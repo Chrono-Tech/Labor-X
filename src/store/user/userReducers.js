@@ -9,7 +9,18 @@ const onUserLogin = (state, action) => {
     return state;
 };
 
+const onReceiveBalance = (state, action) => {
+    if (action.type === 'USER/RECEIVE_BALANCE') {
+        return {
+            ...state,
+            balance: action.balance
+        };
+    }
+    return state;
+};
+
 export const userReducers = (state = {}, action) => {
     state = onUserLogin(state, action);
+    state = onReceiveBalance(state, action);
     return state;
 };

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bip39": "^2.3.0",
+    "ethereumjs-wallet": "^0.6.0",
     "immutable": "^3.8.1",
     "loglevel": "^1.4.1",
     "material-ui": "^0.17.1",
@@ -16,7 +18,8 @@
     "redux-auth-wrapper": "^1.0.0",
     "redux-logger": "^2.8.2",
     "redux-thunk": "^2.2.0",
-    "truffle-contract": "^2.0.0"
+    "truffle-contract": "^2.0.0",
+    "web3-provider-engine": "^11.0.0"
   },
   "devDependencies": {
     "coveralls": "^2.12.0",

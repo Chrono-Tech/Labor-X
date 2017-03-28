@@ -30,11 +30,21 @@ export const setupWeb3 = (web3) => {
 export const loadAccounts = () => {
     return (dispatch, getState) => {
         const web3 = getState().network.web3;
-        const accounts = web3.eth.accounts;
-        log.debug(accounts);
-        return dispatch({
-            type: 'NETWORK/SET_ACCOUNTS',
-            accounts: accounts
+        web3.eth.getAccounts((err, accs) => {
+            if (err !== null) {
+                log.error("There was an error fetching your accounts.", err);
+                return
+            }
+
+            if (accs.length === 0) {
+                log.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+                return
+            }
+
+            dispatch({
+                type: 'NETWORK/SET_ACCOUNTS',
+                accounts: accs
+            });
         });
     }
 };
