@@ -1,6 +1,7 @@
 // @flow
 import log from 'loglevel';
 import {browserHistory} from 'react-router';
+import {push} from 'react-router-redux';
 
 export const loginUser = (address: string) => {
     return (dispatch) => {
@@ -14,8 +15,8 @@ export const loginUser = (address: string) => {
         // This way, once logged in a user can still access the home page.
         const currentLocation = browserHistory.getCurrentLocation();
         if ('redirect' in currentLocation.query) {
-            return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
+            return dispatch(push(decodeURIComponent(currentLocation.query.redirect)));
         }
-        return browserHistory.push('/dashboard')
+        return dispatch(push('/dashboard'));
     };
 };
