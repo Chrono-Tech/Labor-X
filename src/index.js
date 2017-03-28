@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
 import log from 'loglevel';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import {store, start as startStore} from './store';
-import App from './components/App';
+import {start as startStore} from './store';
+import {router} from './router';
 import './index.css';
 
 const start = () => {
@@ -12,10 +12,13 @@ const start = () => {
     log.info('Starting Labox X...');
 
     ReactDOM.render(
-        <Provider store={store}><App /></Provider>,
+        <MuiThemeProvider>
+            {router}
+        </MuiThemeProvider>,
         document.getElementById('root')
     );
 
+    log.info('Starting store');
     startStore();
 };
 

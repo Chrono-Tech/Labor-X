@@ -30,9 +30,11 @@ export const setupWeb3 = (web3) => {
 export const loadAccounts = () => {
     return (dispatch, getState) => {
         const web3 = getState().network.web3;
-        dispatch({
+        const accounts = web3.eth.accounts;
+        log.debug(accounts);
+        return dispatch({
             type: 'NETWORK/SET_ACCOUNTS',
-            accounts: web3.eth.accounts
+            accounts: accounts
         });
     }
 };
