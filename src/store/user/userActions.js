@@ -1,11 +1,13 @@
+// @flow
 import log from 'loglevel';
 import {browserHistory} from 'react-router';
 
-export const loginUser = () => {
+export const loginUser = (address: string) => {
     return (dispatch) => {
         log.debug('loginUser action');
         dispatch({
-            type: 'USER/LOGIN'
+            type: 'USER/LOGIN',
+            address: address
         });
 
         // Used a manual redirect here as opposed to a wrapper.

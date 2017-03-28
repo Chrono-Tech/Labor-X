@@ -1,7 +1,10 @@
 
 const onUserLogin = (state, action) => {
     if (action.type === 'USER/LOGIN') {
-        return {logged: true};
+        return {
+            logged: true,
+            address: action.address
+        };
     }
     return state;
 };

@@ -1,9 +1,21 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
-class Dashboard extends React.Component {
+export class Dashboard extends React.Component {
     render() {
-        return (<p>Dashboard</p>);
+        const {address} = this.props;
+        return (
+            <div>
+                <p>Dashboard</p>
+                <p>Your address: { address }</p>
+            </div>);
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    return {
+        address: state.user.address
+    }
+};
+
+export default connect(mapStateToProps)(Dashboard);
