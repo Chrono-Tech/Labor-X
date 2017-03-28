@@ -5,8 +5,6 @@ import {push} from 'react-router-redux';
 
 export const loginUser = (address: string) => {
     return (dispatch, getState) => {
-        log.debug('loginUser action');
-
         dispatch({
             type: 'USER/LOGIN',
             address: address
