@@ -3,22 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "async": "^2.1.5",
-    "idb-pull-blob-store": "^0.5.1",
+    "bip39": "^2.3.0",
+    "ethereumjs-wallet": "^0.6.0",
     "immutable": "^3.8.1",
-    "ipfs": "^0.22.0",
-    "ipfs-repo": "^0.11.3",
     "loglevel": "^1.4.1",
+    "material-ui": "^0.17.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
+    "react-router": "^3.0.0",
+    "react-router-redux": "^4.0.8",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "redux-auth-wrapper": "^1.0.0",
     "redux-logger": "^2.8.2",
     "redux-thunk": "^2.2.0",
-    "web3": "^0.18.2"
+    "truffle-contract": "^2.0.0",
+    "web3-provider-engine": "^11.0.0"
   },
   "devDependencies": {
     "coveralls": "^2.12.0",
+    "enzyme": "^2.8.0",
+    "react-addons-test-utils": "^15.4.2",
     "react-scripts": "0.9.5"
   },
   "scripts": {

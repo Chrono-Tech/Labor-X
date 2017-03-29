@@ -1,21 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
 import log from 'loglevel';
-
-import {store, start as startStore} from './store';
-import App from './components/App';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import {start as startStore} from './store';
+import {router} from './router';
 import './index.css';
 
 const start = () => {
     log.setLevel('debug');
     log.info('Starting Labox X...');
 
+    /** Needed for onTouchTap @link http://stackoverflow.com/a/34015469/988941 */
+    injectTapEventPlugin();
+
     ReactDOM.render(
-        <Provider store={store}><App /></Provider>,
+        <MuiThemeProvider>
+            {router}
+        </MuiThemeProvider>,
         document.getElementById('root')
     );
 
+    log.info('Starting store');
     startStore();
 };
 

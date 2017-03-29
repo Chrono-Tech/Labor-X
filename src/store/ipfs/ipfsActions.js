@@ -1,24 +1,24 @@
 import log from 'loglevel';
-import IPFS from 'ipfs';
-import IPFSRepo from 'ipfs-repo';
-import idbBS from 'idb-pull-blob-store';
+//import IPFS from 'ipfs';
+//import IPFSRepo from 'ipfs-repo';
+//import idbBS from 'idb-pull-blob-store';
 
 /**
  * Configure IPFS node
  */
 export const setupNode = () => {
     return (dispatch, getState) => {
-        const repo = new IPFSRepo('LaborX', {stores: idbBS});
-        const node = new IPFS({
-            start: false,
-            repo: repo
-        });
-
-        dispatch({
-            type: 'IPFS/SETUP_NODE',
-            node: node
-        });
-        dispatch(runNode());
+        // const repo = new IPFSRepo('LaborX', {stores: idbBS});
+        // const node = new IPFS({
+        //     start: false,
+        //     repo: repo
+        // });
+        //
+        // dispatch({
+        //     type: 'IPFS/SETUP_NODE',
+        //     node: node
+        // });
+        // dispatch(runNode());
     };
 };
 

@@ -5,18 +5,20 @@ const initialState = {
 
 const onSetupWeb3 = (state, action) => {
     if (action.type === 'NETWORK/SETUP_WEB3') {
-        return Object.assign(initialState, state, {
-            web3: action.web3
-        });
+        return {
+            ...state,
+            web3: action.web3,
+        };
     }
     return state;
 };
 
 const onSetAccounts = (state, action) => {
     if (action.type === 'NETWORK/SET_ACCOUNTS') {
-        return Object.assign({}, state, {
-            accounts: action.accounts
-        });
+        return {
+            ...state,
+            accounts: action.accounts,
+        };
     }
     return state;
 };
