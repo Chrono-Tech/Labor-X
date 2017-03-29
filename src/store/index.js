@@ -6,10 +6,7 @@ import {browserHistory} from 'react-router';
 import {ipfsReducers} from './ipfs/ipfsReducers';
 import {networkReducers} from './network/networkReducers';
 import {userReducers} from './user/userReducers';
-import {setupWeb3, loadAccounts} from './network/networkActions';
 import {setupNode as setupIpfsNode} from './ipfs/ipfsActions';
-
-import {MnemonicWeb3} from '../mnemonicWeb3';
 
 import {routerReducer, routerMiddleware} from 'react-router-redux';
 
@@ -47,10 +44,5 @@ export const store = createStore(
 
 
 export const start = () => {
-    const mnemonic = "couch solve unique spirit wine fine occur rhythm foot feature glory away";
-    const instance = new MnemonicWeb3(mnemonic).createInstance();
-
-    store.dispatch(setupWeb3(/*window.web3*/instance));
-    store.dispatch(loadAccounts());
     store.dispatch(setupIpfsNode());
 };
