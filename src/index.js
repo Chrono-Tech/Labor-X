@@ -1,30 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import log from 'loglevel';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import {start as startStore} from './store';
-import {router} from './router';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import log from 'loglevel'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import { start as startStore } from './store'
+import { router } from './router'
+import './index.css'
 
 const start = () => {
-    log.setLevel('debug');
-    log.info('Starting Labox X...');
+  log.setLevel('debug')
+  log.info('Starting Labox X...')
 
-    /** Needed for onTouchTap @link http://stackoverflow.com/a/34015469/988941 */
-    injectTapEventPlugin();
+  /** Needed for onTouchTap @link http://stackoverflow.com/a/34015469/988941 */
+  injectTapEventPlugin()
 
-    ReactDOM.render(
-        <MuiThemeProvider>
-            {router}
-        </MuiThemeProvider>,
-        document.getElementById('root')
-    );
+  ReactDOM.render(
+    <MuiThemeProvider>
+      {router}
+    </MuiThemeProvider>,
+    document.getElementById('root')
+  )
 
-    log.info('Starting store');
-    startStore();
-};
+  log.info('Starting store')
+  startStore()
+}
 
-
-window.LABORX = window.LABORX || {};
-window.LABORX.start = start;
+window.LABORX = window.LABORX || {}
+window.LABORX.start = start

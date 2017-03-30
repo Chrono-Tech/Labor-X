@@ -1,7 +1,8 @@
-import React from 'react';
-import {AddressSelect} from './addressSelect';
-import {shallow} from 'enzyme';
+import React from 'react'
+import {AddressSelect} from './addressSelect'
+import {shallow} from 'enzyme'
 
 it('renders without crashing', () => {
-    const wrapper = shallow(<AddressSelect />);
-});
+  const wrapper = shallow(<AddressSelect />)
+  expect(wrapper).toBeDefined();
+})
