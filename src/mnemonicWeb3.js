@@ -1,10 +1,10 @@
 // @flow
-const bip39 = require('bip39')
-const hdkey = require('ethereumjs-wallet/hdkey')
-const ProviderEngine = require('web3-provider-engine')
-const WalletSubprovider = require('web3-provider-engine/subproviders/wallet.js')
-const Web3Subprovider = require('web3-provider-engine/subproviders/web3.js')
-const Web3 = require('web3')
+import bip39 from 'bip39';
+import hdkey from 'ethereumjs-wallet/hdkey';
+import ProviderEngine from 'web3-provider-engine';
+import WalletSubprovider from 'web3-provider-engine/subproviders/wallet.js';
+import Web3Subprovider from 'web3-provider-engine/subproviders/web3.js';
+import Web3 from 'web3';
 
 /**
  * Light wrapper to instantiate web3 from mnemonic phrase
