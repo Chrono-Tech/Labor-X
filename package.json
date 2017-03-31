@@ -25,12 +25,23 @@
     "coveralls": "^2.12.0",
     "enzyme": "^2.8.0",
     "react-addons-test-utils": "^15.4.2",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "standard": "^9.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "standard": "node_modules/standard/bin/cmd.js",
     "eject": "react-scripts eject"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "plugins": [ "flowtype" ],
+    "globals": [
+      "describe",
+      "it",
+      "expect"
+    ]
   }
 }

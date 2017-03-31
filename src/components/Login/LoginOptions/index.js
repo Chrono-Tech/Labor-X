@@ -1,1 +1,1 @@
-export {default} from './loginOptions';
+export {default} from './loginOptions'

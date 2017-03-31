@@ -1,7 +1,7 @@
-import {store} from './index';
+import { store } from './index'
 
 describe('store', () => {
-    it('should be created', () => {
-        expect(store).toBeDefined();
-    })
-});
+  it('should be created', () => {
+    expect(store).toBeDefined()
+  })
+})

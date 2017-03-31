@@ -1,1 +1,1 @@
-export {default} from './addressSelect';
+export {default} from './addressSelect'
