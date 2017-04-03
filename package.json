@@ -19,6 +19,7 @@
     "redux-logger": "^2.8.2",
     "redux-thunk": "^2.2.0",
     "truffle-contract": "^2.0.0",
+    "uport-connect": "^0.5.4",
     "web3-provider-engine": "^11.0.0"
   },
   "devDependencies": {
@@ -37,7 +38,9 @@
   },
   "standard": {
     "parser": "babel-eslint",
-    "plugins": [ "flowtype" ],
+    "plugins": [
+      "flowtype"
+    ],
     "globals": [
       "describe",
       "it",

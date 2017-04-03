@@ -11,7 +11,6 @@ export class LoginOptions extends React.Component {
             primary
             fullWidth
             onTouchTap={this.props.onMetaMaskLogin} />
-
         </div>
         <div style={styles.buttonsDiv}>
           <RaisedButton label='Mnemonic on INFURA'
@@ -25,7 +24,12 @@ export class LoginOptions extends React.Component {
             primary
             fullWidth
             onTouchTap={this.props.onLocalLogin} />
-
+        </div>
+        <div style={styles.buttonsDiv}>
+          <RaisedButton label='Uport'
+                        primary
+                        fullWidth
+                        onTouchTap={this.props.onUportLogin} />
         </div>
       </Paper>)
   }
@@ -34,7 +38,8 @@ export class LoginOptions extends React.Component {
 LoginOptions.propTypes = {
   onMetaMaskLogin: PropTypes.func,
   onMnemonicLogin: PropTypes.func,
-  onLocalLogin: PropTypes.func
+  onLocalLogin: PropTypes.func,
+  onUportLogin: PropTypes.func
 }
 
 export default LoginOptions

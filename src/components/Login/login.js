@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { MnemonicWeb3 } from '../../mnemonicWeb3'
+import { uport } from '../../uport';
 
 import { setupWeb3, loadAccounts } from '../../store/network/networkActions'
 import { loginUser } from '../../store/user/userActions'
@@ -38,6 +39,11 @@ export class Login extends React.Component {
     this.setState({step: STEP_SELECT_ADDRESS})
   }
 
+  handleUportLogin = () => {
+    this.props.loginUport()
+    this.setState({step: STEP_SELECT_ADDRESS})
+  }
+
   render () {
     const currentStep = this.state.step
     if (currentStep === STEP_LOGIN_OPTIONS) {
@@ -47,6 +53,7 @@ export class Login extends React.Component {
             onMetaMaskLogin={ this.handleMetaMaskLogin }
             onMnemonicLogin={ this.handleMnemonicLogin }
             onLocalLogin={ this.handleLocalLogin }
+            onUportLogin={ this.handleUportLogin }
           />
           <div style={ styles.buttonsDiv }>
             {/*<FlatButton*/}
@@ -91,6 +98,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loginLocal: () => {
     dispatch(setupWeb3(null))
+    dispatch(loadAccounts())
+  },
+  loginUport: () => {
+    dispatch(setupWeb3(uport.getWeb3()))
     dispatch(loadAccounts())
   }
 })
