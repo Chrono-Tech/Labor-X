@@ -32,6 +32,7 @@ export const getBalance = (address: string) => {
         return
       }
 
+      log.debug(`web3.eth.getBalance(${address}) = ${balance.toNumber()}`)
       dispatch({
         type: 'USER/RECEIVE_BALANCE',
         address: address,
