@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "async": "^2.3.0",
     "bip39": "^2.3.0",
     "ethereumjs-wallet": "^0.6.0",
     "immutable": "^3.8.1",
@@ -19,6 +20,7 @@
     "redux-logger": "^2.8.2",
     "redux-thunk": "^2.2.0",
     "truffle-contract": "^2.0.0",
+    "uport-connect": "^0.5.4",
     "web3-provider-engine": "^11.0.0"
   },
   "devDependencies": {
@@ -37,7 +39,9 @@
   },
   "standard": {
     "parser": "babel-eslint",
-    "plugins": [ "flowtype" ],
+    "plugins": [
+      "flowtype"
+    ],
     "globals": [
       "describe",
       "it",
