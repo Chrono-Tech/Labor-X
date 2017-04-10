@@ -33,7 +33,7 @@ export class Web3Util {
   }
 
   static createFromV3(json: string, password: string) {
-    Web3Util.createInstance(Wallet.fromV3(json, password, true));
+    return Web3Util.createInstance(Wallet.fromV3(json, password, true));
   }
 
   static hdWallet(mnemonic): Wallet {
