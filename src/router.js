@@ -7,6 +7,7 @@ import { store } from './store'
 import App from './components/App'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
+import MainLayout from './layout/Main'
 
 import { UserIsAuthenticated } from './auth/wrappers.js'
 
@@ -20,8 +21,10 @@ export const router = (
       <Route component={App}>
 
         <Route path='/' component={Authenticated}>
-          <IndexRoute component={Dashboard} />
-          <Route path='dashboard' component={Dashboard} />
+          <Route component={MainLayout}>
+            <IndexRoute component={Dashboard} />
+            <Route path='dashboard' component={Dashboard} />
+          </Route>
         </Route>
 
         <Route path='/login' component={Login} />
