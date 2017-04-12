@@ -37,6 +37,9 @@
     "standard": "node_modules/standard/bin/cmd.js",
     "eject": "react-scripts eject"
   },
+  "jest": {
+    "collectCoverageFrom" : ["src/**/*.js"]
+  },
   "standard": {
     "parser": "babel-eslint",
     "plugins": [
