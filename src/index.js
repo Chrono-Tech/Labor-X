@@ -6,9 +6,10 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import { start as startStore } from './store'
 import { router } from './router'
 import './index.css'
+import Config from './config';
 
 const start = () => {
-  log.setLevel('debug')
+  log.setLevel(Config.LogLevel)
   log.info('Starting Labox X...')
 
   /** Needed for onTouchTap @link http://stackoverflow.com/a/34015469/988941 */

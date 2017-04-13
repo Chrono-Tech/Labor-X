@@ -1,55 +1,40 @@
 import log from 'loglevel'
-// import IPFS from 'ipfs';
-// import IPFSRepo from 'ipfs-repo';
-// import idbBS from 'idb-pull-blob-store';
+import IPFS from 'ipfs-daemon/src/ipfs-browser-daemon';
+import OrbitDB from 'orbit-db';
+import Config from '../../config';
 
 /**
  * Configure IPFS node
  */
 export const setupNode = () => {
   return (dispatch, getState) => {
-    // const repo = new IPFSRepo('LaborX', {stores: idbBS});
-    // const node = new IPFS({
-    //     start: false,
-    //     repo: repo
-    // });
-    //
-    // dispatch({
-    //     type: 'IPFS/SETUP_NODE',
-    //     node: node
-    // });
-    // dispatch(runNode());
-  }
-}
+    log.info('Starting IPFS daemon');
 
-/**
- * Run IPFS node
- */
-const runNode = () => {
-  return (dispatch, getState) => {
-    const node = getState().ipfs.node
-    node.load(err => {
-      if (err) {
-        log.error(err)
-      } else {
-        node.goOnline(err => {
-          if (err) {
-            log.error(err)
-          } else {
-            log.info('IPFS node is online')
-          }
-        })
+    const ipfs = new IPFS();
+    ipfs.on('ready', () => {
+      log.info(`IPFS Ready. PeerId ${ipfs.PeerId}`);
 
-        node.id((err, res) => {
-          if (err) {
-            throw err
-          }
+      const orbitdb = new OrbitDB(ipfs);
+      const db = orbitdb.eventlog(Config.OrbitDbEventLog);
 
-          log.info('IPFS', {
-            id: res.id, version: res.agentVersion, protocol_version: res.protocolVersion
-          })
-        })
-      }
+      db.events.on('ready', () => {
+        log.info('OrbitDb Ready.')
+      });
+
+      db.events.on('error', (e) => {
+        log.error('OrbitDb Error.' + e)
+      })
+
+      dispatch({
+        type: 'IPFS/SETUP_NODE',
+        daemon: ipfs,
+        orbitdb: orbitdb,
+        db: db
+      });
     })
+
+    ipfs.on('error', (err) => {
+      log.error('IPFS: ' + err)
+    });
   }
 }

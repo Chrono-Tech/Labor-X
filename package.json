@@ -7,8 +7,10 @@
     "bip39": "^2.3.0",
     "ethereumjs-wallet": "^0.6.0",
     "immutable": "^3.8.1",
+    "ipfs-daemon": "^0.3.1",
     "loglevel": "^1.4.1",
     "material-ui": "^0.17.1",
+    "orbit-db": "^0.17.3",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
@@ -38,7 +40,9 @@
     "eject": "react-scripts eject"
   },
   "jest": {
-    "collectCoverageFrom" : ["src/**/*.js"]
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
   },
   "standard": {
     "parser": "babel-eslint",

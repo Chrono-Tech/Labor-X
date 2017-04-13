@@ -1,11 +1,15 @@
 const initialState = {
-  node: null
+  daemon: null,
+  orbitdb: null,
+  db: null
 }
 
 const onSetupNode = (state, action) => {
   if (action.type === 'IPFS/SETUP_NODE') {
     return Object.assign({}, state, {
-      node: action.node
+      daemon: action.daemon,
+      orbitdb: action.orbitdb,
+      db: action.db
     })
   }
   return state
