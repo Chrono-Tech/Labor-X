@@ -32,6 +32,10 @@ export class Web3Util {
     return Web3Util.createInstance(Web3Util.privateKeyWallet(privateKey))
   }
 
+  static createFromV3(json: string, password: string) {
+    return Web3Util.createInstance(Wallet.fromV3(json, password, true));
+  }
+
   static hdWallet(mnemonic): Wallet {
     const hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic))
     // Get the first account using the standard hd path.

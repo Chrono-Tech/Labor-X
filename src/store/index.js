@@ -7,6 +7,7 @@ import { ipfsReducers } from './ipfs/ipfsReducers'
 import { networkReducers } from './network/networkReducers'
 import { userReducers } from './user/userReducers'
 import { setupNode as setupIpfsNode } from './ipfs/ipfsActions'
+import { transactionReducers } from './transaction/transactionReducers'
 
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 
@@ -20,7 +21,8 @@ const appReducers = combineReducers({
   network: networkReducers,
   ipfs: ipfsReducers,
   routing: routerReducer,
-  user: userReducers
+  user: userReducers,
+  transaction: transactionReducers
 })
 
 /**
