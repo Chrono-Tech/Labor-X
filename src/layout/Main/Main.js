@@ -3,9 +3,6 @@ import AppBar from 'material-ui/AppBar';
 import CurrentTx from '../../components/CurrentTx'
 
 class Main extends React.Component {
-  constructor (props) {
-    super(props)
-  }
 
   render () {
     return (

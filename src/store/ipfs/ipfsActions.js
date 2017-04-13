@@ -10,19 +10,30 @@ export const setupNode = () => {
   return (dispatch, getState) => {
     log.info('Starting IPFS daemon');
 
-    const ipfs = new IPFS();
+    const ipfs = new IPFS({
+      SignalServer: 'star-signal.cloud.ipfs.team', // IPFS dev server
+    });
+
     ipfs.on('ready', () => {
-      log.info(`IPFS Ready. PeerId ${ipfs.PeerId}`);
+      log.info(`IPFS Ready. PeerId ${ipfs.PeerId} GatewayAddress ${ipfs.GatewayAddress}`);
 
       const orbitdb = new OrbitDB(ipfs);
       const db = orbitdb.eventlog(Config.OrbitDbEventLog);
 
-      db.events.on('ready', () => {
-        log.info('OrbitDb Ready.')
+      db.events.on('ready', (dbname) => {
+        log.info(`OrbitDb Ready [${dbname}].`)
       });
 
       db.events.on('error', (e) => {
         log.error('OrbitDb Error.' + e)
+      })
+
+      db.events.on('write', (dbname, hash, entry) => {
+       log.debug(`OrbitDb write: [${dbname}, ${hash}, ${JSON.stringify(entry)}]`)
+      })
+
+      db.events.on('synced', () => {
+        log.debug('OrbitDb synced')
       })
 
       dispatch({

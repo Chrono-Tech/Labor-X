@@ -2,12 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import {method} from '../../store/targetContract/actions';
+import { method } from '../../store/targetContract/actions';
+import { updateProfile } from '../../store/user/userActions';
 
 export class Dashboard extends React.Component {
 
   handleClick = () => {
     this.props.dispatch(method());
+  }
+
+  handleUpdateProfile = () => {
+    this.props.dispatch(updateProfile('Profile:' + new Date()));
   }
 
   render () {
@@ -24,6 +29,15 @@ export class Dashboard extends React.Component {
           fullWidth={ true }
           onTouchTap={ this.handleClick }
           />
+        <div>
+          <RaisedButton
+            label='Update user profile'
+            primary={ true }
+            fullWidth={ true }
+            onTouchTap={ this.handleUpdateProfile }
+          />
+
+        </div>
       </div>)
   }
 }
