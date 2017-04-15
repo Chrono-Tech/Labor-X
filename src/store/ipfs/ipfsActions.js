@@ -3,6 +3,9 @@ import IPFS from 'ipfs-daemon/src/ipfs-browser-daemon';
 import OrbitDB from 'orbit-db';
 import Config from '../../config';
 
+const Store = require('idb-pull-blob-store')
+const IPFSRepo = require('ipfs-repo')
+
 /**
  * Configure IPFS node
  */
@@ -32,9 +35,19 @@ export const setupNode = () => {
        log.debug(`OrbitDb write: [${dbname}, ${hash}, ${JSON.stringify(entry)}]`)
       })
 
+      db.events.on('load.progress', (dbname) => {
+        log.debug(`OrbitDb load.progress: [${dbname}]`)
+      })
+
       db.events.on('synced', () => {
         log.debug('OrbitDb synced')
       })
+
+      db.events.on('synced', () => {
+        log.debug('OrbitDb sync')
+      })
+
+      db.load(100);
 
       dispatch({
         type: 'IPFS/SETUP_NODE',

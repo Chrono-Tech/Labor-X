@@ -5,8 +5,9 @@ import { Provider } from 'react-redux'
 
 import { store } from './store'
 import App from './components/App'
-import Login from './components/Login'
 import Dashboard from './components/Dashboard'
+import Login from './components/Login'
+import Debug from './components/Debug'
 import MainLayout from './layout/Main'
 
 import { UserIsAuthenticated } from './auth/wrappers.js'
@@ -20,6 +21,7 @@ export const router = (
         <Route path='/' component={UserIsAuthenticated(MainLayout)}>
             <IndexRoute component={Dashboard} />
             <Route path='dashboard' component={Dashboard} />
+            <Route path='debug' component={Debug} />
         </Route>
         <Route path='/login' component={Login} />
       </Route>
