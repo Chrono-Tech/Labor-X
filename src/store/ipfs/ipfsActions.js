@@ -3,9 +3,6 @@ import IPFS from 'ipfs-daemon/src/ipfs-browser-daemon';
 import OrbitDB from 'orbit-db';
 import Config from '../../config';
 
-const Store = require('idb-pull-blob-store')
-const IPFSRepo = require('ipfs-repo')
-
 /**
  * Configure IPFS node
  */
@@ -57,8 +54,42 @@ export const setupNode = () => {
       });
     })
 
+    // //-----
+    // setInterval(() => {
+    //   _updateSwarmPeers(ipfs._daemon)
+    //     .then((peers) => {
+    //       console.log(peers);
+    //       // this._peers = peers || []
+    //       // // TODO: get unique (new) peers and emit 'peer' for each instead of all at once
+    //       // this.events.emit('peers', this._peers)
+    //     })
+    //     .catch((e) => console.error(e))
+    // }, 3000)
+    // // ----
+
+
+    // A hack to force peers to connect
+    ipfs._daemon.object.put(new Buffer(JSON.stringify({ app: 'orbit.chat' })))
+      .then((res) => {
+        log.info('Hack: ' + res)
+        ipfs._daemon.object.get(res.toJSON().multihash, { enc: 'base58' })
+    })
+    .catch((err) => log.error(err))
+
+
     ipfs.on('error', (err) => {
       log.error('IPFS: ' + err)
     });
   }
 }
+
+// function _updateSwarmPeers(ipfs) {
+//   return new Promise((resolve, reject) => {
+//     ipfs.swarm.peers((err, res) => {
+//       if (err) reject(err)
+//       resolve(res)
+//     })
+//   })
+//     .then((peers) => Object.keys(peers).map((e) => peers[e].addr.toString()))
+//     .catch((e) => console.error(e))
+// }
