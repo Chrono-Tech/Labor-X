@@ -14,7 +14,7 @@ class Debug extends React.Component {
 
   handleReadHashClick = () => {
     const result = this.props.db.get(this.state.hash);
-    console.log(result);
+    console.log('db.get = ' + JSON.stringify(result));
 
     this.props.daemon.object.get(this.state.hash, function(err, res) {
       console.log('err:'+err)

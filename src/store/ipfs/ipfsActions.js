@@ -18,7 +18,7 @@ export const setupNode = () => {
       log.info(`IPFS Ready. PeerId ${ipfs.PeerId} GatewayAddress ${ipfs.GatewayAddress}`);
 
       const orbitdb = new OrbitDB(ipfs);
-      const db = orbitdb.eventlog(Config.OrbitDbEventLog);
+      const db = orbitdb.eventlog(Config.OrbitDbEventLog, {syncHistory: true});
 
       db.events.on('ready', (dbname) => {
         log.info(`OrbitDb Ready [${dbname}].`)
