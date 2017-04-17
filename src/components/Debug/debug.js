@@ -16,8 +16,7 @@ class Debug extends React.Component {
     const result = this.props.db.get(this.state.hash);
     console.log('db.get = ' + JSON.stringify(result));
 
-    this.props.daemon.object.get(this.state.hash, function(err, res) {
-      console.log('err:'+err)
+    this.props.daemon.object.get(this.state.hash, { enc: 'base58'}).then(res => {
       console.log('res:'+JSON.stringify(res))
 
     });
