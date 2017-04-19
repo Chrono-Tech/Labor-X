@@ -41,3 +41,14 @@ export const getBalance = (address: string) => {
     })
   }
 }
+
+export const updateProfile = (profile: string) => {
+  return (dispatch, getState) => {
+    const db = getState().ipfs.db
+    db.add({profile: profile})
+      .then(hash => {
+        log.info('User profile HASH: ' + hash)
+        log.info('Get user profile: '+ JSON.stringify(db.get(hash)))
+      })
+  }
+}
