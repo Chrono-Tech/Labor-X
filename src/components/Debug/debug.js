@@ -19,7 +19,7 @@ class Debug extends React.Component {
     this.props.daemon.object.get(this.state.hash, { enc: 'base58'}).then(res => {
       console.log('res:'+JSON.stringify(res))
 
-    });
+    }).catch(e => console.error('object.get: '+e));
   }
 
   updateInputHash = (event) => {
