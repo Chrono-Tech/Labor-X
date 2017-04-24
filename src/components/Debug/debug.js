@@ -1,6 +1,7 @@
 import React from  'react'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
+import log from 'loglevel';
 
 /**
  * For development and debug only, will be removed in the future
@@ -13,13 +14,9 @@ class Debug extends React.Component {
   }
 
   handleReadHashClick = () => {
-    const result = this.props.db.get(this.state.hash);
-    console.log('db.get = ' + JSON.stringify(result));
-
-    this.props.daemon.object.get(this.state.hash, { enc: 'base58'}).then(res => {
-      console.log('res:'+JSON.stringify(res))
-
-    }).catch(e => console.error('object.get: '+e));
+    this.props.ipfs.client.getObj(this.state.hash).then(result => {
+      log.info(result);
+    });
   }
 
   updateInputHash = (event) => {
@@ -44,8 +41,7 @@ class Debug extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    db: state.ipfs.db,
-    daemon: state.ipfs.daemon
+    ipfs: state.ipfs,
   }
 }
 

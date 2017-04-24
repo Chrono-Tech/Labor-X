@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { RaisedButton, Paper } from 'material-ui'
 import styles from './styles'
 
