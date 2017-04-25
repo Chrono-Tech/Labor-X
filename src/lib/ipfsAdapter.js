@@ -35,7 +35,7 @@ export class IpfsAdapter {
    * @param hash
    * @returns {Promise}
    */
-  getObj (hash): Promise {
+  getObj (hash: string): Promise {
     return new Promise((resolve, reject) => {
       this.api.object.get(hash, (err, response) => {
         if (err) {
