@@ -1,0 +1,24 @@
+import React, { PureComponent } from 'react'
+// import { string, number, bool, array, func, node } from 'prop-types'
+
+import cx from './{{ properCase name }}.sss'
+
+export default class {{ properCase name }} extends PureComponent {
+  static propTypes = {
+
+  }
+
+  static defaultProps = {
+
+  }
+
+  render() {
+    // const {  } = this.props
+
+    return (
+      <div className={cx('{{ camelCase name }}')}>
+        {{ properCase name }}
+      </div>
+    )
+  }
+}
