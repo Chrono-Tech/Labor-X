@@ -1,0 +1,16 @@
+{
+  "name": "@rispa/routes",
+  "version": "0.1.0",
+  "description": "rispa routes",
+  "devDependencies": {
+    "@rispa/eslint-config": "^0.1.0"
+  },
+  "dependencies": {
+    "@adamas/catalog": "0.1.0",
+    "@adamas/home": "0.1.0",
+    "@adamas/dictionaries": "0.1.0",
+    "react-router-dom": "^4.1.1",
+    "react": "15.5.4",
+    "react-dom": "15.5.4"
+  }
+}
