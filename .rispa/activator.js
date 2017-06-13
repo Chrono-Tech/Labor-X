@@ -1,7 +1,5 @@
 import { init, start, build, generator } from '@rispa/core/events'
-// TODO: use import after @rispa/server publishing
-// import { server } from '@rispa/server/events'
-const server = () => 'server'
+import { server } from '@rispa/server/events'
 import { storybook } from '../events'
 import path from 'path'
 import fs from 'fs'
