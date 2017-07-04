@@ -1,7 +1,7 @@
 {
   "name": "@rispa/ui-kit",
   "rispa:name": "ui",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "complete ui kit for csssr projects",
   "main": "index.js",
   "repository": {
@@ -79,9 +79,9 @@
     "react": "^15.4.2",
     "react-container-query": "^0.9.1",
     "react-dom": "^15.4.2",
+    "react-slider": "^0.7.0",
     "storyshots": "^3.2.2",
-    "sugarss": "^0.2.0",
-    "react-slider": "^0.7.0"
+    "sugarss": "^0.2.0"
   },
   "jest": {
     "resolver": "<rootDir>/jest/resolver.js",
