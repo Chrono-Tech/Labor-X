@@ -5,10 +5,17 @@ node_js:
 
 sudo: false
 
+git:
+  depth: 1
+
+install:
+  - yarn global add @rispa/test-utils@latest
+
 script:
-  - yarn lint
-  - yarn stylelint
-  - yarn test:coverage
+  - ris-test-utils init
+  - ris-test-utils run @rispa/ui-kit lint
+  - ris-test-utils run @rispa/ui-kit stylelint
+  - ris-test-utils run @rispa/ui-kit test:coverage
 
 notifications:
   slack:
@@ -20,3 +27,6 @@ notifications:
 
 cache:
   yarn: true
+
+  directories:
+      - $TRAVIS_BUILD_DIR/../rispa-project
