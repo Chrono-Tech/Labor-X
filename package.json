@@ -1,9 +1,9 @@
 {
   "name": "@rispa/routes",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "rispa routes",
   "devDependencies": {
-    "@rispa/eslint-config": "^2.0.0"
+    "@rispa/eslint-config": "2.0.1"
   },
   "dependencies": {
     "react": "15.5.4",
