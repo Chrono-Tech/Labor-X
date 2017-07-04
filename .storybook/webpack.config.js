@@ -1,6 +1,5 @@
-const getBabelrcConfig = require('@rispa/core/babel.js')
+const babelrcConfig = require('@rispa/core/babel.js')
 
-const babelrcConfig = getBabelrcConfig()
 require('babel-register')(babelrcConfig)
 
 const commonLoaders = require('../.rispa/webpack/common-loaders')
