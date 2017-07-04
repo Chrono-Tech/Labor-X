@@ -9,7 +9,7 @@ git:
   depth: 1
 
 install:
-  - yarn global add https://github.com/rispa-io/rispa-test-utils.git#feature/initial-impl
+  - yarn global add @rispa/test-utils@latest
 
 script:
   - ris-test-utils init
