@@ -1,7 +1,7 @@
 {
   "name": "@rispa/ui-kit",
   "rispa:name": "ui",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "complete ui kit for csssr projects",
   "main": "index.js",
   "repository": {
@@ -46,8 +46,8 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "dependencies": {
-    "@rispa/core": "2.1.0",
-    "@rispa/server": "2.1.0",
+    "@rispa/core": "2.1.1",
+    "@rispa/server": "2.1.1",
     "autoprefixer": "^6.7.7",
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
