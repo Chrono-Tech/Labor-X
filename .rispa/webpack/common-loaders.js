@@ -20,7 +20,7 @@ module.exports = [
   },
   {
     test: /\.(ttf|eot|woff(2)?|svg)(\?v=\d+\.\d+\.\d+)?$/,
-    loaders: ['url-loader'],
+    loaders: [urlLoader],
   },
   {
     test: /\.(jpg|png)(\?v=\d+\.\d+\.\d+)?$/,
