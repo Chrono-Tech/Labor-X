@@ -3,7 +3,7 @@
   "version": "2.1.1",
   "description": "rispa routes",
   "devDependencies": {
-    "@rispa/eslint-config": "2.0.1"
+    "@rispa/eslint-config": ">=3.0.0"
   },
   "dependencies": {
     "react": "15.5.4",
