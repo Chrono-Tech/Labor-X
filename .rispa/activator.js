@@ -3,28 +3,10 @@ import fs from 'fs'
 import { init, start, build, generator } from '@rispa/core/events'
 import { server } from '@rispa/server/events'
 import { storybook } from '../events'
-import webpackCommon from './webpack/common.wpc'
-import uiKitGenerator from './generators'
-import ssrCache from './ssr-cache'
+import webpackCommon from '../activator/webpack/common.wpc'
+import ssrCache from '../ssr-cache'
 
 const activator = on => {
-  const buildStaticHandler = registry => {
-    registry.add('webpack.common', webpackCommon)
-    registry.add('webpack.client', webpackCommon)
-    registry.add('ssr-cache', ssrCache)
-  }
-  on(init(build), buildStaticHandler)
-  on(init(server), buildStaticHandler)
-
-  on(init(storybook), registry => {
-    registry.add('storiesContexts', path.resolve(__dirname, '../atoms'))
-    registry.add('storiesContexts', path.resolve(__dirname, '../molecules'))
-  })
-
-  on(start(generator), (registry, plop) => {
-    uiKitGenerator(plop)
-  })
-
   on(start(storybook), registry => {
     const stories = registry.get('storiesContexts')
       .map(context => context.replace(/\\/g, '/'))
