@@ -1,7 +1,7 @@
 {
   "name": "@rispa/ui-kit",
   "rispa:name": "ui",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "complete ui kit for csssr projects",
   "main": "index.js",
   "rispa:activator": "./activator/index.js",
@@ -49,9 +49,9 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "dependencies": {
-    "@rispa/core": "4.0.3",
-    "@rispa/render-server": "4.0.3",
-    "@rispa/webpack": "4.0.3",
+    "@rispa/core": "4.0.4",
+    "@rispa/render-server": "4.0.4",
+    "@rispa/webpack": "4.0.4",
     "autoprefixer": "^6.7.7",
     "classnames": "^2.2.5",
     "fbjs": "^0.8.12",
