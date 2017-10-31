@@ -1,6 +1,6 @@
 {
   "name": "@rispa/routes",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "rispa routes",
   "devDependencies": {
     "@rispa/eslint-config": ">=3.0.0"
