@@ -1,3 +1,3 @@
-const generator = require('./.rispa/generators/')
+const generator = require('./generators/')
 
 module.exports = plop => generator(plop)

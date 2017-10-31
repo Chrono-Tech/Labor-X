@@ -1,5 +1,5 @@
 {
   "presets": [
-    "@rispa/core/babel"
+    "@rispa/babel/lib/babelConfig"
   ]
 }

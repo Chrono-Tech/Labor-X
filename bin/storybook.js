@@ -1,4 +1,4 @@
-const { storybook } = require('../events')
-const core = require('@rispa/core')
+const { init } = require('@rispa/core')
+const { startHandler } = require('../activator/UiKitPluginApi')
 
-core(storybook())
+init(startHandler)

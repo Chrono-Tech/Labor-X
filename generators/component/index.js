@@ -2,7 +2,7 @@
  * Component Generator
  */
 const path = require('path')
-const componentExists = require('../../utils/componentExists')
+const componentExists = require('../../activator/utils/componentExists')
 
 const identity = item => item
 
