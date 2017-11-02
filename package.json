@@ -1,13 +1,14 @@
 {
   "name": "@rispa/routes",
   "version": "4.0.4",
+  "description": "Rispa React routes configuration",
+  "main": "./index.js",
   "description": "rispa routes",
   "devDependencies": {
     "@rispa/eslint-config": ">=3.0.0"
   },
   "dependencies": {
-    "react": "15.5.4",
-    "react-dom": "15.5.4",
+    "react": "^15.5.4",
     "react-router-dom": "^4.1.1"
   },
   "scripts": {
