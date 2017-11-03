@@ -1,9 +1,8 @@
 {
   "name": "@rispa/routes",
-  "version": "4.0.4",
-  "description": "Rispa React routes configuration",
-  "main": "./index.js",
+  "version": "4.1.0",
   "description": "rispa routes",
+  "main": "./index.js",
   "devDependencies": {
     "@rispa/eslint-config": ">=3.0.0"
   },
