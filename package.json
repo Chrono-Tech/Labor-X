@@ -1,7 +1,7 @@
 {
   "name": "@rispa/ui-kit",
   "rispa:name": "ui",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "complete ui kit for csssr projects",
   "main": "index.js",
   "rispa:activator": "./activator/index.js",
