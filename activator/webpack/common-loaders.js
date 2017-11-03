@@ -1,11 +1,9 @@
 const path = require('path')
 
-const resolveLoader = loader => path.resolve(__dirname, '../../node_modules', loader)
-
 const urlLoader = 'url-loader'
 const cssLoader = 'css-loader'
 const styleLoader = 'style-loader'
-const postcssLoader = resolveLoader('postcss-loader')
+const postcssLoader = require.resolve('postcss-loader')
 const classNamesLoader = path.resolve(__dirname, './classnames-loader.js')
 
 module.exports = [
