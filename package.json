@@ -1,6 +1,6 @@
 {
   "name": "@rispa/react-config",
-  "version": "4.1.2",
+  "version": "4.1.3",
   "description": "Rispa React Configuration",
   "license": "MIT",
   "rispa:activator": "./activator.js",
