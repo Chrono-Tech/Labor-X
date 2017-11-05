@@ -1,6 +1,6 @@
 {
   "name": "@rispa/routes",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "rispa routes",
   "main": "./index.js",
   "devDependencies": {
