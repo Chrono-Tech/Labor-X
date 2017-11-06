@@ -1,0 +1,29 @@
+extends: stylelint-config-standard
+rules:
+  selector-pseudo-class-no-unknown:
+  - true
+  - ignorePseudoClasses:
+    - global
+    - container
+  selector-type-no-unknown:
+  - true
+  - ignoreTypes:
+    - width
+    - /\d+px/
+    - <
+  comment-empty-line-before:
+  - never
+  - ignore: stylelint-commands
+
+  block-closing-brace-empty-line-before: null
+  block-closing-brace-newline-after: null
+  block-closing-brace-newline-before: null
+  block-closing-brace-space-before: null
+  block-opening-brace-newline-after: null
+  block-opening-brace-space-after: null
+  block-opening-brace-space-before: null
+  declaration-block-no-redundant-longhand-properties: null
+  declaration-block-semicolon-newline-after: null
+  declaration-block-semicolon-space-after: null
+  declaration-block-semicolon-space-before: null
+  declaration-block-trailing-semicolon: null

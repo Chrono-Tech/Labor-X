@@ -1,0 +1,122 @@
+{
+  "name": "@rispa/ui-kit",
+  "rispa:name": "react-ui",
+  "version": "4.1.3",
+  "description": "Rispa React ui-kit",
+  "rispa:activator": "./activator/index.js",
+  "rispa:generators": "./generators/index.js",
+  "repository": "https://github.com/rispa-io/rispa-ui-kit.git",
+  "author": "Andrew Laiff <q.laiff@gmail.com>",
+  "scripts": {
+    "stylelint": "stylelint atoms/**/*.sss molecules/**/*.sss styles/**/*.sss",
+    "test": "yarn sb-config && yarn jest",
+    "test:update": "yarn sb-config && jest -u",
+    "test:watch": "yarn sb-config && jest --watch",
+    "test:coverage": "yarn sb-config && jest --coverage",
+    "storybook": "yarn sb-config && better-npm-run start-storybook",
+    "sb": "yarn sb-config && better-npm-run start-storybook",
+    "build-storybook": "yarn sb-config && better-npm-run build-storybook",
+    "sb-config": "node ./bin/storybook.js",
+    "g": "plop",
+    "lint": "rispa-eslint .",
+    "lint:fix": "rispa-eslint . --fix"
+  },
+  "devDependencies": {
+    "@rispa/eslint-config": ">=3.0.0",
+    "@kadira/react-storybook-addon-info": "^3.4.0",
+    "@kadira/storybook": "^2.35.3",
+    "@kadira/storybook-addon-comments": "^1.9.1",
+    "@kadira/storybook-addon-knobs": "^1.7.1",
+    "@kadira/storybook-addon-notes": "^1.0.1",
+    "@kadira/storybook-addon-options": "^1.0.2",
+    "@olistic/storyshots": "^3.3.1",
+    "babel-jest": "^19.0.0",
+    "babel-register": "^6.26.0",
+    "babel-loader": "7.1.1",
+    "better-npm-run": "^0.0.15",
+    "browser-resolve": "^1.11.2",
+    "enzyme": "^2.8.0",
+    "jest": "^20.0.4",
+    "react-addons-test-utils": "^15.4.2",
+    "react-storybook-addon-backgrounds": "^0.0.7",
+    "resolve": "^1.3.2",
+    "stylelint": "^7.10.1",
+    "plop": "^1.7.4",
+    "stylelint-config-standard": "^16.0.0",
+    "webpack-hot-middleware": "^2.18.0"
+  },
+  "dependencies": {
+    "@rispa/core": "4.1.x",
+    "@rispa/render-server": "4.1.x",
+    "@rispa/webpack": "4.1.x",
+    "autoprefixer": "^7.1.6",
+    "classnames": "^2.2.5",
+    "fbjs": "^0.8.16",
+    "loader-utils": "^1.1.0",
+    "postcss": "^6.0.14",
+    "postcss-autoreset": "^2.0.1",
+    "postcss-color-function": "^4.0.1",
+    "postcss-custom-properties": "^6.2.0",
+    "postcss-for": "^2.1.1",
+    "postcss-import": "^11.0.0",
+    "postcss-initial": "^2.0.0",
+    "postcss-loader": "^2.0.8",
+    "postcss-nested": "^2.1.2",
+    "prop-types": "^15.5.6",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "storyshots": "^3.2.2",
+    "sugarss": "^1.0.0"
+  },
+  "jest": {
+    "resolver": "<rootDir>/jest/resolver.js",
+    "moduleDirectories": [
+      "node_modules",
+      "atoms",
+      "modules",
+      "__test__"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.sss$": "<rootDir>/.storybook/stylesMock.js",
+      "^.+\\.jpg$": "<rootDir>/.storybook/imgMock.js"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/jest/transform.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules"
+    ],
+    "collectCoverageFrom": [
+      "atoms/**/*.js",
+      "molecules/**/*.js",
+      "!**/*.stories.js",
+      "!**/*.mock.js",
+      "!**/index.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  },
+  "betterScripts": {
+    "start-storybook": {
+      "command": "start-storybook -s ./ -p 9001",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build-storybook": {
+      "command": "build-storybook -o build/storybook",
+      "env": {
+        "NODE_ENV": "storybook"
+      }
+    }
+  }
+}
