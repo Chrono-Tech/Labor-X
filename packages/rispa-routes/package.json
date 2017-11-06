@@ -7,6 +7,8 @@
     "@rispa/eslint-config": ">=3.0.0"
   },
   "dependencies": {
+    "laborx-dashboard": "0.1.0",
+    "chronobank-login": "0.1.0",
     "react": "^15.5.4",
     "react-router-dom": "^4.1.1"
   },
