@@ -1,0 +1,58 @@
+{
+  "pluginsPath": "./packages",
+  "plugins": [
+    {
+      "name": "rispa-react-config",
+      "ref": "stable",
+      "remote": "https://github.com/rispa-io/rispa-react-config.git",
+      "extendable": true
+    },
+    {
+      "name": "rispa-ui-kit",
+      "ref": "stable",
+      "remote": "https://github.com/rispa-io/rispa-ui-kit.git",
+      "extendable": true
+    },
+    {
+      "name": "rispa-routes",
+      "ref": "stable",
+      "remote": "https://github.com/rispa-io/rispa-routes.git",
+      "extendable": true
+    },
+    {
+      "name": "@rispa/redux",
+      "ref": "stable",
+      "dependency": true
+    },
+    {
+      "name": "@rispa/babel",
+      "ref": "stable",
+      "dependency": true
+    },
+    {
+      "name": "@rispa/webpack-javascript",
+      "ref": "stable",
+      "dependency": true
+    },
+    {
+      "name": "@rispa/webpack",
+      "ref": "stable",
+      "dependency": true
+    },
+    {
+      "name": "@rispa/render-server",
+      "ref": "stable",
+      "dependency": true
+    },
+    {
+      "name": "@rispa/client",
+      "ref": "stable",
+      "dependency": true
+    },
+    {
+      "name": "@rispa/server",
+      "ref": "stable",
+      "dependency": true
+    }
+  ]
+}
