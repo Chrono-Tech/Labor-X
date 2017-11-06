@@ -1,0 +1,17 @@
+{
+  "name": "@rispa/routes",
+  "version": "4.1.3",
+  "description": "rispa routes",
+  "main": "./index.js",
+  "devDependencies": {
+    "@rispa/eslint-config": ">=3.0.0"
+  },
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-router-dom": "^4.1.1"
+  },
+  "scripts": {
+    "lint": "rispa-eslint .",
+    "lint:fix": "rispa-eslint . --fix"
+  }
+}
