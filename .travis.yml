@@ -6,12 +6,13 @@ node_js:
 sudo: false
 
 before_script:
-  - yarn lerna bootstrap
+  - yarn global add @rispa/cli@latest
+  - ris all compile
 
 script:
-  - yarn ris all lint
-  - yarn ris all stylelint
-  - yarn ris all test:coverage
+  - ris all lint
+  - ris all stylelint
+  - ris all test:coverage
 
 # notifications:
 #   slack:

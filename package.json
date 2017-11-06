@@ -13,8 +13,16 @@
     "@rispa/server": "4.1.3"
   },
   "scripts": {
-    "bs": "yarn install",
-    "postinstall": "ris clean-cache"
+    "bs": "yarn install && ris all compile",
+    "postinstall": "ris clean-cache",
+    "lint": "ris all lint && ris all stylelint",
+    "test": "ris all test",
+    "test:coverage": "ris all test:coverage",
+    "start": "ris server start-dev-client",
+    "build": "ris webpack build",
+    "storybook": "ris ui storybook",
+    "make-atom": "ris g atom @rispa/ui-kit",
+    "make-molecule": "ris g molecule @rispa/ui-kit"
   },
   "workspaces": [
     "packages/*"
