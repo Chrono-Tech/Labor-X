@@ -248,7 +248,41 @@
     redux-form "^7.1.0"
     redux-logger "^3.0.6"
 
-"@rispa/render-server@4.1.3", "@rispa/render-server@4.1.x":
+"@rispa/render-server@4.1.7":
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/@rispa/render-server/-/render-server-4.1.7.tgz#d4b99ddc5a403da8a8e8a0a2a50cba7c2bc7e72a"
+  dependencies:
+    "@rispa/babel" "4.1.x"
+    "@rispa/config" "4.1.x"
+    "@rispa/core" "4.1.x"
+    "@rispa/redux" "4.1.x"
+    "@rispa/routes" "4.1.x"
+    "@rispa/server" "4.1.x"
+    "@rispa/webpack" "4.1.x"
+    "@webpack-blocks/webpack2" "^0.4.0"
+    babel-runtime "^6.23.0"
+    debug "^2.6.6"
+    electrode-react-ssr-caching "^0.1.5"
+    express "^4.15.2"
+    extract-text-webpack-plugin "^2.1.0"
+    history "^4.6.1"
+    prop-types "^15.5.8"
+    react "15.5.4"
+    react-cookie "^2.0.7"
+    react-dom "15.5.4"
+    react-loadable "^3.3.1"
+    react-redux "^5.0.6"
+    react-router "^4.1.1"
+    react-tree-walker "^2.1.1"
+    require-relative "^0.8.7"
+    stats-webpack-plugin "^0.6.0"
+    universal-cookie-express "^2.0.5"
+    universal-webpack "^0.3.9"
+    webpack "^2.4.1"
+    webpack-flush-chunks "^0.1.1"
+    write-file-webpack-plugin "^4.0.2"
+
+"@rispa/render-server@4.1.x":
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/@rispa/render-server/-/render-server-4.1.3.tgz#eecff1c42d7f090ad527e7fea6e1c1b16dd164c5"
   dependencies:
@@ -310,7 +344,21 @@
     babel-loader "^7.1.2"
     happypack "^4.0.0"
 
-"@rispa/webpack@4.1.3", "@rispa/webpack@4.1.x":
+"@rispa/webpack@4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@rispa/webpack/-/webpack-4.1.4.tgz#e3431d90f182c1797060db8812a200beebd24383"
+  dependencies:
+    "@rispa/config" "4.1.x"
+    "@rispa/core" "4.1.x"
+    "@webpack-blocks/webpack2" "^0.4.0"
+    better-npm-run "0.0.15"
+    clean-webpack-plugin "^0.1.17"
+    debug "^2.6.6"
+    webpack "^2.7.0"
+    webpack-dev-middleware "^1.12.0"
+    webpack-hot-middleware "^2.19.1"
+
+"@rispa/webpack@4.1.x":
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/@rispa/webpack/-/webpack-4.1.3.tgz#f9b2a7e45c3e1de7b447fde4c4b8277f366c6ffe"
   dependencies:

@@ -1,4 +1,4 @@
-// import BaseComponent from './containers/BaseComponent/BaseComponent'
+import Dashboard from './containers/Dashboard'
 // import reducer, { action } from './redux/reducer'
 // import { match } from '@rispa/redux'
 
@@ -14,7 +14,7 @@ const registerModule = context => {
   registerReducer(context)
   registerWhen(context)
 
-  // return BaseComponent
+  return Dashboard
 }
 
 export default registerModule
