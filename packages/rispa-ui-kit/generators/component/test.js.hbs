@@ -1,0 +1,12 @@
+import React from 'react'
+import { shallow } from 'enzyme'
+import {{ properCase name }} from '../{{ properCase name }}'
+
+describe('{{ properCase name }}', () => {
+  it('should render normal without any props supplied', () => {
+    expect(shallow(<{{ properCase name }} />)).toHaveLength(1)
+  })
+  it('should render normal with children content', () => {
+    expect(shallow(<{{ properCase name }}>{{ properCase name }}</{{ properCase name }}>).text()).toEqual('{{ properCase name }}')
+  })
+})

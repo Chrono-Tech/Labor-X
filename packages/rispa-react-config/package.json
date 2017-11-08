@@ -1,0 +1,13 @@
+{
+  "name": "@rispa/react-config",
+  "version": "4.1.3",
+  "description": "Rispa React Configuration",
+  "license": "MIT",
+  "rispa:activator": "./activator.js",
+  "dependencies": {
+    "@rispa/config": "4.1.x"
+  },
+  "devDependencies": {
+    "@rispa/eslint-config": ">=3.0.0"
+  }
+}

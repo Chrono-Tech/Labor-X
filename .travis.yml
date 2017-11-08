@@ -1,20 +1,32 @@
-dist: trusty
-os: linux
-group: stable
 language: node_js
+
 node_js:
-  - 6
+  - "stable"
 
-install:
-  - npm install
+sudo: false
 
-cache:
-  directories:
-    - node_modules
+before_script:
+  - yarn global add @rispa/cli@latest
+  - ris all compile
 
 script:
-  - npm test -- --coverage
-  #- npm run build
+  - ris all lint
+  - ris all stylelint
+  - ris all test:coverage
 
-after_script:
-    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+# notifications:
+#   slack:
+#     rooms:
+#
+#     on_success: always
+#     on_failure: always
+#     on_start: never
+#   webhooks:
+#     urls:
+#
+#     on_success: always
+#     on_failure: never
+#     on_start: never
+
+cache:
+  yarn: true

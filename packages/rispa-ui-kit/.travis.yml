@@ -1,0 +1,32 @@
+language: node_js
+
+node_js:
+  - "stable"
+
+sudo: false
+
+git:
+  depth: 1
+
+install:
+  - yarn global add @rispa/test-utils@latest
+
+script:
+  - ris-test-utils init
+  - ris-test-utils run @rispa/ui-kit lint
+  - ris-test-utils run @rispa/ui-kit stylelint
+  - ris-test-utils run @rispa/ui-kit test:coverage
+
+notifications:
+  slack:
+    rooms:
+      - secure: "QLqggWW8+G+k0Pn9UzzBo2lpS+sYhA7jyjuRBJf7Y8Wdh4BDSE7rxddMNB+2U59YifBQBjwrfz8vOxsCB2yRXW6QJ3/AlywWL0qBOSEsBZ4G9ZA1036bR7LjoVj7pcij6w75MnUJ0ez7o7O6JDtmD9Eli4a9T4lU78Lbw56rjVvCv310uLgILXFHgKD6x1UI/Nf74oMe7ExgXfr0q3iHJmkhcqUFrtv2cT898kGBJqy+dGvn8l1tjm0ja8CbmQM2NEb67n8LLnMJ0tEoKsr+sUB5fqlqnSLxXQrG0n8qLxlHJ3Y2oO5Cc/zh6Nwci57KS6UVCVrVpZPqs+QCJ9/4G5JGTbCn4+a75pMFzAXEuxSt77GD9y2cM+YeM7vBOMXr3qyl39dh/n4yMP5cWjmf729/LQipEdEXu0L2PoCqs+opWH4/08DDFY7uDehLikxk43iLebdLZ3s0Qbuof7D4BqpPO3k76+I5LMhKX1oPKpw4MEPuWturvwruPkYZyVs6mqCUNfsjhMajH63nDbhu3Vbz4K3nvz/8H1vCWyaITVR78ek/qL5gTBaP4hpVijFTXu5Y29o9OOgtY/Uu/Cdet7+MtGOZAwSb1WhVAxrNFz3GUmlB3oQKwAvh4hK59ceu0Y/dhG3+DXf92I2BzczHBmXoKbsEuSoS4jXDv1Mm3k0="
+    on_success: always
+    on_failure: always
+    on_start: never
+
+cache:
+  yarn: true
+
+  directories:
+      - $TRAVIS_BUILD_DIR/../rispa-project
