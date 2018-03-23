@@ -1,0 +1,13 @@
+node_modules/**
+.next/**
+build/**
+.tmp/**
+mocks/**
+docs/**
+*.json
+*.md
+*.less
+*.scss
+*.svg
+git
+static/**

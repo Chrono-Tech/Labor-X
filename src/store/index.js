@@ -1,49 +1,50 @@
+import { combineReducers } from 'redux'
+
+// export default (initialState = {}) => {
+//   const
+// }
+
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { browserHistory } from 'react-router'
 
-import { ipfsReducers } from './ipfs/ipfsReducers'
-import { networkReducers } from './network/networkReducers'
-import { userReducers } from './user/userReducers'
-import { setupNode as setupIpfsNode } from './ipfs/ipfsActions'
-import { transactionReducers } from './transaction/transactionReducers'
-
-import { routerReducer, routerMiddleware } from 'react-router-redux'
-
-const routingMiddleware = routerMiddleware(browserHistory)
-
-const loggerMiddleware = createLogger({
-  // stateTransformer
-})
-
-const appReducers = combineReducers({
-  network: networkReducers,
-  ipfs: ipfsReducers,
-  routing: routerReducer,
-  user: userReducers,
-  transaction: transactionReducers
-})
-
-/**
- * This reducer just clean state on logout
- */
-const rootReducer = (state, action) => {
-  if (action.type === 'USER/LOGOUT') {
-    state = undefined
-  }
-  return appReducers(state, action)
+const exampleInitialState = {
+  lastUpdate: 0,
+  light: false,
+  count: 0
 }
 
-export const store = createStore(
-  rootReducer,
-  applyMiddleware(
-    routingMiddleware,
-    thunkMiddleware,
-    loggerMiddleware
-  )
-)
+export const actionTypes = {
+  ADD: 'ADD',
+  TICK: 'TICK'
+}
 
-export const start = () => {
-  store.dispatch(setupIpfsNode())
+// REDUCERS
+export const reducer = (state = exampleInitialState, action) => {
+  switch (action.type) {
+    case actionTypes.TICK:
+      return Object.assign({}, state, { lastUpdate: action.ts, light: !!action.light })
+    case actionTypes.ADD:
+      return Object.assign({}, state, {
+        count: state.count + 1
+      })
+    default: return state
+  }
+}
+
+// ACTIONS
+export const serverRenderClock = (isServer) => dispatch => {
+  return dispatch({ type: actionTypes.TICK, light: !isServer, ts: Date.now() })
+}
+
+export const startClock = () => dispatch => {
+  return setInterval(() => dispatch({ type: actionTypes.TICK, light: true, ts: Date.now() }), 1000)
+}
+
+export const addCount = () => dispatch => {
+  return dispatch({ type: actionTypes.ADD })
+}
+
+export const initStore = (initialState = exampleInitialState) => {
+  return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
 }

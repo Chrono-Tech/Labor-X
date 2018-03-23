@@ -3,4 +3,5 @@
 
 Labor X
 
-    `npm install`
+    `yarn install`
+    'yarn dev'

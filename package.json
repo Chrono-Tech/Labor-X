@@ -1,59 +1,45 @@
 {
-  "name": "labor-x",
-  "version": "0.1.0",
+  "name": "@chronobank/labor-x",
+  "version": "0.1.1",
+  "description": "ChronoBank Labor-x project",
   "private": true,
   "dependencies": {
-    "async": "^2.3.0",
-    "base-x": "^3.0.0",
-    "bip39": "^2.3.0",
-    "ethereumjs-wallet": "^0.6.0",
-    "immutable": "^3.8.1",
-    "ipfs-api": "^14.0.0",
-    "loglevel": "^1.4.1",
-    "material-ui": "^0.17.1",
-    "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-redux": "^5.0.3",
-    "react-router": "^3.0.0",
-    "react-router-redux": "^4.0.8",
-    "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.6.0",
-    "redux-auth-wrapper": "^1.0.0",
-    "redux-logger": "^2.8.2",
-    "redux-thunk": "^2.2.0",
-    "truffle-contract": "^2.0.0",
-    "uport-connect": "^0.5.4",
-    "web3-provider-engine": "^11.0.0"
+    "@chronobank/mint": "github:chronobank/chronomint",
+    "express": "^4.16.2",
+    "joi": "^13.1.2",
+    "lx-sc": "github:chronobank/lx-sc#develop",
+    "next": "^5.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-transition-group": "^2.2.1",
+    "redux": "^3.7.2",
+    "truffle-contract": "github:trufflesuite/truffle-contract#95/head",
+    "web3": "^1.0.0-beta.30"
   },
   "devDependencies": {
-    "coveralls": "^2.12.0",
-    "enzyme": "^2.8.2",
-    "react-addons-test-utils": "^15.5.1",
-    "react-scripts": "0.9.5",
-    "standard": "^9.0.2"
+    "@zeit/next-sass": "^0.1.1",
+    "autoprefixer": "^8.0.0",
+    "babel-eslint": "^8.2.2",
+    "babel-plugin-module-alias": "^1.6.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.18.1",
+    "eslint-plugin-chronobank": "github:ChronoBank/eslint-plugin-chronobank",
+    "eslint-plugin-chronobank-react": "github:ChronoBank/eslint-plugin-chronobank-react",
+    "ganache-cli": "^6.0.3",
+    "node-sass": "^4.7.2",
+    "normalize.css": "^8.0.0",
+    "postcss-easy-import": "^3.0.0",
+    "styled-jsx": "^2.2.5",
+    "styled-jsx-plugin-postcss": "^0.1.2",
+    "truffle": "^4.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "standard": "node_modules/standard/bin/cmd.js",
-    "eject": "react-scripts eject"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ]
-  },
-  "standard": {
-    "parser": "babel-eslint",
-    "plugins": [
-      "flowtype"
-    ],
-    "globals": [
-      "describe",
-      "it",
-      "expect"
-    ]
+    "dev": "node server.js",
+    "start": "next start",
+    "build": "next build",
+    "lint": "./node_modules/eslint/bin/eslint.js --ext .js,.jsx --fix src pages specs",
+    "testrpc": "testrpc --mnemonic \"video visa alcohol fault earth naive army senior major inherit convince electric\" --trace_request true | grep -Ev \"FilterSubprovider|eth_getFilterChanges\"",
+    "contracts": "cd node_modules/lx-sc && node --max_old_space_size=8000 ../truffle/build/cli.bundled.js migrate --network development",
+    "contracts:compile": "cd node_modules/lx-sc && node --max_old_space_size=8000 ../truffle/build/cli.bundled.js compile --all"
   }
 }

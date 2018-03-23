@@ -1,0 +1,61 @@
+@import "~styles/globals/variables";
+
+$borderWidth: 0.2rem;
+$border: $borderWidth solid $color-black;
+$size: 1.6rem;
+
+.root {
+  position: relative;
+  transition: opacity 250ms;
+  visibility: hidden;
+  opacity: 1;
+}
+
+.wrapper {
+  padding-top: 2rem - $borderWidth;
+  position: absolute;
+  width: 27rem;
+  right: -10px;
+
+  &:before {
+    content: '';
+    width: $size + $borderWidth*2;
+    height: $size + $borderWidth*2;
+    position: absolute;
+    top: $size/2 + $borderWidth;
+    transform: rotateZ(45deg);
+    right: $size;
+    background-color: $color-black;
+    z-index: 1;
+  }
+
+  &:after {
+    content: '';
+    width: $size;
+    height: $size;
+    position: absolute;
+    top: $size/2 + $borderWidth*2;
+    transform: rotateZ(45deg);
+    right: $size + $borderWidth;
+    background-color: $color-white;
+    z-index: 3;
+  }
+}
+
+.content {
+  position: relative;
+  color: $color-black;
+  background-color: $color-white;
+  padding: 2rem;
+  border: $borderWidth solid $color-black;
+  z-index: 2;
+}
+
+.title {
+  font-weight: $font-weight-medium;
+  margin-bottom: 2rem;
+}
+
+.pointer {
+  cursor: pointer;
+}

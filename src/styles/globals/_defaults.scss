@@ -1,0 +1,73 @@
+
+html {
+  font-size: 62.5%; // 1rem = 10px
+  height: 100%;
+}
+
+body {
+  font-size: 1.4rem;
+  color: $color-black;
+  font-weight: $font-weight-light;
+  background-color: #f7f7f7;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a,
+p,
+b,
+strong {
+  margin: 0;
+  padding: 0;
+  line-height: $pLineHeight;
+}
+
+h1 {
+  font-size: 5rem;
+  font-weight: $font-weight-thin;
+  letter-spacing: -0.1rem;
+  line-height: 1;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: $font-weight-medium;
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: $font-weight-medium;
+}
+
+h4 {
+  font-size: 1.6rem;
+  font-weight: $font-weight-medium;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  padding: 0;
+  margin: 0;
+}
+
+a,
+a:hover,
+a:visited,
+a:focus
+{
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+}
+
+//a:visited {
+//  color: currentColor;
+//}

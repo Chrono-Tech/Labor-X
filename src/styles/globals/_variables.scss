@@ -1,0 +1,48 @@
+
+// ----------- colors ----------
+
+$color-white: #FFF;
+$color-black: #333;
+$color-blue: #0088C3;
+$color-blue-light: #BFE7F4;
+$color-blue94: lighten($color-blue, 6%);
+$color-blue53: lighten($color-blue, 47%);
+$color-red: #C25451;
+$color-green: #92cc72;
+$color-gold: #e6bf6e;
+
+
+// grays
+$color-super-black: #000;
+$color-gray50: lighten($color-super-black, 50%);
+$color-gray10: lighten($color-super-black, 90%);
+$color-gray5: lighten($color-super-black, 95%);
+$color-gray3: lighten($color-super-black, 97%);
+
+// common aliases
+$color-primary: $color-blue;
+$color-secondary: $color-gray50;
+$color-error: $color-red;
+$color-warn: $color-gold;
+$color-success: $color-green;
+
+
+// ----------- fonts -----------
+
+// roboto available weights
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+//$font-weight-black: 900;
+
+
+// ---------- other -----------
+
+$border-radius: 0.3rem;
+
+
+// --------- typo ------------
+
+$pLineHeight: 1.571428571; // 22/14

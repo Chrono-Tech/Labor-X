@@ -1,0 +1,21 @@
+{
+  "presets": [
+    [
+      "next/babel",
+      {
+        "styled-jsx": {
+          "plugins": [
+            "styled-jsx-plugin-postcss"
+          ]
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    ["module-alias", [
+      { "src": "./src/components", "expose": "components" },
+      { "src": "./src/styles", "expose": "styles" },
+      { "src": "./src", "expose": "src" }
+    ]]
+  ]
+}

@@ -1,0 +1,9 @@
+
+@mixin grid ($gutterH: 4rem, $gutterV: 0rem) {
+  margin: 0 -#{$gutterH / 2};
+}
+
+@mixin gridItem ($gutter: 4rem) {
+  margin: 0 #{$gutter / 2};
+
+}

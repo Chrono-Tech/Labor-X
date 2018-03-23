@@ -1,0 +1,29 @@
+@import "~styles/globals/variables";
+
+.root {
+  background-color: $color-white;
+  box-shadow: 0.4rem 0.4rem 0.6rem rgba($color-black, 0.1);
+}
+
+.header {
+  padding: 3rem;
+  background-color: $color-blue94;
+
+  &:hover {
+    background-color: $color-primary;
+  }
+}
+
+.title {
+  color: $color-white;
+}
+
+
+.subtitle {
+  color: $color-blue53;
+  font-weight: $font-weight-medium;
+}
+
+.content {
+  padding: 3rem;
+}

@@ -1,0 +1,14 @@
+@import "~styles/globals/mixins";
+
+$gutter: 4rem;
+
+.highlights {
+  @include grid;
+
+  display: flex;
+}
+
+.highlight {
+  @include gridItem;
+  flex-grow: 1;
+}

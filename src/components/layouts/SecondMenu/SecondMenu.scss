@@ -1,0 +1,65 @@
+@import "~styles/globals/variables";
+
+.root {
+  background-color: $color-white;
+  padding-left: 6rem;
+  box-shadow: 0.5rem 0 0.8rem rgba($color-super-black, 0.1);
+  color: $color-gray50;
+}
+
+.section {
+  padding: 3rem 0;
+  border-bottom: 0.1rem solid $color-gray10;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.icons {
+  display: flex;
+}
+
+.iconsItem {
+  margin-left: 3.5rem;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.completed {
+  color: $color-red;
+  margin-left: 0.5rem;
+  font-weight: $font-weight-bold;
+  opacity: 0.5;
+}
+
+.link {
+  display: block;
+  color: $color-gray50;
+  font-size: 1.6rem;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.selected {
+  color: $color-blue;
+}
+
+.subLink {
+  display: block;
+  font-size: 1.6rem;
+  padding-left: 3rem;
+  padding-top: 3rem;
+  color: $color-gray50;
+  line-height: 1;
+
+  &:hover {
+    color: $color-primary;
+  }
+}

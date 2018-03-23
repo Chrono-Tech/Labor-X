@@ -1,0 +1,12 @@
+<svg id="svg-icon-active-points" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      #svg-icon-active-points .cls-1 { fill: #fff; }
+      #svg-icon-active-points .cls-2 { fill: #00a0d2; }
+    </style>
+  </defs>
+  <g>
+    <circle class="cls-1" cx="15" cy="15" r="15"/>
+    <path class="cls-2" d="M18,10H12a3,3,0,0,0-3,3v7h2V17h3v3h2V11h2a1,1,0,0,1,1,1v3a1,1,0,0,1-1,1H17v1h1a3.009,3.009,0,0,0,3-3V13A3.009,3.009,0,0,0,18,10Zm-4,6H11V12a1,1,0,0,1,1-1h2Z"/>
+  </g>
+</svg>

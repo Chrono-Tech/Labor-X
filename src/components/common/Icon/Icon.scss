@@ -1,0 +1,35 @@
+@import "~styles/globals/variables";
+
+.root {
+  width: 2.4rem;
+  height: 2.4rem;
+  color: $color-black;
+}
+
+.red {
+  color: $color-red;
+}
+
+.blue {
+  color: $color-blue;
+}
+
+.green {
+  color: $color-green;
+}
+
+.black {
+  color: $color-black;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.faded {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}

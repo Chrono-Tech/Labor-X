@@ -1,0 +1,36 @@
+@import "~styles/globals/variables";
+
+$maxWidth: 100rem;
+
+.header {
+  background-color: $color-primary;
+}
+
+.headerWrapper {
+  display: flex;
+  max-width: $maxWidth;
+  margin: 0 auto;
+  min-height: 9rem;
+}
+
+.page {
+  display: flex;
+  align-items: stretch;
+  max-width: $maxWidth;
+  margin: 0 auto;
+}
+
+.menu {
+  flex-grow: 0;
+  min-width: 28rem;
+  //box-shadow: 0.5rem 0 0.8rem rgba($color-super-black, 0.1);
+}
+
+.main {
+  flex-grow: 1;
+  padding: 6rem 4rem;
+}
+
+.content {
+  margin-top: 4rem;
+}
