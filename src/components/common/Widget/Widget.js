@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Widget.scss'
-import WidgetAction from './WidgetAction'
+import { Action } from 'components/common'
 
 export default class Widget extends React.Component {
   static propTypes = {
@@ -11,7 +11,7 @@ export default class Widget extends React.Component {
     actions: PropTypes.instanceOf(Array),
   }
 
-  renderActions = () => (item, index) => <WidgetAction key={index} item={item} />
+  renderActions = () => (item, index) => <Action key={index} item={item} />
 
   render () {
     const { title, subtitle, actions, children } = this.props

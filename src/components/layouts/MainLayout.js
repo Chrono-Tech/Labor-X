@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Header from './Header/Header'
 import css from './MainLayout.scss'
-import SecondMenu from './SecondMenu/SecondMenu'
+import { Header, SecondMenu, RightPanel } from 'components/layouts'
 
 export default class MainLayout extends React.Component {
   static propTypes = {
@@ -28,6 +27,7 @@ export default class MainLayout extends React.Component {
             </div>
           </div>
         </div>
+        <RightPanel />
       </div>
     )
   }

@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  font-size: 1.4rem;
+  font-size: $pSize;
   color: $color-black;
   font-weight: $font-weight-light;
   background-color: #f7f7f7;
@@ -20,43 +20,38 @@ body {
   padding: 0;
 }
 
+div[data-reactroot] {
+  position: relative;
+}
+
 a,
 p,
 b,
+i,
 strong {
-  margin: 0;
-  padding: 0;
   line-height: $pLineHeight;
 }
 
 h1 {
-  font-size: 5rem;
+  font-size: $h1Size;
   font-weight: $font-weight-thin;
   letter-spacing: -0.1rem;
   line-height: 1;
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: $h2Size;
   font-weight: $font-weight-medium;
 }
 
 h3 {
-  font-size: 2rem;
+  font-size: $h3Size;
   font-weight: $font-weight-medium;
 }
 
 h4 {
-  font-size: 1.6rem;
+  font-size: $h4Size;
   font-weight: $font-weight-medium;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  padding: 0;
-  margin: 0;
 }
 
 a,
@@ -67,7 +62,3 @@ a:focus
   font-weight: $font-weight-medium;
   text-decoration: none;
 }
-
-//a:visited {
-//  color: currentColor;
-//}

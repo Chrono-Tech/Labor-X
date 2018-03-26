@@ -1,0 +1,82 @@
+@import "~styles/globals/variables";
+
+.root {
+  // TODO @dkchv: temp
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(#ccc, 0.5);
+}
+
+.content {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 35rem;
+  background-color: $color-white;
+}
+
+.profileBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(to bottom, $color-blue, $color-green 100%);
+  min-height: 22rem;
+}
+
+.avatar {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.username {
+  color: $color-white;
+  text-transform: capitalize;
+}
+
+.stats {
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    height: 1rem;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba($color-super-black, 0.1), rgba($color-super-black, 0) 50%);
+  }
+}
+
+.mainStat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 2rem 3rem 3rem;
+}
+
+.shield {
+  background: url(/static/images/icon-shield.svg) no-repeat;
+  min-width: 3rem;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-medium;
+  color: $color-white;
+  font-size: $h4Size;
+}
+
+.stars {
+  display: flex;
+  overflow: hidden;
+}
+
+.star {
+  max-width: 3rem;
+  font-size: 3rem;
+}

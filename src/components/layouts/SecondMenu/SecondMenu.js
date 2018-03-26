@@ -1,4 +1,4 @@
-import { Icon, Link } from 'components/common'
+import { Image, Link } from 'components/common'
 import React from 'react'
 import css from './SecondMenu.scss'
 
@@ -8,22 +8,22 @@ export default class SecondMenu extends React.Component {
       <nav className={css.root}>
         <div className={css.section}>
           <div className={css.icons}>
-            <Icon
+            <Image
               className={css.iconsItem}
-              name={Icon.NAMES.WALLET}
-              color={Icon.COLORS.BLACK}
+              icon={Image.ICONS.WALLET}
+              color={Image.COLORS.BLACK}
               faded
             />
-            <Icon
+            <Image
               className={css.iconsItem}
-              name={Icon.NAMES.SETTINGS}
-              color={Icon.COLORS.BLACK}
+              icon={Image.ICONS.SETTINGS}
+              color={Image.COLORS.BLACK}
               faded
             />
-            <Icon
+            <Image
               className={css.iconsItem}
-              name={Icon.NAMES.ACCOUNT}
-              color={Icon.COLORS.RED}
+              icon={Image.ICONS.ACCOUNT}
+              color={Image.COLORS.RED}
               faded
             />
             <span className={css.completed}>20%</span>

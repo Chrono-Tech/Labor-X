@@ -1,4 +1,4 @@
-import { Icon, Widget } from 'components/common'
+import { Image, Widget } from 'components/common'
 import React from 'react'
 import css from './Dashboard.scss'
 
@@ -10,26 +10,26 @@ const TempActions = [
   },
   {
     href: '/',
-    firstIcon: Icon.SETS.SHIELD_SUCCESS,
+    firstIcon: Image.SETS.SHIELD_SUCCESS,
     label: 'Validate Your Email or Phone',
   },
   {
     href: '/',
     label: 'Validate Your ID',
-    firstIcon: Icon.SETS.SHIELD_ERROR,
+    firstIcon: Image.SETS.SHIELD_ERROR,
   },
   {
     href: '/',
     label: 'Validate Documents (Worker)',
-    firstIcon: Icon.SETS.SHIELD_ERROR,
-    secondIcon: Icon.SETS.MESSAGE_ERROR,
+    firstIcon: Image.SETS.SHIELD_ERROR,
+    secondIcon: Image.SETS.MESSAGE_ERROR,
   },
   {
     href: '/',
     label: 'Become Involved',
     firstIcon: {
-      name: Icon.NAMES.LOGO,
-      color: Icon.COLORS.RED,
+      name: Image.ICONS.LOGO,
+      color: Image.COLORS.RED,
     },
     counter: { value: 3 },
   },
@@ -37,8 +37,8 @@ const TempActions = [
     href: '/',
     label: 'Hays Recruitment',
     firstIcon: {
-      name: Icon.NAMES.LOGO,
-      color: Icon.COLORS.RED,
+      name: Image.ICONS.LOGO,
+      color: Image.COLORS.RED,
     },
     counter: { value: 0 },
   },
@@ -80,7 +80,7 @@ const TempActions = [
   {
     href: '/',
     label: 'Create job',
-    secondIcon: Icon.SETS.HELP,
+    secondIcon: Image.SETS.HELP,
     secondIconTip: {
       tip: 'In order to create Your Job Board you will need to complete your general info and recruiter profile.'
     },

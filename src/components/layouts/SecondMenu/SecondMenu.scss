@@ -5,6 +5,7 @@
   padding-left: 6rem;
   box-shadow: 0.5rem 0 0.8rem rgba($color-super-black, 0.1);
   color: $color-gray50;
+  height: 100%;
 }
 
 .section {
@@ -38,7 +39,7 @@
 .link {
   display: block;
   color: $color-gray50;
-  font-size: 1.6rem;
+  font-size: $h4Size;
   font-weight: $font-weight-medium;
   text-transform: uppercase;
 
@@ -53,7 +54,7 @@
 
 .subLink {
   display: block;
-  font-size: 1.6rem;
+  font-size: $h4Size;
   padding-left: 3rem;
   padding-top: 3rem;
   color: $color-gray50;

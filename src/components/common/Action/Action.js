@@ -1,10 +1,10 @@
-import { Link, Icon, Moment, Tip } from 'components/common'
+import { Link, Image, Moment, Tip } from 'components/common/index'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Counter from '../Counter/Counter'
-import css from './WidgetAction.scss'
+import css from './Action.scss'
 
-export default class WidgetAction extends React.Component {
+export default class Action extends React.Component {
   static propTypes = {
     item: PropTypes.shape({
       href: PropTypes.string.isRequired,
@@ -33,7 +33,7 @@ export default class WidgetAction extends React.Component {
           </div>
         )}
         {item.firstIcon && (
-          <Icon
+          <Image
             className={css.firstIcon}
             {...item.firstIcon}
           />
@@ -44,11 +44,11 @@ export default class WidgetAction extends React.Component {
             {item.secondIconTip
               ? (
                 <Tip {...item.secondIconTip}>
-                  <Icon className={css.secondIcon}{...item.secondIcon} />
+                  <Image className={css.secondIcon} {...item.secondIcon} />
                 </Tip>
               )
               : (
-                <Icon className={css.secondIcon}{...item.secondIcon} />
+                <Image className={css.secondIcon} {...item.secondIcon} />
               )}
           </div>
         )}
