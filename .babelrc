@@ -15,7 +15,8 @@
     ["module-alias", [
       { "src": "./src/components", "expose": "components" },
       { "src": "./src/styles", "expose": "styles" },
-      { "src": "./src", "expose": "src" }
+      { "src": "./src", "expose": "src" },
+      { "src": "./src/store", "expose": "store" }
     ]]
   ]
 }

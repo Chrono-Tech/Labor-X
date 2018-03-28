@@ -1,0 +1,41 @@
+@import "~styles/globals/variables";
+
+$opacity: 0.75;
+
+.root {
+  color: currentColor;
+}
+
+.rootInvert {
+  color: $color-white;
+}
+
+.input {
+  display: block;
+  background: transparent;
+  color: currentColor;
+  text-align: center;
+  font-size: $pBigSize;
+  border: none;
+  width: 100%;
+  padding: 1rem;
+
+  &::placeholder {
+    opacity: $opacity;
+    color: currentColor;
+    font-style: italic;
+    font-weight: $font-weight-light;
+  }
+
+  &:hover + .line,
+  &:focus + .line
+  {
+    opacity: 1;
+  }
+}
+
+.line {
+  margin-top: 0.1rem; // avoid intersection with input
+  opacity: $opacity;
+  border-bottom: 0.1rem solid currentColor;
+}

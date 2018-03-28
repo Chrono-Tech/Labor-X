@@ -11,6 +11,7 @@ $color-red: #C25451;
 $color-green: #92cc72;
 $color-gold: #e6bf6e;
 
+$color-shadow-blue: #465d8c;
 
 // grays
 $color-super-black: #000;
@@ -41,6 +42,7 @@ $font-weight-bold: 700;
 // ---------- other -----------
 
 $border-radius: 0.3rem;
+$shadow-blue: 0.4rem 0.4rem 0.2rem rgba($color-shadow-blue, 0.2);
 
 
 // --------- typo ------------
@@ -49,6 +51,8 @@ $h1Size: 5rem;
 $h2Size: 3rem;
 $h3Size: 2rem;
 $h4Size: 1.6rem;
+
+$pBigSize: 1.6rem;
 $pSize: 1.4rem;
 $pMediumSize: 1.2rem;
 $pSmallSize: 1rem;

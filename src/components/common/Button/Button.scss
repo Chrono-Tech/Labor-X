@@ -1,0 +1,17 @@
+@import "~styles/globals/variables";
+
+.root {
+  display: flex;
+  background-color: $color-white;
+  color: $color-black;
+  width: 100%;
+  border: none;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  box-shadow: $shadow-blue;
+  border-radius: $border-radius;
+
+  &:hover {
+    background-color: $color-blue-light;
+  }
+}

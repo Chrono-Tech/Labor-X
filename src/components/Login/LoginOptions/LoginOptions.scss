@@ -1,0 +1,12 @@
+@import "~styles/globals/variables";
+
+.root {
+  min-width: 71rem; // TODO @dkchv: temp
+  background-color: $color-blue94;
+  padding: 4rem;
+}
+
+.content {
+  max-width: 28rem;
+  margin: 0 auto;
+}

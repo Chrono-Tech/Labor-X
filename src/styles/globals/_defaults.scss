@@ -20,6 +20,10 @@ body {
   padding: 0;
 }
 
+#__next {
+  height: 100%;
+}
+
 div[data-reactroot] {
   position: relative;
 }

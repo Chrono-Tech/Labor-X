@@ -1,0 +1,18 @@
+@import "~styles/globals/variables";
+
+.title {
+  text-align: center;
+  color: $color-white;
+}
+
+.buttons {
+  margin-top: 4rem;
+}
+
+.button {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
