@@ -1,3 +1,4 @@
+import { Translate } from 'components/common'
 import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Input.scss'
@@ -12,6 +13,13 @@ export default class Input extends React.Component {
       value: PropTypes.string,
       name: PropTypes.string,
     }),
+    meta: PropTypes.shape({
+      touched: PropTypes.bool,
+      error: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
+      ]),
+    }),
   }
 
   static TYPES = {
@@ -24,20 +32,28 @@ export default class Input extends React.Component {
       name: 'input',
     },
     type: Input.TYPES.TEXT,
+    meta: {
+      touched: false,
+      error: null,
+    },
   }
 
   render () {
-    const className = [ this.props.invert ? css.rootInvert : css.root ]
-    this.props.className && className.push(this.props.className)
+    const { invert, className, placeholder, type, input, meta } = this.props
+    const classNames = [ invert ? css.rootInvert : css.root ]
+    className && classNames.push(className)
+    meta.touched && meta.error && classNames.push(css.invalid)
+
     return (
-      <div className={className.join(' ')}>
+      <div className={classNames.join(' ')}>
         <input
           className={css.input}
-          placeholder={this.props.placeholder}
-          type={this.props.type}
-          {...this.props.input}
+          placeholder={placeholder}
+          type={type}
+          {...input}
         />
         <div className={css.line} />
+        {meta.touched && meta.error && <div className={css.error}><Translate value={meta.error} /></div>}
       </div>
     )
   }

@@ -13,10 +13,14 @@
   ],
   "plugins": [
     ["module-alias", [
+      { "src": "./src", "expose": "src" },
+
       { "src": "./src/components", "expose": "components" },
       { "src": "./src/styles", "expose": "styles" },
-      { "src": "./src", "expose": "src" },
-      { "src": "./src/store", "expose": "store" }
+      { "src": "./src/store", "expose": "store" },
+      { "src": "./src/models", "expose": "models" },
+      { "src": "./src/i18n", "expose": "i18n" },
+      { "src": "./src/services", "expose": "services" }
     ]]
   ]
 }

@@ -1,9 +1,16 @@
-import React from 'react'
-import { LoginLayout } from 'components/layouts'
-import 'styles/globals/globals.scss'
 import { Link } from 'components/common'
+import { LoginLayout } from 'components/layouts'
+import withRedux from 'next-redux-wrapper'
+import React from 'react'
+import { bootstrap } from 'store/bootstrap'
+import 'styles/globals/globals.scss'
+import initialStore from 'store'
 
-export default class Index extends React.Component {
+class Index extends React.Component {
+  static getInitialProps ({ store }) {
+    store.dispatch(bootstrap())
+  }
+
   render () {
     return (
       <LoginLayout>
@@ -12,3 +19,5 @@ export default class Index extends React.Component {
     )
   }
 }
+
+export default withRedux(initialStore)(Index)

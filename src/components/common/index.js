@@ -8,3 +8,6 @@ export { default as Tip } from './Tip/Tip'
 // forms
 export { default as Button } from './Button/Button'
 export { default as Input } from './Input/Input'
+
+// i18n
+export { default as Translate } from './Translate/Translate'

@@ -5,9 +5,12 @@ import css from './Button.scss'
 export default class Button extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
     type: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
   }
 
   static TYPES = {
@@ -20,7 +23,9 @@ export default class Button extends React.Component {
     type: Button.TYPES.BUTTON,
   }
 
-  handleClick = () => this.props.onClick()
+  handleClick = () => this.props.onClick
+    ? this.props.onClick()
+    : true
 
   render () {
     const className = [css.root]

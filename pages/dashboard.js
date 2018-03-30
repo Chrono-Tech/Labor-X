@@ -1,9 +1,16 @@
-import React from 'react'
-import { MainLayout } from 'components/layouts'
-import 'styles/globals/globals.scss'
 import DashboardContent from 'components/Dashboard/Dashboard'
+import { MainLayout } from 'components/layouts'
+import withRedux from 'next-redux-wrapper'
+import React from 'react'
+import { bootstrap } from 'store/bootstrap'
+import 'styles/globals/globals.scss'
+import initialStore from '../src/store'
 
-export default class dashboard extends React.Component {
+class Dashboard extends React.Component {
+  static getInitialProps ({ store }) {
+    store.dispatch(bootstrap())
+  }
+
   render () {
     return (
       <MainLayout title='Dashboard'>
@@ -12,3 +19,5 @@ export default class dashboard extends React.Component {
     )
   }
 }
+
+export default withRedux(initialStore)(Dashboard)

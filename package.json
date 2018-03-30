@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@chronobank/mint": "github:chronobank/chronomint",
+    "ethereumjs-wallet": "^0.6.0",
     "express": "^4.16.2",
     "joi": "^13.1.2",
     "lx-sc": "github:chronobank/lx-sc#develop",
@@ -13,13 +14,15 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
+    "react-redux-i18n": "^1.9.2",
     "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-form": "^7.3.0",
     "redux-thunk": "^2.2.0",
     "truffle-contract": "github:trufflesuite/truffle-contract#95/head",
-    "web3": "^1.0.0-beta.30"
+    "web3": "^1.0.0-beta.30",
+    "web3-eth-accounts": "^1.0.0-beta.33"
   },
   "devDependencies": {
     "@zeit/next-sass": "^0.1.1",

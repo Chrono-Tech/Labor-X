@@ -8,6 +8,16 @@ $opacity: 0.75;
 
 .rootInvert {
   color: $color-white;
+
+  .error {
+    color: $color-white;
+  }
+}
+
+.invalid {
+  .line {
+    border-bottom-color: $color-error;
+  }
 }
 
 .input {
@@ -38,4 +48,10 @@ $opacity: 0.75;
   margin-top: 0.1rem; // avoid intersection with input
   opacity: $opacity;
   border-bottom: 0.1rem solid currentColor;
+}
+
+.error {
+  margin-top: 10px;
+  text-align: center;
+  color: $color-error;
 }

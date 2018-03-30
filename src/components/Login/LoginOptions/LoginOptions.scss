@@ -10,3 +10,21 @@
   max-width: 28rem;
   margin: 0 auto;
 }
+
+.back {
+  text-align: center;
+  margin-top: 4rem;
+  color: $color-blue-light;
+  font-size: $pBigSize;
+}
+
+.link {
+  font-weight: $font-weight-light;
+  margin-left: 0.5em;
+  color: $color-white;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
