@@ -3,7 +3,7 @@ import { LoginOptions } from 'components/Login'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import initialStore from 'store'
-import {bootstrap} from 'store/bootstrap'
+import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import ethereumService from '../../src/services/EthereumService'
 
