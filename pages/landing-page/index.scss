@@ -1,0 +1,55 @@
+.sliderContainer {
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+  z-index: 1;
+}
+.logoImg {
+  border-radius: 0 0 10px 10px;
+}
+
+.navWrapper {
+  position: fixed;
+  top: 28px;
+  right: 30px;
+  display: flex;
+  flex-direction: row;
+  z-index: 2;
+}
+
+@mixin navButton() {
+  border-style: solid;
+  border-radius: 21px;
+  text-align: center;
+  text-transform: uppercase;
+  border-width: 0px 0px 2px;
+  color: #fff;
+  font-family: roboto, sans-serif;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 13px 26px 11px;
+}
+
+.createButton {
+  @include navButton();
+  background-color: #FFB14A;
+  border-color: #C69C6D;
+  margin-right: 10px;
+  &:hover {
+    background-color: #F4A23D;
+  }
+}
+
+.loginButton {
+  @include navButton();
+  background-color: #00A0D2;
+  border-color: #0088C3;
+  padding: 12px 20px;
+  &:hover {
+    background-color: #0088C3;
+  }
+}

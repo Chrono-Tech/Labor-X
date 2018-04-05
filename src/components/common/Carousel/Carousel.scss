@@ -1,0 +1,23 @@
+.carousel{
+  width: 100%;
+}
+
+.carouselItem {
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  width: 100%;
+}
+.carouselItemActive {
+  opacity: 1;
+}
+
+.carouselItem > a {
+  max-width: 100%;
+  display: block;
+}
+
+.carouselItem a > img {
+  max-width: 100%;
+  display: block;
+}
