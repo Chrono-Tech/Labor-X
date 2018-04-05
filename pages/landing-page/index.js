@@ -115,6 +115,103 @@ class Index extends React.Component {
               </div>
             </div>
           </div>
+          <div className={css.advantageBlockWrapper}>
+            <img src='' />
+            <div className={css.advantageCounts}>
+              <div className={css.advantageCountBlock}>
+                <div className={css.advantageCountBlockHeader}>
+                  USD 8,000
+                </div>
+                <div className={css.advantageCountBlockText}>
+                  Earned by Workers in past 24h
+                </div>
+              </div>
+              <div className={css.advantageCountBlock}>
+                <div className={css.advantageCountBlockHeader}>
+                  5,001 Clients
+                </div>
+                <div className={css.advantageCountBlockText}>
+                  posted their jobs
+                  
+                </div>
+              </div>
+            </div>
+            <div className={css.advantageContent}>
+              <div className={css.advantageTitle}>
+                <div className={css.advantageTitleILetter}>for</div>
+                Workers
+              </div>
+              <div className={css.advantageContentBlock}>
+                <div className={css.advantageContentBlockTitle}>
+                  Payment
+                </div>
+                <div className={css.advantageContentBlockText}>
+                  Our automated digital contracts guarantees real-time payment. Your high skills, responsibility and rating can demand higher hourly fee.
+                </div>
+                <div className={css.advantageContentBlockTitle}>
+                  Inflation Resistance
+                </div>
+                <div className={css.advantageContentBlockText}>
+                  Our LaborHour digital currency is linked to 1 hour average earning in your location which keeps the currency stable.
+                </div>
+                <div className={css.advantageContentBlockTitle}>
+                  Scheduling
+                </div>
+                <div className={css.advantageContentBlockText}>
+                  LaborX is a fully automated solution with ability to track you time, view reports and plan your schedule.
+                </div>
+      
+              </div>
+            </div>
+          </div>
+          <div className={css.advantageBlockWrapper}>
+            <img src='' />
+            <div className={css.advantageCounts}>
+              <div className={css.advantageCountBlock}>
+                <div className={css.advantageCountBlockHeader}>
+                  1,250 Recruiters
+                </div>
+                <div className={css.advantageCountBlockText}>
+                  are already using LaborX
+                </div>
+              </div>
+              <div className={css.advantageCountBlock}>
+                <div className={css.advantageCountBlockHeader}>
+                  USD 50,945
+                </div>
+                <div className={css.advantageCountBlockText}>
+                  earned by Recruiters in September 2018
+                </div>
+              </div>
+            </div>
+            <div className={css.advantageContent}>
+              <div className={css.advantageTitle}>
+                <div className={css.advantageTitleILetter}>for</div>
+                Recruiters
+              </div>
+              <div className={css.advantageContentBlock}>
+                <div className={css.advantageContentBlockTitle}>
+                  Earn
+                </div>
+                <div className={css.advantageContentBlockText}>
+                  Create and manage your Job Boards and get paid for your work.
+                </div>
+                <div className={css.advantageContentBlockTitle}>
+                  Save Time
+                </div>
+                <div className={css.advantageContentBlockText}>
+                  Our smart automated technologies will save your time removing big portion of paperwork and routines.
+                </div>
+                <div className={css.advantageContentBlockTitle}>
+                  Trust
+                </div>
+                <div className={css.advantageContentBlockText}>
+                  Get access to our reliable database of Workers and Clients verified by out professional team. LaborX is using an innovative technology and guarantees reliable contacts reputation.
+                </div>
+      
+              </div>
+            </div>
+          </div>
           
         </div>
       </div>
