@@ -1,4 +1,6 @@
-export default class SignInModel {
+import ModelBase from './ModelBase'
+
+export default class SignInModel extends ModelBase {
   static DEFAULTS = {
     method: null,
     address: null,
@@ -12,19 +14,5 @@ export default class SignInModel {
     WALLET: 'wallet',
     LEDGER: 'leger',
     TREZOR: 'trezor',
-  }
-
-  constructor (data = {}) {
-    this.parse(data)
-    Object.freeze(this)
-  }
-
-  parse (origData) {
-    const data = Object.assign({}, SignInModel.DEFAULTS, origData)
-    for (let k in data) {
-      if (data.hasOwnProperty(k) && SignInModel.DEFAULTS[k] !== undefined) {
-        this[ k ] = data[ k ]
-      }
-    }
   }
 }

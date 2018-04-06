@@ -9,7 +9,8 @@
           ]
         }
       }
-    ]
+    ],
+    "flow"
   ],
   "plugins": [
     ["module-alias", [

@@ -10,6 +10,7 @@ export default class Image extends React.PureComponent {
     className: PropTypes.string,
     faded: PropTypes.bool,
     href: PropTypes.string,
+    onClick: PropTypes.func,
   }
 
   static ICONS = {
@@ -18,15 +19,25 @@ export default class Image extends React.PureComponent {
     STAR: 'star_rate',
     ACCOUNT: 'account_circle', // TODO @dkchv: set actual
     LOGO: 'grade', // TODO @dkchv: set actual
+    UPLOAD_FILE_SELECT: 'file_upload',
+    UPLOAD_FILE_UPLOADING: 'cached',
+    UPLOAD_FILE_SUCCESS: 'check_circle',
+    UPLOAD_FILE_ERROR: 'error',
+    UPLOAD_FILE_REMOVE: 'delete',
+    CHECKBOX_ON: 'check_box',
+    CHECKBOX_OFF: 'check_box_outline_blank',
   }
 
   static COLORS = {
-    WARN: 'warn',
     BLACK: 'black',
+    WHITE: 'white',
     RED: 'red',
     BLUE: 'blue',
     GREEN: 'green',
     GOLD: 'gold',
+
+    ERROR: 'error',
+    WARN: 'warn',
   }
 
   static SETS = {
@@ -46,28 +57,46 @@ export default class Image extends React.PureComponent {
       icon: 'help_outline', // TODO @dkchv: set actual
       color: Image.COLORS.BLUE,
     },
+    HELP_INVERT: {
+      icon: 'help_outline', // TODO @dkchv: set actual
+      color: Image.COLORS.WHITE,
+    },
     STAR: {
       icon: Image.ICONS.STAR,
       color: Image.COLORS.GOLD,
     },
   }
 
+  handleClick = () => this.props.onClick && this.props.onClick()
+
   render () {
-    let classnames
+    let classnames = ['root']
+    this.props.className && classnames.push(this.props.className)
 
     if (this.props.href) {
       // external image
-      classnames = this.props.className
-      return <img src={this.props.href} className={classnames} />
+      return (
+        <img
+          src={this.props.href}
+          className={classnames}
+          onClick={this.handleClick}
+        />
+      )
     }
 
     // specific material icons
-    classnames = [ 'material-icons' ]
-    this.props.className && classnames.push(this.props.className)
+    classnames.push('material-icons')
     this.props.color && classnames.push(css[ this.props.color ])
     this.props.clickable !== false && classnames.push(css.clickable)
     this.props.faded && classnames.push(css.faded)
 
-    return <i className={classnames.join(' ')}>{this.props.icon}</i>
+    return (
+      <i
+        className={classnames.join(' ')}
+        onClick={this.handleClick}
+      >
+        {this.props.icon}
+      </i>
+    )
   }
 }

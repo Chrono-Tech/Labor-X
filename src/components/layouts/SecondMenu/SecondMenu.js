@@ -33,17 +33,17 @@ export default class SecondMenu extends React.Component {
           <div className={[ css.link, css.selected ].join(' ')}>Dashboard</div>
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link}>VALIDATION</Link>
+          <Link href='/dashboard' className={css.link} label='nav.validation' />
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link}>VALIDATION SERVICE</Link>
+          <Link href='/dashboard' className={css.link} label='nav.validationService' />
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link}>Worker</Link>
+          <Link href='/dashboard' className={css.link} label='nav.worker' />
           <Link href='/dashboard' className={css.subLink}>To-Do</Link>
-          <Link href='/dashboard' className={css.subLink}>Applications & Offers</Link>
-          <Link href='/dashboard' className={css.subLink}>Opportunities</Link>
-          <Link href='/dashboard' className={css.subLink}>Completed Jobs</Link>
+          <Link href='/dashboard' className={css.subLink} label='nav.applicationsAndOffers' />
+          <Link href='/dashboard' className={css.subLink} label='nav.Opportunities' />
+          <Link href='/dashboard' className={css.subLink} label='nav.completedJobs' />
         </div>
       </nav>
     )

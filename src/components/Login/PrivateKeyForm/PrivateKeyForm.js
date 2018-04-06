@@ -31,21 +31,23 @@ class PrivateKeyForm extends React.Component {
 
   render () {
     const prefix = this.constructor.name
+    const { handleSubmit, pristine, invalid } = this.props
 
     return (
-      <form name={FORM_PRIVATE_KEY} onSubmit={this.props.handleSubmit}>
+      <form className={css.root} name={FORM_PRIVATE_KEY} onSubmit={handleSubmit}>
         <h3 className={css.title}><Translate value={`${prefix}.title`} /></h3>
         <Field
           component={Input}
           name='privateKey'
-          placeholder='Enter Private Key'
+          placeholder={`${prefix}.enterPrivateKey`}
           className={css.input}
-          invert
+          autoComplete={false}
+          mods={}
         />
         <Button
-          onClick={this.handleEnterClick}
-          label={<Translate value='term.enter' />}
+          label='term.enter'
           type={Button.TYPES.SUBMIT}
+          disabled={pristine || invalid}
         />
       </form>
     )

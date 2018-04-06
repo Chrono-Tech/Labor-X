@@ -1,5 +1,5 @@
 import { Translate } from 'components/common'
-import { LoginWithMnemonic, LoginWithPrivateKey, LoginWithWallet, SelectOption } from 'components/Login'
+import { MnemonicForm, PrivateKeyForm, WalletFileForm, SelectOption } from 'components/Login'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -28,32 +28,31 @@ class LoginOptions extends React.Component {
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
 
-  handleBackClick = () => {
-    console.log('--LoginOptions#handleBackClick', 1)
-    this.handleChangeStep(null)
-  }
+  handleBackClick = () => this.handleChangeStep(null)
 
   render () {
     let component
 
     switch (this.state.step) {
-      case LoginWithMnemonic.STEP:
+      case MnemonicForm.STEP:
         component = (
-          <LoginWithMnemonic
+          <MnemonicForm
             onChangeStep={this.handleChangeStep}
+            onSubmitSuccess={this.handleSubmitSuccess}
           />
         )
         break
-      case LoginWithWallet.STEP:
+      case WalletFileForm.STEP:
         component = (
-          <LoginWithWallet
+          <WalletFileForm
             onChangeStep={this.handleChangeStep}
+            onSubmitSuccess={this.handleSubmitSuccess}
           />
         )
         break
-      case LoginWithPrivateKey.STEP:
+      case PrivateKeyForm.STEP:
         component = (
-          <LoginWithPrivateKey
+          <PrivateKeyForm
             onChangeStep={this.handleChangeStep}
             onSubmitSuccess={this.handleSubmitSuccess}
           />
@@ -87,4 +86,3 @@ class LoginOptions extends React.Component {
 }
 
 export default connect(null, mapDispatchToProps)(LoginOptions)
-// export default LoginOptions

@@ -14,7 +14,10 @@ class Index extends React.Component {
   render () {
     return (
       <LoginLayout>
-        <Link href='/login-options'>Go to Login Options</Link>
+        <div>
+          <div><Link href='/login-options'>Login Options</Link></div>
+          <div><Link href='/dashboard'>Dashboard</Link></div>
+        </div>
       </LoginLayout>
     )
   }

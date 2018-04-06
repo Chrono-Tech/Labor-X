@@ -1,65 +1,96 @@
-import { Button } from 'components/common'
+import { Button, FileUploader, Input } from 'components/common'
+import FileModel from 'models/FileModel'
+import SignInModel from 'models/SignInModel'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { Field, formValueSelector, reduxForm, SubmissionError } from 'redux-form'
 import Accounts from 'web3-eth-accounts'
-import FileUploader from '../../common/FileUploader/FileUploader'
-import validate from '../PrivateKeyForm/validate'
+import validate from './validate'
+import css from './WalletFileForm.scss'
 
 const FORM_WALLET_FILE = 'form/walletFile'
+const FIELD_WALLET_FILE = 'walletFile'
+const FIELD_WALLET_PASSWORD = 'walletPassword'
 
-const onSubmit = (values) => {
-  try {
-    // const address = ethereumService.createAddressFromPrivateKey(values.privateKey)
-    // return new SignInModel({
-    //   method: SignInModel.METHODS.PRIVATE_KEY,
-    //   address,
-    // })
-    console.log('--WalletFileForm#onSubmit', values)
-  } catch (e) {
-    // eslint-disable-next-line
-    console.error('error wallet file', e.message)
+function mapStateToProps (state) {
+  const selector = formValueSelector(FORM_WALLET_FILE)
+  return {
+    walletFile: selector(state, FIELD_WALLET_FILE),
+    password: selector(state, FIELD_WALLET_PASSWORD),
   }
+}
+
+const onSubmit = ({ walletFile, walletPassword }) => {
+  try {
+    const accounts = new Accounts()
+    const encryptedWallet = accounts.wallet.decrypt([ walletFile.content ], walletPassword)[ 0 ]
+
+    return new SignInModel({
+      isHD: true,
+      address: encryptedWallet.address,
+      method: SignInModel.METHODS.WALLET,
+    })
+  } catch (e) {
+    throw new SubmissionError({ _error: e.message })
+  }
+
 }
 
 class WalletFileForm extends React.Component {
   static propTypes = {
     onChangeStep: PropTypes.func.isRequired,
-  }
-
-  constructor () {
-    super(...arguments)
-    this.state = {
-      wallet: null,
-    }
+    wallet: PropTypes.instanceOf(FileModel),
+    password: PropTypes.string,
   }
 
   static STEP = 'step/LoginWithWallet'
 
-  handleGenerateWallet = () => {
+  constructor () {
+    super(...arguments)
     const accounts = new Accounts()
     const wallet = accounts.wallet.create(1)
     const walletJSON = wallet.encrypt('test')[ 0 ]
-    this.setState({ wallet: walletJSON })
-    console.log('--WalletFileForm#handleGenerateWallet', walletJSON, accounts)
+    // eslint-disable-next-line
+    console.log('test wallet JSON: ', JSON.stringify(walletJSON))
   }
 
   render () {
+    const prefix = this.constructor.name
+    const { handleSubmit, invalid, pristine, walletFile, error } = this.props
+    const isWallet = walletFile && !!walletFile.content
+
     return (
-      <form name={FORM_WALLET_FILE} onSubmit={this.props.handleSubmit}>
-        generated: {JSON.stringify(this.state.wallet)}
+      <form className={css.root} name={FORM_WALLET_FILE} onSubmit={handleSubmit}>
         <Field
-          name='walletFile'
+          className={css.row}
+          name={FIELD_WALLET_FILE}
           component={FileUploader}
-          label='Upload Wallet'
+          label={`${prefix}.uploadWallet`}
+          invert
+        />
+        <Field
+          className={css.row}
+          name={FIELD_WALLET_PASSWORD}
+          component={Input}
+          type={Input.TYPES.PASSWORD}
+          placeholder={`${prefix}.enterWalletPassword`}
+          mods={Input.MODS.INVERT}
+          disabled={!isWallet}
         />
         <Button
-          label='Generate wallet'
-          onClick={this.handleGenerateWallet}
+          className={css.row}
+          label={`${prefix}.login`}
+          type={Button.TYPES.SUBMIT}
+          disabled={pristine || invalid}
+          error={error}
+          color={Button.COLORS.PRIMARY}
+          mods={Button.MODS.INVERT}
         />
       </form>
     )
   }
 }
 
-export default reduxForm({ form: FORM_WALLET_FILE, validate, onSubmit })(WalletFileForm)
+const form = reduxForm({ form: FORM_WALLET_FILE, validate, onSubmit })(WalletFileForm)
+export default connect(mapStateToProps)(form)

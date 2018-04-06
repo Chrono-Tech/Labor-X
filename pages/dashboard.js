@@ -13,7 +13,7 @@ class Dashboard extends React.Component {
 
   render () {
     return (
-      <MainLayout title='Dashboard'>
+      <MainLayout title='nav.dashboard'>
         <DashboardContent />
       </MainLayout>
     )

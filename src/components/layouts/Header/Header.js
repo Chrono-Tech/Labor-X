@@ -5,6 +5,8 @@ import css from './Header.scss'
 
 export default class Header extends React.Component {
   render () {
+    const prefix = this.constructor.name
+
     return (
       <div className={css.root}>
         <Link href='/' className={css.logo}>
@@ -13,13 +15,13 @@ export default class Header extends React.Component {
         <FirstMenu />
 
         <nav className={css.actions}>
-          <Link href='/' className={css.actionItem}>New job</Link>
-          <Link href='/' className={css.actionItem}>New board</Link>
+          <Link href='/jobs/post' className={css.actionItem} label='nav.newJob' />
+          <Link href='/' className={css.actionItem} label='nav.newBoard' />
         </nav>
         <div className={css.points}>
           <Tip
-            title='Action Points'
-            tip='Our platform is using action points to prevent spam, abuse and other inappropriate behavior. Click on the icon to learn more.'
+            title={`${prefix}.actionPoints`}
+            tip={`${prefix}.actionPointsDescription`}
           >
             <img src='/static/images/icon-active-points.svg' className={css.pointsIcon} />
           </Tip>
