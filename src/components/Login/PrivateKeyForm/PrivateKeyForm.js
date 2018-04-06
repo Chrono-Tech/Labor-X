@@ -42,7 +42,7 @@ class PrivateKeyForm extends React.Component {
           placeholder={`${prefix}.enterPrivateKey`}
           className={css.input}
           autoComplete={false}
-          mods={}
+          mods={Input.MODS.INVERT}
         />
         <Button
           label='term.enter'
