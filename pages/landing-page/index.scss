@@ -54,11 +54,98 @@
   }
 }
 
-.benefitsBlockWrapper {
+.benefitsBlock {
   background-color: #00A0D2;
   color: #fff;
+  text-align: center;
+  padding: 50px 0;
 }
 
-.benefitsBlock {
-  margin: 0 auto;
+.benefitsHeader {
+  margin-top:0;
+  margin-bottom: 30px;
+  line-height: 60px;
+  font-family: roboto, sans-serif;
+  font-size: 50px;
+  font-weight: 200;
+  letter-spacing: -1px;
+}
+
+.benefitsText {
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.advantageBlockWrapper {
+  position: relative;
+  color: #fff;
+  border-bottom: 30px solid #00A0D2;
+  .advantageBlockImage {
+    width: 100%;
+    z-index: 1;
+    display: block;
+  }
+  .advantageCounts {
+    z-index: 2;
+    position: absolute;
+    bottom: 20px;
+    left: 6%;
+    font-size: 14px;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+    .advantageCountBlock {
+      margin-bottom: 22px;
+      .advantageCountBlockHeader {
+        font-size: 30px;
+        font-family: roboto, sans-serif;
+        font-weight: 500;
+        line-height: 36px;
+      }
+    }
+  }
+}
+
+
+
+.advantageContent {
+  position: absolute;
+  bottom: 10px;
+  right: 20%;
+  .advantageTitle {
+    font-size: 90px;
+    line-height: 126px;
+    color: #00A0D2;
+    letter-spacing: -1px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    .advantageTitleFirstWord{
+      font-size: 30px;
+      text-align: right;
+      letter-spacing: -1px;
+      line-height: 36px;
+      margin-right: 25px;
+      margin-left: -60px;
+    }
+  }
+  .advantageContentBlockTitle {
+    color: #00A0D2;
+    line-height: 42px;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .advantageContentBlockText {
+    line-height: 22px;
+    font-size: 16px;
+    margin-bottom: 30px;
+
+  }
+
+}
+
+.footer {
+  background-color: #00A0D2;
+  padding: 40px 40px;
+  .footerLogo {
+    width: 97px;
+  }
 }

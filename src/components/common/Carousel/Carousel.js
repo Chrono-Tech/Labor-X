@@ -22,7 +22,7 @@ export default class Carousel extends React.Component {
     
     this.state = {
       activeIndex: 0,
-      childHeight: 0,
+      childHeight: null,
     }
   }
   
@@ -54,15 +54,17 @@ export default class Carousel extends React.Component {
   }
   
   render () {
-    console.log(this.state)
     return (
-      <div className={css.carousel} style={{ height: this.state.childHeight }}>
+      <div className={css.carousel} style={this.state.childHeight !== null ? { height: this.state.childHeight } : {}}>
         {
-          this.props.children.map((slide, index) => (
+          React.Children.map(this.props.children, (slide, index) => (
             <div
               key={index}
               ref={`carousel-${index}`}
-              className={[css.carouselItem, index === this.state.activeIndex ? css.carouselItemActive : ''].join(' ')}
+              className={[
+                css.carouselItem,
+                index === this.state.activeIndex ? css.carouselItemActive : '',
+                this.state.childHeight === null && index === 0 ? css.carouselItemAlwaysVisible : ''].join(' ')}
             >
               {slide}
             </div>
