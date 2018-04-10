@@ -18,7 +18,7 @@
   right: 30px;
   display: flex;
   flex-direction: row;
-  z-index: 2;
+  z-index: 999;
 }
 
 @mixin navButton() {
@@ -76,11 +76,15 @@
   line-height: 32px;
 }
 
+
 .advantageBlockWrapper {
   position: relative;
   color: #fff;
   border-bottom: 30px solid #00A0D2;
-  .advantageTextWrapper{
+  &.advantageBlockWrapperLast{
+    border: none;
+  }
+  .advantageTextWrapper {
 
   }
   .advantageBlockImage {
@@ -93,10 +97,23 @@
     position: absolute;
     height: 100%;
     display: table;
-    left: 5%;
     font-size: 14px;
     text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
     padding-bottom: 14%;
+    transition: all 0.2s ease-in;
+    opacity: 0;
+    visibility: hidden;
+    &.advantageCountsWoman {
+      left: 5%;
+    }
+    &.advantageCountsWorkers {
+      right: 5%;
+      text-align: right;
+    }
+    &.advantageCountsClients {
+      left: 5%;
+      padding-bottom: 13%;
+    }
     .advantageCountsInner {
       display: table-cell;
       vertical-align: bottom;
@@ -120,9 +137,22 @@
 .advantageContent {
   position: absolute;
   display: table;
-  right: 21%;
   padding-bottom: 13%;
   height: 100%;
+  top: 0;
+  transition: all 0.2s ease-in;
+  opacity: 0;
+  visibility: hidden;
+  &.advantageContentWoman {
+    right: 21%;
+  }
+  &.advantageContentWorkers {
+    left: 8%;
+  }
+  &.advantageContentClients {
+    right: 21%;
+    padding-bottom: 12%;
+  }
   .advantageContentInner {
     display: table-cell;
     height: 100%;
@@ -163,7 +193,31 @@
 .footer {
   background-color: #00A0D2;
   padding: 40px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   .footerLogo {
     width: 97px;
+    margin-right: 45px;
+  }
+  .footerMenu {
+    list-style: none;
+    display: flex;
+    margin-right: 45px;
+    li {
+      margin-right: 34px;
+    }
+    a {
+      color: #fff;
+      &:hover {
+        text-decoration: underline;
+      }
+      img {
+        display: block;
+      }
+    }
+  }
+  .footerCopyright {
+    color: #fff;
   }
 }

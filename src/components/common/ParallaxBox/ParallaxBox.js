@@ -8,18 +8,37 @@ export default class ParallaxImage extends React.Component {
   static propTypes = {
     imgSrc: PropTypes.string,
     deflectionPercent: PropTypes.number,
+    imageStyles: PropTypes.oneOf([PropTypes.object, PropTypes.array]),
+    addClassOnScrollEvent: PropTypes.oneOf([PropTypes.string, PropTypes.array]),
   }
   
   static defaultProps = {
     imgSrc: '',
-    deflectionPercent: 0
+    deflectionPercent: 0,
+    imageStyles: []
   }
   
-  updateParams(child){
-    this.setState({
-      c1left: ReactDOM.findDOMNode(this._child).offsetLeft,
-      c1top: ReactDOM.findDOMNode(this._child).offsetTop
-    })
+  constructor(){
+    super()
+    this.state = {
+      isScrollWasFired: false
+    }
+  }
+  
+  componentDidMount(){
+    window.addEventListener('scroll', this.scrollCallback.bind(this))
+  }
+  
+  scrollCallback(){
+    let offset = window.pageYOffset || document.documentElement.scrollTop;
+  
+    console.dir('this.refs.wrapper', this.refs.wrapper)
+    if (this.refs.wrapper.offsetTop >= offset) {
+      if (!this.state.isScrollWasFired){
+        this.setState({isScrollWasFired: true})
+        console.log('scrolled')
+      }
+    }
   }
   
   onMouseMove(event){
@@ -43,22 +62,26 @@ export default class ParallaxImage extends React.Component {
   
   
   render () {
-    const { children, imgSrc, deflectionPercent } = this.props
+    const { children, imgSrc, deflectionPercent, imageStyles } = this.props
     let minSize = 100 + deflectionPercent;
+    let styles = {
+      minWidth: `${minSize}%`,
+      minHeight: `${minSize}%`,
+    }
     
-    console.log('child', this.refs.child)
+    let newStyles = {
+      ...styles,
+      ...imageStyles
+    }
     
     return (
       <div className={css.root} ref='wrapper' onMouseMove={this.onMouseMove.bind(this)}>
         <div ref='child' className={css.imageWrapper}>
           { imgSrc ?
-            <img style={{
-              minWidth: `${minSize}%`,
-              minHeight: `${minSize}%`,
-              position: 'absolute',
-            }}
-                src={imgSrc}
-                alt='' /> : null}
+            <img style={styles}
+                 className={css.image}
+                 src={imgSrc}
+                 alt='' /> : null}
         </div>
         {children}
       </div>
