@@ -1,6 +1,7 @@
 export { default as Image } from './Image/Image'
 export { default as Link } from './Link/Link'
 export { default as Carousel } from './Carousel/Carousel'
+export { default as ParallaxBox } from './ParallaxBox/ParallaxBox'
 export { default as Widget } from './Widget/Widget'
 export { default as Action } from './Action/Action'
 export { default as Moment } from './Moment/Moment'

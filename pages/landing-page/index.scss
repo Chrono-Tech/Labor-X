@@ -80,6 +80,9 @@
   position: relative;
   color: #fff;
   border-bottom: 30px solid #00A0D2;
+  .advantageTextWrapper{
+
+  }
   .advantageBlockImage {
     width: 100%;
     z-index: 1;
@@ -88,12 +91,20 @@
   .advantageCounts {
     z-index: 2;
     position: absolute;
-    bottom: 20px;
-    left: 6%;
+    height: 100%;
+    display: table;
+    left: 5%;
     font-size: 14px;
     text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+    padding-bottom: 14%;
+    .advantageCountsInner {
+      display: table-cell;
+      vertical-align: bottom;
+    }
+
     .advantageCountBlock {
       margin-bottom: 22px;
+
       .advantageCountBlockHeader {
         font-size: 30px;
         font-family: roboto, sans-serif;
@@ -108,8 +119,15 @@
 
 .advantageContent {
   position: absolute;
-  bottom: 10px;
-  right: 20%;
+  display: table;
+  right: 21%;
+  padding-bottom: 13%;
+  height: 100%;
+  .advantageContentInner {
+    display: table-cell;
+    height: 100%;
+    vertical-align: bottom;
+  }
   .advantageTitle {
     font-size: 90px;
     line-height: 126px;

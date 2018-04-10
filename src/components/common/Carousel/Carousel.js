@@ -33,9 +33,7 @@ export default class Carousel extends React.Component {
     if (currentIndex === slideCount){
       currentIndex = -1
     }
-  
-    console.log('count', currentIndex, slideCount)
-  
+    
     this.setState({ activeIndex: ++currentIndex })
   }
   
