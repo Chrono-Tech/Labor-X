@@ -12,7 +12,7 @@
   border-radius: 0 0 10px 10px;
 }
 
-.navWrapper {
+.navigationTop {
   position: fixed;
   top: 28px;
   right: 30px;
@@ -76,11 +76,42 @@
   line-height: 32px;
 }
 
-
 .advantageBlockWrapper {
   position: relative;
   color: #fff;
   border-bottom: 30px solid #00A0D2;
+  :global(.animation-fired) {
+    .advantageCountsWoman {
+      opacity: 1;
+      visibility: visible;
+      left: 5% !important;
+    }
+    .advantageContentWoman {
+      opacity: 1;
+      visibility: visible;
+      right: 21% !important;
+    }
+    .advantageCountsWorkers {
+      opacity: 1;
+      visibility: visible;
+      right: 5% !important;
+    }
+    .advantageContentWorkers {
+      opacity: 1;
+      visibility: visible;
+      left: 8% !important;
+    }
+    .advantageCountsClients {
+      left: 5% !important;
+      opacity: 1;
+      visibility: visible;
+    }
+    .advantageContentClients {
+      right: 21% !important;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
   &.advantageBlockWrapperLast{
     border: none;
   }
@@ -104,14 +135,14 @@
     opacity: 0;
     visibility: hidden;
     &.advantageCountsWoman {
-      left: 5%;
+      left: -100px;
     }
     &.advantageCountsWorkers {
-      right: 5%;
+      right: -100px;
       text-align: right;
     }
     &.advantageCountsClients {
-      left: 5%;
+      left: -100px;
       padding-bottom: 13%;
     }
     .advantageCountsInner {
@@ -130,69 +161,69 @@
       }
     }
   }
-}
-
-
-
-.advantageContent {
-  position: absolute;
-  display: table;
-  padding-bottom: 13%;
-  height: 100%;
-  top: 0;
-  transition: all 0.2s ease-in;
-  opacity: 0;
-  visibility: hidden;
-  &.advantageContentWoman {
-    right: 21%;
-  }
-  &.advantageContentWorkers {
-    left: 8%;
-  }
-  &.advantageContentClients {
-    right: 21%;
-    padding-bottom: 12%;
-  }
-  .advantageContentInner {
-    display: table-cell;
+  .advantageContent {
+    position: absolute;
+    display: table;
+    padding-bottom: 13%;
     height: 100%;
-    vertical-align: bottom;
-  }
-  .advantageTitle {
-    font-size: 90px;
-    line-height: 126px;
-    color: #00A0D2;
-    letter-spacing: -1px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    .advantageTitleFirstWord{
-      font-size: 30px;
-      text-align: right;
-      letter-spacing: -1px;
-      line-height: 36px;
-      margin-right: 25px;
-      margin-left: -60px;
+    top: 0;
+    transition: all 0.2s ease-in;
+    opacity: 0;
+    visibility: hidden;
+    &.advantageContentWoman {
+      right: -100px;
     }
-  }
-  .advantageContentBlockTitle {
-    color: #00A0D2;
-    line-height: 42px;
-    font-size: 30px;
-    font-weight: 500;
-    margin-bottom: 5px;
-  }
-  .advantageContentBlockText {
-    line-height: 22px;
-    font-size: 16px;
-    margin-bottom: 30px;
+    &.advantageContentWorkers {
+      left: -100px;
+    }
+    &.advantageContentClients {
+      right: -100px;
+      padding-bottom: 12%;
+    }
+    .advantageContentInner {
+      display: table-cell;
+      height: 100%;
+      vertical-align: bottom;
+    }
+    .advantageTitle {
+      font-size: 90px;
+      line-height: 126px;
+      color: #00A0D2;
+      letter-spacing: -1px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      .advantageTitleFirstWord{
+        font-size: 30px;
+        text-align: right;
+        letter-spacing: -1px;
+        line-height: 36px;
+        margin-right: 25px;
+        margin-left: -60px;
+      }
+    }
+    .advantageContentBlockTitle {
+      color: #00A0D2;
+      line-height: 42px;
+      font-size: 30px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    .advantageContentBlockText {
+      line-height: 22px;
+      font-size: 16px;
+      margin-bottom: 30px;
+
+    }
 
   }
 
 }
+
+
 
 .footer {
   background-color: #00A0D2;
-  padding: 40px 40px;
+  padding: 60px 40px 135px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -219,5 +250,56 @@
   }
   .footerCopyright {
     color: #fff;
+  }
+}
+
+.navigationBottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  .bottomButtonBackground {
+    margin: 0 auto;
+    width: 316px;
+    height: 60px;
+    background: url(/static/images/laborx-promo-pad.svg);
+    opacity: 0.6;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+  .bottomButtonWrapper {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+
+    .bottomButton {
+      font-family: roboto, sans-serif;
+      font-weight: bold;
+      color: #fff;
+      padding: 5px 20px;
+      box-shadow: none;
+      border-width: 0;
+      border-style: solid;
+      border-bottom-width: 2px;
+      border-color: #006E9E;
+      background-color: #00A0D2;
+      border-radius: 24px;
+      text-align: center;
+      line-height: 36px;
+      width: 255px;
+
+      &:hover {
+        background-color: #0088C3;
+      }
+    }
+  }
+  .bottomLine {
+    background-color: #000000;
+    opacity: 0.6;
+    height: 10px;
   }
 }

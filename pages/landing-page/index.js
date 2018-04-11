@@ -1,18 +1,18 @@
-import {Link, Carousel, Button, ParallaxBox} from 'components/common'
-import {LoginOptions} from 'components/Login'
+import { Link, Carousel, Button, ParallaxBox } from 'components/common'
+import { LoginOptions } from 'components/Login'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import initialStore from 'store'
-import {bootstrap} from 'store/bootstrap'
+import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import css from './index.scss'
 
 class Index extends React.Component {
-  static getInitialProps({store}) {
+  static getInitialProps ({ store }) {
     store.dispatch(bootstrap())
   }
   
-  constructor() {
+  constructor (){
     super()
     
     this.state = {
@@ -20,56 +20,40 @@ class Index extends React.Component {
     }
   }
   
-  updateBlocksVisibility(offset) {
-    const {womanBlock, workersBlock, clientsBlock} = this.refs
-    
+  goToNextSlide (){
+    this.setState({ activeIndex: this.state.activeIndex })
   }
   
-  componentDidMount() {
-    window.addEventListener('scroll', () => {
-      let offset = window.pageYOffset || document.documentElement.scrollTop;
-      // console.log('offset', offset)
-      // console.dir(this.refs.womanBlock)
-      // console.log('offset', offset)
-    })
-  }
-  
-  goToNextSlide() {
-    this.setState({activeIndex: this.state.activeIndex})
-  }
-  
-  render() {
+  render () {
     return (
       <div className={css.root}>
-        <div className={css.navWrapper}>
+        <div className={css.navigationTop}>
           <Button
             label='New account'
-            onClick={() => {
-            }}
+            onClick={() => {}}
             className={css.createButton}
           />
           <Button
             label='Login'
-            onClick={() => {
-            }}
+            onClick={() => {}}
             className={css.loginButton}
           />
         </div>
         <div className={css.sliderContainer}>
           <div className={css.logo}>
             <Link href='/'>
-              <img src='/static/images/laborx-promo-head.jpg' className={css.logoImg}/>
+              <img src='/static/images/laborx-promo-head.jpg' className={css.logoImg} />
             </Link>
           </div>
           <Carousel>
             <a href='/'>
-              <img src='/static/images/laborx-promo-slider-01_together-tobetter-future.jpg'/>
+              <img src='/static/images/laborx-promo-slider-01_together-tobetter-future.jpg' />
             </a>
             <a href='/'>
-              <img src='/static/images/laborx-promo-slider-02_work.jpg'/>
+              <img src='/static/images/laborx-promo-slider-02_work.jpg' />
             </a>
             <a href='/'>
-              <img src='/static/images/laborx-promo-slider-03_labor-hour.jpg'/>
+              <img src='/static/images/laborx-promo-slider-03_labor-hour.jpg' />
             </a>
           </Carousel>
         </div>
@@ -83,30 +67,30 @@ class Index extends React.Component {
             We aim to make short-term employment as accessible and rewarding<br/>as long-term employment.
           </p>
         </div>
-        <div ref='womanBlock' className={css.advantageBlockWrapper}>
+        <div className={css.advantageBlockWrapper}>
           <ParallaxBox imgSrc='/static/images/laborx-promo-woman-watching-time-1.jpg' deflectionPercent={3}>
-            <div className={[css.advantageCounts, css.advantageCountsWoman,].join(' ')}>
-              <div className={css.advantageCountsInner}>
-                <div className={css.advantageCountBlock}>
-                  <div className={css.advantageCountBlockHeader}>
-                    1,250 Recruiters
+              <div className={[css.advantageCounts, css.advantageCountsWoman].join(' ')}>
+                <div className={css.advantageCountsInner}>
+                  <div className={css.advantageCountBlock}>
+                    <div className={css.advantageCountBlockHeader}>
+                      1,250 Recruiters
+                    </div>
+                    <div className={css.advantageCountBlockText}>
+                      are already using LaborX
+                    </div>
                   </div>
-                  <div className={css.advantageCountBlockText}>
-                    are already using LaborX
-                  </div>
-                </div>
-                <div className={css.advantageCountBlock}>
-                  <div className={css.advantageCountBlockHeader}>
-                    USD 50,945
-                  </div>
-                  <div className={css.advantageCountBlockText}>
-                    earned by Recruiters in September 2018
+                  <div className={css.advantageCountBlock}>
+                    <div className={css.advantageCountBlockHeader}>
+                      USD 50,945
+                    </div>
+                    <div className={css.advantageCountBlockText}>
+                      earned by Recruiters in September 2018
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className={[css.advantageContent, css.advantageContentWoman].join(' ')}>
-              <div className={css.advantageContentInner}>
+              <div className={[css.advantageContent, css.advantageContentWoman].join(' ')}>
+                <div className={css.advantageContentInner}>
                 <div className={css.advantageTitle}>
                   <span className={css.advantageTitleFirstWord}>for</span>
                   Recruiters
@@ -133,34 +117,34 @@ class Index extends React.Component {
                     verified by out professional team. LaborX is using an innovative<br/>
                     technology and guarantees reliable contacts reputation.
                   </div>
-                
+    
                 </div>
               </div>
             </div>
-          
+            
           </ParallaxBox>
         </div>
-        <div ref='workersBlock' className={css.advantageBlockWrapper}>
+        <div className={css.advantageBlockWrapper}>
           <ParallaxBox imgSrc='/static/images/laborx-promo-hero-2.jpg' deflectionPercent={3}>
             <div className={[css.advantageCounts, css.advantageCountsWorkers].join(' ')}>
               <div className={css.advantageCountsInner}>
-                <div className={css.advantageCountBlock}>
-                  <div className={css.advantageCountBlockHeader}>
-                    USD 8,000
-                  </div>
-                  <div className={css.advantageCountBlockText}>
-                    Earned by Workers in past 24h
-                  </div>
+              <div className={css.advantageCountBlock}>
+                <div className={css.advantageCountBlockHeader}>
+                  USD 8,000
                 </div>
-                <div className={css.advantageCountBlock}>
-                  <div className={css.advantageCountBlockHeader}>
-                    5,001 Clients
-                  </div>
-                  <div className={css.advantageCountBlockText}>
-                    posted their jobs
-                  
-                  </div>
+                <div className={css.advantageCountBlockText}>
+                  Earned by Workers in past 24h
                 </div>
+              </div>
+              <div className={css.advantageCountBlock}>
+                <div className={css.advantageCountBlockHeader}>
+                  5,001 Clients
+                </div>
+                <div className={css.advantageCountBlockText}>
+                  posted their jobs
+      
+                </div>
+              </div>
               </div>
             </div>
             <div className={[css.advantageContent, css.advantageContentWorkers].join(' ')}>
@@ -192,14 +176,14 @@ class Index extends React.Component {
                     LaborX is a fully automated solution with ability to track you<br/>
                     time, view reports and plan your schedule.
                   </div>
-                
+      
                 </div>
               </div>
             </div>
           </ParallaxBox>
-        
+
         </div>
-        <div ref='clientsBlock' className={[css.advantageBlockWrapper, css.advantageBlockWrapperLast].join(' ')}>
+        <div className={[css.advantageBlockWrapper, css.advantageBlockWrapperLast].join(' ')}>
           <ParallaxBox imgSrc='/static/images/laborx-promo-client-3.jpg' deflectionPercent={3}>
             <div className={[css.advantageCounts, css.advantageCountsClients].join(' ')}>
               <div className={css.advantageCountsInner}>
@@ -251,7 +235,7 @@ class Index extends React.Component {
                     The ability to pay with a variety of digital tokens makes the<br/>
                     system universal and not tied to any particular country or region.
                   </div>
-                
+      
                 </div>
               </div>
             </div>
@@ -259,9 +243,7 @@ class Index extends React.Component {
         </div>
         <div className={css.footer}>
           <div className={css.footerLogo}>
-            <a href='/'>
-              <img src='/static/images/labor-x-logo.svg'/>
-            </a>
+              <img src='/static/images/labor-x-logo.svg' />
           </div>
           <ul className={css.footerMenu}>
             <li><a href='/'>LaborX Whitepaper</a></li>
@@ -271,6 +253,13 @@ class Index extends React.Component {
             <li><a href='/'>Terms of Use</a></li>
           </ul>
           <div className={css.footerCopyright}>© 2018 LaborX</div>
+        </div>
+        <div className={css.navigationBottom}>
+          <div className={css.bottomButtonBackground}></div>
+          <div className={css.bottomButtonWrapper}>
+            <a href='#' className={css.bottomButton}>Learn More</a>
+          </div>
+          <div className={css.bottomLine}></div>
         </div>
       </div>
     )

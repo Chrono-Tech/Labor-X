@@ -26,17 +26,19 @@ export default class ParallaxImage extends React.Component {
   }
   
   componentDidMount(){
+    this.scrollCallback()
     window.addEventListener('scroll', this.scrollCallback.bind(this))
   }
   
   scrollCallback(){
-    let offset = window.pageYOffset || document.documentElement.scrollTop;
-  
-    console.dir('this.refs.wrapper', this.refs.wrapper)
-    if (this.refs.wrapper.offsetTop >= offset) {
+    let rect = this.refs.wrapper.getBoundingClientRect()
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    let clientHeight = document.documentElement.clientHeight
+
+
+    if (rect.top + rect.height * 1/2 <= clientHeight && rect.top + rect.height > 0) {
       if (!this.state.isScrollWasFired){
         this.setState({isScrollWasFired: true})
-        console.log('scrolled')
       }
     }
   }
@@ -75,7 +77,7 @@ export default class ParallaxImage extends React.Component {
     }
     
     return (
-      <div className={css.root} ref='wrapper' onMouseMove={this.onMouseMove.bind(this)}>
+      <div className={[css.root, this.state.isScrollWasFired ? 'animation-fired' : ''].join(' ')} ref='wrapper' onMouseMove={this.onMouseMove.bind(this)}>
         <div ref='child' className={css.imageWrapper}>
           { imgSrc ?
             <img style={styles}
