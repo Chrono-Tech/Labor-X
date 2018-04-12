@@ -2,10 +2,13 @@ import { Link, Carousel, Button, ParallaxBox } from 'components/common'
 import { LoginOptions } from 'components/Login'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import Head from 'next/head'
+
 import initialStore from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import css from './index.scss'
+import ReactDOM from "react-dom";
 
 class Index extends React.Component {
   static getInitialProps ({ store }) {
@@ -17,7 +20,23 @@ class Index extends React.Component {
     
     this.state = {
       activeIndex: 0,
-      isOpenCookiesNotice: false,
+      isOpenCookiesNotice: true,
+      isVisibleNavBottom: true,
+    }
+  }
+  
+  componentDidMount(){
+    this.learnMoreVisibility()
+    window.addEventListener('scroll', this.learnMoreVisibility.bind(this))
+  }
+  
+  learnMoreVisibility(){
+    let carousel = ReactDOM.findDOMNode(this.refs.carousel)
+    let rect = carousel.getBoundingClientRect()
+    if (rect.top + rect.height < 0){
+      this.setState({isVisibleNavBottom: false})
+    } else {
+      this.setState({isVisibleNavBottom: true})
     }
   }
   
@@ -28,6 +47,7 @@ class Index extends React.Component {
   getCookiesNoticeWidget(){
     return (
       <div className={[css.cookiesNotice].join(' ')}>
+        <img className={css.cookiesNoticeImg} src='/static/images/laborx-promo-info.svg' alt=''/>
         We use cookies to improve our user's experience. Read our <a href='#'>cookies policies</a> to learn more or change settings.
         <button className={css.noticeClose} onClick={() => this.setState({isOpenCookiesNotice: false})}>X</button>
       </div>
@@ -37,6 +57,9 @@ class Index extends React.Component {
   render () {
     return (
       <div className={[css.root, this.state.isOpenCookiesNotice ? css.rootCookiesNoticeVisible: ''].join(' ')}>
+        <Head>
+          <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
+        </Head>
         { this.getCookiesNoticeWidget() }
         <div className={css.navigationTop}>
           <div className={css.createButtonWrapper}>
@@ -60,17 +83,14 @@ class Index extends React.Component {
               <img src='/static/images/laborx-promo-head.jpg' className={css.logoImg} />
             </Link>
           </div>
-          <Carousel>
-            <a href='/'>
-              <img src='/static/images/laborx-promo-slider-01_together-tobetter-future.jpg' />
-            </a>
-            <a href='/'>
-              <img src='/static/images/laborx-promo-slider-02_work.jpg' />
-            </a>
-            <a href='/'>
-              <img src='/static/images/laborx-promo-slider-03_labor-hour.jpg' />
-            </a>
-          </Carousel>
+          <Carousel
+            ref='carousel'
+            content={[
+              {link: '/', imgSrc: '/static/images/laborx-promo-slider-01_together-tobetter-future.jpg'},
+              {link: '/', imgSrc: '/static/images/laborx-promo-slider-02_work.jpg'},
+              {link: '/', imgSrc: '/static/images/laborx-promo-slider-03_labor-hour.jpg'},
+            ]}
+          />
         </div>
         <div className={css.benefitsBlock}>
           <h1 className={css.benefitsHeader}>Our Network Benefits</h1>
@@ -269,12 +289,12 @@ class Index extends React.Component {
           </ul>
           <div className={css.footerCopyright}>© 2018 LaborX</div>
         </div>
-        <div className={css.navigationBottom}>
-          <div className={css.bottomButtonBackground}></div>
+        <div className={[css.navigationBottom, this.state.isVisibleNavBottom ? '' : css.navigationBottomHide].join(' ')}>
+          <div className={css.bottomButtonBackground}/>
           <div className={css.bottomButtonWrapper}>
             <a href='#' className={css.bottomButton}>Learn More</a>
           </div>
-          <div className={css.bottomLine}></div>
+          <div className={css.bottomLine}/>
         </div>
       </div>
     )

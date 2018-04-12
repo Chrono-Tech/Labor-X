@@ -1,14 +1,15 @@
 .root {
   transition: top 0.3s linear;
-  top: 0;
   position: relative;
   &.rootCookiesNoticeVisible {
-    top: 66px;
     .cookiesNotice {
-      top: 0;
+      margin-bottom: 0;
     }
     .navigationTop {
       margin-top: 66px;
+      @media only screen and (max-width: 1120px) {
+        margin-top: 0;
+      }
     }
   }
 }
@@ -16,16 +17,25 @@
 
 .cookiesNotice {
   background: rgb(0, 108, 119);
-  padding: 0 65px;
-  padding-right: 50px;
+  padding: 0 50px 0 30px;
   font-weight: 400;
   color: #fff;
   line-height: 66px;
-  position: fixed;
-  display: none;
-  top: -66px;
+  position: relative;
+  height: 66px;
+  margin-bottom: -66px;
   width: 100%;;
-  transition: top 0.3s linear;
+  transition: margin 0.3s linear;
+  @media only screen and (max-width: 1120px) {
+    display: none;
+  }
+
+  .cookiesNoticeImg {
+    width: 24px;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
   a {
     color: #fff;
     text-decoration: underline;
@@ -46,6 +56,7 @@
 
 .sliderContainer {
   position: relative;
+  min-height: 153px;
 }
 
 .logo {
@@ -190,8 +201,11 @@
   position: relative;
   color: #fff;
   border-bottom: 30px solid #00A0D2;
+
   :global(.ParallaxBox){
-    height: auto;
+    @media (max-width: 1024px){
+      height: auto;
+    }
   }
   :global(.animation-fired) {
     .advantageCountsWoman {
@@ -432,6 +446,9 @@
   bottom: 0;
   width: 100%;
   @media (max-width: 1024px){
+    display: none;
+  }
+  &.navigationBottomHide {
     display: none;
   }
   .bottomButtonBackground {

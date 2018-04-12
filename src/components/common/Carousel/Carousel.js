@@ -11,10 +11,15 @@ import css from './Carousel.scss'
 export default class Carousel extends React.Component {
   static propTypes = {
     interval: PropTypes.number,
+    content: PropTypes.arrayOf(PropTypes.shape({
+      link: PropTypes.string,
+      imgSrc: PropTypes.string
+    }))
   }
   
   static defaultProps = {
     interval: 3000,
+    content: []
   }
   
   constructor (){
@@ -55,7 +60,7 @@ export default class Carousel extends React.Component {
     return (
       <div className={css.carousel} style={this.state.childHeight !== null ? { height: this.state.childHeight } : {}}>
         {
-          React.Children.map(this.props.children, (slide, index) => (
+          this.props.content.map((slide, index) => (
             <div
               key={index}
               ref={`carousel-${index}`}
@@ -64,7 +69,13 @@ export default class Carousel extends React.Component {
                 index === this.state.activeIndex ? css.carouselItemActive : '',
                 this.state.childHeight === null && index === 0 ? css.carouselItemAlwaysVisible : ''].join(' ')}
             >
-              {slide}
+              {
+                slide.link ? (
+                  <a href={slide.link}>
+                    <img src={slide.imgSrc} alt='' onLoad={this.updateDimensions.bind(this)} />
+                  </a>
+                ) : (<img src={slide.imgSrc} alt='' onLoad={this.updateDimensions.bind(this)} />)
+              }
             </div>
           ))
         }
