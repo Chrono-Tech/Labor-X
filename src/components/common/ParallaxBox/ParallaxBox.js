@@ -77,7 +77,7 @@ export default class ParallaxImage extends React.Component {
     }
     
     return (
-      <div className={[css.root, this.state.isScrollWasFired ? 'animation-fired' : ''].join(' ')} ref='wrapper' onMouseMove={this.onMouseMove.bind(this)}>
+      <div className={['ParallaxBox', css.root, this.state.isScrollWasFired ? 'animation-fired' : ''].join(' ')} ref='wrapper' onMouseMove={this.onMouseMove.bind(this)}>
         <div ref='child' className={css.imageWrapper}>
           { imgSrc ?
             <img style={styles}

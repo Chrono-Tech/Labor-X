@@ -16,7 +16,7 @@ export default class Link extends React.Component {
 
     return (
       <NextLink href={this.props.href}>
-        <a className={classNames}>
+        <a className={classNames.join(' ')}>
           {this.props.children}
         </a>
       </NextLink>

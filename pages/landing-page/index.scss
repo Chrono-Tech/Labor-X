@@ -1,16 +1,88 @@
+.root {
+  transition: top 0.3s linear;
+  top: 0;
+  position: relative;
+  &.rootCookiesNoticeVisible {
+    top: 66px;
+    .cookiesNotice {
+      top: 0;
+    }
+    .navigationTop {
+      margin-top: 66px;
+    }
+  }
+}
+
+
+.cookiesNotice {
+  background: rgb(0, 108, 119);
+  padding: 0 65px;
+  padding-right: 50px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 66px;
+  position: fixed;
+  display: none;
+  top: -66px;
+  width: 100%;;
+  transition: top 0.3s linear;
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .noticeClose {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 50px;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+
 .sliderContainer {
   position: relative;
 }
 
 .logo {
   position: absolute;
-  transform: translate(-50%, 0);
-  left: 50%;
+  top: 0;
   z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  @media only screen and (max-width: 480px){
+    position: relative;
+  }
+  .topLink {
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
+    @media only screen and (max-width: 1120px) {
+      //width: 419px;
+      height: 135px;
+    }
+    @media only screen and (max-width: 480px){
+      height: auto;
+      border-radius: 0;
+    }
+    .logoImg {
+      display: block;
+      @media only screen and (max-width: 1120px) {
+        height: 100%;
+      }
+      @media only screen and (max-width: 480px) {
+        margin: 0;
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
 }
-.logoImg {
-  border-radius: 0 0 10px 10px;
-}
+
 
 .navigationTop {
   position: fixed;
@@ -19,6 +91,17 @@
   display: flex;
   flex-direction: row;
   z-index: 999;
+  transition: margin-top 0.3s linear;
+  @media (max-width: 1024px){
+    display: flex;
+    bottom: 0;
+    top: auto;
+    flex-direction: row;
+    width: 100%;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    padding: 15px 20px;
+  }
 }
 
 @mixin navButton() {
@@ -34,13 +117,24 @@
   padding: 13px 26px 11px;
 }
 
-.createButton {
-  @include navButton();
-  background-color: #FFB14A;
-  border-color: #C69C6D;
+.createButtonWrapper {
   margin-right: 10px;
-  &:hover {
-    background-color: #F4A23D;
+
+  @media (max-width: 1024px) {
+    flex: 1;
+  }
+
+  .createButton {
+    @include navButton();
+    background-color: #FFB14A;
+    border-color: #C69C6D;
+    &:hover {
+      background-color: #F4A23D;
+    }
+
+    @media (max-width: 1024px) {
+      width: auto;
+    }
   }
 }
 
@@ -52,57 +146,76 @@
   &:hover {
     background-color: #0088C3;
   }
+
+  @media (max-width: 1024px) {
+    width: auto;
+  }
 }
 
 .benefitsBlock {
   background-color: #00A0D2;
   color: #fff;
   text-align: center;
-  padding: 50px 0;
-}
+  padding: 50px 20px;
+  .benefitsHeader {
+    margin-top:0;
+    margin-bottom: 30px;
+    line-height: 60px;
+    font-family: roboto, sans-serif;
+    font-size: 50px;
+    font-weight: 200;
+    letter-spacing: -1px;
+    @media (max-width: 1024px){
+      font-size: 40px;
+      line-height: 48px;
+    }
+  }
 
-.benefitsHeader {
-  margin-top:0;
-  margin-bottom: 30px;
-  line-height: 60px;
-  font-family: roboto, sans-serif;
-  font-size: 50px;
-  font-weight: 200;
-  letter-spacing: -1px;
-}
+  .benefitsText {
+    font-size: 20px;
+    line-height: 32px;
+    width: 40%;
+    max-width: 800px;
+    margin: 0 auto;
+    @media (max-width: 1024px){
+      font-size: 16px;
+      line-height: 26px;
+      width: auto;
+    }
+  }
 
-.benefitsText {
-  font-size: 20px;
-  line-height: 32px;
 }
 
 .advantageBlockWrapper {
   position: relative;
   color: #fff;
   border-bottom: 30px solid #00A0D2;
+  :global(.ParallaxBox){
+    height: auto;
+  }
   :global(.animation-fired) {
     .advantageCountsWoman {
       opacity: 1;
       visibility: visible;
-      left: 5% !important;
+      left: 5%;
     }
     .advantageContentWoman {
       opacity: 1;
       visibility: visible;
-      right: 21% !important;
+      right: 21%;
     }
     .advantageCountsWorkers {
       opacity: 1;
       visibility: visible;
-      right: 5% !important;
+      right: 5%;
     }
     .advantageContentWorkers {
       opacity: 1;
       visibility: visible;
-      left: 8% !important;
+      left: 8%;
     }
     .advantageCountsClients {
-      left: 5% !important;
+      left: 5%;
       opacity: 1;
       visibility: visible;
     }
@@ -123,6 +236,17 @@
     z-index: 1;
     display: block;
   }
+  .advantageCountsWoman {
+    left: -100px;
+  }
+  .advantageCountsWorkers {
+    right: -100px;
+    text-align: right;
+  }
+  .advantageCountsClients {
+    left: -100px;
+    padding-bottom: 13%;
+  }
   .advantageCounts {
     z-index: 2;
     position: absolute;
@@ -134,16 +258,9 @@
     transition: all 0.2s ease-in;
     opacity: 0;
     visibility: hidden;
-    &.advantageCountsWoman {
-      left: -100px;
-    }
-    &.advantageCountsWorkers {
-      right: -100px;
-      text-align: right;
-    }
-    &.advantageCountsClients {
-      left: -100px;
-      padding-bottom: 13%;
+
+    @media (max-width: 1024px) {
+      display: none;
     }
     .advantageCountsInner {
       display: table-cell;
@@ -161,6 +278,19 @@
       }
     }
   }
+  .advantageContentWoman {
+    right: -100px;
+    width: 450px;
+  }
+  .advantageContentWorkers {
+    left: -100px;
+    width: 442px;
+  }
+  .advantageContentClients {
+    right: -100px;
+    padding-bottom: 12%;
+    width: 455px;
+  }
   .advantageContent {
     position: absolute;
     display: table;
@@ -170,20 +300,26 @@
     transition: all 0.2s ease-in;
     opacity: 0;
     visibility: hidden;
-    &.advantageContentWoman {
-      right: -100px;
+
+    @media (max-width: 1024px) {
+      position: relative;
+      right: 0 !important;
+      left: 0 !important;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      padding: 55px 20px;
+      visibility: visible;
+      opacity: 1;
     }
-    &.advantageContentWorkers {
-      left: -100px;
-    }
-    &.advantageContentClients {
-      right: -100px;
-      padding-bottom: 12%;
-    }
+
     .advantageContentInner {
       display: table-cell;
       height: 100%;
       vertical-align: bottom;
+
+      @media (max-width: 1024px) {
+        vertical-align: top;
+      }
     }
     .advantageTitle {
       font-size: 90px;
@@ -192,6 +328,12 @@
       letter-spacing: -1px;
       font-weight: 700;
       margin-bottom: 8px;
+
+      @media (max-width: 1024px) {
+        font-size: 50px;
+        line-height: 36px;
+        margin-bottom: 28px;
+      }
       .advantageTitleFirstWord{
         font-size: 30px;
         text-align: right;
@@ -199,6 +341,15 @@
         line-height: 36px;
         margin-right: 25px;
         margin-left: -60px;
+
+        @media (max-width: 1024px) {
+          margin: 0;
+          font-size: 20px;
+          text-align: left;
+          letter-spacing: 0px;
+          line-height: 24px;
+          display: block;
+        }
       }
     }
     .advantageContentBlockTitle {
@@ -207,6 +358,11 @@
       font-size: 30px;
       font-weight: 500;
       margin-bottom: 5px;
+
+      @media (max-width: 1024px) {
+        font-weight: 400;
+        margin-bottom: 3px;
+      }
     }
     .advantageContentBlockText {
       line-height: 22px;
@@ -227,16 +383,34 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  @media (max-width: 1024px){
+    flex-direction: column;
+    align-items: center;
+  }
   .footerLogo {
     width: 97px;
     margin-right: 45px;
+    @media (max-width: 1024px){
+      margin: 0 0 25px 0;
+    }
   }
   .footerMenu {
     list-style: none;
     display: flex;
     margin-right: 45px;
+
+    @media (max-width: 1024px){
+      flex-direction: column;
+      align-items: center;
+      margin: 0 0 25px 0;
+    }
     li {
       margin-right: 34px;
+      white-space: nowrap;
+
+      @media (max-width: 1024px){
+        margin: 0 0 25px 0;
+      }
     }
     a {
       color: #fff;
@@ -257,6 +431,9 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  @media (max-width: 1024px){
+    display: none;
+  }
   .bottomButtonBackground {
     margin: 0 auto;
     width: 316px;

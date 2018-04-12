@@ -17,6 +17,7 @@ class Index extends React.Component {
     
     this.state = {
       activeIndex: 0,
+      isOpenCookiesNotice: false,
     }
   }
   
@@ -24,24 +25,38 @@ class Index extends React.Component {
     this.setState({ activeIndex: this.state.activeIndex })
   }
   
+  getCookiesNoticeWidget(){
+    return (
+      <div className={[css.cookiesNotice].join(' ')}>
+        We use cookies to improve our user's experience. Read our <a href='#'>cookies policies</a> to learn more or change settings.
+        <button className={css.noticeClose} onClick={() => this.setState({isOpenCookiesNotice: false})}>X</button>
+      </div>
+    )
+  }
+  
   render () {
     return (
-      <div className={css.root}>
+      <div className={[css.root, this.state.isOpenCookiesNotice ? css.rootCookiesNoticeVisible: ''].join(' ')}>
+        { this.getCookiesNoticeWidget() }
         <div className={css.navigationTop}>
-          <Button
-            label='New account'
-            onClick={() => {}}
-            className={css.createButton}
-          />
-          <Button
-            label='Login'
-            onClick={() => {}}
-            className={css.loginButton}
-          />
+          <div className={css.createButtonWrapper}>
+            <Button
+              label='New account'
+              onClick={() => {}}
+              className={css.createButton}
+            />
+          </div>
+          <div className={css.loginButtonWrapper}>
+            <Button
+              label='Login'
+              onClick={() => {}}
+              className={css.loginButton}
+            />
+          </div>
         </div>
         <div className={css.sliderContainer}>
           <div className={css.logo}>
-            <Link href='/'>
+            <Link className={css.topLink} href='/'>
               <img src='/static/images/laborx-promo-head.jpg' className={css.logoImg} />
             </Link>
           </div>
@@ -61,10 +76,10 @@ class Index extends React.Component {
           <h1 className={css.benefitsHeader}>Our Network Benefits</h1>
           <p className={css.benefitsText}>
             We took the most secure technology
-            <br/>
             and have built this global, autonomous and versatile platform.
-            <br/>
-            We aim to make short-term employment as accessible and rewarding<br/>as long-term employment.
+          </p>
+          <p className={css.benefitsText}>
+            We aim to make short-term employment as accessible and rewardingas long-term employment.
           </p>
         </div>
         <div className={css.advantageBlockWrapper}>
@@ -106,15 +121,15 @@ class Index extends React.Component {
                     Save Time
                   </div>
                   <div className={css.advantageContentBlockText}>
-                    Our smart automated technologies will save your time removing<br/>
+                    Our smart automated technologies will save your time removing
                     big portion of paperwork and routines.
                   </div>
                   <div className={css.advantageContentBlockTitle}>
                     Trust
                   </div>
                   <div className={css.advantageContentBlockText}>
-                    Get access to our reliable database of Workers and Clients<br/>
-                    verified by out professional team. LaborX is using an innovative<br/>
+                    Get access to our reliable database of Workers and Clients
+                    verified by out professional team. LaborX is using an innovative
                     technology and guarantees reliable contacts reputation.
                   </div>
     
@@ -158,22 +173,22 @@ class Index extends React.Component {
                     Payment
                   </div>
                   <div className={css.advantageContentBlockText}>
-                    Our automated digital contracts guarantees real-time payment.<br/>
-                    Your high skills, responsibility and rating can demand higher<br/>
+                    Our automated digital contracts guarantees real-time payment.
+                    Your high skills, responsibility and rating can demand higher
                     hourly fee.
                   </div>
                   <div className={css.advantageContentBlockTitle}>
                     Inflation Resistance
                   </div>
                   <div className={css.advantageContentBlockText}>
-                    Our LaborHour digital currency is linked to 1 hour average<br/>
+                    Our LaborHour digital currency is linked to 1 hour average
                     learning in your location which keeps the currency stable.
                   </div>
                   <div className={css.advantageContentBlockTitle}>
                     Scheduling
                   </div>
                   <div className={css.advantageContentBlockText}>
-                    LaborX is a fully automated solution with ability to track you<br/>
+                    LaborX is a fully automated solution with ability to track you
                     time, view reports and plan your schedule.
                   </div>
       
@@ -217,22 +232,22 @@ class Index extends React.Component {
                     Spend Less
                   </div>
                   <div className={css.advantageContentBlockText}>
-                    Our solution allows us to reduce recruitment fees compared with<br/>
+                    Our solution allows us to reduce recruitment fees compared with
                     traditional recruitment industry.
                   </div>
                   <div className={css.advantageContentBlockTitle}>
                     Get Your Job Done
                   </div>
                   <div className={css.advantageContentBlockText}>
-                    Public Worker Rating System is reliable and contains real people<br/>
+                    Public Worker Rating System is reliable and contains real people
                     profiles, histories and ratings which make your choice easier.
                   </div>
                   <div className={css.advantageContentBlockTitle}>
                     Access Immediate
                   </div>
                   <div className={css.advantageContentBlockText}>
-                    Our solution is fast, reliable, secure, and permanently available.<br/>
-                    The ability to pay with a variety of digital tokens makes the<br/>
+                    Our solution is fast, reliable, secure, and permanently available.
+                    The ability to pay with a variety of digital tokens makes the
                     system universal and not tied to any particular country or region.
                   </div>
       
