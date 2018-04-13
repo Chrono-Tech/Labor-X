@@ -1,7 +1,10 @@
 @import "~styles/globals/variables";
 
-.title {
+.root {
   text-align: center;
+}
+
+.title {
   color: $color-white;
   margin-bottom: 4rem;
 }

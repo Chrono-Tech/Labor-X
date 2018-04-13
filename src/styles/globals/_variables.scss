@@ -27,6 +27,11 @@ $color-error: $color-red;
 $color-warn: $color-gold;
 $color-success: $color-green;
 
+$todo: #ccc;
+
+// ------- gradients
+
+$gradientBlueToGreen: linear-gradient(to bottom, #00A0D2 , $color-green 100%);
 
 // ----------- fonts -----------
 
@@ -44,7 +49,6 @@ $font-weight-bold: 700;
 $border-radius: 0.3rem;
 $shadow-blue: 0.4rem 0.4rem 0.2rem rgba($color-shadow-blue, 0.2);
 
-
 // --------- typo ------------
 
 $h1Size: 5rem;
@@ -58,3 +62,16 @@ $pMediumSize: 1.2rem;
 $pSmallSize: 1rem;
 
 $pLineHeight: 1.571428571; // 22/14
+
+
+// --------- components --------
+
+$buttonHeight: 3.6rem;
+$paperBoxShadow: 0.4rem 0.4rem 0.6rem rgba($color-black, 0.1);
+$paperColor: $color-white;
+$paperPadding: 4rem;
+$fieldGroupTitleWidth: 27rem;
+$badgeBorderRadius: 2rem;
+$numberInputControlSize: 3rem;
+$chipHeight: 3rem;
+$chipMargin: 1rem;

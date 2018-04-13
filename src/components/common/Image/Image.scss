@@ -3,8 +3,11 @@
 .root {
   width: 2.4rem;
   height: 2.4rem;
-  color: $color-black;
+  color: currentColor;
 }
+
+
+// ------- color ------
 
 .red {
   color: $color-red;
@@ -25,6 +28,20 @@
 .black {
   color: $color-black;
 }
+
+.white {
+  color: $color-white;
+}
+
+.error {
+  color: $color-error;
+}
+
+.warn {
+  color: $color-warn;
+}
+
+// ------ opt ----------
 
 .clickable {
   cursor: pointer;

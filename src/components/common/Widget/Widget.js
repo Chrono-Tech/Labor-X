@@ -1,7 +1,7 @@
+import { Action } from 'components/common'
 import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Widget.scss'
-import { Action } from 'components/common'
 
 export default class Widget extends React.Component {
   static propTypes = {

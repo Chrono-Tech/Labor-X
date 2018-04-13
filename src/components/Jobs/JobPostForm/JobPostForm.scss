@@ -1,0 +1,139 @@
+@import "~styles/globals/variables";
+
+.root {
+
+}
+
+$gutter: 4rem;
+
+.row {
+  display: flex;
+  margin-left: 0 -$gutter/2;
+  margin-right: 0 -$gutter/2;
+  margin-bottom: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.col {
+  //flex-grow: 1;
+  width: calc(50% - #{$gutter});
+  margin-left: $gutter/2;
+  margin-right: $gutter/2;
+}
+
+.headline {
+  background-color: $color-primary;
+  margin-bottom: 3rem;
+}
+
+.headlineContent {
+  padding: 4rem;
+}
+
+.headlineInput {
+  text-align: left;
+}
+
+.headlineActions {
+  display: flex;
+  min-height: 5rem;
+  border-bottom: 0.1rem solid rgba($color-white, 0.2);
+}
+
+.headlineLeft,
+.headlineRight {
+  display: flex;
+  align-items: stretch;
+}
+
+.headlineLeft {
+  flex-grow: 1;
+}
+
+.headlineRight {
+  flex-grow: 0;
+  text-align: right;
+}
+
+.headlineButton {
+  height: 100%;
+  min-width: 5rem;
+  margin-left: 2rem;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.boardCategory {
+  margin-bottom: 4rem;
+}
+
+$injectLeft: $fieldGroupTitleWidth + $paperPadding;
+$injectRight: $paperPadding;
+
+.inject {
+  margin-right: -$injectRight;
+  margin-left: -$injectLeft;
+}
+
+.requirements {
+  padding: 4rem $injectRight 4rem $injectLeft;
+  background: $gradientBlueToGreen;
+  color: $color-white;
+}
+
+.requirementsTitle {
+  font-weight: $font-weight-medium;
+  font-size: $h4Size;
+}
+
+.requirementsSubtitle {
+
+}
+
+.requirementsBadges {
+  display: flex;
+  margin-top: 4rem;
+}
+
+.workerRating {
+  margin-top: 4rem;
+}
+
+.hourlyRating {
+  margin-top: 4rem;
+}
+
+.hourlyRatingTitle {
+  font-weight: $font-weight-medium;
+}
+
+.hourlyRatingGraph {
+  min-width: 20rem;
+  min-height: 20rem;
+  background-color: $todo;
+  margin-top: 2rem;
+}
+
+.numberInput {
+  max-width: 50%;
+}
+
+.find {
+  display: flex;
+}
+
+.findInput {
+  flex-grow: 0;
+}
+
+.chips {
+  flex-grow: 1;
+  margin-bottom: -$chipMargin;
+  margin-right: -$chipMargin;
+  margin-left: 2rem;
+}

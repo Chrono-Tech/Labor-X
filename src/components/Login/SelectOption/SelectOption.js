@@ -1,5 +1,5 @@
-import { Button, Translate } from 'components/common'
-import { LoginWithMnemonic, LoginWithPrivateKey, LoginWithWallet } from 'components/Login'
+import { Button } from 'components/common'
+import { MnemonicForm, PrivateKeyForm, WalletFileForm } from 'components/Login'
 import PropTypes from 'prop-types'
 import React from 'react'
 import css from './SelectOption.scss'
@@ -11,11 +11,11 @@ export default class SelectOption extends React.Component {
 
   static STEP = 'step/selectOption'
 
-  handleMnemonicClick = () => this.props.onChangeStep(LoginWithMnemonic.STEP)
+  handleMnemonicClick = () => this.props.onChangeStep(MnemonicForm.STEP)
 
-  handleWalletClick = () => this.props.onChangeStep(LoginWithWallet.STEP)
+  handleWalletClick = () => this.props.onChangeStep(WalletFileForm.STEP)
 
-  handlePrivateKeyClick = () => this.props.onChangeStep(LoginWithPrivateKey.STEP)
+  handlePrivateKeyClick = () => this.props.onChangeStep(PrivateKeyForm.STEP)
 
   render () {
     const prefix = this.constructor.name
@@ -26,17 +26,17 @@ export default class SelectOption extends React.Component {
         <div className={css.buttons}>
           <Button
             className={css.button}
-            label={<Translate value={`${prefix}.mnemonic`} />}
+            label={`${prefix}.mnemonic`}
             onClick={this.handleMnemonicClick}
           />
           <Button
             className={css.button}
-            label={<Translate value={`${prefix}.wallet`} />}
+            label={`${prefix}.wallet`}
             onClick={this.handleWalletClick}
           />
           <Button
             className={css.button}
-            label={<Translate value={`${prefix}.privateKey`} />}
+            label={`${prefix}.privateKey`}
             onClick={this.handlePrivateKeyClick}
           />
         </div>

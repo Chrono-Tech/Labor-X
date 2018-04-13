@@ -1,0 +1,16 @@
+@import "~styles/globals/variables";
+
+.root {
+  display: flex;
+}
+
+.title {
+  font-weight: $font-weight-medium;
+  font-size: $h4Size;
+  min-width: $fieldGroupTitleWidth;
+  text-transform: capitalize;
+}
+
+.content {
+  flex-grow: 1;
+}

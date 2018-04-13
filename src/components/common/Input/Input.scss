@@ -4,14 +4,15 @@ $opacity: 0.75;
 
 .root {
   color: currentColor;
+  margin-top: 4rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
-.rootInvert {
-  color: $color-white;
-
-  .error {
-    color: $color-white;
-  }
+.label {
+  margin-bottom: 0.5rem;
 }
 
 .invalid {
@@ -54,4 +55,57 @@ $opacity: 0.75;
   margin-top: 10px;
   text-align: center;
   color: $color-error;
+}
+
+// --------- mods -------
+
+.invert {
+  color: $color-white;
+
+  .error {
+    color: $color-white;
+  }
+}
+
+.huge {
+  .input {
+    font-size: $h1Size;
+    text-align: left;
+
+    &::placeholder {
+      font-style: normal;
+      font-weight: $font-weight-thin;
+    }
+  }
+
+  .line {
+    display: none;
+  }
+}
+
+.boxed {
+  .input {
+    text-align: left;
+    font-size: $pSize;
+    padding: 1.5rem 2rem;
+    border: 0.1rem solid $color-gray10;
+
+    &:hover {
+      border-color: $color-primary;
+    }
+  }
+
+  &.invalid {
+    .input {
+      border-color: $color-error;
+    }
+  }
+
+  .line {
+    display: none;
+  }
+
+  .error {
+    text-align: left;
+  }
 }

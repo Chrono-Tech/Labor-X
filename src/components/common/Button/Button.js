@@ -1,16 +1,29 @@
+import { Translate } from 'components/common'
 import PropTypes from 'prop-types'
 import React from 'react'
+import Image from '../Image/Image'
 import css from './Button.scss'
 
 export default class Button extends React.Component {
   static propTypes = {
     className: PropTypes.string,
+    disabled: PropTypes.bool,
     label: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.node,
+      PropTypes.object,
     ]),
     type: PropTypes.string,
     onClick: PropTypes.func,
+    error: PropTypes.string,
+    color: PropTypes.string,
+    mods: PropTypes.string,
+    icon: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        icon: PropTypes.string,
+        color: PropTypes.string,
+      }),
+    ]),
   }
 
   static TYPES = {
@@ -19,8 +32,22 @@ export default class Button extends React.Component {
     RESET: 'reset',
   }
 
+  static MODS = {
+    FLAT: css.flat,
+    NORMAL: css.normal,
+    INVERT: css.invert,
+  }
+
   static defaultProps = {
     type: Button.TYPES.BUTTON,
+    disabled: false,
+    error: null,
+    icon: null,
+    mods: [Button.MODS.NORMAL],
+  }
+
+  static COLORS = {
+    PRIMARY: 'primary',
   }
 
   handleClick = () => this.props.onClick
@@ -28,17 +55,27 @@ export default class Button extends React.Component {
     : true
 
   render () {
-    const className = [css.root]
-    this.props.className && className.push(this.props.className)
+    const { type, disabled, label, className, error, mods, color, icon } = this.props
+    const classNames = [ css.root ].concat(mods)
+    className && classNames.push(className)
+    disabled && classNames.push(css.disabled)
+    color && classNames.push(css[ color ])
 
     return (
-      <button
-        className={className.join(' ')}
-        onClick={this.handleClick}
-        type={this.props.type}
-      >
-        {this.props.label}
-      </button>
+      <div className={classNames.join(' ')}>
+        <button
+          className={css.button}
+          onClick={this.handleClick}
+          type={type}
+          disabled={disabled}
+        >
+          {icon && <Image {...icon} />}
+          {label && <Translate className={css.label} value={label} />}
+        </button>
+        {error && (
+          <div className={css.error}>{error}</div>
+        )}
+      </div>
     )
   }
 }

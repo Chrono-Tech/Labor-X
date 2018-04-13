@@ -1,0 +1,21 @@
+@import "~styles/globals/variables";
+
+.root {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon {
+  flex-grow: 0;
+  margin-right: 1rem;
+}
+
+.label {
+  flex-grow: 1;
+  font-weight: $font-weight-regular;
+}
+
+.checkbox {
+  //display: none;
+}

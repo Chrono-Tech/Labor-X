@@ -1,0 +1,15 @@
+@import "~styles/globals/variables";
+
+.root {
+
+}
+
+.title {
+  margin-bottom: 2rem;
+}
+
+.content {
+  min-width: 20rem;
+  min-height: 20rem;
+  background-color: $todo;
+}

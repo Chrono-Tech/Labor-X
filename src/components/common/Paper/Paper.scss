@@ -1,0 +1,13 @@
+@import "~styles/globals/variables";
+
+.root {
+  background-color: $paperColor;
+  box-shadow: $paperBoxShadow;
+  padding: $paperPadding;
+
+  margin-bottom: 3rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

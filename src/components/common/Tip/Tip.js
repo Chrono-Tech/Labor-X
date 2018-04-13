@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Transition } from 'react-transition-group'
 import css from './Tip.scss'
+import { Translate } from 'components/common'
 
 const DELAY = 250
 
@@ -45,8 +46,8 @@ export default class Tip extends React.Component {
     <div className={css.root} style={transitionStyles[ state ]}>
       <div className={css.wrapper}>
         <div className={css.content}>
-          {this.props.title && <div className={css.title}>{this.props.title}</div>}
-          <p>{this.props.tip}</p>
+          {this.props.title && <div className={css.title}><Translate value={this.props.title} /></div>}
+          <p><Translate value={this.props.tip} /></p>
         </div>
       </div>
     </div>
