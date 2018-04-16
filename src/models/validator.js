@@ -16,3 +16,9 @@ export const isEthereumAddress = (value) => {
   }
   return null
 }
+
+export const required = (value) => {
+  return !!value
+    ? null
+    : 'validator.required'
+}

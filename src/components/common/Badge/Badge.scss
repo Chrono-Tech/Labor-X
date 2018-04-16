@@ -1,0 +1,32 @@
+@import "~styles/globals/variables";
+
+.root {
+  position: relative;
+  text-align: center;
+  margin-left: 7rem;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $h4Size;
+  font-weight: $font-weight-medium;
+  text-transform: capitalize;
+  border: 0.1rem solid $color-white;
+  background-color: rgba($color-super-black, 0.3);
+  width: 5rem;
+  height: 5rem;
+  border-radius: $badgeBorderRadius;
+  margin: 0 auto;
+}
+
+.title {
+  margin-top: 2rem;
+  font-weight: $font-weight-medium;
+  text-transform: capitalize;
+}

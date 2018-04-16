@@ -8,11 +8,27 @@ export default class Translate extends React.Component {
       PropTypes.string,
       PropTypes.object,
     ]),
+    className: PropTypes.string,
   }
 
   render () {
-    return this.props.value instanceof String
-      ? <TranslateI18n {...this.props} />
-      : <TranslateI18n {...this.props} {...this.props.value} />
+    let value = this.props.value
+    let additional = null
+
+    if (typeof this.props.value === 'object') {
+      value = this.props.value.value
+      additional = {
+        ...this.props.value,
+      }
+      delete additional.value
+    }
+
+    return (
+      <TranslateI18n
+        className={this.props.className}
+        value={value}
+        {...additional}
+      />
+    )
   }
 }

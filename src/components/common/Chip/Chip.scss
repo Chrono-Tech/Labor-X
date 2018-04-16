@@ -1,0 +1,42 @@
+@import "~styles/globals/variables";
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  min-height: $chipHeight;
+  background-color: $color-gray50;
+  border-radius: $chipHeight/2;
+  padding: 0 0 0 1.5rem;
+  color: $color-white;
+  margin-right: $chipMargin;
+  margin-bottom: $chipMargin;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-primary;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.value {
+  flex-grow: 1;
+}
+
+.remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  margin-left: 0.5rem;
+  width: $chipHeight;
+  height: $chipHeight;
+  border-radius: $chipHeight/2;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba( $color-super-black, 0.1);
+  }
+}
