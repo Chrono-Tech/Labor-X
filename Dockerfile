@@ -10,8 +10,9 @@ RUN apt update && \
     cd Labor-X && \
     git checkout develop && \
     npm install eslint@^4.9.0 && \
-    yarn install && \
-    yarn run build
+    yarn install --ignore-engines
 EXPOSE 3000 3001 3010 3011
 RUN echo "test"
-CMD pm2 start npm --name "next" -- start
+CMD cd Labor-X && \
+    yarn run build && \
+    yarn start
