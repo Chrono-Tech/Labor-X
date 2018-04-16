@@ -55,8 +55,10 @@ export default class Button extends React.Component {
     : true
 
   render () {
-    const { type, disabled, label, className, error, mods, color, icon } = this.props
+    const { type, disabled, label, className, buttonClassName, labelClassName, error, mods, color, icon } = this.props
     const classNames = [ css.root ].concat(mods)
+    const buttonClassNames = [ css.button ].concat(buttonClassName)
+    const labelClassNames = [ css.labelClassName ].concat(labelClassName)
     className && classNames.push(className)
     disabled && classNames.push(css.disabled)
     color && classNames.push(css[ color ])
@@ -64,13 +66,13 @@ export default class Button extends React.Component {
     return (
       <div className={classNames.join(' ')}>
         <button
-          className={css.button}
+          className={buttonClassNames.join(' ')}
           onClick={this.handleClick}
           type={type}
           disabled={disabled}
         >
           {icon && <Image {...icon} />}
-          {label && <Translate className={css.label} value={label} />}
+          {label && <Translate className={labelClassNames.join(' ')} value={label} />}
         </button>
         {error && (
           <div className={css.error}>{error}</div>

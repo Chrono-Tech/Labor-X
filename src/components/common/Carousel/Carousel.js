@@ -13,13 +13,13 @@ export default class Carousel extends React.Component {
     interval: PropTypes.number,
     content: PropTypes.arrayOf(PropTypes.shape({
       link: PropTypes.string,
-      imgSrc: PropTypes.string
-    }))
+      imgSrc: PropTypes.string,
+    })),
   }
   
   static defaultProps = {
     interval: 3000,
-    content: []
+    content: [],
   }
   
   constructor (){
@@ -33,7 +33,7 @@ export default class Carousel extends React.Component {
   
   timer (){
     let currentIndex = this.state.activeIndex
-    let slideCount = this.props.children.length - 1
+    let slideCount = this.props.content.length - 1
   
     if (currentIndex === slideCount){
       currentIndex = -1
@@ -43,7 +43,11 @@ export default class Carousel extends React.Component {
   }
   
   updateDimensions () {
-    this.setState({ childHeight: ReactDOM.findDOMNode(this.refs['carousel-0']) && ReactDOM.findDOMNode(this.refs['carousel-0']).clientHeight })
+    const firstChild = this.refs['carousel-0'] && ReactDOM.findDOMNode(this.refs['carousel-0'])
+    
+    if (firstChild) {
+      this.setState({ childHeight: firstChild.clientHeight })
+    }
   }
   
   componentDidMount (){
@@ -60,7 +64,14 @@ export default class Carousel extends React.Component {
     return (
       <div className={css.carousel} style={this.state.childHeight !== null ? { height: this.state.childHeight } : {}}>
         {
-          this.props.content.map((slide, index) => (
+          this.props.content.map((slide, index) => {
+            const imgProps = {
+              ...(index === 0 ? {onLoad: this.updateDimensions.bind(this)} : {}),
+              src: slide.imgSrc,
+              alt: ''
+            }
+            
+            return (
             <div
               key={index}
               ref={`carousel-${index}`}
@@ -72,12 +83,12 @@ export default class Carousel extends React.Component {
               {
                 slide.link ? (
                   <a href={slide.link}>
-                    <img src={slide.imgSrc} alt='' onLoad={this.updateDimensions.bind(this)} />
+                    <img {...imgProps} />
                   </a>
-                ) : (<img src={slide.imgSrc} alt='' onLoad={this.updateDimensions.bind(this)} />)
+                ) : (<img {...imgProps} />)
               }
             </div>
-          ))
+          )})
         }
       </div>
     )

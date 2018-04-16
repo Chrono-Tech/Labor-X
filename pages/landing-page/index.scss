@@ -1,12 +1,14 @@
+$cookiesNoticeHeight: 66px;
+
 .root {
-  transition: top 0.3s linear;
+  transition: margin-top 0.3s linear;
   position: relative;
   &.rootCookiesNoticeVisible {
+    margin-top: $cookiesNoticeHeight;
     .cookiesNotice {
-      margin-bottom: 0;
+      margin-top: 0;
     }
-    .navigationTop {
-      margin-top: 66px;
+    .fixedTopPanel {
       @media only screen and (max-width: 1120px) {
         margin-top: 0;
       }
@@ -20,11 +22,11 @@
   padding: 0 50px 0 30px;
   font-weight: 400;
   color: #fff;
-  line-height: 66px;
+  line-height: $cookiesNoticeHeight;
   position: relative;
-  height: 66px;
-  margin-bottom: -66px;
+  height: $cookiesNoticeHeight;
   width: 100%;;
+  margin-top: -66px;
   transition: margin 0.3s linear;
   @media only screen and (max-width: 1120px) {
     display: none;
@@ -95,14 +97,21 @@
 }
 
 
-.navigationTop {
+.fixedTopPanel {
   position: fixed;
-  top: 28px;
-  right: 30px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  width: 100%;
+  top: 0;
+  right: 0;
+  margin-top: 0;
   z-index: 999;
   transition: margin-top 0.3s linear;
+  .navigationPanel {
+    display: flex;
+    justify-content: flex-end;
+    margin: 28px 30px 0 0;
+  }
   @media (max-width: 1024px){
     display: flex;
     bottom: 0;
@@ -128,6 +137,15 @@
   padding: 13px 26px 11px;
 }
 
+.navButtonWrapperReset {
+  min-width: auto;
+  color: transparent;
+}
+
+.navButtonTextWrapperReset {
+  margin: 0;
+}
+
 .createButtonWrapper {
   margin-right: 10px;
 
@@ -135,12 +153,13 @@
     flex: 1;
   }
 
+
   .createButton {
     @include navButton();
-    background-color: #FFB14A;
+    background-color: #FFB14A !important;
     border-color: #C69C6D;
     &:hover {
-      background-color: #F4A23D;
+      background-color: #F4A23D !important;
     }
 
     @media (max-width: 1024px) {
@@ -151,11 +170,11 @@
 
 .loginButton {
   @include navButton();
-  background-color: #00A0D2;
+  background-color: #00A0D2 !important;
   border-color: #0088C3;
   padding: 12px 20px;
   &:hover {
-    background-color: #0088C3;
+    background-color: #0088C3 !important;
   }
 
   @media (max-width: 1024px) {

@@ -1,5 +1,5 @@
 import { Link, Carousel, Button, ParallaxBox } from 'components/common'
-import { LoginOptions } from 'components/Login'
+import ReactDOM from 'react-dom'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import Head from 'next/head'
@@ -8,7 +8,6 @@ import initialStore from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import css from './index.scss'
-import ReactDOM from "react-dom";
 
 class Index extends React.Component {
   static getInitialProps ({ store }) {
@@ -25,34 +24,36 @@ class Index extends React.Component {
     }
   }
   
-  componentDidMount(){
+  componentDidMount (){
     this.learnMoreVisibility()
     window.addEventListener('scroll', this.learnMoreVisibility.bind(this))
-  }
-  
-  learnMoreVisibility(){
-    let carousel = ReactDOM.findDOMNode(this.refs.carousel)
-    let rect = carousel.getBoundingClientRect()
-    if (rect.top + rect.height < 0){
-      this.setState({isVisibleNavBottom: false})
-    } else {
-      this.setState({isVisibleNavBottom: true})
-    }
   }
   
   goToNextSlide (){
     this.setState({ activeIndex: this.state.activeIndex })
   }
   
-  getCookiesNoticeWidget(){
+  getCookiesNoticeWidget (){
     return (
       <div className={[css.cookiesNotice].join(' ')}>
-        <img className={css.cookiesNoticeImg} src='/static/images/laborx-promo-info.svg' alt=''/>
+        <img className={css.cookiesNoticeImg} src='/static/images/laborx-promo-info.svg' alt='' />
         We use cookies to improve our user's experience. Read our <a href='#'>cookies policies</a> to learn more or change settings.
-        <button className={css.noticeClose} onClick={() => this.setState({isOpenCookiesNotice: false})}>X</button>
+        <button className={css.noticeClose} onClick={() => this.setState({ isOpenCookiesNotice: false })}>X</button>
       </div>
     )
   }
+  
+  learnMoreVisibility (){
+    let carousel = ReactDOM.findDOMNode(this.refs.carousel)
+    let rect = carousel.getBoundingClientRect()
+    if (rect.top + rect.height < 0){
+      this.setState({ isVisibleNavBottom: false })
+    } else {
+      this.setState({ isVisibleNavBottom: true })
+    }
+  }
+  
+  
   
   render () {
     return (
@@ -60,21 +61,27 @@ class Index extends React.Component {
         <Head>
           <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
         </Head>
-        { this.getCookiesNoticeWidget() }
-        <div className={css.navigationTop}>
-          <div className={css.createButtonWrapper}>
-            <Button
-              label='New account'
-              onClick={() => {}}
-              className={css.createButton}
-            />
-          </div>
-          <div className={css.loginButtonWrapper}>
-            <Button
-              label='Login'
-              onClick={() => {}}
-              className={css.loginButton}
-            />
+        <div className={css.fixedTopPanel}>
+          { this.getCookiesNoticeWidget() }
+          <div className={css.navigationPanel}>
+            <div className={css.createButtonWrapper}>
+              <Button
+                label='New account'
+                onClick={() => {}}
+                className={css.navButtonWrapperReset}
+                labelClassName={css.navButtonTextWrapperReset}
+                buttonClassName={css.createButton}
+              />
+            </div>
+            <div className={css.loginButtonWrapper}>
+              <Button
+                label='Login'
+                onClick={() => {}}
+                className={css.navButtonWrapperReset}
+                labelClassName={css.navButtonTextWrapperReset}
+                buttonClassName={css.loginButton}
+              />
+            </div>
           </div>
         </div>
         <div className={css.sliderContainer}>
@@ -86,9 +93,9 @@ class Index extends React.Component {
           <Carousel
             ref='carousel'
             content={[
-              {link: '/', imgSrc: '/static/images/laborx-promo-slider-01_together-tobetter-future.jpg'},
-              {link: '/', imgSrc: '/static/images/laborx-promo-slider-02_work.jpg'},
-              {link: '/', imgSrc: '/static/images/laborx-promo-slider-03_labor-hour.jpg'},
+              { link: '/', imgSrc: '/static/images/laborx-promo-slider-01_together-tobetter-future.jpg' },
+              { link: '/', imgSrc: '/static/images/laborx-promo-slider-02_work.jpg' },
+              { link: '/', imgSrc: '/static/images/laborx-promo-slider-03_labor-hour.jpg' },
             ]}
           />
         </div>
@@ -104,28 +111,28 @@ class Index extends React.Component {
         </div>
         <div className={css.advantageBlockWrapper}>
           <ParallaxBox imgSrc='/static/images/laborx-promo-woman-watching-time-1.jpg' deflectionPercent={3}>
-              <div className={[css.advantageCounts, css.advantageCountsWoman].join(' ')}>
-                <div className={css.advantageCountsInner}>
-                  <div className={css.advantageCountBlock}>
-                    <div className={css.advantageCountBlockHeader}>
+            <div className={[css.advantageCounts, css.advantageCountsWoman].join(' ')}>
+              <div className={css.advantageCountsInner}>
+                <div className={css.advantageCountBlock}>
+                  <div className={css.advantageCountBlockHeader}>
                       1,250 Recruiters
-                    </div>
-                    <div className={css.advantageCountBlockText}>
-                      are already using LaborX
-                    </div>
                   </div>
-                  <div className={css.advantageCountBlock}>
-                    <div className={css.advantageCountBlockHeader}>
+                  <div className={css.advantageCountBlockText}>
+                      are already using LaborX
+                  </div>
+                </div>
+                <div className={css.advantageCountBlock}>
+                  <div className={css.advantageCountBlockHeader}>
                       USD 50,945
-                    </div>
-                    <div className={css.advantageCountBlockText}>
+                  </div>
+                  <div className={css.advantageCountBlockText}>
                       earned by Recruiters in September 2018
-                    </div>
                   </div>
                 </div>
               </div>
-              <div className={[css.advantageContent, css.advantageContentWoman].join(' ')}>
-                <div className={css.advantageContentInner}>
+            </div>
+            <div className={[css.advantageContent, css.advantageContentWoman].join(' ')}>
+              <div className={css.advantageContentInner}>
                 <div className={css.advantageTitle}>
                   <span className={css.advantageTitleFirstWord}>for</span>
                   Recruiters
@@ -163,23 +170,23 @@ class Index extends React.Component {
           <ParallaxBox imgSrc='/static/images/laborx-promo-hero-2.jpg' deflectionPercent={3}>
             <div className={[css.advantageCounts, css.advantageCountsWorkers].join(' ')}>
               <div className={css.advantageCountsInner}>
-              <div className={css.advantageCountBlock}>
-                <div className={css.advantageCountBlockHeader}>
+                <div className={css.advantageCountBlock}>
+                  <div className={css.advantageCountBlockHeader}>
                   USD 8,000
-                </div>
-                <div className={css.advantageCountBlockText}>
+                  </div>
+                  <div className={css.advantageCountBlockText}>
                   Earned by Workers in past 24h
+                  </div>
                 </div>
-              </div>
-              <div className={css.advantageCountBlock}>
-                <div className={css.advantageCountBlockHeader}>
+                <div className={css.advantageCountBlock}>
+                  <div className={css.advantageCountBlockHeader}>
                   5,001 Clients
-                </div>
-                <div className={css.advantageCountBlockText}>
+                  </div>
+                  <div className={css.advantageCountBlockText}>
                   posted their jobs
       
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
             <div className={[css.advantageContent, css.advantageContentWorkers].join(' ')}>
@@ -278,7 +285,7 @@ class Index extends React.Component {
         </div>
         <div className={css.footer}>
           <div className={css.footerLogo}>
-              <img src='/static/images/labor-x-logo.svg' />
+            <img src='/static/images/labor-x-logo.svg' />
           </div>
           <ul className={css.footerMenu}>
             <li><a href='/'>LaborX Whitepaper</a></li>
@@ -290,11 +297,11 @@ class Index extends React.Component {
           <div className={css.footerCopyright}>© 2018 LaborX</div>
         </div>
         <div className={[css.navigationBottom, this.state.isVisibleNavBottom ? '' : css.navigationBottomHide].join(' ')}>
-          <div className={css.bottomButtonBackground}/>
+          <div className={css.bottomButtonBackground} />
           <div className={css.bottomButtonWrapper}>
             <a href='#' className={css.bottomButton}>Learn More</a>
           </div>
-          <div className={css.bottomLine}/>
+          <div className={css.bottomLine} />
         </div>
       </div>
     )

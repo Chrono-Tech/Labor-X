@@ -20,8 +20,6 @@ export default class Link extends React.Component {
 
     return (
       <NextLink href={this.props.href}>
-        <a className={classNames.join(' ')}>
-          {this.props.children}
         <a className={classNames.join(' ')} title={label}>
           {label
             ? <Translate value={label} />
