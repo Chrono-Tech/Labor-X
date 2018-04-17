@@ -1,6 +1,8 @@
 // basic
 export { default as Image } from './Image/Image'
 export { default as Link } from './Link/Link'
+export { default as Carousel } from './Carousel/Carousel'
+export { default as ParallaxBox } from './ParallaxBox/ParallaxBox'
 export { default as Moment } from './Moment/Moment'
 export { default as Tip } from './Tip/Tip'
 

@@ -82,7 +82,7 @@ const TempActions = [
     label: 'Create job',
     secondIcon: Image.SETS.HELP,
     secondIconTip: {
-      tip: 'In order to create Your Job Board you will need to complete your general info and recruiter profile.'
+      tip: 'In order to create Your Job Board you will need to complete your general info and recruiter profile.',
     },
   },
 ]

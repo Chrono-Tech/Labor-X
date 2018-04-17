@@ -1,4 +1,3 @@
-
 export default class TestPRCNode {
   constructor () {
     this.protocol = 'http'

@@ -1,3 +1,5 @@
+import { Image, Translate } from 'components/common'
+import PropTypes from 'prop-types'
 import React from 'react'
 import FileModel from '../../../models/FileModel'
 import css from './FileUploader.scss'
