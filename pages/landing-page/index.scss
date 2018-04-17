@@ -5,14 +5,13 @@ $cookiesNoticeHeight: 66px;
   position: relative;
   &.rootCookiesNoticeVisible {
     margin-top: $cookiesNoticeHeight;
+    @media only screen and (max-width: 1120px) {
+      margin-top: 0;
+    }
     .cookiesNotice {
       margin-top: 0;
     }
-    .fixedTopPanel {
-      @media only screen and (max-width: 1120px) {
-        margin-top: 0;
-      }
-    }
+
   }
 }
 
@@ -97,7 +96,7 @@ $cookiesNoticeHeight: 66px;
 }
 
 
-.fixedTopPanel {
+.fixedPanel {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -111,12 +110,16 @@ $cookiesNoticeHeight: 66px;
     display: flex;
     justify-content: flex-end;
     margin: 28px 30px 0 0;
+
+    @media (max-width: 1024px){
+      margin: 0;
+      padding: 6px 0;
+    }
   }
   @media (max-width: 1024px){
     display: flex;
     bottom: 0;
     top: auto;
-    flex-direction: row;
     width: 100%;
     right: 0;
     background: rgba(0,0,0,0.6);
@@ -178,7 +181,7 @@ $cookiesNoticeHeight: 66px;
   }
 
   @media (max-width: 1024px) {
-    width: auto;
+    padding: 12px 40px;
   }
 }
 
@@ -412,17 +415,19 @@ $cookiesNoticeHeight: 66px;
 
 .footer {
   background-color: #00A0D2;
-  padding: 60px 40px 135px;
+  padding: 60px 40px 60px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   @media (max-width: 1024px){
     flex-direction: column;
     align-items: center;
+    padding: 60px 40px 110px;
   }
   .footerLogo {
     width: 97px;
     margin-right: 45px;
+    line-height: normal;
     @media (max-width: 1024px){
       margin: 0 0 25px 0;
     }

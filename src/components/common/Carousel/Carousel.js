@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types'
-import { Link } from 'components/common'
-import { HeaderLanding } from 'components/layouts'
-import { LoginOptions } from 'components/Login'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import css from './Carousel.scss'
 
@@ -31,15 +27,10 @@ export default class Carousel extends React.Component {
     }
   }
   
-  timer (){
-    let currentIndex = this.state.activeIndex
-    let slideCount = this.props.content.length - 1
-  
-    if (currentIndex === slideCount){
-      currentIndex = -1
-    }
-    
-    this.setState({ activeIndex: ++currentIndex })
+  componentDidMount (){
+    setInterval(this.timer.bind(this), this.props.interval)
+    this.updateDimensions()
+    window.addEventListener("resize", this.updateDimensions.bind(this))
   }
   
   updateDimensions () {
@@ -50,10 +41,15 @@ export default class Carousel extends React.Component {
     }
   }
   
-  componentDidMount (){
-    setInterval(this.timer.bind(this), this.props.interval)
-    this.updateDimensions()
-    window.addEventListener("resize", this.updateDimensions.bind(this))
+  timer (){
+    let currentIndex = this.state.activeIndex
+    let slideCount = this.props.content.length - 1
+    
+    if (currentIndex === slideCount){
+      currentIndex = -1
+    }
+    
+    this.setState({ activeIndex: ++currentIndex })
   }
   
   goToNextSlide (){
@@ -66,29 +62,29 @@ export default class Carousel extends React.Component {
         {
           this.props.content.map((slide, index) => {
             const imgProps = {
-              ...(index === 0 ? {onLoad: this.updateDimensions.bind(this)} : {}),
+              ...(index === 0 ? { onLoad: this.updateDimensions.bind(this) } : {}),
               src: slide.imgSrc,
-              alt: ''
+              alt: '',
             }
             
             return (
-            <div
-              key={index}
-              ref={`carousel-${index}`}
-              className={[
-                css.carouselItem,
-                index === this.state.activeIndex ? css.carouselItemActive : '',
-                this.state.childHeight === null && index === 0 ? css.carouselItemAlwaysVisible : ''].join(' ')}
-            >
-              {
-                slide.link ? (
-                  <a href={slide.link}>
-                    <img {...imgProps} />
-                  </a>
-                ) : (<img {...imgProps} />)
-              }
-            </div>
-          )})
+              <div
+                key={index}
+                ref={`carousel-${index}`}
+                className={[
+                  css.carouselItem,
+                  index === this.state.activeIndex ? css.carouselItemActive : '',
+                  this.state.childHeight === null && index === 0 ? css.carouselItemAlwaysVisible : ''].join(' ')}
+              >
+                {
+                  slide.link ? (
+                    <a href={slide.link}>
+                      <img {...imgProps} alt='' />
+                    </a>
+                  ) : (<img {...imgProps} alt='' />)
+                }
+              </div>
+            )})
         }
       </div>
     )

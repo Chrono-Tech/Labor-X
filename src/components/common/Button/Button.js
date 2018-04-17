@@ -7,6 +7,8 @@ import css from './Button.scss'
 export default class Button extends React.Component {
   static propTypes = {
     className: PropTypes.string,
+    buttonClassName: PropTypes.string,
+    labelClassName: PropTypes.string,
     disabled: PropTypes.bool,
     label: PropTypes.oneOfType([
       PropTypes.string,

@@ -1,15 +1,28 @@
-import { Link, Carousel, Button, ParallaxBox } from 'components/common'
+import { Link, Carousel, ParallaxBox } from 'components/common'
 import ReactDOM from 'react-dom'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import PropTypes from 'prop-types'
 import Head from 'next/head'
 
-import initialStore from 'store'
+import initialStore, { hideCookiesNotice, getCookiesNoticeValue } from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import css from './index.scss'
 
 class Index extends React.Component {
+  static propTypes = {
+    hideCookiesNotice: PropTypes.func,
+    getCookiesNoticeValue: PropTypes.func,
+    isHideCookiesNotice: PropTypes.bool,
+  }
+  
+  static defaultProps = {
+    hideCookiesNotice: () => {},
+    getCookiesNoticeValue: () => {},
+    isHideCookiesNotice: true,
+  }
+  
   static getInitialProps ({ store }) {
     store.dispatch(bootstrap())
   }
@@ -19,28 +32,28 @@ class Index extends React.Component {
     
     this.state = {
       activeIndex: 0,
-      isOpenCookiesNotice: true,
       isVisibleNavBottom: true,
     }
   }
   
   componentDidMount (){
+    this.props.getCookiesNoticeValue()
     this.learnMoreVisibility()
     window.addEventListener('scroll', this.learnMoreVisibility.bind(this))
-  }
-  
-  goToNextSlide (){
-    this.setState({ activeIndex: this.state.activeIndex })
   }
   
   getCookiesNoticeWidget (){
     return (
       <div className={[css.cookiesNotice].join(' ')}>
         <img className={css.cookiesNoticeImg} src='/static/images/laborx-promo-info.svg' alt='' />
-        We use cookies to improve our user's experience. Read our <a href='#'>cookies policies</a> to learn more or change settings.
-        <button className={css.noticeClose} onClick={() => this.setState({ isOpenCookiesNotice: false })}>X</button>
+        We use cookies to improve our user's experience. Read our <Link href='#'>cookies policies</Link> to learn more or change settings.
+        <button className={css.noticeClose} onClick={this.props.hideCookiesNotice.bind(this)}>X</button>
       </div>
     )
+  }
+  
+  goToNextSlide (){
+    this.setState({ activeIndex: this.state.activeIndex })
   }
   
   learnMoreVisibility (){
@@ -53,41 +66,31 @@ class Index extends React.Component {
     }
   }
   
-  
-  
   render () {
     return (
-      <div className={[css.root, this.state.isOpenCookiesNotice ? css.rootCookiesNoticeVisible: ''].join(' ')}>
+      <div className={[css.root, this.props.isHideCookiesNotice ? '' : css.rootCookiesNoticeVisible].join(' ')}>
         <Head>
           <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
         </Head>
-        <div className={css.fixedTopPanel}>
+        <div className={css.fixedPanel}>
           { this.getCookiesNoticeWidget() }
           <div className={css.navigationPanel}>
-            <div className={css.createButtonWrapper}>
-              <Button
-                label='New account'
-                onClick={() => {}}
-                className={css.navButtonWrapperReset}
-                labelClassName={css.navButtonTextWrapperReset}
-                buttonClassName={css.createButton}
-              />
+            <div className={css.createButtonWrapper} >
+              <Link href='/' className={css.createButton}>
+                New account
+              </Link>
             </div>
             <div className={css.loginButtonWrapper}>
-              <Button
-                label='Login'
-                onClick={() => {}}
-                className={css.navButtonWrapperReset}
-                labelClassName={css.navButtonTextWrapperReset}
-                buttonClassName={css.loginButton}
-              />
+              <Link href='/login-options' className={css.loginButton}>
+                Login
+              </Link>
             </div>
           </div>
         </div>
         <div className={css.sliderContainer}>
           <div className={css.logo}>
             <Link className={css.topLink} href='/'>
-              <img src='/static/images/laborx-promo-head.jpg' className={css.logoImg} />
+              <img src='/static/images/laborx-promo-head.jpg' className={css.logoImg} alt='' />
             </Link>
           </div>
           <Carousel
@@ -284,22 +287,22 @@ class Index extends React.Component {
           </ParallaxBox>
         </div>
         <div className={css.footer}>
-          <div className={css.footerLogo}>
-            <img src='/static/images/labor-x-logo.svg' />
-          </div>
+          <Link href='/' className={css.footerLogo}>
+            <img src='/static/images/labor-x-logo.svg' alt='' />
+          </Link>
           <ul className={css.footerMenu}>
-            <li><a href='/'>LaborX Whitepaper</a></li>
-            <li><a href='/'>Chronobank Whitepaper</a></li>
-            <li><a href='/'>Q&A</a></li>
-            <li><a href='/'>Privacy Policy</a></li>
-            <li><a href='/'>Terms of Use</a></li>
+            <li><Link href='/'>LaborX Whitepaper</Link></li>
+            <li><Link href='/'>Chronobank Whitepaper</Link></li>
+            <li><Link href='/'>Q&A</Link></li>
+            <li><Link href='/'>Privacy Policy</Link></li>
+            <li><Link href='/'>Terms of Use</Link></li>
           </ul>
           <div className={css.footerCopyright}>© 2018 LaborX</div>
         </div>
         <div className={[css.navigationBottom, this.state.isVisibleNavBottom ? '' : css.navigationBottomHide].join(' ')}>
           <div className={css.bottomButtonBackground} />
           <div className={css.bottomButtonWrapper}>
-            <a href='#' className={css.bottomButton}>Learn More</a>
+            <Link href='#' className={css.bottomButton}>Learn More</Link>
           </div>
           <div className={css.bottomLine} />
         </div>
@@ -308,4 +311,17 @@ class Index extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(Index)
+const mapStateToProps = (state) => {
+  return {
+    isHideCookiesNotice: state.landing.isHideCookiesNotice,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    hideCookiesNotice: () => dispatch(hideCookiesNotice()),
+    getCookiesNoticeValue: () => dispatch(getCookiesNoticeValue()),
+  }
+}
+
+export default withRedux(initialStore, mapStateToProps, mapDispatchToProps)(Index)

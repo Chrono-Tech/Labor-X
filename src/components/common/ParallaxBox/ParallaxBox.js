@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import css from './ParallaxBox.scss'
-import { Action } from 'components/common'
 
 export default class ParallaxBox extends React.Component {
   static propTypes = {
@@ -30,7 +29,6 @@ export default class ParallaxBox extends React.Component {
   
   scrollCallback (){
     let rect = this.refs.wrapper.getBoundingClientRect()
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop
     let clientHeight = document.documentElement.clientHeight
 
     if (rect.top + rect.height * 1/2 <= clientHeight && rect.top + rect.height > 0) {
@@ -48,8 +46,6 @@ export default class ParallaxBox extends React.Component {
     let speed = deflectionPercent
   
     let obj = ReactDOM.findDOMNode(this.refs.child)
-    let rect = obj.getBoundingClientRect()
-    let win = obj.ownerDocument.defaultView
     let containerWidth = parseInt( wrapper.offsetWidth )
     let containerHeight = parseInt( wrapper.offsetHeight )
     let left = 0
@@ -65,10 +61,6 @@ export default class ParallaxBox extends React.Component {
     let styles = {
       minWidth: `${minSize}%`,
       minHeight: `${minSize}%`,
-    }
-    
-    let newStyles = {
-      ...styles,
     }
     
     return (
