@@ -6,14 +6,32 @@
 }
 
 .buttons {
-  margin-top: 4rem;
+  margin-top: 35px;
   text-align: center;
 }
 
 .button {
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  box-shadow: 4px 4px 2px rgba(70,93,140,0.2);
+  width: 100%;
+  padding: 8px 20px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  outline: none;
 
-  &:last-child {
-    margin-bottom: 0;
+  &:hover {
+    background-color: #E5F5FA;
   }
+  .buttonImage {
+    width: 24px;
+    margin-right: 6px;
+  }
+}
+.buttonWrapper {
+  background: transparent;
 }

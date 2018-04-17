@@ -1,0 +1,109 @@
+.root {
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
+  //justify-content: space-between;
+  min-height: 100%;
+}
+
+.logo {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  img {
+    display: block;
+  }
+}
+
+.contentWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 1102px;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+}
+
+.loginWrapper {
+  z-index: 10;
+}
+
+.backgroundImage {
+  position: absolute;
+  z-index: -1;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.forNewUsersBlock {
+  position: absolute;
+  top: 312px;
+  left: -564px;
+  right: 0;
+  width: 530px;
+  margin: auto;
+  z-index: 9;
+
+  @media (max-width: 1024px){
+  }
+}
+.gradientBlock {
+  height: 430px;
+  background: linear-gradient(to bottom,#0074A5 ,#00B5D1 100%);
+  position: relative;
+  opacity: 0.95;
+}
+
+.forNewUsersContent {
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  text-align: center;
+  padding: 20px 30px 50px;
+  max-width: 530px;
+
+  h1 {
+    font-size: 40px;
+    letter-spacing: -1px;
+    margin-bottom: 28px;
+    font-weight: 200;
+  }
+
+  .text {
+    font-size: 26px;
+    line-height: 36px;
+    font-weight: 200;
+    letter-spacing: -1px;
+    margin-bottom: 30px;
+  }
+
+  .learnMoreLink {
+    border-radius: 21px;
+    color: #fff;
+    background-color: #00A0D2;
+    font-weight: 500;
+    line-height: 40px;
+    width: 180px;
+    display: inline-block;
+    letter-spacing: 0;
+    margin-bottom: 28px;
+
+    &:hover {
+      background-color: #0088C3;
+    }
+  }
+  .createAccountBlock {
+    color: #7F7F7F;
+    font-size: 16px;
+
+    .createAccountLink {
+      color: #fff;
+      font-weight: 300;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+}
