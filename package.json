@@ -26,12 +26,19 @@
     "web3-eth-accounts": "^1.0.0-beta.33"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.1",
+    "@storybook/addon-knobs": "^3.4.1",
+    "@storybook/addon-links": "^3.4.1",
+    "@storybook/addons": "^3.4.1",
+    "@storybook/react": "^3.4.1",
     "@zeit/next-sass": "^0.1.1",
     "autoprefixer": "^8.0.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-plugin-module-alias": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.26.0",
     "eslint": "^4.18.1",
     "eslint-plugin-chronobank": "github:ChronoBank/eslint-plugin-chronobank",
     "eslint-plugin-chronobank-react": "github:ChronoBank/eslint-plugin-chronobank-react",
@@ -56,6 +63,8 @@
     "docker:stop": "/bin/bash ./bin/docker-stop.sh",
     "docker:start": "/bin/bash ./bin/docker-start.sh",
     "docker:restart": "yarn docker:stop; yarn docker:start",
-    "docker:upgrade": "yarn docker:build && yarn docker:restart"
+    "docker:upgrade": "yarn docker:build && yarn docker:restart",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   }
 }

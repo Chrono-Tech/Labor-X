@@ -15,6 +15,13 @@ yarn dev
 
 The app will be launched on the port 3001 by default.
 
+Run storybook for UI development:
+```
+yarn storybook
+```
+
+storybook will be launched on localhost:6006
+
 ## Launch in demo environment
 
 Create network:
@@ -30,8 +37,9 @@ yarn docker:build
 Start:
 ```
 yarn docker:start
-
 ```
+
+
 Restart:
 ```
 yarn docker:restart
