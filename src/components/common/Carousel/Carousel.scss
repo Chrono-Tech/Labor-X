@@ -1,0 +1,31 @@
+.carousel{
+  width: 100%;
+}
+.carouselItemAlwaysVisible {
+  opacity: 1 !important;
+  position: relative !important;
+}
+.carouselItem {
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  width: 100%;
+}
+.carouselItem.visible {
+  opacity: 1;
+  position: relative;
+}
+
+.carouselItemActive {
+  opacity: 1;
+}
+
+.carouselItem > a {
+  width: 100%;
+  display: block;
+}
+
+.carouselItem a > img {
+  width: 100%;
+  display: block;
+}
