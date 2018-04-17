@@ -51,6 +51,11 @@
     "lint": "./node_modules/eslint/bin/eslint.js --ext .js,.jsx --fix src pages specs",
     "testrpc": "testrpc --mnemonic \"video visa alcohol fault earth naive army senior major inherit convince electric\" --trace_request true | grep -Ev \"FilterSubprovider|eth_getFilterChanges\"",
     "contracts": "cd node_modules/lx-sc && node --max_old_space_size=8000 ../truffle/build/cli.bundled.js migrate --network development",
-    "contracts:compile": "cd node_modules/lx-sc && node --max_old_space_size=8000 ../truffle/build/cli.bundled.js compile --all"
+    "contracts:compile": "cd node_modules/lx-sc && node --max_old_space_size=8000 ../truffle/build/cli.bundled.js compile --all",
+    "docker:build": "/bin/bash ./bin/docker-build.sh",
+    "docker:stop": "/bin/bash ./bin/docker-stop.sh",
+    "docker:start": "/bin/bash ./bin/docker-start.sh",
+    "docker:restart": "yarn docker:stop; yarn docker:start",
+    "docker:upgrade": "yarn docker:build && yarn docker:restart"
   }
 }
