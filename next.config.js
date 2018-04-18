@@ -21,6 +21,7 @@ module.exports = withSass({
     config.resolve.alias = {
       'src': path.join(__dirname, 'src'),
       'styles': path.join(__dirname, 'src/styles'),
+      'normalize.css': path.join(__dirname, 'node_modules/normalize.css/normalize.css'),
     }
 
     config.resolve.extensions = [ '.js', '.jsx', '.scss', '.css' ]

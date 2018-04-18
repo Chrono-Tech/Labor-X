@@ -17,6 +17,7 @@ class Index extends React.Component {
         <div>
           <div><Link href='/login-options'>Login Options</Link></div>
           <div><Link href='/dashboard'>Dashboard</Link></div>
+          <div><Link href='/landing-page'>Landing</Link></div>
         </div>
       </LoginLayout>
     )
