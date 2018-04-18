@@ -1,6 +1,6 @@
 import { Link } from 'components/common'
-import { LoginLayout, Footer } from 'components/layouts'
-import { LoginOptions } from 'components/Login'
+import { LoginLayout, Footer, LoginActions } from 'components/layouts'
+import { LoginOptions, LearnMoreBlock } from 'components/Login'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import initialStore from 'store'
@@ -31,16 +31,7 @@ class Index extends React.Component {
           <img src='/static/images/laborx-login-hour.jpg' className={css.backgroundImage} alt=''/>
           <div className={css.forNewUsersBlock}>
             <div className={css.gradientBlock}/>
-            <div className={css.forNewUsersContent}>
-              <h1>New to LaborX?</h1>
-              <p className={css.text}>Learn more about our innovative solution for Recruiters, Workers and Clients</p>
-              <Link className={css.learnMoreLink} href='/landing-page#learn-more'>
-                Learn More
-              </Link>
-              <p className={css.createAccountBlock}>
-                or <Link className={css.createAccountLink} href='/'>Create New Account</Link>
-              </p>
-            </div>
+            <LearnMoreBlock/>
           </div>
         </div>
         <Footer/>

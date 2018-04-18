@@ -5,6 +5,7 @@ export { default as Carousel } from './Carousel/Carousel'
 export { default as ParallaxBox } from './ParallaxBox/ParallaxBox'
 export { default as Moment } from './Moment/Moment'
 export { default as Tip } from './Tip/Tip'
+export { default as UserRow } from './UserRow/UserRow'
 
 // blocks
 export { default as Paper } from './Paper/Paper'

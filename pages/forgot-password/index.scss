@@ -19,14 +19,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 1102px;
   width: 100%;
   overflow: hidden;
   height: 100%;
 }
 
-.loginWrapper {
+.forgotPasswordWrapper {
   z-index: 10;
+  width: 640px;
 }
 
 .backgroundImage {
@@ -36,21 +36,13 @@
   min-height: 100%;
 }
 
-.forNewUsersBlock {
-  position: absolute;
-  top: 312px;
-  left: -564px;
-  right: 0;
-  width: 530px;
-  margin: auto;
-  z-index: 9;
-
-  @media (max-width: 1024px){
-  }
-}
 .gradientBlock {
   height: 430px;
   background: linear-gradient(to bottom,#0074A5 ,#00B5D1 100%);
   position: relative;
   opacity: 0.95;
+}
+
+.forNewUsersBlock {
+  padding: 20px 50px 50px;
 }
