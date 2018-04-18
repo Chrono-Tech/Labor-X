@@ -9,29 +9,32 @@ export default class Header extends React.Component {
 
     return (
       <div className={css.root}>
-        <Link href='/' className={css.logo}>
-          <img src='/static/images/labor-x-logo.svg' className={css.logoImg} />
-        </Link>
-        <FirstMenu />
-
-        <nav className={css.actions}>
-          <Link href='/jobs/post' className={css.actionItem} label='nav.newJob' />
-          <Link href='/' className={css.actionItem} label='nav.newBoard' />
-        </nav>
-        <div className={css.points}>
-          <Tip
-            title={`${prefix}.actionPoints`}
-            tip={`${prefix}.actionPointsDescription`}
-          >
-            <img src='/static/images/icon-active-points.svg' className={css.pointsIcon} />
-          </Tip>
-          <span className={css.pointsValue}>70</span>
+        <div className={css.headerLeft}>
+          <Link href='/' className={css.logo}>
+            <img src='/static/images/labor-x-logo.svg' className={css.logoImg} />
+          </Link>
+          <FirstMenu />
         </div>
+        <div className={css.headerRight}>
+          <nav className={css.actions}>
+            <Link href='/jobs/post' className={css.actionItem} label='nav.newJob' />
+            <Link href='/' className={css.actionItem} label='nav.newBoard' />
+          </nav>
+          <div className={css.points}>
+            <Tip
+              title={`${prefix}.actionPoints`}
+              tip={`${prefix}.actionPointsDescription`}
+            >
+              <img src='/static/images/icon-active-points.svg' className={css.pointsIcon} />
+            </Tip>
+            <span className={css.pointsValue}>70</span>
+          </div>
 
-        <div className={css.profile}>
-          <div className={css.profileWrapper}>
-            <img src='/static/temp/icon-profile.jpg' className={css.profileIcon} />
-            <div className={css.profileCounter}>99</div>
+          <div className={css.profile}>
+            <div className={css.profileWrapper}>
+              <img src='/static/temp/icon-profile.jpg' className={css.profileIcon} />
+              <div className={css.profileCounter}>99</div>
+            </div>
           </div>
         </div>
       </div>

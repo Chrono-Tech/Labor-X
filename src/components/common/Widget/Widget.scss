@@ -1,12 +1,14 @@
 @import "~styles/globals/variables";
 
 .root {
+  border-radius: .5rem;
   background-color: $paperColor;
   box-shadow: $paperBoxShadow;
 }
 
 .header {
   padding: 3rem;
+  border-radius: .5rem .5rem 0 0;
   background-color: $color-blue94;
 
   &:hover {
