@@ -31,7 +31,7 @@ export default class MainLayout extends React.Component {
             </div>
           )}
           <div className={css.main}>
-            {title && <h1><Translate value={title} /></h1>}
+            {title && <h1 className={css.title}><Translate value={title} /></h1>}
             <div className={css.content}>
               {children}
             </div>

@@ -1,10 +1,20 @@
 @import "~styles/globals/variables";
+@import "~styles/globals/mixins";
 
 .root {
-  display: flex;
+  @include flex(row, space-between, stretch);
   flex-grow: 1;
   color: $color-white;
-  padding-left: 6rem;
+}
+
+.headerLeft {
+  @include flex(row, flex-start, stretch);
+  margin-left: 3rem;
+}
+
+.headerRight {
+  @include flex(row, flex-end, center);
+  margin-right: 3rem;
 }
 
 .logo {

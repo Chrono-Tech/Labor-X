@@ -1,36 +1,45 @@
 @import "~styles/globals/variables";
+@import "~styles/globals/mixins";
 
-$maxWidth: 100rem;
+$maxWidth: 74rem;
+$minWidth: 102.4rem;
 
 .header {
+  min-width: $minWidth;
   background-color: $color-primary;
 }
 
 .headerWrapper {
-  display: flex;
-  max-width: $maxWidth;
-  margin: 0 auto;
+  @include flex(row, flex-start, stretch);
+  width: 100%;
+  margin: 0;
   min-height: 9rem;
 }
 
 .page {
-  display: flex;
-  align-items: stretch;
-  max-width: $maxWidth;
-  margin: 0 auto;
+  @include flex(row, flex-start, stretch);
+  min-width: $minWidth;
+  margin: 0;
 }
 
 .menu {
   flex-grow: 0;
-  min-width: 28rem;
+  min-width: 22.5rem;
   //box-shadow: 0.5rem 0 0.8rem rgba($color-super-black, 0.1);
+}
+
+.title {
+  margin: 0;
+  padding: 5rem 0 5rem 4rem;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
 }
 
 .main {
   flex-grow: 1;
-  padding: 6rem 4rem;
 }
 
 .content {
-  margin-top: 4rem;
+  padding-left: 4rem;
+  max-width: $maxWidth;
 }
