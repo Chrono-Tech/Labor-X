@@ -10,6 +10,10 @@ export default class Index extends React.Component {
     className: PropTypes.string,
   }
   
+  static defaultProps = {
+    className: ''
+  }
+  
   render () {
     const { className } = this.props
     const classNames = [css.forNewUsersContent].concat(className)

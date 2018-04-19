@@ -10,3 +10,41 @@
   color: #fff;
   margin-bottom: 45px;
 }
+
+.fieldWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.word {
+  width: 32%;
+  margin: 0 0 30px 0;
+  outline: none;
+}
+
+.submitButton {
+  justify-content: center;
+  font-weight: bold;
+  background-color: #fff !important;
+  padding: 12px 0;
+  margin-bottom: 90px;
+
+  &:hover {
+    background-color: #E5F5FA !important;
+    text-decoration: underline;
+  }
+}
+
+.descriptionBlock {
+  font-size: 16px;
+  color: #BFE7F4;
+
+  .loginLink {
+    color: #fff;
+    font-weight: 200;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
