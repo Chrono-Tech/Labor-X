@@ -6,7 +6,7 @@ import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import initialStore from 'src/store'
 
-class JobsContent extends React.Component {
+class JobsPage extends React.Component {
   static getInitialProps ({ store }) {
     store.dispatch(bootstrap())
   }
@@ -20,4 +20,4 @@ class JobsContent extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(JobsContent)
+export default withRedux(initialStore)(JobsPage)
