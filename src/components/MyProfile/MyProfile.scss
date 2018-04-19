@@ -1,0 +1,58 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+}
+
+.title {
+  margin: 0;
+  padding: 5rem 0 0 4rem;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.titleText {
+  font-size: $h1Size;
+  font-weight: $font-weight-thin;
+  letter-spacing: -0.1rem;
+  line-height: 1;
+}
+
+.content {
+  padding-left: 4rem;
+  max-width: $maxWidth;
+}
+
+.tabs {
+  @include flex(row, flex-start, stretch);
+  margin-top: 5rem;
+  border-top: .1rem solid rgba($color-white, .2);
+  height: 5rem;
+}
+
+.tab {
+  @include flex(row, center, center);
+  cursor: pointer;
+  user-select: none;
+  padding: .5rem 2rem;
+  font-size: $pSize;
+  font-weight: $font-weight-regular;
+  text-transform: uppercase;
+  &:hover {
+    background-color: rgba($color-super-black, .2);
+    border-bottom: .5rem solid $color-super-black;
+    padding-bottom: 0;
+  }
+}
+
+.tabActive {
+  border-bottom: .5rem solid $color-white;
+  font-weight: $font-weight-bold;
+  padding-bottom: 0;
+  &:hover {
+    border-bottom: .5rem solid $color-white;
+  }
+}

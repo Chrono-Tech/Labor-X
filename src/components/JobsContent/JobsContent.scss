@@ -1,17 +1,7 @@
 @import "~styles/globals/variables";
 @import "~styles/globals/mixins";
 
-$gutter: 4rem;
 $maxWidth: 74rem;
-
-.highlights {
-  @include flex(column, flex-start, stretch);
-}
-
-.highlight {
-  margin-top: 4rem;
-  flex-grow: 1;
-}
 
 .main {
   flex-grow: 1;

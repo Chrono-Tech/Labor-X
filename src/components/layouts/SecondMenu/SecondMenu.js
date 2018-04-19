@@ -30,42 +30,42 @@ export default class SecondMenu extends React.Component {
           </div>
         </div>
         <div className={css.section}>
-          <div className={[ css.link, css.selected ].join(' ')}>Dashboard</div>
+          <Link href='/dashboard' className={[ css.link, css.selected ].join(' ')} label='nav.dashboard'/>
         </div>
         <div className={css.section}>
           <Link href='/my-profile' className={css.link} label='nav.validation' />
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link} label='nav.service' />
+          <Link href='/validation-requests' className={css.link} label='nav.service' />
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link} label='nav.worker' />
-          <Link href='/dashboard' className={css.subLink}>To-Do</Link>
-          <Link href='/dashboard' className={css.subLink} label='nav.applicationsAndOffers' />
-          <Link href='/dashboard' className={css.subLink} label='nav.Opportunities' />
-          <Link href='/dashboard' className={css.subLink} label='nav.completedJobs' />
+          <Link href='/to-do' className={css.link} label='nav.worker' />
+          <Link href='/to-do' className={css.subLink} label='nav.toDo'/>
+          <Link href='/applications-and-offers' className={css.subLink} label='nav.applicationsAndOffers' />
+          <Link href='/opportunities' className={css.subLink} label='nav.Opportunities' />
+          <Link href='/completed-jobs' className={css.subLink} label='nav.completedJobs' />
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link} label='nav.client' />
-          <Link href='/dashboard' className={css.subLink} label='nav.activeJobs' />
-          <Link href='/dashboard' className={css.subLink} label='nav.postedJobs' />
-          <Link href='/dashboard' className={css.subLink} label='nav.jobsArchive' />
+          <Link href='/active-jobs' className={css.link} label='nav.client' />
+          <Link href='/active-jobs' className={css.subLink} label='nav.activeJobs' />
+          <Link href='/posted-jobs' className={css.subLink} label='nav.postedJobs' />
+          <Link href='/jobs-archive' className={css.subLink} label='nav.jobsArchive' />
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link} label='nav.recruiter' />
-          <Link href='/dashboard' className={css.subLink} label='nav.myJobsBoards' />
-          <Link href='/dashboard' className={css.subLink} label='nav.jobs' />
+          <Link href='/my-jobs-boards' className={css.link} label='nav.recruiter' />
+          <Link href='/my-jobs-boards' className={css.subLink} label='nav.myJobsBoards' />
+          <Link href='/jobs' className={css.subLink} label='nav.jobs' />
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link} label='nav.tools' />
-          <Link href='/dashboard' className={css.subLink} label='nav.schedule' />
-          <Link href='/dashboard' className={css.subLink} label='nav.workerStats' />
-          <Link href='/dashboard' className={css.subLink} label='nav.clientStats' />
-          <Link href='/dashboard' className={css.subLink} label='nav.saved' />
-          <Link href='/dashboard' className={css.subLink} label='nav.earnActivityPoints' />
+          <Link href='/schedule' className={css.link} label='nav.tools' />
+          <Link href='/schedule' className={css.subLink} label='nav.schedule' />
+          <Link href='/worker-stats' className={css.subLink} label='nav.workerStats' />
+          <Link href='/client-stats' className={css.subLink} label='nav.clientStats' />
+          <Link href='/saved' className={css.subLink} label='nav.saved' />
+          <Link href='/earn-activity-points' className={css.subLink} label='nav.earnActivityPoints' />
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={css.link} label='nav.reportsAndClaims' />
+          <Link href='/reports-and-claims' className={css.link} label='nav.reportsAndClaims' />
         </div>
       </nav>
     )
