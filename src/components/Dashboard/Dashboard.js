@@ -1,4 +1,5 @@
-import { Image, Widget } from 'components/common'
+import { Image, Widget, Translate } from 'components/common'
+
 import React from 'react'
 import css from './Dashboard.scss'
 
@@ -90,29 +91,36 @@ const TempActions = [
 export default class Dashboard extends React.Component {
   render () {
     return (
-      <div>
-        <div className={css.highlights}>
-          <div className={css.highlight}>
-            <Widget
-              title='Complete Your Profile'
-              subtitle='General'
-              actions={TempActions}
-            >
-              You may continue to use <strong>laborX</strong> network anonymous if you wish so. To open wider
-              possibilities and access better Offers, Workers and Recruiters you may complete your profile by using
-              links below.
-            </Widget>
+      <div className={css.main}>
+        <div className={css.title}>
+          <div className={css.titleText}><Translate value='nav.dashboard' /></div>
+        </div>
+        <div className={css.content}>
+
+          <div className={css.highlights}>
+            <div className={css.highlight}>
+              <Widget
+                title='Complete Your Profile'
+                subtitle='General'
+                actions={TempActions}
+              >
+                You may continue to use <strong>laborX</strong> network anonymous if you wish so. To open wider
+                possibilities and access better Offers, Workers and Recruiters you may complete your profile by using
+                links below.
+              </Widget>
+            </div>
+            <div className={css.highlight}>
+              <Widget
+                title='Validate Your Data'
+                subtitle='General'
+                actions={TempActions}
+              >
+                We care about our network integrity and asks our members to pass verification process. Validation will
+                give you an access to Job Boards with higher skilled and trustworthy workers and clients.
+              </Widget>
+            </div>
           </div>
-          <div className={css.highlight}>
-            <Widget
-              title='Validate Your Data'
-              subtitle='General'
-              actions={TempActions}
-            >
-              We care about our network integrity and asks our members to pass verification process. Validation will
-              give you an access to Job Boards with higher skilled and trustworthy workers and clients.
-            </Widget>
-          </div>
+
         </div>
       </div>
     )

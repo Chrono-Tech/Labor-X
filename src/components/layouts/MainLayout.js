@@ -1,4 +1,3 @@
-import { Translate } from 'components/common'
 import { Header, RightPanel, SecondMenu } from 'components/layouts'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -6,8 +5,8 @@ import css from './MainLayout.scss'
 
 export default class MainLayout extends React.Component {
   static propTypes = {
-    title: PropTypes.string,
     isMenu: PropTypes.bool,
+    customTitle: PropTypes.func,
   }
 
   static defaultProps = {
@@ -15,7 +14,7 @@ export default class MainLayout extends React.Component {
   }
 
   render () {
-    const { title, children, isMenu } = this.props
+    const { children, isMenu, customTitle } = this.props
 
     return (
       <div>
@@ -30,12 +29,7 @@ export default class MainLayout extends React.Component {
               <SecondMenu />
             </div>
           )}
-          <div className={css.main}>
-            {title && <h1 className={css.title}><Translate value={title} /></h1>}
-            <div className={css.content}>
-              {children}
-            </div>
-          </div>
+          {children}
         </div>
         <RightPanel />
       </div>

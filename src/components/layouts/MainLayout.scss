@@ -1,7 +1,6 @@
 @import "~styles/globals/variables";
 @import "~styles/globals/mixins";
 
-$maxWidth: 74rem;
 $minWidth: 102.4rem;
 
 .header {
@@ -26,20 +25,4 @@ $minWidth: 102.4rem;
   flex-grow: 0;
   min-width: 22.5rem;
   //box-shadow: 0.5rem 0 0.8rem rgba($color-super-black, 0.1);
-}
-
-.title {
-  margin: 0;
-  padding: 5rem 0 5rem 4rem;
-  color: $color-white;
-  background-image: $gradientBlueToGreen;
-}
-
-.main {
-  flex-grow: 1;
-}
-
-.content {
-  padding-left: 4rem;
-  max-width: $maxWidth;
 }
