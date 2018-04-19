@@ -1,0 +1,48 @@
+.root {
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
+  //justify-content: space-between;
+  min-height: 100%;
+}
+
+.logo {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  img {
+    display: block;
+  }
+}
+
+.contentWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+}
+
+.loginWrapper {
+  z-index: 10;
+  width: 640px;
+}
+
+.backgroundImage {
+  position: absolute;
+  z-index: -1;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.gradientBlock {
+  height: 430px;
+  background: linear-gradient(to bottom,#0074A5 ,#00B5D1 100%);
+  position: relative;
+  opacity: 0.95;
+}
+
+.forNewUsersBlock {
+  padding: 20px 50px 50px;
+}

@@ -1,0 +1,71 @@
+.root {
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
+  //justify-content: space-between;
+  min-height: 100%;
+}
+
+.logo {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  z-index: 10;
+  img {
+    display: block;
+  }
+}
+
+.contentWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 1102px;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+
+  @media (max-width: 1024px) {
+    min-height: auto;
+  }
+}
+
+.loginWrapper {
+  z-index: 10;
+
+}
+
+.backgroundImage {
+  position: absolute;
+  z-index: -1;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.forNewUsersBlock {
+  position: absolute;
+  top: 312px;
+  left: -564px;
+  right: 0;
+  width: 530px;
+  margin: auto;
+  z-index: 9;
+
+  @media (max-width: 1024px){
+    position: relative;
+    top:0;
+    left:0;
+    margin: 0;
+  }
+}
+.gradientBlock {
+  height: 430px;
+  background: linear-gradient(to bottom,#0074A5 ,#00B5D1 100%);
+  position: relative;
+  opacity: 0.95;
+
+  @media (max-width: 1024px){
+    display: none;
+  }
+}

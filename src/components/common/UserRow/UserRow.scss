@@ -1,0 +1,66 @@
+.userBlock {
+  color: #A8EAFF;
+  border-top: 1px solid #A8EAFF;
+  border-bottom: 1px solid #A8EAFF;
+  padding: 18px 0;
+  text-align: left;
+  font-weight: 400;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 23px;
+
+  .userBlockInner {
+    display: flex;
+
+    .userBlockAvatar {
+      .userAvatar {
+        width: 40px;
+        border-radius: 20px;
+        margin-right: 20px;
+      }
+    }
+
+    .userBlockInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      &:hover {
+        color: #fff;
+      }
+
+      .userName {
+        font-size: 16px;
+        line-height: 22px;
+      }
+
+      .userAddress {
+        font-size: 12px;
+        line-height: 17px;
+      }
+    }
+  }
+
+  .actionWrapper {
+    align-items: center;
+    display: flex;
+  }
+
+  .actionListTrigger {
+    background: transparent;
+    width: 24px;
+    border: none;
+    opacity: 0.25;
+    cursor: pointer;
+    outline: none;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    img {
+      display: block;
+    }
+  }
+
+}
