@@ -27,13 +27,14 @@ class RecoveryAccountForm extends React.Component {
     
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
-        <div className={css.formHeader}>Recovery account</div>
-        <UserRow name='Emile' address='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
+        <div className={css.formHeader}>Recover Account</div>
+        <UserRow address='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
   
         <div className={css.fieldWrapper}>
           {
             wordsArray.map((item, index) =>
               <Field
+                key={index}
                 className={css.word}
                 component={Input}
                 name={`word ${index}`}

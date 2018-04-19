@@ -3,6 +3,7 @@ import { LoginLayout, Footer, LoginActions } from 'components/layouts'
 import { LoginOptions, LearnMoreBlock, LoginForm } from 'components/Login'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import Head from 'next/head'
 import initialStore from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
@@ -21,6 +22,9 @@ class Login extends React.Component {
   render () {
     return (
       <div className={css.root}>
+        <Head>
+          <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
+        </Head>
         <LoginActions>
           <LoginForm
             avatar='/static/images/profile-photo.jpg'

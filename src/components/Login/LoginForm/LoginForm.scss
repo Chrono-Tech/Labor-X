@@ -2,6 +2,10 @@
   text-align: center;
   padding: 40px 130px;
   background: linear-gradient(to bottom, rgba(0, 116, 165, 0.95), rgba(0, 160, 210, 0.95) 100%);
+
+  @media (max-width: 640px) {
+    padding: 40px 20px;
+  }
 }
 .formHeader {
   font-size: 20px;

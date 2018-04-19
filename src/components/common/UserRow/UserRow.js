@@ -32,7 +32,7 @@ export default class UserRow extends React.Component {
             { name ? (
               <div className={css.userName}>{name}</div>
             ) : null}
-            <div className={css.userAddress}>{address}</div>
+            <div className={[css.userAddress, name ? '' : css.noName].join(' ')}>{address}</div>
           </div>
         </div>
         <div className={css.actionWrapper}>

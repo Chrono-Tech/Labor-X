@@ -8,11 +8,15 @@ export default class ParallaxBox extends React.Component {
     imgSrc: PropTypes.string,
     deflectionPercent: PropTypes.number,
     addClassOnScrollEvent: PropTypes.oneOf([PropTypes.string, PropTypes.array]),
+    imageClassName: PropTypes.string,
+    className: PropTypes.string,
   }
   
   static defaultProps = {
     imgSrc: '',
     deflectionPercent: 0,
+    imageClassName: '',
+    className: '',
   }
   
   constructor (){
@@ -56,7 +60,9 @@ export default class ParallaxBox extends React.Component {
   }
   
   render () {
-    const { children, imgSrc, deflectionPercent } = this.props
+    const { children, imgSrc, className, imageClassName, deflectionPercent } = this.props
+    const imageClassNames = [css.image].concat(imageClassName)
+    const classNames = ['ParallaxBox', css.root, this.state.isScrollWasFired ? 'animation-fired' : ''].concat(className)
     let minSize = 100 + deflectionPercent
     let styles = {
       minWidth: `${minSize}%`,
@@ -64,12 +70,15 @@ export default class ParallaxBox extends React.Component {
     }
     
     return (
-      <div className={['ParallaxBox', css.root, this.state.isScrollWasFired ? 'animation-fired' : ''].join(' ')} ref='wrapper' onMouseMove={this.onMouseMove.bind(this)}>
+      <div
+        ref='wrapper'
+        className={classNames.join(' ')}
+        onMouseMove={ deflectionPercent ? this.onMouseMove.bind(this) : null}>
         <div ref='child' className={css.imageWrapper}>
           { imgSrc ?
             <img
               style={styles}
-              className={css.image}
+              className={imageClassNames.join(' ')}
               src={imgSrc}
               alt=''
             /> : null}
