@@ -17,7 +17,8 @@ export default class LoginActions extends React.Component {
   }
   
   render () {
-    const { backgroundImage } = this.props
+    const { backgroundImage, contentClassName } = this.props
+    const contentClassNames = [css.loginActionsContent].concat(contentClassName)
     
     return (
       <div className={css.root}>
@@ -26,8 +27,10 @@ export default class LoginActions extends React.Component {
             <img src='/static/images/laborx-login-head.jpg' alt='' />
           </Link>
           <div className={css.loginActionsWrapper}>
-            {this.props.children}
-            <LearnMoreBlock className={css.forNewUsersBlock}/>
+            <div className={contentClassNames.join(' ')}>
+              {this.props.children}
+            </div>
+            <LearnMoreBlock/>
           </div>
           <img src={backgroundImage} className={css.backgroundImage} alt=''/>
         </div>
