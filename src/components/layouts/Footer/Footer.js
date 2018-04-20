@@ -2,14 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'components/common'
 
-
 import css from './Footer.scss'
 
 export default class Footer extends React.Component {
   static propTypes = {
     footerClass: PropTypes.string,
   }
-  render(){
+  render (){
     return (
       <div className={css.footer}>
         <Link href='/' className={css.footerLogo}>

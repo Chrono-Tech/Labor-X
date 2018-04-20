@@ -25,23 +25,23 @@ export default class SelectOption extends React.Component {
         <h3 className={css.title}>Select Log In Method</h3>
         <div className={css.buttons}>
           <button className={css.button} onClick={this.handleMnemonicClick}>
-            <img className={css.buttonImage} src='/static/images/svg/mnemonic.svg' alt=''/>
+            <img className={css.buttonImage} src='/static/images/svg/mnemonic.svg' alt='' />
             Use Mnemonic Key
           </button>
           <button className={css.button} onClick={this.handleWalletClick}>
-            <img className={css.buttonImage} src='/static/images/svg/file.svg' alt=''/>
+            <img className={css.buttonImage} src='/static/images/svg/file.svg' alt='' />
             Select Wallet File
           </button>
           <button className={css.button} onClick={this.handlePrivateKeyClick}>
-            <img className={css.buttonImage} src='/static/images/svg/key.svg' alt=''/>
+            <img className={css.buttonImage} src='/static/images/svg/key.svg' alt='' />
             Enter Private Key
           </button>
           <button className={css.button} onClick={this.handlePrivateKeyClick}>
-            <img className={css.buttonImage} src='/static/images/svg/ledger-nano.svg' alt=''/>
+            <img className={css.buttonImage} src='/static/images/svg/ledger-nano.svg' alt='' />
             Use Ledger Nano USB
           </button>
           <button className={css.button} onClick={this.handlePrivateKeyClick}>
-            <img className={css.buttonImage} src='/static/images/svg/trezor.svg' alt=''/>
+            <img className={css.buttonImage} src='/static/images/svg/trezor.svg' alt='' />
             Use Trezor USB
           </button>
         </div>

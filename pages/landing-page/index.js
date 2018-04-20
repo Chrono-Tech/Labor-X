@@ -118,7 +118,8 @@ class Index extends React.Component {
             imgSrc='/static/images/laborx-promo-woman-watching-time-1.jpg'
             imageClassName={css.womanImage}
             className={css.womanParallaxBox}
-            deflectionPercent={0}>
+            deflectionPercent={0}
+          >
             <div className={[css.advantageBlockInner, css.advantageBlockInnerWoman].join(' ')}>
               <div className={[css.advantageCounts, css.advantageCountsWoman].join(' ')}>
                 <div className={css.advantageCountsInner}>

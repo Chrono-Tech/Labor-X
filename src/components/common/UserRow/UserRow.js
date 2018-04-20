@@ -36,7 +36,7 @@ export default class UserRow extends React.Component {
           </div>
         </div>
         <div className={css.actionWrapper}>
-          <button className={css.actionListTrigger} onClick={ onClick }>
+          <button className={css.actionListTrigger} onClick={onClick}>
             <img src={actionIcon} alt='' />
           </button>
         </div>

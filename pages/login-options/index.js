@@ -1,6 +1,5 @@
 import { Link } from 'components/common'
-import { LoginLayout, Footer, LoginActions } from 'components/layouts'
-import { LoginOptions, LearnMoreBlock } from 'components/Login'
+import { LoginActions } from 'components/layouts'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import initialStore from 'store'

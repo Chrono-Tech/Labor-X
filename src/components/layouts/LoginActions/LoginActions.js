@@ -13,7 +13,7 @@ export default class LoginActions extends React.Component {
   }
   
   static defaultProps = {
-    backgroundImage: '/static/images/laborx-login-hour.jpg'
+    backgroundImage: '/static/images/laborx-login-hour.jpg',
   }
   
   render () {
@@ -30,11 +30,11 @@ export default class LoginActions extends React.Component {
             <div className={contentClassNames.join(' ')}>
               {this.props.children}
             </div>
-            <LearnMoreBlock/>
+            <LearnMoreBlock />
           </div>
-          <img src={backgroundImage} className={css.backgroundImage} alt=''/>
+          <img src={backgroundImage} className={css.backgroundImage} alt='' />
         </div>
-        <Footer/>
+        <Footer />
       </div>
     )
   }

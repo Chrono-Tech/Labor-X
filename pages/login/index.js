@@ -1,6 +1,5 @@
-import { Link } from 'components/common'
-import { LoginLayout, Footer, LoginActions } from 'components/layouts'
-import { LoginOptions, LearnMoreBlock, LoginForm } from 'components/Login'
+import { LoginActions } from 'components/layouts'
+import { LoginForm } from 'components/Login'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import Head from 'next/head'

@@ -30,7 +30,7 @@ export default class SecondMenu extends React.Component {
           </div>
         </div>
         <div className={css.section}>
-          <Link href='/dashboard' className={[ css.link, css.selected ].join(' ')} label='nav.dashboard'/>
+          <Link href='/dashboard' className={[ css.link, css.selected ].join(' ')} label='nav.dashboard' />
         </div>
         <div className={css.section}>
           <Link href='/my-profile' className={css.link} label='nav.validation' />
@@ -40,7 +40,7 @@ export default class SecondMenu extends React.Component {
         </div>
         <div className={css.section}>
           <Link href='/to-do' className={css.link} label='nav.worker' />
-          <Link href='/to-do' className={css.subLink} label='nav.toDo'/>
+          <Link href='/to-do' className={css.subLink} label='nav.toDo' />
           <Link href='/applications-and-offers' className={css.subLink} label='nav.applicationsAndOffers' />
           <Link href='/opportunities' className={css.subLink} label='nav.Opportunities' />
           <Link href='/completed-jobs' className={css.subLink} label='nav.completedJobs' />

@@ -11,7 +11,7 @@ export default class Index extends React.Component {
   }
   
   static defaultProps = {
-    className: ''
+    className: '',
   }
   
   render () {

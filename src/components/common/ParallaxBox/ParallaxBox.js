@@ -73,7 +73,8 @@ export default class ParallaxBox extends React.Component {
       <div
         ref='wrapper'
         className={classNames.join(' ')}
-        onMouseMove={ deflectionPercent ? this.onMouseMove.bind(this) : null}>
+        onMouseMove={deflectionPercent ? this.onMouseMove.bind(this) : null}
+      >
         <div ref='child' className={css.imageWrapper}>
           { imgSrc ?
             <img

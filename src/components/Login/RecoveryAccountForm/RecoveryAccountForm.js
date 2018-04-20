@@ -33,7 +33,7 @@ class RecoveryAccountForm extends React.Component {
         <div className={css.fieldWrapper}>
           {
             wordsArray.map((item, index) =>
-              <Field
+              (<Field
                 key={index}
                 className={css.word}
                 component={Input}
@@ -41,10 +41,9 @@ class RecoveryAccountForm extends React.Component {
                 placeholder={`word ${index + 1}`}
                 autoComplete={false}
                 mods={Input.MODS.INVERT}
-              />
+              />)
             )
           }
-          
 
         </div>
         <Button
