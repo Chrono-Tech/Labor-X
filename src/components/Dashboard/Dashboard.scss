@@ -4,16 +4,33 @@
 $gutter: 4rem;
 $maxWidth: 74rem;
 
-.highlights {
-  @include flex(column, flex-start, stretch);
+.block {
+  margin-top: 4rem;
 }
 
-.highlight {
-  margin-top: 4rem;
-  flex-grow: 1;
+.highlightsRow {
+  @include flex(row, flex-start, stretch);
+  > * {
+    margin-right: 4rem;
+    flex-basis: 50%;
+    &:last-child {
+      margin-right: 0rem;
+    }
+    &:only-child {
+      flex-basis: calc(50% - 2rem);
+    }
+  }
+  &:not(:first-child) {
+    margin-top: 4rem;
+  }
+}
+
+.blockTitle {
+  margin-bottom: 4rem;
 }
 
 .main {
+  margin-bottom: 16rem;
   flex-grow: 1;
 }
 
@@ -32,6 +49,7 @@ $maxWidth: 74rem;
 }
 
 .content {
+  @include flex(column, flex-start, stretch);
   padding-left: 4rem;
   max-width: $maxWidth;
 }

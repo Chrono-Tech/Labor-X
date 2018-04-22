@@ -54,7 +54,7 @@ export default class Image extends React.PureComponent {
       color: Image.COLORS.RED,
     },
     HELP: {
-      icon: 'help_outline', // TODO @dkchv: set actual
+      icon: 'help', // TODO @dkchv: set actual
       color: Image.COLORS.BLUE,
     },
     HELP_INVERT: {

@@ -22,7 +22,7 @@ export default class Widget extends React.Component {
           <h3 className={css.title}>{title}</h3>
           <div className={css.subtitle}>{subtitle}</div>
         </div>
-        <p className={css.content}>{children}</p>
+        {children && <p className={css.content}>{children}</p>}
         {actions && actions.map(this.renderActions())}
       </div>
     )

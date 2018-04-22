@@ -9,13 +9,16 @@ export default class Action extends React.Component {
     item: PropTypes.shape({
       href: PropTypes.string.isRequired,
       date: PropTypes.string,
-      label: PropTypes.string.isRequired,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
+      ]).isRequired,
       firstIcon: PropTypes.shape({
-        name: PropTypes.string,
+        icon: PropTypes.string,
         color: PropTypes.string,
       }),
       secondIcon: PropTypes.shape({
-        name: PropTypes.string,
+        icon: PropTypes.string,
         color: PropTypes.string,
       }),
       isLink: PropTypes.bool, // affect styles only
