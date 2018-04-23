@@ -3,91 +3,6 @@ import { Image, Widget, Translate } from 'components/common'
 import React from 'react'
 import css from './Dashboard.scss'
 
-const TempActions = [
-  {
-    href: '/',
-    label: 'General profile',
-    isLink: true,
-  },
-  {
-    href: '/',
-    firstIcon: Image.SETS.SHIELD_SUCCESS,
-    label: 'Validate Your Email or Phone',
-  },
-  {
-    href: '/',
-    label: 'Validate Your ID',
-    firstIcon: Image.SETS.SHIELD_ERROR,
-  },
-  {
-    href: '/',
-    label: 'Validate Documents (Worker)',
-    firstIcon: Image.SETS.SHIELD_ERROR,
-    secondIcon: Image.SETS.MESSAGE_ERROR,
-  },
-  {
-    href: '/',
-    label: 'Become Involved',
-    firstIcon: {
-      name: Image.ICONS.LOGO,
-      color: Image.COLORS.RED,
-    },
-    counter: { value: 3 },
-  },
-  {
-    href: '/',
-    label: 'Hays Recruitment',
-    firstIcon: {
-      name: Image.ICONS.LOGO,
-      color: Image.COLORS.RED,
-    },
-    counter: { value: 0 },
-  },
-  {
-    href: '/',
-    label: 'Opportunities',
-    counter: { value: 135 },
-  },
-  {
-    href: '/',
-    label: 'Offers',
-    counter: { value: 3 },
-  },
-  {
-    href: '/',
-    label: 'Applications (0)',
-    counter: { value: 0 },
-  },
-  {
-    href: '/',
-    label: 'Applications (NaN)',
-    counter: { value: NaN },
-  },
-  {
-    href: '/',
-    label: 'Install 10 Gas Ovens',
-    counter: { value: 3, isPercent: true },
-  },
-  {
-    href: '/',
-    label: 'Pick-up 3 sofas',
-    counter: { value: 0, isPercent: true },
-  },
-  {
-    href: '/',
-    label: 'Install 10 Gas Ovens',
-    date: '1:30 PM',
-  },
-  {
-    href: '/',
-    label: 'Create job',
-    secondIcon: Image.SETS.HELP,
-    secondIconTip: {
-      tip: 'In order to create Your Job Board you will need to complete your general info and recruiter profile.',
-    },
-  },
-]
-
 export default class Dashboard extends React.Component {
   render () {
     return (
@@ -99,28 +14,28 @@ export default class Dashboard extends React.Component {
 
           <div className={css.block}>
             <Widget
-              title='Complete Your Profile'
-              subtitle='General'
+              title='ui.dashboard.general.completeYourProfile'
+              subtitle='ui.dashboard.general.general'
               actions={[
                 {
                   href: '/general-profile',
-                  label: <Translate value='nav.generalProfile' />,
+                  label: 'nav.generalProfile',
                   isLink: true,
                   secondIcon: Image.SETS.MESSAGE_ERROR,
                 },
                 {
                   href: '/recruiter-profile',
-                  label: <Translate value='nav.recruiterProfile' />,
+                  label: 'nav.recruiterProfile',
                   isLink: true,
                 },
                 {
                   href: '/worker-profile',
-                  label: <Translate value='nav.workerProfile' />,
+                  label: 'nav.workerProfile',
                   isLink: true,
                 },
                 {
                   href: '/client-profile',
-                  label: <Translate value='nav.clientProfile' />,
+                  label: 'nav.clientProfile',
                   isLink: true,
                 },
               ]}
@@ -137,8 +52,8 @@ export default class Dashboard extends React.Component {
             <h2 className={css.blockTitle}>For Recruiters</h2>
             <div className={css.highlightsRow}>
               <Widget
-                title='Create your Job Board'
-                subtitle='Recruiter'
+                title='ui.dashboard.recruiter.createYourJobBoard'
+                subtitle='ui.dashboard.recruiter.recruiter'
                 actions={[
                   {
                     href: '/create-job-board',
@@ -164,8 +79,8 @@ export default class Dashboard extends React.Component {
                 and Workers to receive fees on job completed.
               </Widget>
               <Widget
-                title='My Job Boards'
-                subtitle='Recruiter'
+                title='ui.dashboard.recruiter.createYourJobBoard'
+                subtitle='ui.dashboard.recruiter.recruiter'
                 actions={[
                   {
                     href: '/become-involved',
@@ -191,8 +106,8 @@ export default class Dashboard extends React.Component {
             </div>
             <div className={css.highlightsRow}>
               <Widget
-                title='HR Review'
-                subtitle='Recruiter'
+                title='ui.dashboard.recruiter.hrReview'
+                subtitle='ui.dashboard.recruiter.recruiter'
                 actions={[
                   {
                     href: '/',
@@ -212,8 +127,8 @@ export default class Dashboard extends React.Component {
             <h2 className={css.blockTitle}>For Workers</h2>
             <div className={css.highlightsRow}>
               <Widget
-                title='Start your Job Search'
-                subtitle='Worker'
+                title='ui.dashboard.worker.startYourJobSearch'
+                subtitle='ui.dashboard.worker.worker'
                 actions={[
                   {
                     href: '/general-job-board',
@@ -231,8 +146,8 @@ export default class Dashboard extends React.Component {
                 browse Job Boards created by other network users.
               </Widget>
               <Widget
-                title='To-DO 20 Dec 2017'
-                subtitle='Worker'
+                title='ui.dashboard.worker.toDo'
+                subtitle='ui.dashboard.worker.worker'
                 actions={[
                   {
                     label: 'Install 10 Gas Ovens',
@@ -251,8 +166,8 @@ export default class Dashboard extends React.Component {
             </div>
             <div className={css.highlightsRow}>
               <Widget
-                title='Opportunities'
-                subtitle='Worker'
+                title='ui.dashboard.worker.opportunities'
+                subtitle='ui.dashboard.worker.worker'
                 actions={[
                   {
                     label: 'Opportunities',
@@ -276,8 +191,8 @@ export default class Dashboard extends React.Component {
             <h2 className={css.blockTitle}>For Clients</h2>
             <div className={css.highlightsRow}>
               <Widget
-                title='Post Your Job'
-                subtitle='Client'
+                title='ui.dashboard.client.postYourJob'
+                subtitle='ui.dashboard.client.client'
                 actions={[
                   {
                     href: '/',
@@ -289,8 +204,8 @@ export default class Dashboard extends React.Component {
                 Has got a Job already? Post it now!
               </Widget>
               <Widget
-                title='My Posted Jobs'
-                subtitle='Client'
+                title='ui.dashboard.client.myPostedJobs'
+                subtitle='ui.dashboard.client.client'
                 actions={[
                   {
                     label: 'Offers Activity',
@@ -307,8 +222,8 @@ export default class Dashboard extends React.Component {
             </div>
             <div className={css.highlightsRow}>
               <Widget
-                title='Jobs Progress'
-                subtitle='Client'
+                title='ui.dashboard.client.jobsProgress'
+                subtitle='ui.dashboard.client.client'
                 actions={[
                   {
                     href: '/',
@@ -328,8 +243,8 @@ export default class Dashboard extends React.Component {
             <h2 className={css.blockTitle}>Validation Service</h2>
             <div className={css.highlightsRow}>
               <Widget
-                title='Validation Requests'
-                subtitle='Validation Service'
+                title='ui.dashboard.validationService.validationRequests'
+                subtitle='ui.dashboard.validationService.validationService'
                 actions={[
                   {
                     label: 'New Requests',
@@ -344,8 +259,8 @@ export default class Dashboard extends React.Component {
                 ]}
               ></Widget>
               <Widget
-                title='Reports & Claims'
-                subtitle='Validation Service'
+                title='ui.dashboard.validationService.reportsAndClaims'
+                subtitle='ui.dashboard.validationService.validationService'
                 actions={[
                   {
                     label: 'New Reports',

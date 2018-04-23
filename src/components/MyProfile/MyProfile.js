@@ -1,4 +1,5 @@
 import { Translate } from 'components/common'
+import ValidationTab from './ValidationTab/ValidationTab'
 import React from 'react'
 import css from './MyProfile.scss'
 
@@ -11,7 +12,7 @@ export default class MyProfile extends React.Component {
       tabs: [
         {
           title: 'nav.validation',
-          content: <div>Validation tab content</div>,
+          content: <ValidationTab />,
         },
         {
           title: 'nav.notifications',

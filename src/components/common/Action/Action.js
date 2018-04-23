@@ -1,4 +1,4 @@
-import { Link, Image, Moment, Tip } from 'components/common/index'
+import { Link, Image, Moment, Tip, Translate } from 'components/common/index'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Counter from '../Counter/Counter'
@@ -41,7 +41,7 @@ export default class Action extends React.Component {
             {...item.firstIcon}
           />
         )}
-        <div className={item.isLink ? css.link : css.action}>{item.label}</div>
+        <div className={item.isLink ? css.link : css.action}><Translate value={item.label}/></div>
         {item.secondIcon && (
           <div>
             {item.secondIconTip
