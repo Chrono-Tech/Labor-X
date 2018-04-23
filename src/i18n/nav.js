@@ -32,4 +32,8 @@ export default {
   earnActivityPoints: 'Earn Activity Points',
   reportsAndClaims: 'Reports & Claims',
   myProfile: 'My Profile',
+  generalProfile: 'General Profile',
+  recruiterProfile: 'Recruiter Profile',
+  workerProfile: 'Worker Profile',
+  clientProfile: 'Client Profile',
 }
