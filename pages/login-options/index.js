@@ -1,6 +1,5 @@
 import { Link } from 'components/common'
-import { LoginLayout, Footer, LoginActions } from 'components/layouts'
-import { LoginOptions, LearnMoreBlock } from 'components/Login'
+import { LoginActions } from 'components/layouts'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import initialStore from 'store'
@@ -21,20 +20,38 @@ class Index extends React.Component {
   render () {
     return (
       <div className={css.root}>
-        <div className={css.contentWrapper}>
-          <Link href='/' className={css.logo}>
-            <img src='/static/images/laborx-login-head.jpg' alt='' />
+        <LoginActions contentClassName={css.contentGradient}>
+          <Link className={css.helpLink} href='/'>
+            <img src='/static/images/svg/help-white.svg' alt='' />
           </Link>
-          <div className={css.loginWrapper}>
-            <LoginOptions />
+          <div className={css.pageHeader}>Add an existing account</div>
+          <div className={css.buttonsWrapper}>
+            <button className={css.methodButton}>
+              <img src='/static/images/svg/ledger-nano.svg' alt='' />
+              LedgerNano
+            </button>
+            <button className={css.methodButton}>
+              <img src='/static/images/svg/trezor.svg' alt='' />
+              Trezor
+            </button>
+            <button className={[css.methodButton, css.pluginButton].join(' ')}>
+              <img src='/static/images/svg/plugin.svg' alt='' />
+              Browser Plug-in
+            </button>
+            <button className={css.methodButton}>
+              <img src='/static/images/svg/mnemonic.svg' alt='' />
+              Mnemonic
+            </button>
+            <button className={css.methodButton}>
+              <img src='/static/images/svg/key.svg' alt='' />
+              Private key
+            </button>
+            <button className={[css.methodButton, css.walletButton].join(' ')}>
+              <img src='/static/images/svg/wallet.svg' alt='' />
+              Wallet file
+            </button>
           </div>
-          <img src='/static/images/laborx-login-hour.jpg' className={css.backgroundImage} alt=''/>
-          <div className={css.forNewUsersBlock}>
-            <div className={css.gradientBlock}/>
-            <LearnMoreBlock/>
-          </div>
-        </div>
-        <Footer/>
+        </LoginActions>
       </div>
     )
   }

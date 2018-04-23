@@ -40,7 +40,7 @@ class LoginForm extends React.Component {
           className={css.row}
           component={Input}
           name='password'
-          placeholder={'Enter Password'}
+          placeholder='Enter Password'
           autoComplete={false}
           mods={[Input.MODS.INVERT, css.passwordField]}
         />

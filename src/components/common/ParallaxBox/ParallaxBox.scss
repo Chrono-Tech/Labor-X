@@ -2,7 +2,8 @@
   position: relative;
   height: 85vh;
   overflow: hidden;
-  display: block;
+  display: flex;
+  align-items: center;
 }
 
 .imageWrapper {
