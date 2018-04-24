@@ -26,6 +26,7 @@
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0",
     "truffle-contract": "github:trufflesuite/truffle-contract#95/head",
+    "uniqid": "^4.1.1",
     "web3": "^1.0.0-beta.30",
     "web3-eth-accounts": "^1.0.0-beta.33"
   },

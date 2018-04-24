@@ -16,7 +16,7 @@ import ethereumService from '../../src/services/EthereumService'
 
 // import css from './index.scss'
 
-class Index extends React.Component {
+class Wallet extends React.Component {
   componentWillMount () {
     ethereumService.start()
   }
@@ -42,4 +42,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRedux(initialStore, mapStateToProps, mapDispatchToProps)(Index)
+export default withRedux(initialStore, mapStateToProps, mapDispatchToProps)(Wallet)
