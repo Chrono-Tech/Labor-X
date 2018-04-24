@@ -1,4 +1,8 @@
 import Web3 from 'web3'
+import uniqid from 'uniqid'
+import bip39 from 'bip39'
+import {WalletModel, WalletEntryModel} from 'src/models'
+
 
 export const WALLETS_CREATE = 'wallets/create'
 export const WALLETS_SELECT = 'wallets/select'
@@ -21,31 +25,40 @@ export const walletRemove = (name) => (dispatch) => {
   dispatch({ type: WALLETS_REMOVE, name })
 }
 
-export const loadWallet = (wallet, password) => (dispatch) => {
-  let walletDecrypted = Web3.eth.accounts.wallet.decrypt(wallet.encrypted, password)
+export const loadWallet = (entry, password) => (dispatch) => {
+  let wallet = Web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
   
-    dispatch(walletSelect(walletDecrypted))
+  const model = new WalletModel({
+    entry,
+    wallet
+  })
+  
+  dispatch(walletSelect(model))
   
 }
 
-export const createWallet = await ({ name, password, seed, mnemonic, numbeOfAccounts = 0 }) {
-  const wallet = web3.eth.accounts.wallet.create(numbeOfAccounts)
+export const createWallet = ({ name, password, seed, mnemonic, numberOfAccounts = 0 }) => (dispatch) => {
+  const wallet = web3.eth.accounts.wallet.create(numberOfAccounts)
+  
   if (seed) {
-    const account = await web3.eth.accounts.privateKeyToAccount(seed)
-    await wallet.add(account)
+    const account = web3.eth.accounts.privateKeyToAccount(seed)
+    wallet.add(account)
   }
+  
   if (mnemonic) {
-    const account = await web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
-    await wallet.add(account)
+    const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
+    wallet.add(account)
   }
+  
   const entry = new WalletEntryModel({
     key: uniqid(),
     name,
     encrypted: wallet.encrypt(password)
   })
+  
   dispatch(walletCreate(entry))
-  // return new WalletModel({
-  //   entry,
-  //   wallet
-  // })
-},
+}
+
+export const logout = () => (dispatch) => {
+  dispatch(walletSelect(null))
+}

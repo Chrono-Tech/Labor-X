@@ -1,8 +1,8 @@
-import { updateWallet, removeWallet } from 'utils'
+import { updateWallet, removeWallet } from 'src/utils'
 import * as a from './actions'
 
 
-const initialState = {
+export const initialState = {
   walletsList: [],
   activeWallet: null,
 }
@@ -36,6 +36,6 @@ export default (state = initialState, action) => {
         walletsList: removeWallet(state.walletsList, action.name)
       }
     default:
-      return state
+      return {...state}
   }
 }

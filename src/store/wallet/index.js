@@ -1,35 +1,39 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
+import storage from 'redux-persist/lib/storage'
+import {composeWithDevTools} from 'redux-devtools-extension'
+import { createLogger } from 'redux-logger'
+import thunkMiddleware from 'redux-thunk'
 
 import rootReducer from './reducers'
-import {composeWithDevTools} from "redux-devtools-extension";
-import { createLogger } from 'redux-logger';
-import thunkMiddleware from "redux-thunk";
-
 export * from './actions'
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: storage,
   blacklist: ['activeWallet']
 }
+
 
 const loggerMiddleware = createLogger({
   level:      'info',
   collapsed:  true
 });
+
+const middlewares = [thunkMiddleware, process.env.NODE_ENV !== 'production' ? loggerMiddleware: undefined]
+
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-export default (initialState = {}) => {
+export default () => {
   let store = createStore(
     persistedReducer,
-    initialState,
+    undefined,
     composeWithDevTools(
-      applyMiddleware(thunkMiddleware, loggerMiddleware),
+      applyMiddleware(...middlewares),
       )
   )
   
   let persistor = persistStore(store)
+  
   return store
 }

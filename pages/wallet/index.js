@@ -2,17 +2,19 @@ import { Link } from 'components/common'
 import { LoginActions } from 'components/layouts'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import initialStore, { signOut } from 'store/wallet'
+import initialStore, {
+  walletCreate,
+  walletUpdate,
+  walletRemove,
+  loadWallet,
+  createWallet,
+  logout
+} from 'store/wallet'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import ethereumService from '../../src/services/EthereumService'
 
-import { PersistGate } from 'redux-persist/integration/react'
-
-import { persistStore, persistReducer } from 'redux-persist'
-
 // import css from './index.scss'
-
 
 class Index extends React.Component {
   componentWillMount () {
@@ -20,17 +22,17 @@ class Index extends React.Component {
   }
   
   render () {
-    console.log('state', this.props.state)
-    return (
-      <div>
-        hello, world!
-      </div>
-    )
+    return null
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    walletUpdate: (wallet, name) => dispatch(walletUpdate(wallet, name)),
+    walletRemove: (name) => dispatch(walletRemove(name)),
+    loadWallet: (wallet) => dispatch(loadWallet(wallet)),
+    createWallet: (options) => dispatch(createWallet(options)),
+    logout: (wallet) => dispatch(logout(wallet)),
   }
 }
 
