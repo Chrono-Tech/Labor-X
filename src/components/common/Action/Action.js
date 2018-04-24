@@ -7,7 +7,7 @@ import css from './Action.scss'
 export default class Action extends React.Component {
   static propTypes = {
     item: PropTypes.shape({
-      href: PropTypes.string.isRequired,
+      href: PropTypes.string,
       date: PropTypes.string,
       label: PropTypes.oneOfType([
         PropTypes.string,
@@ -29,7 +29,7 @@ export default class Action extends React.Component {
     const { item } = this.props
 
     return (
-      <Link href={item.href} className={css.root}>
+      <Link href={item.href || '/'} className={css.root}>
         {item.date && (
           <div className={css.date}>
             <Moment value={item.date} />

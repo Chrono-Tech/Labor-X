@@ -1,30 +1,75 @@
+/* eslint-disable max-len */
+
 export default {
- myProfile: {
-    yourLevel: 'Your profile validation level',
-    yourLevelText: 'If you\'d like you may continue to use LaborX network anonymous. We care about our network integrity and asks our members to pass validation process done by our team to ensure every profile does meet our quality data standards. Verification will give you an access to Job Boards with higher skilled and trustworthy workers and clients. Complete the following tasks to gain higher validation level.',
-    general: {
-      general: 'General',
-      photoNameDate: 'Photo, Name and Date of Birth',
-      phoneMail: 'Phone and email',
-      homeAddress: 'Home Address',
+  myProfile: {
+    validation: {
+      yourLevel: 'Your profile validation level',
+      yourLevelText: 'If you\'d like you may continue to use LaborX network anonymous. We care about our network integrity and asks our members to pass validation process done by our team to ensure every profile does meet our quality data standards. Verification will give you an access to Job Boards with higher skilled and trustworthy workers and clients. Complete the following tasks to gain higher validation level.',
+      general: {
+        general: 'General',
+        photoNameDate: 'Photo, Name and Date of Birth',
+        phoneMail: 'Phone and email',
+        homeAddress: 'Home Address',
+      },
+      recruiter: {
+        recruiter: 'Recruiter',
+        recruiterInformation: 'Recruiter Information',
+      },
+      worker: {
+        worker: 'Worker',
+        workerInformation: 'Worker Information',
+      },
+      client: {
+        client: 'Client',
+        clientInformation: 'Client Information',
+      },
+      evaluator: {
+        evaluator: 'Become an Evaluator',
+        evaluatorInformation: 'Mauris libero est, blandit sollicitudin quam sit amet, mattis maximus nunc. Aenean feugiat justo non urna sodales suscipit in at mauris.',
+      },
+      publicProfilePages: 'Public Profile Pages',
     },
-    recruiter: {
-      recruiter: 'Recruiter',
-      recruiterInformation: 'Recruiter Information',
+    notifications: {
+      messagesAndEmailNotifications: 'Messages & Email Notifications',
+      jobBoards: 'Job Boards',
+      worker: {
+        worker: 'Worker',
+        opportunities: 'Opportunities',
+        jobApplied: 'Job applied',
+        jobOfferReceived: 'Job offer received',
+        invoiceUpdates: 'Invoice Updates',
+        endorsementReceived: 'Endorsement received',
+      },
+      client: {
+        client: 'Client',
+        applicationReceived: 'Application received',
+        invoiceUpdates: 'Invoice updates',
+        offerAccepted: 'Offer accepted',
+      },
+      recruiter: {
+        recruiter: 'Recruiter',
+        myJobBoardUpdates: 'My Job Board Updates',
+        offerReceived: 'Offer received',
+      },
+      general: {
+        general: 'General',
+        jobBoardAdded: 'Job Board Added',
+        messageReceived: 'Message received',
+        validationUpdates: 'Validation updates',
+        ratingChanged: 'Rating Changed',
+        myJobUpdates: 'My job updates',
+        reportUpdates: 'Report updates',
+      },
+      messaging: {
+        messaging: 'messaging',
+        everyoneCanSendMessages: 'Everyone can send messages',
+        workers: 'Workers',
+        clients: 'Clients',
+        recruiters: 'Recruiters',
+        withValidatedEmail: 'With validated email',
+        withValidatedId: 'With validated ID',
+      },
     },
-    worker: {
-      worker: 'Worker',
-      workerInformation: 'Worker Information',
-    },
-    client: {
-      client: 'Client',
-      clientInformation: 'Client Information',
-    },
-    evaluator: {
-      evaluator: 'Become an Evaluator',
-      evaluatorInformation: 'Mauris libero est, blandit sollicitudin quam sit amet, mattis maximus nunc. Aenean feugiat justo non urna sodales suscipit in at mauris.',
-    },
-    publicProfilePages: 'Public Profile Pages',
   },
   dashboard: {
     general: {
