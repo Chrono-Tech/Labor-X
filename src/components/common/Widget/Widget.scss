@@ -6,24 +6,37 @@
   box-shadow: $paperBoxShadow;
 }
 
-.header {
+.header-blue {
   padding: 3rem;
   border-radius: .5rem .5rem 0 0;
   background-color: $color-blue94;
-
   &:hover {
     background-color: $color-primary;
   }
 }
 
-.title {
+.title-blue {
   color: $color-white;
 }
 
 
-.subtitle {
+.subtitle-blue {
   color: $color-blue53;
   font-weight: $font-weight-medium;
+}
+
+.header-white {
+  padding: 3rem;
+  border-radius: .5rem .5rem 0 0;
+  background-color: $color-white;
+}
+
+.title-white {
+  color: $color-black;
+}
+
+.subtitle-white {
+  color: $color-black;
 }
 
 .content {

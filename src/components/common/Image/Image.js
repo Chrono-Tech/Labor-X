@@ -26,6 +26,7 @@ export default class Image extends React.PureComponent {
     UPLOAD_FILE_REMOVE: 'delete',
     CHECKBOX_ON: 'check_box',
     CHECKBOX_OFF: 'check_box_outline_blank',
+    CHECKBOX_CIRCLE: 'check_box_outline_blank', //TODO set actual
   }
 
   static COLORS = {
@@ -42,7 +43,7 @@ export default class Image extends React.PureComponent {
 
   static SETS = {
     SHIELD_SUCCESS: {
-      icon: 'check_box', // TODO @dkchv: set actual
+      icon: 'security', // TODO @dkchv: set actual
       color: Image.COLORS.GREEN,
     },
     SHIELD_ERROR: {

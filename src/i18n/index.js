@@ -4,6 +4,7 @@ import terms from './terms'
 import layouts from './layouts'
 import nav from './nav'
 import tip from './tip'
+import ui from './ui'
 
 export default {
   en: {
@@ -11,6 +12,7 @@ export default {
     terms,
     nav,
     tip,
+    ui,
     ...layouts,
     ...components,
   },
