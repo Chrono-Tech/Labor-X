@@ -6,7 +6,7 @@
   box-shadow: $paperBoxShadow;
 }
 
-.header-blue {
+.headerBlue {
   padding: 3rem;
   border-radius: .5rem .5rem 0 0;
   background-color: $color-blue94;
@@ -15,27 +15,28 @@
   }
 }
 
-.title-blue {
+.titleBlue {
   color: $color-white;
 }
 
 
-.subtitle-blue {
+.subtitleBlue {
   color: $color-blue53;
   font-weight: $font-weight-medium;
 }
 
-.header-white {
+.headerWhite {
   padding: 3rem;
   border-radius: .5rem .5rem 0 0;
   background-color: $color-white;
 }
 
-.title-white {
+.titleWhite {
   color: $color-black;
 }
 
-.subtitle-white {
+.subtitleWhite {
+  margin-top: 1.5rem;
   color: $color-black;
 }
 

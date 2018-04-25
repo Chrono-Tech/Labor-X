@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Widget.scss'
 
-const BLUE = 'blue'
-const WHITE = 'white'
+const BLUE = 'Blue'
+const WHITE = 'White'
 
 export default class Widget extends React.Component {
   static propTypes = {
@@ -13,6 +13,7 @@ export default class Widget extends React.Component {
     className: PropTypes.string,
     headerTheme: PropTypes.oneOf([BLUE, WHITE]),
     actions: PropTypes.instanceOf(Array),
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   }
 
   static defaultProps = {
@@ -31,9 +32,9 @@ export default class Widget extends React.Component {
 
     return (
       <div className={css.root}>
-        <div className={css[`header-${headerTheme}`]}>
-          <h3 className={css[`title-${headerTheme}`]}><Translate value={title}/></h3>
-          {subtitle && <div className={css[`subtitle-${headerTheme}`]}><Translate value={subtitle}/></div>}
+        <div className={css[`header${headerTheme}`]}>
+          <h3 className={css[`title${headerTheme}`]}><Translate value={title} /></h3>
+          {subtitle && <div className={css[`subtitle${headerTheme}`]}><Translate value={subtitle} /></div>}
         </div>
         {children && <p className={css.content}>{children}</p>}
         {actions && actions.map(this.renderActions())}

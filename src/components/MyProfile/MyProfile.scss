@@ -36,6 +36,7 @@ $maxWidth: 74rem;
 
 .tab {
   @include flex(row, center, center);
+  outline-color: transparent;
   cursor: pointer;
   user-select: none;
   padding: .5rem 2rem;

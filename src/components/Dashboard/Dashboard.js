@@ -40,7 +40,7 @@ export default class Dashboard extends React.Component {
                 },
               ]}
             >
-              If you'd like you may continue to use LaborX network anonymous.
+              If you&apos;d like you may continue to use LaborX network anonymous.
               We care about our network integrity and asks our members to pass validation
               process done by our team to ensure every profile does meet our quality data
               standards. Verification will give you an access to Job Boards with higher
@@ -102,7 +102,7 @@ export default class Dashboard extends React.Component {
                     isLink: true,
                   },
                 ]}
-              ></Widget>
+              />
             </div>
             <div className={css.highlightsRow}>
               <Widget
@@ -120,7 +120,7 @@ export default class Dashboard extends React.Component {
                     date: '21 Dec',
                   },
                 ]}
-              ></Widget>
+              />
             </div>
           </div>
           <div className={css.block}>
@@ -162,7 +162,7 @@ export default class Dashboard extends React.Component {
 
                   },
                 ]}
-              ></Widget>
+              />
             </div>
             <div className={css.highlightsRow}>
               <Widget
@@ -184,7 +184,7 @@ export default class Dashboard extends React.Component {
                     isLink: true,
                   },
                 ]}
-              ></Widget>
+              />
             </div>
           </div>
           <div className={css.block}>
@@ -218,7 +218,7 @@ export default class Dashboard extends React.Component {
                     isLink: true,
                   },
                 ]}
-              ></Widget>
+              />
             </div>
             <div className={css.highlightsRow}>
               <Widget
@@ -236,7 +236,7 @@ export default class Dashboard extends React.Component {
                     counter: { value: 0, isPercent: true },
                   },
                 ]}
-              ></Widget>
+              />
             </div>
           </div>
           <div className={css.block}>
@@ -257,7 +257,7 @@ export default class Dashboard extends React.Component {
                     isLink: true,
                   },
                 ]}
-              ></Widget>
+              />
               <Widget
                 title='ui.dashboard.validationService.reportsAndClaims'
                 subtitle='ui.dashboard.validationService.validationService'
@@ -273,7 +273,7 @@ export default class Dashboard extends React.Component {
                     isLink: true,
                   },
                 ]}
-              ></Widget>
+              />
             </div>
           </div>
 

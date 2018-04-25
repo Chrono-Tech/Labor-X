@@ -1,12 +1,15 @@
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Translate } from 'components/common'
 import ValidationTab from './ValidationTab/ValidationTab'
-import React from 'react'
+import NotificationsTab from './NotificationsTab/NotificationsTab'
 import css from './MyProfile.scss'
 
 export default class MyProfile extends React.Component {
-
-  constructor(props, context){
+  constructor (props, context){
     super(props, context)
+    this.handleTabClick = this.handleTabClick.bind(this)
+
     this.state = {
       currentTab: 0,
       tabs: [
@@ -16,14 +19,18 @@ export default class MyProfile extends React.Component {
         },
         {
           title: 'nav.notifications',
-          content: <div>Notifications tab content</div>,
+          content: <NotificationsTab />,
         },
         {
           title: 'nav.security',
           content: <div>Security tab content</div>,
         },
-      ]
+      ],
     }
+  }
+
+  handleTabClick (index) {
+    this.setState({ currentTab: index })
   }
 
   render () {
@@ -32,20 +39,52 @@ export default class MyProfile extends React.Component {
         <div className={css.title}>
           <div className={css.titleText}><Translate value='nav.myProfile' /></div>
           <div className={css.tabs}>
-            {this.state.tabs.map((tab, index) =>
-              <div
-                className={[css.tab, this.state.currentTab === index ? css.tabActive : null].join(' ')}
-                onClick={() => this.setState({currentTab: index})}
+            {this.state.tabs.map((tab, index) => (
+              <Tab
                 key={tab.title}
-              >
-                <Translate value={tab.title} />
-              </div>
-            )}
+                isActive={this.state.currentTab === index}
+                onClick={this.handleTabClick}
+                title={tab.title}
+                index={index}
+              />
+            ))}
           </div>
         </div>
         <div className={css.content}>
           {this.state.tabs[this.state.currentTab].content}
         </div>
+      </div>
+    )
+  }
+}
+
+class Tab extends React.Component {
+  static propTypes = {
+    index: PropTypes.number,
+    title: PropTypes.string,
+    isActive: PropTypes.bool,
+    onClick: PropTypes.func,
+  }
+
+  constructor (...args) {
+    super(...args)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick () {
+    this.props.onClick(this.props.index)
+  }
+
+  render () {
+    return (
+      <div
+        className={[css.tab, this.props.isActive ? css.tabActive : null].join(' ')}
+        onClick={this.handleClick}
+        onKeyPress={this.handleClick}
+        tabIndex={0}
+        role='button'
+      >
+        <Translate value={this.props.title} />
       </div>
     )
   }

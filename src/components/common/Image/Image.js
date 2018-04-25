@@ -36,6 +36,7 @@ export default class Image extends React.PureComponent {
     BLUE: 'blue',
     GREEN: 'green',
     GOLD: 'gold',
+    GREY: 'grey',
 
     ERROR: 'error',
     WARN: 'warn',
