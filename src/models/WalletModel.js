@@ -1,17 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import WalletEntryModel from './WalletEntryModel'
+import AbstractModel from './AbstractModel'
 
-export default class WalletModel extends React.Component {
-  static propTypes = {
-    wallet: PropTypes.object,
-    entry: PropTypes.instanceOf(WalletEntryModel),
-  }
+const schema = {
+  wallet: PropTypes.object,
+  entry: PropTypes.instanceOf(WalletEntryModel),
+}
+
+export default class WalletModel extends AbstractModel {
+  constructor(props) {
+    super(props, schema)
   
-  constructor({wallet, entry}){
-    super({wallet, entry})
-    
-    this.wallet = wallet
-    this.entry = entry
+    this.wallet = props.wallet
+    this.entry = props.entry
   }
 }
