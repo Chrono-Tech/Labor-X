@@ -4,6 +4,7 @@ import * as a from './actions'
 const initialState = {
   isSignIn: false,
   signIn: new SignInModel(),
+  step: null
 }
 
 export default (state = initialState, action) => {
@@ -19,6 +20,11 @@ export default (state = initialState, action) => {
         ...state,
         isSignIn: false,
         signIn: new SignInModel(),
+      }
+    case a.LOGIN_CHANGE_STEP:
+      return {
+        ...state,
+        step: action.step
       }
     default:
       return state

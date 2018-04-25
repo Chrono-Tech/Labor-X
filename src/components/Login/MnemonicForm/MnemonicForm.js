@@ -25,20 +25,18 @@ class MnemonicForm extends React.Component {
     onChangeStep: PropTypes.func.isRequired,
   }
 
-  static STEP = 'step/LoginWithMnemonic'
-
   constructor () {
     super(...arguments)
-    // eslint-disable-next-line
     console.log('test mnemonic: ', bip39.generateMnemonic())
   }
 
   render () {
     const prefix = this.constructor.name
-    const { handleSubmit, error, pristine, invalid } = this.props
+    const { handleSubmit, error, pristine, invalid, onChangeStep } = this.props
 
     return (
       <form className={css.root} name={FORM_MNEMONIC} onSubmit={handleSubmit}>
+        <h3 className={css.header}>Mnemonic form</h3>
         <Field
           className={css.row}
           component={Input}
@@ -49,6 +47,7 @@ class MnemonicForm extends React.Component {
         />
         <Button
           className={css.row}
+          buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
           label='Login'
           primary
@@ -56,6 +55,10 @@ class MnemonicForm extends React.Component {
           error={error}
           mods={Button.MODS.INVERT}
         />
+        <div>
+          or
+          <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>
+        </div>
       </form>
     )
   }

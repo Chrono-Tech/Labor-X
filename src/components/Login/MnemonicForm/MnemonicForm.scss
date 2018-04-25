@@ -1,8 +1,44 @@
 
 .root {
   text-align: center;
+  padding: 40px 130px;
 }
 
 .row {
   margin-top: 2rem;
+}
+
+.header {
+  line-height: 24px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 50px;
+}
+
+.submitButton {
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #fff !important;
+  padding: 12px 0;
+  margin-bottom: 30px;
+
+  &:hover {
+    background-color: #E5F5FA !important;
+  }
+}
+
+.backButton {
+  margin-left: 5px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline;
+  font-weight: 300;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

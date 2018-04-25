@@ -31,11 +31,11 @@ class PrivateKeyForm extends React.Component {
 
   render () {
     const prefix = this.constructor.name
-    const { handleSubmit, pristine, invalid } = this.props
+    const { handleSubmit, pristine, invalid, onChangeStep } = this.props
 
     return (
       <form className={css.root} name={FORM_PRIVATE_KEY} onSubmit={handleSubmit}>
-        <h3 className={css.title}><Translate value={`${prefix}.title`} /></h3>
+        <h3 className={css.header}><Translate value={`${prefix}.title`} /></h3>
         <Field
           component={Input}
           name='privateKey'
@@ -46,9 +46,13 @@ class PrivateKeyForm extends React.Component {
         />
         <Button
           label='term.enter'
+          buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
           disabled={pristine || invalid}
         />
+        <div>
+          or <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>
+        </div>
       </form>
     )
   }
