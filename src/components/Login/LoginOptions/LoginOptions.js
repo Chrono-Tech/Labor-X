@@ -3,7 +3,7 @@ import { MnemonicForm, PrivateKeyForm, WalletFileForm, SelectOption, LoginSteps 
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { signIn, changeStep, submitMnemonic, submitPrivateKey } from 'store'
+import { signIn, changeStep } from 'store'
 import css from './LoginOptions.scss'
 
 class LoginOptions extends React.Component {
@@ -31,7 +31,7 @@ class LoginOptions extends React.Component {
   handleBackClick = () => this.handleChangeStep(null)
 
   render () {
-    const { onChangeStep, step, submitMnemonic, submitPrivateKey } = this.props
+    const { onChangeStep, step } = this.props
 
     const formProps = {
       onChangeStep,

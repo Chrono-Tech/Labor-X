@@ -2,7 +2,6 @@ import Web3 from 'src/network/Web3Provider'
 import uniqid from 'uniqid'
 import bip39 from 'bip39'
 import {WalletModel, WalletEntryModel} from 'src/models'
-console.log('web3', Web3 )
 
 export const WALLETS_CREATE = 'wallets/create'
 export const WALLETS_SELECT = 'wallets/select'
@@ -52,8 +51,6 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
     const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
     wallet.add(account)
   }
-
-  console.log('createWallet', wallet)
 
   const entry = new WalletEntryModel({
     key: uniqid(),
