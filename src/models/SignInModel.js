@@ -6,6 +6,7 @@ export default class SignInModel extends ModelBase {
     address: null,
     isHD: false,
     isHardware: false,
+    key: '',
   }
 
   static METHODS = {

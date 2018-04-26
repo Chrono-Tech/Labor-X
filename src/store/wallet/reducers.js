@@ -1,13 +1,21 @@
 import { updateWallet, removeWallet } from 'src/utils'
+import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+
 import * as a from './actions'
 
+const persistConfig = {
+  key: 'wallet',
+  storage: storage,
+  blacklist: ['activeWallet']
+}
 
 export const initialState = {
   walletsList: [],
   activeWallet: null,
 }
 
-export default (state = initialState, action) => {
+const wallet = (state = initialState, action) => {
   switch (action.type) {
     case a.WALLETS_CREATE :
       return {
@@ -39,3 +47,5 @@ export default (state = initialState, action) => {
       return {...state}
   }
 }
+
+export default persistReducer(persistConfig, wallet)

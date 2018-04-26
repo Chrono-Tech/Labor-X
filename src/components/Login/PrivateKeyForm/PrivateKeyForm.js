@@ -6,14 +6,17 @@ import ethereumService from 'services/EthereumService'
 import SignInModel from '../../../models/SignInModel'
 import css from './PrivateKeyForm.scss'
 import validate from './validate'
+import hdKey from 'ethereumjs-wallet/hdkey'
 
-const FORM_PRIVATE_KEY = 'form/privateKEy'
+const FORM_PRIVATE_KEY = 'form/privateKey'
 
-const onSubmit = (values) => {
+const onSubmit = ({privateKey}) => {
   try {
-    const address = ethereumService.createAddressFromPrivateKey(values.privateKey)
+    const address = ethereumService.createAddressFromPrivateKey(privateKey)
+    console.log('address', address)
     return new SignInModel({
       method: SignInModel.METHODS.PRIVATE_KEY,
+      key: privateKey,
       address,
     })
   } catch (e) {
@@ -26,6 +29,8 @@ class PrivateKeyForm extends React.Component {
   static propTypes = {
     onChangeStep: PropTypes.func.isRequired,
   }
+
+
 
   static STEP = 'step/LoginWithPrivateKey'
 
@@ -49,6 +54,7 @@ class PrivateKeyForm extends React.Component {
           buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
           disabled={pristine || invalid}
+          mods={Button.MODS.INVERT}
         />
         <div>
           or <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>

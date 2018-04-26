@@ -7,16 +7,22 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import css from './MnemonicForm.scss'
 import validate from './validate'
+import Web3 from 'src/network/Web3Provider'
 
 const FORM_MNEMONIC = 'form/mnemonic'
 
 const onSubmit = ({ mnemonic }) => {
-  const wallet = hdKey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic)).getWallet()
+  let web3 = Web3.getWeb3()
+
+  const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
+
+  console.log('wallet', account)
 
   return new SignInModel({
     isHD: true,
-    address: wallet.getChecksumAddressString(),
+    address: account.address,
     method: SignInModel.METHODS.MNEMONIC,
+    key: mnemonic,
   })
 }
 
@@ -25,8 +31,8 @@ class MnemonicForm extends React.Component {
     onChangeStep: PropTypes.func.isRequired,
   }
 
-  constructor () {
-    super(...arguments)
+  constructor (props) {
+    super(props)
     console.log('test mnemonic: ', bip39.generateMnemonic())
   }
 

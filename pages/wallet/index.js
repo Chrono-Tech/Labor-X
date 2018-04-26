@@ -9,7 +9,7 @@ import initialStore, {
   loadWallet,
   createWallet,
   logout
-} from 'store/wallet'
+} from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import ethereumService from '../../src/services/EthereumService'

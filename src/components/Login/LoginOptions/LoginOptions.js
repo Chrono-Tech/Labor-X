@@ -3,7 +3,7 @@ import { MnemonicForm, PrivateKeyForm, WalletFileForm, SelectOption, LoginSteps 
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { signIn, changeStep } from 'store/login/actions'
+import { signIn, changeStep, submitMnemonic, submitPrivateKey } from 'store'
 import css from './LoginOptions.scss'
 
 class LoginOptions extends React.Component {
@@ -11,18 +11,17 @@ class LoginOptions extends React.Component {
     signIn: PropTypes.func,
     onChangeStep: PropTypes.func,
     step: PropTypes.string,
+    submitPrivateKey: PropTypes.func,
+    submitMnemonic: PropTypes.func,
   }
-  
+
   static defaultProps = {
     onChangeStep: () => {},
     step: '',
   }
 
-  constructor () {
-    super(...arguments)
-    this.state = {
-      step: SelectOption.STEP,
-    }
+  constructor (props) {
+    super(props)
   }
 
   handleChangeStep = (step) => this.setState({ step: step || SelectOption.STEP })
@@ -32,13 +31,13 @@ class LoginOptions extends React.Component {
   handleBackClick = () => this.handleChangeStep(null)
 
   render () {
-    const { onChangeStep, step } = this.props
-    
+    const { onChangeStep, step, submitMnemonic, submitPrivateKey } = this.props
+
     const formProps = {
       onChangeStep,
-      onSubmitSuccess: this.handleSubmitSuccess
+      onSubmitSuccess: this.handleSubmitSuccess,
     }
-    
+
     let component
 
     switch (step) {
@@ -52,7 +51,7 @@ class LoginOptions extends React.Component {
         component = (<PrivateKeyForm {...formProps}/>)
         break
       default:
-        component = (<SelectOption onChangeStep={onChangeStep} />)
+        component = <SelectOption onChangeStep={onChangeStep} />
     }
 
     return (
@@ -64,7 +63,7 @@ class LoginOptions extends React.Component {
 }
 
 function mapStateToProps (state) {
-  console.log('step', state)
+
   return {
     step: state.login.step,
   }
@@ -73,6 +72,9 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     onChangeStep: (step) => dispatch(changeStep(step)),
+    signIn: (signInModel) => dispatch(signIn(signInModel)),
+    submitMnemonic: (mnemonic) => dispatch(submitMnemonic(mnemonic)),
+    submitPrivateKey: (privateKey) => dispatch(submitPrivateKey(privateKey)),
   }
 }
 
