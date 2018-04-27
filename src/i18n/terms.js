@@ -8,4 +8,5 @@ export default {
   endorsement: 'Endorsement',
   categories: 'Categories',
   find: 'Find',
+  proceed: 'Proceed',
 }

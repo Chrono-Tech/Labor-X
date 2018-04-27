@@ -14,6 +14,7 @@ export default class Dashboard extends React.Component {
 
           <div className={css.block}>
             <Widget
+              href='/my-profile'
               title='ui.dashboard.general.completeYourProfile'
               subtitle='ui.dashboard.general.general'
               actions={[
@@ -52,6 +53,7 @@ export default class Dashboard extends React.Component {
             <h2 className={css.blockTitle}>For Recruiters</h2>
             <div className={css.highlightsRow}>
               <Widget
+                href='/create-job-board'
                 title='ui.dashboard.recruiter.createYourJobBoard'
                 subtitle='ui.dashboard.recruiter.recruiter'
                 actions={[

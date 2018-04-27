@@ -9,6 +9,7 @@ const WHITE = 'White'
 export default class Widget extends React.Component {
   static propTypes = {
     title: PropTypes.string,
+    href: PropTypes.string,
     subtitle: PropTypes.string,
     className: PropTypes.string,
     headerTheme: PropTypes.oneOf([BLUE, WHITE]),
@@ -25,17 +26,28 @@ export default class Widget extends React.Component {
     WHITE,
   }
 
+  constructor (props, context){
+    super(props, context)
+    this.header = this.header.bind(this)
+  }
+
+  header () {
+    return (
+      <div className={css[`header${this.props.headerTheme}`]}>
+        <h3 className={css[`title${this.props.headerTheme}`]}><Translate value={this.props.title} /></h3>
+        {this.props.subtitle && <div className={css[`subtitle${this.props.headerTheme}`]}><Translate value={this.props.subtitle} /></div>}
+      </div>
+    )
+  }
+
   renderActions = () => (item, index) => <Action key={index} item={item} />
 
   render () {
-    const { title, subtitle, actions, children, headerTheme } = this.props
+    const { actions, children, href } = this.props
 
     return (
       <div className={css.root}>
-        <div className={css[`header${headerTheme}`]}>
-          <h3 className={css[`title${headerTheme}`]}><Translate value={title} /></h3>
-          {subtitle && <div className={css[`subtitle${headerTheme}`]}><Translate value={subtitle} /></div>}
-        </div>
+        { href ? <a href={href}>{this.header()}</a> : this.header() }
         {children && <p className={css.content}>{children}</p>}
         {actions && actions.map(this.renderActions())}
       </div>

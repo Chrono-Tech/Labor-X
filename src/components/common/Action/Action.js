@@ -1,6 +1,7 @@
-import { Link, Image, Moment, Tip, Translate } from 'components/common/index'
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Link, Image, Moment, Tip, Translate } from 'components/common/index'
+import uniqid from 'uniqid'
 import Counter from '../Counter/Counter'
 import css from './Action.scss'
 
@@ -17,12 +18,23 @@ export default class Action extends React.Component {
         icon: PropTypes.string,
         color: PropTypes.string,
       }),
-      secondIcon: PropTypes.shape({
-        icon: PropTypes.string,
-        color: PropTypes.string,
-      }),
+      secondIcon: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.shape({
+          icon: PropTypes.string,
+          color: PropTypes.string,
+        })),
+        PropTypes.shape({
+          icon: PropTypes.string,
+          color: PropTypes.string,
+        }),
+      ]),
       isLink: PropTypes.bool, // affect styles only
+      isHeader: PropTypes.bool, // affect styles only
     }),
+  }
+
+  static getIcons (icons) {
+    return Array.isArray(icons) ? icons : [icons]
   }
 
   render () {
@@ -41,19 +53,24 @@ export default class Action extends React.Component {
             {...item.firstIcon}
           />
         )}
-        <div className={item.isLink ? css.link : css.action}><Translate value={item.label}/></div>
+        <div className={item.isLink ? css.link : css.action}><Translate className={item.isHeader ? css.header : null} value={item.label} /></div>
         {item.secondIcon && (
-          <div>
-            {item.secondIconTip
-              ? (
-                <Tip {...item.secondIconTip}>
-                  <Image className={css.secondIcon} {...item.secondIcon} />
-                </Tip>
-              )
-              : (
-                <Image className={css.secondIcon} {...item.secondIcon} />
-              )}
-          </div>
+          Action.getIcons(item.secondIcon).map((icon) => (
+            <div
+              className={css.iconContainer}
+              key={uniqid()}
+            >
+              {item.secondIconTip
+                ? (
+                  <Tip {...item.secondIconTip}>
+                    <Image className={css.secondIcon} {...icon} />
+                  </Tip>
+                )
+                : (
+                  <Image className={css.secondIcon} {...icon} />
+                )}
+            </div>
+          ))
         )}
         {item.counter && (
           <Counter {...item.counter} />

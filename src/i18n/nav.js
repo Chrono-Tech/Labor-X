@@ -4,7 +4,6 @@ export default {
   toDo: 'To-Do',
   newJob: 'New Job',
   newBoard: 'New Board',
-  dashboard: 'Dashboard',
   jobBoards: 'Job Boards',
   people: 'People',
   validation: 'Validation',
@@ -36,4 +35,5 @@ export default {
   recruiterProfile: 'Recruiter Profile',
   workerProfile: 'Worker Profile',
   clientProfile: 'Client Profile',
+  createJobBoard: 'Create Job Board',
 }

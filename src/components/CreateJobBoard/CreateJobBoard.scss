@@ -1,0 +1,121 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.content {
+  @include flex(column, flex-start, stretch);
+  max-width: 110rem;
+  margin-top: 4rem;
+  margin-left: 4rem;
+  width: 100%;
+}
+
+.card {
+  @include flex(row, flex-start, flex-start);
+  @include card;
+  padding: 4rem;
+  margin-bottom: 4rem;
+}
+
+.headline {
+  padding: 0;
+  margin-bottom: 4rem;
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.actions {
+  @include flex(row, space-between, center);
+  padding: 2rem 1.5rem;
+  font-weight: $font-weight-medium;
+  border-bottom: solid .1rem $color-blue53;
+}
+
+.actionIcon {
+  margin-right: 3rem;
+}
+
+.boardHeadline {
+  padding: 4rem;
+}
+
+.flexRow {
+  @include flex(row, flex-start, flex-end);
+}
+
+.cardDesc {
+  width: 23rem;
+  max-width: 23rem;
+  margin-right: 4rem;
+}
+
+.title {
+  font-weight: $font-weight-medium;
+  font-size: $h4Size;
+  margin-bottom: 2rem;
+}
+
+.chartContainer {
+  @include flex(column, flex-start, center);
+  padding: 4rem 0 3rem;
+  margin-bottom: 4rem;
+  width: 100%;
+  color: $color-white;
+  background: $gradientBlueToGreen;
+}
+
+.chart {
+  margin-top: 3rem;
+  width: 22rem;
+  height: 22rem;
+  background-color: darken($color-green, 30%);
+  border-radius: 50%;
+}
+
+.find {
+  color: $color-gray30;
+  margin-right: 2rem;
+}
+
+.match {
+  color: $color-gray30;
+}
+
+.noMarginBottom {
+  margin-bottom: 0;
+}
+
+.feeInputs {
+  @include flex(row, space-between, flex-end);
+  > * {
+    flex-basis: 45%;
+  }
+}
+
+.feeActions {
+  @include flex(row, flex-start, flex-start);
+  margin-top: 10rem;
+}
+
+.feeActionsIcon {
+  margin-right: 2rem;
+}
+
+.cardContent {
+  @include flex(column, flex-start, stretch);
+  width: 100%;
+}
+
+.visuals {
+  @include flex(row, space-around, center);
+  width: 100%;
+}
+
+.visualsContainer {
+  @include flex(column, flex-start, center);
+  img {
+    margin-bottom: 2rem;
+    width: 15rem;
+    height: 10rem;
+    object-fit: contain;
+  }
+}

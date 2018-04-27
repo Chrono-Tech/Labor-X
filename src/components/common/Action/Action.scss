@@ -43,6 +43,11 @@
   color: $color-primary;
 }
 
+.header {
+  font-size: $h4Size;
+  font-weight: $font-weight-medium;
+}
+
 .action {
   flex-grow: 1;
   color: $color-black;
@@ -56,4 +61,11 @@
   flex-grow: 0;
   flex-shrink: 0;
   margin-left: 1rem;
+}
+
+.iconContainer {
+  margin-right: 3rem;
+  &:last-child {
+    margin-right: 0;
+  }
 }
