@@ -1,37 +1,5 @@
 @import "~styles/globals/variables";
 
 .root {
-  min-width: 71rem; // TODO @dkchv: temp
-  margin-top: 15px;
 
-  @media (max-width: 1024px){
-    padding: 15px 0 80px;
-    background: linear-gradient(to bottom, rgba(0, 116, 165, 0.95), rgba(0, 160, 210, 0.95) 100%);
-    min-width: 530px;
-    margin: 0;
-  }
-
-}
-
-.content {
-  max-width: 28rem;
-  margin: 0 auto;
-}
-
-.back {
-  text-align: center;
-  margin-top: 4rem;
-  color: $color-blue-light;
-  font-size: $pBigSize;
-}
-
-.link {
-  font-weight: $font-weight-light;
-  margin-left: 0.5em;
-  color: $color-white;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }

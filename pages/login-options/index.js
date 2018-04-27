@@ -1,14 +1,23 @@
-import { Link } from 'components/common'
-import { LoginActions } from 'components/layouts'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import initialStore from 'store'
+import PropTypes from 'prop-types'
+import { Link } from 'components/common'
+import { LoginActions } from 'components/layouts'
+import { SelectOption, LoginOptions } from 'components/Login'
+import initialStore, {
+  changeStep
+} from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import ethereumService from '../../src/services/EthereumService'
 import css from './index.scss'
 
 class Index extends React.Component {
+  static propTypes = {
+    step: PropTypes.string,
+    changeStep: PropTypes.func,
+  }
+  
   static getInitialProps ({ store }) {
     store.dispatch(bootstrap())
   }
@@ -18,43 +27,27 @@ class Index extends React.Component {
   }
 
   render () {
+    const { step, changeStep } = this.props
     return (
       <div className={css.root}>
         <LoginActions contentClassName={css.contentGradient}>
-          <Link className={css.helpLink} href='/'>
-            <img src='/static/images/svg/help-white.svg' alt='' />
-          </Link>
-          <div className={css.pageHeader}>Add an existing account</div>
-          <div className={css.buttonsWrapper}>
-            <button className={css.methodButton}>
-              <img src='/static/images/svg/ledger-nano.svg' alt='' />
-              LedgerNano
-            </button>
-            <button className={css.methodButton}>
-              <img src='/static/images/svg/trezor.svg' alt='' />
-              Trezor
-            </button>
-            <button className={[css.methodButton, css.pluginButton].join(' ')}>
-              <img src='/static/images/svg/plugin.svg' alt='' />
-              Browser Plug-in
-            </button>
-            <button className={css.methodButton}>
-              <img src='/static/images/svg/mnemonic.svg' alt='' />
-              Mnemonic
-            </button>
-            <button className={css.methodButton}>
-              <img src='/static/images/svg/key.svg' alt='' />
-              Private key
-            </button>
-            <button className={[css.methodButton, css.walletButton].join(' ')}>
-              <img src='/static/images/svg/wallet.svg' alt='' />
-              Wallet file
-            </button>
-          </div>
+          <LoginOptions/>
         </LoginActions>
       </div>
     )
   }
 }
 
-export default withRedux(initialStore)(Index)
+const mapStateToProps = (state) => {
+  return {
+    step: state.step
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeStep: (step) => dispatch(changeStep(step))
+  }
+}
+
+export default withRedux(initialStore, mapStateToProps, mapDispatchToProps)(Index)

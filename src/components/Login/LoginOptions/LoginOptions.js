@@ -1,27 +1,27 @@
 import { Translate } from 'components/common'
-import { MnemonicForm, PrivateKeyForm, WalletFileForm, SelectOption } from 'components/Login'
+import { MnemonicForm, PrivateKeyForm, WalletFileForm, SelectOption, LoginSteps } from 'components/Login'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { signIn } from 'store/login/actions'
+import { signIn, changeStep } from 'store'
 import css from './LoginOptions.scss'
-
-function mapDispatchToProps (dispatch) {
-  return {
-    signIn: (signInModel) => dispatch(signIn(signInModel)),
-  }
-}
 
 class LoginOptions extends React.Component {
   static propTypes = {
     signIn: PropTypes.func,
+    onChangeStep: PropTypes.func,
+    step: PropTypes.string,
+    submitPrivateKey: PropTypes.func,
+    submitMnemonic: PropTypes.func,
   }
 
-  constructor () {
-    super(...arguments)
-    this.state = {
-      step: SelectOption.STEP,
-    }
+  static defaultProps = {
+    onChangeStep: () => {},
+    step: '',
+  }
+
+  constructor (props) {
+    super(props)
   }
 
   handleChangeStep = (step) => this.setState({ step: step || SelectOption.STEP })
@@ -31,58 +31,51 @@ class LoginOptions extends React.Component {
   handleBackClick = () => this.handleChangeStep(null)
 
   render () {
+    const { onChangeStep, step } = this.props
+
+    const formProps = {
+      onChangeStep,
+      onSubmitSuccess: this.handleSubmitSuccess,
+    }
+
     let component
 
-    switch (this.state.step) {
-      case MnemonicForm.STEP:
-        component = (
-          <MnemonicForm
-            onChangeStep={this.handleChangeStep}
-            onSubmitSuccess={this.handleSubmitSuccess}
-          />
-        )
+    switch (step) {
+      case LoginSteps.Mnemonic:
+        component = (<MnemonicForm {...formProps} />)
         break
-      case WalletFileForm.STEP:
-        component = (
-          <WalletFileForm
-            onChangeStep={this.handleChangeStep}
-            onSubmitSuccess={this.handleSubmitSuccess}
-          />
-        )
+      case LoginSteps.WalletFile:
+        component = (<WalletFileForm {...formProps}/>)
         break
-      case PrivateKeyForm.STEP:
-        component = (
-          <PrivateKeyForm
-            onChangeStep={this.handleChangeStep}
-            onSubmitSuccess={this.handleSubmitSuccess}
-          />
-        )
+      case LoginSteps.PrivateKey:
+        component = (<PrivateKeyForm {...formProps}/>)
         break
       default:
-        component = (
-          <SelectOption
-            onChangeStep={this.handleChangeStep}
-          />
-        )
+        component = <SelectOption onChangeStep={onChangeStep} />
     }
 
     return (
       <div className={css.root}>
-        <div className={css.content}>
-          {component}
-          {this.state.step !== SelectOption.STEP && (
-            <div
-              className={css.back}
-              onClick={this.handleBackClick}
-            >
-              <Translate value='term.or' />
-              <Translate className={css.link} value={`${this.constructor.name}.useDifferentLogInMethod`} />
-            </div>
-          )}
-        </div>
+        {component}
       </div>
     )
   }
 }
 
-export default connect(null, mapDispatchToProps)(LoginOptions)
+function mapStateToProps (state) {
+
+  return {
+    step: state.login.step,
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    onChangeStep: (step) => dispatch(changeStep(step)),
+    signIn: (signInModel) => dispatch(signIn(signInModel)),
+    submitMnemonic: (mnemonic) => dispatch(submitMnemonic(mnemonic)),
+    submitPrivateKey: (privateKey) => dispatch(submitPrivateKey(privateKey)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginOptions)

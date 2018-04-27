@@ -7,16 +7,22 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import css from './MnemonicForm.scss'
 import validate from './validate'
+import Web3 from 'src/network/Web3Provider'
 
 const FORM_MNEMONIC = 'form/mnemonic'
 
 const onSubmit = ({ mnemonic }) => {
-  const wallet = hdKey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic)).getWallet()
+  let web3 = Web3.getWeb3()
+
+  const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
+
+  console.log('wallet', account)
 
   return new SignInModel({
     isHD: true,
-    address: wallet.getChecksumAddressString(),
+    address: account.address,
     method: SignInModel.METHODS.MNEMONIC,
+    key: mnemonic,
   })
 }
 
@@ -25,20 +31,18 @@ class MnemonicForm extends React.Component {
     onChangeStep: PropTypes.func.isRequired,
   }
 
-  static STEP = 'step/LoginWithMnemonic'
-
-  constructor () {
-    super(...arguments)
-    // eslint-disable-next-line
+  constructor (props) {
+    super(props)
     console.log('test mnemonic: ', bip39.generateMnemonic())
   }
 
   render () {
     const prefix = this.constructor.name
-    const { handleSubmit, error, pristine, invalid } = this.props
+    const { handleSubmit, error, pristine, invalid, onChangeStep } = this.props
 
     return (
       <form className={css.root} name={FORM_MNEMONIC} onSubmit={handleSubmit}>
+        <h3 className={css.header}>Mnemonic form</h3>
         <Field
           className={css.row}
           component={Input}
@@ -49,6 +53,7 @@ class MnemonicForm extends React.Component {
         />
         <Button
           className={css.row}
+          buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
           label='Login'
           primary
@@ -56,6 +61,10 @@ class MnemonicForm extends React.Component {
           error={error}
           mods={Button.MODS.INVERT}
         />
+        <div>
+          or
+          <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>
+        </div>
       </form>
     )
   }

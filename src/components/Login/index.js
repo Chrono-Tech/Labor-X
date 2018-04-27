@@ -7,3 +7,12 @@ export { default as MnemonicForm } from './MnemonicForm/MnemonicForm'
 export { default as LearnMoreBlock } from './LearnMoreBlock/LearnMoreBlock'
 export { default as LoginForm } from './LoginForm/LoginForm'
 export { default as RecoveryAccountForm } from './RecoveryAccountForm/RecoveryAccountForm'
+
+export const LoginSteps = {
+  Ledger: 'ledger',
+  Trezor: 'trezor',
+  BrowserPlugIn: 'browserPlugIn',
+  Mnemonic: 'mnemonic',
+  PrivateKey: 'privateKey',
+  WalletFile: 'walletFile'
+}
