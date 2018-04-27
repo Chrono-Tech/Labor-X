@@ -1,6 +1,8 @@
 .root {
   text-align: center;
   padding: 40px 130px;
+  color: #BFE7F4;
+  font-size: 16px;
 
   @media (max-width: 640px) {
     padding: 40px 20px;
@@ -13,4 +15,29 @@
   line-height: 24px;
   color: #fff;
   margin-bottom: 45px;
+}
+
+.otherActions {
+  color: #BFE7F4;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.fieldWrapper {
+  margin-bottom: 30px;
+}
+
+.submitButton {
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.loginLink {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 300;
+
+  &:hover {
+    font-weight: 300;
+  }
 }

@@ -18,9 +18,11 @@ const onSubmit = ({ walletName, password }) => {
 
 class CreateAccount extends React.Component {
   static propTypes = {
+    onChangeStep: PropTypes.func,
   }
 
   static defaultProps = {
+    onChangeStep: PropTypes.func,
   }
 
   render () {
@@ -64,7 +66,8 @@ class CreateAccount extends React.Component {
           mods={Button.MODS.INVERT}
         />
         <div>
-          <Link href='/forgot-password' className={css.forgotPasswordLink}>Forgot your password?</Link>
+          or
+          <button onClick={} className={css.forgotPasswordLink}>Use an existing wallet</button>
         </div>
       </form>
     )

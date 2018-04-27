@@ -9,7 +9,6 @@ export default class UserRow extends React.Component {
     address: PropTypes.string,
     onClick: PropTypes.func,
     actionIcon: PropTypes.string,
-    largeText: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -18,11 +17,10 @@ export default class UserRow extends React.Component {
     address: '',
     onClick: () => {},
     actionIcon: '/static/images/svg/list.svg',
-    largeText: false,
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, avatar, title, subtitle, largeText, onClick, actionIcon } = this.props
+    const { handleSubmit, error, pristine, invalid, avatar, title, subtitle, onClick, actionIcon } = this.props
 
     return (
       <div className={css.userBlock} onClick={onClick}>
@@ -32,11 +30,11 @@ export default class UserRow extends React.Component {
           </div>
           <div className={css.userBlockInfo}>
             { title ? (
-              <div className={[css.title, largeText && css.largeText].join(' ')}>
+              <div className={[css.title].join(' ')}>
                 {title}
               </div>) : null}
             { subtitle ? (
-              <div className={[css.subtitle, largeText && css.largeText].join(' ')}>
+              <div className={[css.subtitle].join(' ')}>
                 {subtitle}
               </div>) : null}
           </div>

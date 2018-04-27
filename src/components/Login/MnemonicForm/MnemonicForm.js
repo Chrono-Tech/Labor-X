@@ -60,7 +60,7 @@ class MnemonicForm extends React.Component {
           error={error}
           mods={Button.MODS.INVERT}
         />
-        <div>
+        <div className={css.otherActions}>
           or
           <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>
         </div>

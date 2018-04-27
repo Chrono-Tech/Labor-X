@@ -28,7 +28,7 @@ class RecoveryAccountForm extends React.Component {
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Recover Account</div>
-        <UserRow title='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' largeText={true} />
+        <UserRow title='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
 
         <div className={css.fieldWrapper}>
           {

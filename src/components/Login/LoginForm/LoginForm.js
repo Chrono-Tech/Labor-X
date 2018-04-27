@@ -1,8 +1,9 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Field, reduxForm } from 'redux-form'
+
 import { Button, Input, Link, UserRow } from 'components/common'
 import LogInModel from 'models/SignInModel'
-import PropTypes from 'prop-types'
-import React from 'react'
-import { Field, reduxForm } from 'redux-form'
 import css from './LoginForm.scss'
 import validate from './validate'
 
@@ -10,7 +11,6 @@ const FORM_LOGIN = 'form/login'
 
 const onSubmit = ({ password }) => {
 
-  console.log('onsubmit')
   return new LogInModel({
     address: '',
     password: password,
@@ -32,7 +32,6 @@ class LoginForm extends React.Component {
 
   render () {
     const { handleSubmit, error, pristine, invalid, selectedWallet } = this.props
-    console.log('this.getFirstAddress(selectedWallet)', this.getFirstAddress(selectedWallet), selectedWallet)
 
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>

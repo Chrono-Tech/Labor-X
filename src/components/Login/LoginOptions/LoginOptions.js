@@ -78,8 +78,8 @@ class LoginOptions extends React.Component {
         component = (<LoginForm onChangeStep={onChangeStep} selectedWallet={selectedWallet} onSubmitSuccess={signIn} />)
         break
       default:
-        component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
-      // component = (<CreateAccount onChangeStep={onChangeStep} onSubmitSuccess={createAccount} />)
+        // component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
+        component = (<CreateAccount onChangeStep={onChangeStep} onSubmitSuccess={createAccount} />)
         // component = <SelectOption onChangeStep={onChangeStep} />
     }
 

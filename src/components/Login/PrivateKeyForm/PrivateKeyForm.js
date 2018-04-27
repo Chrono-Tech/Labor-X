@@ -56,8 +56,9 @@ class PrivateKeyForm extends React.Component {
           error={error}
           primary
         />
-        <div>
-          or <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>
+        <div className={css.otherActions}>
+          or
+          <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>
         </div>
       </form>
     )
