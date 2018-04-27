@@ -14,6 +14,8 @@ export default class Image extends React.PureComponent {
   }
 
   static ICONS = {
+    EMAIL: 'email',
+    NOTIFICATIONS: 'notifications',
     WALLET: 'account_balance_wallet',
     SETTINGS: 'settings',
     STAR: 'star_rate',
@@ -26,7 +28,7 @@ export default class Image extends React.PureComponent {
     UPLOAD_FILE_REMOVE: 'delete',
     CHECKBOX_ON: 'check_box',
     CHECKBOX_OFF: 'check_box_outline_blank',
-    CHECKBOX_CIRCLE: 'check_box_outline_blank', //TODO set actual
+    CHECKBOX_CIRCLE: 'check_circle',
   }
 
   static COLORS = {
@@ -48,7 +50,7 @@ export default class Image extends React.PureComponent {
       color: Image.COLORS.GREEN,
     },
     SHIELD_ERROR: {
-      icon: 'check_box_outline_blank', // TODO @dkchv: set actual
+      icon: 'security', // TODO @dkchv: set actual
       color: Image.COLORS.RED,
     },
     MESSAGE_ERROR: {
@@ -67,6 +69,30 @@ export default class Image extends React.PureComponent {
       icon: Image.ICONS.STAR,
       color: Image.COLORS.GOLD,
     },
+    NOTIFICATIONS_ON: {
+      icon: Image.ICONS.NOTIFICATIONS,
+      color: Image.COLORS.BLUE,
+    },
+    NOTIFICATIONS_OFF: {
+      icon: Image.ICONS.NOTIFICATIONS,
+      color: Image.COLORS.GREY,
+    },
+    EMAIL_ON: {
+      icon: Image.ICONS.EMAIL,
+      color: Image.COLORS.BLUE,
+    },
+    EMAIL_OFF: {
+      icon: Image.ICONS.EMAIL,
+      color: Image.COLORS.GREY,
+    },
+    CIRCLE_CHECKBOX_OFF: {
+      icon: Image.ICONS.CHECKBOX_CIRCLE,
+      color: Image.COLORS.GREY,
+    },
+    CIRCLE_CHECKBOX_ON: {
+      icon: Image.ICONS.CHECKBOX_CIRCLE,
+      color: Image.COLORS.BLUE,
+    },
   }
 
   handleClick = () => this.props.onClick && this.props.onClick()
@@ -78,11 +104,18 @@ export default class Image extends React.PureComponent {
     if (this.props.href) {
       // external image
       return (
-        <img
-          src={this.props.href}
-          className={classnames}
+        <div
           onClick={this.handleClick}
-        />
+          onKeyPress={this.handleClick}
+          tabIndex={0}
+          role='button'
+        >
+          <img
+            className={classnames}
+            src={this.props.href}
+            alt=''
+          />
+        </div>
       )
     }
 
@@ -96,6 +129,9 @@ export default class Image extends React.PureComponent {
       <i
         className={classnames.join(' ')}
         onClick={this.handleClick}
+        onKeyPress={this.handleClick}
+        role='button'
+        tabIndex={0}
       >
         {this.props.icon}
       </i>

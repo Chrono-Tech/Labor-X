@@ -1,5 +1,6 @@
 import React from 'react'
 import { Widget, Image } from 'components/common'
+import css from './NotificationsTab.scss'
 
 export default class NotificationsTab extends React.Component {
   render () {
@@ -11,73 +12,139 @@ export default class NotificationsTab extends React.Component {
           actions={[
             {
               label: 'ui.myProfile.notifications.worker.worker',
+              isHeader: true,
             },
             {
               label: 'ui.myProfile.notifications.worker.opportunities',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.worker.jobApplied',
+              secondIcon: [
+                Image.SETS.EMAIL_OFF,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.worker.jobOfferReceived',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.worker.invoiceUpdates',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.worker.endorsementReceived',
+              secondIcon: [
+                Image.SETS.EMAIL_OFF,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
 
             {
               label: 'ui.myProfile.notifications.client.client',
+              isHeader: true,
             },
             {
               label: 'ui.myProfile.notifications.client.applicationReceived',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.client.invoiceUpdates',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.client.offerAccepted',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_ON,
+              ],
             },
 
             {
               label: 'ui.myProfile.notifications.recruiter.recruiter',
+              isHeader: true,
             },
             {
               label: 'ui.myProfile.notifications.recruiter.myJobBoardUpdates',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.recruiter.offerReceived',
+              secondIcon: [
+                Image.SETS.EMAIL_OFF,
+                Image.SETS.NOTIFICATIONS_ON,
+              ],
             },
 
             {
               label: 'ui.myProfile.notifications.general.general',
+              isHeader: true,
             },
             {
               label: 'ui.myProfile.notifications.general.jobBoardAdded',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.general.messageReceived',
+              secondIcon: [
+                Image.SETS.EMAIL_OFF,
+                Image.SETS.NOTIFICATIONS_ON,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.general.validationUpdates',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.general.ratingChanged',
+              secondIcon: [
+                Image.SETS.EMAIL_OFF,
+                Image.SETS.NOTIFICATIONS_ON,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.general.myJobUpdates',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_ON,
+              ],
             },
             {
               label: 'ui.myProfile.notifications.general.reportUpdates',
-            },
-
-            {
-              label: 'ui.myProfile.notifications.jobBoards',
+              secondIcon: [
+                Image.SETS.EMAIL_ON,
+                Image.SETS.NOTIFICATIONS_OFF,
+              ],
             },
           ]}
         />
+
+        <div className={css.spacer} />
 
         <Widget
           title='ui.myProfile.notifications.jobBoards'
@@ -104,6 +171,8 @@ export default class NotificationsTab extends React.Component {
             },
           ]}
         />
+
+        <div className={css.spacer} />
 
         <Widget
           title='ui.myProfile.notifications.messaging.messaging'

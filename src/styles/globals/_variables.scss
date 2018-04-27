@@ -10,12 +10,14 @@ $color-blue53: lighten($color-blue, 47%);
 $color-red: #C25451;
 $color-green: #92cc72;
 $color-gold: #e6bf6e;
+$color-azure: #00A0D2;
 
 $color-shadow-blue: #465d8c;
 
 // grays
 $color-super-black: #000;
 $color-gray50: lighten($color-super-black, 50%);
+$color-gray30: lighten($color-super-black, 70%);
 $color-gray10: lighten($color-super-black, 90%);
 $color-gray5: lighten($color-super-black, 95%);
 $color-gray3: lighten($color-super-black, 97%);
@@ -31,7 +33,7 @@ $todo: #ccc;
 
 // ------- gradients
 
-$gradientBlueToGreen: linear-gradient(to bottom, #00A0D2 , $color-green 100%);
+$gradientBlueToGreen: linear-gradient(to bottom, $color-azure , $color-green 100%);
 
 // ----------- fonts -----------
 

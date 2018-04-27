@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Translate } from 'components/common'
+import uniqid from 'uniqid'
 import ValidationTab from './ValidationTab/ValidationTab'
 import NotificationsTab from './NotificationsTab/NotificationsTab'
+import SecurityTab from './SecurityTab/SecurityTab'
 import css from './MyProfile.scss'
 
 export default class MyProfile extends React.Component {
@@ -23,7 +25,7 @@ export default class MyProfile extends React.Component {
         },
         {
           title: 'nav.security',
-          content: <div>Security tab content</div>,
+          content: <SecurityTab />,
         },
       ],
     }
@@ -41,7 +43,7 @@ export default class MyProfile extends React.Component {
           <div className={css.tabs}>
             {this.state.tabs.map((tab, index) => (
               <Tab
-                key={tab.title}
+                key={uniqid()}
                 isActive={this.state.currentTab === index}
                 onClick={this.handleTabClick}
                 title={tab.title}

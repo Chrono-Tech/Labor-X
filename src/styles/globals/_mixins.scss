@@ -14,3 +14,9 @@
   justify-content: $justify-content;
   align-items: $align-items;
 }
+
+@mixin card {
+  border-radius: .5rem;
+  background-color: $paperColor;
+  box-shadow: $paperBoxShadow;
+}

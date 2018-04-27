@@ -1,5 +1,6 @@
 import React from 'react'
 import { Widget, Image, Translate } from 'components/common'
+import css from './ValidationTab.scss'
 
 export default class ValidationTab extends React.Component {
   render () {
@@ -11,6 +12,7 @@ export default class ValidationTab extends React.Component {
           actions={[
             {
               label: 'ui.myProfile.validation.general.general',
+              isHeader: true,
             },
             {
               href: '/general-profile#photo',
@@ -30,6 +32,7 @@ export default class ValidationTab extends React.Component {
 
             {
               label: 'ui.myProfile.validation.recruiter.recruiter',
+              isHeader: true,
             },
             {
               href: '/recruiter-profile',
@@ -39,6 +42,7 @@ export default class ValidationTab extends React.Component {
 
             {
               label: 'ui.myProfile.validation.worker.worker',
+              isHeader: true,
             },
             {
               href: '/worker-profile',
@@ -48,6 +52,7 @@ export default class ValidationTab extends React.Component {
 
             {
               label: 'ui.myProfile.validation.client.client',
+              isHeader: true,
             },
             {
               href: '/client-profile',
@@ -66,26 +71,23 @@ export default class ValidationTab extends React.Component {
           actions={[
             {
               label: 'Task One',
-              firstIcon: {
-                icon: Image.ICONS.CHECKBOX_CIRCLE,
-              },
+              firstIcon: Image.SETS.CIRCLE_CHECKBOX_OFF,
             },
             {
               label: 'Task Two',
-              firstIcon: {
-                icon: Image.ICONS.CHECKBOX_CIRCLE,
-              },
+              firstIcon: Image.SETS.CIRCLE_CHECKBOX_OFF,
             },
             {
               label: 'Task Three',
-              firstIcon: {
-                icon: Image.ICONS.CHECKBOX_CIRCLE,
-              },
+              firstIcon: Image.SETS.CIRCLE_CHECKBOX_OFF,
             },
           ]}
         />
 
+        <div className={css.spacer} />
+
         <Widget
+          className={css.block}
           title='ui.myProfile.validation.publicProfilePages'
           headerTheme={Widget.THEMES.WHITE}
           actions={[

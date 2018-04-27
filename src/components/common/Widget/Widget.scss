@@ -1,15 +1,15 @@
 @import "~styles/globals/variables";
+@import "~styles/globals/mixins";
 
 .root {
-  border-radius: .5rem;
-  background-color: $paperColor;
-  box-shadow: $paperBoxShadow;
+  @include card;
 }
 
 .headerBlue {
   padding: 3rem;
   border-radius: .5rem .5rem 0 0;
   background-color: $color-blue94;
+  line-height: 1.2;
   &:hover {
     background-color: $color-primary;
   }
@@ -29,6 +29,7 @@
   padding: 3rem;
   border-radius: .5rem .5rem 0 0;
   background-color: $color-white;
+  line-height: 1.2;
 }
 
 .titleWhite {
