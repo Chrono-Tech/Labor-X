@@ -1,5 +1,6 @@
 import Router from 'next/router'
 import type SignInModel from 'models/SignInModel'
+import WalletEntryModel from 'models/WalletEntryModel'
 import { createWallet, loadWallet } from 'src/store'
 
 export const LoginSteps = {
@@ -11,6 +12,7 @@ export const LoginSteps = {
   WalletFile: 'walletFile',
   CreateWallet: 'createWallet',
   SelectLoginMethod: 'selectLoginMethod',
+  SelectWallet: 'selectWallet',
   Login: 'login',
 }
 
@@ -24,15 +26,14 @@ export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
 }
 
-export const signIn = (password) => (dispatch, getState) => {
+export const signIn = ({password}) => (dispatch, getState) => {
   const state = getState()
   const { selectedWallet } = state.login
-
-  dispatch(loadWallet(selectedWallet.encrypted, password))
+  dispatch(loadWallet(new WalletEntryModel(selectedWallet), password))
 
   dispatch({ type: LOGIN_SIGN_IN })
 
-  Router.push('/test-sign-in')
+  Router.push('/dashboard')
 }
 
 export const signOut = () => (dispatch) => {
@@ -43,9 +44,13 @@ export const createAccount = (walletName, password) => (dispatch, getState) => {
   const state = getState()
   const signInModel = state.login.signIn
 
-  dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
+  if (signInModel) {
+    dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
 
-  Router.push('/test-sign-in')
+    Router.push('/dashboard')
+  } else {
+    Router.push('/account-password')
+  }
 }
 
 export const onSubmitMnemonic = (signInModel) => (dispatch) => {

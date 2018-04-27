@@ -1,48 +1,65 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, SubmissionError } from 'redux-form'
 
 import { Button, Input, Link, UserRow } from 'components/common'
-import LogInModel from 'models/SignInModel'
-import css from './LoginForm.scss'
+import WalletEntryModel from 'models/WalletEntryModel'
 import validate from './validate'
+import Web3 from 'src/network/Web3Provider'
+import {LoginSteps} from 'src/store'
+
+import css from './LoginForm.scss'
 
 const FORM_LOGIN = 'form/login'
 
-const onSubmit = ({ password }) => {
-
-  return new LogInModel({
-    address: '',
-    password: password,
-  })
-}
-
 class LoginForm extends React.Component {
   static propTypes = {
-    selectedWallet: PropTypes.any,
+    selectedWallet: PropTypes.instanceOf(WalletEntryModel),
+    onChangeStep: PropTypes.func,
+  }
+  
+  onSubmit ({ password }) {
+    const { selectedWallet } = this.props
+    let web3 = Web3.getWeb3()
+
+    try {
+      web3.eth.accounts.wallet.decrypt(selectedWallet.encrypted, password)
+    } catch (e) {
+      throw new SubmissionError({ password: e.message })
+    }
+
+    return {
+      password: password,
+    }
   }
 
-  static defaultProps = {
-    selectedWallet: {},
-  }
-
-  getFirstAddress (wallet) {
-    return wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address
+  navigateToSelectWallet() {
+    const {onChangeStep} = this.props
+    onChangeStep(LoginSteps.SelectWallet)
   }
 
   render () {
     const { handleSubmit, error, pristine, invalid, selectedWallet } = this.props
 
     return (
-      <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
+      <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <div className={css.formHeader}>Log In</div>
-        <UserRow title={selectedWallet.name} subtitle={this.getFirstAddress(selectedWallet)} />
+        <div className={css.accountWrapper}>
+          <UserRow
+            title={selectedWallet.name}
+            onClick={this.navigateToSelectWallet.bind(this)}
+          />
+        </div>
         <Field
           className={css.row}
-          component={Input}
+          component={(props) => {
+            const mergedProps = {...props, lineDisabled: true}
+            return <Input {...mergedProps} />
+          }}
           name='password'
-          placeholder='Enter Password'
+          type='password'
           autoComplete={false}
+          placeholder='Enter Password'
           mods={[Input.MODS.INVERT, css.passwordField]}
         />
         <Button
@@ -63,4 +80,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: FORM_LOGIN, validate, onSubmit })(LoginForm)
+export default reduxForm({ form: FORM_LOGIN, validate })(LoginForm)

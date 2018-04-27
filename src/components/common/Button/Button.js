@@ -10,6 +10,7 @@ export default class Button extends React.Component {
     buttonClassName: PropTypes.string,
     labelClassName: PropTypes.string,
     disabled: PropTypes.bool,
+    isLoading: PropTypes.bool,
     label: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
@@ -46,6 +47,7 @@ export default class Button extends React.Component {
     error: null,
     icon: null,
     mods: [Button.MODS.NORMAL],
+    isLoading: false,
   }
 
   static COLORS = {
@@ -56,11 +58,25 @@ export default class Button extends React.Component {
     ? this.props.onClick()
     : true
 
+  renderButtonContent(){
+    const {isLoading, icon, label, labelClassName} = this.props
+
+    const labelClassNames = [ css.labelClassName ].concat(labelClassName)
+
+    if (isLoading) {
+      return <div className={css.spinner} />
+    } else {
+      return [
+        icon && <Image key='0' {...icon} />,
+        label && <Translate key='1' className={labelClassNames.join(' ')} value={label} />,
+      ]
+    }
+  }
+
   render () {
-    const { type, disabled, label, className, buttonClassName, labelClassName, error, mods, color, icon } = this.props
+    const { type, disabled, className, buttonClassName, error, mods, color } = this.props
     const classNames = [ css.root ].concat(mods)
     const buttonClassNames = [ css.button ].concat(buttonClassName)
-    const labelClassNames = [ css.labelClassName ].concat(labelClassName)
     className && classNames.push(className)
     disabled && classNames.push(css.disabled)
     color && classNames.push(css[ color ])
@@ -73,8 +89,7 @@ export default class Button extends React.Component {
           type={type}
           disabled={disabled}
         >
-          {icon && <Image {...icon} />}
-          {label && <Translate className={labelClassNames.join(' ')} value={label} />}
+          { this.renderButtonContent() }
         </button>
         {error && (
           <div className={css.error}>{error}</div>

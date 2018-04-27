@@ -1,13 +1,11 @@
 .userBlock {
   color: #A8EAFF;
-  border-top: 1px solid #A8EAFF;
   border-bottom: 1px solid #A8EAFF;
   padding: 18px 0;
   text-align: left;
   font-weight: 400;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 23px;
   cursor: pointer;
 
   &:hover .userBlockInfo {

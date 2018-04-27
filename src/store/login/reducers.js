@@ -1,10 +1,8 @@
-import SignInModel from 'src/models/SignInModel'
-import WalletModel from 'src/models/WalletModel'
 import * as a from './actions'
 
 const initialState = {
   isSignIn: false,
-  signIn: new SignInModel(),
+  signIn: null,
   step: null,
   selectedWallet: null,
 }
@@ -20,7 +18,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSignIn: false,
-        signIn: new SignInModel(),
+        signIn: null,
       }
     case a.LOGIN_SET_SIGN_IN_MODEL:
       return {

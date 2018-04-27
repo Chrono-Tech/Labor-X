@@ -11,6 +11,7 @@ export default class Input extends React.Component {
     placeholder: PropTypes.string,
     invert: PropTypes.bool,
     disabled: PropTypes.bool,
+    lineDisabled: PropTypes.bool,
     input: PropTypes.shape({
       value: PropTypes.string,
       name: PropTypes.string,
@@ -55,10 +56,11 @@ export default class Input extends React.Component {
     autoComplete: true,
     // TODO @dkchv: add normal as default mod
     mods: [],
+    lineDisabled: false,
   }
 
   render () {
-    const { className, placeholder, type, input, label, meta, disabled, autoComplete, mods } = this.props
+    const { className, placeholder, type, input, label, meta, disabled, lineDisabled, autoComplete, mods } = this.props
     const classNames = [ css.root ].concat(mods)
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
@@ -74,7 +76,7 @@ export default class Input extends React.Component {
           disabled={disabled}
           {...input}
         />
-        <div className={css.line} />
+        { lineDisabled ? null : <div className={css.line} /> }
         {meta.touched && meta.error && <div className={css.error}><Translate value={meta.error} /></div>}
       </div>
     )

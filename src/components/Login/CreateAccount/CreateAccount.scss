@@ -18,3 +18,39 @@
   color: #fff;
   margin-bottom: 50px;
 }
+
+.submitButton {
+  justify-content: center;
+  font-weight: bold;
+  background-color: #fff !important;
+  padding: 12px 0;
+  margin-bottom: 30px;
+
+  &:hover {
+    background-color: #E5F5FA !important;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.loginButton {
+  margin-left: 5px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline;
+  font-weight: 300;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.otherActions {
+  color: #BFE7F4;
+  font-size: 16px;
+  font-weight: 300;
+}

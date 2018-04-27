@@ -1,9 +1,29 @@
-import { Translate } from 'components/common'
-import { MnemonicForm, PrivateKeyForm, WalletFileForm, SelectOption, CreateAccount, SelectWallet, LoginForm } from 'components/Login'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { signIn, createAccount, changeStep, LoginSteps, navigateToCreateWallet, onSubmitMnemonic, onSubmitPrivateKey, onSelectWallet } from 'store'
+
+import {
+  signIn,
+  createAccount,
+  changeStep,
+  LoginSteps,
+  onSubmitMnemonic,
+  onSubmitPrivateKey,
+  onSelectWallet,
+} from 'store'
+
+import {
+  MnemonicForm,
+  PrivateKeyForm,
+  WalletFileForm,
+  SelectOption,
+  CreateAccount,
+  SelectWallet,
+  LoginForm ,
+} from 'components/Login'
+
+import WalletEntryModel from 'models/WalletEntryModel'
+
 import css from './LoginOptions.scss'
 
 class LoginOptions extends React.Component {
@@ -16,13 +36,13 @@ class LoginOptions extends React.Component {
     onChangeStep: PropTypes.func,
     step: PropTypes.string,
     navigateToCreateWallet: PropTypes.func,
-    walletsList: PropTypes.array,
-    selectedWallet: PropTypes.object,
+    walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
+    selectedWallet: PropTypes.instanceOf(WalletEntryModel),
   }
 
   static defaultProps = {
     onChangeStep: () => {},
-    step: '',
+    step: null,
     onSelectWallet: null,
   }
 
@@ -30,11 +50,7 @@ class LoginOptions extends React.Component {
     super(props)
   }
 
-  handleChangeStep = (step) => this.setState({ step: step || SelectOption.STEP })
-
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
-
-  handleBackClick = () => this.handleChangeStep(null)
 
   render () {
     const {
@@ -46,6 +62,7 @@ class LoginOptions extends React.Component {
       walletsList,
       onSelectWallet,
       selectedWallet,
+      signIn,
     } = this.props
 
     const formProps = {
@@ -78,9 +95,7 @@ class LoginOptions extends React.Component {
         component = (<LoginForm onChangeStep={onChangeStep} selectedWallet={selectedWallet} onSubmitSuccess={signIn} />)
         break
       default:
-        // component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
         component = (<CreateAccount onChangeStep={onChangeStep} onSubmitSuccess={createAccount} />)
-        // component = <SelectOption onChangeStep={onChangeStep} />
     }
 
     return (
@@ -94,9 +109,9 @@ class LoginOptions extends React.Component {
 function mapStateToProps (state) {
 
   return {
-    selectedWallet: state.login.selectedWallet,
+    selectedWallet: state.login.selectedWallet && new WalletEntryModel(state.login.selectedWallet),
     step: state.login.step,
-    walletsList: state.wallet.walletsList,
+    walletsList: state.wallet.walletsList.map((wallet) => new WalletEntryModel(wallet)),
   }
 }
 

@@ -9,7 +9,7 @@ import 'styles/globals/globals.scss'
 import ethereumService from '../../src/services/EthereumService'
 import css from './index.scss'
 
-class CreateAccount extends React.Component {
+class AccountPassword extends React.Component {
   static getInitialProps ({ store }) {
     store.dispatch(bootstrap())
   }
@@ -25,11 +25,11 @@ class CreateAccount extends React.Component {
           <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
         </Head>
         <LoginActions>
-          Create account
+          Create account password
         </LoginActions>
       </div>
     )
   }
 }
 
-export default withRedux(initialStore)(CreateAccount)
+export default withRedux(initialStore)(AccountPassword)

@@ -18,22 +18,33 @@ export default class SelectWallet extends React.Component {
   getWalletsList() {
     const { walletsList, onSelectWallet } = this.props
 
-    return walletsList.map((wallet, index) => (
-      <UserRow
-        key={index}
-        title={wallet.name}
-        onClick={() => onSelectWallet(wallet)}
-      />
-    ))
+    return (
+      <div className={css.walletsWrapper}>
+        {
+          walletsList.map((wallet, index) => (
+            <UserRow
+              key={index}
+              title={wallet.name}
+              onClick={() => onSelectWallet(wallet)}
+            />
+          ))
+        }
+      </div>
+    )
   }
 
+  getEmptyListMessage(){
+    return <div className={css.emptyListMessage}>You have no wallets</div>
+  }
+  
   navigateToLoginMethods(){
     const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectLoginMethod)
   }
-
-  getEmptyListMessage(){
-    return 'You have no wallets'
+  
+  navigateToCreateWallet(){
+    const { onChangeStep } = this.props
+    onChangeStep(LoginSteps.CreateWallet)
   }
 
   render () {
@@ -42,11 +53,7 @@ export default class SelectWallet extends React.Component {
     return (
       <div className={css.root}>
         <div className={css.formHeader}>Select wallet</div>
-        <div className={css.fieldWrapper}>
-          {
-            walletsList.length ? this.getWalletsList() : this.getEmptyListMessage()
-          }
-        </div>
+        { walletsList.length ? this.getWalletsList() : this.getEmptyListMessage() }
         <Button
           onClick={this.navigateToLoginMethods.bind(this)}
           buttonClassName={css.submitButton}
@@ -57,7 +64,10 @@ export default class SelectWallet extends React.Component {
           error={error}
           mods={Button.MODS.INVERT}
         />
-        <p className={css.otherActions}>or <Link className={css.loginLink} href='/login'>Create a new wallet</Link></p>
+        <p className={css.otherActions}>
+          or
+          <button className={css.loginLink} onClick={this.navigateToCreateWallet.bind(this)}>Create a new wallet</button>
+        </p>
       </div>
     )
   }

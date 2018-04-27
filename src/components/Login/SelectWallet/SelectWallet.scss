@@ -23,7 +23,12 @@
   font-weight: 300;
 }
 
-.fieldWrapper {
+.walletsWrapper {
+  margin-bottom: 30px;
+  border-top: 1px solid #A8EAFF;
+}
+
+.emptyListMessage {
   margin-bottom: 30px;
 }
 
@@ -36,8 +41,14 @@
   color: #FFFFFF;
   font-size: 16px;
   font-weight: 300;
+  margin-left: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline;
 
   &:hover {
     font-weight: 300;
+    text-decoration: underline;
   }
 }
