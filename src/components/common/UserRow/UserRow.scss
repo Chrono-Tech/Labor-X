@@ -8,6 +8,11 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 23px;
+  cursor: pointer;
+
+  &:hover .userBlockInfo {
+    color: #fff;
+  }
 
   .userBlockInner {
     display: flex;
@@ -26,28 +31,24 @@
       justify-content: center;
       min-width: 0;
 
-      &:hover {
-        color: #fff;
-      }
-
-      .userName {
+      .title {
         font-size: 16px;
         line-height: 22px;
       }
 
-      .userAddress {
+      .subtitle {
         font-size: 12px;
         line-height: 17px;
         min-width: 0;
         word-break: break-all;
-
-        &.noName {
-          font-size: 16px;
-          line-height: 22px;
-          padding-right: 70px;
-        }
       }
 
+      .title.largeText,
+      .subtitle.largeText {
+        font-size: 16px;
+        line-height: 22px;
+        padding-right: 30px;
+      }
     }
   }
 

@@ -13,11 +13,10 @@ const FORM_PRIVATE_KEY = 'form/privateKey'
 
 const onSubmit = ({key}) => {
   const address = ethereumService.createAddressFromPrivateKey(key)
-  console.log('address', address)
   return new SignInModel({
     method: SignInModel.METHODS.PRIVATE_KEY,
     key: key,
-    address
+    address,
   })
 
 }

@@ -16,8 +16,6 @@ const onSubmit = ({ mnemonic }) => {
 
   const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
 
-  console.log('wallet', account)
-
   return new SignInModel({
     isHD: true,
     address: account.address,
@@ -35,6 +33,7 @@ class MnemonicForm extends React.Component {
     super(props)
     console.log('test mnemonic: ', bip39.generateMnemonic())
   }
+
 
   render () {
     const prefix = this.constructor.name

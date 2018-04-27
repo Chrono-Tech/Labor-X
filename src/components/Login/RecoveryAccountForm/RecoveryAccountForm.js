@@ -8,28 +8,28 @@ import validate from './validate'
 const FORM_LOGIN = 'form/login'
 
 const onSubmit = ({ words }) => {
-  
+
   return {}
 }
 
 class RecoveryAccountForm extends React.Component {
   static propTypes = {
-  
+
   }
-  
+
   static defaultProps = {
-  
+
   }
-  
+
   render () {
     const { handleSubmit, error, pristine, invalid } = this.props
     const wordsArray = new Array(12).fill()
-    
+
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Recover Account</div>
-        <UserRow address='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
-  
+        <UserRow title='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' largeText={true} />
+
         <div className={css.fieldWrapper}>
           {
             wordsArray.map((item, index) =>

@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, Link } from 'components/common'
-import { MnemonicForm, PrivateKeyForm, WalletFileForm, LoginSteps } from 'components/Login'
+import { MnemonicForm, PrivateKeyForm, WalletFileForm } from 'components/Login'
+import { LoginSteps } from 'store'
 
 import css from './SelectOption.scss'
 

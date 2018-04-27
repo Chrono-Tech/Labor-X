@@ -3,17 +3,17 @@ import LogInModel from 'models/SignInModel'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import css from './LoginForm.scss'
+import css from './CreateAccount.scss'
 import validate from './validate'
 
-const FORM_LOGIN = 'form/login'
+const FORM_LOGIN = 'form/createAccount'
 
-const onSubmit = ({ password }) => {
+const onSubmit = ({ walletName, password }) => {
 
-  return new LogInModel({
-    address: '',
-    password: password,
-  })
+  return {
+    walletName,
+    password,
+  }
 }
 
 class CreateAccount extends React.Component {
@@ -28,8 +28,7 @@ class CreateAccount extends React.Component {
 
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
-        <div className={css.formHeader}>Log In</div>
-        <UserRow name='Emile' address='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
+        <div className={css.header}>Create account</div>
         <Field
           className={css.row}
           component={Input}

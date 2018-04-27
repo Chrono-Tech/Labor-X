@@ -1,12 +1,12 @@
-import SignInModel from '../../models/SignInModel'
+import SignInModel from 'src/models/SignInModel'
+import WalletModel from 'src/models/WalletModel'
 import * as a from './actions'
-import {LOGIN_RESET_LOGIN_OPTIONS} from "./actions";
-import {LOGIN_RESET_LOGIN_OPTIONS_METHOD} from "./actions";
 
 const initialState = {
   isSignIn: false,
   signIn: new SignInModel(),
   step: null,
+  selectedWallet: null,
 }
 
 export default (state = initialState, action) => {
@@ -15,7 +15,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSignIn: true,
-        signIn: action.signInModel,
       }
     case a.LOGIN_SIGN_OUT:
       return {
@@ -23,10 +22,21 @@ export default (state = initialState, action) => {
         isSignIn: false,
         signIn: new SignInModel(),
       }
+    case a.LOGIN_SET_SIGN_IN_MODEL:
+      return {
+        ...state,
+        isSignIn: false,
+        signIn: action.signInModel,
+      }
     case a.LOGIN_CHANGE_STEP:
       return {
         ...state,
         step: action.step,
+      }
+    case a.LOGIN_SELECT_WALLET:
+      return {
+        ...state,
+        selectedWallet: action.wallet,
       }
     default:
       return state

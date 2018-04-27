@@ -9,7 +9,8 @@ import validate from './validate'
 const FORM_LOGIN = 'form/login'
 
 const onSubmit = ({ password }) => {
-  
+
+  console.log('onsubmit')
   return new LogInModel({
     address: '',
     password: password,
@@ -18,24 +19,25 @@ const onSubmit = ({ password }) => {
 
 class LoginForm extends React.Component {
   static propTypes = {
-    avatar: PropTypes.string,
-    name: PropTypes.string,
-    address: PropTypes.string,
+    selectedWallet: PropTypes.any,
   }
-  
+
   static defaultProps = {
-    avatar: '/static/images/profile-photo.jpg',
-    name: '',
-    address: '',
+    selectedWallet: {},
+  }
+
+  getFirstAddress (wallet) {
+    return wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, name, address, avatar } = this.props
-    
+    const { handleSubmit, error, pristine, invalid, selectedWallet } = this.props
+    console.log('this.getFirstAddress(selectedWallet)', this.getFirstAddress(selectedWallet), selectedWallet)
+
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Log In</div>
-        <UserRow name='Emile' address='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
+        <UserRow title={selectedWallet.name} subtitle={this.getFirstAddress(selectedWallet)} />
         <Field
           className={css.row}
           component={Input}
