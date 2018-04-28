@@ -48,7 +48,7 @@ export const createAccount = (walletName, password) => (dispatch, getState) => {
   if (signInModel) {
     dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
 
-    Router.push('/dashboard')
+    dispatch(changeStep(LoginSteps.SelectWallet))
   } else {
     Router.push('/account-password')
   }
