@@ -6,7 +6,7 @@ import initialStore, {
   walletCreate,
   walletUpdate,
   walletRemove,
-  loadWallet,
+  decryptWallet,
   createWallet,
   logout
 } from 'store'
@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     walletUpdate: (wallet, name) => dispatch(walletUpdate(wallet, name)),
     walletRemove: (name) => dispatch(walletRemove(name)),
-    loadWallet: (wallet) => dispatch(loadWallet(wallet)),
+    decryptWallet: (wallet) => dispatch(decryptWallet(wallet)),
     createWallet: (options) => dispatch(createWallet(options)),
     logout: (wallet) => dispatch(logout(wallet)),
   }

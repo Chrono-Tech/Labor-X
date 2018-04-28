@@ -1,12 +1,12 @@
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { PersistGate } from 'redux-persist/integration/react'
+
 import { Link } from 'components/common'
 import { LoginActions } from 'components/layouts'
 import { SelectOption, LoginOptions } from 'components/Login'
-import initialStore, {
-  changeStep
-} from 'store'
+import initialStore, { changeStep} from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import ethereumService from '../../src/services/EthereumService'
@@ -38,15 +38,16 @@ class Index extends React.Component {
   }
 }
 
+
 const mapStateToProps = (state) => {
   return {
-    step: state.step
+    step: state.step,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeStep: (step) => dispatch(changeStep(step))
+    changeStep: (step) => dispatch(changeStep(step)),
   }
 }
 

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import {PersistGate} from 'redux-persist/integration/react'
 
 import {
   signIn,
@@ -48,6 +49,15 @@ class LoginOptions extends React.Component {
 
   constructor (props) {
     super(props)
+  }
+  
+  componentWillMount(){
+    const { selectedWallet, onChangeStep } = this.props
+    
+    console.log('selectedWallet')
+    if (selectedWallet) {
+      onChangeStep(LoginSteps.Login)
+    }
   }
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
@@ -106,10 +116,38 @@ class LoginOptions extends React.Component {
   }
 }
 
+export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
+  
+  class WithPersistGate extends React.Component {
+    
+    static displayName = `withPersistGate(${WrappedComponent.displayName
+    || WrappedComponent.name
+    || 'Component'})`;
+    static contextTypes = {
+      store: PropTypes.object.isRequired
+    };
+    
+    constructor(props, context) {
+      super(props, context);
+      this.store = context.store;
+    }
+    
+    render() {
+      return (
+        <PersistGate {...gateProps} persistor={this.store.__persistor}>
+          <WrappedComponent {...this.props} />
+        </PersistGate>
+      );
+    }
+    
+  }
+
+);
+
 function mapStateToProps (state) {
 
   return {
-    selectedWallet: state.login.selectedWallet && new WalletEntryModel(state.login.selectedWallet),
+    selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     step: state.login.step,
     walletsList: state.wallet.walletsList.map((wallet) => new WalletEntryModel(wallet)),
   }
@@ -126,4 +164,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginOptions)
+export default connect(mapStateToProps, mapDispatchToProps)(PersistWrapper({ loading: (<div className={css.loadingMessage}/>) })(LoginOptions))

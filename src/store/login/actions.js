@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import type SignInModel from 'models/SignInModel'
 import WalletEntryModel from 'models/WalletEntryModel'
-import { createWallet, loadWallet } from 'src/store'
+import { createWallet, decryptWallet, walletSelect } from 'src/store'
 
 export const LoginSteps = {
   Ledger: 'ledger',
@@ -28,8 +28,9 @@ export const setSignInModel = (signInModel) => (dispatch) => {
 
 export const signIn = ({password}) => (dispatch, getState) => {
   const state = getState()
-  const { selectedWallet } = state.login
-  dispatch(loadWallet(new WalletEntryModel(selectedWallet), password))
+  const { selectedWallet } = state.wallet
+  
+  dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
 
   dispatch({ type: LOGIN_SIGN_IN })
 
@@ -66,7 +67,7 @@ export const onSubmitPrivateKey = (signInModel) => (dispatch) => {
 }
 
 export const onSelectWallet = (wallet) => (dispatch) => {
-  dispatch({ type: LOGIN_SELECT_WALLET, wallet })
+  dispatch(walletSelect(wallet))
   dispatch(changeStep(LoginSteps.Login))
 
 }

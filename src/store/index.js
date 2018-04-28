@@ -14,6 +14,7 @@ export * from './wallet/actions'
 const loggerMiddleware = createLogger({
   level:      'info',
   collapsed:  true,
+  serialize: true,
 })
 
 export default () => {
@@ -35,7 +36,7 @@ export default () => {
     )
   )
 
-  persistStore(store)
+  store.__persistor = persistStore(store)
 
   syncTranslationWithStore(store)
 

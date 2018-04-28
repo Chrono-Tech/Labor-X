@@ -5,6 +5,7 @@ import {WalletModel, WalletEntryModel} from 'src/models'
 
 export const WALLETS_CREATE = 'wallets/create'
 export const WALLETS_SELECT = 'wallets/select'
+export const WALLETS_LOAD = 'wallets/load'
 export const WALLETS_UPDATE = 'wallets/update'
 export const WALLETS_REMOVE = 'wallets/remove'
 
@@ -16,6 +17,10 @@ export const walletSelect = (wallet) => (dispatch) => {
   dispatch({ type: WALLETS_SELECT, wallet })
 }
 
+export const walletLoad = (wallet) => (dispatch) => {
+  dispatch({ type: WALLETS_LOAD, wallet })
+}
+
 export const walletUpdate = (wallet, name) => (dispatch) => {
   dispatch({ type: WALLETS_UPDATE, wallet, name })
 }
@@ -24,7 +29,7 @@ export const walletRemove = (name) => (dispatch) => {
   dispatch({ type: WALLETS_REMOVE, name })
 }
 
-export const loadWallet = (entry, password) => (dispatch) => {
+export const decryptWallet = (entry, password) => (dispatch) => {
   let web3 = Web3.getWeb3()
 
   let wallet = web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
@@ -34,7 +39,7 @@ export const loadWallet = (entry, password) => (dispatch) => {
     wallet,
   })
 
-  dispatch(walletSelect(model))
+  dispatch(walletLoad(model))
 
 }
 
