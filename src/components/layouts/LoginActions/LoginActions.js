@@ -30,7 +30,9 @@ export default class LoginActions extends React.Component {
             <div className={contentClassNames.join(' ')}>
               {this.props.children}
             </div>
-            <LearnMoreBlock />
+            <div className={css.learnMoreBlockWrapper}>
+              <LearnMoreBlock />
+            </div>
           </div>
           <img src={backgroundImage} className={css.backgroundImage} alt='' />
         </div>

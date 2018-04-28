@@ -73,6 +73,13 @@ export default class SelectOption extends React.Component {
             <img src='/static/images/svg/wallet.svg' alt='' />
             Wallet file
           </button>
+          <button
+            className={[css.methodButton, css.uportButton].join(' ')}
+            onClick={() => onChangeStep(LoginSteps.Uport)}
+          >
+            <img src='/static/images/svg/wallet.svg' alt='' />
+              Uport
+          </button>
         </div>
       </div>
     )

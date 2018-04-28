@@ -8,6 +8,7 @@ export const LoginSteps = {
   Trezor: 'trezor',
   BrowserPlugIn: 'browserPlugIn',
   Mnemonic: 'mnemonic',
+  Uport: 'uport',
   PrivateKey: 'privateKey',
   WalletFile: 'walletFile',
   CreateWallet: 'createWallet',
