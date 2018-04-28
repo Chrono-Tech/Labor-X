@@ -1,15 +1,16 @@
-import { LoginActions } from 'components/layouts'
-import { LoginForm } from 'components/Login'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import withRedux from 'next-redux-wrapper'
 import Head from 'next/head'
-import initialStore from 'store'
+
+import { LoginActions } from 'components/layouts'
+import { LoginOptions } from 'components/Login'
+import initialStore  from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
-import ethereumService from '../../src/services/EthereumService'
+import ethereumService from 'src/services/EthereumService'
 import css from './index.scss'
 
-class Login extends React.Component {
+class Index extends React.Component {
   static getInitialProps ({ store }) {
     store.dispatch(bootstrap())
   }
@@ -24,16 +25,13 @@ class Login extends React.Component {
         <Head>
           <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
         </Head>
-        <LoginActions>
-          <LoginForm
-            avatar='/static/images/profile-photo.jpg'
-            name='Emile'
-            address='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9'
-          />
+        <LoginActions contentClassName={css.contentGradient}>
+          <LoginOptions/>
         </LoginActions>
       </div>
     )
   }
 }
 
-export default withRedux(initialStore)(Login)
+
+export default withRedux(initialStore, null)(Index)

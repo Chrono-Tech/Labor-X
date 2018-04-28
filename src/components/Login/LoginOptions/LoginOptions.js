@@ -74,12 +74,7 @@ class LoginOptions extends React.Component {
       selectedWallet,
       signIn,
     } = this.props
-
-    const formProps = {
-      onChangeStep,
-      onSubmitSuccess: this.handleSubmitSuccess,
-    }
-
+    
     let component
 
     switch (step) {
@@ -87,7 +82,7 @@ class LoginOptions extends React.Component {
         component = (<MnemonicForm onChangeStep={onChangeStep} onSubmitSuccess={onSubmitMnemonic} />)
         break
       case LoginSteps.WalletFile:
-        component = (<WalletFileForm {...formProps} />)
+        component = (<WalletFileForm onChangeStep={onChangeStep} onSubmitSuccess={signIn}/>)
         break
       case LoginSteps.PrivateKey:
         component = (<PrivateKeyForm onChangeStep={onChangeStep} onSubmitSuccess={onSubmitPrivateKey} />)
