@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Field, reduxForm, SubmissionError } from 'redux-form'
 
 import { Button, Input, Link, UserRow } from 'components/common'
+import { FieldInputComponent } from 'components/Login'
 import WalletEntryModel from 'models/WalletEntryModel'
 import validate from './validate'
 import Web3 from 'src/network/Web3Provider'
@@ -52,15 +53,13 @@ class LoginForm extends React.Component {
         </div>
         <Field
           className={css.row}
-          component={(props) => {
-            const mergedProps = {...props, lineDisabled: true}
-            return <Input {...mergedProps} />
-          }}
+          component={Input}
           name='password'
           type='password'
           autoComplete={false}
           placeholder='Enter Password'
-          mods={[Input.MODS.INVERT, css.passwordField]}
+          mods={css.passwordField}
+          lineEnabled={false}
         />
         <Button
           className={css.row}
@@ -79,5 +78,6 @@ class LoginForm extends React.Component {
     )
   }
 }
+
 
 export default reduxForm({ form: FORM_LOGIN, validate })(LoginForm)

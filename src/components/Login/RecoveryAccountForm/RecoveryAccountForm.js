@@ -1,9 +1,12 @@
-import { Button, Input, Link, UserRow } from 'components/common'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import css from './RecoveryAccountForm.scss'
+
+import { Button, Input, Link, UserRow } from 'components/common'
+import { FieldInputComponent } from 'components/Login'
 import validate from './validate'
+
+import css from './RecoveryAccountForm.scss'
 
 const FORM_LOGIN = 'form/login'
 
@@ -41,6 +44,7 @@ class RecoveryAccountForm extends React.Component {
                 placeholder={`word ${index + 1}`}
                 autoComplete={false}
                 mods={Input.MODS.INVERT}
+                lineEnabled={false}
               />)
             )
           }

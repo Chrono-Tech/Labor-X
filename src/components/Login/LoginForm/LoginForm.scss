@@ -105,7 +105,13 @@
       border-bottom: 1px solid #fff;
       color: #fff;
     }
+
+    &::placeholder {
+      font-size: 16px;
+      font-weight: 400;
+    }
   }
+
 }
 
 .submitButton {

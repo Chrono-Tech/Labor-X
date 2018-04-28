@@ -54,3 +54,26 @@
   font-size: 16px;
   font-weight: 300;
 }
+
+.passwordField {
+  margin-top: 0;
+  margin-bottom: 38px;
+
+  input {
+    font-size: 16px;
+    line-height: 22px;
+    color: #A8EAFF;
+    border-bottom: 1px solid #A8EAFF;
+    outline: none;
+
+    &:hover, &:focus {
+      border-bottom: 1px solid #fff;
+      color: #fff;
+    }
+
+    &::placeholder {
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+}

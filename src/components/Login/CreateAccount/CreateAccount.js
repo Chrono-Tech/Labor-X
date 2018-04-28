@@ -1,11 +1,13 @@
-import { Button, Input, Link, UserRow } from 'components/common'
-import LogInModel from 'models/SignInModel'
-import {LoginSteps} from 'store'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import css from './CreateAccount.scss'
+
+import { Button, Input } from 'components/common'
+import { FieldInputComponent } from 'components/Login'
+import {LoginSteps} from 'store'
 import validate from './validate'
+
+import css from './CreateAccount.scss'
 
 const FORM_LOGIN = 'form/createAccount'
 
@@ -43,7 +45,8 @@ class CreateAccount extends React.Component {
           name='walletName'
           placeholder='Wallet name'
           autoComplete={false}
-          mods={Input.MODS.INVERT}
+          lineEnabled={false}
+          mods={css.passwordField}
         />
         <Field
           className={css.row}
@@ -52,7 +55,8 @@ class CreateAccount extends React.Component {
           type='password'
           placeholder='Password'
           autoComplete={false}
-          mods={[Input.MODS.INVERT, css.passwordField]}
+          lineEnabled={false}
+          mods={css.passwordField}
         />
         <Field
           className={css.row}
@@ -61,7 +65,8 @@ class CreateAccount extends React.Component {
           type='password'
           placeholder='Password confirmation'
           autoComplete={false}
-          mods={[Input.MODS.INVERT, css.passwordField]}
+          lineEnabled={false}
+          mods={css.passwordField}
         />
         <Button
           className={css.row}
@@ -71,7 +76,6 @@ class CreateAccount extends React.Component {
           primary
           disabled={pristine || invalid}
           error={error}
-          mods={Button.MODS.INVERT}
         />
         <div className={css.otherActions}>
           or
