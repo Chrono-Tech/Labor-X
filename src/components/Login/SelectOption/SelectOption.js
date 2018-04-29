@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, Link } from 'components/common'
-import { MnemonicForm, PrivateKeyForm, WalletFileForm, LoginSteps } from 'components/Login'
+import { MnemonicForm, PrivateKeyForm, WalletFileForm } from 'components/Login'
+import { LoginSteps } from 'store'
 
 import css from './SelectOption.scss'
 
@@ -71,6 +72,13 @@ export default class SelectOption extends React.Component {
           >
             <img src='/static/images/svg/wallet.svg' alt='' />
             Wallet file
+          </button>
+          <button
+            className={[css.methodButton, css.uportButton].join(' ')}
+            onClick={() => onChangeStep(LoginSteps.Uport)}
+          >
+            <img src='/static/images/svg/wallet.svg' alt='' />
+              Uport
           </button>
         </div>
       </div>

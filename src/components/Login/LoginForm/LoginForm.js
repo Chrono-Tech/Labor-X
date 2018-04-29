@@ -1,48 +1,65 @@
-import { Button, Input, Link, UserRow } from 'components/common'
-import LogInModel from 'models/SignInModel'
-import PropTypes from 'prop-types'
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
-import css from './LoginForm.scss'
+import PropTypes from 'prop-types'
+import { Field, reduxForm, SubmissionError } from 'redux-form'
+
+import { Button, Input, Link, UserRow } from 'components/common'
+import { FieldInputComponent } from 'components/Login'
+import WalletEntryModel from 'models/WalletEntryModel'
 import validate from './validate'
+import Web3 from 'src/network/Web3Provider'
+import {LoginSteps} from 'src/store'
+
+import css from './LoginForm.scss'
 
 const FORM_LOGIN = 'form/login'
 
-const onSubmit = ({ password }) => {
-  
-  return new LogInModel({
-    address: '',
-    password: password,
-  })
-}
-
 class LoginForm extends React.Component {
   static propTypes = {
-    avatar: PropTypes.string,
-    name: PropTypes.string,
-    address: PropTypes.string,
+    selectedWallet: PropTypes.instanceOf(WalletEntryModel),
+    onChangeStep: PropTypes.func,
   }
   
-  static defaultProps = {
-    avatar: '/static/images/profile-photo.jpg',
-    name: '',
-    address: '',
+  onSubmit ({ password }) {
+    const { selectedWallet } = this.props
+    let web3 = Web3.getWeb3()
+
+    try {
+      web3.eth.accounts.wallet.decrypt(selectedWallet.encrypted, password)
+    } catch (e) {
+      throw new SubmissionError({ password: e.message })
+    }
+
+    return {
+      password: password,
+    }
+  }
+
+  navigateToSelectWallet() {
+    const {onChangeStep} = this.props
+    onChangeStep(LoginSteps.SelectWallet)
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, name, address, avatar } = this.props
-    
+    const { handleSubmit, error, pristine, invalid, selectedWallet } = this.props
+
     return (
-      <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
+      <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <div className={css.formHeader}>Log In</div>
-        <UserRow name='Emile' address='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
+        <div className={css.accountWrapper}>
+          <UserRow
+            title={selectedWallet.name}
+            onClick={this.navigateToSelectWallet.bind(this)}
+          />
+        </div>
         <Field
           className={css.row}
           component={Input}
           name='password'
-          placeholder='Enter Password'
+          type='password'
           autoComplete={false}
-          mods={[Input.MODS.INVERT, css.passwordField]}
+          placeholder='Enter Password'
+          mods={css.passwordField}
+          lineEnabled={false}
         />
         <Button
           className={css.row}
@@ -62,4 +79,5 @@ class LoginForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: FORM_LOGIN, validate, onSubmit })(LoginForm)
+
+export default reduxForm({ form: FORM_LOGIN, validate })(LoginForm)

@@ -1,13 +1,16 @@
 .userBlock {
   color: #A8EAFF;
-  border-top: 1px solid #A8EAFF;
   border-bottom: 1px solid #A8EAFF;
   padding: 18px 0;
   text-align: left;
   font-weight: 400;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 23px;
+  cursor: pointer;
+
+  &:hover .userBlockInfo {
+    color: #fff;
+  }
 
   .userBlockInner {
     display: flex;
@@ -26,28 +29,17 @@
       justify-content: center;
       min-width: 0;
 
-      &:hover {
-        color: #fff;
-      }
-
-      .userName {
+      .title {
         font-size: 16px;
         line-height: 22px;
       }
 
-      .userAddress {
+      .subtitle {
         font-size: 12px;
         line-height: 17px;
         min-width: 0;
         word-break: break-all;
-
-        &.noName {
-          font-size: 16px;
-          line-height: 22px;
-          padding-right: 70px;
-        }
       }
-
     }
   }
 

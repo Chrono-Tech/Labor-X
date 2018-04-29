@@ -7,12 +7,13 @@ import * as a from './actions'
 const persistConfig = {
   key: 'wallet',
   storage: storage,
-  blacklist: ['activeWallet']
+  blacklist: ['decryptedWalet'],
 }
 
 export const initialState = {
   walletsList: [],
-  activeWallet: null,
+  decryptedWalet: null,
+  selectedWallet: null,
 }
 
 const wallet = (state = initialState, action) => {
@@ -29,13 +30,19 @@ const wallet = (state = initialState, action) => {
     case a.WALLETS_SELECT :
       return {
         ...state,
-        activeWallet: action.wallet
+        selectedWallet: action.wallet
+      }
+      
+    case a.WALLETS_LOAD :
+      return {
+        ...state,
+        decryptedWalet: action.wallet
       }
       
     case a.WALLETS_UPDATE :
       return {
         ...state,
-        activeWallet: updateWallet(action.wallet, action.name)
+        decryptedWalet: updateWallet(action.wallet, action.name)
       }
       
     case a.WALLETS_REMOVE :

@@ -1,0 +1,55 @@
+.root {
+  text-align: center;
+  padding: 40px 130px;
+  color: #BFE7F4;
+  font-size: 16px;
+
+  @media (max-width: 640px) {
+    padding: 40px 20px;
+  }
+}
+
+.formHeader {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 24px;
+  color: #fff;
+  margin-bottom: 45px;
+}
+
+.otherActions {
+  color: #BFE7F4;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.walletsWrapper {
+  margin-bottom: 30px;
+  border-top: 1px solid #A8EAFF;
+}
+
+.emptyListMessage {
+  margin-bottom: 30px;
+}
+
+.submitButton {
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  background: #fff;
+}
+.loginLink {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 300;
+  margin-left: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline;
+
+  &:hover {
+    font-weight: 300;
+    text-decoration: underline;
+  }
+}

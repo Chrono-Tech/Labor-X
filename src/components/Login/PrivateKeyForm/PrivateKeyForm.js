@@ -1,25 +1,26 @@
-import { Button, Input } from 'components/common'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import bip39 from 'bip39'
+
+import { Button, Input } from 'components/common'
 import ethereumService from 'services/EthereumService'
-import SignInModel from '../../../models/SignInModel'
-import css from './PrivateKeyForm.scss'
+import SignInModel from 'src/models/SignInModel'
+import { LoginSteps } from 'store'
 import validate from './validate'
-import hdKey from 'ethereumjs-wallet/hdkey'
-import bip39 from "bip39";
+
+import css from './PrivateKeyForm.scss'
 
 const FORM_PRIVATE_KEY = 'form/privateKey'
 
 const onSubmit = ({key}) => {
   const address = ethereumService.createAddressFromPrivateKey(key)
-  console.log('address', address)
+  
   return new SignInModel({
     method: SignInModel.METHODS.PRIVATE_KEY,
     key: key,
-    address
+    address,
   })
-
 }
 
 class PrivateKeyForm extends React.Component {
@@ -31,8 +32,6 @@ class PrivateKeyForm extends React.Component {
     super(props)
     console.log('test mnemonic: ', bip39.generateMnemonic())
   }
-
-  static STEP = 'step/LoginWithPrivateKey'
 
   render () {
     const { handleSubmit, error, invalid, pristine, onChangeStep } = this.props
@@ -46,7 +45,8 @@ class PrivateKeyForm extends React.Component {
           placeholder='Enter private key'
           className={css.input}
           autoComplete={false}
-          mods={Input.MODS.INVERT}
+          lineEnabled={false}
+          mods={css.keyField}
         />
         <Button
           label='Login'
@@ -57,8 +57,9 @@ class PrivateKeyForm extends React.Component {
           error={error}
           primary
         />
-        <div>
-          or <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>
+        <div className={css.otherActions}>
+          or
+          <button className={css.backButton} onClick={() => onChangeStep(LoginSteps.SelectLoginMethod)}>back</button>
         </div>
       </form>
     )

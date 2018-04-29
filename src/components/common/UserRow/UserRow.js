@@ -10,7 +10,7 @@ export default class UserRow extends React.Component {
     onClick: PropTypes.func,
     actionIcon: PropTypes.string,
   }
-  
+
   static defaultProps = {
     avatar: '/static/images/profile-photo.jpg',
     name: '',
@@ -18,25 +18,29 @@ export default class UserRow extends React.Component {
     onClick: () => {},
     actionIcon: '/static/images/svg/list.svg',
   }
-  
+
   render () {
-    const { handleSubmit, error, pristine, invalid, avatar, name, address, onClick, actionIcon } = this.props
-    
+    const { handleSubmit, error, pristine, invalid, avatar, title, subtitle, onClick, actionIcon } = this.props
+
     return (
-      <div className={css.userBlock}>
+      <div className={css.userBlock} onClick={onClick}>
         <div className={css.userBlockInner}>
           <div className={css.userBlockAvatar}>
             <img className={css.userAvatar} src={avatar} alt='' />
           </div>
           <div className={css.userBlockInfo}>
-            { name ? (
-              <div className={css.userName}>{name}</div>
-            ) : null}
-            <div className={[css.userAddress, name ? '' : css.noName].join(' ')}>{address}</div>
+            { title ? (
+              <div className={[css.title].join(' ')}>
+                {title}
+              </div>) : null}
+            { subtitle ? (
+              <div className={[css.subtitle].join(' ')}>
+                {subtitle}
+              </div>) : null}
           </div>
         </div>
         <div className={css.actionWrapper}>
-          <button className={css.actionListTrigger} onClick={onClick}>
+          <button className={css.actionListTrigger}>
             <img src={actionIcon} alt='' />
           </button>
         </div>

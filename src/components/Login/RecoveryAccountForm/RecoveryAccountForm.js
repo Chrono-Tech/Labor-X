@@ -1,35 +1,38 @@
-import { Button, Input, Link, UserRow } from 'components/common'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import css from './RecoveryAccountForm.scss'
+
+import { Button, Input, Link, UserRow } from 'components/common'
+import { FieldInputComponent } from 'components/Login'
 import validate from './validate'
+
+import css from './RecoveryAccountForm.scss'
 
 const FORM_LOGIN = 'form/login'
 
 const onSubmit = ({ words }) => {
-  
+
   return {}
 }
 
 class RecoveryAccountForm extends React.Component {
   static propTypes = {
-  
+
   }
-  
+
   static defaultProps = {
-  
+
   }
-  
+
   render () {
     const { handleSubmit, error, pristine, invalid } = this.props
     const wordsArray = new Array(12).fill()
-    
+
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Recover Account</div>
-        <UserRow address='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
-  
+        <UserRow title='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
+
         <div className={css.fieldWrapper}>
           {
             wordsArray.map((item, index) =>
@@ -41,6 +44,7 @@ class RecoveryAccountForm extends React.Component {
                 placeholder={`word ${index + 1}`}
                 autoComplete={false}
                 mods={Input.MODS.INVERT}
+                lineEnabled={false}
               />)
             )
           }

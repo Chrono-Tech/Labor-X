@@ -1,5 +1,6 @@
 import Web3 from 'web3'
 import TestPRCNode from './TestPRCNode'
+import bip39 from "bip39";
 
 class EthereumService {
   constructor (node) {
@@ -44,7 +45,12 @@ class EthereumService {
   }
 
   createAddressFromMnemonic (mnemonic) {
-
+    if (!this.started) {
+      throw new Error('Ethereum service not started')
+    }
+    const { address } = this.web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
+    this.address = address
+    return address
   }
 
   createAddressFromWallet (wallet) {

@@ -11,6 +11,7 @@ export default class Input extends React.Component {
     placeholder: PropTypes.string,
     invert: PropTypes.bool,
     disabled: PropTypes.bool,
+    lineEnabled: PropTypes.bool,
     input: PropTypes.shape({
       value: PropTypes.string,
       name: PropTypes.string,
@@ -24,6 +25,10 @@ export default class Input extends React.Component {
     }),
     autoComplete: PropTypes.bool,
     mods: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    inputMods: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
     ]),
@@ -55,11 +60,13 @@ export default class Input extends React.Component {
     autoComplete: true,
     // TODO @dkchv: add normal as default mod
     mods: [],
+    lineEnabled: false,
   }
 
   render () {
-    const { className, placeholder, type, input, label, meta, disabled, autoComplete, mods } = this.props
+    const { className, placeholder, type, input, label, meta, disabled, inputMods, lineEnabled, autoComplete, mods } = this.props
     const classNames = [ css.root ].concat(mods)
+    const inputModsArray = [css.input].concat(inputMods)
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
     input.autoComplete = autoComplete ? 'on' : 'off'
@@ -68,13 +75,13 @@ export default class Input extends React.Component {
       <div className={classNames.join(' ')}>
         {label && <div className={css.label}><Translate value={label} /></div>}
         <input
-          className={css.input}
+          className={inputModsArray.join(' ')}
           placeholder={I18n.t(placeholder)}
           type={type}
           disabled={disabled}
           {...input}
         />
-        <div className={css.line} />
+        { lineEnabled ? <div className={css.line} /> : false }
         {meta.touched && meta.error && <div className={css.error}><Translate value={meta.error} /></div>}
       </div>
     )

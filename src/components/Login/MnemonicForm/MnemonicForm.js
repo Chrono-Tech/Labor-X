@@ -1,26 +1,24 @@
-import bip39 from 'bip39'
-import { Button, Input } from 'components/common'
-import hdKey from 'ethereumjs-wallet/hdkey'
-import SignInModel from 'models/SignInModel'
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
-import css from './MnemonicForm.scss'
+import bip39 from 'bip39'
+
+import { Button, Input } from 'components/common'
+import SignInModel from 'models/SignInModel'
+import ethereumService from 'services/EthereumService'
+import { LoginSteps } from 'store'
 import validate from './validate'
-import Web3 from 'src/network/Web3Provider'
+
+import css from './MnemonicForm.scss'
 
 const FORM_MNEMONIC = 'form/mnemonic'
 
 const onSubmit = ({ mnemonic }) => {
-  let web3 = Web3.getWeb3()
-
-  const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
-
-  console.log('wallet', account)
+  const address = ethereumService.createAddressFromMnemonic(mnemonic)
 
   return new SignInModel({
     isHD: true,
-    address: account.address,
+    address: address,
     method: SignInModel.METHODS.MNEMONIC,
     key: mnemonic,
   })
@@ -37,7 +35,6 @@ class MnemonicForm extends React.Component {
   }
 
   render () {
-    const prefix = this.constructor.name
     const { handleSubmit, error, pristine, invalid, onChangeStep } = this.props
 
     return (
@@ -47,9 +44,10 @@ class MnemonicForm extends React.Component {
           className={css.row}
           component={Input}
           name='mnemonic'
-          placeholder={`${prefix}.enterMnemonic`}
+          placeholder='Enter mnemonic'
           autoComplete={false}
-          mods={Input.MODS.INVERT}
+          mods={css.mnemonicField}
+          lineEnabled={false}
         />
         <Button
           className={css.row}
@@ -61,9 +59,9 @@ class MnemonicForm extends React.Component {
           error={error}
           mods={Button.MODS.INVERT}
         />
-        <div>
+        <div className={css.otherActions}>
           or
-          <button className={css.backButton} onClick={() => onChangeStep(null)}>back</button>
+          <button className={css.backButton} onClick={() => onChangeStep(LoginSteps.SelectLoginMethod)}>back</button>
         </div>
       </form>
     )

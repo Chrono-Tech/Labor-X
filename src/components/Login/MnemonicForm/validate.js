@@ -6,6 +6,6 @@ export default (values) => {
   return {
     mnemonic: bip39.validateMnemonic(mnemonic)
       ? null
-      : 'MnemonicForm.invalidMnemonic',
+      : 'Invalid mnemonic',
   }
 }
