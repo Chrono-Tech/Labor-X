@@ -1,0 +1,74 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.jobDateAward {
+  @include flex(row, flex-start, center);
+  margin-left: auto;
+  > * {
+    margin-left: 4rem;
+  }
+}
+
+.review {
+  margin-left: auto;
+  color: $color-blue;
+}
+
+.icon {
+  margin-right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.root {
+  @include card;
+  border-left-width: 1rem;
+  border-left-style: solid;
+  > div {
+    @include flex(row, flex-start, center);
+    height: 6rem;
+    border-bottom: solid 1px $color-gray5;
+    padding: 0 3rem;
+  }
+}
+
+.applicantsOffers {
+  @include flex(row, flex-start, center);
+  margin-right: 2rem;
+  > * {
+    margin-right: 1rem;
+  }
+}
+
+.jobName {
+  &:hover {
+    color: $color-blue;
+  }
+}
+
+.jobInfo {
+  min-height: 9rem;
+}
+
+.report {
+  font-weight: $font-weight-light;
+  color: $color-red;
+}
+
+.inProgress {
+  border-left-color: $color-gold;
+}
+
+.error {
+  border-left-color: $color-red;
+}
+
+.done {
+  border-left-color: $color-green;
+}
+
+.pending {
+  border-left-color: $color-gray50;
+}

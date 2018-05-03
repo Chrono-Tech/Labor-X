@@ -1,0 +1,45 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.go {
+  margin-left: auto;
+  color: $color-blue;
+}
+
+.icon {
+  margin-right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.root {
+  @include card;
+  > * {
+    @include flex(row, flex-start, center);
+    border-bottom: solid 1px $color-gray5;
+    padding: 0 3rem;
+  }
+}
+
+.title {
+  height: 4rem;
+}
+
+.content {
+  height: 7rem;
+}
+
+.link {
+  font-weight: $font-weight-regular;
+  &:hover {
+    font-weight: $font-weight-regular;
+    color: $color-blue;
+  }
+}
+
+.iconAndName {
+  @include flex(row, flex-start, center);
+  margin-right: 4rem;
+}
