@@ -3,8 +3,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import ReviewTab from './ReviewTab/ReviewTab'
-import ActiveTab from './ActiveTab/ActiveTab'
-import CompletedTab from './CompletedTab/CompletedTab'
+// import ActiveTab from './ActiveTab/ActiveTab'
+// import CompletedTab from './CompletedTab/CompletedTab'
 import css from './RecruiterJobs.scss'
 
 export default class RecruiterJobs extends React.Component {
@@ -29,11 +29,13 @@ export default class RecruiterJobs extends React.Component {
         },
         {
           title: 'Active',
-          content: <ActiveTab />,
+          // content: <ActiveTab />,
+          content: <ReviewTab {...props.reviewTab} />,
         },
         {
           title: 'Completed',
-          content: <CompletedTab />,
+          // content: <CompletedTab />,
+          content: <ReviewTab {...props.reviewTab} />,
         },
       ],
     }
