@@ -1,32 +1,37 @@
-import { LoginActions } from 'components/layouts'
-import { LoginForm } from 'components/Login'
-import withRedux from 'next-redux-wrapper'
-import React from 'react'
+import React, { input } from 'react'
 import Head from 'next/head'
+import { reduxForm, Field } from 'redux-form'
+import withRedux from 'next-redux-wrapper'
+
+import { Link } from 'components/common'
+import { AccountLayout } from 'components/layouts'
+import { AccountPasswordForm } from 'components/Account'
 import initialStore from 'store'
-import { bootstrap } from 'store/bootstrap'
+
 import 'styles/globals/globals.scss'
-import ethereumService from '../../src/services/EthereumService'
+import validate from './validate'
 import css from './index.scss'
 
+const FORM_ACCOUNT_PASSWORD = 'form/accountPassword'
+
+const onSubmit = () => {
+
+}
+
 class AccountPassword extends React.Component {
-  static getInitialProps ({ store }) {
-    store.dispatch(bootstrap())
-  }
-
-  componentWillMount () {
-    ethereumService.start()
-  }
-
+  
   render () {
+    const { handleSubmit, error, pristine, invalid } = this.props
+  
     return (
       <div className={css.root}>
         <Head>
           <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
         </Head>
-        <LoginActions>
-          Create account password
-        </LoginActions>
+        <AccountLayout title='Create New Acccount'>
+          <AccountPasswordForm />
+
+        </AccountLayout>
       </div>
     )
   }
