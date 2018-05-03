@@ -1,4 +1,5 @@
 import React from 'react'
+import uniqid from 'uniqid'
 import { Button, Translate, Input } from 'components/common'
 import css from './SecurityTab.scss'
 
@@ -80,14 +81,16 @@ export default class NotificationsTab extends React.Component {
             <div className={css.header}><Translate value='ui.myProfile.security.activityLog' /></div>
             <table>
               <thead>
-                <th align='left'><Translate value='ui.myProfile.security.activity.activity' /></th>
-                <th align='left'><Translate value='ui.myProfile.security.activity.date' /></th>
-                <th align='left'><Translate value='ui.myProfile.security.activity.country' /></th>
-                <th align='left'><Translate value='ui.myProfile.security.activity.ip' /></th>
+                <tr>
+                  <th align='left'><Translate value='ui.myProfile.security.activity.activity' /></th>
+                  <th align='left'><Translate value='ui.myProfile.security.activity.date' /></th>
+                  <th align='left'><Translate value='ui.myProfile.security.activity.country' /></th>
+                  <th align='left'><Translate value='ui.myProfile.security.activity.ip' /></th>
+                </tr>
               </thead>
               <tbody>
                 {activities.map( (activity) => (
-                  <tr>
+                  <tr key={uniqid()} >
                     <td align='left'>{activity.activity}</td>
                     <td>{activity.date}</td>
                     <td>{activity.country}</td>

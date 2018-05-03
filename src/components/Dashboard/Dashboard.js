@@ -108,6 +108,7 @@ export default class Dashboard extends React.Component {
             </div>
             <div className={css.highlightsRow}>
               <Widget
+                href='/recruiter-jobs'
                 title='ui.dashboard.recruiter.hrReview'
                 subtitle='ui.dashboard.recruiter.recruiter'
                 actions={[
