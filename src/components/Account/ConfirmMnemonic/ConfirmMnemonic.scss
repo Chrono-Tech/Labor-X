@@ -1,0 +1,91 @@
+.contentBlock {
+  padding: 50px 135px 25px;
+}
+
+.description {
+  margin-bottom: 54px;
+}
+
+.passPhrase {
+  background: #F0F0F0;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #333;
+  text-align: left;
+  margin-bottom: 50px;
+  border: 1px solid transparent;
+  min-height: 46px;
+
+  &:hover, &:focus {
+    border-color: #00A0D2;
+  }
+}
+
+.wordsBlock {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 35px;
+}
+
+.word {
+  background: #00A0D2;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 40px;
+  white-space: nowrap;
+  width: 15.5%;
+  margin-bottom: 10px;
+
+  &:hover {
+    background: #0088C3;
+  }
+}
+
+.wordInactive {
+  background: #E5E5E5;
+
+  &:hover {
+    background: #E5E5E5;
+  }
+}
+
+.submitButton {
+  background: #00A0D2;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 21px;
+  cursor: pointer;
+  line-height: 40px;
+  height: 40px;
+  min-width: 150px;
+  border: none;
+  margin-bottom: 40px;
+
+  &:hover {
+    background: #0088C3;
+  }
+}
+
+.progressBlock {
+  width: 70px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progressPoint {
+  background: #00A0D2;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  &.progressPointInactive {
+    background: #BFBFBF;
+  }
+}
