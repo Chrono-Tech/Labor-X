@@ -1,9 +1,13 @@
 .root {
-  padding: 50px 0 25px;
+  padding: 50px 20px 25px;
 }
 
 .description {
   margin-bottom: 50px;
+
+  @media (max-width: 1023px) {
+    margin-bottom: 20px;
+  }
 }
 
 .submitButton {

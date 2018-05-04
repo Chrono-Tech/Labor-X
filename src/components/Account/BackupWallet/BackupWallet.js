@@ -9,7 +9,7 @@ import css from './BackupWallet.scss'
 export default class BackupWallet extends React.Component {
   
   render () {
-    const { handleSubmit, error, pristine, invalid } = this.props
+    const { handleSubmit, error, pristine, invalid, navigateBack } = this.props
     
     return (
       <div className={css.root}>
@@ -27,7 +27,7 @@ export default class BackupWallet extends React.Component {
         </div>
         
         <div>
-          <button className={css.submitButton}>Finish</button>
+          <button className={css.submitButton}>FINISH</button>
         </div>
   
         <div className={css.progressBlock}>

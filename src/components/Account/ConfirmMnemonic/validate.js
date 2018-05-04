@@ -1,6 +1,8 @@
 export default (values) => {
+  const confirm = values.confirm === values.mnemonic
+  console.log('mnem', confirm)
   
   return {
-    accountType: '' ? null : 'Wrong field',
+    confirm: confirm ? null : 'Wrong field',
   }
 }

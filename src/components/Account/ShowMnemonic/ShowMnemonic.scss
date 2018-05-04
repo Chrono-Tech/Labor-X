@@ -1,0 +1,155 @@
+.root {
+  padding: 50px 135px 25px;
+
+  @media (max-width: 1023px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+.securityBlock {
+
+}
+
+.description {
+  margin-bottom: 50px;
+}
+
+.phraseBlock {
+  margin-bottom: 42px;
+
+  .phraseBlockTitle {
+    font-size: 14px;
+    margin-bottom: 7px;
+  }
+
+  .phrase {
+    background: #F2FFE4;
+    text-align: center;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid #92CC72;
+    padding: 10px 20px;
+
+    &:hover {
+      border-color: #00A0D2;
+    }
+  }
+}
+
+.infoBlock {
+  text-align: left;
+  padding: 32px 20px 10px;
+  border: 1px solid #BFBFBF;
+  margin-bottom: 40px;
+
+  &.securityBlock {
+    border: 1px solid #C25451;
+
+    .infoBlockHeader {
+      color: #C25451;
+    }
+
+    b {
+      color: #C25451;
+    }
+  }
+
+  .infoBlockHeader {
+    color: #BFBFBF;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  .infoBlockList {
+    list-style: none;
+    line-height: 24px;
+
+    li {
+      margin-bottom: 20px;
+    }
+
+    p {
+      line-height: 24px;
+      margin-bottom: 20px;
+    }
+
+  }
+}
+
+
+b {
+  font-weight: bold;
+}
+
+.link {
+  color: #00A0D2;
+  font-weight: 400 !important;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.checkboxBlock {
+  text-align: left;
+  margin-bottom: 35px;
+}
+
+.checkbox {
+  display: none;
+
+  & + .checkboxLabel {
+    background:url(/static/images/svg/checkbox-unchecked.svg) no-repeat;
+    background-size: 20px 20px;
+    padding-left: 30px;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    display: inline-block;
+  }
+
+  &:checked + .checkboxLabel {
+    background:url(/static/images/svg/checkbox.svg) no-repeat;
+    background-size: 20px 20px;
+  }
+
+}
+
+.submitButton {
+  background: #00A0D2;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 21px;
+  cursor: pointer;
+  line-height: 40px;
+  height: 40px;
+  min-width: 150px;
+  border: none;
+  margin-bottom: 40px;
+
+  &:hover {
+    background: #0088C3;
+  }
+}
+
+.progressBlock {
+  width: 70px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progressPoint {
+  background: #00A0D2;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  &.progressPointInactive {
+    background: #BFBFBF;
+  }
+}

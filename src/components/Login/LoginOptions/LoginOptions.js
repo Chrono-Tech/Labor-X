@@ -54,7 +54,6 @@ class LoginOptions extends React.Component {
   componentWillMount(){
     const { selectedWallet, onChangeStep } = this.props
     
-    console.log('selectedWallet')
     if (selectedWallet) {
       onChangeStep(LoginSteps.Login)
     }

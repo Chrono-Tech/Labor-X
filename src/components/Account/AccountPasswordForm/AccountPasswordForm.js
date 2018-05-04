@@ -1,7 +1,8 @@
 import React  from 'react'
 import { reduxForm, Field } from 'redux-form'
+import { connect } from 'react-redux'
 
-import { Link } from 'components/common'
+import { Link, Button, Input  } from 'components/common'
 import validate from './validate'
 
 import 'styles/globals/globals.scss'
@@ -17,7 +18,7 @@ const onSubmit = () => {
 class AccountPasswordForm extends React.Component {
   
   render () {
-    const { handleSubmit, error, pristine, invalid } = this.props
+    const { handleSubmit, error, pristine, invalid, navigateNext, navigateBack } = this.props
     
     return (
       <form className={css.root} name={FORM_ACCOUNT_PASSWORD} onSubmit={handleSubmit}>
@@ -83,8 +84,10 @@ class AccountPasswordForm extends React.Component {
             &nbsp;and&nbsp;
             <Link className={css.descriptionLink} href='/'>Terms of Use</Link>
           </div>
-  
-          <button className={css.submitButton}>Create an Account</button>
+          
+          <button className={css.submitButton} disabled={pristine || invalid}>
+            Create an Account
+          </button>
           
         </div>
         
@@ -98,4 +101,11 @@ class AccountPasswordForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: FORM_ACCOUNT_PASSWORD, validate, onSubmit })(AccountPasswordForm)
+const mapStateToProps = (state) => {
+  return {
+    mnemonic: state.createAccount.mnemonic
+  }
+}
+
+const form = reduxForm({ form: FORM_ACCOUNT_PASSWORD, validate, onSubmit })(AccountPasswordForm)
+export default connect(mapStateToProps)(form)

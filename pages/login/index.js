@@ -23,6 +23,8 @@ class Index extends React.Component {
     return (
       <div className={css.root}>
         <Head>
+          <title>LaborX</title>
+          <link rel='shortcut icon' type='image/x-icon' href='/static/favicon.ico' />
           <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
         </Head>
         <LoginActions contentClassName={css.contentGradient}>
