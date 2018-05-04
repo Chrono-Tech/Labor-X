@@ -1,5 +1,6 @@
 export { default as LoginLayout } from './LoginLayout'
 export { default as LoginActions } from './LoginActions/LoginActions'
+export { default as AccountLayout } from './AccountLayout/AccountLayout'
 export { default as MainLayout } from './MainLayout'
 
 export { default as Header } from './Header/Header'
