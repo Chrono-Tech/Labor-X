@@ -9,4 +9,6 @@ export default {
   categories: 'Categories',
   find: 'Find',
   proceed: 'Proceed',
+  postJob: 'Post a job',
+  hireWorker: 'Hire a worker',
 }

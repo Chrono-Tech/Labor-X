@@ -17,8 +17,8 @@ export default class Header extends React.Component {
         </div>
         <div className={css.headerRight}>
           <nav className={css.actions}>
-            <Link href='/jobs/post' className={css.actionItem} label='nav.newJob' />
-            <Link href='/' className={css.actionItem} label='nav.newBoard' />
+            <Link href='/job-types' className={css.actionItem} label='nav.newJob' />
+            <Link href='/create-job-board' className={css.actionItem} label='nav.newBoard' />
           </nav>
           <div className={css.points}>
             <Tip
