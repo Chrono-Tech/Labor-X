@@ -9,7 +9,7 @@ import css from './BackupWallet.scss'
 export default class BackupWallet extends React.Component {
   
   render () {
-    const { handleSubmit, error, pristine, invalid, navigateBack } = this.props
+    const { onClickDownload, onClickFinish } = this.props
     
     return (
       <div className={css.root}>
@@ -23,11 +23,11 @@ export default class BackupWallet extends React.Component {
         </p>
         
         <div>
-          <Link className={css.link} href='/'>Download Wallet File</Link>
+          <button className={css.link} onClick={onClickDownload}>Download Wallet File</button>
         </div>
         
         <div>
-          <button className={css.submitButton}>FINISH</button>
+          <button className={css.submitButton} onClick={onClickFinish}>FINISH</button>
         </div>
   
         <div className={css.progressBlock}>

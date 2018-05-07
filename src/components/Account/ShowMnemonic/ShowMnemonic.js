@@ -12,15 +12,8 @@ import Web3 from "../../../network/Web3Provider";
 const FORM_SHOW_MNEMONIC = 'form/showMnemonic'
 
 const onSubmit = ({ confirm }) => {
-
-  console.log('onsubmit', confirm)
-  
   if (!confirm) {
-    throw new SubmissionError({confirm: 'Please'})
-  }
-  
-  return {
-    confirm: confirm,
+    throw new SubmissionError({_error: 'Please apply license'})
   }
 }
 
@@ -132,6 +125,7 @@ class ShowMnemonic extends React.Component {
             disabled={pristine || invalid}
             mods={Button.MODS.INVERT}
             error={error}
+            errorClassName={css.formError}
             primary
           />
         </div>

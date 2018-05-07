@@ -39,13 +39,20 @@ export default class AccountLayout extends React.Component {
     const pageProps = {
       navigateBack: this.navigateBack.bind(this),
       navigateNext: this.navigateNext.bind(this),
-      onSubmitSuccess: this.navigateNext.bind(this),
     }
     
     return React.Children.map(this.props.children, (item, index) => {
       return this.state.activePage === index ? (
         <div key={index}>
-          { React.cloneElement(item, pageProps) }
+          {
+            React.cloneElement(item, {
+              ...pageProps,
+              onSubmitSuccess: (props) => {
+                item.props.onSubmitSuccess && item.props.onSubmitSuccess(props)
+                this.navigateNext(props)
+              }
+            })
+          }
         </div>) : null
     })
   }

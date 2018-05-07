@@ -27,6 +27,7 @@ export default class Button extends React.Component {
         color: PropTypes.string,
       }),
     ]),
+    errorClassName: PropTypes.string,
   }
 
   static TYPES = {
@@ -74,9 +75,10 @@ export default class Button extends React.Component {
   }
 
   render () {
-    const { type, disabled, className, buttonClassName, error, mods, color } = this.props
+    const { type, disabled, className, buttonClassName, errorClassName, error, mods, color } = this.props
     const classNames = [ css.root ].concat(mods)
     const buttonClassNames = [ css.button ].concat(buttonClassName)
+    const errorClassNames = [ css.error ].concat(errorClassName)
     className && classNames.push(className)
     disabled && classNames.push(css.disabled)
     color && classNames.push(css[ color ])
@@ -92,7 +94,7 @@ export default class Button extends React.Component {
           { this.renderButtonContent() }
         </button>
         {error && (
-          <div className={css.error}>{error}</div>
+          <div className={errorClassNames.join(' ')}>{error}</div>
         )}
       </div>
     )

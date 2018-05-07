@@ -64,6 +64,8 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
   })
 
   dispatch(walletCreate(entry))
+  
+  return entry.encrypted
 }
 
 export const logout = () => (dispatch) => {

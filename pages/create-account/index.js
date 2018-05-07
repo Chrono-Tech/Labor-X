@@ -1,4 +1,5 @@
-import React, { input } from 'react'
+import React  from 'react'
+import { bindActionCreators } from 'redux'
 import Head from 'next/head'
 import withRedux from 'next-redux-wrapper'
 import bip39 from 'bip39'
@@ -6,7 +7,7 @@ import bip39 from 'bip39'
 import { Link } from 'components/common'
 import { AccountLayout } from 'components/layouts'
 import { AccountPasswordForm, ShowMnemonic, ConfirmMnemonic, BackupWallet } from 'components/Account'
-import initialStore, { setMnemonic } from 'store'
+import initialStore, { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, navigateToSelectWalletPage } from 'store'
 
 import 'styles/globals/globals.scss'
 import css from './index.scss'
@@ -72,6 +73,26 @@ class CreateAccount extends React.Component {
     setMnemonic(mnemonic)
   }
   
+  onSubmitAccountPasswordForm({password, types}){
+    console.log('onsubmit', password)
+    const {setPassword, setAccountTypes} = this.props
+  
+    setPassword(password)
+    setAccountTypes(types)
+  }
+  
+  createAccount(){
+    this.props.createUserAccount()
+  }
+  
+  onClickDownload(){
+    this.props.downloadWallet()
+  }
+  
+  onClickFinish(){
+    this.props.navigateToSelectWalletPage()
+  }
+  
   render () {
   
     return (
@@ -82,10 +103,10 @@ class CreateAccount extends React.Component {
           <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
         </Head>
         <AccountLayout title='Create New Acccount'>
-          <AccountPasswordForm  />
+          <AccountPasswordForm onSubmitSuccess={this.onSubmitAccountPasswordForm.bind(this)} />
           <ShowMnemonic />
-          <ConfirmMnemonic />
-          <BackupWallet />
+          <ConfirmMnemonic onSubmitSuccess={this.createAccount.bind(this)} />
+          <BackupWallet onClickDownload={this.onClickDownload.bind(this)} onClickFinish={this.onClickFinish.bind(this)} />
         </AccountLayout>
       </div>
     )
@@ -93,9 +114,7 @@ class CreateAccount extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    setMnemonic: (mnemonic) => dispatch(setMnemonic(mnemonic)),
-  }
+  return bindActionCreators({setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, navigateToSelectWalletPage}, dispatch)
 }
 
 export default withRedux(initialStore, null, mapDispatchToProps)(CreateAccount)

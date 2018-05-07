@@ -12,14 +12,19 @@ import css from './AccountPasswordForm.scss'
 const FORM_ACCOUNT_PASSWORD = 'form/accountPassword'
 
 const onSubmit = ({ password, recruiter, worker, client }) => {
-  if (!(recruiter && worker && client)) {
+  if (!(recruiter || worker || client)) {
     throw new SubmissionError({
-      recruiter: 'One field required',
+      _error: 'Please select at least one of account type',
     })
   }
   
   return {
     password,
+    types: {
+      recruiter: !!recruiter,
+      worker: !!worker,
+      client: !!client,
+    },
   }
 }
 
@@ -124,6 +129,7 @@ class AccountPasswordForm extends React.Component {
             disabled={pristine || invalid}
             error={error}
             mods={Button.MODS.INVERT}
+            errorClassName={css.formError}
           />
           
         </div>
@@ -138,11 +144,5 @@ class AccountPasswordForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    mnemonic: state.createAccount.mnemonic,
-  }
-}
 
-const form = reduxForm({ form: FORM_ACCOUNT_PASSWORD, validate, onSubmit })(AccountPasswordForm)
-export default connect(mapStateToProps)(form)
+export default reduxForm({ form: FORM_ACCOUNT_PASSWORD, validate, onSubmit })(AccountPasswordForm)
