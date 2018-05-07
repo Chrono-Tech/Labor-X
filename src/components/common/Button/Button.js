@@ -46,7 +46,7 @@ export default class Button extends React.Component {
     disabled: false,
     error: null,
     icon: null,
-    mods: [Button.MODS.NORMAL],
+    mods: Button.MODS.NORMAL,
     isLoading: false,
   }
 
@@ -58,8 +58,8 @@ export default class Button extends React.Component {
     ? this.props.onClick()
     : true
 
-  renderButtonContent(){
-    const {isLoading, icon, label, labelClassName} = this.props
+  renderButtonContent (){
+    const { isLoading, icon, label, labelClassName } = this.props
 
     const labelClassNames = [ css.labelClassName ].concat(labelClassName)
 

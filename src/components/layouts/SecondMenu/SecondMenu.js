@@ -54,7 +54,7 @@ export default class SecondMenu extends React.Component {
         <div className={css.section}>
           <Link href='/my-jobs-boards' className={css.link} label='nav.recruiter' />
           <Link href='/my-jobs-boards' className={css.subLink} label='nav.myJobsBoards' />
-          <Link href='/jobs' className={css.subLink} label='nav.jobs' />
+          <Link href='/recruiter-jobs' className={css.subLink} label='nav.jobs' />
         </div>
         <div className={css.section}>
           <Link href='/schedule' className={css.link} label='nav.tools' />
