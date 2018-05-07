@@ -130,9 +130,15 @@ b {
   min-width: 150px;
   border: none;
   margin-bottom: 40px;
+  padding: 0;
+  box-shadow: none;
 
   &:hover {
     background: #0088C3;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 

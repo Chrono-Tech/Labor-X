@@ -1,10 +1,10 @@
 export default (values) => {
-  
-  const password = (values.password || '').trim()
-  const passwordConfirm = (values.passwordConfirm || '').trim()
+  console.log('values', values)
+  const password = (values['password'] || '').trim()
+  const passwordConfirm = (values['password-confirm'] || '').trim()
   
   return {
-    password: password ? null : 'Wrong password',
-    passwordConfirm: password === passwordConfirm && password ? null : 'Wrong confirm password',
+    'password': password ? null : 'Wrong password',
+    'password-confirm': password === passwordConfirm && password ? null : 'Wrong confirm password',
   }
 }

@@ -1,17 +1,27 @@
 import React  from 'react'
-import { reduxForm, Field } from 'redux-form'
+import {reduxForm, Field, SubmissionError} from 'redux-form'
 import {connect} from 'react-redux'
 
-import { Link } from 'components/common'
+import { Link, Button } from 'components/common'
 
 import 'styles/globals/globals.scss'
 import css from './ShowMnemonic.scss'
 import validate from './validate'
+import Web3 from "../../../network/Web3Provider";
 
 const FORM_SHOW_MNEMONIC = 'form/showMnemonic'
 
-const onSubmit = () => {
+const onSubmit = ({ confirm }) => {
 
+  console.log('onsubmit', confirm)
+  
+  if (!confirm) {
+    throw new SubmissionError({confirm: 'Please'})
+  }
+  
+  return {
+    confirm: confirm,
+  }
 }
 
 class ShowMnemonic extends React.Component {
@@ -115,9 +125,15 @@ class ShowMnemonic extends React.Component {
         </div>
         
         <div>
-          <button className={css.submitButton} disabled={pristine || invalid}>
-            Proceed
-          </button>
+          <Button
+            label='Proceed'
+            buttonClassName={css.submitButton}
+            type={Button.TYPES.SUBMIT}
+            disabled={pristine || invalid}
+            mods={Button.MODS.INVERT}
+            error={error}
+            primary
+          />
         </div>
   
         <div className={css.progressBlock}>

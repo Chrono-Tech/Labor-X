@@ -1,6 +1,8 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import { Link } from 'components/common'
 import 'styles/globals/globals.scss'
@@ -23,7 +25,13 @@ export default class AccountLayout extends React.Component {
   
   navigateNext() {
     if (this.state.activePage + 1 <= this.props.children.length) {
-      this.setState({activePage: this.state.activePage + 1})
+      this.setState(
+        {activePage: this.state.activePage + 1},
+        () => {
+          const pagesWrapper = ReactDOM.findDOMNode(this.refs.pagesWrapper)
+          pagesWrapper && pagesWrapper.scrollIntoView()
+        })
+      
     }
   }
   
@@ -34,11 +42,12 @@ export default class AccountLayout extends React.Component {
       onSubmitSuccess: this.navigateNext.bind(this),
     }
     
-    return React.Children.map(this.props.children, (item, index) => (
-      <div className={[css.page, this.state.activePage === index ? css.activeSlide : ''].join(' ')}>
-        { React.cloneElement(item, pageProps) }
-      </div>
-    ))
+    return React.Children.map(this.props.children, (item, index) => {
+      return this.state.activePage === index ? (
+        <div key={index}>
+          { React.cloneElement(item, pageProps) }
+        </div>) : null
+    })
   }
   
   render () {
@@ -60,9 +69,12 @@ export default class AccountLayout extends React.Component {
             <img className={css.background} src='/static/images/city-5.jpg' alt='' />
         
             <div className={css.topSectionBlock}>
-              <span onClick={this.navigateBack.bind(this)} className={css.backLink}>
-                <img src='/static/images/svg/back.svg' alt='' />
-              </span>
+              {
+                this.state.activePage !== 0 ? (
+                  <button onClick={this.navigateBack.bind(this)} className={css.backLink}>
+                    <img src='/static/images/svg/back.svg' alt=''/>
+                  </button>) : null
+              }
           
               <Link href='/' className={css.helpLink}>
                 <img src='/static/images/svg/help-white.svg' alt='' />
@@ -70,8 +82,17 @@ export default class AccountLayout extends React.Component {
               { title ? (<h1>{ title }</h1>) : null }
             </div>
           </div>
-          <div className={contentClassNames.join(' ')}>
-            { this.renderChildren() }
+          <div ref='pagesWrapper' className={contentClassNames.join(' ')}>
+            <ReactCSSTransitionGroup
+              transitionName='slides'
+              transitionEnterTimeout={1000}
+              transitionLeaveTimeout={2000}
+              transitionAppear={false}
+              transitionEnter={true}
+              transitionLeave={false}
+            >
+              { this.renderChildren() }
+            </ReactCSSTransitionGroup>
           </div>
           <Link href='/' className={css.footerLogo}>
             <img src='/static/images/svg/laborx-caption.svg' alt='' />

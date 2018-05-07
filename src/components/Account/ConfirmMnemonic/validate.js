@@ -1,8 +1,8 @@
-export default (values) => {
-  const confirm = values.confirm === values.mnemonic
-  console.log('mnem', confirm)
+export default (values, state) => {
+  const mnemonic = values.mnemonic === state.mnemonic
+  console.log('mnem', values.mnemonic, state.mnemonic, mnemonic ? 'ok' : 'Wrong field')
   
   return {
-    confirm: confirm ? null : 'Wrong field',
+    mnemonic: mnemonic ? null : 'Wrong field',
   }
 }

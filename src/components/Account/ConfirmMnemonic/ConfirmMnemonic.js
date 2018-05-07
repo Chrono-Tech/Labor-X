@@ -1,8 +1,8 @@
 import React  from 'react'
-import { reduxForm, Field } from 'redux-form'
+import { reduxForm, Field, change } from 'redux-form'
 import {connect} from 'react-redux'
 
-import { Link } from 'components/common'
+import { Link, Button } from 'components/common'
 import validate from './validate'
 
 import 'styles/globals/globals.scss'
@@ -33,8 +33,13 @@ class ConfirmMnemonic extends React.Component {
   }
   
   onClickWord(word){
+    const { dispatch } = this.props
+    
     if (!this.state.confirmPhrase.includes(word)) {
-      this.setState({confirmPhrase: this.state.confirmPhrase.concat(word)})
+      this.setState(
+        {confirmPhrase: this.state.confirmPhrase.concat(word) },
+        () => dispatch(change(FORM_CONFIRM_MNEMONIC, 'mnemonic', this.getCurrentMnemonic()))
+      )
     }
   }
   
@@ -42,7 +47,7 @@ class ConfirmMnemonic extends React.Component {
     return this.state.confirmPhrase.map((item) => item.word).join(' ')
   }
   
-  getMnemonicWords(){
+  getWordsButtons(){
     return this.state.currentWordsArray.map((item, index) => {
       const wordSelected = this.state.confirmPhrase.includes(item)
       
@@ -57,15 +62,18 @@ class ConfirmMnemonic extends React.Component {
     )
   }
   
-  get validateMnemonic() {
-    const {confirmPhrase, wordsArray} = this.state
-    
-    return wordsArray.every((item, index) => item === confirmPhrase[item.index])
+  clearMnemonic(){
+    const { dispatch } = this.props
+  
+    this.setState(
+      { confirmPhrase: [] },
+      () => dispatch(change(FORM_CONFIRM_MNEMONIC, 'mnemonic', this.getCurrentMnemonic()))
+    )
   }
   
   render () {
     const { handleSubmit, error, pristine, invalid, mnemonic } = this.props
-    console.log('validate', this.validateMnemonic, this.state.confirmPhrase, this.state.wordsArray)
+    console.log('error', error, pristine, invalid)
   
     return (
       <form className={css.root} name={FORM_CONFIRM_MNEMONIC} onSubmit={handleSubmit}>
@@ -73,14 +81,39 @@ class ConfirmMnemonic extends React.Component {
           <h2>Confirm back-up phrase (mnemonic key)</h2>
           
           <p className={css.description}>Click on phrase words in the correct order.</p>
-          
-          <div className={css.passPhrase}>{ this.getCurrentMnemonic() }</div>
-          
-          <div className={css.wordsBlock}>
-            { this.getMnemonicWords() }
+  
+          <div className={css.passPhraseWrapper}>
+            <div className={css.passPhrase}>{ this.getCurrentMnemonic() }</div>
+            <Field
+              className={css.passPhrase}
+              component='input'
+              type='hidden'
+              name='mnemonic'
+              readOnly={true}
+            />
+            { this.getCurrentMnemonic() ? (
+              <span
+                className={css.clearMnemonic}
+                onClick={this.clearMnemonic.bind(this)}>
+                <img src='/static/images/svg/close-white.svg' alt='' />
+              </span>
+            ) : null }
+            
           </div>
           
-          <button className={css.submitButton} disabled={!this.validateMnemonic}>Proceed</button>
+          <div className={css.wordsBlock}>
+            { this.getWordsButtons() }
+          </div>
+  
+          <Button
+            label='Proceed'
+            buttonClassName={css.submitButton}
+            type={Button.TYPES.SUBMIT}
+            disabled={pristine || invalid}
+            mods={Button.MODS.INVERT}
+            error={error}
+            primary
+          />
           
           <div className={css.progressBlock}>
             <div className={css.progressPoint} />
@@ -99,4 +132,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default reduxForm({ form: FORM_CONFIRM_MNEMONIC, validate, onSubmit })( connect(mapStateToProps)(ConfirmMnemonic) )
+const form  = reduxForm({ form: FORM_CONFIRM_MNEMONIC, validate, onSubmit })(ConfirmMnemonic)
+export default connect(mapStateToProps)(form)

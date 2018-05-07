@@ -15,16 +15,24 @@
   }
 }
 
+.passPhraseWrapper {
+  position: relative;
+  margin-bottom: 50px;
+  border: 1px solid transparent;
+
+  &:hover, &:focus {
+    border-color: #00A0D2;
+  }
+}
+
 .passPhrase {
   background: #F0F0F0;
-  padding: 10px 20px;
+  padding: 10px 45px 10px 20px;
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
   color: #333;
   text-align: left;
-  margin-bottom: 50px;
-  border: 1px solid transparent;
   min-height: 46px;
   width: 100%;
 
@@ -33,9 +41,6 @@
     margin-bottom: 30px;
   }
 
-    &:hover, &:focus {
-    border-color: #00A0D2;
-  }
 }
 
 .wordsBlock {
@@ -83,6 +88,12 @@
   min-width: 150px;
   border: none;
   margin-bottom: 40px;
+  padding: 0;
+  box-shadow: none;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 
   @media (max-width: 1023px) {
     min-width: 180px;
@@ -108,5 +119,23 @@
 
   &.progressPointInactive {
     background: #BFBFBF;
+  }
+}
+
+.clearMnemonic {
+  width: 23px;
+  height: 23px;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 11px;
+  cursor: pointer;
+  box-sizing: content-box;
+
+  img {
+    width: 100%;
   }
 }
