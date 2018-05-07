@@ -4,7 +4,6 @@ import SelectOption from 'components/Login/SelectOption/lang'
 import FileUploader from 'components/common/FileUploader/lang'
 import WalletFileForm from 'components/Login/WalletFileForm/lang'
 import MnemonicForm from 'components/Login/MnemonicForm/lang'
-import JobPostForm from 'components/Jobs/JobPostForm/lang'
 
 export default {
   PrivateKeyForm,
@@ -13,5 +12,4 @@ export default {
   FileUploader,
   WalletFileForm,
   MnemonicForm,
-  JobPostForm,
 }

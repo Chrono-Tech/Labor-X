@@ -30,6 +30,7 @@ export default class Image extends React.PureComponent {
     CHECKBOX_OFF: 'check_box_outline_blank',
     CHECKBOX_CIRCLE: 'check_circle',
     LH_LIGHT: 'star_rate', // TODO actual
+    ARROW_BACK: 'arrow_back',
   }
 
   static COLORS = {
@@ -96,6 +97,10 @@ export default class Image extends React.PureComponent {
     },
     LH_LIGHT: {
       icon: Image.ICONS.LH_LIGHT,
+      color: Image.COLORS.WHITE,
+    },
+    ARROW_BACK: {
+      icon: Image.ICONS.ARROW_BACK,
       color: Image.COLORS.WHITE,
     },
   }

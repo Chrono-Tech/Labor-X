@@ -2,6 +2,7 @@
 @import "~styles/globals/mixins";
 
 $maxWidth: 74rem;
+$gutter: 4rem;
 
 .main {
   flex-grow: 1;
@@ -16,21 +17,33 @@ $maxWidth: 74rem;
 }
 
 .titleBar {
-  @include flex(row, space-between, center);
+  @include flex(row, flex-start, stretch);
   max-width: 70rem;
   height: 5rem;
-  padding: 0 2rem;
   border-top-left-radius: .5rem;
   border-top-right-radius: .5rem;
   background-color: $color-azure;
-  border-bottom: solid .1rem $color-blue53;
-  > div {
-    @include flex(row, flex-start, center);
-    p {
-      margin-left: 3rem;
-      font-weight: $font-weight-bold;
-    }
-  }
+  border-bottom: 0.1rem solid rgba($color-white, 0.2);
+}
+
+.titleBarRight {
+  @include flex(row, flex-start, stretch);
+  margin-left: auto;
+}
+
+.cancelButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.helpButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.doneButton {
+  color: $color-white;
+  background-color: $color-azure;
 }
 
 .content {
@@ -56,7 +69,7 @@ $maxWidth: 74rem;
   margin-bottom: 4rem;
 }
 
-.flexRow {
+.categoriesRow {
   @include flex(row, flex-start, flex-end);
 }
 
@@ -83,6 +96,7 @@ $maxWidth: 74rem;
 
 .inputSection {
   margin-bottom: 3rem;
+  min-height: 3.8rem;
   &:last-child {
     margin-bottom: 0;
   }
@@ -104,3 +118,24 @@ $maxWidth: 74rem;
 .noMarginBottom {
   margin-bottom: 0;
 }
+
+.col {
+  @include flex(column, flex-start, center);
+}
+
+.hourlyRating {
+  margin-top: 4rem;
+}
+
+.hourlyRatingGraph {
+  min-width: 20rem;
+  min-height: 20rem;
+  background-color: $todo;
+  margin-top: 2rem;
+}
+
+.companyAddress {
+  margin-bottom: 4rem;
+}
+
+
