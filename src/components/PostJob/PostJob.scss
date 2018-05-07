@@ -1,0 +1,106 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+}
+
+.title {
+  height: 9rem;
+  margin: 0;
+  padding: 4rem 4rem 0;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.titleBar {
+  @include flex(row, space-between, center);
+  max-width: 70rem;
+  height: 5rem;
+  padding: 0 2rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  background-color: $color-azure;
+  border-bottom: solid .1rem $color-blue53;
+  > div {
+    @include flex(row, flex-start, center);
+    p {
+      margin-left: 3rem;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.content {
+  padding-left: 4rem;
+  max-width: $maxWidth;
+}
+
+.headline {
+  padding: 0;
+  margin-bottom: 4rem;
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.boardHeadline {
+  margin: 0;
+  padding: 4rem;
+}
+
+.card {
+  @include card;
+  padding: 3rem;
+  margin-bottom: 4rem;
+}
+
+.flexRow {
+  @include flex(row, flex-start, flex-end);
+}
+
+.twoColumn {
+  @include flex(row, flex-start, flex-start);
+  > * {
+    flex-basis: 50%;
+    margin-right: 2rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.find {
+  width: 6rem;
+  color: $color-gray30;
+  margin-right: 2rem;
+}
+
+.cardTitle {
+  margin-bottom: 3rem;
+}
+
+.inputSection {
+  margin-bottom: 3rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.badgesContainer {
+  @include flex(column, flex-start, center);
+  padding: 4rem 0 3rem;
+  width: 100%;
+  color: $color-white;
+  background: $gradientBlueToGreen;
+}
+
+.badges {
+  @include flex(row, space-around, center);
+  margin-top: 3rem;
+}
+
+.noMarginBottom {
+  margin-bottom: 0;
+}
