@@ -81,6 +81,10 @@ export const navigateToSelectWallet = () => (dispatch) => {
   dispatch(changeStep(LoginSteps.SelectWallet))
 }
 
+export const navigateToSelectLoginMethod = () => (dispatch) => {
+  dispatch(changeStep(LoginSteps.SelectLoginMethod))
+}
+
 export const changeStep = (step) => (dispatch) => {
   dispatch({ type: LOGIN_CHANGE_STEP, step })
 }

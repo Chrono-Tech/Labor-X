@@ -7,7 +7,7 @@ import bip39 from 'bip39'
 import { Link } from 'components/common'
 import { AccountLayout } from 'components/layouts'
 import { AccountPasswordForm, ShowMnemonic, ConfirmMnemonic, BackupWallet } from 'components/Account'
-import initialStore, { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, onFinishCreateAccount } from 'store'
+import initialStore, { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, onFinishCreateAccount, navigateToSelectMethod } from 'store'
 
 import 'styles/globals/globals.scss'
 import css from './index.scss'
@@ -43,7 +43,7 @@ class CreateAccount extends React.Component {
   }
   
   render () {
-    const { onFinishCreateAccount, downloadWallet, createUserAccount } = this.props
+    const { onFinishCreateAccount, downloadWallet, createUserAccount, navigateToSelectMethod } = this.props
   
     return (
       <div className={css.root}>
@@ -53,7 +53,7 @@ class CreateAccount extends React.Component {
           <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
         </Head>
         <AccountLayout title='Create New Acccount'>
-          <AccountPasswordForm onSubmitSuccess={this.onSubmitAccountPasswordForm.bind(this)} />
+          <AccountPasswordForm navigateToSelectMethod={navigateToSelectMethod} onSubmitSuccess={this.onSubmitAccountPasswordForm.bind(this)} />
           <ShowMnemonic />
           <ConfirmMnemonic onSubmitSuccess={createUserAccount} />
           <BackupWallet onClickDownload={downloadWallet} onClickFinish={onFinishCreateAccount} />
@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch) => {
     createUserAccount,
     downloadWallet,
     onFinishCreateAccount,
+    navigateToSelectMethod,
   }, dispatch)
 }
 
