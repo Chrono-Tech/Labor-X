@@ -1,26 +1,45 @@
 .contentBlock {
   padding: 50px 135px 25px;
+
+  @media (max-width: 1023px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 .description {
   margin-bottom: 54px;
+
+  @media (max-width: 1023px) {
+    margin-bottom: 30px;
+  }
+}
+
+.passPhraseWrapper {
+  position: relative;
+  margin-bottom: 50px;
+  border: 1px solid transparent;
+
+  &:hover, &:focus {
+    border-color: #00A0D2;
+  }
 }
 
 .passPhrase {
   background: #F0F0F0;
-  padding: 10px 20px;
+  padding: 10px 45px 10px 20px;
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
   color: #333;
   text-align: left;
-  margin-bottom: 50px;
-  border: 1px solid transparent;
   min-height: 46px;
+  width: 100%;
 
-  &:hover, &:focus {
-    border-color: #00A0D2;
+  @media (max-width: 1023px) {
+    min-height: 70px;
   }
+
 }
 
 .wordsBlock {
@@ -38,8 +57,10 @@
   font-size: 14px;
   line-height: 40px;
   white-space: nowrap;
-  width: 15.5%;
+  width: 23%;
   margin-bottom: 10px;
+  cursor: pointer;
+  user-select: none;
 
   &:hover {
     background: #0088C3;
@@ -66,8 +87,18 @@
   min-width: 150px;
   border: none;
   margin-bottom: 40px;
+  padding: 0;
+  box-shadow: none;
 
-  &:hover {
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 1023px) {
+    min-width: 180px;
+  }
+
+    &:hover {
     background: #0088C3;
   }
 }
@@ -87,5 +118,23 @@
 
   &.progressPointInactive {
     background: #BFBFBF;
+  }
+}
+
+.clearMnemonic {
+  width: 23px;
+  height: 23px;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 11px;
+  cursor: pointer;
+  box-sizing: content-box;
+
+  img {
+    width: 100%;
   }
 }

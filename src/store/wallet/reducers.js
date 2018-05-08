@@ -18,7 +18,7 @@ export const initialState = {
 
 const wallet = (state = initialState, action) => {
   switch (action.type) {
-    case a.WALLETS_CREATE :
+    case a.WALLETS_ADD :
       return {
         ...state,
         walletsList: [

@@ -1,6 +1,7 @@
-export default (values) => {
+export default (values, state) => {
+  const mnemonic = values.mnemonic === state.mnemonic
   
   return {
-    accountType: '' ? null : 'Wrong field',
+    mnemonic: mnemonic ? null : 'Wrong field',
   }
 }

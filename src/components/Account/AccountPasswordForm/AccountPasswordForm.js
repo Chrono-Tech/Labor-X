@@ -1,7 +1,8 @@
 import React  from 'react'
-import { reduxForm, Field } from 'redux-form'
+import { reduxForm, Field, SubmissionError } from 'redux-form'
+import { connect } from 'react-redux'
 
-import { Link } from 'components/common'
+import { Link, Button, Input } from 'components/common'
 import validate from './validate'
 
 import 'styles/globals/globals.scss'
@@ -10,14 +11,27 @@ import css from './AccountPasswordForm.scss'
 
 const FORM_ACCOUNT_PASSWORD = 'form/accountPassword'
 
-const onSubmit = () => {
-
+const onSubmit = ({ password, recruiter, worker, client }) => {
+  if (!(recruiter || worker || client)) {
+    throw new SubmissionError({
+      _error: 'Please select at least one of account type',
+    })
+  }
+  
+  return {
+    password,
+    types: {
+      recruiter: !!recruiter,
+      worker: !!worker,
+      client: !!client,
+    },
+  }
 }
 
 class AccountPasswordForm extends React.Component {
   
   render () {
-    const { handleSubmit, error, pristine, invalid } = this.props
+    const { handleSubmit, error, pristine, invalid, touched, navigateNext, navigateBack } = this.props
     
     return (
       <form className={css.root} name={FORM_ACCOUNT_PASSWORD} onSubmit={handleSubmit}>
@@ -28,7 +42,13 @@ class AccountPasswordForm extends React.Component {
       
           <div className={css.checkboxBlock}>
             <div className={css.row}>
-              <Field id='recruiter' className={css.checkbox} component='input' type='checkbox' name='recruiter' />
+              <Field
+                id='recruiter'
+                className={css.checkbox}
+                component='input'
+                type='checkbox'
+                name='recruiter'
+              />
               <label htmlFor='recruiter' className={css.checkboxLabel}>
                 <strong>Recruiter</strong>
                 Create and manage Job Boards
@@ -36,7 +56,13 @@ class AccountPasswordForm extends React.Component {
             </div>
             
             <div className={css.row}>
-              <Field id='worker' className={css.checkbox} component='input' type='checkbox' name='worker' />
+              <Field
+                id='worker'
+                className={css.checkbox}
+                component='input'
+                type='checkbox'
+                name='worker'
+              />
               <label htmlFor='worker' className={css.checkboxLabel}>
                 <strong>Worker</strong>
                 Join Job Boards and start your job search
@@ -44,7 +70,13 @@ class AccountPasswordForm extends React.Component {
             </div>
             
             <div className={css.row}>
-              <Field id='client' className={css.checkbox} component='input' type='checkbox' name='client' />
+              <Field
+                id='client'
+                className={css.checkbox}
+                component='input'
+                type='checkbox'
+                name='client'
+              />
               <label htmlFor='client' className={css.checkboxLabel}>
                 <strong>Client</strong>
                 Join Job Boards and post your jobs
@@ -61,18 +93,21 @@ class AccountPasswordForm extends React.Component {
           <div className={css.passwordBlock}>
             <Field
               className={css.password}
-              component='input'
+              component={Input}
               type='password'
               name='password'
               placeholder='Password'
+              mods={[css.passwordField]}
             />
   
             <Field
               className={css.password}
-              component='input'
+              component={Input}
               type='password'
               name='password-confirm'
               placeholder='Confirm Password'
+              mods={[css.passwordField]}
+
             />
           </div>
   
@@ -84,7 +119,17 @@ class AccountPasswordForm extends React.Component {
             <Link className={css.descriptionLink} href='/'>Terms of Use</Link>
           </div>
   
-          <button className={css.submitButton}>Create an Account</button>
+          <Button
+            className={css.row}
+            buttonClassName={css.submitButton}
+            type={Button.TYPES.SUBMIT}
+            label='Create an Account'
+            primary
+            disabled={pristine || invalid}
+            error={error}
+            mods={Button.MODS.INVERT}
+            errorClassName={css.formError}
+          />
           
         </div>
         
@@ -97,5 +142,6 @@ class AccountPasswordForm extends React.Component {
     )
   }
 }
+
 
 export default reduxForm({ form: FORM_ACCOUNT_PASSWORD, validate, onSubmit })(AccountPasswordForm)

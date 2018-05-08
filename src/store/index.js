@@ -5,11 +5,12 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { reducer as formReducer } from 'redux-form'
 import { createLogger } from 'redux-logger'
 import * as thunkMiddleware from 'redux-thunk'
-import { login, landing, wallet } from './reducers'
+import { login, landing, wallet, createAccount } from './reducers'
 
 export * from './landing/actions'
 export * from './login/actions'
 export * from './wallet/actions'
+export * from './createAccount/actions'
 
 const loggerMiddleware = createLogger({
   level:      'info',
@@ -24,6 +25,7 @@ export default () => {
     login,
     landing,
     wallet,
+    createAccount,
   })
 
   const store = createStore(

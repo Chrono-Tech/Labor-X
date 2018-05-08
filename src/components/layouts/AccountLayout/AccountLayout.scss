@@ -77,6 +77,9 @@
         position: absolute;
         top: 22px;
         left: 20px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
 
         @media (max-width: 1024px){
           top: 13px;
@@ -84,6 +87,7 @@
 
         img {
           width: 24px;
+          display: block;
         }
       }
 
@@ -137,7 +141,7 @@
 
     @media (max-width: 1024px){
       margin-bottom: 15px;
-      padding: 50px 15px;
+      //padding: 50px 15px 40px;
     }
 
     h2 {
@@ -216,4 +220,37 @@
       width: 100%;
     }
   }
+}
+
+.page {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+
+.activeSlide {
+  opacity: 1;
+  display: block;
+  visibility: visible;
+
+}
+
+
+:global(.slides-enter) {
+  opacity: 0.01;
+}
+
+:global(.slides-enter.slides-enter-active) {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+:global(.slides-leave) {
+  opacity: 1;
+}
+
+:global(.slides-leave.slides-leave-active) {
+  opacity: 0.01;
+  transition: opacity 200ms ease-in;
 }

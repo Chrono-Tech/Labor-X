@@ -66,7 +66,7 @@ export default class SelectWallet extends React.Component {
         />
         <p className={css.otherActions}>
           or
-          <button className={css.loginLink} onClick={this.navigateToCreateWallet.bind(this)}>Create a new wallet</button>
+          <Link className={css.loginLink} href='/create-account'>Create a new wallet</Link>
         </p>
       </div>
     )
