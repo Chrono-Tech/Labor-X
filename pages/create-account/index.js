@@ -7,48 +7,10 @@ import bip39 from 'bip39'
 import { Link } from 'components/common'
 import { AccountLayout } from 'components/layouts'
 import { AccountPasswordForm, ShowMnemonic, ConfirmMnemonic, BackupWallet } from 'components/Account'
-import initialStore, { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, navigateToSelectWalletPage } from 'store'
+import initialStore, { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, onFinishCreateAccount } from 'store'
 
 import 'styles/globals/globals.scss'
 import css from './index.scss'
-
-class PageCarousel extends React.Component {
-  
-  constructor(props){
-    super(props)
-    
-    this.state = {
-      activePage: 0,
-    }
-  }
-  
-  navigateBack() {
-    if (this.state.activePage - 1  >= 0) {
-      this.setState({activePage: this.state.activePage - 1})
-    }
-  }
-  
-  navigateNext() {
-    if (this.state.activePage + 1 <= this.props.children.length) {
-      this.setState({activePage: this.state.activePage + 1})
-    }
-  }
-  
-  render(){
-    const { children } = this.props
-    const pageProps = {
-      navigateBack: this.navigateBack.bind(this),
-      navigateNext: this.navigateNext.bind(this),
-      onSubmitSuccess: this.navigateNext.bind(this)
-    }
-    
-    return React.Children.map(children, (item, index) => (
-      <div className={[css.page, this.state.activePage === index ? css.activeSlide : ''].join(' ')}>
-        { React.cloneElement(item, pageProps) }
-      </div>
-    ))
-  }
-}
 
 class CreateAccount extends React.Component {
   
@@ -74,26 +36,14 @@ class CreateAccount extends React.Component {
   }
   
   onSubmitAccountPasswordForm({password, types}){
-    console.log('onsubmit', password)
     const {setPassword, setAccountTypes} = this.props
   
     setPassword(password)
     setAccountTypes(types)
   }
   
-  createAccount(){
-    this.props.createUserAccount()
-  }
-  
-  onClickDownload(){
-    this.props.downloadWallet()
-  }
-  
-  onClickFinish(){
-    this.props.navigateToSelectWalletPage()
-  }
-  
   render () {
+    const { onFinishCreateAccount, downloadWallet, createUserAccount } = this.props
   
     return (
       <div className={css.root}>
@@ -105,8 +55,8 @@ class CreateAccount extends React.Component {
         <AccountLayout title='Create New Acccount'>
           <AccountPasswordForm onSubmitSuccess={this.onSubmitAccountPasswordForm.bind(this)} />
           <ShowMnemonic />
-          <ConfirmMnemonic onSubmitSuccess={this.createAccount.bind(this)} />
-          <BackupWallet onClickDownload={this.onClickDownload.bind(this)} onClickFinish={this.onClickFinish.bind(this)} />
+          <ConfirmMnemonic onSubmitSuccess={createUserAccount} />
+          <BackupWallet onClickDownload={downloadWallet} onClickFinish={onFinishCreateAccount} />
         </AccountLayout>
       </div>
     )
@@ -114,7 +64,14 @@ class CreateAccount extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, navigateToSelectWalletPage}, dispatch)
+  return bindActionCreators({
+    setMnemonic,
+    setPassword,
+    setAccountTypes,
+    createUserAccount,
+    downloadWallet,
+    onFinishCreateAccount,
+  }, dispatch)
 }
 
 export default withRedux(initialStore, null, mapDispatchToProps)(CreateAccount)

@@ -26,7 +26,7 @@ export default class Index extends React.Component {
           Learn More
         </Link>
         <p className={css.createAccountBlock}>
-          or <Link className={css.createAccountLink} href='/'>Create New Account</Link>
+          or <Link className={css.createAccountLink} href='/create-account'>Create New Account</Link>
         </p>
       </div>
     )

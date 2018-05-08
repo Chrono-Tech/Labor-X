@@ -47,7 +47,7 @@ class LoginForm extends React.Component {
         <div className={css.formHeader}>Log In</div>
         <div className={css.accountWrapper}>
           <UserRow
-            title={selectedWallet.name}
+            title={selectedWallet && selectedWallet.name}
             onClick={this.navigateToSelectWallet.bind(this)}
           />
         </div>

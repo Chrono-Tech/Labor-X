@@ -27,8 +27,8 @@
     "redux-thunk": "^2.2.0",
     "truffle-contract": "github:trufflesuite/truffle-contract#95/head",
     "uniqid": "^4.1.1",
-    "web3": "^1.0.0-beta.33",
-    "web3-eth-accounts": "^1.0.0-beta.33"
+    "web3": "1.0.0-beta.33",
+    "web3-eth-accounts": "1.0.0-beta.33"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.1",

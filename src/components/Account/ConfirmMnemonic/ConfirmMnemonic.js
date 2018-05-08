@@ -32,14 +32,6 @@ class ConfirmMnemonic extends React.Component {
     }
   }
   
-  componentDidMount(){
-    // HARDCODE: fill confirm mnemonic for test
-    const { dispatch, mnemonic } = this.props
-
-    dispatch(change(FORM_CONFIRM_MNEMONIC, 'mnemonic', mnemonic))
-    this.setState({confirmPhrase: this.state.wordsArray})
-  }
-  
   onClickWord(word){
     const { dispatch } = this.props
     
@@ -81,7 +73,6 @@ class ConfirmMnemonic extends React.Component {
   
   render () {
     const { handleSubmit, error, pristine, invalid, mnemonic } = this.props
-    console.log('error', error, pristine, invalid)
   
     return (
       <form className={css.root} name={FORM_CONFIRM_MNEMONIC} onSubmit={handleSubmit}>

@@ -33,7 +33,6 @@ class AccountPasswordForm extends React.Component {
   render () {
     const { handleSubmit, error, pristine, invalid, touched, navigateNext, navigateBack } = this.props
     
-    console.log('acc', this.props)
     return (
       <form className={css.root} name={FORM_ACCOUNT_PASSWORD} onSubmit={handleSubmit}>
         <div className={css.contentBlock}>

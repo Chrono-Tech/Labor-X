@@ -57,13 +57,13 @@ export const createAccount = (walletName, password) => (dispatch, getState) => {
 
 export const onSubmitMnemonic = (signInModel) => (dispatch) => {
   dispatch(setSignInModel(signInModel))
-  dispatch(changeStep(LoginSteps.CreateWallet))
+  dispatch(navigateToCreateWallet())
 
 }
 
 export const onSubmitPrivateKey = (signInModel) => (dispatch) => {
   dispatch(setSignInModel(signInModel))
-  dispatch(changeStep(LoginSteps.CreateWallet))
+  dispatch(navigateToCreateWallet())
 
 }
 

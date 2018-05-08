@@ -18,9 +18,9 @@ import {
   PrivateKeyForm,
   WalletFileForm,
   SelectOption,
-  CreateAccount,
   SelectWallet,
-  LoginForm ,
+  LoginForm,
+  CreateAccount,
 } from 'components/Login'
 
 import WalletEntryModel from 'models/WalletEntryModel'
@@ -65,13 +65,13 @@ class LoginOptions extends React.Component {
     const {
       onChangeStep,
       step,
-      createAccount,
       onSubmitMnemonic,
       onSubmitPrivateKey,
       walletsList,
       onSelectWallet,
       selectedWallet,
       signIn,
+      createAccount,
     } = this.props
     
     let component
@@ -81,7 +81,7 @@ class LoginOptions extends React.Component {
         component = (<MnemonicForm onChangeStep={onChangeStep} onSubmitSuccess={onSubmitMnemonic} />)
         break
       case LoginSteps.WalletFile:
-        component = (<WalletFileForm onChangeStep={onChangeStep} onSubmitSuccess={signIn}/>)
+        component = (<WalletFileForm onChangeStep={onChangeStep} onSubmitSuccess={signIn} />)
         break
       case LoginSteps.PrivateKey:
         component = (<PrivateKeyForm onChangeStep={onChangeStep} onSubmitSuccess={onSubmitPrivateKey} />)
@@ -99,7 +99,7 @@ class LoginOptions extends React.Component {
         component = (<LoginForm onChangeStep={onChangeStep} selectedWallet={selectedWallet} onSubmitSuccess={signIn} />)
         break
       default:
-        component = (<CreateAccount onChangeStep={onChangeStep} onSubmitSuccess={createAccount} />)
+        component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
     }
 
     return (
