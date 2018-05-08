@@ -31,7 +31,7 @@ const onSubmit = ({ password, recruiter, worker, client }) => {
 class AccountPasswordForm extends React.Component {
   
   render () {
-    const { handleSubmit, error, pristine, invalid, touched, navigateNext, navigateBack } = this.props
+    const { handleSubmit, error, pristine, invalid, touched, navigateNext, navigateBack, navigateToSelectMethod } = this.props
     
     return (
       <form className={css.root} name={FORM_ACCOUNT_PASSWORD} onSubmit={handleSubmit}>
@@ -136,7 +136,9 @@ class AccountPasswordForm extends React.Component {
         <div className={css.pageDescription}>
           Have a Mnemonic key, Wallet File or HD solution?
           <br />
-          <Link className={css.descriptionLink} href='/'>Use another Authorization Method</Link>
+          <button onClick={navigateToSelectMethod} className={css.descriptionLink}>
+            Use another Authorization Method
+          </button>
         </div>
       </form>
     )

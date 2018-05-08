@@ -1,8 +1,7 @@
 import uniqid from 'uniqid'
 import Router from 'next/router'
 
-import { createWallet, walletAdd, navigateToSelectWallet } from 'store'
-import {WalletEntryModel} from "../../models";
+import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'store'
 
 export const CREATE_ACCOUNT_SET_MNEMONIC = 'createAccount/setMnemonic'
 export const CREATE_ACCOUNT_SET_PASSWORD = 'createAccount/setPassword'
@@ -105,4 +104,9 @@ export const onFinishCreateAccount = () => (dispatch, getState) => {
   dispatch(walletAdd(currentWallet))
   
   dispatch(navigateToSelectWalletPage())
+}
+
+export const navigateToSelectMethod = () => (dispatch) => {
+  Router.push('/login')
+  dispatch(navigateToSelectLoginMethod())
 }
