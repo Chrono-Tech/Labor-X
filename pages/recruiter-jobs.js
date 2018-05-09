@@ -7,7 +7,7 @@ import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import initialStore from 'src/store'
 
-const recruiterJobs = {
+const RECRUITER_JOBS = {
   expectedRewards: 10,
   earned: 7,
   reviewTab: {
@@ -53,7 +53,7 @@ class JobsPage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.recruiterJobs'>
-        <RecruiterJobsContent {...recruiterJobs} />
+        <RecruiterJobsContent {...RECRUITER_JOBS} />
       </MainLayout>
     )
   }

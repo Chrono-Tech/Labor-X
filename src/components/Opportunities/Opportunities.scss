@@ -7,6 +7,25 @@ $maxWidth: 74rem;
   flex-grow: 1;
 }
 
+.searchRow {
+  @include flex(row, flex-start, center);
+  margin: 4rem 0;
+}
+
+.search {
+  flex-grow: 1;
+}
+
+.filterRow {
+  @include flex(row, flex-start, center);
+  align-self: flex-start;
+  margin-left: auto;
+  > * {
+    margin-left: 1.5rem;
+  }
+}
+
+
 .title {
   margin: 0;
   padding: 5rem 0 5rem 4rem;
