@@ -150,7 +150,7 @@ export default {
     companyAddressLabel: 'Use company address',
     city: 'City',
     zip: 'ZIP',
-    buildingN: 'building #',
+    buildingN: 'Building #',
     suit: 'Suit',
     street: 'Street',
 

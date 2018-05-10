@@ -4,7 +4,17 @@ import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
-import initialStore from 'src/store'
+import initialStore from 'store'
+
+const OPPORTUNITIES_CARDS = [
+  {
+    icon: '/static/temp/get-started.png',
+    jobName: 'Install 10 Gas Ovens',
+    title: 'Get Started at Become Involved',
+    payTotal: 80,
+    payHour: 2,
+  },
+]
 
 class Opportunities extends React.Component {
   static getInitialProps ({ store }) {
@@ -14,7 +24,9 @@ class Opportunities extends React.Component {
   render () {
     return (
       <MainLayout title='nav.opportunities'>
-        <OpportunitiesContent />
+        <OpportunitiesContent
+          opportunitiesCards={OPPORTUNITIES_CARDS}
+        />
       </MainLayout>
     )
   }

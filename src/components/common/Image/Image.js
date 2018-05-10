@@ -31,6 +31,10 @@ export default class Image extends React.PureComponent {
     CHECKBOX_CIRCLE: 'check_circle',
     LH_LIGHT: 'star_rate', // TODO actual
     ARROW_BACK: 'arrow_back',
+    SEARCH: 'search',
+    FILTER: 'filter_list',
+    CALENDAR: 'calendar_today',
+    ERROR: 'error',
   }
 
   static COLORS = {
@@ -41,6 +45,7 @@ export default class Image extends React.PureComponent {
     GREEN: 'green',
     GOLD: 'gold',
     GREY: 'grey',
+    GREY30: 'grey30',
 
     ERROR: 'error',
     WARN: 'warn',

@@ -68,7 +68,7 @@ export default class Button extends React.Component {
       return <div className={css.spinner} />
     } else {
       return [
-        icon && <Image key='0' {...icon} />,
+        icon && <Image key='0' className={css.icon} {...icon} />,
         label && <Translate key='1' className={labelClassNames.join(' ')} value={label} />,
       ]
     }

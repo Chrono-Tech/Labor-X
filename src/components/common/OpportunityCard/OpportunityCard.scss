@@ -1,0 +1,38 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.jobPay {
+  @include flex(row, flex-start, center);
+  margin-left: auto;
+  > * {
+    margin-left: 4rem;
+  }
+}
+
+.icon {
+  margin-right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.root {
+  @include card;
+  > div {
+    @include flex(row, flex-start, center);
+    height: 6rem;
+    border-bottom: solid 1px $color-gray5;
+    padding: 0 3rem;
+  }
+}
+
+.jobName {
+  &:hover {
+    color: $color-blue;
+  }
+}
+
+.jobInfo {
+  min-height: 9rem;
+}

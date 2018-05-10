@@ -1,0 +1,192 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+  margin-bottom: 20rem;
+}
+
+.title {
+  height: 9rem;
+  margin: 0;
+  padding: 4rem 4rem 0;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.titleBar {
+  @include flex(row, flex-start, stretch);
+  max-width: 70rem;
+  height: 5rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  background-color: $color-azure;
+}
+
+.titleOpportunities {
+  margin-left: 2rem;
+  font-weight: $font-weight-medium;
+}
+
+.content {
+  @include card;
+  margin-left: 4rem;
+  max-width: calc(#{$maxWidth} - 4rem);
+}
+
+.header {
+  position: relative;
+  padding: 3rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom: solid .1rem $color-gray5;
+}
+
+.tabs {
+  @include flex(row, flex-start, stretch);
+  padding: 0 3rem;
+  height: 5rem;
+  border-bottom: solid .1rem $color-azure;
+  margin-bottom: 3rem;
+}
+
+.tab {
+  @include flex(row, center, center);
+  outline-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  color: $color-gray50;
+  padding: .5rem 2rem;
+  font-size: $pSize;
+  font-weight: $font-weight-regular;
+  text-transform: uppercase;
+  &:hover {
+    border-bottom: .5rem solid $color-gray10;
+    padding-bottom: 0;
+  }
+}
+
+.tabActive {
+  color: $color-azure;
+  border-bottom: .5rem solid $color-azure;
+  padding-bottom: 0;
+  &:hover {
+    border-bottom: .5rem solid $color-azure;
+  }
+}
+
+.opportunityAge {
+  position: absolute;
+  font-size: 1.2rem;
+  top: 2rem;
+  right: 3rem;
+}
+
+.block {
+  padding: 2rem 3rem;
+  ul {
+    padding: 1rem 0 0 3rem;
+    li {
+      padding: .5rem 0;
+      list-style-position: outside;
+      span {
+        font-weight: $font-weight-regular;
+        line-height: 2.2rem;
+      }
+    }
+ }
+}
+
+.profile {
+  padding: 2rem 3rem;
+  h3 {
+    padding-bottom: 2rem;
+  }
+}
+
+.profileRequirement {
+  @include flex(row, flex-start, center);
+  margin: .5rem 0;
+  > * {
+    margin-right: 1.5rem;
+  }
+}
+
+.delimiter {
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: solid .1rem $color-gray5;
+}
+
+.infoBlock {
+  padding: 2rem 3rem;
+}
+
+.infoRow {
+  @include flex(row, flex-start, stretch);
+  margin-bottom: 3rem;
+  > div {
+    margin-right: 4rem;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.infoColumn {
+  @include flex(column, flex-start, stretch);
+  min-width: 8rem;
+  > div {
+    margin-bottom: .5rem;
+  }
+}
+
+.bold {
+  font-weight: $font-weight-medium;
+}
+
+.regular {
+  font-weight: $font-weight-regular;
+}
+
+.actionsBlock {
+  @include flex(row, flex-start, stretch);
+  padding: 1rem 3rem 2rem;
+}
+
+.actionsSaveApply {
+  @include flex(row, flex-start, stretch);
+  margin-left: auto;
+}
+
+.backButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.saveButton {
+  width: 10rem;
+  color: $color-azure;
+  background-color: transparent;
+}
+
+.reportButton {
+  width: 12rem;
+  color: $color-gray30;
+  background-color: transparent;
+}
+
+.applyButton {
+  width: 15rem;
+  margin-left: 1rem;
+  color: $color-white;
+  background-color: $color-green;
+}
+
+.calendarButton {
+  color: $color-white;
+  background-color: $color-blue;
+  margin-left: auto;
+}

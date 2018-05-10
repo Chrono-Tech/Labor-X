@@ -14,11 +14,13 @@ export { default as Widget } from './Widget/Widget'
 export { default as JobCard } from './JobCard/JobCard'
 export { default as FieldGroup } from './FieldGroup/FieldGroup'
 export { default as FeedbackCard } from './FeedbackCard/FeedbackCard'
+export { default as OpportunityCard } from './OpportunityCard/OpportunityCard'
 
 //elements
 export { default as Badge } from './Badge/Badge'
 export { default as Action } from './Action/Action'
 export { default as Chip } from './Chip/Chip'
+export { default as Tag } from './Tag/Tag'
 export { default as Counter } from './Counter/Counter'
 
 // forms

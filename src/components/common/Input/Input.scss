@@ -1,7 +1,5 @@
 @import "~styles/globals/variables";
 
-$opacity: 0.75;
-
 .root {
   color: currentColor;
 
@@ -29,9 +27,10 @@ $opacity: 0.75;
   border: none;
   width: 100%;
   padding: 1rem;
+  outline: none;
 
   &::placeholder {
-    opacity: $opacity;
+    opacity: .75;
     color: currentColor;
     font-style: italic;
     font-weight: $font-weight-light;
@@ -42,12 +41,13 @@ $opacity: 0.75;
   &:focus + .line
   {
     opacity: 1;
+    border-bottom: 0.1rem solid $color-azure;
   }
 }
 
 .line {
   margin-top: 0.1rem; // avoid intersection with input
-  opacity: $opacity;
+  opacity: .25;
   border-bottom: 0.1rem solid currentColor;
 }
 
