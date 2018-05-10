@@ -12,9 +12,11 @@ import css from './RecoveryPasswordResetForm.scss'
 
 const FORM_PASSWORD_RESET = 'form/formPasswordReset'
 
-const onSubmit = ({ words }) => {
+const onSubmit = ({ password }) => {
   
-  return {}
+  return {
+    password
+  }
 }
 
 class RecoveryPasswordResetForm extends React.Component {
@@ -75,7 +77,7 @@ class RecoveryPasswordResetForm extends React.Component {
         <Field
           className={css.row}
           component={Input}
-          name='passwordConfirm'
+          name='password-confirm'
           type='password'
           autoComplete={false}
           placeholder='Confirm New Account Password'

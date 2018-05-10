@@ -1,7 +1,8 @@
 import Router from 'next/router'
 import type SignInModel from 'models/SignInModel'
 import WalletEntryModel from 'models/WalletEntryModel'
-import { createWallet, decryptWallet, walletSelect } from 'src/store'
+import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
+import { getWalletAddress } from 'src/utils'
 
 export const LoginSteps = {
   Ledger: 'ledger',
@@ -26,6 +27,8 @@ export const LOGIN_CHANGE_STEP = 'login/changeStep'
 export const LOGIN_SELECT_WALLET_RECOVERY_FORM = 'login/selectWalletRecoveryForm'
 export const LOGIN_SET_RECOVERY_PASSWORD_MODE = 'login/setRecoveryPasswordMode'
 export const LOGIN_RESET_RECOVERY_PASSWORD_MODE = 'login/resetRecoveryPasswordMode'
+export const LOGIN_SET_RECOVERY_FORM_MNEMONIC = 'login/setRecoveryFormMnemonic'
+export const LOGIN_RESET_RECOVERY_FORM_MNEMONIC = 'login/resetRecoveryFormMnemonic'
 
 export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
@@ -121,15 +124,40 @@ export const navigateToRecoveryPassword = () => (dispatch, getState) => {
   dispatch(changeStep(LoginSteps.RecoveryPassword))
 }
 
-export const onSubmitRecoveryAccountForm = () => (dispatch) => {
+export const onSubmitRecoveryAccountForm = ({mnemonic}) => (dispatch) => {
+  dispatch(setRecoveryFormMnemonic(mnemonic))
   dispatch(changeStep(LoginSteps.RecoveryPasswordReset))
 }
 
-export const onConfirmRecoveryPassword = () => (dispatch) => {
+export const onConfirmRecoveryPassword = ({ password }) => (dispatch, getState) => {
+  const state = getState()
+  
+  const { selectedWalletRecoveryForm, recoveryFormMnemonic } = state.login
+  
+  
+  dispatch(resetPasswordWallet(selectedWalletRecoveryForm, recoveryFormMnemonic, password))
+  
   dispatch({ type: LOGIN_RESET_RECOVERY_PASSWORD_MODE })
+  
   Router.push('/dashboard')
 }
 
 export const changeStep = (step) => (dispatch) => {
   dispatch({ type: LOGIN_CHANGE_STEP, step })
+}
+
+export const validateRecoveryForm = (mnemonic) => (dispatch, getState) => {
+  const state = getState()
+  
+  const { selectedWalletRecoveryForm } = state.login
+  
+  return dispatch(validateMnemonicForWallet(selectedWalletRecoveryForm, mnemonic))
+  
+}
+
+export const setRecoveryFormMnemonic = (mnemonic) => (dispatch, getState) => {
+  const state = getState()
+  
+  return dispatch({ type: LOGIN_SET_RECOVERY_FORM_MNEMONIC, mnemonic})
+  
 }

@@ -50,7 +50,6 @@
   font-weight: 500;
   background-color: #fff !important;
   padding: 12px 0;
-  margin-bottom: 90px;
 
   &:hover {
     background-color: #E5F5FA !important;
@@ -77,8 +76,17 @@
 
 .userRowWrapper {
   margin-bottom: 35px;
+  border-top: 1px solid #A8EAFF;
 }
 
-.row {
+.submitButtonWrapper {
   min-width: 190px;
+  margin-bottom: 90px;
 }
+
+.formError {
+  color: #FFE14D !important;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+

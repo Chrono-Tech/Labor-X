@@ -213,8 +213,8 @@ function mapDispatchToProps (dispatch) {
     onSubmitPrivateKey: (signInModel) => dispatch(onSubmitPrivateKey(signInModel)),
     onSubmitMnemonic: (signInModel) => dispatch(onSubmitMnemonic(signInModel)),
     onSelectWallet: (signInModel) => dispatch(onSelectWallet(signInModel)),
-    onSubmitRecoveryAccountForm: () => dispatch(onSubmitRecoveryAccountForm()),
-    onConfirmRecoveryPassword: () => dispatch(onConfirmRecoveryPassword()),
+    onSubmitRecoveryAccountForm: (values) => dispatch(onSubmitRecoveryAccountForm(values)),
+    onConfirmRecoveryPassword: (values) => dispatch(onConfirmRecoveryPassword(values)),
     navigateToRecoveryPassword: () => dispatch(navigateToRecoveryPassword()),
   }
 }

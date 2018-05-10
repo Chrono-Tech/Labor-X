@@ -8,6 +8,7 @@ const initialState = {
   step: null,
   selectedWalletRecoveryForm: null,
   isRecoveryPasswordMode: false,
+  recoveryFormMnemonic: '',
 }
 
 export default (state = initialState, action) => {
@@ -43,6 +44,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isRecoveryPasswordMode: true
+      }
+    case a.LOGIN_SET_RECOVERY_FORM_MNEMONIC:
+      return {
+        ...state,
+        recoveryFormMnemonic: action.mnemonic
+      }
+    case a.LOGIN_RESET_RECOVERY_FORM_MNEMONIC:
+      return {
+        ...state,
+        recoveryFormMnemonic: ''
       }
     case a.LOGIN_RESET_RECOVERY_PASSWORD_MODE:
       return {

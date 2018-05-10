@@ -39,10 +39,10 @@ const wallet = (state = initialState, action) => {
         decryptedWalet: action.wallet
       }
       
-    case a.WALLETS_UPDATE :
+    case a.WALLETS_UPDATE_LIST :
       return {
         ...state,
-        decryptedWalet: updateWallet(action.wallet, action.name)
+        walletsList: action.walletsList
       }
       
     case a.WALLETS_REMOVE :
