@@ -22,6 +22,7 @@ export { default as Action } from './Action/Action'
 export { default as Chip } from './Chip/Chip'
 export { default as Tag } from './Tag/Tag'
 export { default as Counter } from './Counter/Counter'
+export { default as Tab } from './Tab/Tab'
 
 // forms
 export { default as Button } from './Button/Button'

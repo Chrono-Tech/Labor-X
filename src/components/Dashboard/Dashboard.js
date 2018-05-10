@@ -169,10 +169,12 @@ export default class Dashboard extends React.Component {
             </div>
             <div className={css.highlightsRow}>
               <Widget
+                href='/opportunities'
                 title='ui.dashboard.worker.opportunities'
                 subtitle='ui.dashboard.worker.worker'
                 actions={[
                   {
+                    href: '/opportunities',
                     label: 'Opportunities',
                     counter: { value: 135 },
                     isLink: true,

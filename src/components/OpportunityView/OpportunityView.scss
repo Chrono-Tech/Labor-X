@@ -72,9 +72,14 @@ $maxWidth: 74rem;
   color: $color-azure;
   border-bottom: .5rem solid $color-azure;
   padding-bottom: 0;
+  font-weight: $font-weight-bold;
   &:hover {
     border-bottom: .5rem solid $color-azure;
   }
+}
+
+.tabContent {
+  min-height: 60rem;
 }
 
 .opportunityAge {
@@ -84,105 +89,9 @@ $maxWidth: 74rem;
   right: 3rem;
 }
 
-.block {
-  padding: 2rem 3rem;
-  ul {
-    padding: 1rem 0 0 3rem;
-    li {
-      padding: .5rem 0;
-      list-style-position: outside;
-      span {
-        font-weight: $font-weight-regular;
-        line-height: 2.2rem;
-      }
-    }
- }
-}
-
-.profile {
-  padding: 2rem 3rem;
-  h3 {
-    padding-bottom: 2rem;
-  }
-}
-
-.profileRequirement {
-  @include flex(row, flex-start, center);
-  margin: .5rem 0;
-  > * {
-    margin-right: 1.5rem;
-  }
-}
-
-.delimiter {
-  padding-top: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: solid .1rem $color-gray5;
-}
-
-.infoBlock {
-  padding: 2rem 3rem;
-}
-
-.infoRow {
-  @include flex(row, flex-start, stretch);
-  margin-bottom: 3rem;
-  > div {
-    margin-right: 4rem;
-  }
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.infoColumn {
-  @include flex(column, flex-start, stretch);
-  min-width: 8rem;
-  > div {
-    margin-bottom: .5rem;
-  }
-}
-
-.bold {
-  font-weight: $font-weight-medium;
-}
-
-.regular {
-  font-weight: $font-weight-regular;
-}
-
-.actionsBlock {
-  @include flex(row, flex-start, stretch);
-  padding: 1rem 3rem 2rem;
-}
-
-.actionsSaveApply {
-  @include flex(row, flex-start, stretch);
-  margin-left: auto;
-}
-
 .backButton {
   color: $color-white;
   background-color: $color-azure;
-}
-
-.saveButton {
-  width: 10rem;
-  color: $color-azure;
-  background-color: transparent;
-}
-
-.reportButton {
-  width: 12rem;
-  color: $color-gray30;
-  background-color: transparent;
-}
-
-.applyButton {
-  width: 15rem;
-  margin-left: 1rem;
-  color: $color-white;
-  background-color: $color-green;
 }
 
 .calendarButton {
