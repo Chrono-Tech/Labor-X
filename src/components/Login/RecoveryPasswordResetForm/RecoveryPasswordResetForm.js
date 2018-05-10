@@ -1,18 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm } from 'redux-form'
+import {Field, reduxForm, SubmissionError} from 'redux-form'
 
 import { Button, Input, Link, UserRow } from 'components/common'
 import { FieldInputComponent } from 'components/Login'
 import WalletEntryModel from 'models/WalletEntryModel'
 import {LoginSteps} from 'store'
-import validate from './validate'
 
 import css from './RecoveryPasswordResetForm.scss'
 
 const FORM_PASSWORD_RESET = 'form/formPasswordReset'
 
 const onSubmit = ({ password }) => {
+  if (!password) {
+    throw new SubmissionError({ _error: 'Wrong password' })
+  }
   
   return {
     password
@@ -100,4 +102,4 @@ class RecoveryPasswordResetForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: FORM_PASSWORD_RESET, validate, onSubmit })(RecoveryPasswordResetForm)
+export default reduxForm({ form: FORM_PASSWORD_RESET, onSubmit })(RecoveryPasswordResetForm)

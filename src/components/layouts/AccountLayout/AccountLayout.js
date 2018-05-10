@@ -73,7 +73,6 @@ export default class AccountLayout extends React.Component {
             </div>
           </div>
           <div className={css.topSection}>
-            <img className={css.background} src='/static/images/city-5.jpg' alt='' />
         
             <div className={css.topSectionBlock}>
               {

@@ -10,8 +10,6 @@ export const replaceWallet = (wallet, walletList) => {
   
   let copyWalletList = [...walletList]
   
-  console.log('replaceWallet', index, copyWalletList)
-  
   copyWalletList.splice(index, 1, wallet)
   
   return copyWalletList

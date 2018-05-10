@@ -14,7 +14,7 @@
   font-weight: bold;
   line-height: 24px;
   color: #fff;
-  margin-bottom: 45px;
+  margin-bottom: 35px;
 }
 
 .otherActions {
@@ -29,11 +29,21 @@
 }
 
 .emptyListMessage {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #A8EAFF;
+  border-top: 1px solid #A8EAFF;
+  padding: 22px 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #A8EAFF;
+
 }
 
+.row {
+  width: 260px;
+}
 .submitButton {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 14px;
   font-weight: bold;
   background: #fff;

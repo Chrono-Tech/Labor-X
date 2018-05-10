@@ -22,8 +22,6 @@ const onSubmit = (values, dispatch) => {
   
   const validForm = dispatch(validateRecoveryForm(mnemonic))
   
-  console.log('mnemonic', mnemonic, validForm)
-  
   if (!validForm) {
     throw new SubmissionError({ _error: 'Mnemonic incorrect for this wallet' })
   }
@@ -67,7 +65,6 @@ class RecoveryAccountForm extends React.Component {
   render () {
     const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList } = this.props
     const wordsArray = new Array(12).fill()
-    console.log('recovery', pristine, invalid)
 
     return (
       <form className={css.root} name={FORM_RECOVERY_PASSWORD} onSubmit={handleSubmit}>

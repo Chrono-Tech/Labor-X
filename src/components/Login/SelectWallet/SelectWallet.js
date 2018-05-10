@@ -41,7 +41,7 @@ export default class SelectWallet extends React.Component {
   }
 
   getEmptyListMessage(){
-    return <div className={css.emptyListMessage}>You have no wallets</div>
+    return <div className={css.emptyListMessage}>Sorry, there are no accounts to display</div>
   }
   
   navigateToLoginMethods(){
@@ -59,10 +59,11 @@ export default class SelectWallet extends React.Component {
 
     return (
       <div className={css.root}>
-        <div className={css.formHeader}>My accounts</div>
+        <div className={css.formHeader}>My Accounts</div>
         { walletsList.length ? this.getWalletsList() : this.getEmptyListMessage() }
         <Button
           onClick={this.navigateToLoginMethods.bind(this)}
+          className={css.row}
           buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
           label='Add an existing LaborX account'

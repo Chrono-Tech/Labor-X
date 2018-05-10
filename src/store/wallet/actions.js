@@ -33,11 +33,9 @@ export const walletUpdate = (wallet) => (dispatch, getState) => {
   const { walletsList } = state.wallet
   
   const updatedWalletList = replaceWallet(wallet, walletsList)
-  console.log('walletUpdate', wallet, updatedWalletList)
   
   dispatch(walletSelect(wallet))
   
-  console.log('updated', updatedWalletList)
   
   dispatch({ type: WALLETS_UPDATE_LIST, walletsList: updatedWalletList })
   
@@ -88,8 +86,6 @@ export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch) =>
   let web3 = Web3.getWeb3()
   web3.eth.accounts.wallet.clear()
   
-  console.log('resetpassword', wallet, mnemonic, password)
-  
   const newCopy = dispatch(createWallet({ name: wallet.name, mnemonic, password}))
   
   
@@ -98,9 +94,6 @@ export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch) =>
     ...wallet,
     encrypted: newCopy.encrypted,
   }
-  
-  console.log('resetpassword newCopy', newCopy, newWallet, {wallet, mnemonic, password})
-  
   
   dispatch(walletUpdate(newWallet))
 }
@@ -112,16 +105,13 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
 
   if (privateKey) {
     const account = web3.eth.accounts.privateKeyToAccount(`0x${privateKey}`)
-    console.log('address', account && account.address, account)
     wallet.add(account)
   }
 
   if (mnemonic) {
     const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
-    console.log('address', account && account.address, account)
     wallet.add(account)
   }
-  console.log('createWallet', wallet)
   
   return new WalletEntryModel({
     key: uniqid(),

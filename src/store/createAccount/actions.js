@@ -102,7 +102,8 @@ export const onFinishCreateAccount = () => (dispatch, getState) => {
   
   dispatch(walletAdd(currentWallet))
   
-  dispatch(navigateToSelectWalletPage())
+  Router.push('/dashboard')
+  
 }
 
 export const navigateToSelectMethod = () => (dispatch) => {
