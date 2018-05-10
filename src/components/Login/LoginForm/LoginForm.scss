@@ -142,3 +142,36 @@
 .fieldError {
   color: #FFE14D;
 }
+
+.passwordFieldInput {
+
+
+  label {
+    font-size: 16px;
+    line-height: 22px;
+    color: #A8EAFF !important;
+    font-style: italic;
+    left: 0;
+    right:0;
+    transform-origin: top center;
+    //transform: translate(0, 20px) scale(1);
+
+    &[data-shrink=true] {
+      //transform-origin: top center;
+    }
+  }
+  input {
+    text-align: center;
+  }
+}
+.passwordFieldInputWrapper {
+  &:before {
+    background-color: #A8EAFF !important;
+    height: 1px !important;
+  }
+
+  &:after {
+    background-color: #fff !important;
+    height: 1px !important;
+  }
+}

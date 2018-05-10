@@ -49,7 +49,7 @@ class LoginForm extends React.Component {
         <div className={css.accountWrapper}>
           <UserRow
             title={selectedWallet && selectedWallet.name}
-            onClick={this.navigateToSelectWallet.bind(this)}
+            onClick={walletsList.length === 1 ? null : this.navigateToSelectWallet.bind(this)}
             hideActionIcon={walletsList.length === 1}
           />
         </div>
@@ -58,11 +58,13 @@ class LoginForm extends React.Component {
           component={Input}
           name='password'
           type='password'
-          autoComplete={false}
           placeholder='Enter Password'
+          autoComplete={false}
           mods={css.passwordField}
           errorMods={css.fieldError}
+          inputMods={css.passwordFieldInput}
           lineEnabled={false}
+          materialInput={false}
         />
         <Button
           className={css.row}

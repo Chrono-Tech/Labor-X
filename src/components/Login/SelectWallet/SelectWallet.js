@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import Router from 'next/router'
+
 import { Button, Input, Link, UserRow } from 'components/common'
-import {LoginSteps} from 'store'
+import {LoginSteps} from 'src/store'
+
+
 import css from './SelectWallet.scss'
 
 export default class SelectWallet extends React.Component {
@@ -15,12 +19,20 @@ export default class SelectWallet extends React.Component {
     onSelectWallet: () => {},
   }
   
+  constructor(props){
+    super(props)
+    
+    this.state = {
+      isModalOpen: props.walletsList.length === 0
+    }
+  }
+  
   getWalletAddress(wallet) {
     return wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
   }
-
+  
   getWalletsList() {
-    const { walletsList, onSelectWallet } = this.props
+    const { walletsList, onSelectWallet, classes } = this.props
 
     return (
       <div className={css.walletsWrapper}>
@@ -49,14 +61,14 @@ export default class SelectWallet extends React.Component {
     onChangeStep(LoginSteps.SelectLoginMethod)
   }
   
-  navigateToCreateWallet(){
-    const { onChangeStep } = this.props
+  navigateToCreateWallet() {
+    const {onChangeStep} = this.props
     onChangeStep(LoginSteps.CreateWallet)
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, walletsList } = this.props
-
+    const { handleSubmit, error, pristine, invalid, walletsList, classes } = this.props
+    
     return (
       <div className={css.root}>
         <div className={css.formHeader}>My Accounts</div>
@@ -72,6 +84,7 @@ export default class SelectWallet extends React.Component {
           error={error}
           mods={Button.MODS.INVERT}
         />
+
       </div>
     )
   }

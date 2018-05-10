@@ -3,6 +3,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Router from 'next/router'
+import Paper from 'material-ui/Paper';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
 
 import {
   signIn,
@@ -15,7 +23,9 @@ import {
   onSubmitRecoveryAccountForm,
   onConfirmRecoveryPassword,
   navigateToRecoveryPassword,
-} from 'store'
+} from 'src/store'
+
+import { Button } from 'components/common'
 
 import {
   MnemonicForm,
@@ -56,6 +66,10 @@ class LoginOptions extends React.Component {
 
   constructor (props) {
     super(props)
+    
+    this.state = {
+      isModalOpen: props.walletsList.length === 0
+    }
   }
   
   componentWillMount(){
@@ -140,7 +154,48 @@ class LoginOptions extends React.Component {
   }
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
-
+  
+  closeModal(){
+    this.setState({ isModalOpen: false })
+  }
+  
+  navigateToCreateAccount(){
+    Router.push('/create-account')
+  }
+  
+  renderDialog(){
+    return (
+      <Dialog classes={{paper: css.dialog}} open={this.state.isModalOpen}>
+        <Paper>
+          <DialogTitle className={css.dialogTitle}>
+            LaborX account is not found
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText className={css.dialogContent}>
+              LaborX account with the provided address is not found.
+              Would you like to Create a New Account?
+            </DialogContentText>
+          </DialogContent>
+      
+          <DialogActions className={css.actionWrapper}>
+            <Button
+              label='No'
+              onClick={this.closeModal.bind(this)}
+              buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
+              type={Button.TYPES.SUBMIT}
+            />
+            <Button
+              label='YES'
+              onClick={this.navigateToCreateAccount.bind(this)}
+              buttonClassName={css.actionButton}
+              type={Button.TYPES.SUBMIT}
+            />
+          </DialogActions>
+        </Paper>
+      </Dialog>
+    )
+  }
+  
   render () {
 
     return (
@@ -155,6 +210,7 @@ class LoginOptions extends React.Component {
         >
           {this.renderComponent()}
         </ReactCSSTransitionGroup>
+        { this.renderDialog() }
       </div>
     )
   }

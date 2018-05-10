@@ -38,16 +38,6 @@ class RecoveryAccountForm extends React.Component {
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
   
-  componentDidMount(){
-    
-    const { dispatch } = this.props
-    let wordsArray = 'club bullet chief lend subway small merit engine harbor post scale market'.split(' ')
-    wordsArray.forEach((item, i) => {
-      dispatch(change(FORM_RECOVERY_PASSWORD, `word-${i}`, item))
-    })
-
-  }
-  
   getWalletAddress(wallet) {
     return wallet && wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
   }
@@ -72,7 +62,7 @@ class RecoveryAccountForm extends React.Component {
         <div className={css.userRowWrapper}>
           <UserRow
             title={this.getWalletAddress(selectedWallet)}
-            onClick={this.navigateToSelectWallet.bind(this)}
+            onClick={walletsList.length === 1 ? null : this.navigateToSelectWallet.bind(this)}
             hideActionIcon={walletsList.length === 1}
           />
         </div>

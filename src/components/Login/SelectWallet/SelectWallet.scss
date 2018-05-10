@@ -45,8 +45,18 @@
 .submitButton {
   margin-bottom: 20px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 500;
+  color: #00A0D2;
   background: #fff;
+
+  &:hover {
+    background-color: #E5F5FA;
+  }
+
+  span {
+    font-weight: 500;
+  }
+
 }
 .loginLink {
   color: #FFFFFF;
