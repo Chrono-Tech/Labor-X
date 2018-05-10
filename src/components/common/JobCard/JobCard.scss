@@ -30,7 +30,7 @@
     @include flex(row, flex-start, center);
     height: 6rem;
     border-bottom: solid 1px $color-gray5;
-    padding: 0 3rem;
+    padding: 0 2rem;
   }
 }
 
@@ -57,18 +57,22 @@
   color: $color-red;
 }
 
-.inProgress {
+.attention {
   border-left-color: $color-gold;
 }
 
-.error {
+.problem {
   border-left-color: $color-red;
 }
 
-.done {
+.inProgress {
   border-left-color: $color-green;
 }
 
-.pending {
+.applied {
   border-left-color: $color-gray50;
+}
+
+.approved {
+  border-left-color: $color-azure;
 }

@@ -1,0 +1,77 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include card;
+  border-left-width: 1rem;
+  border-left-style: solid;
+}
+
+.todoInfo {
+  @include flex(column, center, stretch);
+  padding: 2rem;
+  border-bottom: solid 1px $color-gray5;
+  min-height: 8rem;
+}
+
+.cardNote {
+  margin-bottom: 1.5rem;
+  font-size: $pSmallSize;
+  font-weight: $font-weight-bold;
+}
+
+.rowInfo {
+  @include flex(row, flex-start, center);
+  > * {
+    margin-right: 1rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.progress {
+  @include flex(row, flex-start, center);
+  padding: 0 2rem;
+  min-height: 6rem;
+}
+
+.actions {
+  margin-left: auto;
+}
+
+.actionButton {
+  padding: 1rem 1.5rem;
+  color: $color-gray30;
+  &:hover {
+    color: $color-azure;
+  }
+}
+
+.daysLeft {
+  margin-left: auto;
+}
+
+.attention {
+  border-left-color: $color-gold;
+}
+
+.problem {
+  border-left-color: $color-red;
+}
+
+.inProgress {
+  border-left-color: $color-green;
+}
+
+.applied {
+  border-left-color: $color-gray50;
+}
+
+.approved {
+  border-left-color: $color-azure;
+}
+
+.medium {
+  font-weight: $font-weight-medium;
+}
