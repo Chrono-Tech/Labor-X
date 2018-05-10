@@ -91,7 +91,7 @@ class PostJob extends React.Component {
                 component={Select}
                 name='jobBoardCategory'
               />
-              <div>
+              <div className={css.postFee}>
                 Post Fee (no-refund): LHUS 1.00 (USD 30.00)
               </div>
             </div>
@@ -107,7 +107,7 @@ class PostJob extends React.Component {
             </div>
           </div>
           <div className={css.card}>
-            <div className={css.col}>
+            <div className={css.hourlyRatingColumn}>
               <Field
                 component={Select}
                 name='forceWorkerRating'

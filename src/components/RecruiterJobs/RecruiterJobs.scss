@@ -30,6 +30,7 @@ $maxWidth: 74rem;
 .titleStats {
   @include flex(row, flex-start, flex-end);
   margin-top: 4rem;
+  color: $color-white;
   > div {
     @include flex(column, flex-start, flex-start);
     margin-right: 6rem;
@@ -37,6 +38,12 @@ $maxWidth: 74rem;
       margin-top: .5rem;
     }
   }
+}
+
+.reviewCounter {
+  color: $color-white;
+  font-size: $h2Size;
+  font-weight: $font-weight-medium;
 }
 
 .statAmount {

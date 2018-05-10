@@ -23,7 +23,13 @@ export default class TodoCard extends React.Component {
     startDate: PropTypes.instanceOf(Date).isRequired,
     deadline: PropTypes.instanceOf(Date),
     totalHours: PropTypes.number,
-    spent: PropTypes.number,
+    worked: PropTypes.number,
+  }
+
+  constructor (props, context){
+    super(props, context)
+    this.workedTime = this.workedTime.bind(this)
+    this.progressIcon = this.progressIcon.bind(this)
   }
 
   static STATUSES = STATUSES
@@ -38,6 +44,25 @@ export default class TodoCard extends React.Component {
     console.log('Opportunity-view-handleMessage')
   }
 
+  daysUntil(date) {
+    return moment(date).diff(moment(), 'days')
+  }
+
+  leadZero (value) {
+    return value < 10 ? `0${value}` : value
+  }
+
+  progressIcon () {
+    return this.props.status === STATUSES.IN_PROGRESS ?
+      <Image icon={Image.ICONS.PAUSE}/> : <Image icon={Image.ICONS.PLAY}/>
+  }
+
+  workedTime () {
+    const dur = moment.duration(this.props.worked, 'seconds')
+    return this.props.status === STATUSES.PROBLEM ?
+      `${dur.asHours()}h` : `${this.leadZero(dur.asHours().toFixed(0))}:${this.leadZero(Math.trunc(dur.asMinutes() % 60))}:${this.leadZero(Math.trunc(dur.asSeconds() % 60))}`
+  }
+
   render () {
     return (
       <div className={[this.props.className, css.root, css[this.props.status]].join(' ')}>
@@ -46,11 +71,14 @@ export default class TodoCard extends React.Component {
           <div className={css.rowInfo}>
             <span>{moment(this.props.startDate).format(dateFormat)}</span>
             <span className={css.medium}>{ this.props.jobName }</span>
-            <span className={css.daysLeft}>123</span>
+            {!!this.daysUntil(this.props.deadline) && <span className={css.daysLeft}>{this.daysUntil(this.props.deadline)} day(s) to go</span>}
           </div>
         </div>
         <div className={css.progress}>
-          <p> of </p>
+          <div className={css.progressTimer}>
+            {this.props.status !== STATUSES.PROBLEM && this.progressIcon()}
+            <p><span className={css.medium}>{this.props.worked > 0 ? this.workedTime() : 'Start Work'}</span> of {this.props.totalHours}h</p>
+          </div>
           <div className={css.actions}>
             <Image
               clickable

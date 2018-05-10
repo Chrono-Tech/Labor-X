@@ -25,7 +25,7 @@ export default class ToDo extends React.Component {
         <div className={css.content}>
           {this.props.todoLists.map((list) => (
             <div key={uniqid()}>
-              <h3 className={css.date}>{moment(list.date).format(dateFormat)}</h3>
+              <h3 className={css.date}>{moment(list.date).format(dateFormat)} {moment(list.date).isSame(Date.now(), 'days') && '(Today)'}</h3>
               {list.todos.map((todo) => (
                 <TodoCard
                   key={uniqid()}

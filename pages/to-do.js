@@ -3,6 +3,7 @@ import { MainLayout } from 'components/layouts'
 import { TodoCard } from 'components/common'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import moment from 'moment'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import initialStore from 'src/store'
@@ -10,44 +11,44 @@ import initialStore from 'src/store'
 const TODO = {
   todoLists: [
     {
-      date: new Date('2018-12-20'),
+      date: new Date(),
       todos: [
         {
           jobName: 'Install 10 Gas Ovens',
           status: TodoCard.STATUSES.PROBLEM,
-          startDate: new Date('2018-12-20 7:30 pm'),
-          spent: 133200,
+          startDate: moment().hours(19).minutes(30).toDate(),
+          worked: 133200,
           totalHours: 40,
           cardNote: 'RE-DO TODAY',
         },
         {
           jobName: 'Install 10 Gas Ovens',
           status: TodoCard.STATUSES.IN_PROGRESS,
-          startDate: new Date('2018-12-20 1:30 pm'),
-          deadline: new Date('2018-12-23 1:30 pm'),
-          spent: 4850,
+          startDate: moment().hours(13).minutes(30).toDate(),
+          deadline: moment().add(3, 'days').hours(19).minutes(30).toDate(),
+          worked: 4850,
           totalHours: 40,
         },
         {
           jobName: 'Pick-up 3 sofas',
           status: TodoCard.STATUSES.ATTENTION,
-          startDate: new Date('2018-12-20 1:30 pm'),
-          deadline: new Date('2018-12-23 7:30 pm'),
-          spent: 0,
+          startDate: moment().hours(13).minutes(30).toDate(),
+          deadline: moment().hours(19).minutes(30).toDate(),
+          worked: 0,
           totalHours: 2,
           cardNote: 'DUE TODAY',
         },
       ],
     },
     {
-      date: new Date('2018-12-21'),
+      date: moment().add(1, 'days').toDate(),
       todos: [
         {
           jobName: 'Plumber Required',
           status: TodoCard.STATUSES.APPROVED,
-          startDate: new Date('2018-12-21 9:00 pm'),
-          deadline: new Date('2018-12-22 1:30 pm'),
-          spent: 1200,
+          startDate: moment().add(1, 'days').hours(9).minutes(0).toDate(),
+          deadline: moment().add(1, 'days').hours(13).minutes(30).toDate(),
+          worked: 1200,
           totalHours: 6,
         },
       ],

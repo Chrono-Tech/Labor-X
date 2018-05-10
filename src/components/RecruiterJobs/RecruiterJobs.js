@@ -52,7 +52,7 @@ export default class RecruiterJobs extends React.Component {
           <div className={css.titleText}><Translate value='nav.jobs' /></div>
           <div className={css.titleStats}>
             <div>
-              <h2>2</h2>
+              <div className={css.reviewCounter}>2</div>
               <div className={css.counterText}>For Review</div>
             </div>
             <div>
