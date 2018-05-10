@@ -1,22 +1,24 @@
-import { LoginActions } from 'components/layouts'
-import { RecoveryAccountForm } from 'components/Login'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import PropTypes from 'prop-types'
 import Head from 'next/head'
+
 import initialStore from 'store'
 import { bootstrap } from 'store/bootstrap'
+import { LoginActions } from 'components/layouts'
+import { RecoveryAccountForm } from 'components/Login'
+import WalletEntryModel from 'models/WalletEntryModel'
+
 import 'styles/globals/globals.scss'
-import ethereumService from '../../src/services/EthereumService'
 import css from './index.scss'
 
 class ForgotPassword extends React.Component {
-  static getInitialProps ({ store }) {
-    store.dispatch(bootstrap())
+  static propTypes = {
+    walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
+    selectedWallet: PropTypes.instanceOf(WalletEntryModel),
   }
   
-  componentWillMount () {
-    ethereumService.start()
-  }
+  
   
   render () {
     return (
@@ -34,4 +36,11 @@ class ForgotPassword extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(ForgotPassword)
+const mapStateToProps = (state) => {
+  return {
+    selectedWallet: state.wallet.selectedWallet,
+    walletsList: state.wallet.walletsList,
+  }
+}
+
+export default withRedux(initialStore, mapStateToProps)(ForgotPassword)

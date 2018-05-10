@@ -4,6 +4,11 @@
 
 }
 
+.componentWrapper {
+  & + * {
+    display: none;
+  }
+}
 .loadingMessage {
   text-align: center;
   padding: 40px 130px;
@@ -18,4 +23,12 @@
   }
 
 
+}
+
+.loadingMessageHeader {
+  line-height: 24px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 50px;
 }

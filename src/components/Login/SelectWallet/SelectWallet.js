@@ -14,6 +14,10 @@ export default class SelectWallet extends React.Component {
     walletsList: [],
     onSelectWallet: () => {},
   }
+  
+  getWalletAddress(wallet) {
+    return wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
+  }
 
   getWalletsList() {
     const { walletsList, onSelectWallet } = this.props
@@ -25,7 +29,10 @@ export default class SelectWallet extends React.Component {
             <UserRow
               key={index}
               title={wallet.name}
+              subtitle={this.getWalletAddress(wallet)}
               onClick={() => onSelectWallet(wallet)}
+              actionIconClass={css.actionIconClass}
+              actionIcon='/static/images/svg/prev-white.svg'
             />
           ))
         }
@@ -48,26 +55,22 @@ export default class SelectWallet extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, walletsList, onSelectWallet } = this.props
+    const { handleSubmit, error, pristine, invalid, walletsList } = this.props
 
     return (
       <div className={css.root}>
-        <div className={css.formHeader}>Select wallet</div>
+        <div className={css.formHeader}>My accounts</div>
         { walletsList.length ? this.getWalletsList() : this.getEmptyListMessage() }
         <Button
           onClick={this.navigateToLoginMethods.bind(this)}
           buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
-          label='Import wallet'
+          label='Add an existing LaborX account'
           primary
           disabled={pristine || invalid}
           error={error}
           mods={Button.MODS.INVERT}
         />
-        <p className={css.otherActions}>
-          or
-          <Link className={css.loginLink} href='/create-account'>Create a new wallet</Link>
-        </p>
       </div>
     )
   }

@@ -32,6 +32,10 @@ export default class Input extends React.Component {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
     ]),
+    errorMods: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
   }
 
   static TYPES = {
@@ -64,9 +68,10 @@ export default class Input extends React.Component {
   }
 
   render () {
-    const { className, placeholder, type, input, label, meta, disabled, inputMods, lineEnabled, autoComplete, mods } = this.props
+    const { className, placeholder, type, input, label, meta, disabled, inputMods, errorMods, lineEnabled, autoComplete, mods } = this.props
     const classNames = [ css.root ].concat(mods)
     const inputModsArray = [css.input].concat(inputMods)
+    const errorClassNames = [css.error].concat(errorMods)
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
     input.autoComplete = autoComplete ? 'on' : 'off'
@@ -82,7 +87,7 @@ export default class Input extends React.Component {
           {...input}
         />
         { lineEnabled ? <div className={css.line} /> : false }
-        {meta.touched && meta.error && <div className={css.error}><Translate value={meta.error} /></div>}
+        {meta.touched && meta.error && <div className={errorClassNames.join(' ')}><Translate value={meta.error} /></div>}
       </div>
     )
   }

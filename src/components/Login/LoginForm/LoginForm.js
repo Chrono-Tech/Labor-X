@@ -5,7 +5,6 @@ import { Field, reduxForm, SubmissionError } from 'redux-form'
 import { Button, Input, Link, UserRow } from 'components/common'
 import { FieldInputComponent } from 'components/Login'
 import WalletEntryModel from 'models/WalletEntryModel'
-import validate from './validate'
 import Web3 from 'src/network/Web3Provider'
 import {LoginSteps} from 'src/store'
 
@@ -17,6 +16,8 @@ class LoginForm extends React.Component {
   static propTypes = {
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     onChangeStep: PropTypes.func,
+    walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
+    onClickForgotPassword: PropTypes.func,
   }
   
   onSubmit ({ password }) {
@@ -26,7 +27,7 @@ class LoginForm extends React.Component {
     try {
       web3.eth.accounts.wallet.decrypt(selectedWallet.encrypted, password)
     } catch (e) {
-      throw new SubmissionError({ password: e.message })
+      throw new SubmissionError({ password: 'Password does not match' })
     }
 
     return {
@@ -40,7 +41,7 @@ class LoginForm extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, selectedWallet } = this.props
+    const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword} = this.props
 
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -49,6 +50,7 @@ class LoginForm extends React.Component {
           <UserRow
             title={selectedWallet && selectedWallet.name}
             onClick={this.navigateToSelectWallet.bind(this)}
+            hideActionIcon={walletsList.length === 1}
           />
         </div>
         <Field
@@ -59,6 +61,7 @@ class LoginForm extends React.Component {
           autoComplete={false}
           placeholder='Enter Password'
           mods={css.passwordField}
+          errorMods={css.fieldError}
           lineEnabled={false}
         />
         <Button
@@ -72,7 +75,9 @@ class LoginForm extends React.Component {
           mods={Button.MODS.INVERT}
         />
         <div>
-          <Link href='/forgot-password' className={css.forgotPasswordLink}>Forgot your password?</Link>
+          <button onClick={onClickForgotPassword} className={css.forgotPasswordLink}>
+            Forgot your password?
+          </button>
         </div>
       </form>
     )
@@ -80,4 +85,4 @@ class LoginForm extends React.Component {
 }
 
 
-export default reduxForm({ form: FORM_LOGIN, validate })(LoginForm)
+export default reduxForm({ form: FORM_LOGIN })(LoginForm)

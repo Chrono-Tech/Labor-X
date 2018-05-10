@@ -66,7 +66,6 @@ export const createUserAccount = () => (dispatch, getState) => {
     password,
     mnemonic,
     numberOfAccounts: 0,
-    withoutAdd: true,
     types: accountTypes,
   }))
   

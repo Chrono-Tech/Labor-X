@@ -71,6 +71,15 @@ class ConfirmMnemonic extends React.Component {
     )
   }
   
+  clearLastWord(){
+    const { dispatch } = this.props
+  
+    this.setState(
+      { confirmPhrase: this.state.confirmPhrase.slice(0, -1) },
+      () => dispatch(change(FORM_CONFIRM_MNEMONIC, 'mnemonic', this.getCurrentMnemonic()))
+    )
+  }
+  
   render () {
     const { handleSubmit, error, pristine, invalid, mnemonic } = this.props
   
@@ -90,18 +99,16 @@ class ConfirmMnemonic extends React.Component {
               name='mnemonic'
               readOnly={true}
             />
-            { this.getCurrentMnemonic() ? (
-              <span
-                className={css.clearMnemonic}
-                onClick={this.clearMnemonic.bind(this)}>
-                <img src='/static/images/svg/close-white.svg' alt='' />
-              </span>
-            ) : null }
             
           </div>
           
           <div className={css.wordsBlock}>
             { this.getWordsButtons() }
+          </div>
+          
+          <div className={css.controlsBlock}>
+            <div className={css.clearAllButton} onClick={this.clearMnemonic.bind(this)}>Start Over</div>
+            <div className={css.clearLastButton} onClick={this.clearLastWord.bind(this)}>Undo</div>
           </div>
   
           <Button

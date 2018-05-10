@@ -235,22 +235,3 @@
   visibility: visible;
 
 }
-
-
-:global(.slides-enter) {
-  opacity: 0.01;
-}
-
-:global(.slides-enter.slides-enter-active) {
-  opacity: 1;
-  transition: opacity 200ms ease-in;
-}
-
-:global(.slides-leave) {
-  opacity: 1;
-}
-
-:global(.slides-leave.slides-leave-active) {
-  opacity: 0.01;
-  transition: opacity 200ms ease-in;
-}

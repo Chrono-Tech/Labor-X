@@ -53,3 +53,7 @@
     text-decoration: underline;
   }
 }
+
+.actionIconClass {
+  transform: matrix(-1,0,0,-1,0,0);
+}

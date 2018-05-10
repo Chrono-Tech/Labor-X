@@ -15,13 +15,17 @@ export const LoginSteps = {
   SelectLoginMethod: 'selectLoginMethod',
   SelectWallet: 'selectWallet',
   Login: 'login',
+  RecoveryPassword: 'recoveryPassword',
+  RecoveryPasswordReset: 'recoveryPasswordReset',
 }
 
 export const LOGIN_SIGN_IN = 'login/signIn'
 export const LOGIN_SET_SIGN_IN_MODEL = 'login/signInModel'
 export const LOGIN_SIGN_OUT = 'login/signOut'
 export const LOGIN_CHANGE_STEP = 'login/changeStep'
-export const LOGIN_SELECT_WALLET = 'login/selectWallet'
+export const LOGIN_SELECT_WALLET_RECOVERY_FORM = 'login/selectWalletRecoveryForm'
+export const LOGIN_SET_RECOVERY_PASSWORD_MODE = 'login/setRecoveryPasswordMode'
+export const LOGIN_RESET_RECOVERY_PASSWORD_MODE = 'login/resetRecoveryPasswordMode'
 
 export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
@@ -47,7 +51,9 @@ export const createAccount = (walletName, password) => (dispatch, getState) => {
   const signInModel = state.login.signIn
 
   if (signInModel) {
-    dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
+    const wallet = dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
+    
+    dispatch(walletAdd(wallet))
 
     dispatch(changeStep(LoginSteps.SelectWallet))
   } else {
@@ -67,9 +73,29 @@ export const onSubmitPrivateKey = (signInModel) => (dispatch) => {
 
 }
 
-export const onSelectWallet = (wallet) => (dispatch) => {
-  dispatch(walletSelect(wallet))
-  dispatch(changeStep(LoginSteps.Login))
+export const selectWalletRecoveryForm = (wallet) => (dispatch) => {
+  dispatch({ type: LOGIN_SELECT_WALLET_RECOVERY_FORM, wallet })
+}
+
+export const onSelectWallet = (wallet) => (dispatch, getState) => {
+  const state = getState()
+  
+  const {isRecoveryPasswordMode} = state.login
+  
+  if (isRecoveryPasswordMode){
+    
+    dispatch(selectWalletRecoveryForm(wallet))
+    
+    dispatch(changeStep(LoginSteps.RecoveryPassword))
+  
+  
+  } else {
+    
+    dispatch(walletSelect(wallet))
+    
+    dispatch(changeStep(LoginSteps.Login))
+  }
+  
 
 }
 
@@ -83,6 +109,25 @@ export const navigateToSelectWallet = () => (dispatch) => {
 
 export const navigateToSelectLoginMethod = () => (dispatch) => {
   dispatch(changeStep(LoginSteps.SelectLoginMethod))
+}
+
+export const navigateToRecoveryPassword = () => (dispatch, getState) => {
+  const state = getState()
+  
+  const { selectedWallet } = state.wallet
+  
+  dispatch(selectWalletRecoveryForm(selectedWallet))
+  dispatch({ type: LOGIN_SET_RECOVERY_PASSWORD_MODE })
+  dispatch(changeStep(LoginSteps.RecoveryPassword))
+}
+
+export const onSubmitRecoveryAccountForm = () => (dispatch) => {
+  dispatch(changeStep(LoginSteps.RecoveryPasswordReset))
+}
+
+export const onConfirmRecoveryPassword = () => (dispatch) => {
+  dispatch({ type: LOGIN_RESET_RECOVERY_PASSWORD_MODE })
+  Router.push('/dashboard')
 }
 
 export const changeStep = (step) => (dispatch) => {

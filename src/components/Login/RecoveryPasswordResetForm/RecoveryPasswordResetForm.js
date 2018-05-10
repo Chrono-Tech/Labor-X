@@ -6,19 +6,18 @@ import { Button, Input, Link, UserRow } from 'components/common'
 import { FieldInputComponent } from 'components/Login'
 import WalletEntryModel from 'models/WalletEntryModel'
 import {LoginSteps} from 'store'
+import validate from './validate'
 
-import css from './RecoveryAccountForm.scss'
+import css from './RecoveryPasswordResetForm.scss'
 
-const FORM_RECOVERY_PASSWORD = 'form/formRecoveryPassword'
+const FORM_PASSWORD_RESET = 'form/formPasswordReset'
 
-const onSubmit = (values) => {
+const onSubmit = ({ words }) => {
   
-  console.log('words', values)
-
   return {}
 }
 
-class RecoveryAccountForm extends React.Component {
+class RecoveryPasswordResetForm extends React.Component {
   static propTypes = {
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     onChangeStep: PropTypes.func,
@@ -50,52 +49,53 @@ class RecoveryAccountForm extends React.Component {
   render () {
     const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList } = this.props
     const wordsArray = new Array(12).fill()
-    console.log('recovery', this.getWalletAddress(selectedWallet), selectedWallet)
-
+    
     return (
-      <form className={css.root} name={FORM_RECOVERY_PASSWORD} onSubmit={handleSubmit}>
+      <form className={css.root} name={FORM_PASSWORD_RESET} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Recover Account</div>
+        
         <div className={css.userRowWrapper}>
           <UserRow
             title={this.getWalletAddress(selectedWallet)}
-            onClick={this.navigateToSelectWallet.bind(this)}
-            hideActionIcon={walletsList.length === 1}
+            onClick={null}
           />
         </div>
-
-        <div className={css.fieldWrapper}>
-          {
-            wordsArray.map((item, index) =>
-              (<Field
-                key={index}
-                className={css.word}
-                component={Input}
-                name={`word-${index}`}
-                placeholder={`word ${index + 1}`}
-                autoComplete={false}
-                mods={css.wordField}
-                lineEnabled={false}
-              />)
-            )
-          }
-
-        </div>
+  
+        <Field
+          className={css.row}
+          component={Input}
+          name='password'
+          type='password'
+          autoComplete={false}
+          placeholder='New Account Password'
+          mods={css.passwordField}
+          errorMods={css.fieldError}
+          lineEnabled={false}
+        />
+        <Field
+          className={css.row}
+          component={Input}
+          name='passwordConfirm'
+          type='password'
+          autoComplete={false}
+          placeholder='Confirm New Account Password'
+          mods={[css.passwordField, css.passwordConfirmField].join(' ')}
+          errorMods={css.fieldError}
+          lineEnabled={false}
+        />
         <Button
           className={css.row}
           buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
-          label='Proceed'
+          label='Login'
           primary
           disabled={pristine || invalid}
           error={error}
           mods={Button.MODS.INVERT}
         />
-        <p className={css.descriptionBlock}>
-          or <button onClick={this.navigateToLogin.bind(this)} className={css.loginLink}>Login</button>
-        </p>
       </form>
     )
   }
 }
 
-export default reduxForm({ form: FORM_RECOVERY_PASSWORD, onSubmit })(RecoveryAccountForm)
+export default reduxForm({ form: FORM_PASSWORD_RESET, validate, onSubmit })(RecoveryPasswordResetForm)

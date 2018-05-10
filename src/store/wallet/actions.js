@@ -31,7 +31,8 @@ export const walletRemove = (name) => (dispatch) => {
 
 export const decryptWallet = (entry, password) => (dispatch) => {
   let web3 = Web3.getWeb3()
-
+  web3.eth.accounts.wallet.clear()
+  
   let wallet = web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
 
   const model = new WalletModel({
@@ -43,33 +44,53 @@ export const decryptWallet = (entry, password) => (dispatch) => {
 
 }
 
-export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, withoutAdd = false, types = {} }) => (dispatch) => {
+export const validateWalletName = (name) => (dispatch, getState) => {
+  const state = getState()
+  
+  const { walletsList } = state.wallet
+  
+  return !walletsList.find((item) => item.name === name)
+}
+
+export const validateMnemonicForWallet = (wallet, mnemonic) => (dispatch, getState) => {
+  let web3 = Web3.getWeb3()
+  web3.eth.accounts.wallet.clear()
+  
+  const state = getState()
+  
+  
+  let wallet = dispatch(createWallet(mnemonic))
+  
+  console.log('validateMnemonicForWallet', wallet)
+  
+  
+}
+
+export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = {} }) => (dispatch) => {
   let web3 = Web3.getWeb3()
   web3.eth.accounts.wallet.clear()
   let wallet = web3.eth.accounts.wallet.create(numberOfAccounts)
 
   if (privateKey) {
-    const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+    const account = web3.eth.accounts.privateKeyToAccount(`0x${privateKey}`)
+    console.log('address', account && account.address, account)
     wallet.add(account)
   }
 
   if (mnemonic) {
     const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
+    console.log('address', account && account.address, account)
     wallet.add(account)
   }
+  console.log('createWallet', wallet)
   
-  const entry = new WalletEntryModel({
+  return new WalletEntryModel({
     key: uniqid(),
     name,
     types,
     encrypted: wallet.encrypt(password),
   })
   
-  if (!withoutAdd) {
-    dispatch(walletAdd(entry))
-  }
-  
-  return entry
 }
 
 export const logout = () => (dispatch) => {

@@ -1,17 +1,23 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, SubmissionError } from 'redux-form'
 
 import { Button, Input } from 'components/common'
-import { FieldInputComponent } from 'components/Login'
-import {LoginSteps} from 'store'
+import {LoginSteps, validateWalletName} from 'store'
 import validate from './validate'
 
 import css from './CreateAccount.scss'
 
 const FORM_LOGIN = 'form/createAccount'
 
-const onSubmit = ({ walletName, password }) => {
+const onSubmit = ({ walletName, password }, dispatch) => {
+  const validateName = dispatch(validateWalletName(walletName))
+  
+  if (!validateName){
+    throw new SubmissionError({
+      walletName: 'Please enter other wallet name',
+    })
+  }
 
   return {
     walletName,
@@ -47,6 +53,7 @@ class CreateAccount extends React.Component {
           autoComplete={false}
           lineEnabled={false}
           mods={css.passwordField}
+          errorMods={css.fieldError}
         />
         <Field
           className={css.row}

@@ -46,7 +46,6 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 35px;
 }
 
 .word {
@@ -137,4 +136,26 @@
   img {
     width: 100%;
   }
+}
+
+.controlsBlock {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 35px;
+
+  .clearAllButton,
+  .clearLastButton {
+    width: 49%;
+    line-height: 42px;
+    font-size: 14px;
+    border: 1px solid #00A0D2;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      background: #0088C3;
+      color: #fff;
+    }
+  }
+
 }
