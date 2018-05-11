@@ -10,13 +10,13 @@ const schema = {
 }
 
 export default class WalletEntryModel extends AbstractModel {
-  constructor(props) {
+  constructor (props) {
     super(props, schema)
-    
+
     this.key = props.key || ''
     this.name = props.name || ''
     this.types = props.types || {}
     this.encrypted = props.encrypted
-    
+
   }
 }

@@ -1,13 +1,9 @@
-import WalletEntryModel from './WalletEntryModel'
-import WalletModel from './WalletModel'
-import FileModel from './FileModel'
-import LogInModel from './LogInModel'
-import SignInModel from './SignInModel'
-
-export {
-  WalletModel,
-  WalletEntryModel,
-  FileModel,
-  LogInModel,
-  SignInModel
-}
+export WalletEntryModel from './WalletEntryModel'
+export WalletModel from './WalletModel'
+export FileModel from './FileModel'
+export LogInModel from './LogInModel'
+export SignInModel from './SignInModel'
+export TokenModel from './tokens/TokenModel'
+export TokenDAOModel from './tokens/TokenDAOModel'
+export TxExecModel from './txs/TxExecModel'
+export TxEntryModel from './txs/TxEntryModel'

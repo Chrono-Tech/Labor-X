@@ -1,6 +1,4 @@
 import * as a from './actions'
-import {LOGIN_SET_RECOVERY_PASSWORD_MODE} from "./actions";
-import {LOGIN_SELECT_WALLET_RECOVERY_FORM} from "./actions";
 
 const initialState = {
   isSignIn: false,
@@ -43,22 +41,22 @@ export default (state = initialState, action) => {
     case a.LOGIN_SET_RECOVERY_PASSWORD_MODE:
       return {
         ...state,
-        isRecoveryPasswordMode: true
+        isRecoveryPasswordMode: true,
       }
     case a.LOGIN_SET_RECOVERY_FORM_MNEMONIC:
       return {
         ...state,
-        recoveryFormMnemonic: action.mnemonic
+        recoveryFormMnemonic: action.mnemonic,
       }
     case a.LOGIN_RESET_RECOVERY_FORM_MNEMONIC:
       return {
         ...state,
-        recoveryFormMnemonic: ''
+        recoveryFormMnemonic: '',
       }
     case a.LOGIN_RESET_RECOVERY_PASSWORD_MODE:
       return {
         ...state,
-        isRecoveryPasswordMode: false
+        isRecoveryPasswordMode: false,
       }
     default:
       return state
