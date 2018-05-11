@@ -1,0 +1,101 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+  margin-bottom: 20rem;
+}
+
+.title {
+  height: 9rem;
+  margin: 0;
+  padding: 4rem 4rem 0;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.titleBar {
+  @include flex(row, flex-start, stretch);
+  max-width: 70rem;
+  height: 5rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  background-color: $color-azure;
+}
+
+.titleOpportunities {
+  margin-left: 2rem;
+  font-weight: $font-weight-medium;
+}
+
+.content {
+  @include card;
+  margin-left: 4rem;
+  max-width: calc(#{$maxWidth} - 4rem);
+}
+
+.header {
+  position: relative;
+  padding: 3rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom: solid .1rem $color-gray5;
+}
+
+.tabs {
+  @include flex(row, flex-start, stretch);
+  padding: 0 3rem;
+  height: 5rem;
+  border-bottom: solid .1rem $color-azure;
+  margin-bottom: 3rem;
+}
+
+.tab {
+  @include flex(row, center, center);
+  outline-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  color: $color-gray50;
+  padding: .5rem 2rem;
+  font-size: $pSize;
+  font-weight: $font-weight-regular;
+  text-transform: uppercase;
+  &:hover {
+    border-bottom: .5rem solid $color-gray10;
+    padding-bottom: 0;
+  }
+}
+
+.tabActive {
+  color: $color-azure;
+  border-bottom: .5rem solid $color-azure;
+  padding-bottom: 0;
+  font-weight: $font-weight-bold;
+  &:hover {
+    border-bottom: .5rem solid $color-azure;
+  }
+}
+
+.tabContent {
+  min-height: 60rem;
+}
+
+.opportunityAge {
+  position: absolute;
+  font-size: 1.2rem;
+  top: 2rem;
+  right: 3rem;
+}
+
+.backButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.calendarButton {
+  color: $color-white;
+  background-color: $color-blue;
+  margin-left: auto;
+}

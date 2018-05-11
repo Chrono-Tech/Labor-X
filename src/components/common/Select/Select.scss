@@ -1,7 +1,26 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
 .root {
 
 }
 
 .select {
   width: 100%;
+  height: 4rem;
+  outline: none;
+  color: $color-white;
+  appearance: none;
+  border: 0;
+  border-bottom: 1px solid rgba($color-black, .25);
+  background-size: 1rem 1rem;
+  background-image: url('/static/images/svg/drop.svg');
+  background-repeat: no-repeat;
+  background-position: right center;
+  &:hover,
+  &:focus
+  {
+    opacity: 1;
+    border-bottom: 0.1rem solid $color-azure;
+  }
 }

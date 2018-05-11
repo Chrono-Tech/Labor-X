@@ -20,7 +20,7 @@
   border-radius: $buttonHeight / 2;
 
   span {
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-medium;
   }
 
   &:hover {
@@ -88,6 +88,7 @@
   min-width: 0;
 
   .button {
+    outline: none;
     box-shadow: none;
     border-radius: 0;
     padding-left: 1.5rem;
@@ -127,4 +128,8 @@
   animation: spinner 2s linear infinite;
   display: inline-block;
   margin: 0 .5rem;
+}
+
+.icon:not(:only-child) {
+  margin-right: 1rem;
 }

@@ -94,9 +94,13 @@ $gutter: 4rem;
   margin-bottom: 3rem;
 }
 
+.postFee {
+  align-self: center;
+}
+
 .inputSection {
   margin-bottom: 3rem;
-  min-height: 3.8rem;
+  min-height: 4rem;
   &:last-child {
     margin-bottom: 0;
   }
@@ -119,8 +123,11 @@ $gutter: 4rem;
   margin-bottom: 0;
 }
 
-.col {
+.hourlyRatingColumn {
   @include flex(column, flex-start, center);
+  > * {
+    min-width: 30rem;
+  }
 }
 
 .hourlyRating {
@@ -137,5 +144,3 @@ $gutter: 4rem;
 .companyAddress {
   margin-bottom: 4rem;
 }
-
-

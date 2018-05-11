@@ -22,6 +22,32 @@ $maxWidth: 74rem;
 }
 
 .content {
+  margin-bottom: 20rem;
   padding-left: 4rem;
   max-width: $maxWidth;
+}
+
+.date {
+  padding: 4rem 0;
+}
+
+.todoCard {
+  margin-bottom: 3rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.feedback {
+  margin-top: 4rem;
+}
+
+.feedbackTitle {
+  margin-bottom: 1rem;
+}
+
+.feedbackCards {
+  > div {
+    margin-top: 4rem;
+  }
 }

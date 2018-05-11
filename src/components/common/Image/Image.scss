@@ -6,7 +6,6 @@
   color: currentColor;
 }
 
-
 // ------- color ------
 
 .red {
@@ -29,6 +28,10 @@
   color: $color-gray10;
 }
 
+.grey30 {
+  color: $color-gray30;
+}
+
 .black {
   color: $color-black;
 }
@@ -49,6 +52,7 @@
 
 .clickable {
   cursor: pointer;
+  outline: none;
 }
 
 .faded {

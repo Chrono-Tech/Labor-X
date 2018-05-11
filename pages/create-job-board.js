@@ -1,7 +1,7 @@
 import CreateJobBoardContent from 'components/CreateJobBoard/CreateJobBoard'
 import { MainLayout } from 'components/layouts'
 import withRedux from 'next-redux-wrapper'
-import initialStore from 'src/store'
+import initialStore from 'store'
 import React from 'react'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'

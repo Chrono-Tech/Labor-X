@@ -4,7 +4,7 @@ import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
-import initialStore from 'src/store'
+import initialStore from 'store'
 
 class CompletedJobs extends React.Component {
   static getInitialProps ({ store }) {
