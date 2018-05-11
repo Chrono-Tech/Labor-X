@@ -62,8 +62,8 @@ class RecoveryAccountForm extends React.Component {
         <div className={css.userRowWrapper}>
           <UserRow
             title={this.getWalletAddress(selectedWallet)}
-            onClick={walletsList.length === 1 ? null : this.navigateToSelectWallet.bind(this)}
-            hideActionIcon={walletsList.length === 1}
+            onClick={null}
+            hideActionIcon={true}
           />
         </div>
 

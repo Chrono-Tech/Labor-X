@@ -61,11 +61,6 @@ export default class SelectWallet extends React.Component {
     onChangeStep(LoginSteps.SelectLoginMethod)
   }
   
-  navigateToCreateWallet() {
-    const {onChangeStep} = this.props
-    onChangeStep(LoginSteps.CreateWallet)
-  }
-
   render () {
     const { handleSubmit, error, pristine, invalid, walletsList, classes } = this.props
     

@@ -49,8 +49,7 @@ class LoginForm extends React.Component {
         <div className={css.accountWrapper}>
           <UserRow
             title={selectedWallet && selectedWallet.name}
-            onClick={walletsList.length === 1 ? null : this.navigateToSelectWallet.bind(this)}
-            hideActionIcon={walletsList.length === 1}
+            onClick={this.navigateToSelectWallet.bind(this)}
           />
         </div>
         <Field
@@ -64,7 +63,7 @@ class LoginForm extends React.Component {
           errorMods={css.fieldError}
           inputMods={css.passwordFieldInput}
           lineEnabled={false}
-          materialInput={false}
+          materialInput={true}
         />
         <Button
           className={css.row}

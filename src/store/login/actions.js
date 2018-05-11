@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import type SignInModel from 'models/SignInModel'
 import WalletEntryModel from 'models/WalletEntryModel'
-import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
+import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet, generateNameWallet } from 'src/store'
 import { getWalletAddress } from 'src/utils'
 
 export const LoginSteps = {
@@ -18,6 +18,7 @@ export const LoginSteps = {
   Login: 'login',
   RecoveryPassword: 'recoveryPassword',
   RecoveryPasswordReset: 'recoveryPasswordReset',
+  BackupWallet: 'backupWallet',
 }
 
 export const LOGIN_SIGN_IN = 'login/signIn'
@@ -57,8 +58,12 @@ export const createAccount = (walletName, password) => (dispatch, getState) => {
     const wallet = dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
     
     dispatch(walletAdd(wallet))
+    
+    dispatch(walletSelect(wallet))
+    
+    dispatch(navigateToBackupWallet())
 
-    dispatch(changeStep(LoginSteps.SelectWallet))
+    
   } else {
     Router.push('/account-password')
   }
@@ -114,6 +119,10 @@ export const navigateToSelectLoginMethod = () => (dispatch) => {
   dispatch(changeStep(LoginSteps.SelectLoginMethod))
 }
 
+export const navigateToBackupWallet = () => (dispatch) => {
+  dispatch(changeStep(LoginSteps.BackupWallet))
+}
+
 export const navigateToRecoveryPassword = () => (dispatch, getState) => {
   const state = getState()
   
@@ -160,4 +169,21 @@ export const setRecoveryFormMnemonic = (mnemonic) => (dispatch, getState) => {
   
   return dispatch({ type: LOGIN_SET_RECOVERY_FORM_MNEMONIC, mnemonic})
   
+}
+
+export const downloadWallet = () => (dispatch, getState) => {
+  const state = getState()
+  
+  const { selectedWallet } = state.wallet
+  
+  if (selectedWallet) {
+    const text = JSON.stringify(selectedWallet.encrypted.length > 1 ? selectedWallet.encrypted : selectedWallet.encrypted[0])
+    const element = document.createElement('a')
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+    element.setAttribute('download', `Wallet.wlt`)
+    element.style.display = 'none'
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+  }
 }
