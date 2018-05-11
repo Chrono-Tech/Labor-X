@@ -9,6 +9,7 @@ export default class Input extends React.Component {
     type: PropTypes.string,
     className: PropTypes.string,
     placeholder: PropTypes.string,
+    label: PropTypes.string,
     invert: PropTypes.bool,
     disabled: PropTypes.bool,
     lineEnabled: PropTypes.bool,
@@ -43,6 +44,7 @@ export default class Input extends React.Component {
     INVERT: css.invert,
     HUGE: css.huge,
     BOXED: css.boxed,
+    ALIGN_LEFT: css.alignLeft,
   }
 
   static defaultProps = {

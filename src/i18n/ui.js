@@ -120,7 +120,7 @@ export default {
     fixedFee: 'Fixed fee',
     value: 'LHUS 0.00',
   },
-  postJob: {
+  createJob: {
     general: 'General',
     jobBoard: 'Job Board',
     badgesTitle: 'General Board Workers Requirements',

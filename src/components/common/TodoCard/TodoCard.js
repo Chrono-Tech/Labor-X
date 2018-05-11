@@ -59,8 +59,10 @@ export default class TodoCard extends React.Component {
 
   workedTime () {
     const dur = moment.duration(this.props.worked, 'seconds')
-    return this.props.status === STATUSES.PROBLEM ?
-      `${dur.asHours()}h` : `${this.leadZero(dur.asHours().toFixed(0))}:${this.leadZero(Math.trunc(dur.asMinutes() % 60))}:${this.leadZero(Math.trunc(dur.asSeconds() % 60))}`
+    const hours = Math.trunc(dur.asHours())
+    const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
+    const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
+    return this.props.status === STATUSES.PROBLEM ? `${hours}h` : `${hours}:${minutes}:${seconds}`
   }
 
   render () {

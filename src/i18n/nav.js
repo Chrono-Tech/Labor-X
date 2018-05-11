@@ -37,4 +37,6 @@ export default {
   clientProfile: 'Client Profile',
   createJobBoard: 'Create Job Board',
   recruiterJobs: 'Recruiter Jobs',
+  createJob: 'Post a Job',
+  jobTypes: 'Job Types',
 }

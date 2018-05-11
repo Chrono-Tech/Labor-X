@@ -85,7 +85,7 @@ $gutter: 4rem;
 }
 
 .find {
-  width: 6rem;
+  width: 8rem;
   color: $color-gray30;
   margin-right: 2rem;
 }
@@ -104,6 +104,11 @@ $gutter: 4rem;
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.selectSection {
+  margin-bottom: 1rem;
+  min-height: 4rem;
 }
 
 .badgesContainer {

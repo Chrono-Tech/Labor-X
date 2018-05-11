@@ -40,6 +40,7 @@ export default class Image extends React.PureComponent {
     HELP_OUTLINE: 'help_outline',
     SECURITY: 'security',
     MESSAGE: 'message',
+    MESSAGE_ERROR: 'sms_failed',
     PLAY: 'play_arrow',
     PAUSE: 'pause',
   }
