@@ -81,6 +81,12 @@ export default class SelectOption extends React.Component {
               Uport
           </button>
         </div>
+  
+        <div className={css.otherActions}>
+          or
+          <button className={css.backButton} onClick={() => onChangeStep(LoginSteps.SelectWallet)}>back</button>
+        </div>
+        
       </div>
     )
   }
