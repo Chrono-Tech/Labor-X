@@ -66,7 +66,6 @@ export const createUserAccount = () => (dispatch, getState) => {
     password,
     mnemonic,
     numberOfAccounts: 0,
-    withoutAdd: true,
     types: accountTypes,
   }))
   
@@ -103,7 +102,8 @@ export const onFinishCreateAccount = () => (dispatch, getState) => {
   
   dispatch(walletAdd(currentWallet))
   
-  dispatch(navigateToSelectWalletPage())
+  Router.push('/dashboard')
+  
 }
 
 export const navigateToSelectMethod = () => (dispatch) => {

@@ -7,7 +7,7 @@ export default class ParallaxBox extends React.Component {
   static propTypes = {
     imgSrc: PropTypes.string,
     deflectionPercent: PropTypes.number,
-    addClassOnScrollEvent: PropTypes.oneOf([PropTypes.string, PropTypes.array]),
+    addClassOnScrollEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     imageClassName: PropTypes.string,
     className: PropTypes.string,
   }

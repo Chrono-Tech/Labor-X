@@ -45,12 +45,7 @@ class EthereumService {
   }
 
   createAddressFromMnemonic (mnemonic) {
-    if (!this.started) {
-      throw new Error('Ethereum service not started')
-    }
-    const { address } = this.web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
-    this.address = address
-    return address
+    return this.createAddressFromPrivateKey(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
   }
 
   createAddressFromWallet (wallet) {

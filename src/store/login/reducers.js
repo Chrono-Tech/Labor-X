@@ -1,10 +1,14 @@
 import * as a from './actions'
+import {LOGIN_SET_RECOVERY_PASSWORD_MODE} from "./actions";
+import {LOGIN_SELECT_WALLET_RECOVERY_FORM} from "./actions";
 
 const initialState = {
   isSignIn: false,
   signIn: null,
   step: null,
-  selectedWallet: null,
+  selectedWalletRecoveryForm: null,
+  isRecoveryPasswordMode: false,
+  recoveryFormMnemonic: '',
 }
 
 export default (state = initialState, action) => {
@@ -31,10 +35,30 @@ export default (state = initialState, action) => {
         ...state,
         step: action.step,
       }
-    case a.LOGIN_SELECT_WALLET:
+    case a.LOGIN_SELECT_WALLET_RECOVERY_FORM:
       return {
         ...state,
-        selectedWallet: action.wallet,
+        selectedWalletRecoveryForm: action.wallet,
+      }
+    case a.LOGIN_SET_RECOVERY_PASSWORD_MODE:
+      return {
+        ...state,
+        isRecoveryPasswordMode: true
+      }
+    case a.LOGIN_SET_RECOVERY_FORM_MNEMONIC:
+      return {
+        ...state,
+        recoveryFormMnemonic: action.mnemonic
+      }
+    case a.LOGIN_RESET_RECOVERY_FORM_MNEMONIC:
+      return {
+        ...state,
+        recoveryFormMnemonic: ''
+      }
+    case a.LOGIN_RESET_RECOVERY_PASSWORD_MODE:
+      return {
+        ...state,
+        isRecoveryPasswordMode: false
       }
     default:
       return state

@@ -1,7 +1,10 @@
-import { Translate } from 'components/common'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { I18n } from 'react-redux-i18n'
+import TextField from 'material-ui/TextField';
+
+import { Translate } from 'components/common'
+
 import css from './Input.scss'
 
 export default class Input extends React.Component {
@@ -32,6 +35,11 @@ export default class Input extends React.Component {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
     ]),
+    errorMods: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    materialInput: PropTypes.bool,
   }
 
   static TYPES = {
@@ -61,28 +69,62 @@ export default class Input extends React.Component {
     // TODO @dkchv: add normal as default mod
     mods: [],
     lineEnabled: false,
+    materialInput: false,
+  }
+  
+  renderInput(){
+    const defaultInput = (<input
+      className={inputModsArray.join(' ')}
+      placeholder={I18n.t(placeholder)}
+      type={type}
+      disabled={disabled}
+      {...input}
+    />)
+    
+    return (
+      <TextField
+        label={label}
+        placeholder={I18n.t(placeholder)}
+        className={inputModsArray.join(' ')}
+        margin='normal'
+      />
+    )
   }
 
   render () {
-    const { className, placeholder, type, input, label, meta, disabled, inputMods, lineEnabled, autoComplete, mods } = this.props
+    const { className, placeholder, type, input, label, meta, disabled, inputMods, errorMods, lineEnabled, autoComplete, mods, materialInput } = this.props
     const classNames = [ css.root ].concat(mods)
     const inputModsArray = [css.input].concat(inputMods)
+    const errorClassNames = [css.error].concat(errorMods)
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
     input.autoComplete = autoComplete ? 'on' : 'off'
+    
 
     return (
       <div className={classNames.join(' ')}>
-        {label && <div className={css.label}><Translate value={label} /></div>}
-        <input
-          className={inputModsArray.join(' ')}
-          placeholder={I18n.t(placeholder)}
-          type={type}
-          disabled={disabled}
-          {...input}
-        />
+        {label && !materialInput && <div className={css.label}><Translate value={label} /></div>}
+        {
+          materialInput ? (
+            <TextField
+              label={label}
+              placeholder={I18n.t(placeholder)}
+              className={inputModsArray.join(' ')}
+              margin='normal'
+              {...input}
+            />
+          ) : (
+            <input
+              className={inputModsArray.join(' ')}
+              placeholder={I18n.t(placeholder)}
+              type={type}
+              disabled={disabled}
+              {...input}
+            />
+          )
+        }
         { lineEnabled ? <div className={css.line} /> : false }
-        {meta.touched && meta.error && <div className={css.error}><Translate value={meta.error} /></div>}
+        {meta.touched && meta.error && <div className={errorClassNames.join(' ')}><Translate value={meta.error} /></div>}
       </div>
     )
   }

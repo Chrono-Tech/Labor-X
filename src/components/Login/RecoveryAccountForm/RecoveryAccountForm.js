@@ -1,37 +1,71 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import PropTypes from 'prop-types'
+import {Field, reduxForm, change, SubmissionError, submit} from 'redux-form'
 
 import { Button, Input, Link, UserRow } from 'components/common'
 import { FieldInputComponent } from 'components/Login'
-import validate from './validate'
+import WalletEntryModel from 'models/WalletEntryModel'
+import {LoginSteps, validateRecoveryForm} from 'store'
 
 import css from './RecoveryAccountForm.scss'
 
-const FORM_LOGIN = 'form/login'
+const FORM_RECOVERY_PASSWORD = 'form/formRecoveryPassword'
 
-const onSubmit = ({ words }) => {
-
-  return {}
+const onSubmit = (values, dispatch) => {
+  let words = [], mnemonic = ''
+  
+  for (let i = 0; i < 12; i++) {
+    values[`word-${i}`] && words.push(values[`word-${i}`])
+  }
+  
+  mnemonic = words.join(' ')
+  
+  const validForm = dispatch(validateRecoveryForm(mnemonic))
+  
+  if (!validForm) {
+    throw new SubmissionError({ _error: 'Mnemonic incorrect for this wallet' })
+  }
+  
+  return {
+    mnemonic: mnemonic
+  }
 }
 
 class RecoveryAccountForm extends React.Component {
   static propTypes = {
-
+    selectedWallet: PropTypes.instanceOf(WalletEntryModel),
+    onChangeStep: PropTypes.func,
+    walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
-
-  static defaultProps = {
-
+  
+  getWalletAddress(wallet) {
+    return wallet && wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
   }
-
+  
+  navigateToSelectWallet(){
+    const {onChangeStep} = this.props
+    onChangeStep(LoginSteps.SelectWallet)
+  }
+  
+  navigateToLogin(){
+    const {onChangeStep} = this.props
+    onChangeStep(LoginSteps.Login)
+  }
+  
   render () {
-    const { handleSubmit, error, pristine, invalid } = this.props
+    const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList } = this.props
     const wordsArray = new Array(12).fill()
 
     return (
-      <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
+      <form className={css.root} name={FORM_RECOVERY_PASSWORD} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Recover Account</div>
-        <UserRow title='1Q1pE5vPGEEMqRcVRMbtBK842Y6Pzo6nK9' />
+        <div className={css.userRowWrapper}>
+          <UserRow
+            title={this.getWalletAddress(selectedWallet)}
+            onClick={walletsList.length === 1 ? null : this.navigateToSelectWallet.bind(this)}
+            hideActionIcon={walletsList.length === 1}
+          />
+        </div>
 
         <div className={css.fieldWrapper}>
           {
@@ -40,30 +74,41 @@ class RecoveryAccountForm extends React.Component {
                 key={index}
                 className={css.word}
                 component={Input}
-                name={`word ${index}`}
+                name={`word-${index}`}
                 placeholder={`word ${index + 1}`}
                 autoComplete={false}
-                mods={Input.MODS.INVERT}
+                mods={css.wordField}
                 lineEnabled={false}
               />)
             )
           }
 
         </div>
+  
+        <Field
+          type='hidden'
+          component='input'
+          name='mnemonic'
+          autoComplete={false}
+          lineEnabled={false}
+        />
         <Button
-          className={css.row}
+          className={css.submitButtonWrapper}
           buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
           label='Proceed'
           primary
-          disabled={pristine || invalid}
+          disabled={pristine}
           error={error}
           mods={Button.MODS.INVERT}
+          errorClassName={css.formError}
         />
-        <p className={css.descriptionBlock}>or <Link className={css.loginLink} href='/login'>Login</Link></p>
+        <p className={css.descriptionBlock}>
+          or <button onClick={this.navigateToLogin.bind(this)} className={css.loginLink}>Login</button>
+        </p>
       </form>
     )
   }
 }
 
-export default reduxForm({ form: FORM_LOGIN, validate, onSubmit })(RecoveryAccountForm)
+export default reduxForm({ form: FORM_RECOVERY_PASSWORD, onSubmit })(RecoveryAccountForm)

@@ -8,6 +8,10 @@
   justify-content: space-between;
   cursor: pointer;
 
+  &.userBlockSingle {
+    cursor: initial;
+  }
+
   &:hover .userBlockInfo {
     color: #fff;
   }
@@ -32,6 +36,9 @@
       .title {
         font-size: 16px;
         line-height: 22px;
+        min-width: 0;
+        word-break: break-all;
+        padding-right: 20px;
       }
 
       .subtitle {
@@ -55,6 +62,10 @@
     opacity: 0.25;
     cursor: pointer;
     outline: none;
+
+    &.actionListTriggerDisabled {
+      cursor: initial;
+    }
 
     &:hover {
       opacity: 1;

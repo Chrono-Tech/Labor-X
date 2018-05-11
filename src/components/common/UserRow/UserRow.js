@@ -8,22 +8,39 @@ export default class UserRow extends React.Component {
     name: PropTypes.string,
     address: PropTypes.string,
     onClick: PropTypes.func,
+    hideActionIcon: PropTypes.bool,
     actionIcon: PropTypes.string,
+    actionIconClass: PropTypes.string,
   }
 
   static defaultProps = {
-    avatar: '/static/images/profile-photo.jpg',
+    avatar: '/static/images/profile-photo-1.jpg',
     name: '',
     address: '',
     onClick: () => {},
+    hideActionIcon: false,
     actionIcon: '/static/images/svg/list.svg',
+    actionIconClass: '',
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, avatar, title, subtitle, onClick, actionIcon } = this.props
+    const {
+      handleSubmit,
+      error,
+      pristine,
+      invalid,
+      avatar,
+      actionIcon,
+      actionIconClass,
+      hideActionIcon,
+      title,
+      subtitle,
+      onClick,
+    } = this.props
+    const actionIconClasses = [].concat(actionIconClass)
 
     return (
-      <div className={css.userBlock} onClick={onClick}>
+      <div className={[css.userBlock, onClick ? '' : css.userBlockSingle ].join(' ')} onClick={onClick ? onClick : () => {}}>
         <div className={css.userBlockInner}>
           <div className={css.userBlockAvatar}>
             <img className={css.userAvatar} src={avatar} alt='' />
@@ -39,11 +56,13 @@ export default class UserRow extends React.Component {
               </div>) : null}
           </div>
         </div>
-        <div className={css.actionWrapper}>
-          <button className={css.actionListTrigger}>
-            <img src={actionIcon} alt='' />
-          </button>
-        </div>
+        { !hideActionIcon ? (
+          <div className={css.actionWrapper}>
+            <span className={[css.actionListTrigger, onClick ? '' : css.actionListTriggerDisabled].join(' ')}>
+              <img className={actionIconClasses.join(' ')} src={actionIcon} alt='' />
+            </span>
+          </div>
+        ) : null}
       </div>
     )
   }
