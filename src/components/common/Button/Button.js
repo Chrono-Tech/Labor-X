@@ -7,6 +7,7 @@ import css from './Button.scss'
 export default class Button extends React.Component {
   static propTypes = {
     className: PropTypes.string,
+    title: PropTypes.string,
     buttonClassName: PropTypes.string,
     labelClassName: PropTypes.string,
     disabled: PropTypes.bool,
@@ -84,7 +85,7 @@ export default class Button extends React.Component {
     color && classNames.push(css[ color ])
 
     return (
-      <div className={classNames.join(' ')}>
+      <div className={classNames.join(' ')} title={this.props.title}>
         <button
           className={buttonClassNames.join(' ')}
           onClick={this.handleClick}

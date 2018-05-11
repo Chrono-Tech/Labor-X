@@ -1,4 +1,4 @@
-import { Translate } from 'components/common'
+import { Translate, Tab } from 'components/common'
 import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
@@ -52,7 +52,7 @@ export default class RecruiterJobs extends React.Component {
           <div className={css.titleText}><Translate value='nav.jobs' /></div>
           <div className={css.titleStats}>
             <div>
-              <h2>2</h2>
+              <div className={css.reviewCounter}>2</div>
               <div className={css.counterText}>For Review</div>
             </div>
             <div>
@@ -74,6 +74,8 @@ export default class RecruiterJobs extends React.Component {
             {this.state.tabs.map((tab, index) => (
               <Tab
                 key={uniqid()}
+                className={css.tab}
+                classActive={css.tabActive}
                 isActive={this.state.currentTab === index}
                 onClick={this.handleTabClick}
                 title={tab.title}
@@ -85,38 +87,6 @@ export default class RecruiterJobs extends React.Component {
         <div className={css.content}>
           {this.state.tabs[this.state.currentTab].content}
         </div>
-      </div>
-    )
-  }
-}
-
-class Tab extends React.Component {
-  static propTypes = {
-    index: PropTypes.number,
-    title: PropTypes.string,
-    isActive: PropTypes.bool,
-    onClick: PropTypes.func,
-  }
-
-  constructor (...args) {
-    super(...args)
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick () {
-    this.props.onClick(this.props.index)
-  }
-
-  render () {
-    return (
-      <div
-        className={[css.tab, this.props.isActive ? css.tabActive : null].join(' ')}
-        onClick={this.handleClick}
-        onKeyPress={this.handleClick}
-        tabIndex={0}
-        role='button'
-      >
-        <Translate value={this.props.title} />
       </div>
     )
   }

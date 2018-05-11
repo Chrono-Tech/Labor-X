@@ -5,7 +5,7 @@ import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import initialStore from 'src/store'
 
 const RECRUITER_JOBS = {
   expectedRewards: 10,
@@ -15,7 +15,7 @@ const RECRUITER_JOBS = {
       {
         title: 'Get Started at Become Involved',
         icon: '/static/temp/get-started.png',
-        status: JobCard.STATUSES.ERROR,
+        status: JobCard.STATUSES.PROBLEM,
         jobName: 'Install 10 Gas Ovens',
         date: new Date('2017-12-20'),
         award: 10,
@@ -23,7 +23,7 @@ const RECRUITER_JOBS = {
       {
         title: 'Get Started at Become Involved',
         icon: '/static/temp/get-started.png',
-        status: JobCard.STATUSES.PENDING,
+        status: JobCard.STATUSES.APPLIED,
         jobName: 'Install 10 Gas Ovens',
         date: new Date('2017-12-20'),
         award: 10,

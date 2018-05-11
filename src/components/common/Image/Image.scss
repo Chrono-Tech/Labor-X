@@ -6,7 +6,6 @@
   color: currentColor;
 }
 
-
 // ------- color ------
 
 .red {
@@ -53,6 +52,7 @@
 
 .clickable {
   cursor: pointer;
+  outline: none;
 }
 
 .faded {

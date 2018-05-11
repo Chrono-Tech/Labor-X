@@ -3,6 +3,9 @@
   "version": "0.1.1",
   "description": "ChronoBank Labor-x project",
   "private": true,
+  "moduleRoots": [
+    ""
+  ],
   "dependencies": {
     "@chronobank/mint": "github:chronobank/chronomint",
     "bip39": "^2.5.0",

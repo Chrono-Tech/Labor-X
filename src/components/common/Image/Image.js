@@ -5,6 +5,7 @@ import css from './Image.scss'
 export default class Image extends React.PureComponent {
   static propTypes = {
     icon: PropTypes.string,
+    title: PropTypes.string,
     color: PropTypes.string,
     clickable: PropTypes.bool,
     className: PropTypes.string,
@@ -35,6 +36,12 @@ export default class Image extends React.PureComponent {
     FILTER: 'filter_list',
     CALENDAR: 'calendar_today',
     ERROR: 'error',
+    HELP: 'help',
+    HELP_OUTLINE: 'help_outline',
+    SECURITY: 'security',
+    MESSAGE: 'message',
+    PLAY: 'play_arrow',
+    PAUSE: 'pause',
   }
 
   static COLORS = {
@@ -53,23 +60,23 @@ export default class Image extends React.PureComponent {
 
   static SETS = {
     SHIELD_SUCCESS: {
-      icon: 'security', // TODO @dkchv: set actual
+      icon: Image.ICONS.SECURITY, // TODO @dkchv: set actual
       color: Image.COLORS.GREEN,
     },
     SHIELD_ERROR: {
-      icon: 'security', // TODO @dkchv: set actual
+      icon: Image.ICONS.SECURITY, // TODO @dkchv: set actual
       color: Image.COLORS.RED,
     },
     MESSAGE_ERROR: {
-      icon: 'sms_failed', // TODO @dkchv: set actual
+      icon: Image.ICONS.MESSAGE_ERROR, // TODO @dkchv: set actual
       color: Image.COLORS.RED,
     },
     HELP: {
-      icon: 'help', // TODO @dkchv: set actual
+      icon: Image.ICONS.HELP, // TODO @dkchv: set actual
       color: Image.COLORS.BLUE,
     },
     HELP_INVERT: {
-      icon: 'help_outline', // TODO @dkchv: set actual
+      icon: Image.ICONS.HELP_OUTLINE, // TODO @dkchv: set actual
       color: Image.COLORS.WHITE,
     },
     STAR: {
@@ -142,6 +149,7 @@ export default class Image extends React.PureComponent {
 
     return (
       <i
+        title={this.props.title}
         className={classnames.join(' ')}
         onClick={this.handleClick}
         onKeyPress={this.handleClick}
