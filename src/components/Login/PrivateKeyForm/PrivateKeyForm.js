@@ -43,10 +43,12 @@ class PrivateKeyForm extends React.Component {
           component={Input}
           name='key'
           placeholder='Enter private key'
+          label='Enter private key'
           className={css.input}
           autoComplete={false}
           lineEnabled={false}
           mods={css.keyField}
+          materialInput={true}
         />
         <Button
           label='Login'

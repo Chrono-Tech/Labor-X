@@ -109,8 +109,9 @@ export default class Input extends React.Component {
             <TextField
               label={label}
               placeholder={I18n.t(placeholder)}
-              className={inputModsArray.join(' ')}
+              className={[css.materialInput].concat(inputMods).join(' ')}
               margin='normal'
+              InputProps={{className: css.materialInputWrapper }}
               {...input}
             />
           ) : (

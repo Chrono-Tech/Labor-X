@@ -109,3 +109,55 @@
     text-align: left;
   }
 }
+
+.materialInputWrapper {
+  &:before {
+    background-color: #A8EAFF !important;
+    height: 1px !important;
+  }
+
+  &:after {
+    background-color: #fff !important;
+    height: 1px !important;
+  }
+
+  &:hover, &:focus {
+    &:after {
+      background-color: #fff !important;
+    }
+  }
+}
+
+.materialInput {
+  font-size: 16px;
+  line-height: 22px;
+  color: #A8EAFF;
+  border-bottom: 1px solid #A8EAFF;
+  outline: none;
+  width: 100%;
+  label {
+    font-size: 16px;
+    line-height: 22px;
+    color: #A8EAFF !important;
+    font-style: italic;
+    font-weight: 400;
+    left: 0;
+    right:0;
+    transform-origin: top center;
+    //transform: translate(0, 20px) scale(1);
+
+    &[data-shrink=true] {
+      //transform-origin: top center;
+    }
+  }
+  input {
+    text-align: center;
+  }
+
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 400 !important;
+    font-style: italic;
+    color: #fff !important;
+  }
+}

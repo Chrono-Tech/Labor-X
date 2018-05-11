@@ -50,10 +50,12 @@ class CreateAccount extends React.Component {
           component={Input}
           name='walletName'
           placeholder='Wallet name'
+          label='Wallet name'
           autoComplete={false}
           lineEnabled={false}
           mods={css.passwordField}
           errorMods={css.fieldError}
+          materialInput={true}
         />
         <Field
           className={css.row}
@@ -61,9 +63,11 @@ class CreateAccount extends React.Component {
           name='password'
           type='password'
           placeholder='Password'
+          label='Password'
           autoComplete={false}
           lineEnabled={false}
           mods={css.passwordField}
+          materialInput={true}
         />
         <Field
           className={css.row}
@@ -74,6 +78,7 @@ class CreateAccount extends React.Component {
           autoComplete={false}
           lineEnabled={false}
           mods={css.passwordField}
+          materialInput={true}
         />
         <Button
           className={css.row}

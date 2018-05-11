@@ -72,9 +72,11 @@ class RecoveryPasswordResetForm extends React.Component {
           type='password'
           autoComplete={false}
           placeholder='New Account Password'
+          label='New Account Password'
           mods={css.passwordField}
           errorMods={css.fieldError}
           lineEnabled={false}
+          materialInput={true}
         />
         <Field
           className={css.row}
@@ -83,9 +85,12 @@ class RecoveryPasswordResetForm extends React.Component {
           type='password'
           autoComplete={false}
           placeholder='Confirm New Account Password'
+          label='Confirm New Account Password'
           mods={[css.passwordField, css.passwordConfirmField].join(' ')}
           errorMods={css.fieldError}
           lineEnabled={false}
+          materialInput={true}
+
         />
         <Button
           className={css.row}

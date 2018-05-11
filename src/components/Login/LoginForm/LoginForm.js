@@ -58,11 +58,10 @@ class LoginForm extends React.Component {
           name='password'
           type='password'
           placeholder='Enter Password'
+          label='Enter Password'
           autoComplete={false}
           mods={css.passwordField}
           errorMods={css.fieldError}
-          inputMods={css.passwordFieldInput}
-          lineEnabled={false}
           materialInput={true}
         />
         <Button
