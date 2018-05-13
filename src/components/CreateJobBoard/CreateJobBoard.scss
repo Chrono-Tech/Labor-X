@@ -1,16 +1,57 @@
 @import "~styles/globals/variables";
 @import "~styles/globals/mixins";
 
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+}
+
+.title {
+  height: 9rem;
+  margin: 0;
+  padding: 4rem 4rem 0;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.titleBar {
+  @include flex(row, flex-start, stretch);
+  max-width: 70rem;
+  height: 5rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  background-color: $color-azure;
+  border-bottom: 0.1rem solid rgba($color-white, 0.2);
+}
+
+.titleBarRight {
+  @include flex(row, flex-start, stretch);
+  margin-left: auto;
+}
+
 .content {
-  @include flex(column, flex-start, stretch);
-  max-width: 110rem;
-  margin-top: 4rem;
-  margin-left: 4rem;
-  width: 100%;
+  padding-left: 4rem;
+  max-width: $maxWidth;
+}
+
+.cancelButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.helpButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.doneButton {
+  color: $color-white;
+  background-color: $color-azure;
 }
 
 .card {
-  @include flex(row, flex-start, flex-start);
+  @include flex(column, flex-start, flex-start);
   @include card;
   padding: 4rem;
   margin-bottom: 4rem;
@@ -23,17 +64,6 @@
   background-color: $color-azure;
 }
 
-.actions {
-  @include flex(row, space-between, center);
-  padding: 2rem 1.5rem;
-  font-weight: $font-weight-medium;
-  border-bottom: solid .1rem $color-blue53;
-}
-
-.actionIcon {
-  margin-right: 3rem;
-}
-
 .boardHeadline {
   padding: 4rem;
 }
@@ -42,15 +72,7 @@
   @include flex(row, flex-start, flex-end);
 }
 
-.cardDesc {
-  width: 23rem;
-  max-width: 23rem;
-  margin-right: 4rem;
-}
-
-.title {
-  font-weight: $font-weight-medium;
-  font-size: $h4Size;
+.cardTitle {
   margin-bottom: 2rem;
 }
 
@@ -72,20 +94,27 @@
 }
 
 .find {
+  width: 8rem;
   color: $color-gray30;
   margin-right: 2rem;
 }
 
 .match {
   color: $color-gray30;
+  padding-bottom: .9rem;
 }
 
 .noMarginBottom {
   margin-bottom: 0;
 }
 
+.requirementsSelect {
+  margin-top: 3rem;
+}
+
 .feeInputs {
   @include flex(row, space-between, flex-end);
+  margin: 2rem 0;
   > * {
     flex-basis: 45%;
   }
@@ -93,16 +122,21 @@
 
 .feeActions {
   @include flex(row, flex-start, flex-start);
-  margin-top: 10rem;
 }
 
 .feeActionsIcon {
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .cardContent {
   @include flex(column, flex-start, stretch);
   width: 100%;
+}
+
+.delimiter {
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: solid .1rem $color-gray5;
 }
 
 .visuals {
