@@ -38,6 +38,9 @@
   @include flex(row, flex-start, center);
   padding: 0 2rem;
   min-height: 6rem;
+  &:hover {
+    color: $color-azure;
+  }
 }
 
 .progressTimer {
@@ -93,6 +96,7 @@
     padding-left: 3rem;
     background-color: $color-todo2;
     &:hover {
+      color: $color-white;
       background-color: $color-todo2-hover;
     }
   }
