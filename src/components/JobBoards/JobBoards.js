@@ -1,5 +1,6 @@
-import {reduxForm, Field} from 'redux-form'
 import React from 'react'
+import {reduxForm, Field} from 'redux-form'
+import Popover from 'material-ui/Popover'
 
 import { Translate, Input } from 'components/common'
 import JobBoardItem from './JobBoardItem/JobBoardItem'
@@ -43,9 +44,10 @@ class JobBoards extends React.Component {
             </div>
             
             <div className={css.jobBoardsList}>
-              <JobBoardItem/>
-              <JobBoardItem/>
-              <JobBoardItem/>
+              <JobBoardItem status={JobBoardItem.STATUS.DEFAULT} />
+              <JobBoardItem status={JobBoardItem.STATUS.NEED_VERIFY} />
+              <JobBoardItem status={JobBoardItem.STATUS.JOINED} />
+              <JobBoardItem status={JobBoardItem.STATUS.APPROVAL} />
             </div>
             
           </form>
