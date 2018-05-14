@@ -53,14 +53,14 @@ class LoginForm extends React.Component {
           />
         </div>
         <Field
-          className={css.row}
+          className={css.passwordField}
+          inputMods={css.passwordFieldInput}
+          labelMods={css.passwordFieldLabel}
           component={Input}
           name='password'
           type='password'
           placeholder='Enter Password'
           label='Enter Password'
-          autoComplete={false}
-          mods={css.passwordField}
           errorMods={css.fieldError}
           materialInput={true}
         />

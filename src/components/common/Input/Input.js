@@ -1,11 +1,26 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { I18n } from 'react-redux-i18n'
-import TextField from 'material-ui/TextField';
+import TextField from 'material-ui/TextField'
+import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles'
 
 import { Translate } from 'components/common'
 
 import css from './Input.scss'
+
+let WrappedField = (props) => {console.log('props', props);return (
+  <TextField
+    label={props.label}
+    placeholder={I18n.t(props.placeholder)}
+    className={props.classNames}
+    margin='normal'
+    type={props.type}
+    InputProps={{className: props.inputWrapperMods }}
+    inputProps={{className: props.inputMods }}
+    InputLabelProps={{className: props.labelMods }}
+    {...props.input}
+  />
+)}
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -71,48 +86,36 @@ export default class Input extends React.Component {
     lineEnabled: false,
     materialInput: false,
   }
-  
-  renderInput(){
-    const defaultInput = (<input
-      className={inputModsArray.join(' ')}
-      placeholder={I18n.t(placeholder)}
-      type={type}
-      disabled={disabled}
-      {...input}
-    />)
-    
-    return (
-      <TextField
-        label={label}
-        placeholder={I18n.t(placeholder)}
-        className={inputModsArray.join(' ')}
-        margin='normal'
-      />
-    )
-  }
 
   render () {
-    const { className, placeholder, type, input, label, meta, disabled, inputMods, errorMods, lineEnabled, autoComplete, mods, materialInput } = this.props
-    const classNames = [ css.root ].concat(mods)
-    const inputModsArray = [css.input].concat(inputMods)
+    const { className, placeholder, type, input, label, meta, disabled, inputMods, inputWrapperMods, errorMods, lineEnabled, autoComplete,
+      mods, materialInput, labelMods } = this.props
+    const classNames = [ css.root, materialInput ? css.materialInputField : '' ].concat(mods)
+    const inputModsArray = [css.input, materialInput ? css.materialInput : '' ].concat(inputMods)
     const errorClassNames = [css.error].concat(errorMods)
+    const labelClassNames = [css.label].concat(labelMods)
+    
+    const materialInputWrapperArray = [css.materialInputWrapper].concat(inputWrapperMods)
+    
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
     input.autoComplete = autoComplete ? 'on' : 'off'
     
 
     return (
-      <div className={classNames.join(' ')}>
+      <div className={materialInput ? '' : classNames.join(' ')}>
         {label && !materialInput && <div className={css.label}><Translate value={label} /></div>}
         {
           materialInput ? (
-            <TextField
+            <WrappedField
               label={label}
-              placeholder={I18n.t(placeholder)}
-              className={[css.materialInput].concat(inputMods).join(' ')}
-              margin='normal'
-              InputProps={{className: css.materialInputWrapper }}
-              {...input}
+              placeholder={placeholder}
+              classNames={classNames.join(' ')}
+              type={type}
+              inputWrapperMods={ materialInputWrapperArray.join(' ') }
+              inputMods={ inputModsArray.join(' ') }
+              labelMods={ labelClassNames.join(' ') }
+              input={input}
             />
           ) : (
             <input

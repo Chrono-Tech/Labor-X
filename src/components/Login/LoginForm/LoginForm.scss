@@ -120,68 +120,16 @@
   color: #FFE14D;
 }
 
-.passwordFieldInput {
-
-  label {
-    font-size: 16px;
-    line-height: 22px;
-    color: #A8EAFF !important;
-    font-style: italic;
-    font-weight: 400;
-    left: 0;
-    right:0;
-    transform-origin: top center;
-    //transform: translate(0, 20px) scale(1);
-
-    &[data-shrink=true] {
-      //transform-origin: top center;
-    }
-  }
-  input {
-    text-align: center;
-  }
-}
-
 .passwordField {
   margin-top: 0;
-  margin-bottom: 38px;
+  margin-bottom: 38px !important;
+}
 
-  input {
-    font-size: 16px;
-    line-height: 22px;
-    color: #A8EAFF;
-    border-bottom: 1px solid #A8EAFF;
-    outline: none;
-
-    &:hover, &:focus {
-      border-bottom: 1px solid #fff !important;
-      color: #fff !important;
-    }
-
-    &::placeholder {
-      font-size: 16px;
-      font-weight: 400 !important;
-      font-style: italic;
-      color: #fff !important;
-    }
-  }
+.passwordFieldInput {
+  text-align: center;
 
 }
 
-.passwordFieldInputWrapper {
-  &:before {
-    background-color: #A8EAFF !important;
-    height: 1px !important;
-  }
-
-  &:after {
-    background-color: #fff !important;
-    height: 1px !important;
-  }
-
-  &:hover, &:focus {
-    &:after {
-      background-color: #fff !important;
-    }
-  }
+.passwordFieldLabel {
+  transform-origin: top center !important;
 }
