@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import {PersistGate} from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Router from 'next/router'
-import Paper from 'material-ui/Paper';
+import Paper from 'material-ui/Paper'
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from 'material-ui/Dialog';
+} from 'material-ui/Dialog'
 
 import {
   signIn,
@@ -39,7 +39,7 @@ import {
   RecoveryPasswordResetForm,
 } from 'components/Login'
 
-import WalletEntryModel from 'models/WalletEntryModel'
+import { WalletEntryModel } from 'src/models'
 
 import css from './LoginOptions.scss'
 
@@ -66,21 +66,21 @@ class LoginOptions extends React.Component {
 
   constructor (props) {
     super(props)
-    
+
     this.state = {
-      isModalOpen: props.walletsList.length === 0
+      isModalOpen: props.walletsList.length === 0,
     }
   }
-  
-  componentWillMount(){
+
+  componentWillMount () {
     const { selectedWallet, onChangeStep, step } = this.props
-    
+
     if (selectedWallet && !step) {
       onChangeStep(LoginSteps.Login)
     }
   }
-  
-  renderComponent(){
+
+  renderComponent () {
     const {
       onChangeStep,
       step,
@@ -96,9 +96,9 @@ class LoginOptions extends React.Component {
       navigateToRecoveryPassword,
       selectedWalletRecoveryForm,
     } = this.props
-  
+
     let component
-  
+
     switch (step) {
       case LoginSteps.Mnemonic:
         component = (<MnemonicForm onChangeStep={onChangeStep} onSubmitSuccess={onSubmitMnemonic} />)
@@ -149,20 +149,20 @@ class LoginOptions extends React.Component {
       default:
         component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
     }
-    
+
     return [<div key={step} className={css.componentWrapper}>{component}</div>]
   }
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
-  
+
   closeModal(){
     this.setState({ isModalOpen: false })
   }
-  
+
   navigateToCreateAccount(){
     Router.push('/create-account')
   }
-  
+
   renderDialog(){
     return (
       <Dialog classes={{paper: css.dialog}} open={this.state.isModalOpen}>
@@ -176,7 +176,7 @@ class LoginOptions extends React.Component {
               Would you like to Create a New Account?
             </DialogContentText>
           </DialogContent>
-      
+
           <DialogActions className={css.actionWrapper}>
             <Button
               label='No'
@@ -195,7 +195,7 @@ class LoginOptions extends React.Component {
       </Dialog>
     )
   }
-  
+
   render () {
 
     return (
@@ -217,21 +217,21 @@ class LoginOptions extends React.Component {
 }
 
 export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
-  
+
   class WithPersistGate extends React.Component {
-    
+
     static displayName = `withPersistGate(${WrappedComponent.displayName
     || WrappedComponent.name
     || 'Component'})`;
     static contextTypes = {
       store: PropTypes.object.isRequired
     }
-    
+
     constructor(props, context) {
       super(props, context)
       this.store = context.store
     }
-    
+
     render() {
       return (
         <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store.__persistor}>
@@ -239,7 +239,7 @@ export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
         </PersistGate>
       )
     }
-    
+
   }
 
 )

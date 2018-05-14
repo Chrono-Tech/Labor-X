@@ -1,4 +1,6 @@
-export class ETHDAO {
+import EventEmitter from 'events'
+
+export class ETHDAO extends EventEmitter {
   connect (web3) {
     if (this.isConnected) {
       this.disconnect()

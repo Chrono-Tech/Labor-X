@@ -1,9 +1,10 @@
-import { Image, Widget, Translate } from 'components/common'
+import { Image, Widget, Translate } from 'src/components/common'
+import { MyFundsWidget } from 'src/partials'
 
 import React from 'react'
-import css from './Dashboard.scss'
+import css from './DashboardContent.scss'
 
-export default class Dashboard extends React.Component {
+export default class DashboardContent extends React.Component {
   render () {
     return (
       <div className={css.main}>
@@ -11,7 +12,9 @@ export default class Dashboard extends React.Component {
           <div className={css.titleText}><Translate value='nav.dashboard' /></div>
         </div>
         <div className={css.content}>
-
+          <div className={css.block}>
+            <MyFundsWidget />
+          </div>
           <div className={css.block}>
             <Widget
               href='/my-profile'
@@ -287,4 +290,3 @@ export default class Dashboard extends React.Component {
     )
   }
 }
-
