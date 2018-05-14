@@ -4,11 +4,18 @@ import { BigNumber } from 'bignumber.js'
 import { omitBy, isNil } from 'lodash'
 import { TxExecModel, TxEntryModel } from 'src/models'
 
+export const WEB3_UPDATE = 'web3/update'
 export const TX_CREATE = 'tx/create'
 export const TX_STATUS = 'tx/status'
 export const TX_UPDATE = 'tx/update'
 export const TX_REMOVE = 'tx/remove'
 export const NONCE_UPDATE = 'nonce/update'
+
+export const initEthereum = ({ web3 }) => (dispatch) => {
+  // eslint-disable-next-line
+  console.log('Init ethereum')
+  dispatch(WEB3_UPDATE, { web3 })
+}
 
 export const nextNonce = ({ web3, address }) => async (dispatch, getState) => {
   // eslint-disable-next-line no-param-reassign

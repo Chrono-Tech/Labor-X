@@ -1,13 +1,20 @@
 import { omit } from 'lodash'
-import { TxEntryModel, TxExecModel } from 'src/models'
-import { NONCE_UPDATE, TX_STATUS, TX_UPDATE, TX_REMOVE } from './actions'
+import { HolderModel, TxEntryModel, TxExecModel } from 'src/models'
+import { WEB3_UPDATE, NONCE_UPDATE, TX_STATUS, TX_UPDATE, TX_REMOVE } from './actions'
 
-const initialState = {
+const initialState = ({ web3 }) => ({
+  web3: new HolderModel(web3),
   nonces: {},
   pending: {},
-}
+})
 
 const mutations = {
+  [WEB3_UPDATE] (state, { web3 }) {
+    return {
+      ...state,
+      web3: new HolderModel(web3),
+    }
+  },
   [NONCE_UPDATE] (state, { address, nonce }) {
     return {
       ...state,
@@ -68,7 +75,7 @@ const mutations = {
   },
 }
 
-export default (state = initialState, { type, ...other }) => {
+export default ({ web3 }) => (state = initialState({ web3 }), { type, ...other }) => {
   // return [state, other]
   return (type in mutations)
     ? mutations[type](other)

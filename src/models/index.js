@@ -1,3 +1,6 @@
+export { default as HolderModel } from './utils/HolderModel'
+export { default as ContractModel } from './contracts/ContractModel'
+export { default as ContractDAOModel } from './contracts/ContractDAOModel'
 export { default as WalletEntryModel } from './wallets/WalletEntryModel'
 export { default as WalletModel } from './wallets/WalletModel'
 export { default as SignerModel } from './wallets/SignerModel'

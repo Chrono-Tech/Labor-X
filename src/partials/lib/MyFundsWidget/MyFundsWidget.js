@@ -52,9 +52,6 @@ export class MyFundsWidget extends React.Component {
 
 function mapStateToProps (state) {
   const signer = signerSelector()(state)
-  // const wallet = state.wallet.decryptedWallet
-  // eslint-disable-next-line
-  console.log(signer)
   return {
     signer,
   }

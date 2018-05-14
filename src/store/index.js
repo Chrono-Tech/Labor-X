@@ -6,10 +6,16 @@ import { reducer as formReducer } from 'redux-form'
 import { createLogger } from 'redux-logger'
 import * as thunkMiddleware from 'redux-thunk'
 import web3Factory from 'src/web3'
-import { login, landing, wallet, createAccount } from './reducers'
+import { initEthereum } from './ethereum/actions'
+import { initDAOs } from './daos/actions'
+
+import { login, landing, ethereum, daos, wallet, createAccount } from './reducers'
 
 export * from './landing/actions'
 export * from './login/actions'
+export * from './ethereum/actions'
+export * from './daos/actions'
+export * from './daos/selectors'
 export * from './wallet/actions'
 export * from './wallet/selectors'
 export * from './createAccount/actions'
@@ -20,21 +26,22 @@ const loggerMiddleware = createLogger({
   serialize: true,
 })
 
-export default (initialState = {}) => {
+const web3 = typeof window !== 'undefined'
+  ? web3Factory()
+  : null
 
-  const web3 = web3Factory()
+export default (initialState = {}) => {
 
   const reducer = combineReducers({
     form: formReducer,
     i18n: i18nReducer,
     login,
     landing,
+    ethereum: ethereum({ web3 }),
+    daos,
     wallet: wallet({ web3 }),
     createAccount,
   })
-
-  // eslint-disable-next-line
-  console.log('global initialState', initialState)
 
   // Here you can recover state sent from the backend
   const extra = {
@@ -51,10 +58,17 @@ export default (initialState = {}) => {
     )
   )
 
-  // eslint-disable-next-line
-  store.__persistor = persistStore(store)
-
   syncTranslationWithStore(store)
+
+  if (typeof window !== 'undefined') {
+
+    // const web3 = web3Factory()
+    // store.dispatch(initEthereum({ web3 }))
+    store.dispatch(initDAOs({ web3 }))
+
+    // eslint-disable-next-line
+    store.__persistor = persistStore(store)
+  }
 
   return store
 }

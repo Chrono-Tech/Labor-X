@@ -9,6 +9,6 @@ const startI18n = () => (dispatch, getState) => {
   dispatch(setLocale('en'))
 }
 
-export const bootstrap = () => (dispatch) => {
+export const bootstrap = () => async (dispatch) => {
   dispatch(startI18n())
 }
