@@ -5,7 +5,7 @@ import css from './JobTypes.scss'
 
 export default class JobTypes extends React.Component {
   handlePostJob () {
-    Router.push('/post-job')
+    Router.push('/create-job')
   }
 
   handleHireWorker () {

@@ -30,7 +30,7 @@
   outline: none;
 
   &::placeholder {
-    opacity: .75;
+    opacity: .5;
     color: currentColor;
     font-style: italic;
     font-weight: $font-weight-light;
@@ -73,6 +73,7 @@
     text-align: left;
 
     &::placeholder {
+      font-size: $h1Size;
       font-style: normal;
       font-weight: $font-weight-thin;
     }
@@ -80,6 +81,13 @@
 
   .line {
     display: none;
+  }
+}
+
+.alignLeft {
+  .input {
+    padding: 1rem 0;
+    text-align: left;
   }
 }
 
