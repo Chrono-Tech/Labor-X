@@ -139,16 +139,6 @@
   width: 100%;
   background: transparent;
   position: relative;
-  
-  label {
-    font-size: 16px;
-    line-height: 22px;
-    color: #A8EAFF !important;
-    font-style: italic;
-    font-weight: 400;
-    left: 0;
-    right:0;
-  }
 
   &:hover, &:focus {
     color: #fff !important;
@@ -181,4 +171,14 @@
     font-style: italic;
     color: #fff ;
   }
+}
+
+.materialLabel {
+  font-size: 16px !important;
+  line-height: 22px;
+  color: #A8EAFF !important;
+  font-style: italic;
+  font-weight: 400;
+  left: 0;
+  right:0;
 }

@@ -93,7 +93,7 @@ export default class Input extends React.Component {
     const classNames = [ css.root, materialInput ? css.materialInputField : '' ].concat(mods)
     const inputModsArray = [css.input, materialInput ? css.materialInput : '' ].concat(inputMods)
     const errorClassNames = [css.error].concat(errorMods)
-    const labelClassNames = [css.label].concat(labelMods)
+    const labelClassNames = [css.label, materialInput ? css.materialLabel : ''].concat(labelMods)
     
     const materialInputWrapperArray = [css.materialInputWrapper].concat(inputWrapperMods)
     

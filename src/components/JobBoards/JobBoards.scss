@@ -31,22 +31,57 @@ h2 {
   font-weight: 300;
 }
 
-.passwordField {
-  margin-top: 0;
-  margin-bottom: 38px !important;
+.filterButton {
+  background: transparent;
+  border: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  opacity: 0.5;
 }
 
-.passwordFieldInput {
+.searchField {
+  margin-top: 0;
+  margin-bottom: 38px !important;
+  border: 0;
+}
+
+.searchFieldInput {
   text-align: left;
   position: relative;
   color:#333 !important;
+  padding: 5px 0 8px;
+  border-bottom: 1px solid #333;
 
   &:hover, &:focus {
+    color:#333 !important;
+    border-bottom: 1px solid #ccc;
+  }
+
+  &::placeholder {
     color:#333 !important;
   }
 
 }
 
-.passwordFieldLabel {
+.searchFieldLabel {
   transform-origin: top left !important;
+  color:#333 !important;
+
+}
+.searchFieldWrapper {
+  &:before {
+    background-color: #333 !important;
+    height: 1px !important;
+  }
+
+  &:after {
+    background-color: #333 !important;
+    height: 1px !important;
+  }
+
+  &:hover, &:focus {
+    &:after {
+      background-color: #ccc !important;
+    }
+  }
 }
