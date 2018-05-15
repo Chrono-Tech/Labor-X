@@ -1,8 +1,8 @@
 import { Image, Input, Chip, Badge, Checkbox, Translate, NumberInput, Calendar, Button } from 'components/common'
 import { Field, reduxForm } from 'redux-form'
 import React from 'react'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import MenuItem from 'material-ui/Menu'
+import { MuiThemeProvider } from 'material-ui/styles'
+import { MenuItem } from 'material-ui/Menu'
 import { SelectField } from 'redux-form-material-ui'
 import validate from './validate'
 import css from './CreateJob.scss'
@@ -13,9 +13,6 @@ const onSubmit = (values) => {
   // eslint-disable-next-line no-console
   console.log('--CreateJobForm#onSubmit', values)
 }
-
-// TODO @ipavlenko: Customize and move out
-const theme = createMuiTheme({})
 
 class CreateJob extends React.Component {
   state = {
@@ -30,7 +27,7 @@ class CreateJob extends React.Component {
 
   render () {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider>
         <div className={css.main}>
           <div className={css.title}>
             <div className={css.titleBar}>
@@ -102,7 +99,6 @@ class CreateJob extends React.Component {
               />
             </div>
 
-            {/*
             <div className={[css.card, css.noMarginBottom].join(' ')}>
               <h3 className={css.cardTitle}><Translate value='ui.createJob.jobBoard' /></h3>
               <div className={css.twoColumn}>
@@ -270,7 +266,6 @@ class CreateJob extends React.Component {
                 </div>
               </div>
             </div>
-            */}
 
             <div className={css.card}>
               <h3 className={css.cardTitle}><Translate value='ui.createJob.categories' /></h3>

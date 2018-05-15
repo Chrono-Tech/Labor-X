@@ -1,5 +1,5 @@
 import React from 'react'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import { MuiThemeProvider } from 'material-ui/styles'
 import withRedux from 'next-redux-wrapper'
 import Head from 'next/head'
 
@@ -10,9 +10,6 @@ import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import ethereumService from 'src/services/EthereumService'
 import css from './index.scss'
-
-// TODO @ipavlenko: Customize and move out
-const theme = createMuiTheme({})
 
 class Index extends React.Component {
   static getInitialProps ({ store }) {
@@ -25,7 +22,7 @@ class Index extends React.Component {
 
   render () {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider>
         <div className={css.root}>
           <Head>
             <title>LaborX</title>

@@ -1,8 +1,8 @@
 import { Image, Chip, Input, Button } from 'components/common'
 import { Field, reduxForm } from 'redux-form'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import MenuItem from 'material-ui/Menu'
-import { Select } from 'redux-form-material-ui'
+import { MuiThemeProvider } from 'material-ui/styles'
+import { MenuItem } from 'material-ui/Menu'
+import { SelectField } from 'redux-form-material-ui'
 import React from 'react'
 import css from './CreateJobBoard.scss'
 
@@ -12,9 +12,6 @@ const onSubmit = (values) => {
   // eslint-disable-next-line no-console
   console.log('--CreateJobBoardForm#onSubmit', values)
 }
-
-// TODO @ipavlenko: Customize and move out
-const theme = createMuiTheme({})
 
 class CreateJobBoard extends React.Component {
   state = {
@@ -27,7 +24,7 @@ class CreateJobBoard extends React.Component {
 
   render () {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider>
         <div className={css.main}>
           <div className={css.title}>
             <div className={css.titleBar}>
@@ -84,7 +81,7 @@ class CreateJobBoard extends React.Component {
               <h3 className={css.cardTitle}>Join requirements</h3>
               <div className={css.subtitle}>Specify which requirements should be met in order to join the board.</div>
               <Field
-                component={Select}
+                component={SelectField}
                 className={css.requirementsSelect}
                 value={this.state.requirementsValue}
                 onChange={this.handleChangeRequirements}
@@ -108,11 +105,11 @@ class CreateJobBoard extends React.Component {
               <div className={css.cardContent}>
                 <div className={css.feeInputs}>
                   <Field
-                    component={Select}
+                    component={SelectField}
                     value={this.state.feeValue}
                     onChange={this.handleChangeFee}
-                    // hintText='Fixed Fee'
-                    // hintStyle={{ 'font-style': 'italic' }}
+                    hintText='Fixed Fee'
+                    hintStyle={{ 'font-style': 'italic' }}
                     name='fee'
                   >
                     <MenuItem value={1} primaryText='Option 1' />
