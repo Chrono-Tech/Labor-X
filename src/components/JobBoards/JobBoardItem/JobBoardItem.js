@@ -144,15 +144,20 @@ export default class JobBoardItem extends React.Component {
   
   renderApprovalActions(){
     const { actionPopover } = this.state
-    
-    const popover = (<Popover open={actionPopover} onClose={this.handleActionsPopoverClose.bind(this)} >
-      <div>asdf</div>
-    </Popover>)
+  
+    const popoverContent = (
+      <div>
+        <div className={css.popoverHeader}>Your Request is processing</div>
+        <div className={css.popoverDescription}>
+          You have requested to join the board. Moderators  of the board are reviewing your request and will back to you soon!
+        </div>
+      </div>
+    )
   
     return (
       <div className={css.actionButtonApproval}>
         On Approval
-        { this.renderActionsTooltip({ src: '/static/images/svg/help-clean.svg', popover: popover }) }
+        { this.renderActionsTooltip({ src: '/static/images/svg/help-clean.svg', popoverContent, popoverClassName: css.approvalPopover }) }
       </div>
     )
   }
