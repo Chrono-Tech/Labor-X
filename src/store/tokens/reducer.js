@@ -1,26 +1,28 @@
-// import storage from 'redux-persist/lib/storage'
-//
-// export const initialState = {
-//   tokens: {},
-//   tokenDAOs: {}
-// }
-//
-// export default ({ web3 }) => {
-//   const persistConfig = {
-//     key: 'tokens',
-//     storage: storage,
-//     transforms: typeof window === 'undefined'
-//       ? []
-//       : [ decryptedWalletTransform({ web3 }) ],
-//   }
-//
-//   const wallet = (state = initialState, action) => {
-//     switch (action.type) {
-//       case a.WALLETS_ADD :
-//         return {
-//           ...state,
-//           walletsList: [
-//             ...state.walletsList,
-//             action.wallet,
-//           ],
-//         }
+import { TOKENS_REGISTER } from './actions'
+
+export const initialState = {
+  byKey: {},
+  byAddress: {},
+}
+
+const mutations = {
+  [TOKENS_REGISTER] (state, { model }) {
+    return {
+      ...state,
+      byKey: {
+        ...state.byKey,
+        [model.token.key]: model,
+      },
+      byAddress: {
+        ...state.byAddress,
+        [model.token.address]: model,
+      },
+    }
+  },
+}
+
+export default (state = initialState, { type, ...other }) => {
+  return (type in mutations)
+    ? mutations[type](state, other)
+    : state
+}

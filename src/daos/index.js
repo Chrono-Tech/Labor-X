@@ -2,6 +2,7 @@ import { ContractModel } from 'src/models'
 
 import CONTRACTS_MANAGER_ABI from 'laborx-sc-abi/build/contracts/ContractsManager.json'
 import ERC20_LIBRARY_ABI from 'laborx-sc-abi/build/contracts/ERC20Library.json'
+import ERC20_INTERFACE_ABI from 'laborx-sc-abi/build/contracts/ERC20Interface.json'
 import JOB_CONTROLLER_ABI from 'laborx-sc-abi/build/contracts/JobController.json'
 import BOARD_CONTROLLER_ABI from 'laborx-sc-abi/build/contracts/BoardController.json'
 
@@ -9,6 +10,7 @@ import ContractsManagerDAO from './lib/ContractsManagerDAO'
 import ERC20LibraryDAO from './lib/ERC20LibraryDAO'
 import JobControllerDAO from './lib/JobControllerDAO'
 import BoardControllerDAO from './lib/BoardControllerDAO'
+import ERC20TokenDAO from './lib/ERC20TokenDAO'
 
 export { default as ethDAO } from './lib/ETHDAO'
 export { default as AbstractContractDAO } from './lib/AbstractContractDAO'
@@ -43,6 +45,12 @@ export const BOARD_CONTROLLER = new ContractModel({
   type: "BoardController",
   abi: BOARD_CONTROLLER_ABI,
   DAOClass: BoardControllerDAO,
+})
+
+export const ERC20_INTERFACE = new ContractModel({
+  type: 'ERC20Interface',
+  abi: ERC20_INTERFACE_ABI,
+  DAOClass: ERC20TokenDAO,
 })
 
 // export const MULTI_EVENTS_HISTORY = "MultiEventsHistory"

@@ -1,6 +1,7 @@
 export { default as login } from './login/reducers'
 export { default as landing } from './landing/reducers'
 export { default as daos } from './daos/reducer'
+export { default as tokens } from './tokens/reducer'
 export { default as ethereum } from './ethereum/reducer'
 export { default as wallet } from './wallet/reducers'
 export { default as createAccount } from './createAccount/reducers'

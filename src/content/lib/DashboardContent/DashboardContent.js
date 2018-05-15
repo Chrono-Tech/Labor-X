@@ -1,12 +1,21 @@
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Image, Widget, Translate } from 'src/components/common'
 import { MyFundsWidget } from 'src/partials'
+import { SignerModel } from 'src/models'
+import { signerSelector } from 'src/store'
 
 import React from 'react'
 import css from './DashboardContent.scss'
 
-export default class DashboardContent extends React.Component {
+export class DashboardContent extends React.Component {
+  static propTypes = {
+    signer: PropTypes.instanceOf(SignerModel),
+  }
+
   render () {
-    return (
+    const { signer } = this.props
+    return signer == null ? null : (
       <div className={css.main}>
         <div className={css.title}>
           <div className={css.titleText}><Translate value='nav.dashboard' /></div>
@@ -290,3 +299,18 @@ export default class DashboardContent extends React.Component {
     )
   }
 }
+
+function mapStateToProps (state) {
+  const signer = signerSelector()(state)
+  return {
+    signer,
+  }
+}
+
+function mapDispatchToProps (/*dispatch*/) {
+  return {
+    // stack: state.modals.stack,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardContent)

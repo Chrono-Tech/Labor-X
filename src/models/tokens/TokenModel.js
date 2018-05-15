@@ -3,10 +3,10 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   key: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  symbol: PropTypes.string.isRequired,
-  // address: PropTypes.string.isRequired,
-  decimals: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  symbol: PropTypes.string,
+  address: PropTypes.string.isRequired,
+  decimals: PropTypes.number,
 })
 
 export default class TokenModel extends AbstractModel {

@@ -32,6 +32,7 @@ export const initDAOs = ({ web3 }) => async (dispatch) => {
       async contract => {
         const address = await contractManagerDAO.getContractAddressByType(contract.type)
         const dao = contract.create(address)
+        dao.connect(web3)
         return new ContractDAOModel({
           contract,
           address,

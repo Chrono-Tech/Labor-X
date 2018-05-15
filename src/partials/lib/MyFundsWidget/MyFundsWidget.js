@@ -15,32 +15,8 @@ export class MyFundsWidget extends React.Component {
     const { signer } = this.props
     return signer && (
       <Widget
-        href='/my-profile'
-        title='ui.dashboard.general.completeYourProfile'
-        subtitle='ui.dashboard.general.general'
-        actions={[
-          {
-            href: '/general-profile',
-            label: 'nav.generalProfile',
-            isLink: true,
-            secondIcon: Image.SETS.MESSAGE_ERROR,
-          },
-          {
-            href: '/recruiter-profile',
-            label: 'nav.recruiterProfile',
-            isLink: true,
-          },
-          {
-            href: '/worker-profile',
-            label: 'nav.workerProfile',
-            isLink: true,
-          },
-          {
-            href: '/client-profile',
-            label: 'nav.clientProfile',
-            isLink: true,
-          },
-        ]}
+        title='My Funds'
+        subtitle='Account'
       >
         <div className={css.main}>
           {signer.address}

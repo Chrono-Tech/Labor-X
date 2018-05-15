@@ -10,8 +10,9 @@ export default class AbstractTokenDAO extends EventEmitter {
   }
 
   // eslint-disable-next-line no-unused-vars
-  connect (web3, options) {
+  async connect (web3, options): Promise<TokenModel> {
     // do nothing in basic implementation
+    return this.token
   }
 
   disconnect () {

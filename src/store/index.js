@@ -6,19 +6,12 @@ import { reducer as formReducer } from 'redux-form'
 import { createLogger } from 'redux-logger'
 import * as thunkMiddleware from 'redux-thunk'
 import web3Factory from 'src/web3'
-import { initEthereum } from './ethereum/actions'
 import { initDAOs } from './daos/actions'
+import { initTokens } from './tokens/actions'
 
-import { login, landing, ethereum, daos, wallet, createAccount } from './reducers'
+import { login, landing, ethereum, daos, tokens, wallet, createAccount } from './reducers'
 
-export * from './landing/actions'
-export * from './login/actions'
-export * from './ethereum/actions'
-export * from './daos/actions'
-export * from './daos/selectors'
-export * from './wallet/actions'
-export * from './wallet/selectors'
-export * from './createAccount/actions'
+export * from './actions'
 
 const loggerMiddleware = createLogger({
   level:      'info',
@@ -39,6 +32,7 @@ export default (initialState = {}) => {
     landing,
     ethereum: ethereum({ web3 }),
     daos,
+    tokens,
     wallet: wallet({ web3 }),
     createAccount,
   })
@@ -64,7 +58,11 @@ export default (initialState = {}) => {
 
     // const web3 = web3Factory()
     // store.dispatch(initEthereum({ web3 }))
-    store.dispatch(initDAOs({ web3 }))
+    store.dispatch(initDAOs({ web3 })).then(
+      () => {
+        store.dispatch(initTokens({ web3 }))
+      }
+    )
 
     // eslint-disable-next-line
     store.__persistor = persistStore(store)

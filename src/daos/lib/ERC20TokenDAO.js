@@ -2,19 +2,38 @@ import BigNumber from 'bignumber.js'
 import { TokenModel } from 'src/models'
 import AbstractTokenDAO from './AbstractTokenDAO'
 
-export default class EIP20TokenDAO extends AbstractTokenDAO {
+export default class ERC20TokenDAO extends AbstractTokenDAO {
   constructor (token: TokenModel, abi) {
     super(token)
     this.abi = abi
   }
 
-  connect (web3, options) {
+  async connect (web3, options) : Promise<TokenModel> {
     if (this.isConnected) {
       this.disconnect()
     }
     // eslint-disable-next-line no-console
-    console.log('[EIP20TokenDAO] Connect')
-    this.contract = new web3.eth.Contract(this.abi.value.abi, this.token.address, options)
+    console.log('[ERC20TokenDAO] Connect')
+    this.contract = new web3.eth.Contract(this.abi.abi, this.token.address, options)
+
+    const [
+      name,
+      symbol,
+      decimals,
+    ] = await Promise.all([
+      this.getName(),
+      this.getSymbol(),
+      this.getDecimals(),
+    ])
+
+    this.token = new TokenModel({
+      key: this.token.key,
+      name,
+      address: this.token.address,
+      symbol,
+      decimals,
+    })
+
     this.transferEmitter = this.contract.events.Transfer({})
       .on('data', this.handleTransferData.bind(this))
       .on('changed', this.handleTransferChanged.bind(this))
@@ -23,6 +42,8 @@ export default class EIP20TokenDAO extends AbstractTokenDAO {
       .on('data', this.handleApprovalData.bind(this))
       .on('changed', this.handleApprovalChanged.bind(this))
       .on('error', this.handleApprovalError.bind(this))
+
+    return this.token
   }
 
   disconnect () {
@@ -32,6 +53,39 @@ export default class EIP20TokenDAO extends AbstractTokenDAO {
       this.transferEmitter = null
       this.approvalEmitter = null
       this.contract = null
+    }
+  }
+
+  async getName (): Promise<String> {
+    // TODO @ipavlenko: Remove fallback
+    try {
+      return await this.contract.methods.symbol().call()
+    } catch (e) {
+      // eslint-disable-next-line
+      console.log(e)
+      return "Fake Coin"
+    }
+  }
+
+  async getSymbol (): Promise<String> {
+    // TODO @ipavlenko: Remove fallback
+    try {
+      return await this.contract.methods.symbol().call()
+    } catch (e) {
+      // eslint-disable-next-line
+      console.log(e)
+      return "FAKE"
+    }
+  }
+
+  async getDecimals (): Promise<Number> {
+    // TODO @ipavlenko: Remove fallback
+    try {
+      return new Number(await this.contract.methods.decimals().call())
+    } catch (e) {
+      // eslint-disable-next-line
+      console.log(e)
+      return 10
     }
   }
 
@@ -88,7 +142,7 @@ export default class EIP20TokenDAO extends AbstractTokenDAO {
 
   handleTransferData (data) {
     // eslint-disable-next-line no-console
-    console.log('[EIP20TokenDAO] Transfer occurred', data)
+    console.log('[ERC20TokenDAO] Transfer occurred', data)
     const { returnValues } = data
     setImmediate(() => {
       this.emit('transfer', {
@@ -106,17 +160,17 @@ export default class EIP20TokenDAO extends AbstractTokenDAO {
 
   handleTransferChanged (event) {
     // eslint-disable-next-line no-console
-    console.warning('[EIP20TokenDAO] Transfer event changed', event)
+    console.warning('[ERC20TokenDAO] Transfer event changed', event)
   }
 
   handleTransferError (error) {
     // eslint-disable-next-line no-console
-    console.error('[EIP20TokenDAO] Error in Transfer event subscription', error)
+    console.error('[ERC20TokenDAO] Error in Transfer event subscription', error)
   }
 
   handleApprovalData (data) {
     // eslint-disable-next-line no-console
-    console.log('[EIP20TokenDAO] Approve occurred', data)
+    console.log('[ERC20TokenDAO] Approve occurred', data)
     const { returnValues } = data
     setImmediate(() => {
       this.emit('approval', {
@@ -134,11 +188,11 @@ export default class EIP20TokenDAO extends AbstractTokenDAO {
 
   handleApprovalChanged (event) {
     // eslint-disable-next-line no-console
-    console.warning('[EIP20TokenDAO] Approval event changed', event)
+    console.warning('[ERC20TokenDAO] Approval event changed', event)
   }
 
   handleApprovalError (error) {
     // eslint-disable-next-line no-console
-    console.error('[EIP20TokenDAO] Error in Approval event subscription', error)
+    console.error('[ERC20TokenDAO] Error in Approval event subscription', error)
   }
 }
