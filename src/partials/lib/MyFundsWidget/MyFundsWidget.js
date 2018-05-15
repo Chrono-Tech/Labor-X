@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Widget, Image } from 'src/components/common'
+import { Widget } from 'src/components/common'
 import { SignerModel } from 'src/models'
 import { signerSelector } from 'src/store'
 import css from './MyFundsWidget.scss'

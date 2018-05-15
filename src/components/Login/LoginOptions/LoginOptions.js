@@ -223,16 +223,17 @@ export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
     static displayName = `withPersistGate(${WrappedComponent.displayName
     || WrappedComponent.name
     || 'Component'})`;
+
     static contextTypes = {
       store: PropTypes.object.isRequired
     }
 
-    constructor(props, context) {
+    constructor (props, context) {
       super(props, context)
       this.store = context.store
     }
 
-    render() {
+    render () {
       return (
         <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store.__persistor}>
           <WrappedComponent {...this.props} />

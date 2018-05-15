@@ -1,9 +1,17 @@
-import { Link, Tip } from 'components/common'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Link, Tip } from 'components/common'
+import { connect } from 'react-redux'
+import { logout } from 'src/store'
 import FirstMenu from '../FirstMenu/FirstMenu'
 import css from './Header.scss'
 
-export default class Header extends React.Component {
+export class Header extends React.Component {
+
+  static propTypes = {
+    handleLogout: PropTypes.func.isRequired,
+  }
+
   render () {
     const prefix = this.constructor.name
 
@@ -19,6 +27,7 @@ export default class Header extends React.Component {
           <nav className={css.actions}>
             <Link href='/job-types' className={css.actionItem} label='nav.newJob' />
             <Link href='/create-job-board' className={css.actionItem} label='nav.newBoard' />
+            <a className={css.actionItem} onClick={() => this.props.handleLogout()}>Log out</a>
           </nav>
           <div className={css.points}>
             <Tip
@@ -41,3 +50,20 @@ export default class Header extends React.Component {
     )
   }
 }
+
+function mapStateToProps (/*state*/) {
+  // const signer = signerSelector()(state)
+  return {
+    // signer,
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    handleLogout: () => {
+      dispatch(logout())
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

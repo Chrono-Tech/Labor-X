@@ -116,11 +116,12 @@ export default {
     },
   },
   createJobBoard: {
+    jobBoardHeadlinePlaceholder: 'Enter Job Board Headline',
     matchJobBoardCategories: 'Match job board categories',
     fixedFee: 'Fixed fee',
     value: 'LHUS 0.00',
   },
-  postJob: {
+  createJob: {
     general: 'General',
     jobBoard: 'Job Board',
     badgesTitle: 'General Board Workers Requirements',

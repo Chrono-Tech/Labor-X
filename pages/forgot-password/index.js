@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 
 import initialStore from 'store'
-import { bootstrap } from 'store/bootstrap'
 import { LoginActions } from 'components/layouts'
 import { RecoveryAccountForm } from 'components/Login'
-import WalletEntryModel from 'models/WalletEntryModel'
+import { WalletEntryModel } from 'src/models'
 
 import 'styles/globals/globals.scss'
 import css from './index.scss'
@@ -17,9 +16,7 @@ class ForgotPassword extends React.Component {
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
   }
-  
-  
-  
+
   render () {
     return (
       <div className={css.root}>

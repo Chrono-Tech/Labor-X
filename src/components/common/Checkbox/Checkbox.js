@@ -38,7 +38,7 @@ export default class Checkbox extends React.Component {
         <Image className={css.icon} icon={Image.ICONS.CHECKBOX_OFF} />
         {label && <div className={css.label}><Translate value={label} /></div>}
 
-        <checkbox className={css.checkbox} />
+        <input type='checkbox' className={css.checkbox} />
       </div>
     )
   }

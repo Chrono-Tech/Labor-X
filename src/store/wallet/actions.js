@@ -120,4 +120,5 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
 
 export const logout = () => (dispatch) => {
   dispatch(walletSelect(null))
+  dispatch(walletLoad(null))
 }

@@ -8,14 +8,16 @@ export const initBoards = () => async (dispatch, getState) => {
   const state = getState()
   const boardControlerDAO = daoByType('BoardController')(state)
   const signer = signerSelector()(state)
-  const boards = await boardControlerDAO.getBoards(signer.address)
   dispatch({
     type: BOARDS_CLEAR,
   })
-  for (const board of boards) {
-    dispatch({
-      type: BOARDS_SAVE,
-      board,
-    })
+  if (signer) {
+    const boards = await boardControlerDAO.getBoards(signer.address)
+    for (const board of boards) {
+      dispatch({
+        type: BOARDS_SAVE,
+        board,
+      })
+    }
   }
 }
