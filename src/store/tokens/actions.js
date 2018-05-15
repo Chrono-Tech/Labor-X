@@ -7,7 +7,7 @@ export const TOKENS_REGISTER = 'tokens/register'
 
 export const initTokens = ({ web3 }) => async (dispatch, getState) => {
 
-  const erc20LibrayDAO = daoByType('ERC20Library')(getState()).dao
+  const erc20LibrayDAO = daoByType('ERC20Library')(getState())
 
   const contracts = await erc20LibrayDAO.getContracts()
 
