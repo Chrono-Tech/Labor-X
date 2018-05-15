@@ -2,64 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {reduxForm, Field} from 'redux-form'
 
-import { Translate, Input } from 'components/common'
+import { Translate, Input, Popover } from 'components/common'
 import css from './JobBoardItem.scss'
-
-class Popover extends React.Component {
-  static ARROW_POSITION = {
-    LEFT: 'left',
-    CENTER: 'center',
-    RIGHT: 'right',
-  }
-  
-  static propTypes = {
-    arrowPosition: PropTypes.oneOf([
-      Popover.ARROW_POSITION.LEFT,
-      Popover.ARROW_POSITION.CENTER,
-      Popover.ARROW_POSITION.RIGHT,
-    ]),
-    open: PropTypes.bool,
-    className: PropTypes.string,
-  }
-  
-  static defaultProps = {
-    arrowPosition: Popover.ARROW_POSITION.LEFT,
-    open: false,
-    className: '',
-  }
-  
-  render(){
-    const { children, arrowPosition, open, className, ...props } = this.props
-    
-    let arrowPositionStyle
-    
-    switch (arrowPosition) {
-      case Popover.ARROW_POSITION.LEFT:
-        arrowPositionStyle = css.arrowLeft
-        break
-      
-      case Popover.ARROW_POSITION.CENTER:
-        arrowPositionStyle = css.arrowCenter
-        break
-      
-      case Popover.ARROW_POSITION.RIGHT:
-        arrowPositionStyle = css.arrowRight
-        break
-      
-      default:
-        arrowPositionStyle = css.arrowLeft
-    }
-    
-    let styles = [css.popover, open ? css.popoverVisible : '', arrowPositionStyle, className]
-    
-    
-    return(
-      <div className={styles.join(' ')} {...props}>
-        { children }
-      </div>
-    )
-  }
-}
 
 export default class JobBoardItem extends React.Component {
   static STATUS = {
@@ -86,10 +30,9 @@ export default class JobBoardItem extends React.Component {
     super()
     
     this.state = {
-      starsPopover: null,
-      securityPopover: null,
-      actionPopover: null,
-      popperOpen: false,
+      starsPopover: false,
+      securityPopover: false,
+      actionPopover: false,
     }
   }
   
@@ -108,7 +51,7 @@ export default class JobBoardItem extends React.Component {
     return starsArray
   }
   
-  renderActionsTooltip({src, popoverContent}){
+  renderActionsTooltip({src, popoverContent, popoverClassName = ''}){
     const { actionPopover } = this.state
     
     return (
@@ -118,6 +61,7 @@ export default class JobBoardItem extends React.Component {
           <Popover
             open={actionPopover}
             arrowPosition={Popover.ARROW_POSITION.RIGHT}
+            className={popoverClassName}
           >
             { popoverContent }
           </Popover>)
@@ -132,11 +76,17 @@ export default class JobBoardItem extends React.Component {
     const buttonText = text || 'Join the Board'
     
     const popoverContent = (
-      <div className={css.actionPopover}>
+      <div>
         <div className={css.popoverHeader}>Join the Board</div>
         <div className={css.popoverDescription}>
-          In order to apply for jobs or receive new jobs notifications click on
+          In order to apply for jobs or receive new jobs notifications click on&nbsp;
           <b>Join the Board</b> and wait for approval notification from the Board Moderators
+        </div>
+        <div className={css.popoverDescription}>
+          <b>Job Post fee:</b> LHUS 3.00 ($90.00)
+        </div>
+        <div className={css.popoverDescription}>
+          <b>Recruiting Services:</b> LHUS 10.00‒ 30.00 ($300.00 ‒ $900.00)
         </div>
       </div>
     )
@@ -144,7 +94,37 @@ export default class JobBoardItem extends React.Component {
     return (
       <button className={css.actionButton} onClick={handleClick}>
         { buttonText }
-        { this.renderActionsTooltip({ src: '/static/images/svg/help-white-clear.svg', popoverContent }) }
+        { this.renderActionsTooltip({ src: '/static/images/svg/help-white-clear.svg', popoverContent, popoverClassName: css.actionPopover }) }
+      </button>
+    )
+  }
+  
+  renderNeedVerifyButton(text, onClick){
+    const { actionPopover } = this.state
+    const handleClick = onClick ? onClick : () => {}
+    const buttonText = text || 'Verify Me to Join'
+    
+    const popoverContent = (
+      <div>
+        <div className={css.popoverHeader}>Requirements are not met</div>
+        <div className={css.popoverDescription}>
+          Sorry, requirements to join the board are not met. Board owner requires the following to be completed:
+        </div>
+        <ul className={css.popoverVerifyList}>
+          <li className={css.listItem}>Validate your email or phone</li>
+          <li className={css.listItem}>Validate  your ID</li>
+          <li className={css.listItem}>Validate your home address</li>
+          <li className={css.listItem}>Validate your legal documents (Worker or Client)</li>
+          <li className={css.listItem}>At least one skill should be endorsed by other people. new comers may get an endorsement by our validation team</li>
+          <li className={css.listItem}>Your rating should be 3+</li>
+        </ul>
+      </div>
+    )
+    
+    return (
+      <button className={css.actionButton} onClick={handleClick}>
+        { buttonText }
+        { this.renderActionsTooltip({ src: '/static/images/svg/help-white-clear.svg', popoverContent, popoverClassName: css.actionPopover }) }
       </button>
     )
   }
@@ -185,7 +165,7 @@ export default class JobBoardItem extends React.Component {
         return this.renderDefaultActionButton()
       
       case JobBoardItem.STATUS.NEED_VERIFY:
-        return this.renderDefaultActionButton()
+        return this.renderNeedVerifyButton()
       
       case JobBoardItem.STATUS.JOINED:
         return this.renderJoinedActions()
@@ -199,16 +179,10 @@ export default class JobBoardItem extends React.Component {
   }
   
   handleStarsPopoverOpen(e){
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('open')
     this.setState({ starsPopover: true })
   }
   
   handleStarsPopoverClose(e){
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('close')
     this.setState({ starsPopover: false })
   }
   
@@ -228,8 +202,78 @@ export default class JobBoardItem extends React.Component {
     this.setState({ actionPopover: false })
   }
   
+  getStarsPopover(){
+    const { starsPopover } = this.state
+    
+    return (
+      <Popover
+        open={starsPopover}
+        arrowPosition={Popover.ARROW_POSITION.LEFT}
+        className={css.starsPopover}
+      >
+        <div className={css.popoverHeader}>Job Board Rating</div>
+        <div className={css.popoverDescription}>Rating given by the board participants.</div>
+        <table className={css.starsRatingTable}>
+          <tbody>
+          <tr>
+            <td className={css.countStars}>5 stars</td>
+            <td className={css.countStarsVotes}>220</td>
+            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
+          </tr>
+          <tr>
+            <td className={css.countStars}>4 stars</td>
+            <td className={css.countStarsVotes}>220</td>
+            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
+          </tr>
+          <tr>
+            <td className={css.countStars}>3 stars</td>
+            <td className={css.countStarsVotes}>220</td>
+            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
+          </tr>
+          <tr>
+            <td className={css.countStars}>2 stars</td>
+            <td className={css.countStarsVotes}>220</td>
+            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
+          </tr>
+          <tr>
+            <td className={css.countStars}>1 stars</td>
+            <td className={css.countStarsVotes}>220</td>
+            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
+          </tr>
+          <tr className={css.totalRow}>
+            <td>Total</td>
+            <td>860</td>
+            <td>  </td>
+          </tr>
+          </tbody>
+        </table>
+      </Popover>
+    )
+  }
+  
+  getSecurityPopover(){
+    const { securityPopover } = this.state
+    
+    return (
+      <Popover
+        open={securityPopover}
+        arrowPosition={Popover.ARROW_POSITION.LEFT}
+        className={css.securityPopover}
+      >
+        <div className={css.popoverHeader}>Validation</div>
+        <div className={css.popoverDescription}>The Job Board Owner has successfully passed our Validation</div>
+        <ul className={css.securityDoneList}>
+          <li className={css.listItem}>Email is validated</li>
+          <li className={css.listItem}>ID is validated</li>
+          <li className={css.listItem}>Address is validated</li>
+          <li className={css.listItem}>Certificates are validated</li>
+        </ul>
+      </Popover>
+    )
+  }
+  
   render () {
-    const { actionPopover, securityPopover, starsPopover, popperOpen } = this.state
+    const { actionPopover, securityPopover, starsPopover } = this.state
     
     return (
       <div className={css.main}>
@@ -257,63 +301,12 @@ export default class JobBoardItem extends React.Component {
           <div className={css.ratingBlock}>
             <div className={css.starsWrapper} onMouseOver={this.handleStarsPopoverOpen.bind(this)} onMouseOut={this.handleStarsPopoverClose.bind(this)}>
               { this.getRatingStars() }
-              <Popover
-                open={starsPopover}
-                arrowPosition={Popover.ARROW_POSITION.LEFT}
-              >
-                <div className={css.starsPopover}>
-                  <div className={css.popoverHeader}>Job Board Rating</div>
-                  <div className={css.popoverDescription}>Rating given by the board participants.</div>
-                  <table className={css.starsRatingTable}>
-                    <tbody>
-                      <tr>
-                        <td className={css.countStars}>5 stars</td>
-                        <td className={css.countStarsVotes}>220</td>
-                        <td>  </td>
-                      </tr>
-                      <tr>
-                        <td className={css.countStars}>4 stars</td>
-                        <td className={css.countStarsVotes}>220</td>
-                        <td>  </td>
-                      </tr>
-                      <tr>
-                        <td className={css.countStars}>3 stars</td>
-                        <td className={css.countStarsVotes}>220</td>
-                        <td>  </td>
-                      </tr>
-                      <tr>
-                        <td className={css.countStars}>2 stars</td>
-                        <td className={css.countStarsVotes}>220</td>
-                        <td>  </td>
-                      </tr>
-                      <tr>
-                        <td className={css.countStars}>1</td>
-                        <td className={css.countStarsVotes}>220</td>
-                        <td>  </td>
-                      </tr>
-                      <tr>
-                        <td className={css.countStars}>Total</td>
-                        <td className={css.countStarsVotes}>860</td>
-                        <td>  </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </Popover>
+              { this.getStarsPopover() }
             </div>
             
             <span className={css.securityBadge} onMouseOver={this.handleSecurityPopoverOpen.bind(this)} onMouseLeave={this.handleSecurityPopoverClose.bind(this)}>
               <img src='/static/images/svg/security.svg' alt='' width='24' height='24' />
-
-              <Popover
-                open={securityPopover}
-                arrowPosition={Popover.ARROW_POSITION.LEFT}
-              >
-                <div className={css.securityPopover}>
-                  <div className={css.popoverHeader}>Validation</div>
-                  <div className={css.popoverDescription}>The Job Board Owner has successfully passed our Validation</div>
-                </div>
-              </Popover>
+              { this.getSecurityPopover() }
             </span>
           </div>
           

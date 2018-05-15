@@ -30,7 +30,6 @@ class JobBoards extends React.Component {
                   name='search'
                   type='password'
                   placeholder='Search by keyword'
-                  label='Search by keyword'
                   materialInput={true}
                   
                 />

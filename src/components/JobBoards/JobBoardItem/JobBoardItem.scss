@@ -120,7 +120,7 @@
   }
 
   .actionButtonTooltip {
-    border-left: 1px solid #fff;
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
     margin-left: 37px;
   }
 }
@@ -183,7 +183,6 @@
 }
 
 .popover {
-  pointer-events: none;
   display: none;
   top: 100%;
   position: absolute;
@@ -191,6 +190,11 @@
   border: 2px solid #333333;
   padding: 20px;
   font-family: roboto, sans-serif;
+  z-index: 99;
+
+  b {
+    font-weight: 500;
+  }
 }
 
 .popoverVisible {
@@ -230,7 +234,7 @@
 }
 
 .popoverArrow {
-  &:after {
+  &:before {
     content: '';
     display: block;
     border: 2px solid #333;
@@ -241,26 +245,38 @@
     position: absolute;
     top: -16px;
   }
+  &:after {
+    content: '';
+    display: block;
+    background: #fff;
+    width: 100%;
+    height: 12px;
+    position: absolute;
+    top:0;
+    left:0;
+  }
 }
 
 .arrowLeft {
-  &:after {
-    left: 0;
+  left: -13px;
+
+  &:before {
+    left: 15px;
   }
 }
 
 .arrowCenter {
-  &:after {
+  &:before {
     left: 0;
     right: 0;
   }
 }
 
 .arrowRight {
-  right: 0;
+  right: -8px;
 
-  &:after {
-    right: 0;
+  &:before {
+    right: 15px;
   }
 }
 
@@ -281,7 +297,7 @@
 .popoverDescription {
   font-size: 14px;
   font-weight: 300;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   color: #333;
   line-height: 22px;
 
@@ -290,19 +306,86 @@
 .starsRatingTable {
   font-size: 12px;
   font-weight: 400;
+  width: 100%;
 
   .countStars, .countStarsVotes {
-    padding-right: 20px;
-    padding-bottom: 10px;
+    padding: 0 16px 4px 0;
+    white-space: nowrap;
+  }
+
+  .totalRow {
+    font-weight: 500;
+  }
+
+  .countRating {
+    width: 100%;
+
+    .countRatingTrack {
+      background: #E6BF6E;
+      height: 5px;
+      width: 50%;
+      display: inline-block;
+    }
+  }
+}
+
+
+.actionPopover {
+  width: 300px;
+  color: #333;
+  text-align: left;
+
+  .popoverDescription {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
 .securityPopover {
   width: 300px;
+  top: 110%;
+
+  .popoverDescription {
+    margin-bottom: 16px;
+  }
 }
 
-.actionPopover {
-  width: 260px;
+.securityDoneList {
   color: #333;
-  text-align: left;
+  font-weight: 400;
+  list-style: none;
+
+  .listItem {
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 16px;
+    line-height: 24px;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      background: url('/static/images/svg/security-done.svg');
+      position: absolute;
+      top:0;
+      left:0;
+    }
+
+  }
+}
+
+.popoverVerifyList {
+  color: #333333;
+  font-weight: 400;
+  list-style-type: decimal;
+  list-style-position: unset;
+  padding-left: 20px;
+
+  .listItem {
+    line-height: 22px;
+  }
 }

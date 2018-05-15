@@ -8,6 +8,7 @@ export { default as Tip } from './Tip/Tip'
 export { default as UserRow } from './UserRow/UserRow'
 export { default as Checkbox } from './Checkbox/Checkbox'
 export { default as Dialog } from './Dialog/Dialog'
+export { default as Popover } from './Popover/Popover'
 
 // blocks
 export { default as Paper } from './Paper/Paper'
