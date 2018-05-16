@@ -27,7 +27,7 @@ const onSubmit = (values, dispatch) => {
   }
 
   return {
-    mnemonic: mnemonic
+    mnemonic: mnemonic,
   }
 }
 
@@ -38,17 +38,17 @@ class RecoveryAccountForm extends React.Component {
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
 
-  getWalletAddress(wallet) {
+  getWalletAddress (wallet) {
     return wallet && wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
   }
 
-  navigateToSelectWallet(){
-    const {onChangeStep} = this.props
+  navigateToSelectWallet (){
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
 
-  navigateToLogin(){
-    const {onChangeStep} = this.props
+  navigateToLogin (){
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.Login)
   }
 
@@ -62,8 +62,8 @@ class RecoveryAccountForm extends React.Component {
         <div className={css.userRowWrapper}>
           <UserRow
             title={this.getWalletAddress(selectedWallet)}
-            onClick={walletsList.length === 1 ? null : this.navigateToSelectWallet.bind(this)}
-            hideActionIcon={walletsList.length === 1}
+            onClick={null}
+            hideActionIcon
           />
         </div>
 

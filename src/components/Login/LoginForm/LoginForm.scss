@@ -6,6 +6,7 @@
     padding: 40px 20px;
   }
 }
+
 .formHeader {
   font-size: 20px;
   font-weight: bold;
@@ -93,30 +94,6 @@
   }
 }
 
-.passwordField {
-  margin-top: 0;
-  margin-bottom: 38px;
-
-  input {
-    font-size: 16px;
-    line-height: 22px;
-    color: #A8EAFF;
-    border-bottom: 1px solid #A8EAFF;
-    outline: none;
-
-    &:hover, &:focus {
-      border-bottom: 1px solid #fff;
-      color: #fff;
-    }
-
-    &::placeholder {
-      font-size: 16px;
-      font-weight: 400;
-    }
-  }
-
-}
-
 .submitButton {
   justify-content: center;
   text-transform: uppercase;
@@ -143,35 +120,16 @@
   color: #FFE14D;
 }
 
-.passwordFieldInput {
-
-
-  label {
-    font-size: 16px;
-    line-height: 22px;
-    color: #A8EAFF !important;
-    font-style: italic;
-    left: 0;
-    right:0;
-    transform-origin: top center;
-    //transform: translate(0, 20px) scale(1);
-
-    &[data-shrink=true] {
-      //transform-origin: top center;
-    }
-  }
-  input {
-    text-align: center;
-  }
+.passwordField {
+  margin-top: 0;
+  margin-bottom: 38px !important;
 }
-.passwordFieldInputWrapper {
-  &:before {
-    background-color: #A8EAFF !important;
-    height: 1px !important;
-  }
 
-  &:after {
-    background-color: #fff !important;
-    height: 1px !important;
-  }
+.passwordFieldInput {
+  text-align: center;
+
+}
+
+.passwordFieldLabel {
+  transform-origin: top center !important;
 }

@@ -117,3 +117,76 @@
     text-align: left;
   }
 }
+
+.materialInputWrapper {
+
+  &:before {
+    background-color: #A8EAFF !important;
+    height: 1px !important;
+  }
+
+  &:after {
+    background-color: #fff !important;
+    height: 1px !important;
+  }
+
+  &:hover, &:focus {
+    &:after {
+      background-color: #fff !important;
+    }
+  }
+}
+
+.materialInputField {
+  font-size: 16px;
+  line-height: 22px;
+  color: #A8EAFF;
+  border: 0;
+  border-bottom: 1px solid #A8EAFF;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  position: relative;
+
+  &:hover, &:focus {
+    color: #fff !important;
+  }
+
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 400 !important;
+    font-style: italic;
+    color: #fff !important;
+  }
+}
+
+.materialInput {
+  font-size: 16px !important;
+  line-height: 22px !important;
+  color: #A8EAFF !important;
+  border-bottom: 1px solid #A8EAFF;
+  outline: none;
+  height: auto !important;
+  text-align: left;
+
+  &:hover, &:focus {
+    color: #fff !important;
+  }
+
+  &::placeholder {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    font-style: italic;
+    color: #fff ;
+  }
+}
+
+.materialLabel {
+  font-size: 16px !important;
+  line-height: 22px;
+  color: #A8EAFF !important;
+  font-style: italic;
+  font-weight: 400;
+  left: 0;
+  right:0;
+}
