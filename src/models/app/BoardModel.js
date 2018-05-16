@@ -1,23 +1,24 @@
 import PropTypes from 'prop-types'
 import AbstractModel from '../AbstractModel'
-import { TAG_CATEGORIES_LIST } from '../meta/TagCategoryModel'
+import TagCategoryModel from '../meta/TagCategoryModel'
+import TagAreaModel from '../meta/TagAreaModel'
+import TagModel from '../meta/TagModel'
+import BoardIPFSModel from './BoardIPFSModel'
 
 const schemaFactory = () => ({
   id: PropTypes.number.isRequired,
-  ipfs: PropTypes.instanceOf(IPFSBoardModel),
+  status: PropTypes.bool,
+  ipfs: PropTypes.instanceOf(BoardIPFSModel),
+  tags: PropTypes.arrayOf(
+    PropTypes.instanceOf(TagModel)
+  ),
+  tagsArea: PropTypes.arrayOf(
+    PropTypes.instanceOf(TagAreaModel)
+  ),
+  tagsCategory: PropTypes.arrayOf(
+    PropTypes.instanceOf(TagCategoryModel)
+  ),
 })
-
-class IPFSBoardModel extends AbstractModel {
-  constructor (props) {
-    super(Object.assign({
-      name: 'Default Name',
-      description: 'Default Job Description',
-      company: 'Company Name',
-    }, props), schemaFactory())
-    Object.assign(this, props)
-    Object.freeze(this)
-  }
-}
 
 export default class BoardModel extends AbstractModel {
   constructor (props) {
@@ -28,17 +29,5 @@ export default class BoardModel extends AbstractModel {
 
   get key () {
     return `board-${this.id}`
-  }
-
-  get name () {
-    return 'General'
-  }
-
-  get description () {
-    return ''
-  }
-
-  get categories () {
-    return TAG_CATEGORIES_LIST
   }
 }

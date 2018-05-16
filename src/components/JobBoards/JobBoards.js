@@ -1,56 +1,32 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { reduxForm, Field } from 'redux-form'
-
-import { Input } from 'components/common'
+import { connect } from 'react-redux'
+import { SignerModel, BoardModel } from 'src/models'
+import { signerSelector, boardsListSelector } from 'src/store'
+import { Input } from 'src/components/common'
 import JobBoardItem from './JobBoardItem/JobBoardItem'
-
 import css from './JobBoards.scss'
-
-const inputStyles = {
-  inputStyle: {
-    padding: '10px 0',
-    textAlign: 'left',
-    color: '#333',
-    fontWeight: 300,
-    fontSize: 14,
-    marginBottom: 4,
-    marginTop: 0,
-  },
-  underlineStyle: {
-    borderColor: '#E5E5E5',
-    height: 1,
-    bottom: 0,
-  },
-  underlineFocusStyle: {
-    borderColor: '#00A0D2',
-    height: 1,
-  },
-  floatingLabelStyle: {
-    fontSize: 14,
-    color: '#333',
-    left: 0,
-    right: 0,
-    top: 7,
-    transformOrigin: 'left top',
-  },
-  floatingLabelFocusStyle: {
-    fontSize: 14,
-    color: '#333',
-    left: 0,
-    right: 0,
-    transformOrigin: 'left top',
-  },
-}
+import inputStyles from './JobBoards.styles'
 
 const FORM_JOB_BOARDS = 'form/jobBoards'
 
 class JobBoards extends React.Component {
+
+  static propTypes = {
+    signer: PropTypes.instanceOf(SignerModel),
+    boards: PropTypes.arrayOf(
+      PropTypes.instanceOf(BoardModel)
+    ),
+  }
+
   render () {
+    const { boards } = this.props
     return (
       <div className={css.main}>
         <div className={css.contentWrapper}>
           <h2>Job Boards</h2>
-          
+
           <form name={FORM_JOB_BOARDS}>
             <div className={css.actionsBlock}>
               <div className={css.search}>
@@ -73,14 +49,18 @@ class JobBoards extends React.Component {
                 </button>
               </div>
             </div>
-            
+
             <div className={css.jobBoardsList}>
-              <JobBoardItem status={JobBoardItem.STATUS.DEFAULT} />
+              {boards.map(board => (
+                <JobBoardItem key={board.key} status={JobBoardItem.STATUS.DEFAULT} />
+              ))}
+              {/*
               <JobBoardItem status={JobBoardItem.STATUS.NEED_VERIFY} />
               <JobBoardItem status={JobBoardItem.STATUS.JOINED} />
               <JobBoardItem status={JobBoardItem.STATUS.APPROVAL} />
+              */}
             </div>
-            
+
           </form>
         </div>
       </div>
@@ -88,4 +68,21 @@ class JobBoards extends React.Component {
   }
 }
 
-export default reduxForm({ form: FORM_JOB_BOARDS })(JobBoards)
+function mapStateToProps (state) {
+  const signer = signerSelector()(state)
+  const boards = boardsListSelector()(state)
+  return {
+    signer,
+    boards,
+  }
+}
+
+function mapDispatchToProps (/*dispatch*/) {
+  return {
+    // stack: state.modals.stack,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  reduxForm({ form: FORM_JOB_BOARDS })(JobBoards)
+)

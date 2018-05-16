@@ -8,12 +8,12 @@
   ],
   "dependencies": {
     "@chronobank/mint": "github:chronobank/chronomint",
+    "@laborx/sc-abi": "^0.0.3",
     "bip39": "^2.5.0",
     "ethereumjs-util": "^5.1.5",
     "ethereumjs-wallet": "^0.6.0",
     "express": "^4.16.2",
     "joi": "^13.1.2",
-    "laborx-sc-abi": "^0.0.2",
     "lx-sc": "github:chronobank/lx-sc#develop",
     "material-ui": "^0.20.0",
     "moment": "^2.22.1",

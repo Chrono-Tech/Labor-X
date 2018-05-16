@@ -1,10 +1,10 @@
 import { ContractModel } from 'src/models'
 
-import CONTRACTS_MANAGER_ABI from 'laborx-sc-abi/build/contracts/ContractsManager.json'
-import ERC20_LIBRARY_ABI from 'laborx-sc-abi/build/contracts/ERC20Library.json'
-import ERC20_INTERFACE_ABI from 'laborx-sc-abi/build/contracts/ERC20Interface.json'
-import JOB_CONTROLLER_ABI from 'laborx-sc-abi/build/contracts/JobController.json'
-import BOARD_CONTROLLER_ABI from 'laborx-sc-abi/build/contracts/BoardController.json'
+import CONTRACTS_MANAGER_ABI from '@laborx/sc-abi/build/contracts/ContractsManager.json'
+import ERC20_LIBRARY_ABI from '@laborx/sc-abi/build/contracts/ERC20Library.json'
+import ERC20_INTERFACE_ABI from '@laborx/sc-abi/build/contracts/ERC20Interface.json'
+import JOB_CONTROLLER_ABI from '@laborx/sc-abi/build/contracts/JobController.json'
+import BOARD_CONTROLLER_ABI from '@laborx/sc-abi/build/contracts/BoardController.json'
 
 import ContractsManagerDAO from './lib/ContractsManagerDAO'
 import ERC20LibraryDAO from './lib/ERC20LibraryDAO'

@@ -1,5 +1,6 @@
 // import BigNumber from 'bignumber.js'
-import { BoardModel, BoardCreateEvent } from 'src/models'
+import { BoardModel, BoardIPFSModel, BoardCreateEvent, TAGS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST } from 'src/models'
+import { filterArrayByIndexMask } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
 export default class BoardControllerDAO extends AbstractContractDAO {
@@ -39,27 +40,38 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     return this.contract != null // nil check
   }
 
-  async getBoards (address, offset = 0, limit = 10) {
-    // const boards = []
-    // const [
-    //   idx,
-    //   // name,
-    //   // boardDescription,
-    //   // tags,
-    //   // tagsArea,
-    //   // tagsCategory
-    // ] = await this.contract.methods.getBoards(offset, limit, address).call()
-    // for (let i = 0; i < idx.length; i++) {
-    //   boards.push(new BoardModel({
-    //     id: idx[0],
-    //   }))
-    // }
-    // return boards
-    return [
-      new BoardModel({
-        id: 0,
-      }),
-    ]
+  async getBoards (address, fromId = 1, limit = 10) {
+    const boards = []
+    // TODO @ipavlenko: We have to ignore address property and load all the boards for awhile
+    const response = await this.contract.methods.getBoards(fromId, limit, null).call()
+    // eslint-disable-next-line
+    console.log('[BoardControllerDAO] getBoards:', response)
+    const {
+      ids,
+      // eslint-disable-next-line no-unused-vars
+      name,
+      // eslint-disable-next-line no-unused-vars
+      boardDescription,
+      tags,
+      tagsAreas,
+      tagsCategories,
+      status,
+      // ipfsHash,
+    } = response
+    for (let i = 0; i < ids.length; i++) {
+      boards.push(new BoardModel({
+        id: Number(ids[i]),
+        tags: filterArrayByIndexMask(TAGS_LIST, tags[i]),
+        tagsAreas: filterArrayByIndexMask(TAG_AREAS_LIST, tagsAreas[i]),
+        tagsCategories: filterArrayByIndexMask(TAG_CATEGORIES_LIST, tagsCategories[i]),
+        status: status[i],
+        ipfs: new BoardIPFSModel({
+          // ...await ipfsService.get(ipfsHash[i]),
+          // hash: ipfsHash[i],
+        }),
+      }))
+    }
+    return boards
   }
 
   createCreateBoardTx (sender, name, description, tags = [], tagsAreas = [], tagsCategories = []) {
