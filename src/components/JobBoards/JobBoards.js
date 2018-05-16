@@ -1,8 +1,7 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
-import Popover from 'material-ui/Popover'
 
-import { Translate, Input } from 'components/common'
+import { Input } from 'components/common'
 import JobBoardItem from './JobBoardItem/JobBoardItem'
 
 import css from './JobBoards.scss'
@@ -42,7 +41,6 @@ const inputStyles = {
     transformOrigin: 'left top',
   },
 }
-
 
 const FORM_JOB_BOARDS = 'form/jobBoards'
 

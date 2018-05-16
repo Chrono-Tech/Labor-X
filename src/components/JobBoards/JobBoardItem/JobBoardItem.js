@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { reduxForm, Field } from 'redux-form'
 
-import { Translate, Input, Popover } from 'components/common'
+import { Popover } from 'components/common'
 import css from './JobBoardItem.scss'
 
 export default class JobBoardItem extends React.Component {
@@ -51,27 +50,31 @@ export default class JobBoardItem extends React.Component {
     return starsArray
   }
   
-  renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }){
-    const { actionPopover } = this.state
-    
-    return (
-      <span className={css.actionButtonTooltip} onMouseOver={this.handleActionsPopoverOpen.bind(this)} onMouseOut={this.handleActionsPopoverClose.bind(this)} >
-        <img src={src} alt='' width='24' height='24' />
-        { popoverContent ? (
-          <Popover
-            open={actionPopover}
-            arrowPosition={Popover.ARROW_POSITION.RIGHT}
-            className={popoverClassName}
-          >
-            { popoverContent }
-          </Popover>)
-          : null }
-      </span>
-    )
+  handleStarsPopoverOpen (){
+    this.setState({ starsPopover: true })
+  }
+  
+  handleStarsPopoverClose (){
+    this.setState({ starsPopover: false })
+  }
+  
+  handleSecurityPopoverOpen (){
+    this.setState({ securityPopover: true })
+  }
+  
+  handleSecurityPopoverClose (){
+    this.setState({ securityPopover: false })
+  }
+  
+  handleActionsPopoverOpen (){
+    this.setState({ actionPopover: true })
+  }
+  
+  handleActionsPopoverClose (){
+    this.setState({ actionPopover: false })
   }
   
   renderDefaultActionButton (text, onClick){
-    const { actionPopover } = this.state
     const handleClick = onClick ? onClick : () => {}
     const buttonText = text || 'Join the Board'
     
@@ -100,7 +103,6 @@ export default class JobBoardItem extends React.Component {
   }
   
   renderNeedVerifyButton (text, onClick){
-    const { actionPopover } = this.state
     const handleClick = onClick ? onClick : () => {}
     const buttonText = text || 'Verify Me to Join'
     
@@ -143,8 +145,6 @@ export default class JobBoardItem extends React.Component {
   }
   
   renderApprovalActions (){
-    const { actionPopover } = this.state
-  
     const popoverContent = (
       <div>
         <div className={css.popoverHeader}>Your Request is processing</div>
@@ -181,30 +181,6 @@ export default class JobBoardItem extends React.Component {
       default:
         return this.renderDefaultActionButton()
     }
-  }
-  
-  handleStarsPopoverOpen (){
-    this.setState({ starsPopover: true })
-  }
-  
-  handleStarsPopoverClose (){
-    this.setState({ starsPopover: false })
-  }
-  
-  handleSecurityPopoverOpen (){
-    this.setState({ securityPopover: true })
-  }
-  
-  handleSecurityPopoverClose (){
-    this.setState({ securityPopover: false })
-  }
-  
-  handleActionsPopoverOpen (){
-    this.setState({ actionPopover: true })
-  }
-  
-  handleActionsPopoverClose (){
-    this.setState({ actionPopover: false })
   }
   
   getStarsPopover (){
@@ -274,6 +250,25 @@ export default class JobBoardItem extends React.Component {
           <li className={css.listItem}>Certificates are validated</li>
         </ul>
       </Popover>
+    )
+  }
+  
+  renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }){
+    const { actionPopover } = this.state
+    
+    return (
+      <span className={css.actionButtonTooltip} onMouseOver={this.handleActionsPopoverOpen.bind(this)} onMouseOut={this.handleActionsPopoverClose.bind(this)} >
+        <img src={src} alt='' width='24' height='24' />
+        { popoverContent ? (
+          <Popover
+            open={actionPopover}
+            arrowPosition={Popover.ARROW_POSITION.RIGHT}
+            className={popoverClassName}
+          >
+            { popoverContent }
+          </Popover>)
+          : null }
+      </span>
     )
   }
   

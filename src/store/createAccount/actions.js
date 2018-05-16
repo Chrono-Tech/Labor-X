@@ -46,11 +46,11 @@ export const generateNameWallet = () => (dispatch, getState) => {
 }
 
 export const resetCurrentWallet = () => (dispatch) => {
-  dispatch({ type: CREATE_ACCOUNT_RESET_CURRENT_WALLET})
+  dispatch({ type: CREATE_ACCOUNT_RESET_CURRENT_WALLET })
 }
 
 export const setCurrentWallet = (encrypted) => (dispatch) => {
-  dispatch({ type: CREATE_ACCOUNT_SET_CURRENT_WALLET, encrypted})
+  dispatch({ type: CREATE_ACCOUNT_SET_CURRENT_WALLET, encrypted })
 }
 
 export const createUserAccount = () => (dispatch, getState) => {
