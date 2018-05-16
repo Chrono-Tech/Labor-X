@@ -14,7 +14,7 @@ import css from './index.scss'
 
 class CreateAccount extends React.Component {
   
-  constructor (){
+  constructor(){
     super()
     
     this.state = {
@@ -22,21 +22,21 @@ class CreateAccount extends React.Component {
     }
   }
   
-  static async getInitialProps ({ store }) {
+  static async getInitialProps({ store }) {
     const mnemonic = bip39.generateMnemonic()
     
     store.dispatch(setMnemonic(mnemonic))
     return { mnemonic }
   }
   
-  componentWillMount (){
+  componentWillMount(){
     const { setMnemonic, mnemonic } = this.props
     
     setMnemonic(mnemonic)
   }
   
-  onSubmitAccountPasswordForm ({ password, types }){
-    const { setPassword, setAccountTypes } = this.props
+  onSubmitAccountPasswordForm({password, types}){
+    const {setPassword, setAccountTypes} = this.props
   
     setPassword(password)
     setAccountTypes(types)

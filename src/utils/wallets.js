@@ -1,7 +1,7 @@
 export const updateWallet = (wallet, name) => {
   return {
     ...wallet,
-    name: name,
+    name: name
   }
 }
 

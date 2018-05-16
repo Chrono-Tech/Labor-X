@@ -35,13 +35,13 @@ class LoginForm extends React.Component {
     }
   }
 
-  navigateToSelectWallet () {
-    const { onChangeStep } = this.props
+  navigateToSelectWallet() {
+    const {onChangeStep} = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword } = this.props
+    const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword} = this.props
 
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -49,20 +49,22 @@ class LoginForm extends React.Component {
         <div className={css.accountWrapper}>
           <UserRow
             title={selectedWallet && selectedWallet.name}
-            onClick={this.navigateToSelectWallet.bind(this)}
+            onClick={walletsList.length === 1 ? null : this.navigateToSelectWallet.bind(this)}
+            hideActionIcon={walletsList.length === 1}
           />
         </div>
         <Field
-          className={css.passwordField}
-          inputMods={css.passwordFieldInput}
-          labelMods={css.passwordFieldLabel}
+          className={css.row}
           component={Input}
           name='password'
           type='password'
           placeholder='Enter Password'
-          label='Enter Password'
+          autoComplete={false}
+          mods={css.passwordField}
           errorMods={css.fieldError}
-          materialInput
+          inputMods={css.passwordFieldInput}
+          lineEnabled={false}
+          materialInput={false}
         />
         <Button
           className={css.row}
@@ -83,5 +85,6 @@ class LoginForm extends React.Component {
     )
   }
 }
+
 
 export default reduxForm({ form: FORM_LOGIN })(LoginForm)

@@ -14,7 +14,7 @@ export const NONCE_UPDATE = 'nonce/update'
 export const initEthereum = ({ web3 }) => (dispatch) => {
   // eslint-disable-next-line
   console.log('Init ethereum')
-  dispatch(WEB3_UPDATE, { web3 })
+  dispatch({ type: WEB3_UPDATE, web3 })
 }
 
 export const nextNonce = ({ web3, address }) => async (dispatch, getState) => {
@@ -27,7 +27,7 @@ export const nextNonce = ({ web3, address }) => async (dispatch, getState) => {
       : 0,
     await web3.eth.getTransactionCount(address, 'pending')
   )
-  dispatch(NONCE_UPDATE, { address, nonce })
+  dispatch({ type: NONCE_UPDATE, address, nonce })
   return nonce
 }
 
@@ -44,7 +44,7 @@ export const executeTransaction = ({ web3, tx }) => async (dispatch) => {
     isSubmitted: true,
     isAccepted: true,
   })
-  dispatch(TX_CREATE, { web3, entry })
+  dispatch({ type: TX_CREATE, web3, entry })
   return dispatch(process({ web3, entry }))
 }
 
@@ -83,7 +83,8 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
     console.log('wallet', wallet)
     const signed = await wallet.signTransaction(omitBy(entry.tx, isNil))
     const raw = signed.rawTransaction
-    dispatch(TX_STATUS, {
+    dispatch({
+      type: TX_STATUS,
       key: entry.key,
       address: entry.tx.from,
       props: {
@@ -93,7 +94,8 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
     })
     return entry
   } catch (e) {
-    dispatch(TX_STATUS, {
+    dispatch({
+      type: TX_STATUS,
       key: entry.key,
       address: entry.tx.from,
       props: {
@@ -107,7 +109,8 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
 
 export const sendSignedTransaction = ({ web3, entry }) => async (dispatch) => {
   assert.ok(entry instanceof TxEntryModel)
-  dispatch(TX_STATUS, {
+  dispatch({
+    type: TX_STATUS,
     key: entry.key,
     address: entry.tx.from,
     props: {
@@ -118,7 +121,8 @@ export const sendSignedTransaction = ({ web3, entry }) => async (dispatch) => {
   return new Promise((resolve, reject) => {
     web3.eth.sendSignedTransaction(entry.raw)
       .on('transactionHash', (transactionHash) => {
-        dispatch(TX_STATUS, {
+        dispatch({
+          type: TX_STATUS,
           key: entry.key,
           address: entry.tx.from,
           props: {
@@ -128,7 +132,8 @@ export const sendSignedTransaction = ({ web3, entry }) => async (dispatch) => {
         })
       })
       .on('receipt', (receipt) => {
-        dispatch(TX_STATUS, {
+        dispatch({
+          type: TX_STATUS,
           key: entry.key,
           address: entry.tx.from,
           props: {
@@ -139,7 +144,8 @@ export const sendSignedTransaction = ({ web3, entry }) => async (dispatch) => {
         resolve(receipt)
       })
       .on('error', (error) => {
-        dispatch(TX_STATUS, {
+        dispatch({
+          type: TX_STATUS,
           key: entry.key,
           address: entry.tx.from,
           props: {

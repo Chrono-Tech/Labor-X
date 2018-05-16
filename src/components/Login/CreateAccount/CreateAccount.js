@@ -3,7 +3,7 @@ import React from 'react'
 import { Field, reduxForm, SubmissionError } from 'redux-form'
 
 import { Button, Input } from 'components/common'
-import { LoginSteps, validateWalletName } from 'store'
+import {LoginSteps, validateWalletName} from 'store'
 import validate from './validate'
 
 import css from './CreateAccount.scss'
@@ -34,7 +34,7 @@ class CreateAccount extends React.Component {
     onChangeStep: PropTypes.func,
   }
 
-  navigateToSelectWallet (){
+  navigateToSelectWallet(){
     const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
@@ -50,12 +50,10 @@ class CreateAccount extends React.Component {
           component={Input}
           name='walletName'
           placeholder='Wallet name'
-          label='Wallet name'
           autoComplete={false}
           lineEnabled={false}
           mods={css.passwordField}
           errorMods={css.fieldError}
-          materialInput
         />
         <Field
           className={css.row}
@@ -63,11 +61,9 @@ class CreateAccount extends React.Component {
           name='password'
           type='password'
           placeholder='Password'
-          label='Password'
           autoComplete={false}
           lineEnabled={false}
           mods={css.passwordField}
-          materialInput
         />
         <Field
           className={css.row}
@@ -78,7 +74,6 @@ class CreateAccount extends React.Component {
           autoComplete={false}
           lineEnabled={false}
           mods={css.passwordField}
-          materialInput
         />
         <Button
           className={css.row}

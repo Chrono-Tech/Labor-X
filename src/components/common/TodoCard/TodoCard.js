@@ -44,7 +44,7 @@ export default class TodoCard extends React.Component {
     console.log('Opportunity-view-handleMessage')
   }
 
-  daysUntil (date) {
+  daysUntil(date) {
     return moment(date).diff(moment(), 'days')
   }
 
@@ -54,7 +54,7 @@ export default class TodoCard extends React.Component {
 
   progressIcon () {
     return this.props.status === STATUSES.IN_PROGRESS ?
-      <Image icon={Image.ICONS.PAUSE} /> : <Image icon={Image.ICONS.PLAY} />
+      <Image icon={Image.ICONS.PAUSE}/> : <Image icon={Image.ICONS.PLAY}/>
   }
 
   workedTime () {

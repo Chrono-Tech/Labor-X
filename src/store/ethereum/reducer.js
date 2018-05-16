@@ -78,6 +78,6 @@ const mutations = {
 export default ({ web3 }) => (state = initialState({ web3 }), { type, ...other }) => {
   // return [state, other]
   return (type in mutations)
-    ? mutations[type](other)
+    ? mutations[type](state, other)
     : state
 }

@@ -1,19 +1,19 @@
 import React  from 'react'
-import { reduxForm, Field, SubmissionError } from 'redux-form'
-import { connect } from 'react-redux'
+import {reduxForm, Field, SubmissionError} from 'redux-form'
+import {connect} from 'react-redux'
 
 import { Link, Button } from 'components/common'
 
 import 'styles/globals/globals.scss'
 import css from './ShowMnemonic.scss'
 import validate from './validate'
-import Web3 from "../../../network/Web3Provider"
+import Web3 from "../../../network/Web3Provider";
 
 const FORM_SHOW_MNEMONIC = 'form/showMnemonic'
 
 const onSubmit = ({ confirm }) => {
   if (!confirm) {
-    throw new SubmissionError({ _error: 'Please apply license' })
+    throw new SubmissionError({_error: 'Please apply license'})
   }
 }
 

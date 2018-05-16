@@ -1,5 +1,5 @@
-import { Link } from 'components/common'
-import { LoginLayout } from 'components/layouts'
+import { Link } from 'src/components/common'
+import { LoginLayout } from 'src/components/layouts'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import { bootstrap } from 'store/bootstrap'
