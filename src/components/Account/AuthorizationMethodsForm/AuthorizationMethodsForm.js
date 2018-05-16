@@ -29,7 +29,7 @@ export default class AuthorizationMethods extends React.Component {
             <img src='/static/images/svg/plugin.svg' alt='' />
             Browser Plug-in
           </button>
-          <br />
+          <br/>
           <button className={css.methodButton}>
             <img src='/static/images/svg/mnemonic.svg' alt='' />
             Mnemonic

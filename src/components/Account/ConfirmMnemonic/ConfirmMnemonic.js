@@ -1,6 +1,6 @@
 import React  from 'react'
 import { reduxForm, Field, change } from 'redux-form'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 import { Link, Button } from 'components/common'
 import validate from './validate'
@@ -16,7 +16,7 @@ const onSubmit = () => {
 }
 
 class ConfirmMnemonic extends React.Component {
-  constructor (props){
+  constructor(props){
     super(props)
   
     const wordsArray = props.mnemonic.split(' ').map((word, index) => {
@@ -32,22 +32,22 @@ class ConfirmMnemonic extends React.Component {
     }
   }
   
-  onClickWord (word){
+  onClickWord(word){
     const { dispatch } = this.props
     
     if (!this.state.confirmPhrase.includes(word)) {
       this.setState(
-        { confirmPhrase: this.state.confirmPhrase.concat(word) },
+        {confirmPhrase: this.state.confirmPhrase.concat(word) },
         () => dispatch(change(FORM_CONFIRM_MNEMONIC, 'mnemonic', this.getCurrentMnemonic()))
       )
     }
   }
   
-  getCurrentMnemonic (){
+  getCurrentMnemonic(){
     return this.state.confirmPhrase.map((item) => item.word).join(' ')
   }
   
-  getWordsButtons (){
+  getWordsButtons(){
     return this.state.currentWordsArray.map((item, index) => {
       const wordSelected = this.state.confirmPhrase.includes(item)
       
@@ -55,15 +55,14 @@ class ConfirmMnemonic extends React.Component {
         <div
           key={index}
           onClick={this.onClickWord.bind(this, item)}
-          className={[css.word, wordSelected ? css.wordInactive : '' ].join(' ')}
-        >
+          className={[css.word, wordSelected ? css.wordInactive : '' ].join(' ')}>
           { item.word }
         </div>
       )}
     )
   }
   
-  clearMnemonic (){
+  clearMnemonic(){
     const { dispatch } = this.props
   
     this.setState(
@@ -72,7 +71,7 @@ class ConfirmMnemonic extends React.Component {
     )
   }
   
-  clearLastWord (){
+  clearLastWord(){
     const { dispatch } = this.props
   
     this.setState(
@@ -98,7 +97,7 @@ class ConfirmMnemonic extends React.Component {
               component='input'
               type='hidden'
               name='mnemonic'
-              readOnly
+              readOnly={true}
             />
             
           </div>

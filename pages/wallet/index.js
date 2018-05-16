@@ -8,7 +8,7 @@ import initialStore, {
   walletRemove,
   decryptWallet,
   createWallet,
-  logout,
+  logout
 } from 'store'
 import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    state: state,
+    state: state
   }
 }
 

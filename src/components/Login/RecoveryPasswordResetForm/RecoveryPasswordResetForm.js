@@ -27,25 +27,25 @@ class RecoveryPasswordResetForm extends React.Component {
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
 
-  constructor (props){
+  constructor(props){
     super(props)
 
     this.state = {
-      previousSelectedWallet: props.selectedWallet,
+      previousSelectedWallet: props.selectedWallet
     }
   }
 
-  getWalletAddress (wallet) {
+  getWalletAddress(wallet) {
     return wallet && wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
   }
 
-  navigateToSelectWallet (){
-    const { onChangeStep } = this.props
+  navigateToSelectWallet(){
+    const {onChangeStep} = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
 
-  navigateToLogin (){
-    const { onChangeStep } = this.props
+  navigateToLogin(){
+    const {onChangeStep} = this.props
     onChangeStep(LoginSteps.Login)
   }
 
@@ -71,11 +71,9 @@ class RecoveryPasswordResetForm extends React.Component {
           type='password'
           autoComplete={false}
           placeholder='New Account Password'
-          label='New Account Password'
           mods={css.passwordField}
           errorMods={css.fieldError}
           lineEnabled={false}
-          materialInput
         />
         <Field
           className={css.row}
@@ -84,12 +82,9 @@ class RecoveryPasswordResetForm extends React.Component {
           type='password'
           autoComplete={false}
           placeholder='Confirm New Account Password'
-          label='Confirm New Account Password'
           mods={[css.passwordField, css.passwordConfirmField].join(' ')}
           errorMods={css.fieldError}
           lineEnabled={false}
-          materialInput
-
         />
         <Button
           className={css.row}
