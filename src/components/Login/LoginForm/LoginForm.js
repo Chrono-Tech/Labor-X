@@ -35,13 +35,13 @@ class LoginForm extends React.Component {
     }
   }
 
-  navigateToSelectWallet() {
-    const {onChangeStep} = this.props
+  navigateToSelectWallet () {
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword} = this.props
+    const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword } = this.props
 
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -85,6 +85,5 @@ class LoginForm extends React.Component {
     )
   }
 }
-
 
 export default reduxForm({ form: FORM_LOGIN })(LoginForm)

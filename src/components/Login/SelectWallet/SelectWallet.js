@@ -3,8 +3,7 @@ import React from 'react'
 import Router from 'next/router'
 
 import { Button, Input, Link, UserRow } from 'components/common'
-import {LoginSteps} from 'src/store'
-
+import { LoginSteps } from 'src/store'
 
 import css from './SelectWallet.scss'
 
@@ -19,19 +18,19 @@ export default class SelectWallet extends React.Component {
     onSelectWallet: () => {},
   }
   
-  constructor(props){
+  constructor (props){
     super(props)
     
     this.state = {
-      isModalOpen: props.walletsList.length === 0
+      isModalOpen: props.walletsList.length === 0,
     }
   }
   
-  getWalletAddress(wallet) {
+  getWalletAddress (wallet) {
     return wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
   }
   
-  getWalletsList() {
+  getWalletsList () {
     const { walletsList, onSelectWallet, classes } = this.props
 
     return (
@@ -52,17 +51,17 @@ export default class SelectWallet extends React.Component {
     )
   }
 
-  getEmptyListMessage(){
+  getEmptyListMessage (){
     return <div className={css.emptyListMessage}>Sorry, there are no accounts to display</div>
   }
   
-  navigateToLoginMethods(){
+  navigateToLoginMethods (){
     const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectLoginMethod)
   }
   
-  navigateToCreateWallet() {
-    const {onChangeStep} = this.props
+  navigateToCreateWallet () {
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.CreateWallet)
   }
 
