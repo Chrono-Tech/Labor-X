@@ -161,23 +161,15 @@
 }
 
 .materialInput {
-  font-size: 16px !important;
-  line-height: 22px !important;
-  color: #A8EAFF !important;
-  border-bottom: 1px solid #A8EAFF;
-  outline: none;
+  width: 100% !important;
   height: auto !important;
-  text-align: left;
-
-  &:hover, &:focus {
-    color: #fff !important;
-  }
-
-  &::placeholder {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    font-style: italic;
-    color: #fff ;
+  input {
+    &::placeholder {
+      font-size: 16px !important;
+      font-weight: 300 !important;
+      font-style: italic;
+      color: #A8EAFF;
+    }
   }
 }
 

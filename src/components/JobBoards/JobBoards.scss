@@ -13,7 +13,7 @@ h2 {
   font-size: 50px;
   font-weight: 200;
   letter-spacing: -1px;
-  margin-bottom: 30px;
+  margin-bottom: 37px;
 }
 
 .actionsBlock {
@@ -38,12 +38,27 @@ h2 {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: alpha(opacity=50);
   opacity: 0.5;
+  margin-top: 10px;
+
+  img {
+    vertical-align: middle;
+    margin-left: 10px;
+  }
 }
 
 .searchField {
   margin-top: 0;
   margin-bottom: 38px !important;
   border: 0;
+
+  input {
+    &::placeholder {
+      color: #333;
+      font-weight: 300 !important;
+      font-size: 14px !important;
+      font-style: normal !important;
+    }
+  }
 }
 
 .searchFieldInput {

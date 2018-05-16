@@ -8,6 +8,45 @@ import { Translate } from 'components/common'
 
 import css from './Input.scss'
 
+const materialInputStyles = {
+  underlineStyle: {
+    borderColor: '#A8EAFF',
+    bottom: 0,
+    height: 1,
+  },
+  underlineFocusStyle: {
+    borderColor: '#fff',
+    height: 1,
+    borderBottomWidth: 1,
+    
+  },
+  floatingLabelStyle: {
+    color: '#A8EAFF',
+    fontStyle: 'italic',
+    left: 0,
+    right: 0,
+    top: 23,
+    transformOrigin: 'center top',
+  },
+  floatingLabelFocusStyle: {
+    color: '#A8EAFF',
+    left: 0,
+    right: 0,
+    transformOrigin: 'center top',
+  },
+  inputStyle: {
+    padding: '10px 0',
+    textAlign: 'center',
+    color: '#fff',
+  },
+  errorStyle: {
+    left: 0,
+    right: 0,
+    bottom: -17,
+    position: 'absolute',
+  },
+}
+
 export default class Input extends React.Component {
   static propTypes = {
     type: PropTypes.string,
@@ -76,14 +115,11 @@ export default class Input extends React.Component {
   }
 
   render () {
-    const { className, placeholder, type, input, label, meta, disabled, inputMods, inputWrapperMods, errorMods, lineEnabled, autoComplete,
-      mods, materialInput, labelMods } = this.props
-    const classNames = [ css.root, materialInput ? css.materialInputField : '' ].concat(mods)
-    const inputModsArray = [css.input, materialInput ? css.materialInput : '' ].concat(inputMods)
+    const { className, placeholder, type, input, label, meta, disabled, inputMods, errorMods, lineEnabled, autoComplete,
+      mods, materialInput } = this.props
+    const classNames = [ css.root, materialInput ? css.materialInput : '' ].concat(mods)
+    const inputModsArray = [css.input ].concat(inputMods)
     const errorClassNames = [css.error].concat(errorMods)
-    const labelClassNames = [css.label, materialInput ? css.materialLabel : ''].concat(labelMods)
-    
-    const materialInputWrapperArray = [css.materialInputWrapper].concat(inputWrapperMods)
     
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
@@ -96,14 +132,18 @@ export default class Input extends React.Component {
           materialInput ? (
             <MuiThemeProvider>
               <TextField
-                label={label}
+                floatingLabelText={label}
                 placeholder={I18n.t(placeholder)}
                 className={classNames.join(' ')}
                 margin='normal'
                 type={type}
-                InputProps={{ className: materialInputWrapperArray.join(' ') }}
-                inputProps={{ className: inputModsArray.join(' ') }}
-                InputLabelProps={{ className: labelClassNames.join(' ') }}
+                inputStyle={materialInputStyles.inputStyle}
+                underlineStyle={materialInputStyles.underlineStyle}
+                underlineFocusStyle={materialInputStyles.underlineFocusStyle}
+                floatingLabelStyle={materialInputStyles.floatingLabelStyle}
+                floatingLabelFocusStyle={materialInputStyles.floatingLabelFocusStyle}
+                errorText={meta.touched && meta.error}
+                errorStyle={materialInputStyles.errorStyle}
                 {...input}
               />
             </MuiThemeProvider>
@@ -118,7 +158,7 @@ export default class Input extends React.Component {
           )
         }
         { lineEnabled ? <div className={css.line} /> : false }
-        {meta.touched && meta.error && <div className={errorClassNames.join(' ')}><Translate value={meta.error} /></div>}
+        {!materialInput && meta.touched && meta.error && <div className={errorClassNames.join(' ')}><Translate value={meta.error} /></div>}
       </div>
     )
   }

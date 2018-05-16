@@ -183,15 +183,15 @@ export default class JobBoardItem extends React.Component {
     }
   }
   
-  handleStarsPopoverOpen (e){
+  handleStarsPopoverOpen (){
     this.setState({ starsPopover: true })
   }
   
-  handleStarsPopoverClose (e){
+  handleStarsPopoverClose (){
     this.setState({ starsPopover: false })
   }
   
-  handleSecurityPopoverOpen (e){
+  handleSecurityPopoverOpen (){
     this.setState({ securityPopover: true })
   }
   
@@ -199,7 +199,7 @@ export default class JobBoardItem extends React.Component {
     this.setState({ securityPopover: false })
   }
   
-  handleActionsPopoverOpen (e){
+  handleActionsPopoverOpen (){
     this.setState({ actionPopover: true })
   }
   
@@ -278,8 +278,6 @@ export default class JobBoardItem extends React.Component {
   }
   
   render () {
-    const { actionPopover, securityPopover, starsPopover } = this.state
-    
     return (
       <div className={css.main}>
         <div className={css.logoBlock}>
