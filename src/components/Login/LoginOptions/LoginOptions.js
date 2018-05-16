@@ -17,8 +17,6 @@ import {
   onSubmitRecoveryAccountForm,
   onConfirmRecoveryPassword,
   navigateToRecoveryPassword,
-  navigateToBackupWallet,
-  downloadWallet,
 } from 'src/store'
 
 import { Button } from 'components/common'
@@ -33,7 +31,6 @@ import {
   CreateAccount,
   RecoveryAccountForm,
   RecoveryPasswordResetForm,
-  WalletBackup,
 } from 'components/Login'
 
 import { WalletEntryModel } from 'src/models'
@@ -102,8 +99,6 @@ class LoginOptions extends React.Component {
       onConfirmRecoveryPassword,
       navigateToRecoveryPassword,
       selectedWalletRecoveryForm,
-      navigateToBackupWallet,
-      downloadWallet,
     } = this.props
 
     let component
@@ -126,9 +121,6 @@ class LoginOptions extends React.Component {
         break
       case LoginSteps.SelectWallet:
         component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
-        break
-      case LoginSteps.BackupWallet:
-        component = (<WalletBackup onChangeStep={onChangeStep} selectedWallet={selectedWallet} downloadWallet={downloadWallet} />)
         break
       case LoginSteps.RecoveryPassword:
         component = (
@@ -272,8 +264,6 @@ function mapDispatchToProps (dispatch) {
     onSubmitRecoveryAccountForm: (values) => dispatch(onSubmitRecoveryAccountForm(values)),
     onConfirmRecoveryPassword: (values) => dispatch(onConfirmRecoveryPassword(values)),
     navigateToRecoveryPassword: () => dispatch(navigateToRecoveryPassword()),
-    navigateToBackupWallet: () => dispatch(navigateToBackupWallet()),
-    downloadWallet: () => dispatch(downloadWallet()),
   }
 }
 

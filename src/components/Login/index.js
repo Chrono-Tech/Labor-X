@@ -10,4 +10,3 @@ export { default as RecoveryAccountForm } from './RecoveryAccountForm/RecoveryAc
 export { default as RecoveryPasswordResetForm } from './RecoveryPasswordResetForm/RecoveryPasswordResetForm'
 export { default as CreateAccount } from './CreateAccount/CreateAccount'
 export { default as SelectWallet } from './SelectWallet/SelectWallet'
-export { default as WalletBackup } from './WalletBackup/WalletBackup'

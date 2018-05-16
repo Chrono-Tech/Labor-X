@@ -45,10 +45,9 @@ class MnemonicForm extends React.Component {
           component={Input}
           name='mnemonic'
           placeholder='Enter mnemonic'
-          label='Enter mnemonic'
           autoComplete={false}
           mods={css.mnemonicField}
-          materialInput
+          lineEnabled={false}
         />
         <Button
           className={css.row}

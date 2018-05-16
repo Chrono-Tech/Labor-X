@@ -1,6 +1,6 @@
 import Router from 'next/router'
 import { WalletEntryModel } from 'src/models'
-import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet, generateNameWallet } from 'src/store'
+import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
 
 export const LoginSteps = {
   Ledger: 'ledger',
@@ -16,7 +16,6 @@ export const LoginSteps = {
   Login: 'login',
   RecoveryPassword: 'recoveryPassword',
   RecoveryPasswordReset: 'recoveryPasswordReset',
-  BackupWallet: 'backupWallet',
 }
 
 export const LOGIN_SIGN_IN = 'login/signIn'
@@ -33,7 +32,7 @@ export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
 }
 
-export const signIn = ({ password }) => (dispatch, getState) => {
+export const signIn = ({password}) => (dispatch, getState) => {
   const state = getState()
   const { selectedWallet } = state.wallet
 
@@ -56,13 +55,9 @@ export const createAccount = (walletName, password) => (dispatch, getState) => {
     const wallet = dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
 
     dispatch(walletAdd(wallet))
-    
-    dispatch(walletSelect(wallet))
-    
-    dispatch(navigateToBackupWallet())
 
+    dispatch(changeStep(LoginSteps.SelectWallet))
   } else {
-    
     Router.push('/account-password')
   }
 }
@@ -86,7 +81,7 @@ export const selectWalletRecoveryForm = (wallet) => (dispatch) => {
 export const onSelectWallet = (wallet) => (dispatch, getState) => {
   const state = getState()
 
-  const { isRecoveryPasswordMode } = state.login
+  const {isRecoveryPasswordMode} = state.login
 
   if (isRecoveryPasswordMode){
 
@@ -94,12 +89,14 @@ export const onSelectWallet = (wallet) => (dispatch, getState) => {
 
     dispatch(changeStep(LoginSteps.RecoveryPassword))
 
+
   } else {
 
     dispatch(walletSelect(wallet))
 
     dispatch(changeStep(LoginSteps.Login))
   }
+
 
 }
 
@@ -115,10 +112,6 @@ export const navigateToSelectLoginMethod = () => (dispatch) => {
   dispatch(changeStep(LoginSteps.SelectLoginMethod))
 }
 
-export const navigateToBackupWallet = () => (dispatch) => {
-  dispatch(changeStep(LoginSteps.BackupWallet))
-}
-
 export const navigateToRecoveryPassword = () => (dispatch, getState) => {
   const state = getState()
 
@@ -129,7 +122,7 @@ export const navigateToRecoveryPassword = () => (dispatch, getState) => {
   dispatch(changeStep(LoginSteps.RecoveryPassword))
 }
 
-export const onSubmitRecoveryAccountForm = ({ mnemonic }) => (dispatch) => {
+export const onSubmitRecoveryAccountForm = ({mnemonic}) => (dispatch) => {
   dispatch(setRecoveryFormMnemonic(mnemonic))
   dispatch(changeStep(LoginSteps.RecoveryPasswordReset))
 }
@@ -138,6 +131,7 @@ export const onConfirmRecoveryPassword = ({ password }) => (dispatch, getState) 
   const state = getState()
 
   const { selectedWalletRecoveryForm, recoveryFormMnemonic } = state.login
+
 
   dispatch(resetPasswordWallet(selectedWalletRecoveryForm, recoveryFormMnemonic, password))
 
@@ -162,23 +156,6 @@ export const validateRecoveryForm = (mnemonic) => (dispatch, getState) => {
 export const setRecoveryFormMnemonic = (mnemonic) => (dispatch, getState) => {
   const state = getState()
 
-  return dispatch({ type: LOGIN_SET_RECOVERY_FORM_MNEMONIC, mnemonic })
+  return dispatch({ type: LOGIN_SET_RECOVERY_FORM_MNEMONIC, mnemonic})
 
-}
-
-export const downloadWallet = () => (dispatch, getState) => {
-  const state = getState()
-  
-  const { selectedWallet } = state.wallet
-  
-  if (selectedWallet) {
-    const text = JSON.stringify(selectedWallet.encrypted.length > 1 ? selectedWallet.encrypted : selectedWallet.encrypted[0])
-    const element = document.createElement('a')
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
-    element.setAttribute('download', `Wallet.wlt`)
-    element.style.display = 'none'
-    document.body.appendChild(element)
-    element.click()
-    document.body.removeChild(element)
-  }
 }
