@@ -1,0 +1,64 @@
+@import "~styles/globals/fonts";
+@import "~styles/globals/variables";
+
+.root {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  font-family: 'ChronoBankIcons';
+  font-style: normal;
+}
+
+.clickable {
+  cursor: pointer;
+  outline: none;
+}
+
+
+.faded {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.red {
+  color: $color-red;
+}
+
+.blue {
+  color: $color-blue;
+}
+
+.green {
+  color: $color-green;
+}
+
+.gold {
+  color: $color-gold;
+}
+
+.grey {
+  color: $color-gray10;
+}
+
+.grey30 {
+  color: $color-gray30;
+}
+
+.black {
+  color: $color-black;
+}
+
+.white {
+  color: $color-white;
+}
+
+.error {
+  color: $color-error;
+}
+
+.warn {
+  color: $color-warn;
+}

@@ -1,0 +1,142 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.main {
+  width: 100%;
+}
+.titleBlock {
+  height: 9rem;
+  margin: 0;
+  padding: 4rem 4rem 0;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.pageHeader {
+
+}
+
+.titleBar {
+  @include flex(row, flex-start, stretch);
+  max-width: 70rem;
+  height: 5rem;
+  border-radius: 5px 5px 0px 0px;
+  background-color: $color-azure;
+  border-bottom: 0.1rem solid rgba($color-white, 0.2);
+}
+
+.titleBarRight {
+  @include flex(row, flex-start, stretch);
+  margin-left: auto;
+}
+
+.cancelButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.helpButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.doneButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.card {
+  @include flex(column, flex-start, flex-start);
+  @include card;
+  margin-bottom: 4rem;
+  border-radius: 5px;
+}
+
+.cardWrapper {
+  padding: 4rem;
+  width: 100%;
+  @include flex(row, flex-start, flex-start);
+
+}
+
+.cardWrapperContacts {
+  padding: 30px;
+
+}
+
+.cardTitle {
+  margin: 10px 0 20px;
+}
+
+.flexRow {
+  @include flex(row, flex-start, flex-end);
+}
+
+.contentWrapper {
+  padding-left: 4rem;
+  padding-top: 3rem;
+  max-width: 74rem;
+}
+
+.icon {
+  font-size: 36px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.cardActionTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #92CC72;
+  display: inline-block;
+}
+
+.collapseWrapper {
+  box-shadow: none !important;
+  width: 100% !important;
+}
+.collapseHeader {
+  box-shadow: none !important;
+  padding: 6px 50px 5px 28px !important;
+  border-top: 1px solid #E5E5E5;
+
+  &:hover, &:focus {
+    background: #F7F7F7;
+  }
+}
+.collapseText {
+  padding: 30px !important;
+  line-height: 20px;
+}
+
+.openIcon {
+  margin-top: -14px;
+  margin-left: -8px;
+  display: inline-block;
+  overflow: visible;
+  font-size: 32px;
+}
+
+.blockCircle {
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  margin-right: 40px;
+  background: #F7F7F7;
+  color: #BFBFBF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blockCircleIcon {
+  font-size: 60px;
+  color: #BFBFBF;
+}
+
+.avatarBlock {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border: 1px solid #F0F0F0;
+}

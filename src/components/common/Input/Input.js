@@ -18,7 +18,6 @@ const materialInputStyles = {
     borderColor: '#fff',
     height: 1,
     borderBottomWidth: 1,
-    
   },
   floatingLabelStyle: {
     color: '#A8EAFF',
