@@ -2,24 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { I18n } from 'react-redux-i18n'
 import TextField from 'material-ui/TextField'
+import { MuiThemeProvider } from 'material-ui/styles'
 
 import { Translate } from 'components/common'
 
 import css from './Input.scss'
-
-let WrappedField = (props) => {console.log('props', props);return (
-  <TextField
-    label={props.label}
-    placeholder={I18n.t(props.placeholder)}
-    className={props.classNames}
-    margin='normal'
-    type={props.type}
-    InputProps={{ className: props.inputWrapperMods }}
-    inputProps={{ className: props.inputMods }}
-    InputLabelProps={{ className: props.labelMods }}
-    {...props.input}
-  />
-)}
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -107,16 +94,19 @@ export default class Input extends React.Component {
         {label && !materialInput && <div className={css.label}><Translate value={label} /></div>}
         {
           materialInput ? (
-            <WrappedField
-              label={label}
-              placeholder={placeholder}
-              classNames={classNames.join(' ')}
-              type={type}
-              inputWrapperMods={materialInputWrapperArray.join(' ')}
-              inputMods={inputModsArray.join(' ')}
-              labelMods={labelClassNames.join(' ')}
-              input={input}
-            />
+            <MuiThemeProvider>
+              <TextField
+                label={label}
+                placeholder={I18n.t(placeholder)}
+                className={classNames.join(' ')}
+                margin='normal'
+                type={type}
+                InputProps={{ className: materialInputWrapperArray.join(' ') }}
+                inputProps={{ className: inputModsArray.join(' ') }}
+                InputLabelProps={{ className: labelClassNames.join(' ') }}
+                {...input}
+              />
+            </MuiThemeProvider>
           ) : (
             <input
               className={inputModsArray.join(' ')}
