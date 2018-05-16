@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Field, reduxForm, SubmissionError} from 'redux-form'
+import { Field, reduxForm, SubmissionError } from 'redux-form'
 
-import { Button, Input, Link, UserRow } from 'components/common'
-import { FieldInputComponent } from 'components/Login'
-import WalletEntryModel from 'models/WalletEntryModel'
-import {LoginSteps} from 'store'
+import { Button, Input, UserRow } from 'src/components/common'
+import { WalletEntryModel } from 'src/models'
+import { LoginSteps } from 'src/store'
 
 import css from './RecoveryPasswordResetForm.scss'
 
@@ -15,9 +14,9 @@ const onSubmit = ({ password }) => {
   if (!password) {
     throw new SubmissionError({ _error: 'Wrong password' })
   }
-  
+
   return {
-    password
+    password,
   }
 }
 
@@ -27,44 +26,44 @@ class RecoveryPasswordResetForm extends React.Component {
     onChangeStep: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
-  
-  constructor(props){
+
+  constructor (props){
     super(props)
-    
+
     this.state = {
-      previousSelectedWallet: props.selectedWallet
+      previousSelectedWallet: props.selectedWallet,
     }
   }
-  
-  getWalletAddress(wallet) {
+
+  getWalletAddress (wallet) {
     return wallet && wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
   }
-  
-  navigateToSelectWallet(){
-    const {onChangeStep} = this.props
+
+  navigateToSelectWallet (){
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
-  
-  navigateToLogin(){
-    const {onChangeStep} = this.props
+
+  navigateToLogin (){
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.Login)
   }
-  
+
   render () {
     const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList } = this.props
     const wordsArray = new Array(12).fill()
-    
+
     return (
       <form className={css.root} name={FORM_PASSWORD_RESET} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Recover Account</div>
-        
+
         <div className={css.userRowWrapper}>
           <UserRow
             title={this.getWalletAddress(selectedWallet)}
             onClick={null}
           />
         </div>
-  
+
         <Field
           className={css.row}
           component={Input}
@@ -76,7 +75,7 @@ class RecoveryPasswordResetForm extends React.Component {
           mods={css.passwordField}
           errorMods={css.fieldError}
           lineEnabled={false}
-          materialInput={true}
+          materialInput
         />
         <Field
           className={css.row}
@@ -89,7 +88,7 @@ class RecoveryPasswordResetForm extends React.Component {
           mods={[css.passwordField, css.passwordConfirmField].join(' ')}
           errorMods={css.fieldError}
           lineEnabled={false}
-          materialInput={true}
+          materialInput
 
         />
         <Button

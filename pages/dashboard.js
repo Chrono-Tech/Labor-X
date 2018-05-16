@@ -1,4 +1,4 @@
-import DashboardContent from 'components/Dashboard/Dashboard'
+import { DashboardContent } from 'src/content'
 import { MainLayout } from 'components/layouts'
 import withRedux from 'next-redux-wrapper'
 import React from 'react'

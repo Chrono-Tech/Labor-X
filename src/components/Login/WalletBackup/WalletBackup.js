@@ -3,8 +3,7 @@ import React from 'react'
 import Router from 'next/router'
 
 import { Button, Input, Link, UserRow } from 'components/common'
-import {LoginSteps} from 'src/store'
-
+import { LoginSteps } from 'src/store'
 
 import css from './WalletBackup.scss'
 
@@ -21,7 +20,7 @@ export default class SelectWallet extends React.Component {
     downloadWallet: () => {},
   }
 
-  navigateToSelectWallet(){
+  navigateToSelectWallet (){
     const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
@@ -45,7 +44,7 @@ export default class SelectWallet extends React.Component {
           mods={Button.MODS.INVERT}
         />
         <p>
-          or <br/>
+          or <br />
           <button onClick={this.navigateToSelectWallet.bind(this)} className={css.continueLink}>Continue</button>
         </p>
       

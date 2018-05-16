@@ -18,8 +18,8 @@ export default class DialogComponent extends React.Component {
     open: false,
   }
   
-  render(){
-    const {title, children, onClose, ...other} = this.props
+  render (){
+    const { title, children, onClose, ...other } = this.props
     
     return (
       <Dialog onClose={onClose} {...other}>

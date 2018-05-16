@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Field, reduxForm, change, SubmissionError, submit} from 'redux-form'
+import { Field, reduxForm, SubmissionError } from 'redux-form'
 
-import { Button, Input, Link, UserRow } from 'components/common'
-import { FieldInputComponent } from 'components/Login'
-import WalletEntryModel from 'models/WalletEntryModel'
-import {LoginSteps, validateRecoveryForm} from 'store'
+import { Button, Input, UserRow } from 'src/components/common'
+// import { FieldInputComponent } from 'src/components/Login'
+import { WalletEntryModel } from 'src/models'
+import { LoginSteps, validateRecoveryForm } from 'src/store'
 
 import css from './RecoveryAccountForm.scss'
 
@@ -13,21 +13,21 @@ const FORM_RECOVERY_PASSWORD = 'form/formRecoveryPassword'
 
 const onSubmit = (values, dispatch) => {
   let words = [], mnemonic = ''
-  
+
   for (let i = 0; i < 12; i++) {
     values[`word-${i}`] && words.push(values[`word-${i}`])
   }
-  
+
   mnemonic = words.join(' ')
-  
+
   const validForm = dispatch(validateRecoveryForm(mnemonic))
-  
+
   if (!validForm) {
     throw new SubmissionError({ _error: 'Mnemonic incorrect for this wallet' })
   }
-  
+
   return {
-    mnemonic: mnemonic
+    mnemonic: mnemonic,
   }
 }
 
@@ -37,21 +37,21 @@ class RecoveryAccountForm extends React.Component {
     onChangeStep: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
-  
-  getWalletAddress(wallet) {
+
+  getWalletAddress (wallet) {
     return wallet && wallet.encrypted && wallet.encrypted[0] && wallet.encrypted[0].address || ''
   }
-  
-  navigateToSelectWallet(){
-    const {onChangeStep} = this.props
+
+  navigateToSelectWallet (){
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
-  
-  navigateToLogin(){
-    const {onChangeStep} = this.props
+
+  navigateToLogin (){
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.Login)
   }
-  
+
   render () {
     const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList } = this.props
     const wordsArray = new Array(12).fill()
@@ -63,7 +63,7 @@ class RecoveryAccountForm extends React.Component {
           <UserRow
             title={this.getWalletAddress(selectedWallet)}
             onClick={null}
-            hideActionIcon={true}
+            hideActionIcon
           />
         </div>
 
@@ -84,7 +84,7 @@ class RecoveryAccountForm extends React.Component {
           }
 
         </div>
-  
+
         <Field
           type='hidden'
           component='input'

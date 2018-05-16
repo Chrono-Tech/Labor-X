@@ -145,5 +145,4 @@ class AccountPasswordForm extends React.Component {
   }
 }
 
-
 export default reduxForm({ form: FORM_ACCOUNT_PASSWORD, validate, onSubmit })(AccountPasswordForm)

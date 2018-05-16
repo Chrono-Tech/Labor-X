@@ -27,7 +27,7 @@ export default class Popover extends React.Component {
     className: '',
   }
   
-  render(){
+  render (){
     const { children, arrowPosition, open, className, ...props } = this.props
     
     let arrowPositionStyle
@@ -50,7 +50,6 @@ export default class Popover extends React.Component {
     }
     
     let styles = [css.popover, open ? css.popoverVisible : '', css.popoverArrow, arrowPositionStyle, className]
-    
     
     return(
       <div className={styles.join(' ')} {...props}>

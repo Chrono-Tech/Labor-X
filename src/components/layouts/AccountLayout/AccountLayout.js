@@ -9,7 +9,7 @@ import 'styles/globals/globals.scss'
 import css from './AccountLayout.scss'
 
 export default class AccountLayout extends React.Component {
-  constructor(props){
+  constructor (props){
     super(props)
     
     this.state = {
@@ -17,16 +17,16 @@ export default class AccountLayout extends React.Component {
     }
   }
   
-  navigateBack() {
+  navigateBack () {
     if (this.state.activePage - 1  >= 0) {
-      this.setState({activePage: this.state.activePage - 1})
+      this.setState({ activePage: this.state.activePage - 1 })
     }
   }
   
-  navigateNext() {
+  navigateNext () {
     if (this.state.activePage + 1 <= this.props.children.length) {
       this.setState(
-        {activePage: this.state.activePage + 1},
+        { activePage: this.state.activePage + 1 },
         () => {
           const pagesWrapper = ReactDOM.findDOMNode(this.refs.pagesWrapper)
           pagesWrapper && pagesWrapper.scrollIntoView()
@@ -35,7 +35,7 @@ export default class AccountLayout extends React.Component {
     }
   }
   
-  renderChildren(){
+  renderChildren (){
     const pageProps = {
       navigateBack: this.navigateBack.bind(this),
       navigateNext: this.navigateNext.bind(this),
@@ -50,7 +50,7 @@ export default class AccountLayout extends React.Component {
               onSubmitSuccess: (props) => {
                 item.props.onSubmitSuccess && item.props.onSubmitSuccess(props)
                 this.navigateNext(props)
-              }
+              },
             })
           }
         </div>) : null
@@ -78,7 +78,7 @@ export default class AccountLayout extends React.Component {
               {
                 this.state.activePage !== 0 ? (
                   <button onClick={this.navigateBack.bind(this)} className={css.backLink}>
-                    <img src='/static/images/svg/back.svg' alt=''/>
+                    <img src='/static/images/svg/back.svg' alt='' />
                   </button>) : null
               }
           
@@ -94,7 +94,7 @@ export default class AccountLayout extends React.Component {
               transitionEnterTimeout={1000}
               transitionLeaveTimeout={2000}
               transitionAppear={false}
-              transitionEnter={true}
+              transitionEnter
               transitionLeave={false}
             >
               { this.renderChildren() }

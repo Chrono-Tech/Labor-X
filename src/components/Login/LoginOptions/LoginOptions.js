@@ -1,16 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import {PersistGate} from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Router from 'next/router'
-import Paper from 'material-ui/Paper';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
+import Dialog from 'material-ui/Dialog'
 
 import {
   signIn,
@@ -42,7 +36,7 @@ import {
   WalletBackup,
 } from 'components/Login'
 
-import WalletEntryModel from 'models/WalletEntryModel'
+import { WalletEntryModel } from 'src/models'
 
 import css from './LoginOptions.scss'
 
@@ -69,21 +63,31 @@ class LoginOptions extends React.Component {
 
   constructor (props) {
     super(props)
-    
+
     this.state = {
-      isModalOpen: props.walletsList.length === 0
+      isModalOpen: props.walletsList.length === 0,
     }
   }
-  
-  componentWillMount(){
+
+  componentWillMount () {
     const { selectedWallet, onChangeStep, step } = this.props
-    
+
     if (selectedWallet && !step) {
       onChangeStep(LoginSteps.Login)
     }
   }
-  
-  renderComponent(){
+
+  handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
+
+  closeModal (){
+    this.setState({ isModalOpen: false })
+  }
+
+  navigateToCreateAccount (){
+    Router.push('/create-account')
+  }
+
+  renderComponent () {
     const {
       onChangeStep,
       step,
@@ -101,9 +105,9 @@ class LoginOptions extends React.Component {
       navigateToBackupWallet,
       downloadWallet,
     } = this.props
-  
+
     let component
-  
+
     switch (step) {
       case LoginSteps.Mnemonic:
         component = (<MnemonicForm onChangeStep={onChangeStep} onSubmitSuccess={onSubmitMnemonic} />)
@@ -157,53 +161,40 @@ class LoginOptions extends React.Component {
       default:
         component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
     }
-    
+
     return [<div key={step} className={css.componentWrapper}>{component}</div>]
   }
 
-  handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
-  
-  closeModal(){
-    this.setState({ isModalOpen: false })
-  }
-  
-  navigateToCreateAccount(){
-    Router.push('/create-account')
-  }
-  
-  renderDialog(){
+  renderDialog (){
     return (
-      <Dialog classes={{paper: css.dialog}} open={this.state.isModalOpen}>
-        <Paper>
-          <DialogTitle className={css.dialogTitle}>
-            LaborX account is not found
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText className={css.dialogContent}>
-              LaborX account with the provided address is not found.
-              Would you like to Create a New Account?
-            </DialogContentText>
-          </DialogContent>
-      
-          <DialogActions className={css.actionWrapper}>
-            <Button
-              label='No'
-              onClick={this.closeModal.bind(this)}
-              buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
-              type={Button.TYPES.SUBMIT}
-            />
-            <Button
-              label='YES'
-              onClick={this.navigateToCreateAccount.bind(this)}
-              buttonClassName={css.actionButton}
-              type={Button.TYPES.SUBMIT}
-            />
-          </DialogActions>
-        </Paper>
+      <Dialog
+        contentClassName={css.dialog}
+        open={this.state.isModalOpen}
+        title={<h2>LaborX account is not found</h2>}
+        titleClassName={css.dialogTitle}
+        bodyClassName={css.dialogContent}
+        actionsContainerClassName={css.actionWrapper}
+        actions={[
+          <Button
+            label='No'
+            onClick={this.closeModal.bind(this)}
+            buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
+            type={Button.TYPES.SUBMIT}
+          />,
+          <Button
+            label='YES'
+            onClick={this.navigateToCreateAccount.bind(this)}
+            buttonClassName={css.actionButton}
+            type={Button.TYPES.SUBMIT}
+          />,
+        ]}
+      >
+        LaborX account with the provided address is not found.
+        Would you like to Create a New Account?
       </Dialog>
     )
   }
-  
+
   render () {
 
     return (
@@ -213,7 +204,7 @@ class LoginOptions extends React.Component {
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={2000}
           transitionAppear={false}
-          transitionEnter={true}
+          transitionEnter
           transitionLeave={false}
         >
           {this.renderComponent()}
@@ -225,29 +216,30 @@ class LoginOptions extends React.Component {
 }
 
 export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
-  
+
   class WithPersistGate extends React.Component {
-    
+
     static displayName = `withPersistGate(${WrappedComponent.displayName
     || WrappedComponent.name
     || 'Component'})`;
+
     static contextTypes = {
-      store: PropTypes.object.isRequired
+      store: PropTypes.object.isRequired,
     }
-    
-    constructor(props, context) {
+
+    constructor (props, context) {
       super(props, context)
       this.store = context.store
     }
-    
-    render() {
+
+    render () {
       return (
         <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store.__persistor}>
           <WrappedComponent {...this.props} />
         </PersistGate>
       )
     }
-    
+
   }
 
 )

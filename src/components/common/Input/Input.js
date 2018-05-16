@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { I18n } from 'react-redux-i18n'
 import TextField from 'material-ui/TextField'
-import { createMuiTheme, MuiThemeProvider, withStyles } from 'material-ui/styles'
 
 import { Translate } from 'components/common'
 
@@ -15,9 +14,9 @@ let WrappedField = (props) => {console.log('props', props);return (
     className={props.classNames}
     margin='normal'
     type={props.type}
-    InputProps={{className: props.inputWrapperMods }}
-    inputProps={{className: props.inputMods }}
-    InputLabelProps={{className: props.labelMods }}
+    InputProps={{ className: props.inputWrapperMods }}
+    inputProps={{ className: props.inputMods }}
+    InputLabelProps={{ className: props.labelMods }}
     {...props.input}
   />
 )}
@@ -27,6 +26,7 @@ export default class Input extends React.Component {
     type: PropTypes.string,
     className: PropTypes.string,
     placeholder: PropTypes.string,
+    label: PropTypes.string,
     invert: PropTypes.bool,
     disabled: PropTypes.bool,
     lineEnabled: PropTypes.bool,
@@ -66,6 +66,7 @@ export default class Input extends React.Component {
     INVERT: css.invert,
     HUGE: css.huge,
     BOXED: css.boxed,
+    ALIGN_LEFT: css.alignLeft,
   }
 
   static defaultProps = {
@@ -100,7 +101,6 @@ export default class Input extends React.Component {
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
     input.autoComplete = autoComplete ? 'on' : 'off'
-    
 
     return (
       <div className={materialInput ? '' : classNames.join(' ')}>
@@ -112,9 +112,9 @@ export default class Input extends React.Component {
               placeholder={placeholder}
               classNames={classNames.join(' ')}
               type={type}
-              inputWrapperMods={ materialInputWrapperArray.join(' ') }
-              inputMods={ inputModsArray.join(' ') }
-              labelMods={ labelClassNames.join(' ') }
+              inputWrapperMods={materialInputWrapperArray.join(' ')}
+              inputMods={inputModsArray.join(' ')}
+              labelMods={labelClassNames.join(' ')}
               input={input}
             />
           ) : (

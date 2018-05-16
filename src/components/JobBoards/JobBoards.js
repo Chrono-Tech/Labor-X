@@ -1,5 +1,5 @@
 import React from 'react'
-import {reduxForm, Field} from 'redux-form'
+import { reduxForm, Field } from 'redux-form'
 import Popover from 'material-ui/Popover'
 
 import { Translate, Input } from 'components/common'
@@ -9,14 +9,12 @@ import css from './JobBoards.scss'
 
 const FORM_JOB_BOARDS = 'form/jobBoards'
 
-
 class JobBoards extends React.Component {
   render () {
     return (
       <div className={css.main}>
         <div className={css.contentWrapper}>
           <h2>Job Boards</h2>
-          
           
           <form name={FORM_JOB_BOARDS}>
             <div className={css.actionsBlock}>
@@ -30,7 +28,7 @@ class JobBoards extends React.Component {
                   name='search'
                   type='password'
                   placeholder='Search by keyword'
-                  materialInput={true}
+                  materialInput
                   
                 />
               </div>

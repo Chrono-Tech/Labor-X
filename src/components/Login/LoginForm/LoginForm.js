@@ -4,9 +4,9 @@ import { Field, reduxForm, SubmissionError } from 'redux-form'
 
 import { Button, Input, Link, UserRow } from 'components/common'
 import { FieldInputComponent } from 'components/Login'
-import WalletEntryModel from 'models/WalletEntryModel'
+import { WalletEntryModel } from 'src/models'
 import Web3 from 'src/network/Web3Provider'
-import {LoginSteps} from 'src/store'
+import { LoginSteps } from 'src/store'
 
 import css from './LoginForm.scss'
 
@@ -19,7 +19,7 @@ class LoginForm extends React.Component {
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
     onClickForgotPassword: PropTypes.func,
   }
-  
+
   onSubmit ({ password }) {
     const { selectedWallet } = this.props
     let web3 = Web3.getWeb3()
@@ -35,13 +35,13 @@ class LoginForm extends React.Component {
     }
   }
 
-  navigateToSelectWallet() {
-    const {onChangeStep} = this.props
+  navigateToSelectWallet () {
+    const { onChangeStep } = this.props
     onChangeStep(LoginSteps.SelectWallet)
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword} = this.props
+    const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword } = this.props
 
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
           placeholder='Enter Password'
           label='Enter Password'
           errorMods={css.fieldError}
-          materialInput={true}
+          materialInput
         />
         <Button
           className={css.row}
@@ -83,6 +83,5 @@ class LoginForm extends React.Component {
     )
   }
 }
-
 
 export default reduxForm({ form: FORM_LOGIN })(LoginForm)

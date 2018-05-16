@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {reduxForm, Field} from 'redux-form'
+import { reduxForm, Field } from 'redux-form'
 
 import { Translate, Input, Popover } from 'components/common'
 import css from './JobBoardItem.scss'
@@ -10,7 +10,7 @@ export default class JobBoardItem extends React.Component {
     DEFAULT: 'default',
     NEED_VERIFY: 'needVerify',
     JOINED: 'joined',
-    APPROVAL: 'approval'
+    APPROVAL: 'approval',
   }
   
   static propTypes = {
@@ -26,7 +26,7 @@ export default class JobBoardItem extends React.Component {
     status: JobBoardItem.STATUS.DEFAULT,
   }
   
-  constructor(){
+  constructor (){
     super()
     
     this.state = {
@@ -36,7 +36,7 @@ export default class JobBoardItem extends React.Component {
     }
   }
   
-  getRatingStars() {
+  getRatingStars () {
     let starsArray = []
     let count = 5
     
@@ -51,7 +51,7 @@ export default class JobBoardItem extends React.Component {
     return starsArray
   }
   
-  renderActionsTooltip({src, popoverContent, popoverClassName = ''}){
+  renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }){
     const { actionPopover } = this.state
     
     return (
@@ -70,7 +70,7 @@ export default class JobBoardItem extends React.Component {
     )
   }
   
-  renderDefaultActionButton(text, onClick){
+  renderDefaultActionButton (text, onClick){
     const { actionPopover } = this.state
     const handleClick = onClick ? onClick : () => {}
     const buttonText = text || 'Join the Board'
@@ -99,7 +99,7 @@ export default class JobBoardItem extends React.Component {
     )
   }
   
-  renderNeedVerifyButton(text, onClick){
+  renderNeedVerifyButton (text, onClick){
     const { actionPopover } = this.state
     const handleClick = onClick ? onClick : () => {}
     const buttonText = text || 'Verify Me to Join'
@@ -129,7 +129,7 @@ export default class JobBoardItem extends React.Component {
     )
   }
   
-  renderJoinedActions(){
+  renderJoinedActions (){
     return (
       <div>
         <button className={css.actionButtonView}>
@@ -142,7 +142,7 @@ export default class JobBoardItem extends React.Component {
     )
   }
   
-  renderApprovalActions(){
+  renderApprovalActions (){
     const { actionPopover } = this.state
   
     const popoverContent = (
@@ -162,7 +162,7 @@ export default class JobBoardItem extends React.Component {
     )
   }
   
-  renderActions(){
+  renderActions (){
     const { status } = this.props
     
     switch(status) {
@@ -183,31 +183,31 @@ export default class JobBoardItem extends React.Component {
     }
   }
   
-  handleStarsPopoverOpen(e){
+  handleStarsPopoverOpen (e){
     this.setState({ starsPopover: true })
   }
   
-  handleStarsPopoverClose(e){
+  handleStarsPopoverClose (e){
     this.setState({ starsPopover: false })
   }
   
-  handleSecurityPopoverOpen(e){
+  handleSecurityPopoverOpen (e){
     this.setState({ securityPopover: true })
   }
   
-  handleSecurityPopoverClose(){
+  handleSecurityPopoverClose (){
     this.setState({ securityPopover: false })
   }
   
-  handleActionsPopoverOpen(e){
+  handleActionsPopoverOpen (e){
     this.setState({ actionPopover: true })
   }
   
-  handleActionsPopoverClose(){
+  handleActionsPopoverClose (){
     this.setState({ actionPopover: false })
   }
   
-  getStarsPopover(){
+  getStarsPopover (){
     const { starsPopover } = this.state
     
     return (
@@ -220,43 +220,43 @@ export default class JobBoardItem extends React.Component {
         <div className={css.popoverDescription}>Rating given by the board participants.</div>
         <table className={css.starsRatingTable}>
           <tbody>
-          <tr>
-            <td className={css.countStars}>5 stars</td>
-            <td className={css.countStarsVotes}>220</td>
-            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
-          </tr>
-          <tr>
-            <td className={css.countStars}>4 stars</td>
-            <td className={css.countStarsVotes}>220</td>
-            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
-          </tr>
-          <tr>
-            <td className={css.countStars}>3 stars</td>
-            <td className={css.countStarsVotes}>220</td>
-            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
-          </tr>
-          <tr>
-            <td className={css.countStars}>2 stars</td>
-            <td className={css.countStarsVotes}>220</td>
-            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
-          </tr>
-          <tr>
-            <td className={css.countStars}>1 stars</td>
-            <td className={css.countStarsVotes}>220</td>
-            <td className={css.countRating}><span className={css.countRatingTrack}/></td>
-          </tr>
-          <tr className={css.totalRow}>
-            <td>Total</td>
-            <td>860</td>
-            <td>  </td>
-          </tr>
+            <tr>
+              <td className={css.countStars}>5 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr>
+              <td className={css.countStars}>4 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr>
+              <td className={css.countStars}>3 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr>
+              <td className={css.countStars}>2 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr>
+              <td className={css.countStars}>1 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr className={css.totalRow}>
+              <td>Total</td>
+              <td>860</td>
+              <td />
+            </tr>
           </tbody>
         </table>
       </Popover>
     )
   }
   
-  getSecurityPopover(){
+  getSecurityPopover (){
     const { securityPopover } = this.state
     
     return (

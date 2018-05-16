@@ -1,6 +1,6 @@
 import Web3 from 'web3'
+import bip39 from 'bip39'
 import TestPRCNode from './TestPRCNode'
-import bip39 from "bip39";
 
 class EthereumService {
   constructor (node) {

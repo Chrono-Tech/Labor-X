@@ -13,7 +13,7 @@ import css from './PrivateKeyForm.scss'
 
 const FORM_PRIVATE_KEY = 'form/privateKey'
 
-const onSubmit = ({key}) => {
+const onSubmit = ({ key }) => {
   const address = ethereumService.createAddressFromPrivateKey(key)
   
   return new SignInModel({
@@ -48,7 +48,7 @@ class PrivateKeyForm extends React.Component {
           autoComplete={false}
           lineEnabled={false}
           mods={css.keyField}
-          materialInput={true}
+          materialInput
         />
         <Button
           label='Login'
