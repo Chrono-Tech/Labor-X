@@ -17,46 +17,46 @@ class Index extends React.Component {
     getCookiesNoticeValue: PropTypes.func,
     isHideCookiesNotice: PropTypes.bool,
   }
-  
+
   static defaultProps = {
     hideCookiesNotice: () => {},
     getCookiesNoticeValue: () => {},
     isHideCookiesNotice: true,
   }
-  
+
   static getInitialProps ({ store }) {
     store.dispatch(bootstrap())
   }
-  
+
   constructor (){
     super()
-    
+
     this.state = {
       activeIndex: 0,
       isVisibleNavBottom: true,
     }
   }
-  
+
   componentDidMount (){
     this.props.getCookiesNoticeValue()
     this.learnMoreVisibility()
     window.addEventListener('scroll', this.learnMoreVisibility.bind(this))
   }
-  
+
   getCookiesNoticeWidget (){
     return (
       <div className={[css.cookiesNotice].join(' ')}>
         <img className={css.cookiesNoticeImg} src='/static/images/laborx-promo-info.svg' alt='' />
-        We use cookies to improve our user's experience. Read our <Link href='#'>cookies policies</Link> to learn more or change settings.
+        We use cookies to improve our user&#39;s experience. Read our <Link href='#'>cookies policies</Link> to learn more or change settings.
         <button className={css.noticeClose} onClick={this.props.hideCookiesNotice.bind(this)}>X</button>
       </div>
     )
   }
-  
+
   goToNextSlide (){
     this.setState({ activeIndex: this.state.activeIndex })
   }
-  
+
   learnMoreVisibility (){
     let carousel = ReactDOM.findDOMNode(this.refs.carousel)
     let rect = carousel.getBoundingClientRect()
@@ -66,7 +66,7 @@ class Index extends React.Component {
       this.setState({ isVisibleNavBottom: true })
     }
   }
-  
+
   render () {
     return (
       <div className={[css.root, this.props.isHideCookiesNotice ? '' : css.rootCookiesNoticeVisible].join(' ')}>
@@ -171,7 +171,7 @@ class Index extends React.Component {
                       verified by out professional team. LaborX is using an innovative
                       technology and guarantees reliable contacts reputation.
                     </div>
-      
+
                   </div>
                 </div>
               </div>
@@ -210,7 +210,7 @@ class Index extends React.Component {
                       LaborX is a fully automated solution with ability to track you
                       time, view reports and plan your schedule.
                     </div>
-      
+
                   </div>
                 </div>
               </div>
@@ -230,7 +230,7 @@ class Index extends React.Component {
                     </div>
                     <div className={css.advantageCountBlockText}>
                     posted their jobs
-        
+
                     </div>
                   </div>
                 </div>
@@ -291,7 +291,7 @@ class Index extends React.Component {
                       The ability to pay with a variety of digital tokens makes the
                       system universal and not tied to any particular country or region.
                     </div>
-        
+
                   </div>
                 </div>
               </div>

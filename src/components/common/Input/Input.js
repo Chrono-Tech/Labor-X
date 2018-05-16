@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { I18n } from 'react-redux-i18n'
-import TextField from 'material-ui/TextField';
+import TextField from 'material-ui/TextField'
 
 import { Translate } from 'components/common'
 
@@ -73,7 +73,7 @@ export default class Input extends React.Component {
     lineEnabled: false,
     materialInput: false,
   }
-  
+
   renderInput(){
     const defaultInput = (<input
       className={inputModsArray.join(' ')}
@@ -82,7 +82,7 @@ export default class Input extends React.Component {
       disabled={disabled}
       {...input}
     />)
-    
+
     return (
       <TextField
         label={label}
@@ -101,7 +101,7 @@ export default class Input extends React.Component {
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
     input.autoComplete = autoComplete ? 'on' : 'off'
-    
+
 
     return (
       <div className={classNames.join(' ')}>

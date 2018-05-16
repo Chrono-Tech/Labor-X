@@ -5,12 +5,11 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { reducer as formReducer } from 'redux-form'
 import { createLogger } from 'redux-logger'
 import * as thunkMiddleware from 'redux-thunk'
-import { login, landing, wallet, createAccount } from './reducers'
+import web3Factory from 'src/web3'
+import { initFrontend } from './bootstrap'
+import { login, landing, ethereum, daos, tokens, wallet, createAccount, boards } from './reducers'
 
-export * from './landing/actions'
-export * from './login/actions'
-export * from './wallet/actions'
-export * from './createAccount/actions'
+export * from './actions'
 
 const loggerMiddleware = createLogger({
   level:      'info',
@@ -18,19 +17,33 @@ const loggerMiddleware = createLogger({
   serialize: true,
 })
 
-export default () => {
+const web3 = typeof window !== 'undefined'
+  ? web3Factory()
+  : null
+
+export default (initialState = {}) => {
+
   const reducer = combineReducers({
     form: formReducer,
     i18n: i18nReducer,
     login,
     landing,
-    wallet,
+    ethereum: ethereum({ web3 }),
+    daos,
+    tokens,
+    boards,
+    wallet: wallet({ web3 }),
     createAccount,
   })
 
+  // Here you can recover state sent from the backend
+  const extra = {
+    i18n: initialState.i18n,
+  }
+
   const store = createStore(
     reducer,
-    undefined,
+    extra,
     composeWithDevTools(
       process.env.NODE_ENV !== 'production'
         ? applyMiddleware(thunkMiddleware.default, loggerMiddleware)
@@ -38,9 +51,13 @@ export default () => {
     )
   )
 
-  store.__persistor = persistStore(store)
-
   syncTranslationWithStore(store)
+
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line
+    store.__persistor = persistStore(store)
+    store.dispatch(initFrontend(store)({ web3 }))
+  }
 
   return store
 }

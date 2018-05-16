@@ -1,6 +1,5 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import AbstractModel from './AbstractModel'
+import AbstractModel from '../AbstractModel'
 
 const schema = {
   key: PropTypes.string,
@@ -10,13 +9,13 @@ const schema = {
 }
 
 export default class WalletEntryModel extends AbstractModel {
-  constructor(props) {
+  constructor (props) {
     super(props, schema)
-    
-    this.key = props.key || ''
-    this.name = props.name || ''
-    this.types = props.types || {}
-    this.encrypted = props.encrypted
-    
+    Object.assign(this, {
+      key: '',
+      name: '',
+      types: {},
+    }, props)
+    Object.freeze(this)
   }
 }

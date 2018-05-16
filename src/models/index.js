@@ -1,13 +1,18 @@
-import WalletEntryModel from './WalletEntryModel'
-import WalletModel from './WalletModel'
-import FileModel from './FileModel'
-import LogInModel from './LogInModel'
-import SignInModel from './SignInModel'
-
-export {
-  WalletModel,
-  WalletEntryModel,
-  FileModel,
-  LogInModel,
-  SignInModel
-}
+export { default as HolderModel } from './utils/HolderModel'
+export { default as ContractModel } from './contracts/ContractModel'
+export { default as ContractDAOModel } from './contracts/ContractDAOModel'
+export { default as WalletEntryModel } from './wallets/WalletEntryModel'
+export { default as WalletModel } from './wallets/WalletModel'
+export { default as SignerModel } from './wallets/SignerModel'
+export { default as FileModel } from './FileModel'
+export { default as LogInModel } from './LogInModel'
+export { default as SignInModel } from './SignInModel'
+export { default as TokenModel } from './tokens/TokenModel'
+export { default as TokenDAOModel } from './tokens/TokenDAOModel'
+export { default as TxExecModel } from './txs/TxExecModel'
+export { default as TxEntryModel } from './txs/TxEntryModel'
+export { default as BoardCreateEvent } from './app/BoardCreateEvent'
+export { default as BoardModel } from './app/BoardModel'
+export { default as TagModel } from './meta/TagModel'
+export { default as TagAreaModel } from './meta/TagAreaModel'
+export { default as TagCategoryModel } from './meta/TagCategoryModel'

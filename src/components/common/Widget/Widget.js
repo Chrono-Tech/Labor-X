@@ -48,7 +48,7 @@ export default class Widget extends React.Component {
     return (
       <div className={css.root}>
         { href ? <a href={href}>{this.header()}</a> : this.header() }
-        {children && <p className={css.content}>{children}</p>}
+        {children && <div className={css.content}>{children}</div>}
         {actions && actions.map(this.renderActions())}
       </div>
     )

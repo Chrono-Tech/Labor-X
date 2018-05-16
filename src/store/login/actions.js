@@ -1,8 +1,6 @@
 import Router from 'next/router'
-import type SignInModel from 'models/SignInModel'
-import WalletEntryModel from 'models/WalletEntryModel'
+import { WalletEntryModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
-import { getWalletAddress } from 'src/utils'
 
 export const LoginSteps = {
   Ledger: 'ledger',
@@ -37,7 +35,7 @@ export const setSignInModel = (signInModel) => (dispatch) => {
 export const signIn = ({password}) => (dispatch, getState) => {
   const state = getState()
   const { selectedWallet } = state.wallet
-  
+
   dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
 
   dispatch({ type: LOGIN_SIGN_IN })
@@ -55,7 +53,7 @@ export const createAccount = (walletName, password) => (dispatch, getState) => {
 
   if (signInModel) {
     const wallet = dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
-    
+
     dispatch(walletAdd(wallet))
 
     dispatch(changeStep(LoginSteps.SelectWallet))
@@ -82,23 +80,23 @@ export const selectWalletRecoveryForm = (wallet) => (dispatch) => {
 
 export const onSelectWallet = (wallet) => (dispatch, getState) => {
   const state = getState()
-  
+
   const {isRecoveryPasswordMode} = state.login
-  
+
   if (isRecoveryPasswordMode){
-    
+
     dispatch(selectWalletRecoveryForm(wallet))
-    
+
     dispatch(changeStep(LoginSteps.RecoveryPassword))
-  
-  
+
+
   } else {
-    
+
     dispatch(walletSelect(wallet))
-    
+
     dispatch(changeStep(LoginSteps.Login))
   }
-  
+
 
 }
 
@@ -116,9 +114,9 @@ export const navigateToSelectLoginMethod = () => (dispatch) => {
 
 export const navigateToRecoveryPassword = () => (dispatch, getState) => {
   const state = getState()
-  
+
   const { selectedWallet } = state.wallet
-  
+
   dispatch(selectWalletRecoveryForm(selectedWallet))
   dispatch({ type: LOGIN_SET_RECOVERY_PASSWORD_MODE })
   dispatch(changeStep(LoginSteps.RecoveryPassword))
@@ -131,14 +129,14 @@ export const onSubmitRecoveryAccountForm = ({mnemonic}) => (dispatch) => {
 
 export const onConfirmRecoveryPassword = ({ password }) => (dispatch, getState) => {
   const state = getState()
-  
+
   const { selectedWalletRecoveryForm, recoveryFormMnemonic } = state.login
-  
-  
+
+
   dispatch(resetPasswordWallet(selectedWalletRecoveryForm, recoveryFormMnemonic, password))
-  
+
   dispatch({ type: LOGIN_RESET_RECOVERY_PASSWORD_MODE })
-  
+
   Router.push('/dashboard')
 }
 
@@ -148,16 +146,16 @@ export const changeStep = (step) => (dispatch) => {
 
 export const validateRecoveryForm = (mnemonic) => (dispatch, getState) => {
   const state = getState()
-  
+
   const { selectedWalletRecoveryForm } = state.login
-  
+
   return dispatch(validateMnemonicForWallet(selectedWalletRecoveryForm, mnemonic))
-  
+
 }
 
 export const setRecoveryFormMnemonic = (mnemonic) => (dispatch, getState) => {
   const state = getState()
-  
+
   return dispatch({ type: LOGIN_SET_RECOVERY_FORM_MNEMONIC, mnemonic})
-  
+
 }
