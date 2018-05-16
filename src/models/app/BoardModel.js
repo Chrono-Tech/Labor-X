@@ -4,7 +4,20 @@ import { TAG_CATEGORIES_LIST } from '../meta/TagCategoryModel'
 
 const schemaFactory = () => ({
   id: PropTypes.number.isRequired,
+  ipfs: PropTypes.instanceOf(IPFSBoardModel),
 })
+
+class IPFSBoardModel extends AbstractModel {
+  constructor (props) {
+    super(Object.assign({
+      name: 'Default Name',
+      description: 'Default Job Description',
+      company: 'Company Name',
+    }, props), schemaFactory())
+    Object.assign(this, props)
+    Object.freeze(this)
+  }
+}
 
 export default class BoardModel extends AbstractModel {
   constructor (props) {

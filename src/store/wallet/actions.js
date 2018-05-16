@@ -1,3 +1,4 @@
+import { Router } from 'src/routes'
 import Web3 from 'src/network/Web3Provider'
 import uniqid from 'uniqid'
 import bip39 from 'bip39'
@@ -121,4 +122,5 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
 export const logout = () => (dispatch) => {
   dispatch(walletSelect(null))
   dispatch(walletLoad(null))
+  Router.pushRoute('/')
 }

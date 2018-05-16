@@ -1,10 +1,10 @@
 import { Translate } from 'components/common'
-import NextLink from 'next/link'
+import { Link } from 'src/routes'
 import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Link.scss'
 
-export default class Link extends React.Component {
+export default class LinkControl extends React.Component {
   static propTypes = {
     href: PropTypes.string.isRequired,
     className: PropTypes.string,
@@ -19,14 +19,14 @@ export default class Link extends React.Component {
     className && classNames.push(className)
 
     return (
-      <NextLink href={this.props.href}>
+      <Link route={this.props.href}>
         <a className={classNames.join(' ')} title={label}>
           {label
             ? <Translate value={label} />
             : children
           }
         </a>
-      </NextLink>
+      </Link>
     )
   }
 }

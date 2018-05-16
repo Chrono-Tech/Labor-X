@@ -79,7 +79,7 @@ class Index extends React.Component {
           { this.getCookiesNoticeWidget() }
           <div className={css.navigationPanel}>
             <div className={css.createButtonWrapper} >
-              <Link href='/' className={css.createButton}>
+              <Link href='/create-account' className={css.createButton}>
                 New account
               </Link>
             </div>
