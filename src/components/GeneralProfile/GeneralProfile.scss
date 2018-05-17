@@ -53,7 +53,7 @@
 }
 
 .cardWrapper {
-  padding: 4rem;
+  padding: 3rem;
   width: 100%;
   @include flex(row, flex-start, flex-start);
 
@@ -65,11 +65,12 @@
 }
 
 .cardTitle {
-  margin: 10px 0 20px;
+  margin: 10px 0 13px;
 }
 
 .flexRow {
   @include flex(row, flex-start, flex-end);
+  margin-bottom: 10px;
 }
 
 .contentWrapper {
@@ -87,8 +88,19 @@
 .cardActionTitle {
   font-size: 16px;
   font-weight: 500;
-  color: #92CC72;
   display: inline-block;
+}
+
+.cardActionTitleSuccess {
+  color: $color-green;
+}
+
+.cardActionTitleError {
+  color: $color-red;
+}
+
+.cardActionTitleWarning {
+  color: $color-warn;
 }
 
 .collapseWrapper {
@@ -102,11 +114,18 @@
 
   &:hover, &:focus {
     background: #F7F7F7;
+
+    .cardActionTitle, .icon {
+      color: $color-blue;
+    }
   }
+
+
 }
 .collapseText {
   padding: 30px !important;
   line-height: 20px;
+  border-top: 1px solid #F7F7F7;
 }
 
 .openIcon {
@@ -135,8 +154,96 @@
 }
 
 .avatarBlock {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  margin-right: 40px;
+  background: #F7F7F7;
+  color: #BFBFBF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid #F0F0F0;
+  overflow: hidden;
+  position: relative;
+
+  &:hover .avatarUploadButton {
+    display: block;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.avatarUploadButton {
+  background: rgba(0,0,0,0.6);
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  cursor: pointer;
+  display: none;
+  line-height: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+
+  text-align: center;
+
+  .avatarUploadIcon {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 21px 0 2px;
+    line-height: 24px;
+  }
+
+  .avatarUploadButtonText {
+
+  }
+}
+
+.field {
+  width: 230px !important;
+  margin-right: 40px;
+
+  input {
+    &::placeholder {
+      color: #333;
+    }
+  }
+}
+
+.shortField {
+  width: 64px !important;
+  margin-right: 40px;
+
+  input {
+    &::placeholder {
+      color: #333;
+    }
+  }
+}
+
+.phoneField {
+  width: 140px !important;
+  //margin-right: 40px;
+
+  input {
+    &::placeholder {
+      color: #333;
+    }
+  }
+}
+
+.fieldLastName {
+  margin-right: 0;
+}
+
+.dateSelect {
+  width: 64px !important;
+  margin-right: 20px;
 }

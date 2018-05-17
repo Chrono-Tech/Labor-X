@@ -3,6 +3,8 @@ import React from 'react'
 import { I18n } from 'react-redux-i18n'
 import TextField from 'material-ui/TextField'
 import { MuiThemeProvider } from 'material-ui/styles'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import muiThemeable from 'material-ui/styles/muiThemeable'
 
 import { Translate } from 'components/common'
 
@@ -46,7 +48,52 @@ const materialInputStyles = {
   },
 }
 
+const profileInputStyles = {
+  underlineStyle: {
+    bottom: 2,
+  },
+  underlineFocusStyle: {
+    bottom: 2,
+    borderColor: '#00A0D2',
+    borderBottomWidth: 1,
+  },
+  inputStyle: {
+    fontSize: 14,
+  },
+  floatingLabelStyle: {
+    top: 39,
+    color: '#333',
+    fontSize: 14,
+    fontWeight: 300,
+  },
+}
+
+const WrapperInput = (props) => {
+  console.log('wrapper', props)
+  const theme = props.muiTheme && props.muiTheme.customStyles || {}
+  
+  return (
+    <TextField
+      floatingLabelText={props.label}
+      placeholder={props.placeholder}
+      className={props.className}
+      margin='normal'
+      type={props.type}
+      {...theme}
+      {...props.input}
+    />
+  )
+}
+
+const CustomInput = muiThemeable()(WrapperInput)
+
 export default class Input extends React.Component {
+  static MATERIAL_THEME = {
+    DEFAULT: 'default',
+    LOGIN: 'login',
+    PROFILE: 'profile',
+  }
+  
   static propTypes = {
     type: PropTypes.string,
     className: PropTypes.string,
@@ -80,6 +127,10 @@ export default class Input extends React.Component {
       PropTypes.arrayOf(PropTypes.string),
     ]),
     materialInput: PropTypes.bool,
+    materialTheme: PropTypes.oneOf([
+      Input.MATERIAL_THEME.DEFAULT,
+      Input.MATERIAL_THEME.LOGIN_THEME,
+    ]),
   }
 
   static TYPES = {
@@ -112,13 +163,42 @@ export default class Input extends React.Component {
     lineEnabled: false,
     materialInput: false,
   }
+  
+  getMaterialInputTheme(){
+    const { materialTheme } = this.props
+    
+    let theme
+    
+    switch(materialTheme){
+      case Input.MATERIAL_THEME.DEFAULT:
+        theme = {}
+        break
+      
+      case Input.MATERIAL_THEME.LOGIN:
+        theme = materialInputStyles
+        break
+      
+      case Input.MATERIAL_THEME.PROFILE:
+        theme = profileInputStyles
+        break
+      
+      default:
+        theme = {}
+    }
+    
+    return getMuiTheme({
+      customStyles: {...theme}
+    })
+  }
 
   render () {
     const { className, placeholder, type, input, label, meta, disabled, inputMods, errorMods, lineEnabled, autoComplete,
       mods, materialInput } = this.props
-    const classNames = [ css.root, materialInput ? css.materialInput : '' ].concat(mods)
+    const classNames = [ css.root ].concat(mods)
     const inputModsArray = [css.input ].concat(inputMods)
     const errorClassNames = [css.error].concat(errorMods)
+    
+    const materialStyles = this.getMaterialInputTheme()
     
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
@@ -129,21 +209,14 @@ export default class Input extends React.Component {
         {label && !materialInput && <div className={css.label}><Translate value={label} /></div>}
         {
           materialInput ? (
-            <MuiThemeProvider>
-              <TextField
-                floatingLabelText={label}
+            <MuiThemeProvider muiTheme={materialStyles}>
+              <CustomInput
+                label={label}
                 placeholder={I18n.t(placeholder)}
-                className={classNames.join(' ')}
-                margin='normal'
+                className={className}
                 type={type}
-                inputStyle={materialInputStyles.inputStyle}
-                underlineStyle={materialInputStyles.underlineStyle}
-                underlineFocusStyle={materialInputStyles.underlineFocusStyle}
-                floatingLabelStyle={materialInputStyles.floatingLabelStyle}
-                floatingLabelFocusStyle={materialInputStyles.floatingLabelFocusStyle}
+                input={input}
                 errorText={meta.touched && meta.error}
-                errorStyle={materialInputStyles.errorStyle}
-                {...input}
               />
             </MuiThemeProvider>
           ) : (

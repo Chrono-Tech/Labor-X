@@ -7,21 +7,21 @@ export default class Image extends React.PureComponent {
     icon: PropTypes.string,
     title: PropTypes.string,
     color: PropTypes.string,
-    clickable: PropTypes.bool,
     className: PropTypes.string,
     faded: PropTypes.bool,
     href: PropTypes.string,
-    onClick: PropTypes.func,
   }
   
   static ICONS = {
-    SECURITY_CHECK: 'F01A',
-    SECURITY: 'F01C',
-    FILTER: 'F04E',
-    SECURITY_UPGRADE: 'F04E',
-    MESSAGE_WARNING: 'F073',
-    DROP_1: 'F062',
-    PHONE_EMAIL: 'F079',
+    SECURITY: 'security',
+    SECURITY_CHECK: 'security-check',
+    SECURITY_SHIELD: 'security-shield',
+    FILTER: 'filter',
+    SECURITY_UPGRADE: 'security-upgrade',
+    MESSAGE_WARNING: 'message-warning',
+    DROP_1: 'drop-1',
+    PHONE_EMAIL: 'phone-email',
+    UPLOAD: 'upload',
   }
   
   static COLORS = {
@@ -47,29 +47,25 @@ export default class Image extends React.PureComponent {
       icon: Image.ICONS.SECURITY_CHECK,
       color: Image.COLORS.GREEN,
     },
+    SECURITY_SHIELD: {
+      icon: Image.ICONS.SECURITY_SHIELD,
+      color: Image.COLORS.RED,
+    },
   }
   
-  handleClick = () => this.props.onClick && this.props.onClick()
-  
   render () {
-    const { className, color, clickable, faded, icon } = this.props
+    const { className, color, faded, icon } = this.props
     let classnames = [css.root]
     className && classnames.push(className)
     
     // specific material icons
     color && classnames.push(css[ color ])
-    clickable !== false && classnames.push(css.clickable)
     faded && classnames.push(css.faded)
-    
-    const formattedIcon = `&#x${icon};`
+    icon && css[`icon-${icon}`] && classnames.push(css[ `icon-${icon}` ])
     
     return (
       <i
         className={classnames.join(' ')}
-        onClick={this.handleClick}
-        onKeyPress={this.handleClick}
-        tabIndex={0}
-        dangerouslySetInnerHTML={{__html: formattedIcon}}
       />
     )
   }

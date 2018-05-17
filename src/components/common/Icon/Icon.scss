@@ -62,3 +62,39 @@
 .warn {
   color: $color-warn;
 }
+
+.icon-security:before {
+  content: '\F01C';
+}
+
+.icon-security-check:before {
+  content: '\F01A';
+}
+
+.icon-security-shield:before {
+  content: '\F07F';
+}
+
+.icon-filter:before {
+  content: '\F04E';
+}
+
+.icon-security-upgrade:before {
+  content: '\F04E';
+}
+
+.icon-message-warning:before {
+  content: '\F073';
+}
+
+.icon-drop-1:before {
+  content: '\F062';
+}
+
+.icon-phone-email:before {
+  content: '\F079';
+}
+
+.icon-upload:before {
+  content: '\F082';
+}
