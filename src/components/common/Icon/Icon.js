@@ -22,6 +22,10 @@ export default class Image extends React.PureComponent {
     DROP_1: 'drop-1',
     PHONE_EMAIL: 'phone-email',
     UPLOAD: 'upload',
+    HOME: 'home',
+    FILE: 'file',
+    DELETE: 'delete',
+    MESSAGE: 'message',
   }
   
   static COLORS = {

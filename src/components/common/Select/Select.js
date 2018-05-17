@@ -14,11 +14,12 @@ const profileTheme = {
   underlineFocusStyle: {
     height: 1,
     borderWidth: 1,
-    bottom: 2
+    bottom: 2,
   },
   hintStyle: {
-    color: '#333',
+    color: '#7F7F7F',
     fontSize: 14,
+    fontStyle: 'italic',
   },
   iconStyle: {
     width: 'auto',

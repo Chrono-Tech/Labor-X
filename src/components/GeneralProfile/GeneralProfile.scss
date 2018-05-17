@@ -1,6 +1,10 @@
 @import "~styles/globals/variables";
 @import "~styles/globals/mixins";
 
+b {
+  font-weight: bold;
+}
+
 .main {
   width: 100%;
 }
@@ -73,9 +77,15 @@
   margin-bottom: 10px;
 }
 
+.flexAdditionalRow {
+  @include flex(row, flex-start, flex-end);
+  margin-bottom: 20px;
+}
+
 .contentWrapper {
   padding-left: 4rem;
   padding-top: 3rem;
+  padding-bottom: 3rem;
   max-width: 74rem;
 }
 
@@ -109,7 +119,7 @@
 }
 .collapseHeader {
   box-shadow: none !important;
-  padding: 6px 50px 5px 28px !important;
+  padding: 17px 50px 17px 28px !important;
   border-top: 1px solid #E5E5E5;
 
   &:hover, &:focus {
@@ -129,8 +139,8 @@
 }
 
 .openIcon {
-  margin-top: -14px;
-  margin-left: -8px;
+  margin-top: -6px;
+  margin-left: -12px;
   display: inline-block;
   overflow: visible;
   font-size: 32px;
@@ -212,7 +222,8 @@
 
   input {
     &::placeholder {
-      color: #333;
+      color: #7F7F7F;
+      font-style: italic;
     }
   }
 }
@@ -223,7 +234,8 @@
 
   input {
     &::placeholder {
-      color: #333;
+      color: #7F7F7F;
+      font-style: italic;
     }
   }
 }
@@ -246,4 +258,125 @@
 .dateSelect {
   width: 64px !important;
   margin-right: 20px;
+}
+
+.langField {
+  width: 64px !important;
+  margin-right: 30px;
+}
+
+.buildingField {
+  width: 107px !important;
+  margin-right: 17px;
+}
+
+.suitField {
+  width: 107px !important;
+  margin-right: 38px;
+}
+
+
+.listItem {
+  color: #333;
+
+  &:hover {
+    .listItemTitle,
+    .fileIcon {
+      color: $color-blue;
+    }
+  }
+
+  .listItemTitle {
+    color: #333;
+  }
+
+  .fileIcon {
+    font-size: 30px;
+    color: #333;
+  }
+
+  .fileActionIcon {
+    font-size: 30px;
+    color: #BFBFBF;
+
+    &:hover {
+      color: $color-blue;
+    }
+  }
+
+
+}
+
+.list {
+  padding: 30px 0 0 !important;
+}
+
+.validateButton {
+  border: 0;
+  color: #fff;
+  font-weight: 700;
+  background-color: #00A0D2;
+  border-radius: 21px;
+  line-height: 40px;
+  padding: 0 65px;
+  cursor: pointer;
+  margin-top: 30px;
+  
+  &:hover, &:focus {
+    background: #0088C3;
+  }
+}
+
+.cancelValidation {
+  background: transparent;
+  color: #0088C3;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 30px;
+  border: 0;
+  cursor: pointer;
+}
+
+.eventBlock {
+  //border: 1px solid #E5E5E5;
+  background: #fff;
+  border-radius: 0 0 5px 5px;
+  margin-bottom: 40px;
+}
+
+.issueTextBlock {
+  margin-bottom: 10px;
+}
+
+.issueTitle {
+  color: #00A0D2;
+}
+
+.issueIcon {
+  color: #00A0D2;
+}
+
+.userBlock {
+  display: flex;
+  color: #333;
+  margin-bottom: 25px;
+
+  .userAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-right: 12px;
+  }
+
+
+  .userName {
+    font-weight: 500;
+    margin-top: 5px;
+  }
+
+  .userPosition {
+    font-weight: 300;
+    color: #7F7F7F;
+  }
 }

@@ -7,6 +7,7 @@
   white-space: nowrap;
   font-family: 'ChronoBankIcons';
   font-style: normal;
+  line-height: 100%;
 }
 
 .clickable {
@@ -97,4 +98,20 @@
 
 .icon-upload:before {
   content: '\F082';
+}
+
+.icon-home:before {
+  content: '\F089';
+}
+
+.icon-file:before {
+  content: '\F066';
+}
+
+.icon-delete:before {
+  content: '\F05D';
+}
+
+.icon-message:before {
+  content: '\F086';
 }
