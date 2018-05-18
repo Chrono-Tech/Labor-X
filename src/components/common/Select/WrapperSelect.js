@@ -3,9 +3,6 @@ import PropTypes from 'prop-types'
 
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import { MuiThemeProvider } from 'material-ui/styles'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 const profileTheme = {
   underlineStyle: {
@@ -46,10 +43,10 @@ class WrapperSelect extends React.Component {
     }),
     children: PropTypes.element,
   }
-  
+
   render () {
     const { input, label, meta, children, ...custom } = this.props
-    
+
     return (
       <SelectField
         floatingLabelText={label}
@@ -61,6 +58,7 @@ class WrapperSelect extends React.Component {
         iconStyle={profileTheme.iconStyle}
         {...input}
         onChange={(event, index, value) => input.onChange(value)}
+        children={children}
         {...custom}
       />
     )

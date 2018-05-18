@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import muiThemeable from 'material-ui/styles/muiThemeable'
-import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import { MuiThemeProvider } from 'material-ui/styles'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+
+import WrapperSelect from './WrapperSelect'
 
 export default class Select extends React.Component {
   static propTypes = {
@@ -14,10 +13,10 @@ export default class Select extends React.Component {
       name: PropTypes.string,
     })),
   }
-  
+
   renderMenuItems (){
     const { values } = this.props
-    
+
     return Array.isArray(values) && values.map((item, i) => (
       <MenuItem
         key={i}
@@ -25,19 +24,16 @@ export default class Select extends React.Component {
         primaryText={item.name}
       />
     ))
-    
+
   }
 
   render () {
-    const styles = getMuiTheme({
-      customStyles: { ...profileTheme },
-    })
-    
+
     return (
-      <MuiThemeProvider theme={styles}>
-        <CustomSelect {...this.props}>
+      <MuiThemeProvider>
+        <WrapperSelect {...this.props}>
           { this.renderMenuItems() }
-        </CustomSelect>
+        </WrapperSelect>
       </MuiThemeProvider>
     )
   }
