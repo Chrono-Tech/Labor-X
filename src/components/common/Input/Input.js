@@ -70,7 +70,7 @@ const profileInputStyles = {
 
 const WrapperInput = (props) => {
   const theme = props.muiTheme && props.muiTheme.customStyles || {}
-  
+
   return (
     <TextField
       floatingLabelText={props.label}
@@ -92,7 +92,7 @@ export default class Input extends React.Component {
     LOGIN: 'login',
     PROFILE: 'profile',
   }
-  
+
   static propTypes = {
     type: PropTypes.string,
     className: PropTypes.string,
@@ -128,7 +128,8 @@ export default class Input extends React.Component {
     materialInput: PropTypes.bool,
     materialTheme: PropTypes.oneOf([
       Input.MATERIAL_THEME.DEFAULT,
-      Input.MATERIAL_THEME.LOGIN_THEME,
+      Input.MATERIAL_THEME.LOGIN,
+      Input.MATERIAL_THEME.PROFILE,
     ]),
   }
 
@@ -162,29 +163,29 @@ export default class Input extends React.Component {
     lineEnabled: false,
     materialInput: false,
   }
-  
+
   getMaterialInputTheme (){
     const { materialTheme } = this.props
-    
+
     let theme
-    
+
     switch(materialTheme){
       case Input.MATERIAL_THEME.DEFAULT:
         theme = {}
         break
-      
+
       case Input.MATERIAL_THEME.LOGIN:
         theme = materialInputStyles
         break
-      
+
       case Input.MATERIAL_THEME.PROFILE:
         theme = profileInputStyles
         break
-      
+
       default:
         theme = {}
     }
-    
+
     return getMuiTheme({
       customStyles: { ...theme },
     })
@@ -196,9 +197,9 @@ export default class Input extends React.Component {
     const classNames = [ css.root ].concat(mods)
     const inputModsArray = [css.input ].concat(inputMods)
     const errorClassNames = [css.error].concat(errorMods)
-    
+
     const materialStyles = this.getMaterialInputTheme()
-    
+
     className && classNames.push(className)
     meta.touched && meta.error && classNames.push(css.invalid)
     input.autoComplete = autoComplete ? 'on' : 'off'
