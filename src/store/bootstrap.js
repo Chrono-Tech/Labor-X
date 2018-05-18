@@ -3,6 +3,7 @@ import { I18n, loadTranslations, setLocale } from 'react-redux-i18n'
 
 import { initDAOs } from './daos/actions'
 import { initBoards } from './boards/actions'
+import { initJobs } from './jobs/actions'
 import { signerSelector } from './wallet/selectors'
 import { initTokens } from './tokens/actions'
 
@@ -33,6 +34,7 @@ export const initFrontend = (store) => ({ web3 }) => async (dispatch) => {
       console.log('Signer changed to ', currentAddress)
       previousAddress = currentAddress
       store.dispatch(initBoards())
+      store.dispatch(initJobs())
     }
   }
   handleSignerUpdate()

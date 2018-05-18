@@ -1,16 +1,11 @@
-import CreateJobContent from 'components/CreateJob/CreateJob'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import { bootstrap } from 'store/bootstrap'
+import withRedux from 'next-redux-wrapper'
+import { CreateJobContent } from 'src/content'
+import { MainLayout } from 'src/components/layouts'
 import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import initialStore from 'src/store'
 
 class CreateJob extends React.Component {
-  static getInitialProps ({ store }) {
-    store.dispatch(bootstrap())
-  }
-
   render () {
     return (
       <MainLayout title='nav.createJob'>

@@ -9,14 +9,14 @@ const schemaFactory = () => ({
   hash: PropTypes.string,
   raw: PropTypes.string,
   receipt: PropTypes.object,
-  isSubmitted: PropTypes.boolean,
-  isPending: PropTypes.boolean,
-  isAccepted: PropTypes.boolean,
-  isRejected: PropTypes.boolean,
-  isSigned: PropTypes.boolean,
-  isSent: PropTypes.boolean,
-  isErrored: PropTypes.boolean,
-  isMined: PropTypes.boolean,
+  isSubmitted: PropTypes.bool,
+  isPending: PropTypes.bool,
+  isAccepted: PropTypes.bool,
+  isRejected: PropTypes.bool,
+  isSigned: PropTypes.bool,
+  isSent: PropTypes.bool,
+  isErrored: PropTypes.bool,
+  isMined: PropTypes.bool,
 })
 
 export default class TxEntryModel extends AbstractModel {
