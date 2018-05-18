@@ -10,7 +10,8 @@
 }
 
 .logoBlock {
-  padding-right: 38px;
+  margin-right: 38px;
+  width: 180px;
 }
 
 .contentBlock {
@@ -20,6 +21,7 @@
 .logoLink {
   background: transparent;
   border: 0;
+  width: 180px;
 }
 
 .titleBlock {
@@ -61,6 +63,7 @@
 
 .securityBadge{
   position: relative;
+  margin-top: -2px;
 }
 
 .star {
@@ -392,4 +395,20 @@
 
 .approvalPopover {
   width: 300px;
+}
+
+.securityRating {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+}
+
+.securityRatingShield {
+  margin-top: -2px;
 }

@@ -1,83 +1,74 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Popover } from 'components/common'
+import { Popover, Icon } from 'components/common'
+import { BoardModel } from 'src/models'
 import css from './JobBoardItem.scss'
 
 export default class JobBoardItem extends React.Component {
-  static STATUS = {
-    DEFAULT: 'default',
-    NEED_VERIFY: 'needVerify',
-    JOINED: 'joined',
-    APPROVAL: 'approval',
-  }
-  
   static propTypes = {
-    status: PropTypes.oneOf([
-      JobBoardItem.STATUS.DEFAULT,
-      JobBoardItem.STATUS.NEED_VERIFY,
-      JobBoardItem.STATUS.JOINED,
-      JobBoardItem.STATUS.APPROVAL,
-    ]),
+    jobBoard: PropTypes.instanceOf(BoardModel),
   }
-  
+
   static defaultProps = {
-    status: JobBoardItem.STATUS.DEFAULT,
+    jobBoard: new BoardModel(),
   }
-  
-  constructor (){
+
+  constructor () {
     super()
-    
+
     this.state = {
       starsPopover: false,
       securityPopover: false,
       actionPopover: false,
     }
   }
-  
+
   getRatingStars () {
+    const { jobBoard } = this.props
+
     let starsArray = []
-    let count = 5
-    
-    for (let i = 0; i < count; i++){
+    let count = jobBoard.rating
+
+    for (let i = 0; i < count; i++) {
       starsArray.push(
         <span key={i} className={css.star}>
           <img src='/static/images/svg/star-active.svg' alt='' width='20' />
         </span>
       )
     }
-    
+
     return starsArray
   }
-  
-  handleStarsPopoverOpen (){
+
+  handleStarsPopoverOpen () {
     this.setState({ starsPopover: true })
   }
-  
-  handleStarsPopoverClose (){
+
+  handleStarsPopoverClose () {
     this.setState({ starsPopover: false })
   }
-  
-  handleSecurityPopoverOpen (){
+
+  handleSecurityPopoverOpen () {
     this.setState({ securityPopover: true })
   }
-  
-  handleSecurityPopoverClose (){
+
+  handleSecurityPopoverClose () {
     this.setState({ securityPopover: false })
   }
-  
-  handleActionsPopoverOpen (){
+
+  handleActionsPopoverOpen () {
     this.setState({ actionPopover: true })
   }
-  
-  handleActionsPopoverClose (){
+
+  handleActionsPopoverClose () {
     this.setState({ actionPopover: false })
   }
-  
-  renderDefaultActionButton (text, onClick){
+
+  renderDefaultActionButton (text, onClick) {
     const handleClick = onClick ? onClick : () => {}
     const buttonText = text || 'Join the Board'
-    
+
     const popoverContent = (
       <div>
         <div className={css.popoverHeader}>Join the Board</div>
@@ -93,19 +84,23 @@ export default class JobBoardItem extends React.Component {
         </div>
       </div>
     )
-    
+
     return (
       <button className={css.actionButton} onClick={handleClick}>
-        { buttonText }
-        { this.renderActionsTooltip({ src: '/static/images/svg/help-white-clear.svg', popoverContent, popoverClassName: css.actionPopover }) }
+        {buttonText}
+        {this.renderActionsTooltip({
+          src: '/static/images/svg/help-white-clear.svg',
+          popoverContent,
+          popoverClassName: css.actionPopover,
+        })}
       </button>
     )
   }
-  
-  renderNeedVerifyButton (text, onClick){
+
+  renderNeedVerifyButton (text, onClick) {
     const handleClick = onClick ? onClick : () => {}
     const buttonText = text || 'Verify Me to Join'
-    
+
     const popoverContent = (
       <div>
         <div className={css.popoverHeader}>Requirements are not met</div>
@@ -114,24 +109,30 @@ export default class JobBoardItem extends React.Component {
         </div>
         <ul className={css.popoverVerifyList}>
           <li className={css.listItem}>Validate your email or phone</li>
-          <li className={css.listItem}>Validate  your ID</li>
+          <li className={css.listItem}>Validate your ID</li>
           <li className={css.listItem}>Validate your home address</li>
           <li className={css.listItem}>Validate your legal documents (Worker or Client)</li>
-          <li className={css.listItem}>At least one skill should be endorsed by other people. new comers may get an endorsement by our validation team</li>
+          <li className={css.listItem}>At least one skill should be endorsed by other people. new comers may get an
+            endorsement by our validation team
+          </li>
           <li className={css.listItem}>Your rating should be 3+</li>
         </ul>
       </div>
     )
-    
+
     return (
       <button className={css.actionButton} onClick={handleClick}>
-        { buttonText }
-        { this.renderActionsTooltip({ src: '/static/images/svg/help-white-clear.svg', popoverContent, popoverClassName: css.actionPopover }) }
+        {buttonText}
+        {this.renderActionsTooltip({
+          src: '/static/images/svg/help-white-clear.svg',
+          popoverContent,
+          popoverClassName: css.actionPopover,
+        })}
       </button>
     )
   }
-  
-  renderJoinedActions (){
+
+  renderJoinedActions () {
     return (
       <div>
         <button className={css.actionButtonView}>
@@ -143,49 +144,54 @@ export default class JobBoardItem extends React.Component {
       </div>
     )
   }
-  
-  renderApprovalActions (){
+
+  renderApprovalActions () {
     const popoverContent = (
       <div>
         <div className={css.popoverHeader}>Your Request is processing</div>
         <div className={css.popoverDescription}>
-          You have requested to join the board. Moderators  of the board are reviewing your request and will back to you soon!
+          You have requested to join the board. Moderators of the board are reviewing your request and will back to
+          you soon!
         </div>
       </div>
     )
-  
+
     return (
       <div className={css.actionButtonApproval}>
         On Approval
-        { this.renderActionsTooltip({ src: '/static/images/svg/help-clean.svg', popoverContent, popoverClassName: css.approvalPopover }) }
+        {this.renderActionsTooltip({
+          src: '/static/images/svg/help-clean.svg',
+          popoverContent,
+          popoverClassName: css.approvalPopover,
+        })}
       </div>
     )
   }
-  
-  renderActions (){
-    const { status } = this.props
-    
-    switch(status) {
-      case JobBoardItem.STATUS.DEFAULT:
+
+  renderActions () {
+    const { jobBoard } = this.props
+
+    switch (jobBoard.status) {
+      case BoardModel.STATUS.UNASSIGNED:
         return this.renderDefaultActionButton()
-      
-      case JobBoardItem.STATUS.NEED_VERIFY:
+
+      case BoardModel.STATUS.NEED_VERIFY:
         return this.renderNeedVerifyButton()
-      
-      case JobBoardItem.STATUS.JOINED:
+
+      case BoardModel.STATUS.JOINED:
         return this.renderJoinedActions()
-      
-      case JobBoardItem.STATUS.APPROVAL:
+
+      case BoardModel.STATUS.ON_APPROVAL:
         return this.renderApprovalActions()
-      
+
       default:
         return this.renderDefaultActionButton()
     }
   }
-  
-  getStarsPopover (){
+
+  getStarsPopover () {
     const { starsPopover } = this.state
-    
+
     return (
       <Popover
         open={starsPopover}
@@ -231,10 +237,10 @@ export default class JobBoardItem extends React.Component {
       </Popover>
     )
   }
-  
-  getSecurityPopover (){
+
+  getSecurityPopover () {
     const { securityPopover } = this.state
-    
+
     return (
       <Popover
         open={securityPopover}
@@ -252,79 +258,122 @@ export default class JobBoardItem extends React.Component {
       </Popover>
     )
   }
-  
-  renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }){
+
+  renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }) {
     const { actionPopover } = this.state
-    
+
     return (
-      <span className={css.actionButtonTooltip} onMouseOver={this.handleActionsPopoverOpen.bind(this)} onMouseOut={this.handleActionsPopoverClose.bind(this)} >
+      <span
+        className={css.actionButtonTooltip}
+        onMouseOver={this.handleActionsPopoverOpen.bind(this)}
+        onMouseOut={this.handleActionsPopoverClose.bind(this)}
+      >
         <img src={src} alt='' width='24' height='24' />
-        { popoverContent ? (
+        {popoverContent ? (
           <Popover
             open={actionPopover}
             arrowPosition={Popover.ARROW_POSITION.RIGHT}
             className={popoverClassName}
           >
-            { popoverContent }
+            {popoverContent}
           </Popover>)
-          : null }
+          : null}
       </span>
     )
   }
-  
+
+  renderSecurityTooltip (){
+    const { jobBoard } = this.props
+
+    const level = jobBoard.validationLevel
+    const securityIcon = level ? Icon.SETS.SECURITY : Icon.SETS.SECURITY_NONE
+
+    return (
+      <div className={css.securityRatingWrapper}>
+        <Icon className={css.securityRatingShield} size={31} {...securityIcon} />
+        { level ? (<span className={css.securityRating}>{level}</span>) : null }
+      </div>
+    )
+  }
+
+  renderBoardTags (){
+    const { jobBoard } = this.props
+
+    return jobBoard.categories && jobBoard.categories.map(item => item.name).join(', ')
+  }
+
+  renderLogo(){
+    const { jobBoard } = this.props
+
+    return jobBoard.logoSrc ? (
+      <button className={css.logoLink}>
+        <img src={jobBoard.logoSrc} alt='' />
+      </button>
+    ) : null
+  }
+
   render () {
+    const { jobBoard } = this.props
+    console.log('job board item', jobBoard)
+
     return (
       <div className={css.main}>
         <div className={css.logoBlock}>
-          <button className={css.logoLink}>
-            <img src='/static/images/become-full.jpg' alt='' />
-          </button>
+          { this.renderLogo() }
         </div>
         <div className={css.contentBlock}>
           <div className={css.titleBlock}>
             <div>
               <button className={css.title} onClick={() => {}}>
-                Become Involved
+                { jobBoard.name }
               </button>
             </div>
-            
+
             <div className={css.categoryWrapper}>
               <button className={css.category} onClick={() => {}}>
-                Building, Industrial
+                { this.renderBoardTags() }
               </button>
             </div>
-            
+
           </div>
-          
+
           <div className={css.ratingBlock}>
-            <div className={css.starsWrapper} onMouseOver={this.handleStarsPopoverOpen.bind(this)} onMouseOut={this.handleStarsPopoverClose.bind(this)}>
-              { this.getRatingStars() }
-              { this.getStarsPopover() }
+            <div
+              className={css.starsWrapper}
+              onMouseOver={this.handleStarsPopoverOpen.bind(this)}
+              onMouseOut={this.handleStarsPopoverClose.bind(this)}
+            >
+              {this.getRatingStars()}
+              {this.getStarsPopover()}
             </div>
-            
-            <span className={css.securityBadge} onMouseOver={this.handleSecurityPopoverOpen.bind(this)} onMouseLeave={this.handleSecurityPopoverClose.bind(this)}>
-              <img src='/static/images/svg/security.svg' alt='' width='24' height='24' />
+
+            <div
+              className={css.securityBadge}
+              onMouseOver={this.handleSecurityPopoverOpen.bind(this)}
+              onMouseLeave={this.handleSecurityPopoverClose.bind(this)}
+            >
+              { this.renderSecurityTooltip() }
               { this.getSecurityPopover() }
-            </span>
+            </div>
           </div>
-          
+
           <div className={css.aboutJob}>
             <div className={css.jobInfo}>
-              
+
               <div className={css.jobInfoBlock}>
-                <div className={css.jobInfoCount}>245</div>
+                <div className={css.jobInfoCount}>{ jobBoard.jobsCounts }</div>
                 <div className={css.jobInfoDescribe}>Jobs</div>
               </div>
-              
+
               <div className={css.jobInfoBlock}>
-                <div className={css.jobInfoCount}>150</div>
+                <div className={css.jobInfoCount}>{ jobBoard.clientsCounts }</div>
                 <div className={css.jobInfoDescribe}>Clients</div>
               </div>
-              
+
             </div>
-            
+
             <div className={css.actionsWrapper}>
-              { this.renderActions() }
+              {this.renderActions()}
             </div>
           </div>
         </div>

@@ -1,3 +1,6 @@
+@import '~styles/globals/variables';
+@import '~styles/globals/mixins';
+
 .main {
   width: 100%;
   padding: 50px 0;
@@ -8,12 +11,21 @@
   margin: 0 auto;
 }
 
+.flexRow {
+  @include flex(row, center, flex-start);
+}
+
 h2 {
   color: #333333;
   font-size: 50px;
   font-weight: 200;
   letter-spacing: -1px;
   margin-bottom: 37px;
+}
+
+b {
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .actionsBlock {
@@ -102,4 +114,42 @@ h2 {
       background-color: #ccc !important;
     }
   }
+}
+
+.filterBlock {
+  width: 200px;
+  margin-left: 40px;
+}
+
+.filterContent {
+  padding: 20px;
+  background: #333333;
+}
+
+hr {
+  margin-left: -10px;
+  margin-right: -10px;
+  border-bottom: 1px solid #4C4C4C;
+}
+
+.resetRow {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  color: #00A0D2;
+  margin-bottom: 10px;
+}
+
+.resetButton {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #00A0D2;
+}
+
+.filterLabel {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }

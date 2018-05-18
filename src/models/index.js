@@ -1,3 +1,4 @@
+export { default as AbstractModel } from './AbstractModel'
 export { default as HolderModel } from './utils/HolderModel'
 export { default as ContractModel } from './contracts/ContractModel'
 export { default as ContractDAOModel } from './contracts/ContractDAOModel'

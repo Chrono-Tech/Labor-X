@@ -10,12 +10,19 @@ export default class Image extends React.PureComponent {
     className: PropTypes.string,
     faded: PropTypes.bool,
     href: PropTypes.string,
+    size: PropTypes.number,
   }
-  
+
+  static defaultTypes = {
+    icon: '',
+    size: 14,
+  }
+
   static ICONS = {
     SECURITY: 'security',
     SECURITY_CHECK: 'security-check',
     SECURITY_SHIELD: 'security-shield',
+    SECURITY_NONE: 'security-none',
     FILTER: 'filter',
     SECURITY_UPGRADE: 'security-upgrade',
     MESSAGE_WARNING: 'message-warning',
@@ -26,8 +33,10 @@ export default class Image extends React.PureComponent {
     FILE: 'file',
     DELETE: 'delete',
     MESSAGE: 'message',
+    CLOSE: 'close',
+    CHECK: 'check',
   }
-  
+
   static COLORS = {
     BLACK: 'black',
     WHITE: 'white',
@@ -37,11 +46,11 @@ export default class Image extends React.PureComponent {
     GOLD: 'gold',
     GREY: 'grey',
     GREY30: 'grey30',
-    
+
     ERROR: 'error',
     WARN: 'warn',
   }
-  
+
   static SETS = {
     SECURITY: {
       icon: Image.ICONS.SECURITY,
@@ -55,20 +64,29 @@ export default class Image extends React.PureComponent {
       icon: Image.ICONS.SECURITY_SHIELD,
       color: Image.COLORS.RED,
     },
+    SECURITY_NONE: {
+      icon: Image.ICONS.SECURITY_NONE,
+      color: Image.COLORS.RED,
+    },
+    CHECK: {
+      icon: Image.ICONS.CHECK,
+      color: Image.COLORS.WHITE,
+    },
   }
-  
+
   render () {
-    const { className, color, faded, icon } = this.props
+    const { className, color, faded, icon, size } = this.props
     let classnames = [css.root]
     className && classnames.push(className)
-    
+
     // specific material icons
     color && classnames.push(css[ color ])
     faded && classnames.push(css.faded)
     icon && css[`icon-${icon}`] && classnames.push(css[ `icon-${icon}` ])
-    
+
     return (
       <i
+        style={size ? { fontSize: size } : null }
         className={classnames.join(' ')}
       />
     )
