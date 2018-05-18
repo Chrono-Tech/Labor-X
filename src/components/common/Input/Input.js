@@ -69,7 +69,6 @@ const profileInputStyles = {
 }
 
 const WrapperInput = (props) => {
-  console.log('wrapper', props)
   const theme = props.muiTheme && props.muiTheme.customStyles || {}
   
   return (
@@ -164,7 +163,7 @@ export default class Input extends React.Component {
     materialInput: false,
   }
   
-  getMaterialInputTheme(){
+  getMaterialInputTheme (){
     const { materialTheme } = this.props
     
     let theme
@@ -187,7 +186,7 @@ export default class Input extends React.Component {
     }
     
     return getMuiTheme({
-      customStyles: {...theme}
+      customStyles: { ...theme },
     })
   }
 

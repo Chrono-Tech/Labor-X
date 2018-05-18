@@ -1,8 +1,7 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
-import { Card, CardHeader, CardActions, CardText } from 'material-ui/Card'
-import ContentInbox from 'material-ui/svg-icons/content/inbox'
-import {List, ListItem} from 'material-ui/List'
+import { Card, CardHeader, CardText } from 'material-ui/Card'
+import { List, ListItem } from 'material-ui/List'
 import FontIcon from 'material-ui/FontIcon'
 import { MuiThemeProvider } from 'material-ui/styles'
 
@@ -13,12 +12,12 @@ import css from './GeneralProfile.scss'
 const FORM_GENERAL_PROFILE = 'form/generalProfile'
 
 const listItemInnerStyle = {
-  padding: '16px 56px 16px 62px'
+  padding: '16px 56px 16px 62px',
 }
 
 const fontIconStyle = {
   left: 18,
-  top: -1
+  top: -1,
 }
 
 class GeneralProfile extends React.Component {
@@ -28,83 +27,82 @@ class GeneralProfile extends React.Component {
     WARNING: 'warning',
     ERROR: 'error',
   }
-  
-  getStatusIcon(){
-  
+
+  getStatusIcon (){
+
   }
-  
-  renderCard({ title, content}){
+
+  renderCard ({ title, content }){
     return (
       <Card className={css.collapseWrapper}>
         <CardHeader
           title={title}
           closeIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
           openIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-          actAsExpander={true}
-          showExpandableButton={true}
+          actAsExpander
+          showExpandableButton
           className={css.collapseHeader}
         />
-        <CardText className={css.collapseText} expandable={true}>
+        <CardText className={css.collapseText} expandable>
           {content}
         </CardText>
       </Card>
     )
   }
-  
-  renderUserInfoStatus(){
+
+  renderUserInfoStatus (){
     const title = (
       <span className={[css.cardActionTitle, css.cardActionTitleSuccess].join(' ')}>
         <Icon className={css.icon} {...Icon.SETS.SECURITY_CHECK} />
         Validated
       </span>
     )
-    
+
     const content = 'Great Job! You have successfully passed validation.' +
       '          Note that changing and saving information will require validation re-submit.' +
       '          View available Job Boards for your Validation level'
-    
+
     return this.renderCard({ title, content })
   }
-  
-  renderUserContactsStatus(){
+
+  renderUserContactsStatus (){
     const title = (
       <span className={[css.cardActionTitle, css.cardActionTitleError].join(' ')}>
         <Icon className={css.icon} {...Icon.SETS.SECURITY_SHIELD} />
         Validated
       </span>
     )
-    
+
     const content = 'Great Job! You have successfully passed validation.' +
       '          Note that changing and saving information will require validation re-submit.' +
       '          View available Job Boards for your Validation level'
-    
+
     return this.renderCard({ title, content })
   }
-  
-  renderUserAddressStatus(){
+
+  renderUserAddressStatus (){
     const title = (
       <span className={[css.cardActionTitle, css.cardActionTitleError].join(' ')}>
         <Icon className={css.icon} icon={Icon.ICONS.SECURITY_SHIELD} />
         Validated
       </span>
     )
-    
+
     const content = 'Great Job! You have successfully passed validation.' +
       '          Note that changing and saving information will require validation re-submit.' +
       '          View available Job Boards for your Validation level'
 
-    
     return this.renderCard({ title, content })
   }
-  
-  renderAddressStatus(){
+
+  renderAddressStatus (){
     const title = (
       <span className={[css.cardActionTitle, css.cardActionTitleError].join(' ')}>
         <Icon className={css.icon} icon={Icon.ICONS.SECURITY_SHIELD} />
         Upgrade
       </span>
     )
-    
+
     const content = (
       <div>
         <p>
@@ -121,22 +119,22 @@ class GeneralProfile extends React.Component {
             rightIcon={<FontIcon><Icon className={css.fileActionIcon} icon={Icon.ICONS.DELETE} /></FontIcon>}
           />
         </List>
-        
+
         <button className={css.validateButton}>Validate</button>
       </div>
     )
-    
+
     return this.renderCard({ title, content })
   }
-  
-  renderWarningEvent(){
+
+  renderWarningEvent (){
     const title = (
       <span className={[css.cardActionTitle, css.cardActionTitleWarning].join(' ')}>
         <Icon className={css.icon} icon={Icon.ICONS.SECURITY_SHIELD} />
         Validation on review
       </span>
     )
-    
+
     const content = (
       <div>
         <p>
@@ -153,22 +151,22 @@ class GeneralProfile extends React.Component {
             rightIcon={<FontIcon><Icon className={css.fileActionIcon} icon={Icon.ICONS.DELETE} /></FontIcon>}
           />
         </List>
-        
+
         <button className={css.cancelValidation}>Cancel validation</button>
       </div>
     )
-    
+
     return this.renderCard({ title, content })
   }
-  
-  renderIssueEvent(){
+
+  renderIssueEvent (){
     const title = (
       <span className={[css.cardActionTitle, css.cardActionTitleError].join(' ')}>
         <Icon className={css.icon} icon={Icon.ICONS.MESSAGE_WARNING} />
         Validation issue
       </span>
     )
-    
+
     const content = (
       <div>
         <div className={css.userBlock}>
@@ -206,14 +204,14 @@ class GeneralProfile extends React.Component {
             leftIcon={<FontIcon style={fontIconStyle}><Icon className={css.issueIcon} icon={Icon.ICONS.MESSAGE} /></FontIcon>}
           />
         </List>
-        
+
         <button className={css.validateButton}>Validate</button>
       </div>
     )
-    
+
     return this.renderCard({ title, content })
   }
-  
+
   render () {
     return (
       <MuiThemeProvider>
@@ -239,7 +237,7 @@ class GeneralProfile extends React.Component {
           </div>
           <div className={css.contentWrapper}>
             <form name={FORM_GENERAL_PROFILE}>
-              
+
               <div className={css.card}>
                 <div className={css.cardWrapper}>
                   <div>
@@ -249,7 +247,7 @@ class GeneralProfile extends React.Component {
                         <Icon className={css.avatarUploadIcon} icon={Icon.ICONS.UPLOAD} />
                         <br />
                         <span className={css.avatarUploadButtonText}>
-                          Upload<br/> Photo
+                          Upload<br /> Photo
                         </span>
                       </div>
                     </div>
@@ -266,7 +264,7 @@ class GeneralProfile extends React.Component {
                         materialInput
                         materialTheme={Input.MATERIAL_THEME.PROFILE}
                       />
-  
+
                       <Field
                         component={Input}
                         className={[css.field, css.fieldLastName].join(' ')}
@@ -286,7 +284,7 @@ class GeneralProfile extends React.Component {
                         hintText='DD'
                         type='select'
                         values={[
-                          { value: '01', name: '01' }
+                          { value: '01', name: '01' },
                         ]}
                       />
                       <Field
@@ -314,11 +312,11 @@ class GeneralProfile extends React.Component {
                     </div>
                   </div>
                 </div>
-                
+
                 { this.renderUserInfoStatus() }
-                
+
               </div>
-              
+
               <div className={css.card}>
                 <div className={[css.cardWrapper, css.cardWrapperContacts].join(' ')}>
                   <div>
@@ -337,7 +335,7 @@ class GeneralProfile extends React.Component {
                         materialInput
                         materialTheme={Input.MATERIAL_THEME.PROFILE}
                       />
-  
+
                       <Field
                         className={css.langField}
                         component={Select}
@@ -349,7 +347,7 @@ class GeneralProfile extends React.Component {
                           { value: 'RU', name: 'RU' },
                         ]}
                       />
-  
+
                       <Field
                         component={Input}
                         className={css.phoneField}
@@ -360,13 +358,13 @@ class GeneralProfile extends React.Component {
                       />
                     </div>
                   </div>
-                  
+
                 </div>
-                
+
                 { this.renderUserContactsStatus() }
-                
+
               </div>
-              
+
               <div className={css.card}>
                 <div className={css.cardWrapper}>
                   <div>
@@ -400,7 +398,7 @@ class GeneralProfile extends React.Component {
                         ]}
                       />
                     </div>
-                    
+
                     <div className={css.flexAdditionalRow}>
                       <Field
                         component={Input}
@@ -419,7 +417,7 @@ class GeneralProfile extends React.Component {
                         materialTheme={Input.MATERIAL_THEME.PROFILE}
                       />
                     </div>
-                    
+
                     <div className={css.flexRow}>
                       <Field
                         component={Input}
@@ -429,7 +427,7 @@ class GeneralProfile extends React.Component {
                         materialInput
                         materialTheme={Input.MATERIAL_THEME.PROFILE}
                       />
-  
+
                       <Field
                         component={Input}
                         className={[css.field, css.suitField].join(' ')}
@@ -438,7 +436,7 @@ class GeneralProfile extends React.Component {
                         materialInput
                         materialTheme={Input.MATERIAL_THEME.PROFILE}
                       />
-                      
+
                       <Field
                         component={Input}
                         className={css.field}
@@ -450,19 +448,19 @@ class GeneralProfile extends React.Component {
                     </div>
                   </div>
                 </div>
-                
+
                 { this.renderAddressStatus() }
 
               </div>
-              
+
               <div className={css.eventBlock}>
                 { this.renderWarningEvent() }
               </div>
-              
+
               <div className={css.eventBlock}>
                 { this.renderIssueEvent() }
               </div>
-            
+
             </form>
           </div>
         </div>
