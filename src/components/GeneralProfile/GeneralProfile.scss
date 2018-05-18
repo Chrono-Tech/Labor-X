@@ -277,7 +277,13 @@ b {
 
 
 .listItem {
-  color: #333;
+  color: #333 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 0 !important;
+  border-top: 1px solid #F7F7F7 !important;
+  border-bottom: 1px solid #F7F7F7 !important;
+  margin: 0 -30px !important;
 
   &:hover {
     .listItemTitle,
@@ -303,8 +309,40 @@ b {
       color: $color-blue;
     }
   }
+}
 
+.listItemIssue {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #00A0D2 !important;
+  padding: 0 !important;
+  border-top: 1px solid #F7F7F7 !important;
+  margin: 0 -30px !important;
 
+  &:hover {
+    .listItemTitle,
+    .fileIcon {
+      color: $color-blue;
+    }
+  }
+
+  .listItemTitle {
+    color: #333;
+  }
+
+  .fileIcon {
+    font-size: 30px;
+    color: #333;
+  }
+
+  .fileActionIcon {
+    font-size: 30px;
+    color: #BFBFBF;
+
+    &:hover {
+      color: $color-blue;
+    }
+  }
 }
 
 .list {

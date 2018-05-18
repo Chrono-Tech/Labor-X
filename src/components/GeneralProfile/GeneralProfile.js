@@ -12,6 +12,15 @@ import css from './GeneralProfile.scss'
 
 const FORM_GENERAL_PROFILE = 'form/generalProfile'
 
+const listItemInnerStyle = {
+  padding: '16px 56px 16px 62px'
+}
+
+const fontIconStyle = {
+  left: 18,
+  top: -1
+}
+
 class GeneralProfile extends React.Component {
   static VALIDATE_STATUS = {
     VALIDATED: 'validated',
@@ -106,11 +115,9 @@ class GeneralProfile extends React.Component {
         <List className={css.list}>
           <ListItem
             className={css.listItem}
-            style={{fontSize: 14, fontWeight: 500, color: '#333', padding: 0, borderTop: '1px solid #F7F7F7',
-              borderBottom: '1px solid #F7F7F7', margin: '0 -30px' }}
-            innerDivStyle={{padding: '16px 56px 16px 62px'}}
+            innerDivStyle={listItemInnerStyle}
             primaryText={<span className={css.listItemTitle}>My-ID.pdf</span>}
-            leftIcon={<FontIcon style={{left: 18, top: -1}}><Icon className={css.fileIcon} icon={Icon.ICONS.FILE} /></FontIcon>}
+            leftIcon={<FontIcon style={fontIconStyle}><Icon className={css.fileIcon} icon={Icon.ICONS.FILE} /></FontIcon>}
             rightIcon={<FontIcon><Icon className={css.fileActionIcon} icon={Icon.ICONS.DELETE} /></FontIcon>}
           />
         </List>
@@ -140,11 +147,9 @@ class GeneralProfile extends React.Component {
         <List className={css.list}>
           <ListItem
             className={css.listItem}
-            style={{fontSize: 14, fontWeight: 500, color: '#333', padding: 0, borderTop: '1px solid #F7F7F7',
-              borderBottom: '1px solid #F7F7F7', margin: '0 -30px' }}
-            innerDivStyle={{padding: '16px 56px 16px 62px'}}
+            innerDivStyle={listItemInnerStyle}
             primaryText={<span className={css.listItemTitle}>My-ID.pdf</span>}
-            leftIcon={<FontIcon style={{left: 18, top: -1}}><Icon className={css.fileIcon} icon={Icon.ICONS.FILE} /></FontIcon>}
+            leftIcon={<FontIcon style={fontIconStyle}><Icon className={css.fileIcon} icon={Icon.ICONS.FILE} /></FontIcon>}
             rightIcon={<FontIcon><Icon className={css.fileActionIcon} icon={Icon.ICONS.DELETE} /></FontIcon>}
           />
         </List>
@@ -189,19 +194,16 @@ class GeneralProfile extends React.Component {
         </p>
         <List className={css.list}>
           <ListItem
-            className={css.listItem}
-            style={{fontSize: 14, fontWeight: 500, color: '#00A0D2', padding: 0, borderTop: '1px solid #F7F7F7', margin: '0 -30px' }}
-            innerDivStyle={{padding: '16px 56px 16px 62px'}}
+            className={css.listItemIssue}
+            innerDivStyle={listItemInnerStyle}
             primaryText={<span className={css.issueTitle}>Upload Document</span>}
-            leftIcon={<FontIcon style={{left: 18, top: -1}}><Icon className={css.issueIcon} icon={Icon.ICONS.UPLOAD} /></FontIcon>}
+            leftIcon={<FontIcon style={fontIconStyle}><Icon className={css.issueIcon} icon={Icon.ICONS.UPLOAD} /></FontIcon>}
           />
           <ListItem
-            className={css.listItem}
-            style={{fontSize: 14, fontWeight: 500, color: '#00A0D2', padding: 0, borderTop: '1px solid #F7F7F7',
-              borderBottom: '1px solid #F7F7F7', margin: '0 -30px' }}
-            innerDivStyle={{padding: '16px 56px 16px 62px'}}
+            className={css.listItemIssue}
+            innerDivStyle={listItemInnerStyle}
             primaryText={<span className={css.issueTitle}>Message Verifier</span>}
-            leftIcon={<FontIcon style={{left: 18, top: -1}}><Icon className={css.issueIcon} icon={Icon.ICONS.MESSAGE} /></FontIcon>}
+            leftIcon={<FontIcon style={fontIconStyle}><Icon className={css.issueIcon} icon={Icon.ICONS.MESSAGE} /></FontIcon>}
           />
         </List>
         
