@@ -39,9 +39,18 @@ b {
   padding-right: 20px;
 }
 .searchField {
-  font-size: 14px;
-  color: #333;
-  font-weight: 300;
+  &:before {
+    content: '\F07E';
+    display: inline-block;
+    white-space: nowrap;
+    font-family: 'ChronoBankIcons';
+    font-style: normal;
+    line-height: 100%;
+    font-size: 24px;
+    position: absolute;
+    top: 13px;
+    left: 6px;
+  }
 }
 
 .filterButton {
@@ -50,26 +59,32 @@ b {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: alpha(opacity=50);
   opacity: 0.5;
-  margin-top: 10px;
+  margin-top: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  padding-right: 35px;
+  min-height: 24px;
+  line-height: 24px;
+
+  &:after {
+    content: '\F04E';
+    display: inline-block;
+    white-space: nowrap;
+    font-family: 'ChronoBankIcons';
+    font-style: normal;
+    line-height: 100%;
+    font-size: 26px;
+    right: 3px;
+    top:0;
+    position: absolute;
+  }
 
   img {
     vertical-align: middle;
     margin-left: 10px;
-  }
-}
-
-.searchField {
-  margin-top: 0;
-  margin-bottom: 38px !important;
-  border: 0;
-
-  input {
-    &::placeholder {
-      color: #333;
-      font-weight: 300 !important;
-      font-size: 14px !important;
-      font-style: normal !important;
-    }
   }
 }
 
@@ -151,5 +166,15 @@ hr {
   color: #FFFFFF;
   font-size: 16px;
   font-weight: 700;
-  margin-bottom: 10px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.field {
+  margin-bottom: 17px;
+}
+
+.hr {
+  margin: 20px -20px 20px -20px;
+  border-bottom: 1px solid #4C4C4C;
 }

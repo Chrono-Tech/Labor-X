@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import MaterialCheckbox from 'material-ui/Checkbox'
-import SvgIcon from 'material-ui/SvgIcon'
 import { MuiThemeProvider } from 'material-ui/styles'
 
 import { Image, Translate, Icon } from 'components/common'
 import css from './Checkbox.scss'
+
+const iconStyle = {
+  marginRight: 5
+}
 
 export default class Checkbox extends React.Component {
   static propTypes = {
@@ -16,7 +19,7 @@ export default class Checkbox extends React.Component {
       value: PropTypes.string,
       name: PropTypes.string,
     }),
-    materialCheckbox: PropTypes.bool,
+    material: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -26,26 +29,36 @@ export default class Checkbox extends React.Component {
       checked: false,
       name: 'checkbox',
     },
-    materialCheckbox: false,
+    material: false,
   }
 
   // TODO @dkchv: must be input.onChange
   handleClick = () => this.props.input.onClick && this.props.onClick()
 
   render () {
-    const {className, label, input, onCheck, materialCheckbox} = this.props
+    const {className, label, input, onCheck, material} = this.props
     const classNames = [css.root]
     className && classNames.push(className)
 
     console.log('--Checkbox#render', input)
 
-    return materialCheckbox ? (
+    return material ? (
       <MuiThemeProvider>
         <MaterialCheckbox
           label={label}
-          checkedIcon={<div><Icon size={14} {...Icon.SETS.CHECK}/></div>}
-          checked={input.checked}
+          iconStyle={iconStyle}
+          className={classNames.join(' ')}
+          checkedIcon={
+            <div className={[css.iconWrapper, css.checkedIconWrapper].join(' ')}>
+              <Icon className={css.checkedIcon} size={14} {...Icon.SETS.CHECK} />
+            </div>
+          }
+          uncheckedIcon={
+            <div className={[css.iconWrapper].join(' ')} />
+          }
           {...input}
+          checked={input.value}
+          labelStyle={{ color: '#fff', fontWeight: 500, fontSize: 14 }}
           onCheck={(event, value) => {
             input.onChange(value)
             onCheck && onCheck(value)
