@@ -7,6 +7,11 @@ export const boardsListSelector = () => createSelector(
   (boards) => boards.list
 )
 
+export const boardsFilteredListSelector = () => createSelector(
+  boardsSelector(),
+  (boards) => boards.filtered
+)
+
 export const boardByIdSelector = (id) => createSelector(
   boardsSelector(),
   (boards) => boards.byKey[`board-${id}`]

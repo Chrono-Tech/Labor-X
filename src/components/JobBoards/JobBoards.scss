@@ -15,6 +15,10 @@
   @include flex(row, center, flex-start);
 }
 
+.contentBlock {
+  width: 100%;
+}
+
 h2 {
   color: #333333;
   font-size: 50px;
@@ -68,6 +72,7 @@ b {
   padding-right: 35px;
   min-height: 24px;
   line-height: 24px;
+  max-width: 200px;
 
   &:after {
     content: '\F04E';
@@ -139,6 +144,7 @@ b {
 .filterContent {
   padding: 20px;
   background: #333333;
+  width: 200px;
 }
 
 hr {

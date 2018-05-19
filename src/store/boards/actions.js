@@ -25,11 +25,12 @@ export const initBoards = () => async (dispatch, getState) => {
 
 export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
   const state = getState()
+  console.log('updateFilter', filterFields)
 
   const { list } = state.boards
 
-  let { rating, categories, level } = filterFields
-  let currentList = list || []
+  let { rating, categories, level, searchText } = filterFields
+  let currentList = [...list] || []
 
   if (categories) {
     categories = Object.keys(categories).filter((item) => !!categories[item])
@@ -55,5 +56,14 @@ export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
     currentList = currentList.filter((board) => board.rating >= rating)
   }
 
-  console.log('list', currentList, categories, level, rating)
+  if (searchText){
+    searchText = String(searchText).toLowerCase()
+    currentList = currentList.filter((board) => String(board.name).toLowerCase().includes(searchText) )
+  }
+
+  dispatch({
+    type: BOARDS_FILTER,
+    boardsList: currentList,
+  })
+
 }

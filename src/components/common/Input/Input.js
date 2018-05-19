@@ -80,6 +80,7 @@ const WrapperInput = (props) => {
       type={props.type}
       {...theme}
       {...props.input}
+      {...props.styles}
     />
   )
 }
@@ -131,6 +132,7 @@ export default class Input extends React.Component {
       Input.MATERIAL_THEME.LOGIN,
       Input.MATERIAL_THEME.PROFILE,
     ]),
+    materialInputStyles: PropTypes.object,
   }
 
   static TYPES = {
@@ -162,6 +164,7 @@ export default class Input extends React.Component {
     mods: [],
     lineEnabled: false,
     materialInput: false,
+    materialInputStyles: {},
   }
 
   getMaterialInputTheme (){
@@ -193,7 +196,7 @@ export default class Input extends React.Component {
 
   render () {
     const { className, placeholder, type, input, label, meta, disabled, inputMods, errorMods, lineEnabled, autoComplete,
-      mods, materialInput } = this.props
+      mods, materialInput, materialInputStyles } = this.props
     const classNames = [ css.root ].concat(mods)
     const inputModsArray = [css.input ].concat(inputMods)
     const errorClassNames = [css.error].concat(errorMods)
@@ -216,6 +219,7 @@ export default class Input extends React.Component {
                 className={className}
                 type={type}
                 input={input}
+                styles={materialInputStyles}
                 errorText={meta.touched && meta.error}
               />
             </MuiThemeProvider>

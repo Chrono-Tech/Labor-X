@@ -22,6 +22,7 @@ const mutations = {
       ? state.list.map(b => b.key !== board.key ? b : board)
       : [...state.list, board]
     return {
+      ...state,
       byKey,
       filtered: list,
       list,
@@ -30,6 +31,7 @@ const mutations = {
   [BOARDS_FILTER] (state, { boardsList }) {
 
     return {
+      ...state,
       filtered: boardsList,
     }
   },

@@ -314,7 +314,6 @@ export default class JobBoardItem extends React.Component {
 
   render () {
     const { jobBoard } = this.props
-    console.log('job board item', jobBoard)
 
     return (
       <div className={css.main}>
