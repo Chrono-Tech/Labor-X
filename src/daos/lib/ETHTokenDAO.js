@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import { TokenModel } from 'src/models'
 import AbstractTokenDAO from './AbstractTokenDAO'
 import ethDAO from './ETHDAO'
 
@@ -12,6 +13,14 @@ export default class ETHTokenDAO extends AbstractTokenDAO {
     this.web3 = web3
     this.txListener = this.handleTx.bind(this)
     this.subscrition = ethDAO.on('tx', this.txListener)
+    this.token = new TokenModel({
+      key: this.token.key,
+      name: 'Labor Hour', // Hardcoded for awhile
+      address: null,
+      symbol: 'LHT',
+      decimals: 18,
+    })
+    return this.token
   }
 
   disconnect () {
