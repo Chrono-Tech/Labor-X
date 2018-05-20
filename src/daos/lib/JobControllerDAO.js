@@ -1,5 +1,5 @@
 import { JobModel, JobIPFSModel, JobPostedEvent, SKILLS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST, JOB_STATES_LIST } from 'src/models'
-import { filterArrayByIndexMask } from 'src/utils'
+import { filterArrayByIndexMask, loadFromIPFS, ipfsHashToBytes32, bytes32ToIPFSHash } from 'src/utils'
 import Web3 from 'web3'
 import AbstractContractDAO from './AbstractContractDAO'
 
@@ -63,6 +63,7 @@ export default class JobControllerDAO extends AbstractContractDAO {
           await this.contract.methods.getJobDetailsIPFSHash(id).call(),
           await this.contract.methods.getJobState(id).call(),
         ])
+        const hash = bytes32ToIPFSHash(ipfsHash)
         return new JobModel({
           id,
           // status,
@@ -70,8 +71,8 @@ export default class JobControllerDAO extends AbstractContractDAO {
           worker,
           state: JOB_STATES_LIST[state],
           ipfs: new JobIPFSModel({
-            // ...await ipfsService.get(ipfsHash[i]),
-            hash: ipfsHash,
+            ...(await loadFromIPFS(hash) || {}),
+            hash,
           }),
           area: TAG_AREAS_LIST[skillsArea],
           category: TAG_CATEGORIES_LIST[skillsCategory],
@@ -82,7 +83,7 @@ export default class JobControllerDAO extends AbstractContractDAO {
   }
 
   createPostJobTx (sender: String, area: Number, category: Number, skills: Number, detailsIPFSHash: String) {
-    const data = this.contract.methods.postJob(area, category, skills, Web3.utils.asciiToHex(detailsIPFSHash)).encodeABI()
+    const data = this.contract.methods.postJob(area, category, skills, ipfsHashToBytes32(detailsIPFSHash)).encodeABI()
     return {
       from: sender,
       to: this.address,

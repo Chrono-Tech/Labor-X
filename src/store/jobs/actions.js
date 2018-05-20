@@ -31,8 +31,8 @@ export const createJob = (/*{ area, category, skills }*/) => async (dispatch, ge
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
   const detailsIPFSHash = await storeIntoIPFS({
-    foo: 'bar',
-    bar: 'baz',
+    foo: 'bar123',
+    bar: 'baz123',
   })
   const tx = jobControlerDAO.createPostJobTx(signer.address, 1, 1, 1, detailsIPFSHash)
   await dispatch(executeTransaction({ tx, web3 }))
