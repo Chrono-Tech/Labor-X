@@ -48,41 +48,44 @@ export default class JobControllerDAO extends AbstractContractDAO {
     const array = Array.from({ length })
     return Promise.all(
       array.map(async (element, index) => {
-        const id = index + 1
-        const [
-          client,
-          worker,
-          skillsArea,
-          skillsCategory,
-          skills,
-          ipfsHash,
-          state,
-        ] = await Promise.all([
-          await this.contract.methods.getJobClient(id).call(),
-          await this.contract.methods.getJobWorker(id).call(),
-          await this.contract.methods.getJobSkillsArea(id).call(),
-          await this.contract.methods.getJobSkillsCategory(id).call(),
-          await this.contract.methods.getJobSkills(id).call(),
-          await this.contract.methods.getJobDetailsIPFSHash(id).call(),
-          await this.contract.methods.getJobState(id).call(),
-        ])
-        const hash = bytes32ToIPFSHash(ipfsHash)
-        return new JobModel({
-          id,
-          // status,
-          client,
-          worker,
-          state: JOB_STATES_LIST[state],
-          ipfs: new JobIPFSModel({
-            ...(await loadFromIPFS(hash) || {}),
-            hash,
-          }),
-          area: TAG_AREAS_LIST[skillsArea],
-          category: TAG_CATEGORIES_LIST[skillsCategory],
-          skills: filterArrayByIndexMask(SKILLS_LIST, skills),
-        })
+        return this.getJobById(index + 1)
       })
     )
+  }
+
+  async getJobById (id) {
+    const [
+      client,
+      worker,
+      skillsArea,
+      skillsCategory,
+      skills,
+      ipfsHash,
+      state,
+    ] = await Promise.all([
+      await this.contract.methods.getJobClient(id).call(),
+      await this.contract.methods.getJobWorker(id).call(),
+      await this.contract.methods.getJobSkillsArea(id).call(),
+      await this.contract.methods.getJobSkillsCategory(id).call(),
+      await this.contract.methods.getJobSkills(id).call(),
+      await this.contract.methods.getJobDetailsIPFSHash(id).call(),
+      await this.contract.methods.getJobState(id).call(),
+    ])
+    const hash = bytes32ToIPFSHash(ipfsHash)
+    return new JobModel({
+      id,
+      // status,
+      client,
+      worker,
+      state: JOB_STATES_LIST[state],
+      ipfs: new JobIPFSModel({
+        ...(await loadFromIPFS(hash) || {}),
+        hash,
+      }),
+      area: TAG_AREAS_LIST[skillsArea],
+      category: TAG_CATEGORIES_LIST[skillsCategory],
+      skills: filterArrayByIndexMask(SKILLS_LIST, skills),
+    })
   }
 
   createPostJobTx (sender: String, area: Number, category: Number, skills: Number, detailsIPFSHash: String) {
@@ -101,16 +104,16 @@ export default class JobControllerDAO extends AbstractContractDAO {
     setImmediate(() => {
       this.emit('JobPosted', {
         data,
-        job: new JobPostedEvent({
+        event: new JobPostedEvent({
           key: `${data.transactionHash}/${data.logIndex}`,
           self: returnValues.self,
-          jobId: returnValues.jobId,
+          jobId: Number(returnValues.jobId),
           client: returnValues.client,
-          skillsTagsMask: returnValues.skills, // bit-mask,
-          skillsTagsAreaMask: returnValues.skillsArea, // bit-mask,
-          skillsTagsCategoryMask: returnValues.skillsCategory, // bit-mask,
-          ipfsHash: returnValues.detailsIPFSHash,
-          status: returnValues.status,
+          skills: Number(returnValues.skills), // bit-mask,
+          skillsArea: Number(returnValues.skillsArea),
+          skillsCategory: Number(returnValues.skillsCategory),
+          detailsIPFSHash: returnValues.detailsIPFSHash,
+          bindStatus: returnValues.bindStatus,
         }),
       })
     })

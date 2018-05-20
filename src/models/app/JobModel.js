@@ -16,7 +16,7 @@ const schemaFactory = () => ({
   id: PropTypes.number.isRequired,
   // status: PropTypes.bool,
   client: PropTypes.string.isRequired,
-  worker: PropTypes.string.isRequired,
+  worker: PropTypes.string,
   state: PropTypes.oneOf(JOB_STATES_LIST),
   ipfs: PropTypes.instanceOf(JobIPFSModel),
   area: PropTypes.instanceOf(TagAreaModel),

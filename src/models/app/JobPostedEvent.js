@@ -6,11 +6,11 @@ const schemaFactory = () => ({
   jobId: PropTypes.number.isRequired,
   self: PropTypes.string.isRequired,
   client: PropTypes.string.isRequired,
-  skillsTagsMask: PropTypes.number.isRequired, // bit-mask,
-  skillsTagsAreaMask: PropTypes.number.isRequired, // bit-mask,
-  skillsTagsCategoryMask: PropTypes.number.isRequired, // bit-mask,
-  ipfsHash: PropTypes.string.isRequired,
-  status: PropTypes.boolean,
+  skills: PropTypes.number.isRequired, // bit-mask,
+  skillsArea: PropTypes.number.isRequired, // bit-mask,
+  skillsCategory: PropTypes.number.isRequired, // bit-mask,
+  detailsIPFSHash: PropTypes.string.isRequired,
+  bindStatus: PropTypes.bool,
 })
 
 export default class JobPostedEvent extends AbstractModel {
