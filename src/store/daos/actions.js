@@ -1,6 +1,7 @@
 import { ContractDAOModel } from 'src/models'
 import {
   CONTRACTS_MANAGER,
+  MULTI_EVENTS_HISTORY,
   ERC20_LIBRARY,
   JOB_CONTROLLER,
   BOARD_CONTROLLER,
@@ -21,6 +22,8 @@ export const initDAOs = ({ web3 }) => async (dispatch) => {
     }),
   })
 
+  const history = await contractManagerDAO.getContractAddressByType(MULTI_EVENTS_HISTORY.type)
+
   const contracts = [
     ERC20_LIBRARY,
     JOB_CONTROLLER,
@@ -31,11 +34,12 @@ export const initDAOs = ({ web3 }) => async (dispatch) => {
     contracts.map(
       async contract => {
         const address = await contractManagerDAO.getContractAddressByType(contract.type)
-        const dao = contract.create(address)
+        const dao = contract.create(address, history)
         dao.connect(web3)
         return new ContractDAOModel({
           contract,
           address,
+          history,
           dao,
         })
       }

@@ -7,7 +7,6 @@ import { Link, Button } from 'components/common'
 import 'styles/globals/globals.scss'
 import css from './ShowMnemonic.scss'
 import validate from './validate'
-import Web3 from "../../../network/Web3Provider"
 
 const FORM_SHOW_MNEMONIC = 'form/showMnemonic'
 
@@ -21,22 +20,22 @@ class ShowMnemonic extends React.Component {
 
   render () {
     const { handleSubmit, error, pristine, invalid, mnemonic } = this.props
-  
+
     return (
       <form className={css.root} name={FORM_SHOW_MNEMONIC} onSubmit={handleSubmit}>
         <h2>Write down back-up phrase</h2>
-        
+
         <p className={css.description}>
           You can use this phrase to login and access your wallet, even if you forgot your password.
         </p>
-        
+
         <div className={css.phraseBlock}>
           <div className={css.phraseBlockTitle}>Your back-up phrase (Mnemonic Key)</div>
           <div className={css.phrase}>
             { mnemonic }
           </div>
         </div>
-        
+
         <div className={css.infoBlock}>
           <div className={css.infoBlockHeader}>Q&A</div>
           <ol className={css.infoBlockList}>
@@ -81,42 +80,42 @@ class ShowMnemonic extends React.Component {
             </li>
           </ol>
         </div>
-        
+
         <div className={[css.infoBlock, css.securityBlock].join(' ')}>
           <div className={css.infoBlockHeader}>Security Guidelines</div>
-  
+
           <ol className={css.infoBlockList}>
             <li>
               <b>1. Copy you Account Password (Mnemonic key) on Paper.</b> Don't
               save your password on a computer, copy it on a paper and store in a safe place.
             </li>
-  
+
             <li>
               <b>2. Don't share your wallet file with anyone you don't trust.</b> Even
               the wallet file is protected by password, the file still can be used against you and you may
               lose your funds. To avoid the situation do not share your file with anyone.
             </li>
-            
+
             <li><b>3. What if I've lost my Back-up phrase (Mnemonic Key)?</b> You may use you wallet file instead.</li>
-  
+
             <li>
               <b>4. What if I don't have neither Wallet file nor Back-up phrase (Mnemonic Key)?</b> We
               do not store this information and Your account will be lost together with all your funds and history.
             </li>
-            
+
             <li>
               <b>5. Following the simple rules will make your account secure.</b>
             </li>
           </ol>
         </div>
-  
+
         <div className={css.checkboxBlock}>
           <Field id='confirm' className={css.checkbox} component='input' type='checkbox' name='confirm' />
           <label htmlFor='confirm' className={css.checkboxLabel}>
             I have read QA and will follow security guidelines given on this page
           </label>
         </div>
-        
+
         <div>
           <Button
             label='Proceed'
@@ -129,7 +128,7 @@ class ShowMnemonic extends React.Component {
             primary
           />
         </div>
-  
+
         <div className={css.progressBlock}>
           <div className={css.progressPoint} />
           <div className={[css.progressPoint, css.progressPointInactive].join(' ')} />

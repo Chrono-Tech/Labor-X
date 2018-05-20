@@ -2,23 +2,20 @@ import { JobModel, JobIPFSModel, JobPostedEvent, SKILLS_LIST, TAG_AREAS_LIST, TA
 import { filterArrayByIndexMask, loadFromIPFS, ipfsHashToBytes32, bytes32ToIPFSHash } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
-export default class JobControllerDAO extends AbstractContractDAO {
-  constructor ({ address, history, abi }) {
-    super({ address, history, abi })
+export default class MultiEventHistoryDAO extends AbstractContractDAO {
+  constructor (address, abi) {
+    super(address, abi)
   }
 
-  async connect (web3, options) {
+  async connect (Web3, options) {
     if (this.isConnected) {
       this.disconnect()
     }
     // eslint-disable-next-line no-console
-    console.log('[JobControllerDAO] Connect')
-    this.contract = new web3.eth.Contract(this.abi.abi, this.address, options)
-    this.history = this.history != null // nil check
-      ? new web3.eth.Contract(this.abi.abi, this.history, options)
-      : this.contract
+    console.log('[MultiEventHistoryDAO] Connect')
+    this.contract = new Web3.eth.Contract(this.abi.abi, this.address, options)
 
-    this.jobPostedEmitter = this.history.events.JobPosted({})
+    this.jobPostedEmitter = this.contract.events.JobPosted({})
       .on('data', this.handleJobPostedData.bind(this))
       .on('error', this.handleError.bind(this))
     // this.jobClosedEmitter = this.contract.events.JobClosed({})
@@ -35,7 +32,6 @@ export default class JobControllerDAO extends AbstractContractDAO {
       this.jobCreatedEmitter = null
       this.jobClosedEmitter = null
       this.contract = null
-      this.history = null
     }
   }
 
@@ -96,7 +92,7 @@ export default class JobControllerDAO extends AbstractContractDAO {
 
   handleJobPostedData (data) {
     // eslint-disable-next-line no-console
-    console.log('[JobControllerDAO] JobPosted', data)
+    console.log('[MultiEventHistoryDAO] JobPosted', data)
     const { returnValues } = data
     setImmediate(() => {
       this.emit('JobPosted', {
@@ -118,6 +114,6 @@ export default class JobControllerDAO extends AbstractContractDAO {
 
   handleError (error) {
     // eslint-disable-next-line no-console
-    console.error('[JobControllerDAO] Error in subscription', error)
+    console.error('[MultiEventHistoryDAO] Error in subscription', error)
   }
 }

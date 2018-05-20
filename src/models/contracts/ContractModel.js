@@ -4,8 +4,9 @@ import AbstractModel from '../AbstractModel'
 const schemaFactory = () => ({
   type: PropTypes.string.isRequired,
   address: PropTypes.string,
+  history: PropTypes.string,
   abi: PropTypes.object.isRequired,
-  DAOClass: PropTypes.any.isRequired,
+  DAOClass: PropTypes.any,
 })
 
 export default class ContractModel extends AbstractModel {
@@ -15,10 +16,11 @@ export default class ContractModel extends AbstractModel {
     Object.freeze(this)
   }
 
-  create (address = null) {
-    return new this.DAOClass(
-      address || this.address,
-      this.abi
-    )
+  create (address = null, history = null) {
+    return new this.DAOClass({
+      address: address || this.address,
+      history: history || this.history,
+      abi: this.abi,
+    })
   }
 }

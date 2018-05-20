@@ -3,7 +3,7 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   key: PropTypes.string.isRequired,
-  jobId: PropTypes.number().isRequired,
+  jobId: PropTypes.number.isRequired,
   self: PropTypes.string.isRequired,
   client: PropTypes.string.isRequired,
   skillsTagsMask: PropTypes.number.isRequired, // bit-mask,

@@ -11,7 +11,7 @@ const schemaFactory = () => ({
 })
 
 const defaultProps = {
-  hash: 'QmajWTti6H2gX9LS2aMi2tc5NQdtB3vyMoAN4JGRHcX1ai',
+  hash: 'QmQvFxiLGSsEsV9awy8RmyJfKZtySkFDVkDpNerbTHhHD6',
   name: 'Default Job Name',
   intro: 'Default job intro',
   responsibilities: 'Default job responsibilities',

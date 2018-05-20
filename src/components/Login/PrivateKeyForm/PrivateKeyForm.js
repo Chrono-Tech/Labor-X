@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import bip39 from 'bip39'
 
 import { Button, Input } from 'components/common'
-import ethereumService from 'services/EthereumService'
 import SignInModel from 'src/models/SignInModel'
+import { createAddressFromPrivateKey } from 'src/utils'
 import { LoginSteps } from 'store'
 import validate from './validate'
 
@@ -14,8 +13,8 @@ import css from './PrivateKeyForm.scss'
 const FORM_PRIVATE_KEY = 'form/privateKey'
 
 const onSubmit = ({ key }) => {
-  const address = ethereumService.createAddressFromPrivateKey(key)
-  
+  const address = createAddressFromPrivateKey(key)
+
   return new SignInModel({
     method: SignInModel.METHODS.PRIVATE_KEY,
     key: key,
@@ -26,11 +25,7 @@ const onSubmit = ({ key }) => {
 class PrivateKeyForm extends React.Component {
   static propTypes = {
     onChangeStep: PropTypes.func.isRequired,
-  }
-
-  constructor (props) {
-    super(props)
-    console.log('test mnemonic: ', bip39.generateMnemonic())
+    handleSubmit: PropTypes.func,
   }
 
   render () {
