@@ -1,14 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import RecruiterJobsContent from 'src/components/RecruiterJobs/RecruiterJobs'
 import { MainLayout } from 'src/components/layouts'
 import { JobCard } from 'src/components/common'
-import { boardsListSelector } from 'src/store'
-import { Provider, connect } from 'react-redux'
-import { bootstrap } from 'store/bootstrap'
 import withRedux from 'next-redux-wrapper'
-import initialStore from '../src/store'
-import App from './app.js'
+import initialStore from 'src/store'
 import 'styles/globals/globals.scss'
 
 const RECRUITER_JOBS = {
@@ -52,10 +47,6 @@ const RECRUITER_JOBS = {
 class JobsPage extends React.Component {
   static propTypes = {
     // boardsList: PropTypes.instanceOf(SignerModel).isRequired,
-  }
-
-  static getInitialProps ({ store }) {
-    store.dispatch(bootstrap())
   }
 
   render () {
