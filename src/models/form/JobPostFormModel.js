@@ -22,7 +22,7 @@ const schemaFactory = () => ({
 
   area: PropTypes.instanceOf(TagAreaModel).isRequired,
   category: PropTypes.instanceOf(TagCategoryModel).isRequired,
-  skills: PropTypes.arrayOf(SkillModel).isRequired,
+  skills: PropTypes.arrayOf(PropTypes.instanceOf(SkillModel)).isRequired,
 })
 
 const defaultProps = {

@@ -6,8 +6,8 @@ import { reducer as formReducer } from 'redux-form'
 import { createLogger } from 'redux-logger'
 import * as thunkMiddleware from 'redux-thunk'
 import web3Factory from 'src/web3'
-import { initFrontend, bootstrap } from './bootstrap'
-import { login, landing, ethereum, daos, tokens, wallet, createAccount, boards, jobs } from './reducers'
+import { initFrontend, initBackend } from './bootstrap'
+import { login, landing, ethereum, daos, tokens, wallet, balances, createAccount, boards, jobs } from './reducers'
 
 export * from './actions'
 
@@ -34,6 +34,7 @@ export default (initialState = {}) => {
     boards,
     jobs,
     wallet: wallet({ web3 }),
+    balances,
     createAccount,
   })
 
@@ -59,7 +60,7 @@ export default (initialState = {}) => {
     store.__persistor = persistStore(store)
     store.dispatch(initFrontend(store)({ web3 }))
   } else {
-    store.dispatch(bootstrap())
+    store.dispatch(initBackend())
   }
 
   return store

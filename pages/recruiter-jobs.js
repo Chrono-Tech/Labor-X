@@ -1,11 +1,10 @@
 import React from 'react'
+import withRedux from 'next-redux-wrapper'
 import RecruiterJobsContent from 'src/components/RecruiterJobs/RecruiterJobs'
 import { MainLayout } from 'src/components/layouts'
 import { JobCard } from 'src/components/common'
-import { bootstrap } from 'store/bootstrap'
-import withRedux from 'next-redux-wrapper'
+import initialStore from 'src/store'
 import 'styles/globals/globals.scss'
-import initialStore from '../src/store'
 
 const RECRUITER_JOBS = {
   expectedRewards: 10,
@@ -50,10 +49,6 @@ class JobsPage extends React.Component {
     // boardsList: PropTypes.instanceOf(SignerModel).isRequired,
   }
 
-  static getInitialProps ({ store }) {
-    store.dispatch(bootstrap())
-  }
-
   render () {
     return (
       <MainLayout title='nav.recruiterJobs'>
@@ -63,22 +58,4 @@ class JobsPage extends React.Component {
   }
 }
 
-// function mapStateToProps (state) {
-//   const boardsList = boardsListSelector()(state)
-//   // eslint-disable-next-line
-//   console.log('boardsList', boardsList)
-//   return {
-//     boardsList,
-//   }
-// }
-
-// function mapDispatchToProps (/*dispatch*/) {
-//   return {
-//     // stack: state.modals.stack,
-//   }
-// }
-
 export default withRedux(initialStore)(JobsPage)
-
-// export default connect(mapStateToProps, mapDispatchToProps)(JobsPage)
-// export default JobsPage

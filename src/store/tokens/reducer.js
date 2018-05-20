@@ -1,11 +1,19 @@
-import { TOKENS_REGISTER } from './actions'
+import { TOKENS_ETH, TOKENS_REGISTER } from './actions'
 
 export const initialState = {
+  eth: null,
   byKey: {},
   byAddress: {},
 }
 
 const mutations = {
+  [TOKENS_ETH] (state, { model }) {
+    console.log('eth model', model)
+    return {
+      ...state,
+      eth: model,
+    }
+  },
   [TOKENS_REGISTER] (state, { model }) {
     return {
       ...state,

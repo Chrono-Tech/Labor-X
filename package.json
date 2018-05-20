@@ -9,6 +9,7 @@
   "dependencies": {
     "@chronobank/mint": "github:chronobank/chronomint",
     "@laborx/sc-abi": "^0.0.3",
+    "accounting": "^0.4.1",
     "bip39": "^2.5.0",
     "bs58": "^4.0.1",
     "es6-promisify": "^6.0.0",

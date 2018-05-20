@@ -5,9 +5,7 @@ import withRedux from 'next-redux-wrapper'
 import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
-
 import initialStore, { hideCookiesNotice, getCookiesNoticeValue } from 'store'
-import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import css from './index.scss'
 
@@ -22,10 +20,6 @@ class Index extends React.Component {
     hideCookiesNotice: () => {},
     getCookiesNoticeValue: () => {},
     isHideCookiesNotice: true,
-  }
-
-  static getInitialProps ({ store }) {
-    store.dispatch(bootstrap())
   }
 
   constructor (){
