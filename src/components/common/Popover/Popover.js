@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Input } from 'components/common'
 import css from './Popover.scss'
 
 export default class Popover extends React.Component {
@@ -28,7 +27,7 @@ export default class Popover extends React.Component {
   }
   
   render (){
-    const { children, arrowPosition, open, className, ...props } = this.props
+    const { arrowPosition, open, className, ...props } = this.props
     
     let arrowPositionStyle
     
