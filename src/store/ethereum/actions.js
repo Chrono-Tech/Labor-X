@@ -80,7 +80,7 @@ export const processTransaction = ({ web3, entry }) => async (dispatch, getState
 }
 
 export const signTransaction = ({ entry }) => async (dispatch, getState) => {
-  assert.ok(entry instanceof TxEntryModel, '234')
+  assert.ok(entry instanceof TxEntryModel)
   const rootState = getState()
   try {
     // TODO @ipavlenko: Replace with signer selector
@@ -116,7 +116,7 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
 }
 
 export const sendSignedTransaction = ({ web3, entry }) => async (dispatch, getState) => {
-  assert.ok(entry instanceof TxEntryModel, '345')
+  assert.ok(entry instanceof TxEntryModel)
   dispatch({
     type: TX_STATUS,
     key: entry.key,

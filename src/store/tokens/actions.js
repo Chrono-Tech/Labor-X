@@ -5,7 +5,7 @@ import { daoByType } from 'src/store/daos/selectors'
 
 export const TOKENS_REGISTER = 'tokens/register'
 
-export const initTokens = ({ web3 }) => async (dispatch, getState) => {
+export const initTokens = () => async (dispatch, getState) => {
 
   const erc20LibrayDAO = daoByType('ERC20Library')(getState())
 
@@ -14,16 +14,12 @@ export const initTokens = ({ web3 }) => async (dispatch, getState) => {
   const models = await Promise.all(
     contracts.map(
       async address => {
-        const dao = ERC20_INTERFACE.create(
-          new TokenModel({
-            key: uniqid(),
-            address,
-          })
-        )
-        const token = await dao.connect(web3)
-        return new TokenDAOModel({
-          token,
-          dao,
+        const token = new TokenModel({
+          key: uniqid(),
+          address,
+        })
+        return TokenDAOModel.fromTokenModel(token, {
+          getAbi: (/*address*/) => ERC20_INTERFACE.abi,
         })
       }
     )

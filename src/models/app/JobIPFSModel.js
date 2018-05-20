@@ -3,7 +3,7 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   hash: PropTypes.string.isRequired, // ipfs hash of the object itself
-  name: PropTypes.string,
+  headline: PropTypes.string,
   intro: PropTypes.string,
   responsibilities: PropTypes.string,
   requirements: PropTypes.string,
@@ -11,8 +11,8 @@ const schemaFactory = () => ({
 })
 
 const defaultProps = {
-  hash: 'QmajWTti6H2gX9LS2aMi2tc5NQdtB3vyMoAN4JGRHcX1ai',
-  name: 'Default Job Name',
+  hash: 'QmQvFxiLGSsEsV9awy8RmyJfKZtySkFDVkDpNerbTHhHD6',
+  headline: 'Default Job Name',
   intro: 'Default job intro',
   responsibilities: 'Default job responsibilities',
   requirements: 'Default job requirements',

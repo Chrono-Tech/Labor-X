@@ -5,6 +5,7 @@ import AbstractModel from '../AbstractModel'
 const schemaFactory = () => ({
   contract: PropTypes.instanceOf(ContractModel).isRequired,
   address: PropTypes.string.isRequired,
+  history: PropTypes.string,
   dao: PropTypes.any.isRequired,
 })
 

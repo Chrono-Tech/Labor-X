@@ -4,9 +4,10 @@ import { Field, reduxForm } from 'redux-form'
 import { SelectField } from 'redux-form-material-ui'
 import { connect } from 'react-redux'
 import { MuiThemeProvider } from 'material-ui/styles'
-import { MenuItem } from 'material-ui/Menu'
+import { CircularProgress, MenuItem } from 'material-ui'
 import { Image, Input, Chip, Badge, Checkbox, Translate, NumberInput, Calendar, Button } from 'src/components/common'
 import { SignerModel } from 'src/models'
+import { Router } from 'src/routes'
 import { signerSelector, createJob } from 'src/store'
 import validate from './validate'
 import css from './CreateJobContent.scss'
@@ -17,6 +18,7 @@ class CreateJobContent extends React.Component {
   static propTypes = {
     signer: PropTypes.instanceOf(SignerModel).isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
   }
 
   state = {
@@ -30,6 +32,7 @@ class CreateJobContent extends React.Component {
   handleChangeState = (event, index, value) => this.setState({ stateValue: value });
 
   render () {
+    const { isLoading } = this.props
     return (
       <MuiThemeProvider>
         <div className={css.main}>
@@ -47,11 +50,13 @@ class CreateJobContent extends React.Component {
                   icon={Image.SETS.HELP_INVERT}
                   mods={Button.MODS.FLAT}
                 />
+                {!isLoading ? null : <CircularProgress className={css.submitProgress} size={24} />}
                 <Button
                   className={css.doneButton}
                   label='terms.done'
                   type={Button.TYPES.SUBMIT}
                   mods={Button.MODS.FLAT}
+                  disabled={isLoading}
                   onClick={this.props.handleSubmit}
                 />
               </div>
@@ -319,14 +324,29 @@ export class CreateJobContentCont extends React.Component {
     signer: PropTypes.instanceOf(SignerModel),
   }
 
-  handleSubmit = (values) => {
-    this.props.handleSubmit(values)
+  state = {
+    isLoading: false,
+  }
+
+  handleSubmit = async (values) => {
+    this.setState({
+      isLoading: true,
+    })
+    try {
+      await this.props.handleSubmit(values)
+      Router.pushRoute('/posted-jobs')
+    } finally {
+      this.setState({
+        isLoading: false,
+      })
+    }
   }
 
   render () {
     const { signer } = this.props
+    const { isLoading } = this.state
     return signer == null ? null : (
-      <CreateJobContentForm signer={this.props.signer} onSubmit={this.handleSubmit} />
+      <CreateJobContentForm signer={this.props.signer} onSubmit={this.handleSubmit} isLoading={isLoading} />
     )
   }
 }
@@ -341,10 +361,10 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     // stack: state.modals.stack,
-    handleSubmit (values) {
+    async handleSubmit (values) {
       // eslint-disable-next-line no-console
       console.log('--CreateJobForm#onSubmit', values, this)
-      dispatch(createJob(values))
+      await dispatch(createJob(values))
     },
   }
 }

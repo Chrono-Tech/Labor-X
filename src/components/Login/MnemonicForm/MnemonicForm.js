@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
-import bip39 from 'bip39'
+import { createAddressFromMnemonic  } from 'src/utils'
 
 import { Button, Input } from 'components/common'
 import SignInModel from 'models/SignInModel'
-import ethereumService from 'services/EthereumService'
 import { LoginSteps } from 'store'
 import validate from './validate'
 
@@ -14,7 +13,7 @@ import css from './MnemonicForm.scss'
 const FORM_MNEMONIC = 'form/mnemonic'
 
 const onSubmit = ({ mnemonic }) => {
-  const address = ethereumService.createAddressFromMnemonic(mnemonic)
+  const address = createAddressFromMnemonic(mnemonic)
 
   return new SignInModel({
     isHD: true,
@@ -27,11 +26,7 @@ const onSubmit = ({ mnemonic }) => {
 class MnemonicForm extends React.Component {
   static propTypes = {
     onChangeStep: PropTypes.func.isRequired,
-  }
-
-  constructor (props) {
-    super(props)
-    console.log('test mnemonic: ', bip39.generateMnemonic())
+    handleSubmit: PropTypes.func,
   }
 
   render () {

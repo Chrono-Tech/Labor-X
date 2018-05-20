@@ -1,11 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm, SubmissionError } from 'redux-form'
-
-import { Button, Input, Link, UserRow } from 'components/common'
-import { FieldInputComponent } from 'components/Login'
+import { Field, reduxForm /*, SubmissionError */ } from 'redux-form'
+import { Button, Input, UserRow } from 'components/common'
 import { WalletEntryModel } from 'src/models'
-import Web3 from 'src/network/Web3Provider'
 import { LoginSteps } from 'src/store'
 
 import css from './LoginForm.scss'
@@ -21,14 +18,15 @@ class LoginForm extends React.Component {
   }
 
   onSubmit ({ password }) {
-    const { selectedWallet } = this.props
-    let web3 = Web3.getWeb3()
-
-    try {
-      web3.eth.accounts.wallet.decrypt(selectedWallet.encrypted, password)
-    } catch (e) {
-      throw new SubmissionError({ password: 'Password does not match' })
-    }
+    // TODO @ipavlenko: Reimplement using redux way
+    // const { selectedWallet } = this.props
+    // let web3 = Web3.getWeb3()
+    //
+    // try {
+    //   web3.eth.accounts.wallet.decrypt(selectedWallet.encrypted, password)
+    // } catch (e) {
+    //   throw new SubmissionError({ password: 'Password does not match' })
+    // }
 
     return {
       password: password,

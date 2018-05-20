@@ -4,8 +4,8 @@ import { filterArrayByIndexMask } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
 export default class BoardControllerDAO extends AbstractContractDAO {
-  constructor (address, abi) {
-    super(address, abi)
+  constructor ({ address, history, abi }) {
+    super({ address, history, abi })
   }
 
   async connect (web3, options) {
@@ -15,11 +15,13 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     // eslint-disable-next-line no-console
     console.log('[BoardControllerDAO] Connect')
     this.contract = new web3.eth.Contract(this.abi.abi, this.address, options)
-
-    this.boardCreatedEmitter = this.contract.events.BoardCreated({})
+    this.history = this.history != null // nil check
+      ? new web3.eth.Contract(this.abi.abi, this.history, options)
+      : this.contract
+    this.boardCreatedEmitter = this.history.events.BoardCreated({})
       .on('data', this.handleBoardCreatedData.bind(this))
       .on('error', this.handleError.bind(this))
-    this.boardClosedEmitter = this.contract.events.BoardClosed({})
+    this.boardClosedEmitter = this.history.events.BoardClosed({})
       .on('data', this.handleBoardClosedData.bind(this))
       .on('error', this.handleError.bind(this))
 
@@ -33,6 +35,7 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       this.boardCreatedEmitter = null
       this.boardClosedEmitter = null
       this.contract = null
+      this.history = null
     }
   }
 
