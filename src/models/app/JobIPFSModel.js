@@ -3,26 +3,27 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   hash: PropTypes.string.isRequired, // ipfs hash of the object itself
-  headline: PropTypes.string,
+  name: PropTypes.string,
   intro: PropTypes.string,
   responsibilities: PropTypes.string,
   requirements: PropTypes.string,
-  conclusion: PropTypes.string,
+  // conclusion: PropTypes.string,
+  boardName: PropTypes.string,
+  hourlyRate: PropTypes.number,
+  totalHours: PropTypes.number,
+  startDateString: PropTypes.string,
+  endDateString: PropTypes.string,
+  state: PropTypes.string,
+  city: PropTypes.string,
+  zip: PropTypes.string,
+  street: PropTypes.string,
+  building: PropTypes.string,
+  suit: PropTypes.string,
 })
-
-const defaultProps = {
-  hash: 'QmQvFxiLGSsEsV9awy8RmyJfKZtySkFDVkDpNerbTHhHD6',
-  headline: 'Default Job Name',
-  intro: 'Default job intro',
-  responsibilities: 'Default job responsibilities',
-  requirements: 'Default job requirements',
-  conclusion: 'Default job conclusion',
-}
 
 export default class JobIPFSModel extends AbstractModel {
   constructor (props) {
-    super(Object.assign(defaultProps, props), schemaFactory())
-    Object.assign(this, props)
+    super(props, schemaFactory())
     Object.freeze(this)
   }
 }

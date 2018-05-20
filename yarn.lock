@@ -97,9 +97,8 @@
     ethereumjs-testrpc "^6.0.3"
     ethereumjs-wallet "^0.6.0"
     immutable ">=3"
-    ipfs-api "^20.2.1"
+    ipfs-api "^16.0.0"
     js-file-download "^0.4.1"
-    jsan "^3.1.10"
     keythereum "^0.5.2"
     lodash "^4.17.4"
     material-colors-scss "^1.0.0"
@@ -133,7 +132,6 @@
     redux-form "^7.1.1"
     redux-form-material-ui "^4.3.0"
     redux-immutable "^3.0.10"
-    redux-persist-immutable "^4.3.1"
     redux-thunk "^2.2.0"
     reselect "^3.0.1"
     socket.io-client "^2.0.3"
@@ -835,7 +833,7 @@ async-eventemitter@^0.2.2:
   dependencies:
     async "^2.4.0"
 
-"async-eventemitter@github:ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c":
+async-eventemitter@ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c:
   version "0.2.3"
   resolved "https://codeload.github.com/ahultgren/async-eventemitter/tar.gz/fa06e39e56786ba541c180061dbf2c0a5bbf951c"
   dependencies:
@@ -4373,7 +4371,6 @@ eslint-plugin-async-await@0.0.0:
 
 eslint-plugin-chronobank@chronobank/eslint-plugin-chronobank:
   version "1.1.0"
-  uid "38dc59c71223ba76825b4476b5e5ecab344fd67e"
   resolved "https://codeload.github.com/chronobank/eslint-plugin-chronobank/tar.gz/38dc59c71223ba76825b4476b5e5ecab344fd67e"
   dependencies:
     eslint-plugin-async-await "0.0.0"

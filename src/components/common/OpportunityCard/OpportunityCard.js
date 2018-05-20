@@ -3,7 +3,7 @@ import { Link } from 'components/common'
 import PropTypes from 'prop-types'
 import css from './OpportunityCard.scss'
 
-export default class JobCard extends React.Component {
+export default class OpportunityCard extends React.Component {
   static propTypes = {
     icon: PropTypes.string,
     title: PropTypes.string.isRequired,

@@ -129,6 +129,7 @@ export default {
     deadline: 'Deadline',
     address: 'Address',
     categories: 'Categories',
+    skills: 'Skills',
     legal: 'Legal',
 
     hourlyRate: 'Hourly Rate, LHUS',

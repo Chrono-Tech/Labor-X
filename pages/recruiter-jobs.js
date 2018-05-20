@@ -1,15 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import RecruiterJobsContent from 'src/components/RecruiterJobs/RecruiterJobs'
 import { MainLayout } from 'src/components/layouts'
 import { JobCard } from 'src/components/common'
-import { boardsListSelector } from 'src/store'
-import { Provider, connect } from 'react-redux'
 import { bootstrap } from 'store/bootstrap'
 import withRedux from 'next-redux-wrapper'
-import initialStore from '../src/store'
-import App from './app.js'
 import 'styles/globals/globals.scss'
+import initialStore from '../src/store'
 
 const RECRUITER_JOBS = {
   expectedRewards: 10,
