@@ -1,14 +1,27 @@
 @import "~styles/globals/variables";
+@import "~styles/globals/mixins";
 
 .root {
   // TODO @dkchv: temp
-  display: none;
+  //display: none;
+  display: block;
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(#ccc, 0.5);
+  background-color: transparent;
+}
+
+.overlay {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  z-index: 100;
 }
 
 .content {
@@ -18,6 +31,17 @@
   bottom: 0;
   width: 35rem;
   background-color: $color-white;
+  z-index: 101;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 10px;
+    background: linear-gradient(to right,rgba(0,0,0,0) 50%,rgba(0,0,0,0.1) );
+    height: 100%;
+    position: absolute;
+    left: -10px;
+  }
 }
 
 .profileBox {

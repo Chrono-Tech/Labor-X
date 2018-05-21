@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { SignerModel, PocketModel } from 'src/models'
 import { BalanceSubscription } from 'src/micros'
-import { Header, RightPanel, SecondMenu } from 'src/components/layouts'
+import { Header, SecondMenu } from 'src/components/layouts'
 import { signerSelector, ethPocketSelector } from 'src/store'
 import css from './MainLayout.scss'
 
@@ -41,7 +41,6 @@ export class MainLayout extends React.Component {
             )}
             {children}
           </div>
-          <RightPanel />
         </div>
       </BalanceSubscription>
     )

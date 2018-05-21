@@ -215,9 +215,9 @@ class JobBoards extends React.Component {
                   />
                 </div>
                 <div className={css.filter}>
-                  <button onClick={this.toggleFilterBlock.bind(this)} className={css.filterButton}>
+                  <div onClick={this.toggleFilterBlock.bind(this)} className={css.filterButton}>
                     { this.renderActiveCategories() }
-                  </button>
+                  </div>
                 </div>
               </div>
 

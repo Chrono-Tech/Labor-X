@@ -359,7 +359,7 @@ b {
   padding: 0 65px;
   cursor: pointer;
   margin-top: 30px;
-  
+
   &:hover, &:focus {
     background: #0088C3;
   }
@@ -417,4 +417,18 @@ b {
     font-weight: 300;
     color: #7F7F7F;
   }
+}
+
+
+:global(.slides-enter) {
+  opacity: 0.01;
+}
+
+:global(.slides-enter.slides-enter-active) {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+:global(.slides-leave) {
+  opacity: 1;
 }

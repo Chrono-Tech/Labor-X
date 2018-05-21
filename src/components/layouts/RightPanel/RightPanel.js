@@ -1,5 +1,10 @@
-import { Action, Image } from 'components/common'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { Action, Image } from 'components/common'
+import { BalanceCollapsible } from 'src/partials'
+
 import css from './RightPanel.scss'
 
 const stats = [
@@ -31,12 +36,19 @@ const stats = [
 ]
 
 export default class RightPanel extends React.Component {
+  static propTypes = {
+    onClose: PropTypes.func,
+    open: PropTypes.bool,
+  }
 
   renderActions = () => (item, index) => <Action key={index} item={item} />
 
   render () {
-    return (
+    const { onClose, open } = this.props
+
+    return open ? (
       <div className={css.root}>
+        <div className={css.overlay} onClick={() => onClose()}></div>
         <div className={css.content}>
           <div className={css.profileBox}>
             <Image
@@ -60,8 +72,10 @@ export default class RightPanel extends React.Component {
             {stats.map(this.renderActions())}
           </div>
 
+          <BalanceCollapsible />
+
         </div>
       </div>
-    )
+    ) : null
   }
 }
