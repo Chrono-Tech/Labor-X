@@ -45,6 +45,10 @@ export default class Image extends React.PureComponent {
     PAUSE: 'pause',
   }
 
+  static TOKENS = {
+    LHR: '/static/images/tokens/lh-icon.png',
+  }
+
   static COLORS = {
     BLACK: 'black',
     WHITE: 'white',
@@ -134,7 +138,7 @@ export default class Image extends React.PureComponent {
           role='button'
         >
           <img
-            className={classnames}
+            className={classnames.join(' ')}
             src={this.props.href}
             alt=''
           />

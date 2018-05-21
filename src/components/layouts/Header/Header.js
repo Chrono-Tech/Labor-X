@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, Tip } from 'components/common'
+import { RightPanel } from 'src/components/layouts'
 import { connect } from 'react-redux'
 import { logout } from 'src/store'
 import FirstMenu from '../FirstMenu/FirstMenu'
@@ -10,6 +11,22 @@ export class Header extends React.Component {
 
   static propTypes = {
     handleLogout: PropTypes.func.isRequired,
+  }
+
+  constructor (){
+    super()
+
+    this.state = {
+      isVisibleRightPanel: false,
+    }
+  }
+
+  handleOpenPanel(){
+    this.setState({ isVisibleRightPanel: true })
+  }
+
+  handleClosePanel(){
+    this.setState({ isVisibleRightPanel: false })
   }
 
   render () {
@@ -40,12 +57,15 @@ export class Header extends React.Component {
           </div>
 
           <div className={css.profile}>
-            <div className={css.profileWrapper}>
+            <div className={css.profileWrapper} onClick={this.handleOpenPanel.bind(this)}>
               <img src='/static/temp/icon-profile.jpg' className={css.profileIcon} />
               <div className={css.profileCounter}>99</div>
             </div>
           </div>
         </div>
+
+        <RightPanel open={this.state.isVisibleRightPanel} onClose={this.handleClosePanel.bind(this)} />
+
       </div>
     )
   }
