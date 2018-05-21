@@ -84,6 +84,14 @@
   content: '\F04E';
 }
 
+.icon-security-upgrade:before {
+  content: '\F04E';
+}
+
+.icon-security-none:before {
+  content: '\F04F';
+}
+
 .icon-message-warning:before {
   content: '\F073';
 }
@@ -114,4 +122,16 @@
 
 .icon-message:before {
   content: '\F086';
+}
+
+.icon-close:before {
+  content: '\F059';
+}
+
+.icon-check:before {
+  content: '\F058';
+}
+
+.icon-search:before {
+  content: '\F07E';
 }

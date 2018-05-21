@@ -7,8 +7,11 @@ import BoardIPFSModel from './BoardIPFSModel'
 
 const schemaFactory = () => ({
   id: PropTypes.number.isRequired,
-  status: PropTypes.bool,
-  ipfs: PropTypes.instanceOf(BoardIPFSModel),
+  name: PropTypes.string,
+  logoSrc: PropTypes.string,
+  description: PropTypes.string,
+  rating: PropTypes.number,
+  validationLevel: PropTypes.number,
   tags: PropTypes.arrayOf(
     PropTypes.instanceOf(TagModel)
   ),
@@ -18,11 +21,38 @@ const schemaFactory = () => ({
   tagsCategory: PropTypes.arrayOf(
     PropTypes.instanceOf(TagCategoryModel)
   ),
+  ipfs: PropTypes.instanceOf(BoardIPFSModel),
+  clientsCounts: PropTypes.number,
+  jobsCounts: PropTypes.number,
+  status: PropTypes.oneOfType([
+    BoardModel.STATUS.JOINED,
+    BoardModel.STATUS.ON_APPROVAL,
+    BoardModel.STATUS.NEED_VERIFY,
+    BoardModel.STATUS.UNASSIGNED,
+  ]),
+
 })
 
 export default class BoardModel extends AbstractModel {
+  static STATUS = {
+    JOINED: 'joined',
+    ON_APPROVAL: 'onApproval',
+    NEED_VERIFY: 'needVerify',
+    UNASSIGNED: 'unAssigned',
+  }
+
   constructor (props) {
-    super(props, schemaFactory())
+    super(Object.assign({
+      name: 'Default name',
+      logoSrc: '',
+      description: '',
+      rating: 0,
+      validationLevel: 0,
+      tagsCategory: [],
+      clientCounts: 0,
+      jobsCounts: 0,
+      status: BoardModel.STATUS.UNASSIGNED,
+    }, props), schemaFactory())
     Object.assign(this, props)
     Object.freeze(this)
   }

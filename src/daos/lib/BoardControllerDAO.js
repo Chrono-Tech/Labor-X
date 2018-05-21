@@ -1,5 +1,5 @@
 // import BigNumber from 'bignumber.js'
-import { BoardModel, BoardIPFSModel, BoardCreateEvent, TAGS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST } from 'src/models'
+import { BoardModel, BoardIPFSModel, BoardCreateEvent, TAGS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST, TagCategoryModel } from 'src/models'
 import { filterArrayByIndexMask } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
@@ -67,13 +67,14 @@ export default class BoardControllerDAO extends AbstractContractDAO {
         tags: filterArrayByIndexMask(TAGS_LIST, tags[i]),
         tagsAreas: filterArrayByIndexMask(TAG_AREAS_LIST, tagsAreas[i]),
         tagsCategories: filterArrayByIndexMask(TAG_CATEGORIES_LIST, tagsCategories[i]),
-        status: status[i],
+        status: status[i] ? BoardModel.STATUS.JOINED : BoardModel.STATUS.UNASSIGNED,
         ipfs: new BoardIPFSModel({
           // ...await ipfsService.get(ipfsHash[i]),
           // hash: ipfsHash[i],
         }),
       }))
     }
+
     return boards
   }
 

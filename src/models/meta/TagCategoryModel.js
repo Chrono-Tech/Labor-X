@@ -21,14 +21,22 @@ export default class TagCategoryModel extends AbstractModel {
 export const TAG_CATEGORIES_LIST = [
   new TagCategoryModel({
     index: 0,
-    name: 'Tag Category 1',
+    name: 'Building',
   }),
   new TagCategoryModel({
     index: 1,
-    name: 'Tag Category 2',
+    name: 'Industrial',
   }),
   new TagCategoryModel({
     index: 2,
-    name: 'Tag Category 3',
+    name: 'Warehousing',
+  }),
+  new TagCategoryModel({
+    index: 3,
+    name: 'Cleaning',
+  }),
+  new TagCategoryModel({
+    index: 4,
+    name: 'E-Commerce',
   }),
 ]

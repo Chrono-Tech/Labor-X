@@ -1,7 +1,8 @@
-import { BOARDS_CLEAR, BOARDS_SAVE } from './actions'
+import { BOARDS_CLEAR, BOARDS_SAVE, BOARDS_FILTER } from './actions'
 
 export const initialState = {
   list: [],
+  filtered: [],
   byKey: {},
 }
 
@@ -21,8 +22,17 @@ const mutations = {
       ? state.list.map(b => b.key !== board.key ? b : board)
       : [...state.list, board]
     return {
+      ...state,
       byKey,
+      filtered: list,
       list,
+    }
+  },
+  [BOARDS_FILTER] (state, { boardsList }) {
+
+    return {
+      ...state,
+      filtered: boardsList,
     }
   },
 }

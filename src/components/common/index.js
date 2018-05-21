@@ -8,6 +8,7 @@ export { default as Moment } from './Moment/Moment'
 export { default as Tip } from './Tip/Tip'
 export { default as UserRow } from './UserRow/UserRow'
 export { default as Checkbox } from './Checkbox/Checkbox'
+export { default as Radio } from './Radio/Radio'
 export { default as Dialog } from './Dialog/Dialog'
 export { default as Popover } from './Popover/Popover'
 

@@ -19,3 +19,28 @@
 .checkbox {
   //display: none;
 }
+
+.iconWrapper {
+  border-radius: 2px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.25);
+
+  &:hover, &:focus {
+    background: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.checkedIconWrapper {
+  background: #fff;
+
+  &:hover, &:focus {
+    background: #fff;
+  }
+}
+
+.checkedIcon {
+  color: #000;
+}
