@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types'
+import Chance from 'chance'
 import AbstractModel from '../AbstractModel'
+
+const chance = new Chance()
 
 const schemaFactory = () => ({
   hash: PropTypes.string.isRequired, // ipfs hash of the object itself
@@ -8,17 +11,18 @@ const schemaFactory = () => ({
   logo: PropTypes.string, // Any supported URL path, including //example.com/path/to/image, https://example.com/path/to/image , ipfs://example.com/path/to/image
 })
 
-const defaultProps = {
-  hash: 'QmajWTti6H2gX9LS2aMi2tc5NQdtB3vyMoAN4JGRHcX1ai',
-  name: 'Default',
-  description: '',
-  logo: 'ipfs://api/v0/object/get?arg=QmeyamSDEgYZDzSfU4YKU5ZAG7UuFiQndzKaM97KTBNox3&stream-channels=true',
-}
-
 export default class BoardIPFSModel extends AbstractModel {
   constructor (props) {
-    super(Object.assign(defaultProps, props), schemaFactory())
-    Object.assign(this, props)
+    super(propsWithDefaults(props), schemaFactory())
+    Object.assign(this, propsWithDefaults(props))
     Object.freeze(this)
   }
+}
+
+function propsWithDefaults (props) {
+  return Object.assign({}, {
+    name: chance.company(),
+    description: chance.sentence(),
+    logo: chance.avatar(),
+  }, props)
 }

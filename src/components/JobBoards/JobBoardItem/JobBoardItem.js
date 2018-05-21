@@ -1,17 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Popover, Icon } from 'components/common'
+import { connect } from 'react-redux'
+import pluralize from 'pluralize'
+import { Popover, Icon } from 'src/components/common'
 import { BoardModel } from 'src/models'
+import { joinBoard } from 'src/store'
 import css from './JobBoardItem.scss'
 
-export default class JobBoardItem extends React.Component {
+export class JobBoardItem extends React.Component {
   static propTypes = {
     jobBoard: PropTypes.instanceOf(BoardModel),
-  }
-
-  static defaultProps = {
-    jobBoard: new BoardModel(),
+    onJoinBoard: PropTypes.func,
   }
 
   constructor () {
@@ -21,24 +20,8 @@ export default class JobBoardItem extends React.Component {
       starsPopover: false,
       securityPopover: false,
       actionPopover: false,
+      isJoinInProgress: false,
     }
-  }
-
-  getRatingStars () {
-    const { jobBoard } = this.props
-
-    let starsArray = []
-    let count = jobBoard.rating
-
-    for (let i = 0; i < count; i++) {
-      starsArray.push(
-        <span key={i} className={css.star}>
-          <img src='/static/images/svg/star-active.svg' alt='' width='20' />
-        </span>
-      )
-    }
-
-    return starsArray
   }
 
   handleStarsPopoverOpen () {
@@ -65,10 +48,107 @@ export default class JobBoardItem extends React.Component {
     this.setState({ actionPopover: false })
   }
 
-  renderDefaultActionButton (text, onClick) {
-    const handleClick = onClick ? onClick : () => {}
-    const buttonText = text || 'Join the Board'
+  handleJoinBoard = async (boardId) => {
+    this.setState({
+      isJoinInProgress: true,
+    })
+    try {
+      await this.props.onJoinBoard(boardId)
+    } finally {
+      this.setState({
+        isJoinInProgress: false,
+      })
+    }
+  }
 
+  getRatingStars () {
+    const { jobBoard } = this.props
+
+    let starsArray = []
+    let count = jobBoard.extra.rating
+
+    for (let i = 0; i < count; i++) {
+      starsArray.push(
+        <span key={i} className={css.star}>
+          <img src='/static/images/svg/star-active.svg' alt='' width='20' />
+        </span>
+      )
+    }
+
+    return starsArray
+  }
+
+  getStarsPopover () {
+    const { starsPopover } = this.state
+
+    return (
+      <Popover
+        open={starsPopover}
+        arrowPosition={Popover.ARROW_POSITION.LEFT}
+        className={css.starsPopover}
+      >
+        <div className={css.popoverHeader}>Job Board Rating</div>
+        <div className={css.popoverDescription}>Rating given by the board participants.</div>
+        <table className={css.starsRatingTable}>
+          <tbody>
+            <tr>
+              <td className={css.countStars}>5 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr>
+              <td className={css.countStars}>4 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr>
+              <td className={css.countStars}>3 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr>
+              <td className={css.countStars}>2 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr>
+              <td className={css.countStars}>1 stars</td>
+              <td className={css.countStarsVotes}>220</td>
+              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+            </tr>
+            <tr className={css.totalRow}>
+              <td>Total</td>
+              <td>860</td>
+              <td />
+            </tr>
+          </tbody>
+        </table>
+      </Popover>
+    )
+  }
+
+  getSecurityPopover () {
+    const { securityPopover } = this.state
+
+    return (
+      <Popover
+        open={securityPopover}
+        arrowPosition={Popover.ARROW_POSITION.LEFT}
+        className={css.securityPopover}
+      >
+        <div className={css.popoverHeader}>Validation</div>
+        <div className={css.popoverDescription}>The Job Board Owner has successfully passed our Validation</div>
+        <ul className={css.securityDoneList}>
+          <li className={css.listItem}>Email is validated</li>
+          <li className={css.listItem}>ID is validated</li>
+          <li className={css.listItem}>Address is validated</li>
+          <li className={css.listItem}>Certificates are validated</li>
+        </ul>
+      </Popover>
+    )
+  }
+
+  renderDefaultActionButton (text, isDisabled, onClick) {
     const popoverContent = (
       <div>
         <div className={css.popoverHeader}>Join the Board</div>
@@ -86,8 +166,8 @@ export default class JobBoardItem extends React.Component {
     )
 
     return (
-      <button className={css.actionButton} onClick={handleClick}>
-        {buttonText}
+      <button className={css.actionButton} onClick={onClick} disabled={isDisabled}>
+        {text}
         {this.renderActionsTooltip({
           src: '/static/images/svg/help-white-clear.svg',
           popoverContent,
@@ -171,92 +251,26 @@ export default class JobBoardItem extends React.Component {
   renderActions () {
     const { jobBoard } = this.props
 
-    switch (jobBoard.status) {
-      case BoardModel.STATUS.UNASSIGNED:
-        return this.renderDefaultActionButton()
-
-      case BoardModel.STATUS.NEED_VERIFY:
-        return this.renderNeedVerifyButton()
-
-      case BoardModel.STATUS.JOINED:
-        return this.renderJoinedActions()
-
-      case BoardModel.STATUS.ON_APPROVAL:
-        return this.renderApprovalActions()
-
-      default:
-        return this.renderDefaultActionButton()
+    if (jobBoard.extra.isSignerJoined) {
+      return this.renderJoinedActions()
     }
-  }
-
-  getStarsPopover () {
-    const { starsPopover } = this.state
-
-    return (
-      <Popover
-        open={starsPopover}
-        arrowPosition={Popover.ARROW_POSITION.LEFT}
-        className={css.starsPopover}
-      >
-        <div className={css.popoverHeader}>Job Board Rating</div>
-        <div className={css.popoverDescription}>Rating given by the board participants.</div>
-        <table className={css.starsRatingTable}>
-          <tbody>
-            <tr>
-              <td className={css.countStars}>5 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>4 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>3 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>2 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>1 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr className={css.totalRow}>
-              <td>Total</td>
-              <td>860</td>
-              <td />
-            </tr>
-          </tbody>
-        </table>
-      </Popover>
+    return this.renderDefaultActionButton(
+      'Join the Board',
+      this.state.isJoinInProgress,
+      () => this.handleJoinBoard(jobBoard.id)
     )
-  }
-
-  getSecurityPopover () {
-    const { securityPopover } = this.state
-
-    return (
-      <Popover
-        open={securityPopover}
-        arrowPosition={Popover.ARROW_POSITION.LEFT}
-        className={css.securityPopover}
-      >
-        <div className={css.popoverHeader}>Validation</div>
-        <div className={css.popoverDescription}>The Job Board Owner has successfully passed our Validation</div>
-        <ul className={css.securityDoneList}>
-          <li className={css.listItem}>Email is validated</li>
-          <li className={css.listItem}>ID is validated</li>
-          <li className={css.listItem}>Address is validated</li>
-          <li className={css.listItem}>Certificates are validated</li>
-        </ul>
-      </Popover>
-    )
+    // switch (jobBoard.status) {
+    //   case BoardModel.STATUS.UNASSIGNED:
+    //     return this.renderDefaultActionButton()
+    //   case BoardModel.STATUS.NEED_VERIFY:
+    //     return this.renderNeedVerifyButton()
+    //   case BoardModel.STATUS.JOINED:
+    //     return this.renderJoinedActions()
+    //   case BoardModel.STATUS.ON_APPROVAL:
+    //     return this.renderApprovalActions()
+    //   default:
+    //     return this.renderDefaultActionButton()
+    // }
   }
 
   renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }) {
@@ -282,10 +296,10 @@ export default class JobBoardItem extends React.Component {
     )
   }
 
-  renderSecurityTooltip (){
+  renderSecurityTooltip () {
     const { jobBoard } = this.props
 
-    const level = jobBoard.validationLevel
+    const level = jobBoard.extra.validationLevel
     const securityIcon = level ? Icon.SETS.SECURITY : Icon.SETS.SECURITY_NONE
 
     return (
@@ -296,18 +310,21 @@ export default class JobBoardItem extends React.Component {
     )
   }
 
-  renderBoardTags (){
+  renderBoardTags () {
     const { jobBoard } = this.props
-
-    return jobBoard.categories && jobBoard.categories.map(item => item.name).join(', ')
+    const tags = [
+      ...jobBoard.tagsCategory.map(c => c.name),
+      ...jobBoard.tags.map(t => t.name),
+    ]
+    return tags.join(', ')
   }
 
-  renderLogo(){
+  renderLogo () {
     const { jobBoard } = this.props
 
-    return jobBoard.logoSrc ? (
+    return jobBoard.ipfs.logo ? (
       <button className={css.logoLink}>
-        <img src={jobBoard.logoSrc} alt='' />
+        <img src={jobBoard.ipfs.logo} alt='' />
       </button>
     ) : null
   }
@@ -323,13 +340,13 @@ export default class JobBoardItem extends React.Component {
         <div className={css.contentBlock}>
           <div className={css.titleBlock}>
             <div>
-              <button className={css.title} onClick={() => {}}>
-                { jobBoard.name }
+              <button className={css.title}>
+                { jobBoard.ipfs.name }
               </button>
             </div>
 
             <div className={css.categoryWrapper}>
-              <button className={css.category} onClick={() => {}}>
+              <button className={css.category}>
                 { this.renderBoardTags() }
               </button>
             </div>
@@ -360,13 +377,13 @@ export default class JobBoardItem extends React.Component {
             <div className={css.jobInfo}>
 
               <div className={css.jobInfoBlock}>
-                <div className={css.jobInfoCount}>{ jobBoard.jobsCounts }</div>
-                <div className={css.jobInfoDescribe}>Jobs</div>
+                <div className={css.jobInfoCount}>{jobBoard.extra.jobsCount}</div>
+                <div className={css.jobInfoDescribe}>{pluralize('Job', jobBoard.extra.jobsCount)}</div>
               </div>
 
               <div className={css.jobInfoBlock}>
-                <div className={css.jobInfoCount}>{ jobBoard.clientsCounts }</div>
-                <div className={css.jobInfoDescribe}>Clients</div>
+                <div className={css.jobInfoCount}>{ jobBoard.extra.clientsCount }</div>
+                <div className={css.jobInfoDescribe}>{pluralize('Client', jobBoard.extra.clientsCount)}</div>
               </div>
 
             </div>
@@ -381,3 +398,11 @@ export default class JobBoardItem extends React.Component {
   }
 }
 
+function mapDispatchToProps (dispatch) {
+  return {
+    onJoinBoard: (boardId) => dispatch(joinBoard(boardId)),
+    // stack: state.modals.stack,
+  }
+}
+
+export default connect(null, mapDispatchToProps)(JobBoardItem)

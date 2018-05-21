@@ -4,14 +4,11 @@ import TagCategoryModel from '../meta/TagCategoryModel'
 import TagAreaModel from '../meta/TagAreaModel'
 import TagModel from '../meta/TagModel'
 import BoardIPFSModel from './BoardIPFSModel'
+import BoardExtraModel from './BoardExtraModel'
 
 const schemaFactory = () => ({
   id: PropTypes.number.isRequired,
-  name: PropTypes.string,
-  logoSrc: PropTypes.string,
-  description: PropTypes.string,
-  rating: PropTypes.number,
-  validationLevel: PropTypes.number,
+  isActive: PropTypes.bool,
   tags: PropTypes.arrayOf(
     PropTypes.instanceOf(TagModel)
   ),
@@ -22,37 +19,12 @@ const schemaFactory = () => ({
     PropTypes.instanceOf(TagCategoryModel)
   ),
   ipfs: PropTypes.instanceOf(BoardIPFSModel),
-  clientsCounts: PropTypes.number,
-  jobsCounts: PropTypes.number,
-  status: PropTypes.oneOfType([
-    BoardModel.STATUS.JOINED,
-    BoardModel.STATUS.ON_APPROVAL,
-    BoardModel.STATUS.NEED_VERIFY,
-    BoardModel.STATUS.UNASSIGNED,
-  ]),
-
+  extra: PropTypes.instanceOf(BoardExtraModel),
 })
 
 export default class BoardModel extends AbstractModel {
-  static STATUS = {
-    JOINED: 'joined',
-    ON_APPROVAL: 'onApproval',
-    NEED_VERIFY: 'needVerify',
-    UNASSIGNED: 'unAssigned',
-  }
-
   constructor (props) {
-    super(Object.assign({
-      name: 'Default name',
-      logoSrc: '',
-      description: '',
-      rating: 0,
-      validationLevel: 0,
-      tagsCategory: [],
-      clientCounts: 0,
-      jobsCounts: 0,
-      status: BoardModel.STATUS.UNASSIGNED,
-    }, props), schemaFactory())
+    super(props, schemaFactory())
     Object.assign(this, props)
     Object.freeze(this)
   }

@@ -11,7 +11,7 @@ const mutations = {
   },
   [JOBS_SAVE] (state, { job }) {
     const index = (job.key in state.byKey)
-      ? state.jobs.findIndex(b => b.key === job.key)
+      ? state.list.findIndex(b => b.key === job.key)
       : -1
     const byKey = {
       ...state.byKey,

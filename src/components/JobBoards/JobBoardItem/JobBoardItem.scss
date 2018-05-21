@@ -123,6 +123,11 @@
     background: #0088C3;
   }
 
+  &[disabled] {
+    background: #C5C5C5;
+    cursor: not-allowed;
+  }
+
   .actionButtonTooltip {
     border-left: 1px solid rgba(255, 255, 255, 0.25);
     margin-left: 37px;

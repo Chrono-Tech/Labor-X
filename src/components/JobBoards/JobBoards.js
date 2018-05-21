@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { reduxForm, Field, change, formValueSelector } from 'redux-form'
+import { reduxForm, Field, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
-
-import { Input, Icon, Checkbox, Radio } from 'components/common'
-import JobBoardItem from './JobBoardItem/JobBoardItem'
+import { Input, Icon, Checkbox, Radio } from 'src/components/common'
 import { boardsFilteredListSelector, updateFilterBoards } from 'src/store'
 import { BoardModel, TAG_CATEGORIES_LIST } from 'src/models'
+import JobBoardItem from './JobBoardItem/JobBoardItem'
 
 import css from './JobBoards.scss'
 
@@ -40,10 +39,12 @@ const onSubmit = (values, dispatch) => {
 
 class JobBoards extends React.Component {
   static propTypes = {
-    boardsList: PropTypes.arrayOf(BoardModel),
+    boardsList: PropTypes.arrayOf(
+      PropTypes.instanceOf(BoardModel)
+    ),
   }
 
-  constructor(){
+  constructor () {
     super()
 
     this.state = {
@@ -51,7 +52,7 @@ class JobBoards extends React.Component {
     }
   }
 
-  showAllCategories() {
+  showAllCategories () {
     const { change } = this.props
 
     TAG_CATEGORIES_LIST.forEach((item) => {
@@ -61,13 +62,13 @@ class JobBoards extends React.Component {
     change('categories_reset', true)
   }
 
-  onCategoryChecked(){
+  onCategoryChecked () {
     const { change } = this.props
 
     change('categories_reset', false)
   }
 
-  renderCategories(){
+  renderCategories () {
     // const { } = this.props
     return TAG_CATEGORIES_LIST.map((tag, i) => {
       return (
@@ -85,8 +86,8 @@ class JobBoards extends React.Component {
     })
   }
 
-  renderActiveCategories(){
-    const {activeCategoriesFilter} = this.props
+  renderActiveCategories () {
+    const { activeCategoriesFilter } = this.props
 
     return TAG_CATEGORIES_LIST
       .filter((tag) => activeCategoriesFilter && activeCategoriesFilter[String(tag.name).toUpperCase()] )
@@ -94,11 +95,11 @@ class JobBoards extends React.Component {
       .join(', ') || ''
   }
 
-  toggleFilterBlock(){
+  toggleFilterBlock () {
     this.setState({ isVisibleFilterBlock: !this.state.isVisibleFilterBlock })
   }
 
-  resetFilters(){
+  resetFilters () {
     const { change } = this.props
 
     change('level', 'any')
@@ -107,7 +108,7 @@ class JobBoards extends React.Component {
     this.showAllCategories()
   }
 
-  isHideResetBlock(){
+  isHideResetBlock () {
     const { ratingFilter, levelFilter, activeCategoriesFilter, categoriesResetFilter } = this.props
 
     const emptyRatingFilter = ratingFilter === 'any' || ratingFilter === undefined
@@ -118,7 +119,7 @@ class JobBoards extends React.Component {
 
   }
 
-  renderFilterBlock(){
+  renderFilterBlock () {
     return (
       <div className={css.filterBlock}>
         {
@@ -131,7 +132,6 @@ class JobBoards extends React.Component {
             </div>
           )
         }
-
 
         <div className={css.filterContent}>
           <label className={css.filterLabel}>Categories</label>
@@ -193,7 +193,6 @@ class JobBoards extends React.Component {
   render () {
     const { boardsList, onSubmit, handleSubmit, activeCategoriesFilter } = this.props
 
-
     return (
       <div className={css.main}>
         <div className={this.state.isVisibleFilterBlock ? css.contentWrapperFilterOpened : css.contentWrapper}>
@@ -223,8 +222,8 @@ class JobBoards extends React.Component {
 
               <div className={css.jobBoardsList}>
                 {
-                  boardsList && boardsList.map((board, i) => (
-                    <JobBoardItem key={i} jobBoard={board} />
+                  boardsList && boardsList.map(board => (
+                    <JobBoardItem key={board.key} jobBoard={board} />
                   ))
                 }
               </div>

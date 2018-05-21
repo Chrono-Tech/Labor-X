@@ -12,7 +12,7 @@ const mutations = {
   },
   [BOARDS_SAVE] (state, { board }) {
     const index = (board.key in state.byKey)
-      ? state.boards.findIndex(b => b.key === board.key)
+      ? state.list.findIndex(b => b.key === board.key)
       : -1
     const byKey = {
       ...state.byKey,
