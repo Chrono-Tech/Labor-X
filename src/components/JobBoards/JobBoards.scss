@@ -11,6 +11,10 @@
   margin: 0 auto;
 }
 
+.contentWrapperFilterOpened {
+  width: 1100px;
+}
+
 .flexRow {
   @include flex(row, center, flex-start);
 }

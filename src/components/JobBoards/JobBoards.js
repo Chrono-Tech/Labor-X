@@ -196,7 +196,7 @@ class JobBoards extends React.Component {
 
     return (
       <div className={css.main}>
-        <div className={css.contentWrapper}>
+        <div className={this.state.isVisibleFilterBlock ? css.contentWrapperFilterOpened : css.contentWrapper}>
           <h2>Job Boards</h2>
 
           <form className={css.flexRow} name={FORM_JOB_BOARDS} onSubmit={handleSubmit(onSubmit)}>
