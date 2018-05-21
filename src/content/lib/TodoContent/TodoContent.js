@@ -3,11 +3,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import moment from 'moment'
-import css from './ToDo.scss'
+import css from './TodoContent.scss'
 
 const dateFormat = 'DD MMMM YYYY, ddd'
 
-export default class ToDo extends React.Component {
+export default class TodoContent extends React.Component {
   static propTypes = {
     todoLists: PropTypes.arrayOf(PropTypes.shape({
       date: PropTypes.instanceOf(Date),
