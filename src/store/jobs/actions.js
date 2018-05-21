@@ -1,5 +1,5 @@
 import { storeIntoIPFS } from 'src/utils'
-import { JobModel, JobPostedEvent, JobCanceledEvent } from 'src/models'
+import { JobModel, JobPostedEvent, JobCanceledEvent, JobPostFormModel } from 'src/models'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { executeTransaction } from '../ethereum/actions'
@@ -52,15 +52,15 @@ export const handleJobCanceled = (e: JobCanceledEvent) => async (/*dispatch, get
   console.log('jobs/handleJobCanceled', e)
 }
 
-export const createJob = (values) => async (dispatch, getState) => {
+export const createJob = (job: JobPostFormModel) => async (dispatch, getState) => {
   const state = getState()
   const jobControlerDAO = daoByType('JobController')(state)
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
   // eslint-disable-next-line no-console
-  console.log('[jobs] createJob from values', values)
-  const { headline, intro, responsibilities, requirements, conclusion } = values
-  const detailsIPFSHash = await storeIntoIPFS({ headline, intro, responsibilities, requirements, conclusion })
-  const tx = jobControlerDAO.createPostJobTx(signer.address, 1, 1, 1, detailsIPFSHash)
+  console.log('[jobs] createJob from values', job)
+
+  const detailsIPFSHash = await storeIntoIPFS(job.ipfsData)
+  const tx = jobControlerDAO.createPostJobTx(signer.address, job.areaNumber, job.categoryNumber, job.skillsNumber, detailsIPFSHash)
   await dispatch(executeTransaction({ tx, web3 }))
 }

@@ -1,9 +1,9 @@
-import JobsArchiveContent from 'components/JobsArchive/JobsArchive'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import withRedux from 'next-redux-wrapper'
+import { JobsArchiveContent } from 'src/content'
+import { MainLayout } from 'src/components/layouts'
+import initialStore from 'src/store'
 import 'styles/globals/globals.scss'
-import initialStore from 'store'
 
 class JobsArchive extends React.Component {
   render () {

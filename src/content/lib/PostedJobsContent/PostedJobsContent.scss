@@ -23,5 +23,9 @@ $maxWidth: 74rem;
 
 .content {
   padding-left: 4rem;
+  margin-bottom: 30rem;
   max-width: $maxWidth;
+  > * {
+    margin-top: 4rem;
+  }
 }

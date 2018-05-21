@@ -1,9 +1,9 @@
-import PostedJobsContent from 'components/PostedJobs/PostedJobs'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import withRedux from 'next-redux-wrapper'
+import { PostedJobsContent } from 'src/content'
+import { MainLayout } from 'src/components/layouts'
+import initialStore from 'src/store'
 import 'styles/globals/globals.scss'
-import initialStore from 'store'
 
 class PostedJobs extends React.Component {
   render () {

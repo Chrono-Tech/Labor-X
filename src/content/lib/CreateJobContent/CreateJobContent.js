@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { MuiThemeProvider } from 'material-ui/styles'
 import { CircularProgress, MenuItem } from 'material-ui'
 import { Image, Input, Chip, Badge, Checkbox, Translate, NumberInput, Calendar, Button } from 'src/components/common'
-import { SignerModel } from 'src/models'
+import { SignerModel, JobPostFormModel } from 'src/models'
 import { Router } from 'src/routes'
 import { signerSelector, createJob } from 'src/store'
 import validate from './validate'
@@ -22,7 +22,7 @@ class CreateJobContent extends React.Component {
   }
 
   state = {
-    jobBoardValue: 1,
+    jobBoardValue: 'General',
     hourlyRatingValue: 1,
     stateValue: 1,
   };
@@ -72,7 +72,7 @@ class CreateJobContent extends React.Component {
                 component={Input}
                 placeholder='ui.createJob.jobHeadlinePlaceholder'
                 mods={[ Input.MODS.INVERT, Input.MODS.HUGE ]}
-                name='headline'
+                name='name'
               />
             </div>
 
@@ -97,19 +97,19 @@ class CreateJobContent extends React.Component {
               <Field
                 className={css.inputSection}
                 component={Input}
-                name='workerRequirements'
+                name='requirements'
                 label='ui.createJob.workerRequirements'
                 placeholder='ui.createJob.workerRequirementsPlaceholder'
                 mods={Input.MODS.BOXED}
               />
-              <Field
+              {/* <Field
                 className={css.inputSection}
                 component={Input}
                 name='conclusion'
                 label='ui.createJob.conclusion'
                 placeholder='ui.createJob.conclusionPlaceholder'
                 mods={Input.MODS.BOXED}
-              />
+              /> */}
             </div>
 
             <div className={[css.card, css.noMarginBottom].join(' ')}>
@@ -119,11 +119,11 @@ class CreateJobContent extends React.Component {
                   component={SelectField}
                   value={this.state.jobBoardValue}
                   onChange={this.handleChangeJobBoard}
-                  name='jobBoard'
+                  name='boardName'
                 >
-                  <MenuItem value={1} primaryText='General' />
-                  <MenuItem value={2} primaryText='Getting Started' />
-                  <MenuItem value={3} primaryText='Become Involved' />
+                  <MenuItem value='General' primaryText='General' />
+                  <MenuItem value='Getting Started' primaryText='Getting Started' />
+                  <MenuItem value='Become Involved' primaryText='Become Involved' />
                 </Field>
                 <div className={css.postFee}>
                 Post Fee (no-refund): LHUS 1.00 (USD 30.00)
@@ -281,13 +281,13 @@ class CreateJobContent extends React.Component {
             </div>
 
             <div className={css.card}>
-              <h3 className={css.cardTitle}><Translate value='ui.createJob.categories' /></h3>
-              <div className={css.categoriesRow}>
+              <h3 className={css.cardTitle}><Translate value='ui.createJob.skills' /></h3>
+              <div className={css.skillsRow}>
                 <Field
                   lineEnabled
                   className={css.find}
                   component={Input}
-                  name='searchCategory'
+                  name='searchSkill'
                   placeholder='term.find'
                   mods={Input.MODS.ALIGN_LEFT}
                 />
@@ -314,7 +314,7 @@ export const CreateJobContentForm = reduxForm({
   form: FORM_CREATE_JOB,
   validate,
   initialValues: {
-    jobBoard: 1,
+    jobBoard: 'General',
   },
 })(CreateJobContent)
 
@@ -364,7 +364,7 @@ function mapDispatchToProps (dispatch) {
     async handleSubmit (values) {
       // eslint-disable-next-line no-console
       console.log('--CreateJobForm#onSubmit', values, this)
-      await dispatch(createJob(values))
+      await dispatch(createJob(new JobPostFormModel(values)))
     },
   }
 }

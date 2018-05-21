@@ -20,10 +20,9 @@ export const storeIntoIPFS = async (value, config = DEFAULT_CONFIG) => {
   const response = await putDataAsync(entry)
   const hash = response.toJSON().multihash
   return hash
-  // return 'QmajWTti6H2gX9LS2aMi2tc5NQdtB3vy'
 }
 
-export const loadFromIPFS = (hash, timeout = 2000, config = DEFAULT_CONFIG) => {
+export const loadFromIPFS = (hash, timeout = 20000, config = DEFAULT_CONFIG) => {
   if (!hash) {
     return null
   }
