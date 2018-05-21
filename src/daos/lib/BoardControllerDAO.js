@@ -61,77 +61,21 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       status,
       // ipfsHash,
     } = response
-    // for (let i = 0; i < ids.length; i++) {
-    //   boards.push(new BoardModel({
-    //     id: Number(ids[i]),
-    //     tags: filterArrayByIndexMask(TAGS_LIST, tags[i]),
-    //     tagsAreas: filterArrayByIndexMask(TAG_AREAS_LIST, tagsAreas[i]),
-    //     tagsCategories: filterArrayByIndexMask(TAG_CATEGORIES_LIST, tagsCategories[i]),
-    //     status: status[i],
-    //     ipfs: new BoardIPFSModel({
-    //       // ...await ipfsService.get(ipfsHash[i]),
-    //       // hash: ipfsHash[i],
-    //     }),
-    //   }))
-    // }
+    for (let i = 0; i < ids.length; i++) {
+      boards.push(new BoardModel({
+        id: Number(ids[i]),
+        tags: filterArrayByIndexMask(TAGS_LIST, tags[i]),
+        tagsAreas: filterArrayByIndexMask(TAG_AREAS_LIST, tagsAreas[i]),
+        tagsCategories: filterArrayByIndexMask(TAG_CATEGORIES_LIST, tagsCategories[i]),
+        status: status[i] ? BoardModel.STATUS.JOINED : BoardModel.STATUS.UNASSIGNED,
+        ipfs: new BoardIPFSModel({
+          // ...await ipfsService.get(ipfsHash[i]),
+          // hash: ipfsHash[i],
+        }),
+      }))
+    }
 
-    return [new BoardModel({
-      id: 0,
-      name: 'Become Involved',
-      logoSrc: '/static/images/become-full.jpg',
-      categories: [
-        new TagCategoryModel({ index: 0, name: 'Building' }),
-        new TagCategoryModel({ index: 1, name: 'Industrial' }),
-      ],
-      rating: 5,
-      validationLevel: 4,
-      status: BoardModel.STATUS.UNASSIGNED,
-      jobsCounts: 30,
-      clientsCounts: 50,
-    }),
-
-    new BoardModel({
-      id: 1,
-      name: 'Hays Recruiting Experts Worldwide',
-      logoSrc: '/static/images/become-full.jpg',
-      categories: [
-        new TagCategoryModel({ index: 0, name: 'Cleaning' }),
-      ],
-      rating: 4,
-      validationLevel: 3,
-      status: BoardModel.STATUS.NEED_VERIFY,
-      jobsCounts: 20,
-      clientsCounts: 10,
-    }),
-
-    new BoardModel({
-      id: 2,
-      name: 'Australian Recruiting Group',
-      logoSrc: '/static/images/become-full.jpg',
-      categories: [
-        new TagCategoryModel({ index: 0, name: 'Cleaning' }),
-      ],
-      rating: 3,
-      validationLevel: 3,
-      status: BoardModel.STATUS.JOINED,
-      jobsCounts: 230,
-      clientsCounts: 150,
-    }),
-
-    new BoardModel({
-      id: 3,
-      name: 'Hudson',
-      logoSrc: '/static/images/become-full.jpg',
-      categories: [
-        new TagCategoryModel({ index: 0, name: 'Cleaning' }),
-      ],
-      rating: 2,
-      validationLevel: 0,
-      status: BoardModel.STATUS.ON_APPROVAL,
-      jobsCounts: 230,
-      clientsCounts: 150,
-    }),
-    ]
+    return boards
   }
 
   createCreateBoardTx (sender, name, description, tags = [], tagsAreas = [], tagsCategories = []) {

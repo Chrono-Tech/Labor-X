@@ -79,6 +79,7 @@ class JobBoards extends React.Component {
           label={tag.name}
           onCheck={this.onCategoryChecked.bind(this)}
           material
+          defaultTheme={false}
         />
       )
     })
@@ -142,6 +143,7 @@ class JobBoards extends React.Component {
             type='checkbox'
             onCheck={this.showAllCategories.bind(this)}
             material
+            defaultTheme={false}
           />
 
           { this.renderCategories() }
