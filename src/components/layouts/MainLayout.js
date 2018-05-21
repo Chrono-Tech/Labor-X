@@ -1,38 +1,64 @@
-import { Header, RightPanel, SecondMenu } from 'components/layouts'
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { SignerModel, PocketModel } from 'src/models'
+import { BalanceSubscription } from 'src/micros'
+import { Header, RightPanel, SecondMenu } from 'src/components/layouts'
+import { signerSelector, ethPocketSelector } from 'src/store'
 import css from './MainLayout.scss'
 
-export default class MainLayout extends React.Component {
+export class MainLayout extends React.Component {
   static propTypes = {
     isMenu: PropTypes.bool,
     customTitle: PropTypes.func,
+    signer: PropTypes.instanceOf(SignerModel),
+    pockets: PropTypes.arrayOf(
+      PropTypes.instanceOf(PocketModel)
+    ),
   }
 
   static defaultProps = {
     isMenu: true,
+    pockets: [],
   }
 
   render () {
-    const { children, isMenu, customTitle } = this.props
+    const { signer, pockets, children, isMenu, customTitle } = this.props
 
-    return (
-      <div>
-        <div className={css.header}>
-          <div className={css.headerWrapper}>
-            <Header />
-          </div>
-        </div>
-        <div className={css.page}>
-          {isMenu && (
-            <div className={css.menu}>
-              <SecondMenu />
+    return (signer === null || !pockets.length) ? null : (
+      <BalanceSubscription key={signer.address} pockets={pockets}>
+        <div>
+          <div className={css.header}>
+            <div className={css.headerWrapper}>
+              <Header />
             </div>
-          )}
-          {children}
+          </div>
+          <div className={css.page}>
+            {isMenu && (
+              <div className={css.menu}>
+                <SecondMenu />
+              </div>
+            )}
+            {children}
+          </div>
+          <RightPanel />
         </div>
-        <RightPanel />
-      </div>
+      </BalanceSubscription>
     )
   }
 }
+
+function mapStateToProps (state) {
+  const signer = signerSelector()(state)
+  const ethPocket = signer !== null
+    ? ethPocketSelector(signer.address)(state)
+    : null
+  return {
+    signer,
+    pockets: ethPocket === null ? [] : [
+      ethPocket,
+    ],
+  }
+}
+
+export default connect(mapStateToProps)(MainLayout)

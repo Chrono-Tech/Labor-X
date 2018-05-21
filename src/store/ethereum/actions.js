@@ -1,8 +1,10 @@
 import assert from 'assert'
 import uniqid from 'uniqid'
-import { BigNumber } from 'bignumber.js'
+import BigNumber from 'bignumber.js'
 import { omitBy, isNil } from 'lodash'
 import { TxExecModel, TxEntryModel } from 'src/models'
+import { signerSelector } from '../wallet/selectors'
+import { pendingEntrySelector } from './selectors'
 
 export const WEB3_UPDATE = 'web3/update'
 export const TX_CREATE = 'tx/create'
@@ -35,7 +37,7 @@ export const broadcastTransaction = ({ web3, signed }) => async () => {
   return web3.eth.sendSignedTransaction(signed)
 }
 
-export const executeTransaction = ({ web3, tx }) => async (dispatch) => {
+export const executeTransaction = ({ web3, tx }) => async (dispatch, getState) => {
   const prepared = await dispatch(prepareTransaction({ web3, tx }))
   const entry = new TxEntryModel({
     key: uniqid(),
@@ -44,8 +46,11 @@ export const executeTransaction = ({ web3, tx }) => async (dispatch) => {
     isSubmitted: true,
     isAccepted: true,
   })
-  dispatch({ type: TX_CREATE, web3, entry })
-  return dispatch(process({ web3, entry }))
+  await dispatch({ type: TX_CREATE, entry })
+  return dispatch(processTransaction({
+    web3,
+    entry: pendingEntrySelector(entry.tx.from, entry.key)(getState()),
+  }))
 }
 
 export const prepareTransaction = ({ web3, tx }) => async (dispatch) => {
@@ -65,10 +70,13 @@ export const prepareTransaction = ({ web3, tx }) => async (dispatch) => {
   })
 }
 
-export const processTransaction = ({ web3, entry }) => async (dispatch) => {
-  assert.ok(entry instanceof TxEntryModel)
+export const processTransaction = ({ web3, entry }) => async (dispatch, getState) => {
+  assert.ok(entry instanceof TxEntryModel, '123')
   await dispatch(signTransaction({ entry }))
-  return dispatch(sendSignedTransaction({ web3, entry }))
+  return dispatch(sendSignedTransaction({
+    web3,
+    entry: pendingEntrySelector(entry.tx.from, entry.key)(getState()),
+  }))
 }
 
 export const signTransaction = ({ entry }) => async (dispatch, getState) => {
@@ -76,12 +84,12 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
   const rootState = getState()
   try {
     // TODO @ipavlenko: Replace with signer selector
-    const wallet = rootState.wallet.decryptedWallet.wallet[0]
+    const signer = signerSelector()(rootState)
     // eslint-disable-next-line no-console
     console.log('tx', omitBy(entry.tx, isNil))
     // eslint-disable-next-line no-console
-    console.log('wallet', wallet)
-    const signed = await wallet.signTransaction(omitBy(entry.tx, isNil))
+    console.log('signer', signer)
+    const signed = await signer.signTransaction(omitBy(entry.tx, isNil))
     const raw = signed.rawTransaction
     dispatch({
       type: TX_STATUS,
@@ -92,8 +100,8 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
         raw,
       },
     })
-    return entry
   } catch (e) {
+    console.log('Nononon!!!!!!!!!!!!!', e)
     dispatch({
       type: TX_STATUS,
       key: entry.key,
@@ -107,7 +115,7 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
   }
 }
 
-export const sendSignedTransaction = ({ web3, entry }) => async (dispatch) => {
+export const sendSignedTransaction = ({ web3, entry }) => async (dispatch, getState) => {
   assert.ok(entry instanceof TxEntryModel)
   dispatch({
     type: TX_STATUS,
@@ -117,6 +125,9 @@ export const sendSignedTransaction = ({ web3, entry }) => async (dispatch) => {
       isPending: true,
     },
   })
+
+  // eslint-disable-next-line
+  entry = pendingEntrySelector(entry.tx.from, entry.key)(getState())
 
   return new Promise((resolve, reject) => {
     web3.eth.sendSignedTransaction(entry.raw)

@@ -57,36 +57,16 @@ export default class ERC20TokenDAO extends AbstractTokenDAO {
   }
 
   async getName (): Promise<String> {
-    // TODO @ipavlenko: Remove fallback
-    try {
-      return await this.contract.methods.symbol().call()
-    } catch (e) {
-      // eslint-disable-next-line
-      console.log(e)
-      return "Fake Coin"
-    }
+    return this.contract.methods.symbol().call()
   }
 
   async getSymbol (): Promise<String> {
-    // TODO @ipavlenko: Remove fallback
-    try {
-      return await this.contract.methods.symbol().call()
-    } catch (e) {
-      // eslint-disable-next-line
-      console.log(e)
-      return "FAKE"
-    }
+    return this.contract.methods.symbol().call()
   }
 
   async getDecimals (): Promise<Number> {
-    // TODO @ipavlenko: Remove fallback
-    try {
-      return new Number(await this.contract.methods.decimals().call())
-    } catch (e) {
-      // eslint-disable-next-line
-      console.log(e)
-      return 10
-    }
+    const response = await this.contract.methods.decimals().call()
+    return Number(response.toString())
   }
 
   get isConnected () {

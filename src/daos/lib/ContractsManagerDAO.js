@@ -1,7 +1,7 @@
 import EventEmitter from 'events'
 
 export default class ContractsManagerDAO extends EventEmitter {
-  constructor (address, abi) {
+  constructor ({ address, abi }) {
     super()
     this.address = address
     this.abi = abi

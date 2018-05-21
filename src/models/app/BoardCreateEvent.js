@@ -3,7 +3,7 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   key: PropTypes.string.isRequired,
-  boardId: PropTypes.number().isRequired,
+  boardId: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   creator: PropTypes.string.isRequired,

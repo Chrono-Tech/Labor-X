@@ -1,22 +1,24 @@
 import PropTypes from 'prop-types'
-import { AbstractModel, TagCategoryModel } from 'src/models'
+import AbstractModel from '../AbstractModel'
+import TagCategoryModel from '../meta/TagCategoryModel'
+import TagAreaModel from '../meta/TagAreaModel'
+import TagModel from '../meta/TagModel'
+import BoardIPFSModel from './BoardIPFSModel'
 
 const schemaFactory = () => ({
   id: PropTypes.number.isRequired,
-  ipfs: PropTypes.instanceOf(IPFSBoardModel),
+  status: PropTypes.bool,
+  ipfs: PropTypes.instanceOf(BoardIPFSModel),
+  tags: PropTypes.arrayOf(
+    PropTypes.instanceOf(TagModel)
+  ),
+  tagsArea: PropTypes.arrayOf(
+    PropTypes.instanceOf(TagAreaModel)
+  ),
+  tagsCategory: PropTypes.arrayOf(
+    PropTypes.instanceOf(TagCategoryModel)
+  ),
 })
-
-class IPFSBoardModel extends AbstractModel {
-  constructor (props) {
-    super(Object.assign({
-      name: 'Default Name',
-      description: 'Default Job Description',
-      company: 'Company Name',
-    }, props), schemaFactory())
-    Object.assign(this, props)
-    Object.freeze(this)
-  }
-}
 
 const schemaBoardModelFactory = () => ({
   id: PropTypes.number.isRequired,
@@ -28,7 +30,7 @@ const schemaBoardModelFactory = () => ({
   categories: PropTypes.arrayOf(
     PropTypes.instanceOf(TagCategoryModel)
   ),
-  ipfs: PropTypes.instanceOf(IPFSBoardModel),
+  ipfs: PropTypes.instanceOf(BoardIPFSModel),
   clientsCounts: PropTypes.number,
   jobsCounts: PropTypes.number,
   status: PropTypes.oneOfType([
@@ -56,7 +58,6 @@ export default class BoardModel extends AbstractModel {
       rating: 0,
       validationLevel: 0,
       categories: [],
-      ipfs: new IPFSBoardModel(),
       clientCounts: 0,
       jobsCounts: 0,
       status: BoardModel.STATUS.UNASSIGNED,

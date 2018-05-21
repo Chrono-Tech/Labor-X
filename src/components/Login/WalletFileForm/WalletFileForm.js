@@ -46,15 +46,6 @@ class WalletFileForm extends React.Component {
 
   static STEP = 'step/LoginWithWallet'
 
-  constructor () {
-    super(...arguments)
-    const accounts = new Accounts()
-    const wallet = accounts.wallet.create(1)
-    const walletJSON = wallet.encrypt('test')[ 0 ]
-    // eslint-disable-next-line
-    console.log('test wallet JSON: ', JSON.stringify(walletJSON))
-  }
-
   render () {
     const prefix = this.constructor.name
     const { handleSubmit, invalid, pristine, walletFile, error } = this.props

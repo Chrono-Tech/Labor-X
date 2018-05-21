@@ -150,9 +150,6 @@ export const validateRecoveryForm = (mnemonic) => (dispatch, getState) => {
 
 }
 
-export const setRecoveryFormMnemonic = (mnemonic) => (dispatch, getState) => {
-  const state = getState()
-
+export const setRecoveryFormMnemonic = (mnemonic) => (dispatch) => {
   return dispatch({ type: LOGIN_SET_RECOVERY_FORM_MNEMONIC, mnemonic })
-
 }

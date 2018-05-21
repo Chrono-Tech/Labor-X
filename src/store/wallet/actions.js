@@ -1,9 +1,9 @@
 import { Router } from 'src/routes'
-import Web3 from 'src/network/Web3Provider'
 import uniqid from 'uniqid'
 import bip39 from 'bip39'
 import { WalletModel, WalletEntryModel } from 'src/models'
 import { replaceWallet, getWalletAddress } from 'src/utils'
+import { web3Selector } from '../ethereum/selectors'
 
 export const WALLETS_ADD = 'wallets/add'
 export const WALLETS_SELECT = 'wallets/select'
@@ -44,8 +44,8 @@ export const walletRemove = (name) => (dispatch) => {
   dispatch({ type: WALLETS_REMOVE, name })
 }
 
-export const decryptWallet = (entry, password) => (dispatch) => {
-  let web3 = Web3.getWeb3()
+export const decryptWallet = (entry, password) => (dispatch, getState) => {
+  const web3 = web3Selector()(getState())
   web3.eth.accounts.wallet.clear()
 
   let wallet = web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
@@ -67,8 +67,8 @@ export const validateWalletName = (name) => (dispatch, getState) => {
   return !walletsList.find((item) => item.name === name)
 }
 
-export const validateMnemonicForWallet = (wallet, mnemonic) => (/*dispatch*/) => {
-  let web3 = Web3.getWeb3()
+export const validateMnemonicForWallet = (wallet, mnemonic) => (dispatch, getState) => {
+  const web3 = web3Selector()(getState())
   web3.eth.accounts.wallet.clear()
 
   // const state = getState()
@@ -81,8 +81,8 @@ export const validateMnemonicForWallet = (wallet, mnemonic) => (/*dispatch*/) =>
   return addressFromWallet === address
 }
 
-export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch) => {
-  let web3 = Web3.getWeb3()
+export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch, getState) => {
+  const web3 = web3Selector()(getState())
   web3.eth.accounts.wallet.clear()
 
   const newCopy = dispatch(createWallet({ name: wallet.name, mnemonic, password }))
@@ -95,8 +95,8 @@ export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch) =>
   dispatch(walletUpdate(newWallet))
 }
 
-export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = {} }) => (/*dispatch*/) => {
-  let web3 = Web3.getWeb3()
+export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = {} }) => (dispatch, getState) => {
+  const web3 = web3Selector()(getState())
   web3.eth.accounts.wallet.clear()
   let wallet = web3.eth.accounts.wallet.create(numberOfAccounts)
 

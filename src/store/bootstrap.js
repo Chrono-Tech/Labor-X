@@ -1,10 +1,11 @@
 import translations from 'i18n'
 import { I18n, loadTranslations, setLocale } from 'react-redux-i18n'
 
+import { initTokens } from './tokens/actions'
 import { initDAOs } from './daos/actions'
 import { initBoards } from './boards/actions'
+import { initJobs } from './jobs/actions'
 import { signerSelector } from './wallet/selectors'
-import { initTokens } from './tokens/actions'
 
 const startI18n = () => (dispatch, getState) => {
   I18n.setTranslationsGetter(() => getState().i18n.translations)
@@ -14,7 +15,7 @@ const startI18n = () => (dispatch, getState) => {
   dispatch(setLocale('en'))
 }
 
-export const bootstrap = () => async (dispatch) => {
+export const initBackend = () => async (dispatch) => {
   dispatch(startI18n())
 }
 
@@ -33,6 +34,7 @@ export const initFrontend = (store) => ({ web3 }) => async (dispatch) => {
       console.log('Signer changed to ', currentAddress)
       previousAddress = currentAddress
       store.dispatch(initBoards())
+      store.dispatch(initJobs())
     }
   }
   handleSignerUpdate()

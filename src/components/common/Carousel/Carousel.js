@@ -12,50 +12,51 @@ export default class Carousel extends React.Component {
       imgSrc: PropTypes.string,
     })),
   }
-  
+
   static defaultProps = {
     interval: 3000,
     content: [],
   }
-  
+
   constructor (){
     super()
-    
+
     this.state = {
       activeIndex: 0,
       childHeight: null,
     }
   }
-  
+
   componentDidMount (){
     setInterval(this.timer.bind(this), this.props.interval)
     this.updateDimensions()
     window.addEventListener("resize", this.updateDimensions.bind(this))
   }
-  
+
+  // TODO @ipavlenko: Please remove, it causes setState on render
   updateDimensions () {
     const firstChild = this.refs['carousel-0'] && ReactDOM.findDOMNode(this.refs['carousel-0'])
-    
+
     if (firstChild) {
       this.setState({ childHeight: firstChild.clientHeight })
     }
   }
-  
+
   timer (){
     let currentIndex = this.state.activeIndex
     let slideCount = this.props.content.length - 1
-    
+
     if (currentIndex === slideCount){
       currentIndex = -1
     }
-    
+
     this.setState({ activeIndex: ++currentIndex })
   }
-  
+
   goToNextSlide (){
     this.setState({ activeIndex: this.state.activeIndex++ })
   }
-  
+
   render () {
     return (
       <div className={css.carousel} style={this.state.childHeight !== null ? { height: this.state.childHeight } : {}}>
@@ -66,7 +67,7 @@ export default class Carousel extends React.Component {
               src: slide.imgSrc,
               alt: '',
             }
-            
+
             return (
               <div
                 key={index}
@@ -90,4 +91,3 @@ export default class Carousel extends React.Component {
     )
   }
 }
-

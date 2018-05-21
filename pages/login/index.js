@@ -6,20 +6,10 @@ import Head from 'next/head'
 import { LoginActions } from 'components/layouts'
 import { LoginOptions } from 'components/Login'
 import initialStore  from 'store'
-import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
-import ethereumService from 'src/services/EthereumService'
 import css from './index.scss'
 
 class Index extends React.Component {
-  static getInitialProps ({ store }) {
-    store.dispatch(bootstrap())
-  }
-
-  componentWillMount () {
-    ethereumService.start()
-  }
-
   render () {
     return (
       <MuiThemeProvider>

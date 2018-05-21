@@ -8,13 +8,16 @@
   ],
   "dependencies": {
     "@chronobank/mint": "github:chronobank/chronomint",
+    "@laborx/sc-abi": "^0.0.3",
+    "accounting": "^0.4.1",
     "bip39": "^2.5.0",
+    "bs58": "^4.0.1",
+    "es6-promisify": "^6.0.0",
     "ethereumjs-util": "^5.1.5",
     "ethereumjs-wallet": "^0.6.0",
     "express": "^4.16.2",
     "joi": "^13.1.2",
-    "laborx-sc-abi": "^0.0.2",
-    "lx-sc": "github:chronobank/lx-sc#develop",
+    "lx-sc": "github:chronobank/lx-sc#release/release-0.0.3",
     "material-ui": "^0.20.0",
     "moment": "^2.22.1",
     "next": "^5.0.0",
@@ -33,7 +36,6 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0",
-    "truffle-contract": "github:trufflesuite/truffle-contract#95/head",
     "uniqid": "^4.1.1",
     "web3": "1.0.0-beta.33",
     "web3-eth-accounts": "1.0.0-beta.33"
@@ -61,8 +63,7 @@
     "normalize.css": "^8.0.0",
     "postcss-easy-import": "^3.0.0",
     "styled-jsx": "^2.2.5",
-    "styled-jsx-plugin-postcss": "^0.1.2",
-    "truffle": "^4.1.0"
+    "styled-jsx-plugin-postcss": "^0.1.2"
   },
   "scripts": {
     "dev": "node server.js",
@@ -71,8 +72,6 @@
     "build": "next build",
     "lint": "./node_modules/eslint/bin/eslint.js --ext .js,.jsx --fix src pages specs",
     "testrpc": "testrpc --mnemonic \"video visa alcohol fault earth naive army senior major inherit convince electric\" --trace_request true | grep -Ev \"FilterSubprovider|eth_getFilterChanges\"",
-    "contracts": "cd node_modules/lx-sc && node --max_old_space_size=8000 ../truffle/build/cli.bundled.js migrate --network development",
-    "contracts:compile": "cd node_modules/lx-sc && node --max_old_space_size=8000 ../truffle/build/cli.bundled.js compile --all",
     "docker:build": "/bin/bash ./bin/docker-build.sh",
     "docker:stop": "/bin/bash ./bin/docker-stop.sh",
     "docker:start": "/bin/bash ./bin/docker-start.sh",

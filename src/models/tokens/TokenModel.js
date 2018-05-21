@@ -5,7 +5,7 @@ const schemaFactory = () => ({
   key: PropTypes.string.isRequired,
   name: PropTypes.string,
   symbol: PropTypes.string,
-  address: PropTypes.string.isRequired,
+  address: PropTypes.string,
   decimals: PropTypes.number,
 })
 
