@@ -85,6 +85,19 @@ const WrapperInput = (props) => {
   )
 }
 
+WrapperInput.propTypes = {
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  styles: PropTypes.object,
+  type: PropTypes.string,
+  className: PropTypes.string,
+  input: PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.string,
+  }),
+  onCheck: PropTypes.func,
+}
+
 const CustomInput = muiThemeable()(WrapperInput)
 
 export default class Input extends React.Component {

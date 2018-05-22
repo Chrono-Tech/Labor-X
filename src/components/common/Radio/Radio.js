@@ -56,8 +56,6 @@ export default class Radio extends React.Component {
   render () {
     const { label, name, input, onCheck, material, values, defaultSelected, ...custom } = this.props
 
-    console.log('--Radio#render', this.props, custom)
-
     return material ? (
       <MuiThemeProvider>
         <RadioButtonGroup

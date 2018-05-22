@@ -3,10 +3,10 @@ import React from 'react'
 import MaterialCheckbox from 'material-ui/Checkbox'
 import { MuiThemeProvider } from 'material-ui/styles'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-
-import { Image, Translate, Icon } from 'components/common'
-import css from './Checkbox.scss'
 import muiThemeable from 'material-ui/styles/muiThemeable'
+
+import { Translate, Icon } from 'components/common'
+import css from './Checkbox.scss'
 
 const theme = {
   customStyles: {
@@ -42,6 +42,16 @@ const WrapperCheckbox = (props) => {
   )
 }
 
+WrapperCheckbox.propTypes = {
+  label: PropTypes.string,
+  className: PropTypes.string,
+  input: PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.string,
+  }),
+  onCheck: PropTypes.func,
+}
+
 const CustomCheckbox = muiThemeable()(WrapperCheckbox)
 
 export default class Checkbox extends React.Component {
@@ -49,9 +59,13 @@ export default class Checkbox extends React.Component {
     className: PropTypes.string,
     label: PropTypes.string,
     onClick: PropTypes.func,
-    input: PropTypes.object,
+    input: PropTypes.shape({
+      name: PropTypes.string,
+      value: PropTypes.string,
+    }),
     material: PropTypes.bool,
     defaultTheme: PropTypes.bool,
+    onCheck: PropTypes.func,
   }
 
   static defaultProps = {
@@ -64,10 +78,7 @@ export default class Checkbox extends React.Component {
     material: false,
     defaultTheme: true,
   }
-
-  // TODO @dkchv: must be input.onChange
-  handleClick = () => this.props.input.onClick && this.props.onClick()
-
+  
   render () {
     const { className, label, input, onCheck, defaultTheme } = this.props
     const classNames = [css.root]

@@ -42,6 +42,13 @@ class JobBoards extends React.Component {
     boardsList: PropTypes.arrayOf(
       PropTypes.instanceOf(BoardModel)
     ),
+    change: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    onSubmit: PropTypes.func,
+    categoriesResetFilter: PropTypes.string,
+    activeCategoriesFilter: PropTypes.string,
+    ratingFilter: PropTypes.string,
+    levelFilter: PropTypes.string,
   }
 
   constructor () {
@@ -68,24 +75,6 @@ class JobBoards extends React.Component {
     change('categories_reset', false)
   }
 
-  renderCategories () {
-    // const { } = this.props
-    return TAG_CATEGORIES_LIST.map((tag, i) => {
-      return (
-        <Field
-          key={i}
-          component={Checkbox}
-          className={css.field}
-          name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`}
-          label={tag.name}
-          onCheck={this.onCategoryChecked.bind(this)}
-          material
-          defaultTheme={false}
-        />
-      )
-    })
-  }
-
   renderActiveCategories () {
     const { activeCategoriesFilter } = this.props
 
@@ -109,7 +98,7 @@ class JobBoards extends React.Component {
   }
 
   isHideResetBlock () {
-    const { ratingFilter, levelFilter, activeCategoriesFilter, categoriesResetFilter } = this.props
+    const { ratingFilter, levelFilter, categoriesResetFilter } = this.props
 
     const emptyRatingFilter = ratingFilter === 'any' || ratingFilter === undefined
     const emptyLevelFilter = levelFilter === 'any' || levelFilter === undefined
@@ -117,6 +106,24 @@ class JobBoards extends React.Component {
 
     return emptyRatingFilter && emptyLevelFilter && emptyCategoriesResetFilter
 
+  }
+  
+  renderCategories () {
+    // const { } = this.props
+    return TAG_CATEGORIES_LIST.map((tag, i) => {
+      return (
+        <Field
+          key={i}
+          component={Checkbox}
+          className={css.field}
+          name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`}
+          label={tag.name}
+          onCheck={this.onCategoryChecked.bind(this)}
+          material
+          defaultTheme={false}
+        />
+      )
+    })
   }
 
   renderFilterBlock () {
@@ -148,7 +155,7 @@ class JobBoards extends React.Component {
 
           { this.renderCategories() }
 
-          <div className={css.hr}></div>
+          <div className={css.hr} />
 
           <label className={css.filterLabel}>Rating</label>
 
@@ -167,7 +174,7 @@ class JobBoards extends React.Component {
             material
           />
 
-          <div className={css.hr}></div>
+          <div className={css.hr} />
 
           <label className={css.filterLabel}>Validation level</label>
 
@@ -190,7 +197,7 @@ class JobBoards extends React.Component {
     )
   }
   
-  renderEmptyListMessage(){
+  renderEmptyListMessage (){
     return (
       <div className={css.emptyListMessage}>
         Boards list is empty
@@ -199,7 +206,7 @@ class JobBoards extends React.Component {
   }
 
   render () {
-    const { boardsList, onSubmit, handleSubmit, activeCategoriesFilter } = this.props
+    const { boardsList, onSubmit, handleSubmit } = this.props
 
     return (
       <div className={css.main}>
