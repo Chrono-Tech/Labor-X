@@ -16,6 +16,10 @@ export default class TagCategoryModel extends AbstractModel {
   get code () {
     return Math.pow(2, this.index)
   }
+
+  static valueOf (index) {
+    return TAG_CATEGORIES_LIST[index]
+  }
 }
 
 export const TAG_CATEGORIES_LIST = [
@@ -40,3 +44,5 @@ export const TAG_CATEGORIES_LIST = [
     name: 'E-Commerce',
   }),
 ]
+
+export const TAG_CATEGORY_ANY_MASK = Math.pow(2, TAG_CATEGORIES_LIST.length + 1) - 1

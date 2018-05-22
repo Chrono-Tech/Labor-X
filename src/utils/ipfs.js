@@ -1,6 +1,5 @@
 import assert from 'assert'
 import ipfsAPI from 'ipfs-api'
-import bs58 from 'bs58'
 import { promisify } from 'es6-promisify'
 
 const DEFAULT_CONFIG = {
@@ -46,16 +45,4 @@ export const loadFromIPFS = (hash, timeout = 20000, config = DEFAULT_CONFIG) => 
       resolve(null)
     }
   })
-}
-
-export const ipfsHashToBytes32 = (value) => {
-  return `0x${Buffer.from(bs58.decode(value)).toString('hex').substr(4)}`
-}
-
-export const bytes32ToIPFSHash = (bytes) => {
-  if (/^0x0{63}[01]$/.test(`${bytes}`)) {
-    return ''
-  }
-  const str = Buffer.from(bytes.replace(/^0x/, '1220'), 'hex')
-  return bs58.encode(str)
 }

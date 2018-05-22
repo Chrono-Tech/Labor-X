@@ -35,13 +35,13 @@ function mapStateToProps (state) {
   jobs = jobs.filter(job => job.client.toLowerCase() === signer.address)
 
   // TODO remove filtering inconsistent jobCards
-  jobs = jobs.filter(job => (
-    job.ipfs.name != null &&
-    job.ipfs.boardName != null &&
-    job.ipfs.startDateString != null &&
-    job.ipfs.hourlyRate != null &&
-    job.ipfs.totalHours != null
-  ))
+  // jobs = jobs.filter(job => (
+  //   job.ipfs.name != null &&
+  //   job.ipfs.boardName != null &&
+  //   job.ipfs.startDateString != null &&
+  //   job.ipfs.hourlyRate != null &&
+  //   job.ipfs.totalHours != null
+  // ))
 
   return {
     jobCards: jobs.map( job => ({
@@ -52,11 +52,11 @@ function mapStateToProps (state) {
       // TODO jobCard statuses
       status: JobCard.STATUSES.APPROVED,
       // TODO extra data
-      // icon: '/static/temp/get-started.png',
-      // applicants: 120,
-      // offers: 1,
-      // applicantsNew: 1,
-      // offersNew: 1,
+      icon: '/static/temp/get-started.png',
+      applicants: 120,
+      offers: 1,
+      applicantsNew: 1,
+      offersNew: 1,
     })),
   }
 }

@@ -8,7 +8,7 @@
   ],
   "dependencies": {
     "@chronobank/mint": "github:chronobank/chronomint",
-    "@laborx/sc-abi": "^0.0.4",
+    "@laborx/sc-abi": "^0.0.5",
     "accounting": "^0.4.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "bip39": "^2.5.0",
@@ -18,6 +18,7 @@
     "ethereumjs-util": "^5.1.5",
     "ethereumjs-wallet": "^0.6.0",
     "express": "^4.16.2",
+    "faker": "^4.1.0",
     "joi": "^13.1.2",
     "lx-sc": "github:chronobank/lx-sc#release/release-0.0.3",
     "material-ui": "^0.20.0",
