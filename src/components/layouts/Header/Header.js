@@ -23,10 +23,12 @@ export class Header extends React.Component {
 
   handleOpenPanel(){
     this.setState({ isVisibleRightPanel: true })
+    document.body.classList.add('show-overlay')
   }
 
   handleClosePanel(){
     this.setState({ isVisibleRightPanel: false })
+    document.body.classList.remove('show-overlay')
   }
 
   render () {
