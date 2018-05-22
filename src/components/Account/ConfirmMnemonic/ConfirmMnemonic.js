@@ -3,9 +3,8 @@ import { reduxForm, Field, change } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { Link, Button } from 'components/common'
-import validate from './validate'
-
 import 'styles/globals/globals.scss'
+import validate from './validate'
 
 import css from './ConfirmMnemonic.scss'
 
@@ -18,23 +17,23 @@ const onSubmit = () => {
 class ConfirmMnemonic extends React.Component {
   constructor (props){
     super(props)
-  
+
     const wordsArray = props.mnemonic.split(' ').map((word, index) => {
       return { index, word }
     })
-    
+
     const cloneWordsArray = [...wordsArray]
-    
+
     this.state = {
       confirmPhrase: [],
       wordsArray: wordsArray,
       currentWordsArray: cloneWordsArray.sort((a,b) => a.word < b.word),
     }
   }
-  
+
   onClickWord (word){
     const { dispatch } = this.props
-    
+
     if (!this.state.confirmPhrase.includes(word)) {
       this.setState(
         { confirmPhrase: this.state.confirmPhrase.concat(word) },
@@ -42,15 +41,15 @@ class ConfirmMnemonic extends React.Component {
       )
     }
   }
-  
+
   getCurrentMnemonic (){
     return this.state.confirmPhrase.map((item) => item.word).join(' ')
   }
-  
+
   getWordsButtons (){
     return this.state.currentWordsArray.map((item, index) => {
       const wordSelected = this.state.confirmPhrase.includes(item)
-      
+
       return (
         <div
           key={index}
@@ -62,35 +61,35 @@ class ConfirmMnemonic extends React.Component {
       )}
     )
   }
-  
+
   clearMnemonic (){
     const { dispatch } = this.props
-  
+
     this.setState(
       { confirmPhrase: [] },
       () => dispatch(change(FORM_CONFIRM_MNEMONIC, 'mnemonic', this.getCurrentMnemonic()))
     )
   }
-  
+
   clearLastWord (){
     const { dispatch } = this.props
-  
+
     this.setState(
       { confirmPhrase: this.state.confirmPhrase.slice(0, -1) },
       () => dispatch(change(FORM_CONFIRM_MNEMONIC, 'mnemonic', this.getCurrentMnemonic()))
     )
   }
-  
+
   render () {
     const { handleSubmit, error, pristine, invalid, mnemonic } = this.props
-  
+
     return (
       <form className={css.root} name={FORM_CONFIRM_MNEMONIC} onSubmit={handleSubmit}>
         <div className={css.contentBlock}>
           <h2>Confirm back-up phrase (mnemonic key)</h2>
-          
+
           <p className={css.description}>Click on phrase words in the correct order.</p>
-  
+
           <div className={css.passPhraseWrapper}>
             <div className={css.passPhrase}>{ this.getCurrentMnemonic() }</div>
             <Field
@@ -100,18 +99,18 @@ class ConfirmMnemonic extends React.Component {
               name='mnemonic'
               readOnly
             />
-            
+
           </div>
-          
+
           <div className={css.wordsBlock}>
             { this.getWordsButtons() }
           </div>
-          
+
           <div className={css.controlsBlock}>
             <div className={css.clearAllButton} onClick={this.clearMnemonic.bind(this)}>Start Over</div>
             <div className={css.clearLastButton} onClick={this.clearLastWord.bind(this)}>Undo</div>
           </div>
-  
+
           <Button
             label='Proceed'
             buttonClassName={css.submitButton}
@@ -121,7 +120,7 @@ class ConfirmMnemonic extends React.Component {
             error={error}
             primary
           />
-          
+
           <div className={css.progressBlock}>
             <div className={css.progressPoint} />
             <div className={css.progressPoint} />

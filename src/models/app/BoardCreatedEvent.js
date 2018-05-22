@@ -3,6 +3,7 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   key: PropTypes.string.isRequired,
+  self: PropTypes.string.isRequired,
   boardId: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -10,7 +11,8 @@ const schemaFactory = () => ({
   boardTagsMask: PropTypes.number.isRequired, // bit-mask,
   boardTagsAreaMask: PropTypes.number.isRequired, // bit-mask,
   boardTagsCategoryMask: PropTypes.number.isRequired, // bit-mask,
-  status: PropTypes.boolean,
+  boardIpfsHash: PropTypes.string,
+  status: PropTypes.bool,
 })
 
 export default class BoardCreateEvent extends AbstractModel {

@@ -1,6 +1,6 @@
 // import BigNumber from 'bignumber.js'
-import { BoardModel, BoardIPFSModel, BoardCreateEvent, TAGS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST, TagCategoryModel } from 'src/models'
-import { filterArrayByIndexMask } from 'src/utils'
+import { BoardModel, BoardIPFSModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TAGS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST } from 'src/models'
+import { filterArrayByIndexMask, loadFromIPFS, ipfsHashToBytes32, bytes32ToIPFSHash  } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
 export default class BoardControllerDAO extends AbstractContractDAO {
@@ -24,6 +24,9 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     this.boardClosedEmitter = this.history.events.BoardClosed({})
       .on('data', this.handleBoardClosedData.bind(this))
       .on('error', this.handleError.bind(this))
+    this.userBindedEmitter = this.history.events.UserBinded({})
+      .on('data', this.handleUserBindedData.bind(this))
+      .on('error', this.handleError.bind(this))
 
     return this.token
   }
@@ -32,8 +35,10 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     if (this.isConnected) {
       this.boardCreatedEmitter.removeAllListeners()
       this.boardClosedEmitter.removeAllListeners()
+      this.userBindedEmitter.removeAllListeners()
       this.boardCreatedEmitter = null
       this.boardClosedEmitter = null
+      this.userBindedEmitter = null
       this.contract = null
       this.history = null
     }
@@ -43,18 +48,29 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     return this.contract != null // nil check
   }
 
-  async getBoards (address, fromId = 1, limit = 10) {
+  async getUserStatus (address, boardId): Promise<Boolean> {
+    const res = await this.contract.methods.getUserStatus(boardId, address).call()
+    console.log('getUserStatus', res, boardId, address)
+    return res
+  }
+
+  async getBoardById (signer, id) {
+    const [ board ] = await this.getBoards(signer, id, 1)
+    return board
+  }
+
+  async getBoards (address, fromId = 1/*, limit = 100*/) {
     const boards = []
+    const count = await this.contract.methods.getBoardsCount().call()
     // TODO @ipavlenko: We have to ignore address property and load all the boards for awhile
-    const response = await this.contract.methods.getBoards(fromId, limit, null).call()
+    const response = await this.contract.methods.getBoards(fromId, count, null).call()
     // eslint-disable-next-line
     console.log('[BoardControllerDAO] getBoards:', response)
     const {
       ids,
       // eslint-disable-next-line no-unused-vars
-      name,
-      // eslint-disable-next-line no-unused-vars
-      boardDescription,
+      names,
+      descriptions, // contains both description & ipfs hash
       tags,
       tagsAreas,
       tagsCategories,
@@ -62,15 +78,20 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       // ipfsHash,
     } = response
     for (let i = 0; i < ids.length; i++) {
+      const hash = bytes32ToIPFSHash(descriptions[i * 2 + 1])
+      const id = Number(ids[i])
       boards.push(new BoardModel({
-        id: Number(ids[i]),
+        id,
         tags: filterArrayByIndexMask(TAGS_LIST, tags[i]),
-        tagsAreas: filterArrayByIndexMask(TAG_AREAS_LIST, tagsAreas[i]),
-        tagsCategories: filterArrayByIndexMask(TAG_CATEGORIES_LIST, tagsCategories[i]),
-        status: status[i] ? BoardModel.STATUS.JOINED : BoardModel.STATUS.UNASSIGNED,
+        tagsArea: filterArrayByIndexMask(TAG_AREAS_LIST, tagsAreas[i]),
+        tagsCategory: filterArrayByIndexMask(TAG_CATEGORIES_LIST, tagsCategories[i]),
+        isActive: status[i],
         ipfs: new BoardIPFSModel({
-          // ...await ipfsService.get(ipfsHash[i]),
-          // hash: ipfsHash[i],
+          ...(await loadFromIPFS(hash) || {}),
+          hash,
+        }),
+        extra: new BoardExtraModel({
+          isSignerJoined: await this.getUserStatus(address, id),
         }),
       }))
     }
@@ -82,7 +103,16 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     const data = this.contract.methods.createBoard(name, description, tags, tagsAreas, tagsCategories).encodeABI()
     return {
       from: sender,
-      to: this.contract.address,
+      to: this.address,
+      data,
+    }
+  }
+
+  createJoinBoardTx (sender, boardId) {
+    const data = this.contract.methods.bindUserWithBoard(boardId, sender).encodeABI()
+    return {
+      from: sender,
+      to: this.address,
       data,
     }
   }
@@ -94,16 +124,35 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     setImmediate(() => {
       this.emit('BoardCreated', {
         data,
-        board: new BoardCreateEvent({
+        event: new BoardCreatedEvent({
           key: `${data.transactionHash}/${data.logIndex}`,
           self: returnValues.self,
-          boardId: returnValues.boardId,
+          boardId: Number(returnValues.boardId),
           name: returnValues.name,
           description: returnValues.boardDescription,
           creator: returnValues.creator,
-          tags: returnValues.boardTags,
-          tagsArea: returnValues.boardTagsArea,
-          tagsCategory: returnValues.boardTagsCategory,
+          tags: Number(returnValues.boardTags),
+          tagsArea: Number(returnValues.boardTagsArea),
+          tagsCategory: Number(returnValues.boardTagsCategory),
+          boardIpfsHash: returnValues.boardIpfsHash,
+          status: returnValues.status,
+        }),
+      })
+    })
+  }
+
+  handleUserBindedData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[BoardControllerDAO] UserBinded', data)
+    const { returnValues } = data
+    setImmediate(() => {
+      this.emit('UserBinded', {
+        data,
+        event: new UserBindedEvent({
+          key: `${data.transactionHash}/${data.logIndex}`,
+          self: returnValues.self,
+          boardId: Number(returnValues.boardId),
+          user: returnValues.user,
           status: returnValues.status,
         }),
       })
@@ -113,6 +162,18 @@ export default class BoardControllerDAO extends AbstractContractDAO {
   handleBoardClosedData (data) {
     // eslint-disable-next-line no-console
     console.log('[BoardControllerDAO] BoardClosed', data)
+    const { returnValues } = data
+    setImmediate(() => {
+      this.emit('BoardClosed', {
+        data,
+        event: new BoardClosedEvent({
+          key: `${data.transactionHash}/${data.logIndex}`,
+          self: returnValues.self,
+          boardId: Number(returnValues.boardId),
+          status: returnValues.status,
+        }),
+      })
+    })
   }
 
   handleError (error) {

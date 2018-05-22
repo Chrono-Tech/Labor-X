@@ -1,27 +1,31 @@
 {
   "presets": [
     [
-      "next/babel",
-      {
-        "styled-jsx": {
-          "plugins": [
-            "styled-jsx-plugin-postcss"
-          ]
+      "next/babel"
+    ]
+  ],
+  "plugins": [
+    "transform-flow-strip-types",
+    [
+      "module-resolver", {
+        "root": ["./"],
+        "alias": {
+          "components": "./src/components",
+          "styles": "./src/styles",
+          "store": "./src/store",
+          "models": "./src/models",
+          "i18n": "./src/i18n",
+          "store": "./src/store"
         }
       }
     ],
-    "flow"
-  ],
-  "plugins": [
-    ["module-alias", [
-      { "src": "./src", "expose": "src" },
-
-      { "src": "./src/components", "expose": "components" },
-      { "src": "./src/styles", "expose": "styles" },
-      { "src": "./src/store", "expose": "store" },
-      { "src": "./src/models", "expose": "models" },
-      { "src": "./src/i18n", "expose": "i18n" },
-      { "src": "./src/services", "expose": "services" }
-    ]]
+    [
+      "styled-jsx/babel", {
+        "optimizeForSpeed": true,
+        "plugins": [
+          "styled-jsx-plugin-postcss"
+        ]
+      }
+    ]
   ]
 }
