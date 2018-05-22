@@ -54,7 +54,7 @@ class ActiveJobsContent extends React.Component {
           }
           {
             Object.keys(jobCardsDateGrouped).map(dateKey => (
-              <div className={css.section}>
+              <div key={dateKey} className={css.section}>
                 <h3>{dateKey}</h3>
                 {jobCardsDateGrouped[dateKey].map((card) => (<ActiveJobCard {...card} key={uniqid()} />))}
               </div>

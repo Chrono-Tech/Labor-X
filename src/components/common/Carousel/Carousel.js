@@ -28,13 +28,18 @@ export default class Carousel extends React.Component {
   }
 
   componentDidMount (){
-    setInterval(this.timer.bind(this), this.props.interval)
+    this.timerInterval = setInterval(this.timer.bind(this), this.props.interval)
     this.updateDimensions()
-    window.addEventListener("resize", this.updateDimensions.bind(this))
+    window.addEventListener("resize", this.updateDimensions)
+  }
+
+  componentWillUnmount (){
+    window.clearInterval(this.timerInterval)
+    window.removeEventListener("resize", this.updateDimensions)
   }
 
   // TODO @ipavlenko: Please remove, it causes setState on render
-  updateDimensions () {
+  updateDimensions = () => {
     const firstChild = this.refs['carousel-0'] && ReactDOM.findDOMNode(this.refs['carousel-0'])
 
     if (firstChild) {
@@ -63,7 +68,7 @@ export default class Carousel extends React.Component {
         {
           this.props.content.map((slide, index) => {
             const imgProps = {
-              ...(index === 0 ? { onLoad: this.updateDimensions.bind(this) } : {}),
+              ...(index === 0 ? { onLoad: this.updateDimensions } : {}),
               src: slide.imgSrc,
               alt: '',
             }
