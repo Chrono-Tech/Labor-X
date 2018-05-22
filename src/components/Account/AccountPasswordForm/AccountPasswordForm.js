@@ -3,9 +3,9 @@ import { reduxForm, Field, SubmissionError } from 'redux-form'
 import { connect } from 'react-redux'
 
 import { Link, Button, Input } from 'components/common'
+import 'styles/globals/globals.scss'
 import validate from './validate'
 
-import 'styles/globals/globals.scss'
 
 import css from './AccountPasswordForm.scss'
 
@@ -17,7 +17,7 @@ const onSubmit = ({ password, recruiter, worker, client }) => {
       _error: 'Please select at least one of account type',
     })
   }
-  
+
   return {
     password,
     types: {
@@ -29,17 +29,17 @@ const onSubmit = ({ password, recruiter, worker, client }) => {
 }
 
 class AccountPasswordForm extends React.Component {
-  
+
   render () {
     const { handleSubmit, error, pristine, invalid, touched, navigateNext, navigateBack, navigateToSelectMethod } = this.props
-    
+
     return (
       <form className={css.root} name={FORM_ACCOUNT_PASSWORD} onSubmit={handleSubmit}>
         <div className={css.contentBlock}>
           <h2>Select Account Type</h2>
-          
+
           <p className={css.description}>You may also add account types any time in the future. Please select at least one now.</p>
-      
+
           <div className={css.checkboxBlock}>
             <div className={css.row}>
               <Field
@@ -54,7 +54,7 @@ class AccountPasswordForm extends React.Component {
                 Create and manage Job Boards
               </label>
             </div>
-            
+
             <div className={css.row}>
               <Field
                 id='worker'
@@ -68,7 +68,7 @@ class AccountPasswordForm extends React.Component {
                 Join Job Boards and start your job search
               </label>
             </div>
-            
+
             <div className={css.row}>
               <Field
                 id='client'
@@ -82,14 +82,14 @@ class AccountPasswordForm extends React.Component {
                 Join Job Boards and post your jobs
               </label>
             </div>
-            
+
           </div>
         </div>
-        
+
         <div className={css.contentBlock}>
           <h2>Create Account Password</h2>
           <p>If you're new to block-chain create your Account password below.</p>
-  
+
           <div className={css.passwordBlock}>
             <Field
               className={css.password}
@@ -99,7 +99,7 @@ class AccountPasswordForm extends React.Component {
               placeholder='Password'
               mods={[css.passwordField]}
             />
-  
+
             <Field
               className={css.password}
               component={Input}
@@ -110,7 +110,7 @@ class AccountPasswordForm extends React.Component {
 
             />
           </div>
-  
+
           <div className={css.passwordBlockDescription}>
             By creating an Account you agree with our
             <br />
@@ -118,7 +118,7 @@ class AccountPasswordForm extends React.Component {
             &nbsp;and&nbsp;
             <Link className={css.descriptionLink} href='/'>Terms of Use</Link>
           </div>
-  
+
           <Button
             className={css.row}
             buttonClassName={css.submitButton}
@@ -130,9 +130,9 @@ class AccountPasswordForm extends React.Component {
             mods={Button.MODS.INVERT}
             errorClassName={css.formError}
           />
-          
+
         </div>
-        
+
         <div className={css.pageDescription}>
           Have a Mnemonic key, Wallet File or HD solution?
           <br />

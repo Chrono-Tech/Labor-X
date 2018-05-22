@@ -49,7 +49,7 @@
     "@storybook/addon-links": "^3.4.1",
     "@storybook/addons": "^3.4.1",
     "@storybook/react": "^3.4.1",
-    "@zeit/next-sass": "^0.1.1",
+    "@zeit/next-sass": "^0.2.0",
     "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",

@@ -1,7 +1,6 @@
 import { Link } from 'components/common'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { bootstrap } from 'store/bootstrap'
 import 'styles/globals/globals.scss'
 import css from './LearnMoreBlock.scss'
 
@@ -9,15 +8,15 @@ export default class Index extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
-  
+
   static defaultProps = {
     className: '',
   }
-  
+
   render () {
     const { className } = this.props
     const classNames = [css.forNewUsersContent].concat(className)
-    
+
     return (
       <div className={classNames.join(' ')}>
         <h1>New to LaborX?</h1>
@@ -32,4 +31,3 @@ export default class Index extends React.Component {
     )
   }
 }
-

@@ -1,14 +1,7 @@
 {
   "presets": [
     [
-      "next/babel",
-      {
-        "styled-jsx": {
-          "plugins": [
-            "styled-jsx-plugin-postcss"
-          ]
-        }
-      }
+      "next/babel"
     ]
   ],
   "plugins": [
@@ -24,6 +17,14 @@
           "i18n": "./src/i18n",
           "store": "./src/store"
         }
+      }
+    ],
+    [
+      "styled-jsx/babel", {
+        "optimizeForSpeed": true,
+        "plugins": [
+          "styled-jsx-plugin-postcss"
+        ]
       }
     ]
   ]
