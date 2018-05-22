@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
-import Chance from 'chance'
+import BigNumber from 'bignumber.js'
+import faker from 'faker'
 import AbstractModel from '../AbstractModel'
-
-const chance = new Chance()
 
 export const schemaFactory = () => ({
   isSpecified: PropTypes.bool,
@@ -15,12 +14,26 @@ export default class JobBudgetModel extends AbstractModel {
     super(propsWithDefaults(props), schemaFactory())
     Object.freeze(this)
   }
+
+  get award (): BigNumber {
+    if (this.isSpecified) {
+      try {
+        const a = new BigNumber(this.hourlyRate)
+        const b = new BigNumber(this.totalHours)
+        return a.multipliedBy(b)
+      } catch (e) {
+        console.log(this, e)
+        // ignore
+      }
+    }
+    return null
+  }
 }
 
 function propsWithDefaults (props) {
   return Object.assign({}, {
-    isSpecified: false,
-    hourlyRate: String(chance.integer(5, 40)),
-    totalHours: String(chance.integer(1, 40) * 5),
+    isSpecified: faker.random.boolean(),
+    hourlyRate: String(faker.random.number({ min: 5, max: 40 })),
+    totalHours: String(faker.random.number({ min: 1, max: 40 }) * 5),
   }, props)
 }

@@ -9,7 +9,6 @@ const schemaFactory = () => ({
 export default class JobStateModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
-    Object.assign(this, props)
     Object.freeze(this)
   }
 

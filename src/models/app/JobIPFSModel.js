@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types'
-import Chance from 'chance'
 import faker from 'faker'
 import AbstractModel from '../AbstractModel'
 import JobAddressModel from './JobAddressModel'
 import JobBudgetModel from './JobBudgetModel'
 import JobPeriodModel from './JobPeriodModel'
-
-const chance = new Chance()
 
 const schemaFactory = () => ({
   hash: PropTypes.string.isRequired,
@@ -14,6 +11,7 @@ const schemaFactory = () => ({
   intro: PropTypes.string,
   responsibilities: PropTypes.string,
   requirements: PropTypes.string,
+  logo: PropTypes.string,
   endDate: PropTypes.string,
   address: PropTypes.instanceOf(JobAddressModel),
   budget: PropTypes.instanceOf(JobBudgetModel),
