@@ -189,13 +189,21 @@ class JobBoards extends React.Component {
 
     )
   }
+  
+  renderEmptyListMessage(){
+    return (
+      <div className={css.emptyListMessage}>
+        Boards list is empty
+      </div>
+    )
+  }
 
   render () {
     const { boardsList, onSubmit, handleSubmit, activeCategoriesFilter } = this.props
 
     return (
       <div className={css.main}>
-        <div className={this.state.isVisibleFilterBlock ? css.contentWrapperFilterOpened : css.contentWrapper}>
+        <div className={css.contentWrapper}>
           <h2>Job Boards</h2>
 
           <form className={css.flexRow} name={FORM_JOB_BOARDS} onSubmit={handleSubmit(onSubmit)}>
@@ -226,6 +234,7 @@ class JobBoards extends React.Component {
                     <JobBoardItem key={board.key} jobBoard={board} />
                   ))
                 }
+                { boardsList && !boardsList.length && this.renderEmptyListMessage() }
               </div>
             </div>
 

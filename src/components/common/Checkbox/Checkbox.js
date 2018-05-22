@@ -8,7 +8,6 @@ import { Image, Translate, Icon } from 'components/common'
 import css from './Checkbox.scss'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
-
 const theme = {
   customStyles: {
     iconStyle: {
