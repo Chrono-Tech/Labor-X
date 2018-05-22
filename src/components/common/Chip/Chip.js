@@ -8,13 +8,13 @@ export default class Chip extends React.Component {
     onRemove: PropTypes.func,
   }
 
-  handleRemove = () => this.props.onRemove && this.props.onRemove()
+  handleRemove = () => this.props.onRemove && this.props.onRemove(this.props.value)
 
   render () {
     return (
       <div className={css.root}>
         <div className={css.value}>{this.props.value}</div>
-        <div className={css.remove}>x</div>
+        <div className={css.remove} onClick={this.handleRemove}>x</div>
       </div>
     )
   }

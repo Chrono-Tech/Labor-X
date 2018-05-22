@@ -1,9 +1,11 @@
-import { Image, Chip, Input, Button } from 'components/common'
+import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { MuiThemeProvider } from 'material-ui/styles'
 import { MenuItem } from 'material-ui/Menu'
-import { SelectField } from 'redux-form-material-ui'
-import React from 'react'
+import { SelectField, AutoComplete } from 'redux-form-material-ui'
+
+import { Image, Chip, Input, Button } from 'components/common'
+import { TAG_CATEGORIES_LIST } from 'src/models'
 import css from './CreateJobBoard.scss'
 
 const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
@@ -17,11 +19,45 @@ class CreateJobBoard extends React.Component {
   state = {
     requirementsValue: 1,
     feeValue: 1,
+    categories: []
   };
 
   handleChangeRequirements = (event, index, value) => this.setState({ requirementsValue: value });
   handleChangeFee = (event, index, value) => this.setState({ feeValue: value });
 
+  getTagsList(){
+    return TAG_CATEGORIES_LIST && TAG_CATEGORIES_LIST.map(tag => tag.name) || []
+  }
+  
+  onRemoveCategory(name){
+    const { categories } = this.state
+    
+    this.setState({ categories: categories.filter(item => item !== name) })
+  }
+  
+  onAddCategory(name){
+    if (!this.state.categories.includes(name)) {
+      this.setState({categories: [...this.state.categories, name]})
+    }
+  }
+  
+  searchCategoryFilter(searchText, key){
+    return searchText !== '' &&
+      String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
+  }
+  
+  renderCategories(){
+    const { categories } = this.state
+    
+    return categories && categories.map((item, i) => (
+      <Chip key={i} value={item} onRemove={(value) => this.onRemoveCategory(value)} />
+    ))
+  }
+  
+  onFormSubmit(){
+  
+  }
+  
   render () {
     return (
       <MuiThemeProvider>
@@ -42,6 +78,7 @@ class CreateJobBoard extends React.Component {
                 />
                 <Button
                   className={css.doneButton}
+                  onClick={this.onFormSubmit}
                   label='terms.done'
                   type={Button.TYPES.SUBMIT}
                   mods={Button.MODS.FLAT}
@@ -66,14 +103,15 @@ class CreateJobBoard extends React.Component {
                 <Field
                   lineEnabled
                   className={css.find}
-                  component={Input}
+                  component={AutoComplete}
+                  onNewRequest={(category) => this.onAddCategory(category)}
+                  filter={this.searchCategoryFilter}
+                  dataSource={this.getTagsList()}
                   name='searchCategory'
                   placeholder='term.find'
                   mods={Input.MODS.ALIGN_LEFT}
                 />
-                <Chip value='Inventory' />
-                <Chip value='Monetary Exchange' />
-                <Chip value='Ordering Supplies' />
+                { this.renderCategories() }
               </div>
             </div>
 
@@ -144,7 +182,7 @@ class CreateJobBoard extends React.Component {
               </div>
             </div>
 
-            <di className={css.card}>
+            <div className={css.card}>
               <h3 className={css.cardTitle}>Visuals</h3>
               <div className={css.visuals}>
                 <div className={css.visualsContainer}>
@@ -156,7 +194,7 @@ class CreateJobBoard extends React.Component {
                   <a href='/'>UPLOAD BACKGROUND</a>
                 </div>
               </div>
-            </di>
+            </div>
           </form>
         </div>
       </MuiThemeProvider>

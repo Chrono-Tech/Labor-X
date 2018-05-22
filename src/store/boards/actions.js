@@ -8,6 +8,7 @@ import { web3Selector } from '../ethereum/selectors'
 export const BOARDS_CLEAR = 'boards/clear'
 export const BOARDS_SAVE = 'boards/save'
 export const BOARDS_FILTER = 'boards/filter'
+export const BOARD_CREATE= 'boards/create'
 
 export const initBoards = () => async (dispatch, getState) => {
   const state = getState()
@@ -124,4 +125,26 @@ export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
     boardsList: currentList,
   })
 
+}
+
+export const boardCreate = (data) => async (dispatch, getState) => {
+  const state = getState()
+  
+  const boardControlerDAO = daoByType('BoardController')(state)
+  const signer = signerSelector()(state)
+  
+  await boardControlerDAO.handleBoardCreatedData({
+    key: '',
+    self: '',
+    boardId: '',
+    name: data.name,
+    description: '',
+    creator: signer.address,
+    tags: [],
+    tagsArea: [],
+    tagsCategory: data.categories,
+    boardIpfsHash: '',
+    status: true,
+  })
+  
 }
