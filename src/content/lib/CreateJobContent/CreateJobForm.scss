@@ -94,10 +94,6 @@ $gutter: 4rem;
   margin-right: 2rem;
 }
 
-.cardTitle {
-  margin-bottom: 3rem;
-}
-
 .postFee {
   align-self: center;
 }
@@ -152,4 +148,19 @@ $gutter: 4rem;
 
 .companyAddress {
   margin-bottom: 4rem;
+}
+
+.cardHeading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  > * {
+    flex: 0 0 auto;
+    &:first-child {
+      flex: 1 1 auto;
+    }
+  }
 }
