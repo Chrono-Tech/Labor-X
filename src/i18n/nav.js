@@ -17,6 +17,7 @@ export default {
   completedJobs: 'Completed Jobs',
   client: 'Client',
   activeJobs: 'Active Jobs',
+  archivedJobs: 'Archived Jobs',
   postedJobs: 'Posted Jobs',
   jobsArchive: 'Jobs Archive',
   recruiter: 'Recruiter',
