@@ -1,11 +1,16 @@
-import { required } from 'models/validator'
+import { notEmpty } from 'models/validator'
 
 export default (values) => {
   return {
-    name: required(values.name),
-    intro: required(values.intro),
-    responsibilities: required(values.responsibilities),
-    workerRequirements: required(values.workerRequirements),
+    name: notEmpty(values.name),
+    intro: notEmpty(values.intro),
+    responsibilities: notEmpty(values.responsibilities),
+    requirements: notEmpty(values.requirements),
+    category: notEmpty(values.category),
+    area: notEmpty(values.area),
+    tags: notEmpty(values.tags),
+    legal: notEmpty(values.legal),
+    board: notEmpty(values.board),
     // conclusion: required(values.conclusion),
   }
 }

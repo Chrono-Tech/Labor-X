@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cn from 'classnames'
 import { Field, reduxForm, propTypes } from 'redux-form'
-import { Toggle, SelectField, Checkbox, DatePicker } from 'redux-form-material-ui'
+import { Toggle, SelectField, Checkbox, DatePicker, TextField } from 'redux-form-material-ui'
 import { MuiThemeProvider, CircularProgress, MenuItem } from 'material-ui'
-import { Image, Input, Chip, Badge, Translate, NumberInput, Button } from 'src/components/common'
-import { SignerModel, BoardModel } from 'src/models'
+import { Image, Input, Chip, Badge, Translate, NumberInput, Button, ValidatedCheckbox } from 'src/components/common'
+import { SignerModel, BoardModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST } from 'src/models'
 import validate from './validate'
 import css from './CreateJobForm.scss'
 
@@ -27,15 +28,16 @@ class CreateJobForm extends React.Component {
 
   state = {
     hourlyRatingValue: 1,
-    stateValue: 1,
+    // stateValue: 1,
   }
 
   // handleChangeJobBoard = (event, index, value) => this.setState({ jobBoardValue: value })
   handleChangeHourlyRating = (event, index, value) => this.setState({ hourlyRatingValue: value })
-  handleChangeState = (event, index, value) => this.setState({ stateValue: value })
+  // handleChangeState = (event, index, value) => this.setState({ stateValue: value })
 
   render () {
     const { isLoading, boards, hasBudget, hasPeriod, hasAddress, hasRequirements, hasSkills } = this.props
+
     return (
       <MuiThemeProvider>
         <div className={css.main}>
@@ -83,39 +85,81 @@ class CreateJobForm extends React.Component {
               <div className={css.cardHeading}>
                 <h3><Translate value='ui.createJob.general' /></h3>
               </div>
-              <Field
-                className={css.inputSection}
-                component={Input}
-                name='intro'
-                label='ui.createJob.intro'
-                placeholder='ui.createJob.introPlaceholder'
-                mods={Input.MODS.BOXED}
-              />
-              <Field
-                className={css.inputSection}
-                component={Input}
-                name='responsibilities'
-                label='ui.createJob.responsibilities'
-                placeholder='ui.createJob.responsibilitiesPlaceholder'
-                mods={Input.MODS.BOXED}
-              />
-              <Field
-                className={css.inputSection}
-                component={Input}
-                name='requirements'
-                label='ui.createJob.workerRequirements'
-                placeholder='ui.createJob.workerRequirementsPlaceholder'
-                mods={Input.MODS.BOXED}
-              />
-              {/* <Field
-                className={css.inputSection}
-                component={Input}
-                name='conclusion'
-                label='ui.createJob.conclusion'
-                placeholder='ui.createJob.conclusionPlaceholder'
-                mods={Input.MODS.BOXED}
-              /> */}
+              <div>
+                <Field
+                  className={css.inputSection}
+                  component={TextField}
+                  name='intro'
+                  multiLine
+                  fullWidth
+                  floatingLabelText={<Translate value='ui.createJob.intro' />}
+                />
+                <Field
+                  className={css.inputSection}
+                  component={TextField}
+                  name='responsibilities'
+                  multiLine
+                  fullWidth
+                  floatingLabelText={<Translate value='ui.createJob.responsibilities' />}
+                />
+                <Field
+                  className={css.inputSection}
+                  component={TextField}
+                  name='requirements'
+                  multiLine
+                  fullWidth
+                  floatingLabelText={<Translate value='ui.createJob.requirements' />}
+                />
+              </div>
             </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.tags' /></h3>
+              </div>
+              <div className={cn(css.row, css.twoColumn)}>
+                <Field
+                  component={SelectField}
+                  floatingLabelText={<Translate value='ui.createJob.area' />}
+                  name='area'
+                >
+                  {TAG_AREAS_LIST.map(area => (
+                    <MenuItem key={area.index} value={area.index} primaryText={area.name} />
+                  ))}
+                </Field>
+                <Field
+                  component={SelectField}
+                  floatingLabelText={<Translate value='ui.createJob.category' />}
+                  name='category'
+                >
+                  {TAG_CATEGORIES_LIST.map(category => (
+                    <MenuItem key={category.index} value={category.index} primaryText={category.name} />
+                  ))}
+                </Field>
+              </div>
+              <div>
+                <Field
+                  component={SelectField}
+                  floatingLabelText={<Translate value='ui.createJob.skills' />}
+                  name='skills'
+                  multiple
+                  fullWidth
+                >
+                  {SKILLS_LIST.map(skill => (
+                    <MenuItem key={skill.index} value={skill.index} primaryText={skill.name} />
+                  ))}
+                </Field>
+              </div>
+            </div>
+
+            {/* <Field
+              className={css.inputSection}
+              component={Input}
+              name='conclusion'
+              label='ui.createJob.conclusion'
+              placeholder='ui.createJob.conclusionPlaceholder'
+              mods={Input.MODS.BOXED}
+            /> */}
 
             <div className={css.card}>
               <div className={css.cardHeading}>
@@ -131,7 +175,8 @@ class CreateJobForm extends React.Component {
                 <div className={css.twoColumn}>
                   <Field
                     component={SelectField}
-                    name='boardId'
+                    name='board'
+                    hintText={<Translate value='ui.createJob.jobBoard' />}
                   >
                     {boards.map(board => (
                       <MenuItem key={board.key} value={board.id} primaryText={board.ipfs.name} />
@@ -198,7 +243,7 @@ class CreateJobForm extends React.Component {
                       name='hourlyRate'
                       title='ui.createJob.hourlyRate'
                       subtitle='USD 60.00'
-                      max={5}
+                      max={1000}
                       min={0}
                     />
                   </div>
@@ -209,7 +254,7 @@ class CreateJobForm extends React.Component {
                       name='totalHours'
                       title='ui.createJob.totalHours'
                       subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
-                      max={40}
+                      max={1000}
                       min={0}
                     />
                   </div>
@@ -231,14 +276,14 @@ class CreateJobForm extends React.Component {
                 <div className={css.twoColumn}>
                   <div>
                     <Field
-                      name='periodStart'
+                      name='since'
                       component={DatePicker}
                       placeholder='Starts at'
                     />
                   </div>
                   <div>
                     <Field
-                      name='periodEnd'
+                      name='until'
                       component={DatePicker}
                       placeholder='Deadline'
                     />
@@ -259,30 +304,26 @@ class CreateJobForm extends React.Component {
               </div>
               {!hasAddress ? null : (
                 <div>
-                  <div className={css.companyAddress}>
-                    <Field
-                      component={Checkbox}
-                      name='isCompanyAddress'
-                      label={<Translate value='ui.createJob.companyAddressLabel' />}
-                    />
-                  </div>
+                  {/*
+                    <div className={css.companyAddress}>
+                      <Field
+                        component={Checkbox}
+                        name='isCompanyAddress'
+                        label={<Translate value='ui.createJob.companyAddressLabel' />}
+                      />
+                    </div>
+                  */}
                   <div className={css.twoColumn}>
                     <div>
-                      <div className={css.selectSection}>
-                        <Field
-                          component={SelectField}
-                          fullWidth
-                          hintText='State'
-                          hintStyle={{ fontStyle: 'italic' }}
-                          value={this.state.stateValue}
-                          onChange={this.handleChangeState}
-                          name='state'
-                        >
-                          <MenuItem value={1} primaryText='State' />
-                          <MenuItem value={2} primaryText='State' />
-                          <MenuItem value={3} primaryText='State' />
-                        </Field>
-                      </div>
+                      <Field
+                        lineEnabled
+                        className={css.inputSection}
+                        type={Input.TYPES.TEXT}
+                        component={Input}
+                        name='state'
+                        mods={Input.MODS.ALIGN_LEFT}
+                        placeholder='ui.createJob.state'
+                      />
                       <Field
                         lineEnabled
                         className={css.inputSection}
@@ -338,6 +379,7 @@ class CreateJobForm extends React.Component {
               )}
             </div>
 
+            {/*
             <div className={css.card}>
               <div className={css.cardHeading}>
                 <h3><Translate value='ui.createJob.skills' /></h3>
@@ -364,10 +406,11 @@ class CreateJobForm extends React.Component {
                 </div>
               )}
             </div>
+            */}
 
             <div className={css.card}>
               <Field
-                component={Checkbox}
+                component={ValidatedCheckbox}
                 name='legal'
                 label={<Translate value='ui.createJob.legalAgreeLabel' />}
               />

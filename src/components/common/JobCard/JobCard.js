@@ -81,7 +81,7 @@ export default class JobCard extends React.Component {
             {job.state !== JOB_STATE_FINALIZED ? null : (
               <p>Finalized at: {moment(job.extra.finalizedAt).format(dateFormat)}</p>
             )}
-            {!job.ipfs.budget.isSpecified ? null : (
+            {!(job.ipfs.budget.isSpecified && job.ipfs.budget.award) ? null : (
               <p>LHUS { job.ipfs.budget.award.toFixed(2) } (${job.ipfs.budget.award.multipliedBy(30).toFixed(2)})</p>
             )}
           </div>
