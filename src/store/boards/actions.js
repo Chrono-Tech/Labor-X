@@ -27,12 +27,10 @@ export const reloadBoards = () => async (dispatch, getState) => {
   })
   if (signer) {
     const boards = await boardControlerDAO.getBoards(signer.address)
-    for (const board of boards) {
-      dispatch({
-        type: BOARDS_SAVE,
-        board,
-      })
-    }
+    dispatch({
+      type: BOARDS_SAVE,
+      boards,
+    })
   }
 }
 
@@ -52,7 +50,7 @@ export const handleBoardCreated = (e: BoardCreatedEvent) => async (dispatch, get
   const board = await boardControlerDAO.getBoardById(signer.address, e.boardId)
   dispatch({
     type: BOARDS_SAVE,
-    board,
+    boards: [ board ],
   })
   return board
 }
@@ -69,16 +67,18 @@ export const handleUserBinded = (e: UserBindedEvent) => async (dispatch, getStat
   const board = boardByIdSelector(e.boardId)(state)
   dispatch({
     type: BOARDS_SAVE,
-    board: new BoardModel({
-      ...board,
-      extra: new BoardExtraModel({
-        ...board.extra,
-        clientsCount: board.extra.clientsCount + 1,
-        isSignerJoined: signer.address.toLowerCase() === e.user.toLowerCase()
-          ? e.status
-          : board.extra.isSignerJoined,
+    boards: [
+      new BoardModel({
+        ...board,
+        extra: new BoardExtraModel({
+          ...board.extra,
+          clientsCount: board.extra.clientsCount + 1,
+          isSignerJoined: signer.address.toLowerCase() === e.user.toLowerCase()
+            ? e.status
+            : board.extra.isSignerJoined,
+        }),
       }),
-    }),
+    ],
   })
 }
 
