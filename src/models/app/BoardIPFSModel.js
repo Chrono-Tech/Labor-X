@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
-import Chance from 'chance'
+import faker from 'faker'
 import AbstractModel from '../AbstractModel'
-
-const chance = new Chance()
 
 const schemaFactory = () => ({
   hash: PropTypes.string.isRequired, // ipfs hash of the object itself
@@ -21,8 +19,8 @@ export default class BoardIPFSModel extends AbstractModel {
 
 function propsWithDefaults (props) {
   return Object.assign({}, {
-    name: chance.company(),
-    description: chance.sentence(),
-    logo: chance.avatar(),
+    name: faker.company.companyName(),
+    description: faker.lorem.sentence(10),
+    logo: faker.image.image(64, 64),
   }, props)
 }

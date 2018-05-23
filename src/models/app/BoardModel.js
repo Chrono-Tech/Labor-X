@@ -8,16 +8,13 @@ import BoardExtraModel from './BoardExtraModel'
 
 const schemaFactory = () => ({
   id: PropTypes.number.isRequired,
+  creator: PropTypes.string,
   isActive: PropTypes.bool,
   tags: PropTypes.arrayOf(
     PropTypes.instanceOf(TagModel)
   ),
-  tagsArea: PropTypes.arrayOf(
-    PropTypes.instanceOf(TagAreaModel)
-  ),
-  tagsCategory: PropTypes.arrayOf(
-    PropTypes.instanceOf(TagCategoryModel)
-  ),
+  tagsArea: PropTypes.instanceOf(TagAreaModel),
+  tagsCategory: PropTypes.instanceOf(TagCategoryModel),
   ipfs: PropTypes.instanceOf(BoardIPFSModel),
   extra: PropTypes.instanceOf(BoardExtraModel),
 })
@@ -25,7 +22,6 @@ const schemaFactory = () => ({
 export default class BoardModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
-    Object.assign(this, props)
     Object.freeze(this)
   }
 

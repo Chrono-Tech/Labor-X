@@ -734,9 +734,9 @@
     web3-provider-engine "^13.3.3"
     webstomp-client "^1.2.0"
 
-"@laborx/sc-abi@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@laborx/sc-abi/-/sc-abi-0.0.4.tgz#5aa2b5600a73d715a87adfe18441e84d75ab9218"
+"@laborx/sc-abi@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@laborx/sc-abi/-/sc-abi-0.0.5.tgz#c7d99d335babf378636c21b2561f157c03997a59"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -2608,6 +2608,10 @@ bigi@^1.1.0, bigi@^1.4.0:
 bignumber.js@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-4.1.0.tgz#db6f14067c140bd46624815a7916c92d9b6c24b1"
+
+bignumber.js@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-6.0.0.tgz#bbfa047644609a5af093e9cbd83b0461fa3f6002"
 
 "bignumber.js@git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2":
   version "2.0.7"
@@ -5359,6 +5363,10 @@ fake-merkle-patricia-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/fake-merkle-patricia-tree/-/fake-merkle-patricia-tree-1.0.1.tgz#4b8c3acfb520afadf9860b1f14cd8ce3402cddd3"
   dependencies:
     checkpoint-store "^1.1.0"
+
+faker@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
 
 fast-deep-equal@^1.0.0:
   version "1.1.0"
