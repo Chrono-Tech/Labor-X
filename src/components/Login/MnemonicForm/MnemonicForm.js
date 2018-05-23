@@ -13,6 +13,7 @@ import css from './MnemonicForm.scss'
 const FORM_MNEMONIC = 'form/mnemonic'
 
 const onSubmit = ({ mnemonic }) => {
+  console.log('adadad', mnemonic)
   const address = createAddressFromMnemonic(mnemonic)
 
   return new SignInModel({

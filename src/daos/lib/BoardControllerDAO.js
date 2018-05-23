@@ -1,6 +1,6 @@
 // import BigNumber from 'bignumber.js'
 import { BoardModel, BoardIPFSModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TagModel, TagAreaModel, TagCategoryModel } from 'src/models'
-import { loadFromIPFS, bytes32ToIPFSHash  } from 'src/utils'
+import { loadFromIPFS, bytes32ToIPFSHash, ipfsHashToBytes32  } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
 export default class BoardControllerDAO extends AbstractContractDAO {
@@ -69,12 +69,14 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       signer,
       array.map((element, index) => index + 1)
     )
+    console.log('getBoards', boards, length)
     return boards
   }
 
   async getBoardsByIds (signer, ids: Number[]) {
     const boards = []
     const response = await this.contract.methods.getBoardsByIds(ids).call()
+    console.log('getBoardsByIds', response)
     const {
       _gotIds,
       _creators,
@@ -108,8 +110,8 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     return boards
   }
 
-  createCreateBoardTx (sender, name, description, tags = [], tagsAreas = [], tagsCategories = []) {
-    const data = this.contract.methods.createBoard(name, description, tags, tagsAreas, tagsCategories).encodeABI()
+  createCreateBoardTx (sender, name, description, tags, tagsAreas, tagsCategories, ipfs) {
+    let  data = this.contract.methods.createBoard(tags, tagsAreas, tagsCategories, ipfsHashToBytes32(ipfs)).encodeABI()
     return {
       from: sender,
       to: this.address,

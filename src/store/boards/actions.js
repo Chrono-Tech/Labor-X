@@ -1,9 +1,12 @@
-import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent } from 'src/models'
+import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, JobBoardFormModel } from 'src/models'
+import { storeIntoIPFS, loadFromIPFS, ipfsHashToBytes32 } from 'src/utils'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { boardByIdSelector } from './selectors'
 import { executeTransaction } from '../ethereum/actions'
 import { web3Selector } from '../ethereum/selectors'
+
+
 
 export const BOARDS_CLEAR = 'boards/clear'
 export const BOARDS_SAVE = 'boards/save'
@@ -132,19 +135,31 @@ export const boardCreate = (data) => async (dispatch, getState) => {
   
   const boardControlerDAO = daoByType('BoardController')(state)
   const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
   
-  await boardControlerDAO.handleBoardCreatedData({
-    key: '',
-    self: '',
-    boardId: '',
-    name: data.name,
-    description: '',
-    creator: signer.address,
-    tags: [],
-    tagsArea: [],
-    tagsCategory: data.categories,
-    boardIpfsHash: '',
-    status: true,
+  console.log('arguments', boardControlerDAO, signer)
+  
+  const detailsIPFSHash = await storeIntoIPFS({
+    name: 'default name',
+    description: 'default description',
+    logo: '',
   })
+  
+  
+  const tx = boardControlerDAO.createCreateBoardTx(
+    signer.address,
+    'default name',
+    'default description',
+    1,
+    1,
+    1,
+    detailsIPFSHash
+  )
+  
+  
+  await dispatch(executeTransaction({ tx, web3 }))
+  
+  console.log('board create')
+  
   
 }
