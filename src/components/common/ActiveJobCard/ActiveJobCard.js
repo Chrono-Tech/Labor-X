@@ -38,7 +38,7 @@ export default class ActiveJobCard extends React.Component {
         <div className={css.rowInfo}>
           <h4>{moment(job.extra.startedAt).format(dateFormat)}</h4>
           <h4 className={css.medium}>{ job.ipfs.name }</h4>
-          {!job.ipfs.budget.isSpecified ? null : (
+          {!job.ipfs.budget.isSpecified && job.ipfs.budget.award ? null : (
             <div className={css.jobAwardRow}>
               <p>{job.ipfs.budget.award.dividedBy(3).toFixed(2)} / LHUS {job.ipfs.budget.award.toFixed(2)}</p>
               <p>{job.ipfs.budget.award.dividedBy(3).multipliedBy(30).toFixed(2)} / USD {job.ipfs.budget.award.multipliedBy(30).toFixed(2)}</p>

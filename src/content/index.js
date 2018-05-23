@@ -3,4 +3,5 @@ export { default as CreateJobContent } from './lib/CreateJobContent/CreateJobCon
 export { default as ActiveJobsContent } from './lib/ActiveJobsContent/ActiveJobsContent'
 export { default as PostedJobsContent } from './lib/PostedJobsContent/PostedJobsContent'
 export { default as ArchiveJobsContent } from './lib/ArchiveJobsContent/ArchiveJobsContent'
+export { default as OpportunitiesContent } from './lib/OpportunitiesContent/OpportunitiesContent'
 export { default as TodoContent } from './lib/TodoContent/TodoContent'
