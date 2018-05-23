@@ -177,6 +177,24 @@
   }
 }
 
+.actionButtonTerminate {
+  color: #c25451;
+  font-weight: 700;
+  background: #fff;
+  border: 0;
+  text-transform: uppercase;
+  padding: 0 34px;
+  line-height: 42px;
+  display: inline-block;
+  margin-right: 9px;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:hover, &:focus {
+    background: #F7F7F7;
+  }
+}
+
 .actionButtonApproval {
   color: #333333;
   font-weight: 500;

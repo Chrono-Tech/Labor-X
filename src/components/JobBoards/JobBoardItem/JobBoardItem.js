@@ -4,13 +4,18 @@ import { connect } from 'react-redux'
 import pluralize from 'pluralize'
 import { Popover, Icon } from 'src/components/common'
 import { BoardModel } from 'src/models'
-import { joinBoard } from 'src/store'
+import { joinBoard, terminateBoard } from 'src/store'
 import css from './JobBoardItem.scss'
+import {Button} from "../../common";
+import Dialog from "../../common/Dialog/Dialog";
+import RaisedButton from "material-ui/RaisedButton";
+import FlatButton from "material-ui/FlatButton";
 
 export class JobBoardItem extends React.Component {
   static propTypes = {
     jobBoard: PropTypes.instanceOf(BoardModel),
     onJoinBoard: PropTypes.func,
+    onTerminateBoard: PropTypes.func,
   }
 
   constructor () {
@@ -21,6 +26,8 @@ export class JobBoardItem extends React.Component {
       securityPopover: false,
       actionPopover: false,
       isJoinInProgress: false,
+      isTerminateDialogOpen: false,
+      isTerminateProgress: false,
     }
   }
 
@@ -61,6 +68,21 @@ export class JobBoardItem extends React.Component {
     }
   }
 
+  handleTerminateClick = () => this.setState({ isTerminateDialogOpen: true })
+
+  handleTerminateApproveClick = async () => {
+    this.setState({ isTerminateProgress: true })
+    try {
+      await this.props.onTerminateBoard(this.props.jobBoard.id)
+    } finally {
+      this.setState({ isTerminateProgress: false, isTerminateDialogOpen: false })
+    }
+  }
+
+  handleTerminateRejectClick = () => this.setState({ isTerminateDialogOpen: false })
+
+  handleTerminateDialogClose = () => this.setState({ isTerminateDialogOpen: false })
+
   getRatingStars () {
     const { jobBoard } = this.props
 
@@ -87,42 +109,44 @@ export class JobBoardItem extends React.Component {
         arrowPosition={Popover.ARROW_POSITION.LEFT}
         className={css.starsPopover}
       >
-        <div className={css.popoverHeader}>Job Board Rating</div>
-        <div className={css.popoverDescription}>Rating given by the board participants.</div>
-        <table className={css.starsRatingTable}>
-          <tbody>
-            <tr>
-              <td className={css.countStars}>5 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>4 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>3 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>2 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>1 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr className={css.totalRow}>
-              <td>Total</td>
-              <td>860</td>
-              <td />
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <div className={css.popoverHeader}>Job Board Rating</div>
+          <div className={css.popoverDescription}>Rating given by the board participants.</div>
+          <table className={css.starsRatingTable}>
+            <tbody>
+              <tr>
+                <td className={css.countStars}>5 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr>
+                <td className={css.countStars}>4 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr>
+                <td className={css.countStars}>3 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr>
+                <td className={css.countStars}>2 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr>
+                <td className={css.countStars}>1 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr className={css.totalRow}>
+                <td>Total</td>
+                <td>860</td>
+                <td />
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </Popover>
     )
   }
@@ -136,14 +160,16 @@ export class JobBoardItem extends React.Component {
         arrowPosition={Popover.ARROW_POSITION.LEFT}
         className={css.securityPopover}
       >
-        <div className={css.popoverHeader}>Validation</div>
-        <div className={css.popoverDescription}>The Job Board Owner has successfully passed our Validation</div>
-        <ul className={css.securityDoneList}>
-          <li className={css.listItem}>Email is validated</li>
-          <li className={css.listItem}>ID is validated</li>
-          <li className={css.listItem}>Address is validated</li>
-          <li className={css.listItem}>Certificates are validated</li>
-        </ul>
+        <div>
+          <div className={css.popoverHeader}>Validation</div>
+          <div className={css.popoverDescription}>The Job Board Owner has successfully passed our Validation</div>
+          <ul className={css.securityDoneList}>
+            <li className={css.listItem}>Email is validated</li>
+            <li className={css.listItem}>ID is validated</li>
+            <li className={css.listItem}>Address is validated</li>
+            <li className={css.listItem}>Certificates are validated</li>
+          </ul>
+        </div>
       </Popover>
     )
   }
@@ -215,6 +241,9 @@ export class JobBoardItem extends React.Component {
   renderJoinedActions () {
     return (
       <div>
+        <button className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>
+          Terminate
+        </button>
         <button className={css.actionButtonView}>
           View
         </button>
@@ -313,7 +342,8 @@ export class JobBoardItem extends React.Component {
   renderBoardTags () {
     const { jobBoard } = this.props
     const tags = [
-      ...jobBoard.tagsCategory.map(c => c.name),
+      jobBoard.tagsCategory.name,
+      // ...jobBoard.tagsCategory.map(c => c.name),
       ...jobBoard.tags.map(t => t.name),
     ]
     return tags.join(', ')
@@ -327,6 +357,33 @@ export class JobBoardItem extends React.Component {
         <img src={jobBoard.ipfs.logo} alt='' />
       </button>
     ) : null
+  }
+
+  renderTerminateDialog () {
+    return (
+      <Dialog
+        title='Are you absolutely sure?'
+        open={this.state.isTerminateDialogOpen}
+        onRequestClose={this.handleTerminateDialogClose}
+        actions={[
+          <FlatButton
+            disabled={this.state.isTerminateProgress}
+            label='NO'
+            onClick={this.handleTerminateRejectClick}
+            type={Button.TYPES.SUBMIT}
+          />,
+          <RaisedButton
+            primary={true}
+            disabled={this.state.isTerminateProgress}
+            label={this.state.isTerminateProgress ? 'Loading' : 'YES'}
+            onClick={this.handleTerminateApproveClick}
+            type={Button.TYPES.SUBMIT}
+          />,
+        ]}
+      >
+        This action cannot be undone. This will permanently terminate this job board
+      </Dialog>
+    )
   }
 
   render () {
@@ -393,6 +450,7 @@ export class JobBoardItem extends React.Component {
             </div>
           </div>
         </div>
+        { this.renderTerminateDialog() }
       </div>
     )
   }
@@ -401,7 +459,7 @@ export class JobBoardItem extends React.Component {
 function mapDispatchToProps (dispatch) {
   return {
     onJoinBoard: (boardId) => dispatch(joinBoard(boardId)),
-    // stack: state.modals.stack,
+    onTerminateBoard: (boardId) => dispatch(terminateBoard(boardId)),
   }
 }
 

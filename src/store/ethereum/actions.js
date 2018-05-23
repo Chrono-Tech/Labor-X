@@ -21,6 +21,7 @@ export const initEthereum = ({ web3 }) => (dispatch) => {
 
 export const nextNonce = ({ web3, address }) => async (dispatch, getState) => {
   // eslint-disable-next-line no-param-reassign
+  debugger
   address = address.toLowerCase()
   const state = getState().ethereum
   const nonce = Math.max(

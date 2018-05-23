@@ -45,6 +45,15 @@ export const joinBoard = (boardId) => async (dispatch, getState) => {
   await dispatch(executeTransaction({ tx, web3 }))
 }
 
+export const terminateBoard = (boardId) => async (dispatch, getState) => {
+  const state = getState()
+  const boardControlerDAO = daoByType('BoardController')(state)
+  const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
+  const tx = boardControlerDAO.createTerminateBoardTx(signer.address, boardId)
+  await dispatch(executeTransaction({ tx, web3 }))
+}
+
 export const handleBoardCreated = (e: BoardCreatedEvent) => async (dispatch, getState): BoardModel => {
   const state = getState()
   const boardControlerDAO = daoByType('BoardController')(state)
