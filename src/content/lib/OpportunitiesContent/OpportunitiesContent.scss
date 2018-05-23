@@ -44,3 +44,9 @@ $maxWidth: 74rem;
   padding-left: 4rem;
   max-width: $maxWidth;
 }
+
+.opportunities {
+  > * {
+    margin-bottom: 2rem;
+  }
+}
