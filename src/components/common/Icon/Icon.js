@@ -86,7 +86,7 @@ export default class Image extends React.PureComponent {
 
     return (
       <i
-        style={size ? { fontSize: size } : null }
+        style={size ? { fontSize: size } : null}
         className={classnames.join(' ')}
       />
     )
