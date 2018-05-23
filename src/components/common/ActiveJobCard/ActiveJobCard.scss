@@ -74,22 +74,22 @@
   color: $color-red;
 }
 
-.attention {
-  border-left-color: $color-gold;
-}
-
-.problem {
-  border-left-color: $color-red;
-}
-
-.inProgress {
-  border-left-color: $color-green;
-}
-
 .applied {
   border-left-color: $color-gray50;
 }
 
 .approved {
   border-left-color: $color-azure;
+}
+
+.inProgress {
+  border-left-color: $color-green;
+}
+
+.attention {
+  border-left-color: $color-gold;
+}
+
+.problem {
+  border-left-color: $color-red;
 }

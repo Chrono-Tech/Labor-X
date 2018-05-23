@@ -1,6 +1,6 @@
 // import BigNumber from 'bignumber.js'
-import { BoardModel, BoardIPFSModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TAGS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST } from 'src/models'
-import { filterArrayByIndexMask, loadFromIPFS, ipfsHashToBytes32, bytes32ToIPFSHash  } from 'src/utils'
+import { BoardModel, BoardIPFSModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TagModel, TagAreaModel, TagCategoryModel } from 'src/models'
+import { loadFromIPFS, bytes32ToIPFSHash  } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
 export default class BoardControllerDAO extends AbstractContractDAO {
@@ -50,48 +50,57 @@ export default class BoardControllerDAO extends AbstractContractDAO {
 
   async getUserStatus (address, boardId): Promise<Boolean> {
     const res = await this.contract.methods.getUserStatus(boardId, address).call()
-    console.log('getUserStatus', res, boardId, address)
-    return res
+    return Boolean(res)
+  }
+
+  async getJobsBoard (jobId) {
+    return Number(await this.contract.methods.getJobsBoard(jobId).call())
   }
 
   async getBoardById (signer, id) {
-    const [ board ] = await this.getBoards(signer, id, 1)
+    const [ board ] = await this.getBoardsByIds(signer, [ id ])
     return board
   }
 
-  async getBoards (address, fromId = 1/*, limit = 100*/) {
+  async getBoards (signer) {
+    const length = await this.contract.methods.getBoardsCount().call()
+    const array = Array.from({ length })
+    const boards = await this.getBoardsByIds(
+      signer,
+      array.map((element, index) => index + 1)
+    )
+    return boards
+  }
+
+  async getBoardsByIds (signer, ids: Number[]) {
     const boards = []
-    const count = await this.contract.methods.getBoardsCount().call()
-    // TODO @ipavlenko: We have to ignore address property and load all the boards for awhile
-    const response = await this.contract.methods.getBoards(fromId, count, null).call()
-    // eslint-disable-next-line
-    console.log('[BoardControllerDAO] getBoards:', response)
+    const response = await this.contract.methods.getBoardsByIds(ids).call()
     const {
-      ids,
-      // eslint-disable-next-line no-unused-vars
-      names,
-      descriptions, // contains both description & ipfs hash
-      tags,
-      tagsAreas,
-      tagsCategories,
-      status,
-      // ipfsHash,
+      _gotIds,
+      _creators,
+      _ipfs,
+      _tags,
+      _tagsAreas,
+      _tagsCategories,
+      _status,
     } = response
     for (let i = 0; i < ids.length; i++) {
-      const hash = bytes32ToIPFSHash(descriptions[i * 2 + 1])
-      const id = Number(ids[i])
+      const ipfsHash = bytes32ToIPFSHash(_ipfs[i])
+      const id = Number(_gotIds[i])
+      const isSignerJoined = await this.getUserStatus(signer, id)
       boards.push(new BoardModel({
         id,
-        tags: filterArrayByIndexMask(TAGS_LIST, tags[i]),
-        tagsArea: filterArrayByIndexMask(TAG_AREAS_LIST, tagsAreas[i]),
-        tagsCategory: filterArrayByIndexMask(TAG_CATEGORIES_LIST, tagsCategories[i]),
-        isActive: status[i],
+        creator: _creators[i],
+        isActive: _status[i],
+        tags: TagModel.arrayValueOfMask(_tags[i]),
+        tagsArea: TagAreaModel.valueOf(_tagsAreas[i]),
+        tagsCategory: TagCategoryModel.valueOf(_tagsCategories[i]),
         ipfs: new BoardIPFSModel({
-          ...(await loadFromIPFS(hash) || {}),
-          hash,
+          ...(await loadFromIPFS(ipfsHash) || {}),
+          hash: ipfsHash,
         }),
         extra: new BoardExtraModel({
-          isSignerJoined: await this.getUserStatus(address, id),
+          isSignerJoined,
         }),
       }))
     }

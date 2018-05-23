@@ -2,7 +2,6 @@ const routes = module.exports = require('next-routes')()
 
 routes
   .add('landing-page', '/', 'landing-page')
-  .add('landing-page-2', '/landing-page', 'landing-page')
   // .add('about')
   // Examples:
   // .add('blog', '/blog/:slug')

@@ -10,23 +10,14 @@ const mutations = {
   [BOARDS_CLEAR] () {
     return initialState
   },
-  [BOARDS_SAVE] (state, { board }) {
-    const index = (board.key in state.byKey)
-      ? state.list.findIndex(b => b.key === board.key)
-      : -1
-    const byKey = {
-      ...state.byKey,
-      [board.key]: board,
-    }
-    const list = index >= 0
-      ? state.list.map(b => b.key !== board.key ? b : board)
-      : [...state.list, board]
-    return {
-      ...state,
-      byKey,
-      filtered: list,
-      list,
-    }
+  [BOARDS_SAVE] (state, { boards }) {
+    const newBoardsByKey = boards.reduce((x, board) => {
+      x[board.key] = board
+      return x
+    }, {})
+    const byKey = { ...state.byKey, ...newBoardsByKey }
+    const list = Object.values(byKey)
+    return { byKey, list, filtered: list }
   },
   [BOARDS_FILTER] (state, { boardsList }) {
 

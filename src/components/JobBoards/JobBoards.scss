@@ -7,12 +7,14 @@
 }
 
 .contentWrapper {
-  width: 1000px;
-  margin: 0 auto;
+  margin: 0 30px;
 }
 
-.contentWrapperFilterOpened {
-  width: 1100px;
+.emptyListMessage {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 20px 0;
 }
 
 .flexRow {

@@ -20,18 +20,14 @@ export const initJobs = () => async (dispatch, getState) => {
 export const reloadJobs = () => async (dispatch, getState) => {
   const state = getState()
   const jobControlerDAO = daoByType('JobController')(state)
+  const boardControlerDAO = daoByType('BoardController')(state)
   const signer = signerSelector()(state)
   dispatch({
     type: JOBS_CLEAR,
   })
   if (signer) {
-    const jobs = await jobControlerDAO.getJobs(signer.address)
-    for (const job of jobs) {
-      dispatch({
-        type: JOBS_SAVE,
-        job,
-      })
-    }
+    const jobs = await jobControlerDAO.getJobs(boardControlerDAO, signer.address)
+    dispatch({ type: JOBS_SAVE, jobs })
   }
 }
 
@@ -41,7 +37,7 @@ export const handleJobPosted = (e: JobPostedEvent) => async (dispatch, getState)
   const job = await jobControlerDAO.getJobById(e.jobId)
   dispatch({
     type: JOBS_SAVE,
-    job,
+    jobs: [ job ],
   })
   return job
 }

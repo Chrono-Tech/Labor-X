@@ -1,5 +1,25 @@
-import { JobModel, JobIPFSModel, JobPostedEvent, SKILLS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST, JOB_STATES_LIST } from 'src/models'
-import { filterArrayByIndexMask, loadFromIPFS, ipfsHashToBytes32, bytes32ToIPFSHash } from 'src/utils'
+import {
+  JobModel,
+  JobIPFSModel,
+  JobPostedEvent,
+  JobStateModel,
+  JobExtraModel,
+  TagAreaModel,
+  TagCategoryModel,
+  SkillModel,
+  JOB_STATE_ANY_MASK,
+  SKILL_ANY_MASK,
+  TAG_AREA_ANY_MASK,
+  TAG_CATEGORY_ANY_MASK,
+} from 'src/models'
+import {
+  loadFromIPFS,
+  ipfsHashToBytes32,
+  bytes32ToIPFSHash,
+  bytes32ToNumber,
+  bytes32ToAddress,
+  bytes32ToDate,
+} from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
 export default class JobControllerDAO extends AbstractContractDAO {
@@ -43,18 +63,45 @@ export default class JobControllerDAO extends AbstractContractDAO {
     return this.contract != null // nil check
   }
 
-  async getJobs (/*address, fromId = 1, limit = 10*/) {
+  async getJobs (boardControllerDAO, /* client, worker, fromId = 1, limit = 10 */) {
     const length = await this.contract.methods.getJobsCount().call()
     const array = Array.from({ length })
-    return Promise.all(
-      array.map(async (element, index) => {
-        return this.getJobById(index + 1)
-      })
+    const jobs = await this.getJobsByIds(
+      boardControllerDAO,
+      array.map((element, index) => index + 1)
     )
+    return jobs
   }
 
-  async getJobById (id) {
-    const [
+  async getJobsByIds (boardControllerDAO, ids: Number[]) {
+    const data = await this.contract.methods.getJobsByIds(ids).call()
+    const parsed = []
+    for (let i = 0; i < data.length; i += 9) {
+      const [
+        idBytes,
+        clientBytes,
+        workerBytes,
+        skillsAreaBytes,
+        skillsCategoryBytes,
+        skillsBytes,
+        ipfsHashBytes,
+        stateBytes,
+        finalizedAtBytes,
+      ] = data.slice(i, i + 9)
+      parsed.push({
+        id: bytes32ToNumber(idBytes),
+        client: bytes32ToAddress(clientBytes, true),
+        worker: bytes32ToAddress(workerBytes, true),
+        skillsArea: bytes32ToNumber(skillsAreaBytes),
+        skillsCategory: bytes32ToNumber(skillsCategoryBytes),
+        skills: bytes32ToNumber(skillsBytes),
+        ipfsHash: bytes32ToIPFSHash(ipfsHashBytes),
+        state: bytes32ToNumber(stateBytes),
+        finalizedAt: bytes32ToDate(finalizedAtBytes, true),
+      })
+    }
+    const promises = parsed.map(async ({
+      id,
       client,
       worker,
       skillsArea,
@@ -62,30 +109,63 @@ export default class JobControllerDAO extends AbstractContractDAO {
       skills,
       ipfsHash,
       state,
-    ] = await Promise.all([
-      await this.contract.methods.getJobClient(id).call(),
-      await this.contract.methods.getJobWorker(id).call(),
-      await this.contract.methods.getJobSkillsArea(id).call(),
-      await this.contract.methods.getJobSkillsCategory(id).call(),
-      await this.contract.methods.getJobSkills(id).call(),
-      await this.contract.methods.getJobDetailsIPFSHash(id).call(),
-      await this.contract.methods.getJobState(id).call(),
-    ])
-    const hash = bytes32ToIPFSHash(ipfsHash)
-    return new JobModel({
-      id,
-      // status,
-      client,
-      worker,
-      state: JOB_STATES_LIST[state],
-      ipfs: new JobIPFSModel({
-        ...(await loadFromIPFS(hash) || {}),
-        hash,
-      }),
-      area: TAG_AREAS_LIST[skillsArea],
-      category: TAG_CATEGORIES_LIST[skillsCategory],
-      skills: filterArrayByIndexMask(SKILLS_LIST, skills),
+      finalizedAt,
+    }) => {
+      const boardId = await boardControllerDAO.getJobsBoard(id)
+      return new JobModel({
+        id,
+        client,
+        worker,
+        boardId,
+        state: JobStateModel.valueOf(state),
+        area: TagAreaModel.valueOf(skillsArea),
+        category: TagCategoryModel.valueOf(skillsCategory),
+        skills: SkillModel.arrayValueOfMask(skills),
+        ipfs: new JobIPFSModel({
+          ...(await loadFromIPFS(ipfsHash) || {}),
+          hash: ipfsHash,
+        }),
+        extra: new JobExtraModel({
+          // TODO Fetch counts
+          finalizedAt,
+        }),
+      })
     })
+    return Promise.all(promises)
+  }
+
+  async getJobsIds (
+    stateMask: Number = JOB_STATE_ANY_MASK,
+    skillsArea: Number = TAG_AREA_ANY_MASK,
+    skillsCategory: Number = TAG_CATEGORY_ANY_MASK,
+    skills: Number = SKILL_ANY_MASK,
+    pausedMask: Number = 1 | 2,
+    fromId: Number = 1,
+    limit: Number = 100
+  ): Promise<Number[]> {
+    // console.log({
+    //   stateMask,
+    //   skillsArea,
+    //   skillsCategory,
+    //   skills,
+    //   pausedMask,
+    //   fromId,
+    //   limit,
+    // })
+    return this.contract.methods.getJobs(
+      stateMask,
+      skillsArea,
+      skillsCategory,
+      skills,
+      pausedMask,
+      fromId,
+      limit
+    ).call()
+  }
+
+  async getJobById (boardControllerDAO, id) {
+    const [ job ] = await this.getJobsByIds(boardControllerDAO, [ id ])
+    return job
   }
 
   createPostJobTx (sender: String, area: Number, category: Number, skills: Number, detailsIPFSHash: String) {

@@ -6,7 +6,7 @@ import { MuiThemeProvider } from 'material-ui/styles'
 import css from './Radio.scss'
 
 const iconStyle = {
-  marginRight: 5
+  marginRight: 5,
 }
 export default class Radio extends React.Component {
   static propTypes = {
@@ -47,22 +47,19 @@ export default class Radio extends React.Component {
         value={item.value}
         checked={input.value === item.value}
         labelStyle={{ color: '#fff', fontWeight: 500, fontSize: 14 }}
-        checkedIcon={<div className={css.radioWrapperChecked}></div>}
-        uncheckedIcon={<div className={css.radioWrapper}></div>}
+        checkedIcon={<div className={css.radioWrapperChecked} />}
+        uncheckedIcon={<div className={css.radioWrapper} />}
       />
     ))
   }
 
   render () {
-    const {label, name, input, onCheck, material, values, defaultSelected, ...custom} = this.props
-
-    console.log('--Radio#render', this.props, custom)
+    const { label, name, input, onCheck, material, values, defaultSelected, ...custom } = this.props
 
     return material ? (
       <MuiThemeProvider>
         <RadioButtonGroup
           {...input}
-          name={name}
           defaultSelected={defaultSelected}
           valueSelected={input.value}
           onChange={(event, value) => {

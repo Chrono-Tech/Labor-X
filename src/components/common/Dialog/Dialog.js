@@ -10,6 +10,10 @@ export default class DialogComponent extends React.Component {
     ]),
     onClose: PropTypes.func,
     open: PropTypes.bool,
+    children: PropTypes.oneOfType([
+      PropTypes.element,
+      PropTypes.string,
+    ])
   }
   
   static defaultProps = {

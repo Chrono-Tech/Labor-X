@@ -19,7 +19,7 @@ class BalanceCollapsible extends React.Component {
     balance: PropTypes.instanceOf(BalanceModel),
   }
 
-  getBalance(){
+  getBalance (){
     const { balance } = this.props
 
     const lhrCurrency = 25

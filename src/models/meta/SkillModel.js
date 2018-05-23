@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { filterArrayByIndexMask } from 'src/utils'
 import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
@@ -16,6 +17,14 @@ export default class SkillModel extends AbstractModel {
   get code () {
     return Math.pow(2, this.index)
   }
+
+  static valueOf (index) {
+    return SKILLS_LIST[index]
+  }
+
+  static arrayValueOfMask (mask) {
+    return filterArrayByIndexMask(SKILLS_LIST, mask)
+  }
 }
 
 export const SKILLS_LIST = [
@@ -32,3 +41,5 @@ export const SKILLS_LIST = [
     name: 'Skill 3',
   }),
 ]
+
+export const SKILL_ANY_MASK = Math.pow(2, SKILLS_LIST.length + 1) - 1

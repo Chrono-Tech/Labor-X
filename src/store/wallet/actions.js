@@ -5,6 +5,8 @@ import { WalletModel, WalletEntryModel } from 'src/models'
 import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
+import { changeStep as loginChangeStep } from './../login/actions'
+
 export const WALLETS_ADD = 'wallets/add'
 export const WALLETS_SELECT = 'wallets/select'
 export const WALLETS_LOAD = 'wallets/load'
@@ -122,5 +124,6 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
 export const logout = () => (dispatch) => {
   dispatch(walletSelect(null))
   dispatch(walletLoad(null))
+  dispatch(loginChangeStep(null))
   Router.pushRoute('/')
 }
