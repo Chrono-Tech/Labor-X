@@ -9,21 +9,14 @@ const mutations = {
   [JOBS_CLEAR] () {
     return initialState
   },
-  [JOBS_SAVE] (state, { job }) {
-    const index = (job.key in state.byKey)
-      ? state.list.findIndex(b => b.key === job.key)
-      : -1
-    const byKey = {
-      ...state.byKey,
-      [job.key]: job,
-    }
-    const list = index >= 0
-      ? state.list.map(b => b.key !== job.key ? b : job)
-      : [...state.list, job]
-    return {
-      byKey,
-      list,
-    }
+  [JOBS_SAVE] (state, { jobs }) {
+    const newJobsByKey = jobs.reduce((x, job) => {
+      x[job.key] = job
+      return x
+    }, {})
+    const byKey = { ...state.byKey, ...newJobsByKey }
+    const list = Object.values(byKey)
+    return { byKey, list }
   },
 }
 
