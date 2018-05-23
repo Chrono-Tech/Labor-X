@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import { Action, Image } from 'components/common'
 import { BalanceCollapsible } from 'src/partials'
@@ -48,7 +47,7 @@ export default class RightPanel extends React.Component {
 
     return open ? (
       <div className={css.root}>
-        <div className={css.overlay} onClick={() => onClose()}></div>
+        <div className={css.overlay} onClick={() => onClose()} />
         <div className={css.content}>
           <div className={css.profileBox}>
             <Image

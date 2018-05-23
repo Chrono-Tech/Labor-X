@@ -11,7 +11,8 @@
 
 .logoBlock {
   margin-right: 38px;
-  width: 180px;
+  max-width: 30%;
+  //width: 180px;
 }
 
 .contentBlock {
@@ -21,7 +22,13 @@
 .logoLink {
   background: transparent;
   border: 0;
-  width: 180px;
+  max-width: 180px;
+  min-width: 120px;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+  }
 }
 
 .titleBlock {
@@ -107,6 +114,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .actionButton {
@@ -118,6 +126,7 @@
   line-height: 40px;
   border: 0;
   cursor: pointer;
+  margin-top: 15px;
 
   &:hover, &:focus {
     background: #0088C3;
@@ -157,6 +166,7 @@
   padding: 0 74px;
   line-height: 40px;
   display: inline-block;
+  margin-top: 15px;
 }
 
 .actionButtonView {
@@ -168,7 +178,7 @@
   padding: 0 34px;
   line-height: 42px;
   display: inline-block;
-  margin-right: 9px;
+  margin: 15px 9px 0 0;
   cursor: pointer;
   border-radius: 3px;
 
@@ -203,6 +213,7 @@
   line-height: 40px;
   border: 1px solid #333333;
   border-radius: 3px;
+  margin-top: 20px;
 
   .actionButtonTooltip {
     margin-left: 16px;

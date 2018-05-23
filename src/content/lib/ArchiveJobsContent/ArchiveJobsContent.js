@@ -3,19 +3,19 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
-import { SignerModel } from 'src/models'
+import { SignerModel, JOB_STATE_FINISHED, JOB_STATE_FINALIZED } from 'src/models'
 import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, profileSelector } from 'src/store'
 import { Translate, ActiveJobCard } from 'src/components/common'
-import css from './ActiveJobsContent.scss'
+import css from './ArchiveJobsContent.scss'
 
 const dateFormat = 'DD MMMM YYYY, ddd'
 
-class ActiveJobsContent extends React.Component {
+class ArchiveJobsContent extends React.Component {
   static propTypes = {
     signer: PropTypes.instanceOf(SignerModel),
     totalCount: PropTypes.number.isRequired,
-    toPayCount: PropTypes.number.isRequired,
-    inProgressCount: PropTypes.number.isRequired,
+    finishedCount: PropTypes.number.isRequired,
+    finalizedCount: PropTypes.number.isRequired,
     groups: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.string.isRequired,
@@ -25,22 +25,22 @@ class ActiveJobsContent extends React.Component {
     ),
   }
 
-  renderHead ({ toPayCount, inProgressCount, totalCount }) {
+  renderHead ({ finishedCount, finalizedCount, totalCount }) {
     return (
       <div className={css.title}>
-        <div className={css.titleText}><Translate value='nav.activeJobs' /></div>
+        <div className={css.titleText}><Translate value='nav.archivedJobs' /></div>
         <div className={css.titleStats}>
           <div>
-            <h2 className={css.titleStatsCounter}>{toPayCount}</h2>
-            <div className={css.medium}>To Pay</div>
+            <h2 className={css.titleStatsCounter}>{finalizedCount}</h2>
+            <div className={css.medium}>Finalized</div>
           </div>
           <div>
-            <h2 className={css.titleStatsCounter}>{inProgressCount}</h2>
-            <div>In Progress</div>
+            <h2 className={css.titleStatsCounter}>{finishedCount}</h2>
+            <div>Finished</div>
           </div>
           <div>
             <h2 className={css.titleStatsCounter}>{totalCount}</h2>
-            <div>Active</div>
+            <div>Total</div>
           </div>
         </div>
       </div>
@@ -48,10 +48,10 @@ class ActiveJobsContent extends React.Component {
   }
 
   render () {
-    const { groups, totalCount, toPayCount, inProgressCount } = this.props
+    const { groups, totalCount, finishedCount, finalizedCount } = this.props
     return groups == null ? null : (
       <div className={css.main}>
-        {!groups.length ? null : this.renderHead({ totalCount, toPayCount, inProgressCount })}
+        {!groups.length ? null : this.renderHead({ totalCount, finishedCount, finalizedCount })}
         <div className={css.content}>
           {groups.map(({ key, date, cards }) => (
             <div className={css.section} key={key}>
@@ -71,8 +71,14 @@ function mapStateToProps (state) {
   const signer = signerSelector()(state)
   const jobs = jobsListSelector()(state)
 
+  console.log(jobs.map(job => job.state.name))
+
+  const allowedStatuses = [ JOB_STATE_FINISHED, JOB_STATE_FINALIZED ]
   const cards = jobs
-    .filter((/*job*/) => true) // TODO @ipavlenko: Only active jobs
+    .filter((job) => allowedStatuses.find(state => {
+      console.log(job.state === state, state, job.state)
+      return job.state === state
+    })) // TODO @ipavlenko: Provide better filtering
     .map(job => ({
       job,
       board: boardByIdSelector(job.boardId)(state),
@@ -81,7 +87,7 @@ function mapStateToProps (state) {
       recruiter: profileSelector(job.recruiter)(state),
     }))
 
-  const inProgressCount = cards
+  const finalizedCount = cards
     .filter(card => card.worker != null)
     .length
 
@@ -89,8 +95,8 @@ function mapStateToProps (state) {
   return {
     signer,
     totalCount: cards.length,
-    toPayCount: cards.length - inProgressCount,
-    inProgressCount,
+    finishedCount: cards.length - finalizedCount,
+    finalizedCount,
     groups: Object.entries(groups)
       .map(([key, cards]) => ({
         key,
@@ -107,4 +113,4 @@ function mapDispatchToProps (/*dispatch*/) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveJobsContent)
+export default connect(mapStateToProps, mapDispatchToProps)(ArchiveJobsContent)

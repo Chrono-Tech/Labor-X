@@ -14,6 +14,13 @@ body {
   margin: 0;
 }
 
+.show-overlay {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  position: fixed;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

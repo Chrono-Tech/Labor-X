@@ -87,6 +87,7 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     for (let i = 0; i < ids.length; i++) {
       const ipfsHash = bytes32ToIPFSHash(_ipfs[i])
       const id = Number(_gotIds[i])
+      const isSignerJoined = await this.getUserStatus(signer, id)
       boards.push(new BoardModel({
         id,
         creator: _creators[i],
@@ -99,7 +100,7 @@ export default class BoardControllerDAO extends AbstractContractDAO {
           hash: ipfsHash,
         }),
         extra: new BoardExtraModel({
-          isSignerJoined: await this.getUserStatus(signer, id),
+          isSignerJoined,
         }),
       }))
     }

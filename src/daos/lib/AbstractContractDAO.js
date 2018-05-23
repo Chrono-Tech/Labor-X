@@ -27,7 +27,7 @@ export default class AbstractContractDAO extends EventEmitter {
   disconnect () {
     if (this.isConnected) {
       this.contract = null
-      this.hostory = null
+      this.history = null
     }
   }
 }
