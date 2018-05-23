@@ -34,7 +34,11 @@ class Index extends React.Component {
   componentDidMount (){
     this.props.getCookiesNoticeValue()
     this.learnMoreVisibility()
-    window.addEventListener('scroll', this.learnMoreVisibility.bind(this))
+    window.addEventListener('scroll', this.learnMoreVisibility)
+  }
+
+  componentWillUnmount (){
+    window.removeEventListener('scroll', this.learnMoreVisibility)
   }
 
   getCookiesNoticeWidget (){
@@ -51,7 +55,7 @@ class Index extends React.Component {
     this.setState({ activeIndex: this.state.activeIndex })
   }
 
-  learnMoreVisibility (){
+  learnMoreVisibility = () => {
     let carousel = ReactDOM.findDOMNode(this.refs.carousel)
     let rect = carousel.getBoundingClientRect()
     if (rect.top + rect.height < 0){

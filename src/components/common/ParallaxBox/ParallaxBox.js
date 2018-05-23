@@ -11,27 +11,31 @@ export default class ParallaxBox extends React.Component {
     imageClassName: PropTypes.string,
     className: PropTypes.string,
   }
-  
+
   static defaultProps = {
     imgSrc: '',
     deflectionPercent: 0,
     imageClassName: '',
     className: '',
   }
-  
+
   constructor (){
     super()
     this.state = {
       isScrollWasFired: false,
     }
   }
-  
+
   componentDidMount (){
     this.scrollCallback()
-    window.addEventListener('scroll', this.scrollCallback.bind(this))
+    window.addEventListener('scroll', this.scrollCallback)
   }
-  
-  scrollCallback (){
+
+  componentWillUnmount (){
+    window.removeEventListener('scroll', this.scrollCallback)
+  }
+
+  scrollCallback = () => {
     let rect = this.refs.wrapper.getBoundingClientRect()
     let clientHeight = document.documentElement.clientHeight
 
@@ -41,14 +45,14 @@ export default class ParallaxBox extends React.Component {
       }
     }
   }
-  
+
   onMouseMove (event){
     const { deflectionPercent } = this.props
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
     let x = event.clientX,
       y = event.clientY
     let speed = deflectionPercent
-  
+
     let obj = ReactDOM.findDOMNode(this.refs.child)
     let containerWidth = parseInt( wrapper.offsetWidth )
     let containerHeight = parseInt( wrapper.offsetHeight )
@@ -58,7 +62,7 @@ export default class ParallaxBox extends React.Component {
     obj.style.top = top - ( ( ( y - ( parseInt( obj.offsetHeight ) / 2 + top ) ) / containerHeight ) * speed ) + '%'
 
   }
-  
+
   render () {
     const { children, imgSrc, className, imageClassName, deflectionPercent } = this.props
     const imageClassNames = [css.image].concat(imageClassName)
@@ -68,7 +72,7 @@ export default class ParallaxBox extends React.Component {
       minWidth: `${minSize}%`,
       minHeight: `${minSize}%`,
     }
-    
+
     return (
       <div
         ref='wrapper'
