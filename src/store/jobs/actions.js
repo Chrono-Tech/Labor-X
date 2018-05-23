@@ -1,5 +1,5 @@
 import { storeIntoIPFS } from 'src/utils'
-import { JobModel, JobPostedEvent, JobCanceledEvent, JobPostFormModel } from 'src/models'
+import { JobModel, JobPostedEvent, JobCanceledEvent, JobFormModel, SkillModel } from 'src/models'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { executeTransaction } from '../ethereum/actions'
@@ -19,22 +19,25 @@ export const initJobs = () => async (dispatch, getState) => {
 
 export const reloadJobs = () => async (dispatch, getState) => {
   const state = getState()
-  const jobControlerDAO = daoByType('JobController')(state)
+  const jobControllerDAO = daoByType('JobController')(state)
   const boardControlerDAO = daoByType('BoardController')(state)
   const signer = signerSelector()(state)
   dispatch({
     type: JOBS_CLEAR,
   })
   if (signer) {
-    const jobs = await jobControlerDAO.getJobs(boardControlerDAO, signer.address)
+    const jobs = await jobControllerDAO.getJobs(boardControlerDAO, signer.address)
     dispatch({ type: JOBS_SAVE, jobs })
   }
 }
 
 export const handleJobPosted = (e: JobPostedEvent) => async (dispatch, getState): JobModel => {
+  // eslint-disable-next-line no-console
+  console.log('jobs/handleJobPosted', e)
   const state = getState()
-  const jobControlerDAO = daoByType('JobController')(state)
-  const job = await jobControlerDAO.getJobById(e.jobId)
+  const jobControllerDAO = daoByType('JobController')(state)
+  const boardControlerDAO = daoByType('BoardController')(state)
+  const job = await jobControllerDAO.getJobById(boardControlerDAO, e.jobId)
   dispatch({
     type: JOBS_SAVE,
     jobs: [ job ],
@@ -48,15 +51,22 @@ export const handleJobCanceled = (e: JobCanceledEvent) => async (/*dispatch, get
   console.log('jobs/handleJobCanceled', e)
 }
 
-export const createJob = (job: JobPostFormModel) => async (dispatch, getState) => {
+export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
+  // eslint-disable-next-line no-console
+  console.log('[jobs] createJob from values', form)
   const state = getState()
-  const jobControlerDAO = daoByType('JobController')(state)
+  const jobControllerDAO = daoByType('JobController')(state)
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
-  // eslint-disable-next-line no-console
-  console.log('[jobs] createJob from values', job)
 
-  const detailsIPFSHash = await storeIntoIPFS(job.ipfsData)
-  const tx = jobControlerDAO.createPostJobTx(signer.address, job.areaNumber, job.categoryNumber, job.skillsNumber, detailsIPFSHash)
+  const detailsIPFSHash = await storeIntoIPFS(form.ipfs)
+
+  const tx = jobControllerDAO.createPostJobTx(
+    signer.address,
+    form.area.code,
+    form.category.code,
+    SkillModel.writeArrayToMask(form.skills),
+    detailsIPFSHash
+  )
   await dispatch(executeTransaction({ tx, web3 }))
 }

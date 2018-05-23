@@ -7,7 +7,7 @@ export const NOTICE_TYPE_MESSAGE = 'MESSAGE'
 const schemaFactory = () => ({
   id: PropTypes.string.isRequired,
   jobId: PropTypes.number.isRequired,
-  worker: PropTypes.string.isRequired,
+  worker: PropTypes.string,
   type: PropTypes.oneOf([
     NOTICE_TYPE_PROBLEM,
     NOTICE_TYPE_MESSAGE,
