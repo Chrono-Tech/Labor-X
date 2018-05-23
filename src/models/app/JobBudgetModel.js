@@ -17,14 +17,16 @@ export default class JobBudgetModel extends AbstractModel {
 
   get award (): BigNumber {
     if (this.isSpecified) {
-      try {
-        const a = new BigNumber(this.hourlyRate)
-        const b = new BigNumber(this.totalHours)
-        return a.multipliedBy(b)
-      } catch (e) {
-        console.log(this, e)
-        // ignore
-      }
+      const a = new BigNumber(this.hourlyRate)
+      const b = new BigNumber(this.totalHours)
+      return a.multipliedBy(b)
+    }
+    return null
+  }
+
+  get hourlyRateAward (): BigNumber {
+    if (this.isSpecified) {
+      return new BigNumber(this.hourlyRate)
     }
     return null
   }
