@@ -313,7 +313,7 @@ export class JobBoardItem extends React.Component {
   renderBoardTags () {
     const { jobBoard } = this.props
     const tags = [
-      ...jobBoard.tagsCategory.map(c => c.name),
+      jobBoard.tagsCategory,
       ...jobBoard.tags.map(t => t.name),
     ]
     return tags.join(', ')
