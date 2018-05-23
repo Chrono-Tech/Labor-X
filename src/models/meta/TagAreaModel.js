@@ -16,6 +16,10 @@ export default class TagAreaModel extends AbstractModel {
   get code () {
     return Math.pow(2, this.index)
   }
+
+  static valueOf (index) {
+    return TAG_AREAS_LIST[index]
+  }
 }
 
 export const TAG_AREAS_LIST = [
@@ -31,4 +35,14 @@ export const TAG_AREAS_LIST = [
     index: 2,
     name: 'Tag Area 3',
   }),
+  new TagAreaModel({
+    index: 3,
+    name: 'Tag Area 4',
+  }),
+  new TagAreaModel({
+    index: 4,
+    name: 'Tag Area 5',
+  }),
 ]
+
+export const TAG_AREA_ANY_MASK = Math.pow(2, TAG_AREAS_LIST.length + 1) - 1

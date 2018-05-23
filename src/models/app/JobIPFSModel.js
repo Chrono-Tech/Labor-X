@@ -1,29 +1,39 @@
 import PropTypes from 'prop-types'
+import faker from 'faker'
 import AbstractModel from '../AbstractModel'
+import JobAddressModel from './JobAddressModel'
+import JobBudgetModel from './JobBudgetModel'
+import JobPeriodModel from './JobPeriodModel'
 
 const schemaFactory = () => ({
-  hash: PropTypes.string.isRequired, // ipfs hash of the object itself
+  hash: PropTypes.string.isRequired,
   name: PropTypes.string,
   intro: PropTypes.string,
   responsibilities: PropTypes.string,
   requirements: PropTypes.string,
-  // conclusion: PropTypes.string,
-  boardName: PropTypes.string,
-  hourlyRate: PropTypes.number,
-  totalHours: PropTypes.number,
-  startDateString: PropTypes.string,
-  endDateString: PropTypes.string,
-  state: PropTypes.string,
-  city: PropTypes.string,
-  zip: PropTypes.string,
-  street: PropTypes.string,
-  building: PropTypes.string,
-  suit: PropTypes.string,
+  logo: PropTypes.string,
+  endDate: PropTypes.string,
+  address: PropTypes.instanceOf(JobAddressModel),
+  budget: PropTypes.instanceOf(JobBudgetModel),
+  period: PropTypes.instanceOf(JobPeriodModel),
 })
 
 export default class JobIPFSModel extends AbstractModel {
   constructor (props) {
-    super(props, schemaFactory())
+    super(propsWithDefaults(props), schemaFactory())
     Object.freeze(this)
   }
+}
+
+function propsWithDefaults (props) {
+  return Object.assign({}, {
+    name: faker.name.jobTitle(),
+    intro: faker.lorem.sentence(10),
+    responsibilities: faker.lorem.sentence(10),
+    requirements: faker.lorem.sentence(10),
+    logo: faker.image.image(64, 64),
+    address: new JobAddressModel(props.address || {}),
+    budget: new JobBudgetModel(props.budget || {}),
+    period: new JobPeriodModel(props.period || {}),
+  }, props)
 }
