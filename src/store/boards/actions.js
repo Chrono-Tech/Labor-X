@@ -64,10 +64,22 @@ export const handleBoardCreated = (e: BoardCreatedEvent) => async (dispatch, get
   return board
 }
 
-export const handleBoardClosed = (e: BoardClosedEvent) => async (/*dispatch, getState*/) => {
-  // TODO @ipavlenko: Implement
-  // eslint-disable-next-line no-console
-  console.log('jobs/handleBoardClosed', e)
+export const handleBoardClosed = (e: BoardClosedEvent) => async (dispatch, getState) => {
+  const state = getState()
+  const board = boardByIdSelector(e.boardId)(state)
+  dispatch({
+    type: BOARDS_SAVE,
+    boards: [
+      new BoardModel({
+        ...board,
+        extra: new BoardExtraModel({
+          ...board.extra,
+          clientsCount: board.extra.clientsCount - 1,
+          isSignerJoined: false,
+        }),
+      }),
+    ],
+  })
 }
 
 export const handleUserBinded = (e: UserBindedEvent) => async (dispatch, getState) => {

@@ -372,7 +372,7 @@ export class JobBoardItem extends React.Component {
             type={Button.TYPES.SUBMIT}
           />,
           <RaisedButton
-            primary={true}
+            primary
             disabled={this.state.isTerminateProgress}
             label={this.state.isTerminateProgress ? 'Loading' : 'YES'}
             onClick={this.handleTerminateApproveClick}
