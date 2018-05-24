@@ -15,6 +15,10 @@ $maxWidth: 74rem;
   background-image: $gradientBlueToGreen;
 }
 
+.submitProgress {
+  align-self: center;
+}
+
 .titleBar {
   @include flex(row, flex-start, stretch);
   max-width: 70rem;

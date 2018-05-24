@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 import AbstractModel from '../AbstractModel'
+import {TAGS_LIST} from "./TagModel";
+import {filterArrayByIndexMask} from "../../utils";
 
 const schemaFactory = () => ({
   index: PropTypes.number.isRequired,
@@ -19,6 +21,10 @@ export default class TagCategoryModel extends AbstractModel {
 
   static valueOf (index) {
     return TAG_CATEGORIES_LIST[index]
+  }
+  
+  static arrayValueOfMask (mask) {
+    return filterArrayByIndexMask(TAGS_LIST, mask)
   }
 }
 

@@ -1,22 +1,27 @@
 import PropTypes from 'prop-types'
 import { SkillModel, TagAreaModel, TagCategoryModel, SKILLS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST } from 'src/models'
 import AbstractModel from '../AbstractModel'
+import {TAG_CATEGORY_ANY_MASK} from "../";
 
 const schemaFactory = () => ({
-  hash: PropTypes.string.isRequired, // ipfs hash of the object itself
   name: PropTypes.string,
+  logo: PropTypes.string,
+  background: PropTypes.string,
   description: PropTypes.string,
-  logo: PropTypes.string, // Any supported URL path, including //example.com/path/to/image, https://example.com/path/to/image , ipfs://example.com/path/to/image
-  tags: PropTypes.arrayOf(
-    PropTypes.instanceOf(TagCategoryModel)
-  )
+  tagCategories: PropTypes.string,
+  fee: PropTypes.string,
+  lhus: PropTypes.string,
 })
 
 const defaultProps = {
-  hash: '',
   name: '',
-  description: '',
   logo: '',
+  background: '',
+  description: '',
+  tagCategories: '',
+  fee: '',
+  lhus: '',
+  
 }
 
 export default class JobPostFormModel extends AbstractModel {
@@ -25,12 +30,22 @@ export default class JobPostFormModel extends AbstractModel {
     Object.freeze(this)
   }
   
+  get categories(){
+    return this.tagCategories
+      .split(',')
+      .map((item) => )
+  }
+  
   get ipfsData () {
     return {
       hash: this.hash, // ipfs hash of the object itself
       name: this.name,
-      description: this.description,
       logo: this.logo,
+      background: this.background,
+      description: this.description,
+      tagCategories: this.tagCategories,
+      fee: this.fee,
+      lhus: this.lhus,
     }
   }
 }

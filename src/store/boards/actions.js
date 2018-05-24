@@ -109,18 +109,18 @@ export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
   if (level && !isNaN(parseInt(level))) {
     level = parseInt(level)
 
-    currentList = currentList.filter((board) => board.validationLevel >= level)
+    currentList = currentList.filter((board) => board.ipfs.validationLevel >= level)
   }
 
   if (rating && !isNaN(parseInt(rating))) {
     rating = parseInt(rating)
 
-    currentList = currentList.filter((board) => board.rating >= rating)
+    currentList = currentList.filter((board) => board.ipfs.rating >= rating)
   }
 
   if (searchText){
     searchText = String(searchText).toLowerCase()
-    currentList = currentList.filter((board) => String(board.name || '').toLowerCase().includes(searchText) )
+    currentList = currentList.filter((board) => String(board.ipfs.name || '').toLowerCase().includes(searchText) )
   }
 
   dispatch({
@@ -143,6 +143,9 @@ export const boardCreate = (data) => async (dispatch, getState) => {
     name: 'default name',
     description: 'default description',
     logo: '',
+    background: '',
+    fee: '',
+    lhus: '',
   })
   
   

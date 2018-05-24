@@ -7,7 +7,7 @@ import { MenuItem } from 'material-ui/Menu'
 import { SelectField, AutoComplete } from 'redux-form-material-ui'
 
 import { Image, Chip, Input, Button } from 'components/common'
-import { TAG_CATEGORIES_LIST, JobPostFormModel } from 'src/models'
+import { TAG_CATEGORIES_LIST, JobBoardFormModel } from 'src/models'
 import { boardCreate } from 'src/store'
 
 import css from './CreateJobBoard.scss'
@@ -26,29 +26,33 @@ class CreateJobBoardForm extends React.Component {
   handleChangeFee = (event, index, value) => this.setState({ feeValue: value });
 
   getTagsList(){
-    return TAG_CATEGORIES_LIST && TAG_CATEGORIES_LIST.map(tag => tag.name) || []
+    return TAG_CATEGORIES_LIST
   }
   
-  onRemoveCategory(name){
+  onRemoveCategory(tag){
     const { categories, change } = this.state
     
-    const newCategories = categories.filter(item => item !== name)
+    const newCategories = categories.filter(item => item.index !== tag.index)
     
     this.setState({ categories: newCategories })
     
-    change('tags', newCategories.join(', '))
+    change('tags', newCategories.map((item) => item.index).join(', '))
   }
   
-  onAddCategory(name){
-    const { change } = this.props
-    if (!this.state.categories.includes(name)) {
-      
-      const newCategories = [...this.state.categories, name]
-      
-      this.setState({categories: newCategories })
-      
-      change('tags', newCategories.join(', '))
+  onAddCategory = (tag) => {
+    const { change, reset } = this.props
+    
+    if (!this.state.categories.find(item => item.index === tag.index)) {
+
+      const newCategories = [...this.state.categories, tag]
+
+      this.setState({categories: newCategories }, () => {
+        change('tags', newCategories.map((item) => item.index).join(','))
+      })
+
     }
+    
+    change('searchCategory', '')
   }
   
   searchCategoryFilter(searchText, key){
@@ -60,7 +64,7 @@ class CreateJobBoardForm extends React.Component {
     const { categories } = this.state
     
     return categories && categories.map((item, i) => (
-      <Chip key={i} value={item} onRemove={(value) => this.onRemoveCategory(value)} />
+      <Chip key={i} value={item.name} onRemove={(value) => this.onRemoveCategory(value)} />
     ))
   }
   
@@ -101,7 +105,7 @@ class CreateJobBoardForm extends React.Component {
                 component={Input}
                 placeholder='Enter Job Board Headline'
                 mods={[ Input.MODS.INVERT, Input.MODS.HUGE ]}
-                name='headline'
+                name='name'
               />
             </div>
 
@@ -109,11 +113,14 @@ class CreateJobBoardForm extends React.Component {
               <h3 className={css.cardTitle}>Categories</h3>
               <div className={css.flexRow}>
                 <Field
-                  lineEnabled
                   className={css.find}
                   component={AutoComplete}
-                  onNewRequest={(category) => this.onAddCategory(category)}
+                  onNewRequest={this.onAddCategory.bind(this)}
                   filter={this.searchCategoryFilter}
+                  dataSourceConfig={{
+                    text: 'name',
+                    value: 'name'
+                  }}
                   dataSource={this.getTagsList()}
                   name='searchCategory'
                   placeholder='Find'
@@ -122,7 +129,7 @@ class CreateJobBoardForm extends React.Component {
                 <Field
                   component='input'
                   type='hidden'
-                  name='tags'
+                  name='tagCategories'
                   readOnly
                 />
                 { this.renderCategories() }
@@ -241,7 +248,7 @@ class CreateJobBoardWrapper extends React.Component {
     console.log('handle', values)
     try {
       await this.props.handleSubmit(values)
-      // Router.pushRoute('/job-boards')
+      Router.pushRoute('/job-boards')
     } finally {
       this.setState({
         isLoading: false,
@@ -262,7 +269,7 @@ const mapDispatchToProps = (dispatch) => {
     async handleSubmit (values) {
       // eslint-disable-next-line no-console
       console.log('--CreateJobForm#onSubmit', values, this)
-      await dispatch(boardCreate({}))
+      await dispatch(boardCreate(new JobBoardFormModel(values)))
     },
   }
 }

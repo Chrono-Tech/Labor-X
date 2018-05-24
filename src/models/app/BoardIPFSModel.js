@@ -7,6 +7,10 @@ const schemaFactory = () => ({
   name: PropTypes.string,
   description: PropTypes.string,
   logo: PropTypes.string, // Any supported URL path, including //example.com/path/to/image, https://example.com/path/to/image , ipfs://example.com/path/to/image
+  background: PropTypes.string,
+  fee: PropTypes.string,
+  lhus: PropTypes.string,
+  
 })
 
 export default class BoardIPFSModel extends AbstractModel {
@@ -22,5 +26,8 @@ function propsWithDefaults (props) {
     name: faker.company.companyName(),
     description: faker.lorem.sentence(10),
     logo: faker.image.image(64, 64),
+    background: faker.image.image(64, 64),
+    fee: '',
+    lhus: '',
   }, props)
 }
