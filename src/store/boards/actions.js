@@ -43,6 +43,15 @@ export const joinBoard = (boardId) => async (dispatch, getState) => {
   await dispatch(executeTransaction({ tx, web3 }))
 }
 
+export const terminateBoard = (boardId) => async (dispatch, getState) => {
+  const state = getState()
+  const boardControlerDAO = daoByType('BoardController')(state)
+  const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
+  const tx = boardControlerDAO.createTerminateBoardTx(signer.address, boardId)
+  await dispatch(executeTransaction({ tx, web3 }))
+}
+
 export const handleBoardCreated = (e: BoardCreatedEvent) => async (dispatch, getState): BoardModel => {
   const state = getState()
   const boardControlerDAO = daoByType('BoardController')(state)
@@ -55,10 +64,18 @@ export const handleBoardCreated = (e: BoardCreatedEvent) => async (dispatch, get
   return board
 }
 
-export const handleBoardClosed = (e: BoardClosedEvent) => async (/*dispatch, getState*/) => {
-  // TODO @ipavlenko: Implement
-  // eslint-disable-next-line no-console
-  console.log('jobs/handleBoardClosed', e)
+export const handleBoardClosed = (e: BoardClosedEvent) => async (dispatch, getState) => {
+  const state = getState()
+  const board = boardByIdSelector(e.boardId)(state)
+  dispatch({
+    type: BOARDS_SAVE,
+    boards: [
+      new BoardModel({
+        ...board,
+        isActive: false,
+      }),
+    ],
+  })
 }
 
 export const handleUserBinded = (e: UserBindedEvent) => async (dispatch, getState) => {
