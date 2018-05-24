@@ -9,8 +9,9 @@ const config = {
 }
 
 export default () => {
-  const web3Provider = Web3.givenProvider
-    || new Web3.providers.WebsocketProvider(config.blockchain.websocket)
+  const web3Provider =
+    // Web3.givenProvider ||
+    new Web3.providers.WebsocketProvider(config.blockchain.websocket)
     // || new Web3.providers.HttpProvider(config.blockchain.rpc)
   const web3 = new Web3(web3Provider)
   ethDAO.connect(web3)

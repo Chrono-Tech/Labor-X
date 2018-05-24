@@ -6,13 +6,12 @@ import JobBudgetModel from './JobBudgetModel'
 import JobPeriodModel from './JobPeriodModel'
 
 const schemaFactory = () => ({
-  hash: PropTypes.string.isRequired,
+  hash: PropTypes.string,
   name: PropTypes.string,
   intro: PropTypes.string,
   responsibilities: PropTypes.string,
   requirements: PropTypes.string,
   logo: PropTypes.string,
-  endDate: PropTypes.string,
   address: PropTypes.instanceOf(JobAddressModel),
   budget: PropTypes.instanceOf(JobBudgetModel),
   period: PropTypes.instanceOf(JobPeriodModel),
@@ -26,6 +25,12 @@ export default class JobIPFSModel extends AbstractModel {
 }
 
 function propsWithDefaults (props) {
+  const {
+    address,
+    budget,
+    period,
+    ...data
+  } = props
   return Object.assign({}, {
     name: faker.name.jobTitle(),
     intro: faker.lorem.sentence(10),
@@ -35,5 +40,5 @@ function propsWithDefaults (props) {
     address: new JobAddressModel(props.address || {}),
     budget: new JobBudgetModel(props.budget || {}),
     period: new JobPeriodModel(props.period || {}),
-  }, props)
+  }, data)
 }
