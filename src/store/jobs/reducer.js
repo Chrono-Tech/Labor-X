@@ -1,7 +1,8 @@
-import { JOBS_CLEAR, JOBS_SAVE } from './actions'
+import { JOBS_CLEAR, JOBS_SAVE, JOBS_FILTER } from './actions'
 
 export const initialState = {
   list: [],
+  filtered: [],
   byKey: {},
 }
 
@@ -16,7 +17,13 @@ const mutations = {
     }, {})
     const byKey = { ...state.byKey, ...newJobsByKey }
     const list = Object.values(byKey)
-    return { byKey, list }
+    return { byKey, list, filtered: list }
+  },
+  [JOBS_FILTER] (state, { jobsList }) {
+    return {
+      ...state,
+      filtered: jobsList,
+    }
   },
 }
 

@@ -11,3 +11,8 @@ export const jobByIdSelector = (id) => createSelector(
   jobsSelector(),
   (jobs) => jobs.byKey[`job-${id}`]
 )
+
+export const jobsFilteredListSelector = () => createSelector(
+  jobsSelector(),
+  (jobs) => jobs.filtered
+)

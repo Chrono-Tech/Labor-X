@@ -20,7 +20,6 @@ const mutations = {
     return { byKey, list, filtered: list }
   },
   [BOARDS_FILTER] (state, { boardsList }) {
-
     return {
       ...state,
       filtered: boardsList,
