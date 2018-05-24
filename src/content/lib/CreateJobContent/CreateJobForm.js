@@ -90,7 +90,6 @@ class CreateJobForm extends React.Component {
                   className={css.inputSection}
                   component={TextField}
                   name='intro'
-                  multiLine
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.intro' />}
                 />
@@ -98,7 +97,6 @@ class CreateJobForm extends React.Component {
                   className={css.inputSection}
                   component={TextField}
                   name='responsibilities'
-                  multiLine
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.responsibilities' />}
                 />
@@ -106,7 +104,6 @@ class CreateJobForm extends React.Component {
                   className={css.inputSection}
                   component={TextField}
                   name='requirements'
-                  multiLine
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.requirements' />}
                 />

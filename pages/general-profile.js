@@ -1,12 +1,10 @@
-import GeneralProfile from 'components/GeneralProfile/GeneralProfile'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import GeneralProfile from 'src/components/GeneralProfile/GeneralProfile'
+import { MainLayout } from 'src/components/layouts'
 
-class JobsPage extends React.Component {
-  
+class GeneralProfilePage extends React.Component {
+
   render () {
     return (
       <MainLayout title=''>
@@ -16,4 +14,4 @@ class JobsPage extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(JobsPage)
+export default connect()(GeneralProfilePage)

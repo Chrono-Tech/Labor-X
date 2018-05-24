@@ -1,17 +1,16 @@
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import initialStore, {
+import { connect } from 'react-redux'
+import {
   walletUpdate,
   walletRemove,
   decryptWallet,
   createWallet,
   logout,
-} from 'store'
-import 'styles/globals/globals.scss'
+} from 'src/store'
 
 // import css from './index.scss'
 
-class Wallet extends React.Component {
+class WalletPage extends React.Component {
   render () {
     return null
   }
@@ -33,4 +32,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRedux(initialStore, mapStateToProps, mapDispatchToProps)(Wallet)
+export default connect(mapStateToProps, mapDispatchToProps)(WalletPage)

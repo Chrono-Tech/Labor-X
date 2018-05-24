@@ -2,6 +2,7 @@ const routes = module.exports = require('next-routes')()
 
 routes
   .add('landing-page', '/', 'landing-page')
+  .add('opportunity-view', '/opportunity-view/:id', 'opportunity-view')
   // .add('about')
   // Examples:
   // .add('blog', '/blog/:slug')
