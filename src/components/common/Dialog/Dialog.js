@@ -13,7 +13,7 @@ export default class DialogComponent extends React.Component {
     children: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.string,
-    ])
+    ]),
   }
   
   static defaultProps = {

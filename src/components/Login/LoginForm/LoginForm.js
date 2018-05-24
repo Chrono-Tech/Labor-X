@@ -7,7 +7,7 @@ import { LoginSteps, validateSelectedWalletPassword } from 'src/store'
 
 import css from './LoginForm.scss'
 
-const FORM_LOGIN = 'form/login'
+export const FORM_LOGIN = 'form/login'
 
 class LoginForm extends React.Component {
   static propTypes = {
@@ -15,27 +15,6 @@ class LoginForm extends React.Component {
     onChangeStep: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
     onClickForgotPassword: PropTypes.func,
-  }
-
-  onSubmit ({ password }, dispatch) {
-    // TODO @ipavlenko: Reimplement using redux way
-    // const { selectedWallet } = this.props
-    // let web3 = Web3.getWeb3()
-    //
-    // try {
-    //   web3.eth.accounts.wallet.decrypt(selectedWallet.encrypted, password)
-    // } catch (e) {
-    //   throw new SubmissionError({ password: 'Password does not match' })
-    // }
-    if (!dispatch(validateSelectedWalletPassword(password))){
-      throw new SubmissionError({ password: 'Password does not match' })
-    }
-    
-    
-
-    return {
-      password: password,
-    }
   }
 
   navigateToSelectWallet () {
@@ -47,7 +26,7 @@ class LoginForm extends React.Component {
     const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword } = this.props
 
     return (
-      <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+      <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Log In</div>
         <div className={css.accountWrapper}>
           <UserRow
@@ -76,6 +55,7 @@ class LoginForm extends React.Component {
           primary
           disabled={pristine || invalid}
           error={error}
+          errorMods={css.errorForm}
           mods={Button.MODS.INVERT}
         />
         <div>

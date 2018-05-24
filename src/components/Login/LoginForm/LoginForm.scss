@@ -14,6 +14,15 @@
   margin-bottom: 45px;
 }
 
+.errorForm {
+  margin-top: 20px;
+  color: #e6bf6e;
+}
+
+.row {
+  margin-bottom: 30px;
+}
+
 .forgotPasswordLink {
   color: #fff;
   font-weight: normal !important;
@@ -123,7 +132,6 @@
   font-weight: bold;
   background-color: #fff !important;
   padding: 12px 0;
-  margin-bottom: 30px;
 
   &:hover {
     background-color: #E5F5FA !important;
