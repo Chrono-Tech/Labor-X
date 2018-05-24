@@ -192,7 +192,7 @@ export class JobBoardItem extends React.Component {
     )
 
     return (
-      <button className={css.actionButton} onClick={onClick} disabled={isDisabled}>
+      <button key='join' className={css.actionButton} onClick={onClick} disabled={isDisabled}>
         {text}
         {this.renderActionsTooltip({
           src: '/static/images/svg/help-white-clear.svg',
@@ -239,19 +239,14 @@ export class JobBoardItem extends React.Component {
   }
 
   renderJoinedActions () {
-    return (
-      <div>
-        <button className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>
-          Terminate
-        </button>
-        <button className={css.actionButtonView}>
-          View
-        </button>
-        <span className={css.actionButtonJoined}>
-          Joined
-        </span>
-      </div>
-    )
+    return [
+      <button key='view' className={css.actionButtonView}>
+        View
+      </button>,
+      <span key='joined' className={css.actionButtonJoined}>
+        Joined
+      </span>,
+    ]
   }
 
   renderApprovalActions () {
@@ -279,14 +274,17 @@ export class JobBoardItem extends React.Component {
 
   renderActions () {
     const { jobBoard } = this.props
-
-    if (jobBoard.extra.isSignerJoined) {
-      return this.renderJoinedActions()
-    }
-    return this.renderDefaultActionButton(
-      'Join the Board',
-      this.state.isJoinInProgress,
-      () => this.handleJoinBoard(jobBoard.id)
+    return (
+      <div>
+        <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>
+          Terminate
+        </button>
+        { jobBoard.extra.isSignerJoined ? this.renderJoinedActions() : this.renderDefaultActionButton(
+          'Join the Board',
+          this.state.isJoinInProgress,
+          () => this.handleJoinBoard(jobBoard.id)
+        ) }
+      </div>
     )
     // switch (jobBoard.status) {
     //   case BoardModel.STATUS.UNASSIGNED:

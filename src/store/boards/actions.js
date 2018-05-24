@@ -72,11 +72,7 @@ export const handleBoardClosed = (e: BoardClosedEvent) => async (dispatch, getSt
     boards: [
       new BoardModel({
         ...board,
-        extra: new BoardExtraModel({
-          ...board.extra,
-          clientsCount: board.extra.clientsCount - 1,
-          isSignerJoined: false,
-        }),
+        isActive: false,
       }),
     ],
   })
