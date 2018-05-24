@@ -1,6 +1,10 @@
 import Router from 'next/router'
+import { stopSubmit } from 'redux-form'
+
 import { WalletEntryModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
+
+import { FORM_LOGIN } from 'src/components/Login'
 
 export const LoginSteps = {
   Ledger: 'ledger',
@@ -32,15 +36,22 @@ export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
 }
 
-export const signIn = ({ password }) => (dispatch, getState) => {
+export const signIn = ({ password }) => async (dispatch, getState) => {
   const state = getState()
   const { selectedWallet } = state.wallet
+  
+  await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
+  
+}
 
-  dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
-
+export const onSignInSuccess = () => (dispatch) => {
   dispatch({ type: LOGIN_SIGN_IN })
-
+  
   Router.push('/dashboard')
+}
+
+export const onSignInFail = () =>  (dispatch) => {
+  dispatch(stopSubmit(FORM_LOGIN, { password: 'Password does not match' }))
 }
 
 export const signOut = () => (dispatch) => {

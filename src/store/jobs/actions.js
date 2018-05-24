@@ -1,5 +1,5 @@
 import { storeIntoIPFS } from 'src/utils'
-import { JobModel, JobPostedEvent, JobCanceledEvent, JobFormModel, SkillModel } from 'src/models'
+import { JobModel, JobPostedEvent, JobCanceledEvent, JobFormModel, JobOfferFormModel, SkillModel } from 'src/models'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { executeTransaction } from '../ethereum/actions'
@@ -67,6 +67,24 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
     form.category.code,
     SkillModel.writeArrayToMask(form.skills),
     detailsIPFSHash
+  )
+  await dispatch(executeTransaction({ tx, web3 }))
+}
+
+export const createJobOffer = (form: JobOfferFormModel) => async (dispatch, getState) => {
+  // eslint-disable-next-line no-console
+  console.log('[jobs] createJobOffer from values', form)
+  const state = getState()
+  const jobControllerDAO = daoByType('JobController')(state)
+  const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
+
+  const tx = jobControllerDAO.createPostJobOfferTx(
+    signer.address,
+    form.jobId,
+    form.rate,
+    form.estimate,
+    form.ontop
   )
   await dispatch(executeTransaction({ tx, web3 }))
 }

@@ -46,11 +46,11 @@ export const walletRemove = (name) => (dispatch) => {
   dispatch({ type: WALLETS_REMOVE, name })
 }
 
-export const decryptWallet = (entry, password) => (dispatch, getState) => {
+export const decryptWallet = (entry, password) => async (dispatch, getState) => {
   const web3 = web3Selector()(getState())
   web3.eth.accounts.wallet.clear()
 
-  let wallet = web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
+  let wallet = await web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
 
   const model = new WalletModel({
     entry,

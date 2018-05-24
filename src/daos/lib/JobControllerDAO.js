@@ -204,8 +204,8 @@ export default class JobControllerDAO extends AbstractContractDAO {
     }
   }
 
-  createPostJobOfferTx (sender: String, jobId: Number, rate: BigNumber, estimate: BigNumber, onTop: BigNumber) {
-    const data = this.contract.methods.postJobOffer(jobId, rate, estimate, onTop).encodeABI()
+  createPostJobOfferTx (sender: String, jobId: Number, rate: BigNumber, estimate: BigNumber, ontop: BigNumber) {
+    const data = this.contract.methods.postJobOffer(jobId, rate, estimate, ontop).encodeABI()
     return {
       from: sender,
       to: this.address,
