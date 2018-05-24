@@ -32,11 +32,11 @@ export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
 }
 
-export const signIn = ({ password }) => (dispatch, getState) => {
+export const signIn = ({ password }) => async (dispatch, getState) => {
   const state = getState()
   const { selectedWallet } = state.wallet
 
-  dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
+  await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
 
   dispatch({ type: LOGIN_SIGN_IN })
 

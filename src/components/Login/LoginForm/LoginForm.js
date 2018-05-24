@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm /*, SubmissionError */ } from 'redux-form'
+import { Field, reduxForm , SubmissionError } from 'redux-form'
 import { Button, Input, UserRow } from 'components/common'
 import { WalletEntryModel } from 'src/models'
-import { LoginSteps } from 'src/store'
+import { LoginSteps, validateSelectedWalletPassword } from 'src/store'
 
 import css from './LoginForm.scss'
 
@@ -17,7 +17,7 @@ class LoginForm extends React.Component {
     onClickForgotPassword: PropTypes.func,
   }
 
-  onSubmit ({ password }) {
+  onSubmit ({ password }, dispatch) {
     // TODO @ipavlenko: Reimplement using redux way
     // const { selectedWallet } = this.props
     // let web3 = Web3.getWeb3()
@@ -27,6 +27,11 @@ class LoginForm extends React.Component {
     // } catch (e) {
     //   throw new SubmissionError({ password: 'Password does not match' })
     // }
+    if (!dispatch(validateSelectedWalletPassword(password))){
+      throw new SubmissionError({ password: 'Password does not match' })
+    }
+    
+    
 
     return {
       password: password,
