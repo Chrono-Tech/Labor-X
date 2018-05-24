@@ -1,9 +1,7 @@
-import JobTypesContent from 'components/JobTypes/JobTypes'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import JobTypesContent from 'src/components/JobTypes/JobTypes'
+import { MainLayout } from 'src/components/layouts'
 
 class JobTypesPage extends React.Component {
   render () {
@@ -15,4 +13,4 @@ class JobTypesPage extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(JobTypesPage)
+export default connect()(JobTypesPage)

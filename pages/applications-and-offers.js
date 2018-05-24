@@ -1,9 +1,7 @@
-import ApplicationsAndOffersContent from 'components/ApplicationsAndOffers/ApplicationsAndOffers'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import { MainLayout } from 'src/components/layouts'
+import ApplicationsAndOffersContent from 'src/components/ApplicationsAndOffers/ApplicationsAndOffers'
 
 class ApplicationsAndOffers extends React.Component {
   render () {
@@ -15,4 +13,4 @@ class ApplicationsAndOffers extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(ApplicationsAndOffers)
+export default connect()(ApplicationsAndOffers)

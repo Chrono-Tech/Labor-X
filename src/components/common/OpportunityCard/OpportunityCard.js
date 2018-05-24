@@ -31,7 +31,7 @@ export default class OpportunityCard extends React.Component {
           )
         }
         <div className={css.jobInfo}>
-          <Link className={css.jobName} href='/opportunity-view'><h4>{job.ipfs.name}</h4></Link>
+          <Link className={css.jobName} href={`/opportunity-view/${job.id}`}><h4>{job.ipfs.name}</h4></Link>
           {!(job.ipfs.budget.isSpecified && job.ipfs.budget.award) ? null : (
             <div className={css.jobPay}>
               <p>LHUS {job.ipfs.budget.hourlyRateAward.toFixed(2)} (${job.ipfs.budget.hourlyRateAward.multipliedBy(30).toFixed(2)}) / h</p>

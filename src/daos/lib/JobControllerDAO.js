@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 import {
   JobModel,
   JobIPFSModel,
@@ -76,9 +77,10 @@ export default class JobControllerDAO extends AbstractContractDAO {
   async getJobsByIds (boardControllerDAO, ids: Number[]) {
     const data = await this.contract.methods.getJobsByIds(ids).call()
     const parsed = []
-    for (let i = 0; i < data.length; i += 9) {
+    for (let i = 0; i < data.length; i += 16) {
       const [
         idBytes,
+        boardIdBytes,
         clientBytes,
         workerBytes,
         skillsAreaBytes,
@@ -86,10 +88,17 @@ export default class JobControllerDAO extends AbstractContractDAO {
         skillsBytes,
         ipfsHashBytes,
         stateBytes,
+        createdAtBytes,
+        acceptedAtBytes,
+        pendingStartAtBytes,
+        startTimeBytes,
+        pendingFinishAtBytes,
+        finishTimeBytes,
         finalizedAtBytes,
-      ] = data.slice(i, i + 9)
+      ] = data.slice(i, i + 16)
       parsed.push({
         id: bytes32ToNumber(idBytes),
+        boardId: bytes32ToNumber(boardIdBytes),
         client: bytes32ToAddress(clientBytes, true),
         worker: bytes32ToAddress(workerBytes, true),
         skillsArea: bytes32ToNumber(skillsAreaBytes),
@@ -97,6 +106,12 @@ export default class JobControllerDAO extends AbstractContractDAO {
         skills: bytes32ToNumber(skillsBytes),
         ipfsHash: bytes32ToIPFSHash(ipfsHashBytes),
         state: bytes32ToNumber(stateBytes),
+        createdAt: bytes32ToDate(createdAtBytes, true),
+        acceptedAt: bytes32ToDate(acceptedAtBytes, true),
+        pendingStartAt: bytes32ToDate(pendingStartAtBytes, true),
+        startTime: bytes32ToDate(startTimeBytes, true),
+        pendingFinishAt: bytes32ToDate(pendingFinishAtBytes, true),
+        finishTime: bytes32ToDate(finishTimeBytes, true),
         finalizedAt: bytes32ToDate(finalizedAtBytes, true),
       })
     }
@@ -109,9 +124,15 @@ export default class JobControllerDAO extends AbstractContractDAO {
       skills,
       ipfsHash,
       state,
+      createdAt,
+      acceptedAt,
+      pendingStartAt,
+      startTime,
+      pendingFinishAt,
+      finishTime,
       finalizedAt,
+      boardId,
     }) => {
-      const boardId = await boardControllerDAO.getJobsBoard(id)
       return new JobModel({
         id,
         client,
@@ -127,6 +148,12 @@ export default class JobControllerDAO extends AbstractContractDAO {
         }),
         extra: new JobExtraModel({
           // TODO Fetch counts
+          createdAt,
+          acceptedAt,
+          pendingStartAt,
+          startTime,
+          pendingFinishAt,
+          finishTime,
           finalizedAt,
         }),
       })
@@ -170,6 +197,15 @@ export default class JobControllerDAO extends AbstractContractDAO {
 
   createPostJobTx (sender: String, area: Number, category: Number, skills: Number, detailsIPFSHash: String) {
     const data = this.contract.methods.postJob(area, category, skills, ipfsHashToBytes32(detailsIPFSHash)).encodeABI()
+    return {
+      from: sender,
+      to: this.address,
+      data,
+    }
+  }
+
+  createPostJobOfferTx (sender: String, jobId: Number, rate: BigNumber, estimate: BigNumber, onTop: BigNumber) {
+    const data = this.contract.methods.postJobOffer(jobId, rate, estimate, onTop).encodeABI()
     return {
       from: sender,
       to: this.address,

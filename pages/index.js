@@ -1,11 +1,9 @@
+import React from 'react'
 import { Link } from 'src/components/common'
 import { LoginLayout } from 'src/components/layouts'
-import withRedux from 'next-redux-wrapper'
-import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
 
-class Index extends React.Component {
+class IndexPage extends React.Component {
   render () {
     return (
       <LoginLayout>
@@ -20,4 +18,4 @@ class Index extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(Index)
+export default connect()(IndexPage)

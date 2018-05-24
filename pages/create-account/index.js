@@ -1,50 +1,48 @@
 import React  from 'react'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Head from 'next/head'
-import withRedux from 'next-redux-wrapper'
 import bip39 from 'bip39'
 
-import { Link } from 'components/common'
-import { AccountLayout } from 'components/layouts'
-import { AccountPasswordForm, ShowMnemonic, ConfirmMnemonic, BackupWallet } from 'components/Account'
-import initialStore, { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, onFinishCreateAccount, navigateToSelectMethod } from 'store'
+import { AccountLayout } from 'src/components/layouts'
+import { AccountPasswordForm, ShowMnemonic, ConfirmMnemonic, BackupWallet } from 'src/components/Account'
+import { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, onFinishCreateAccount, navigateToSelectMethod } from 'src/store'
 
-import 'styles/globals/globals.scss'
 import css from './index.scss'
 
 class CreateAccount extends React.Component {
-  
+
   constructor (){
     super()
-    
+
     this.state = {
       activePage: null,
     }
   }
-  
+
   static async getInitialProps ({ store }) {
     const mnemonic = bip39.generateMnemonic()
-    
+
     store.dispatch(setMnemonic(mnemonic))
     return { mnemonic }
   }
-  
+
   componentWillMount (){
     const { setMnemonic, mnemonic } = this.props
-    
+
     setMnemonic(mnemonic)
   }
-  
+
   onSubmitAccountPasswordForm ({ password, types }){
     const { setPassword, setAccountTypes } = this.props
-  
+
     setPassword(password)
     setAccountTypes(types)
   }
-  
+
   render () {
     const { onFinishCreateAccount, downloadWallet, createUserAccount, navigateToSelectMethod } = this.props
-  
+
     return (
       <div className={css.root}>
         <Head>
@@ -75,4 +73,4 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-export default withRedux(initialStore, null, mapDispatchToProps)(CreateAccount)
+export default connect(null, mapDispatchToProps)(CreateAccount)

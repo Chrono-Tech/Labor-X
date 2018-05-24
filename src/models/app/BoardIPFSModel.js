@@ -21,6 +21,6 @@ function propsWithDefaults (props) {
   return Object.assign({}, {
     name: faker.company.companyName(),
     description: faker.lorem.sentence(10),
-    logo: faker.image.image(64, 64),
+    logo: faker.internet.avatar(),
   }, props)
 }

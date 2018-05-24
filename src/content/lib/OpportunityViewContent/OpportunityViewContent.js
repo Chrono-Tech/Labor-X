@@ -1,14 +1,19 @@
-import { Image, Button, Tab } from 'components/common'
 import React from 'react'
-import Router from 'next/router'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
+import Router from 'next/router'
+import { JobModel, BoardModel } from 'src/models'
+import { signerSelector, boardByIdSelector } from 'src/store'
+import { Image, Button, Tab } from 'src/components/common'
 import DescriptionTab from './DescriptionTab/DescriptionTab'
 import CompanyTab from './CompanyTab/CompanyTab'
-import css from './OpportunityView.scss'
+import css from './OpportunityViewContent.scss'
 
-export default class OpportunityView extends React.Component {
+export class OpportunityViewContent extends React.Component {
   static propTypes = {
+    job: PropTypes.instanceOf(JobModel).isRequired,
+    board: PropTypes.instanceOf(BoardModel),
     title: PropTypes.string.isRequired,
     refString: PropTypes.string.isRequired,
     description: PropTypes.shape(DescriptionTab.propTypes).isRequired,
@@ -48,6 +53,7 @@ export default class OpportunityView extends React.Component {
   }
 
   render () {
+    const { job } = this.props
     return (
       <div className={css.main}>
         <div className={css.title}>
@@ -75,7 +81,7 @@ export default class OpportunityView extends React.Component {
         </div>
         <div className={css.content}>
           <div className={css.header}>
-            <h2>{this.props.title}</h2>
+            <h2>{job.ipfs.name}</h2>
             <p>{this.props.refString}</p>
             <p className={css.opportunityAge}>1h ago</p>
           </div>
@@ -101,3 +107,13 @@ export default class OpportunityView extends React.Component {
   }
 }
 
+function mapStateToProps (state, op) {
+  const signer = signerSelector()(state)
+  const board = boardByIdSelector(op.job.boardId)(state)
+  return {
+    signer,
+    board,
+  }
+}
+
+export default connect(mapStateToProps)(OpportunityViewContent)

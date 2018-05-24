@@ -1,15 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { MuiThemeProvider } from 'material-ui/styles'
-import withRedux from 'next-redux-wrapper'
 import Head from 'next/head'
 
-import { LoginActions } from 'components/layouts'
-import { LoginOptions } from 'components/Login'
-import initialStore  from 'store'
-import 'styles/globals/globals.scss'
+import { LoginActions } from 'src/components/layouts'
+import { LoginOptions } from 'src/components/Login'
+
 import css from './index.scss'
 
-class Index extends React.Component {
+class LoginPage extends React.Component {
   render () {
     return (
       <MuiThemeProvider>
@@ -28,4 +27,4 @@ class Index extends React.Component {
   }
 }
 
-export default withRedux(initialStore, null)(Index)
+export default connect()(LoginPage)
