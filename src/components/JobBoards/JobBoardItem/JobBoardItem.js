@@ -16,6 +16,7 @@ export class JobBoardItem extends React.Component {
     jobBoard: PropTypes.instanceOf(BoardModel),
     onJoinBoard: PropTypes.func,
     onTerminateBoard: PropTypes.func,
+    isMyJobBoard: PropTypes.bool,
   }
 
   constructor () {
@@ -273,17 +274,19 @@ export class JobBoardItem extends React.Component {
   }
 
   renderActions () {
-    const { jobBoard } = this.props
+    const { jobBoard, isMyJobBoard } = this.props
     return (
       <div>
-        <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>
-          Terminate
-        </button>
-        { jobBoard.extra.isSignerJoined ? this.renderJoinedActions() : this.renderDefaultActionButton(
-          'Join the Board',
-          this.state.isJoinInProgress,
-          () => this.handleJoinBoard(jobBoard.id)
-        ) }
+        {
+          isMyJobBoard
+            ? <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>Terminate</button>
+            : null
+        }
+        {
+          jobBoard.extra.isSignerJoined
+            ? this.renderJoinedActions()
+            : this.renderDefaultActionButton('Join the Board', this.state.isJoinInProgress, () => this.handleJoinBoard(jobBoard.id))
+        }
       </div>
     )
     // switch (jobBoard.status) {
@@ -453,6 +456,10 @@ export class JobBoardItem extends React.Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => ({
+  isMyJobBoard: state.wallet.selectedWallet.encrypted[0].address === ownProps.jobBoard.creator.slice(2),
+})
+
 function mapDispatchToProps (dispatch) {
   return {
     onJoinBoard: (boardId) => dispatch(joinBoard(boardId)),
@@ -460,4 +467,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(JobBoardItem)
+export default connect(mapStateToProps, mapDispatchToProps)(JobBoardItem)
