@@ -126,6 +126,15 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     }
   }
 
+  createTerminateBoardTx (sender, boardId) {
+    const data = this.contract.methods.closeBoard(boardId).encodeABI()
+    return {
+      from: sender,
+      to: this.address,
+      data,
+    }
+  }
+
   handleBoardCreatedData (data) {
     // eslint-disable-next-line no-console
     console.log('[BoardControllerDAO] BoardCreated', data)

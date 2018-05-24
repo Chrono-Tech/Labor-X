@@ -107,7 +107,7 @@ class JobBoards extends React.Component {
     return emptyRatingFilter && emptyLevelFilter && emptyCategoriesResetFilter
 
   }
-  
+
   renderCategories () {
     // const { } = this.props
     return TAG_CATEGORIES_LIST.map((tag, i) => {
@@ -196,7 +196,7 @@ class JobBoards extends React.Component {
 
     )
   }
-  
+
   renderEmptyListMessage (){
     return (
       <div className={css.emptyListMessage}>
@@ -259,7 +259,7 @@ class JobBoards extends React.Component {
 const mapStateToProps = (state) => {
   const boardsList = boardsFilteredListSelector()(state)
   return {
-    boardsList,
+    boardsList: boardsList.filter(x => x.isActive),
     activeCategoriesFilter: formSelector(state, FILTER_CATEGORIES_NAME),
     ratingFilter: formSelector(state, 'rating'),
     levelFilter: formSelector(state, 'level'),
