@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import uniqid from 'uniqid'
-import Router from 'next/router'
-import { JobModel, BoardModel } from 'src/models'
-import { signerSelector, boardByIdSelector } from 'src/store'
+import BigNumber from 'bignumber.js'
+import { Router } from 'src/routes'
+import { JobModel, BoardModel, JobOfferFormModel } from 'src/models'
+import { createJobOffer, signerSelector, boardByIdSelector } from 'src/store'
 import { Image, Button, Tab } from 'src/components/common'
 import DescriptionTab from './DescriptionTab/DescriptionTab'
 import CompanyTab from './CompanyTab/CompanyTab'
@@ -18,39 +18,64 @@ export class OpportunityViewContent extends React.Component {
     refString: PropTypes.string.isRequired,
     description: PropTypes.shape(DescriptionTab.propTypes).isRequired,
     company: PropTypes.shape(CompanyTab.propTypes).isRequired,
+    onPostOffer: PropTypes.func.isRequired,
   }
 
-  constructor (props, context) {
-    super(props, context)
-    this.handleTabClick = this.handleTabClick.bind(this)
-
-    this.state = {
-      currentTab: 0,
-      tabs: [
-        {
-          title: 'Description',
-          content: <DescriptionTab key={uniqid()} {...this.props.description} />,
-        },
-        {
-          title: 'Company info',
-          content: <CompanyTab key={uniqid()} {...this.props.company} />,
-        },
-      ],
-    }
+  state = {
+    currentTab: 0,
+    isOfferPosting: false,
   }
 
   handleBack () {
     Router.push('/opportunities')
   }
 
-  handleCalendar () {
+  handleCalendar = () => {
     // eslint-disable-next-line no-console
     console.log('Opportunity-view-handleCalendar')
   }
 
-  handleTabClick (index) {
+  handleTabClick = (index) => {
     this.setState({ currentTab: index })
   }
+
+  handlePostOffer = async () => {
+    this.setState({
+      isOfferPosting: true,
+    })
+    try {
+      await this.props.onPostOffer(
+        new JobOfferFormModel({
+          jobId: this.props.job.id,
+          rate: new BigNumber(10),
+          estimate: new BigNumber(10),
+          ontop: new BigNumber(0),
+        })
+      )
+      Router.push('/opportunities')
+    } finally {
+      this.setState({
+        isOfferPosting: false,
+      })
+    }
+  }
+
+  tabs = [
+    {
+      key: 'description',
+      title: 'Description',
+      content: (props, state, handlePostOffer) => (
+        <DescriptionTab {...props.description} isOfferPosting={state.isOfferPosting} onPostOffer={handlePostOffer} />
+      ),
+    },
+    {
+      key: 'info',
+      title: 'Company info',
+      content: (props) => (
+        <CompanyTab {...props.company} />
+      ),
+    },
+  ]
 
   render () {
     const { job } = this.props
@@ -86,9 +111,9 @@ export class OpportunityViewContent extends React.Component {
             <p className={css.opportunityAge}>1h ago</p>
           </div>
           <div className={css.tabs}>
-            {this.state.tabs.map((tab, index) => (
+            {this.tabs.map((tab, index) => (
               <Tab
-                key={uniqid()}
+                key={tab.key}
                 className={css.tab}
                 classActive={css.tabActive}
                 index={index}
@@ -99,7 +124,7 @@ export class OpportunityViewContent extends React.Component {
             ))}
           </div>
           <div className={css.tabContent}>
-            {this.state.tabs[this.state.currentTab].content}
+            {this.tabs[this.state.currentTab].content(this.props, this.state, this.handlePostOffer)}
           </div>
         </div>
       </div>
@@ -116,4 +141,10 @@ function mapStateToProps (state, op) {
   }
 }
 
-export default connect(mapStateToProps)(OpportunityViewContent)
+function mapDispatchToProps (dispatch) {
+  return {
+    onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OpportunityViewContent)
