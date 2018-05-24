@@ -110,7 +110,7 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     return boards
   }
 
-  createCreateBoardTx (sender, name, description, tags, tagsAreas, tagsCategories, ipfs) {
+  createCreateBoardTx (sender, tags, tagsAreas, tagsCategories, ipfs) {
     let  data = this.contract.methods.createBoard(tags, tagsAreas, tagsCategories, ipfsHashToBytes32(ipfs)).encodeABI()
     return {
       from: sender,

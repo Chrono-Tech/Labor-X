@@ -139,23 +139,13 @@ export const boardCreate = (data) => async (dispatch, getState) => {
   
   console.log('arguments', boardControlerDAO, signer)
   
-  const detailsIPFSHash = await storeIntoIPFS({
-    name: 'default name',
-    description: 'default description',
-    logo: '',
-    background: '',
-    fee: '',
-    lhus: '',
-  })
-  
+  const detailsIPFSHash = await storeIntoIPFS(data)
   
   const tx = boardControlerDAO.createCreateBoardTx(
     signer.address,
-    'default name',
-    'default description',
-    1,
-    1,
-    1,
+    0,
+    0,
+    data.categories,
     detailsIPFSHash
   )
   

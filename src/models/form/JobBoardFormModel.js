@@ -31,10 +31,12 @@ export default class JobPostFormModel extends AbstractModel {
   }
   
   get categories(){
-    // return this.tagCategories
-    //   .split(',')
-    //   .map((item) => )
+    return this.tagCategories
+      .split(',')
+      .map(s => +s)
+      .reduce((a, b) => (a + b))
   }
+  
   
   get ipfsData () {
     return {
@@ -43,7 +45,6 @@ export default class JobPostFormModel extends AbstractModel {
       logo: this.logo,
       background: this.background,
       description: this.description,
-      tagCategories: this.tagCategories,
       fee: this.fee,
       lhus: this.lhus,
     }

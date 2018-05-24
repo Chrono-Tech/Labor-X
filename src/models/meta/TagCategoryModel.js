@@ -26,6 +26,8 @@ export default class TagCategoryModel extends AbstractModel {
   static arrayValueOfMask (mask) {
     return filterArrayByIndexMask(TAGS_LIST, mask)
   }
+  
+  
 }
 
 export const TAG_CATEGORIES_LIST = [
