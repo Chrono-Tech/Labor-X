@@ -1,14 +1,12 @@
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 
-import initialStore from 'store'
-import { LoginActions } from 'components/layouts'
-import { RecoveryAccountForm } from 'components/Login'
+import { LoginActions } from 'src/components/layouts'
+import { RecoveryAccountForm } from 'src/components/Login'
 import { WalletEntryModel } from 'src/models'
 
-import 'styles/globals/globals.scss'
 import css from './index.scss'
 
 class ForgotPassword extends React.Component {
@@ -40,4 +38,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRedux(initialStore, mapStateToProps)(ForgotPassword)
+export default connect(mapStateToProps)(ForgotPassword)

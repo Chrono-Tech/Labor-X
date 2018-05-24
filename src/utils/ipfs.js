@@ -2,13 +2,31 @@ import assert from 'assert'
 import ipfsAPI from 'ipfs-api'
 import { promisify } from 'es6-promisify'
 
-const DEFAULT_CONFIG = {
+export const DEFAULT_CONFIG = {
   host: 'api.ipfs.tp.ntr1x.com',
-  port: 80,
-  protocol: 'http',
+  port: 443,
+  protocol: 'https',
 }
 
-export const storeIntoIPFS = async (value, config = DEFAULT_CONFIG) => {
+const HOSTS = [
+  'node1.ipfs.tp.ntr1x.com',
+  'node2.ipfs.tp.ntr1x.com',
+  'node3.ipfs.tp.ntr1x.com',
+  'node4.ipfs.tp.ntr1x.com',
+]
+
+let roundRobinIndex = 0
+export const configFactory = () => {
+  const index = roundRobinIndex
+  roundRobinIndex = (index + 1) % HOSTS.length
+  return {
+    host: HOSTS[index],
+    port: 443,
+    protocol: 'https',
+  }
+}
+
+export const storeIntoIPFS = async (value, config = configFactory()) => {
   assert(value != null) // nil check
   const putData = ipfsAPI(config).object.put
   const putDataAsync = promisify(putData)
@@ -21,7 +39,7 @@ export const storeIntoIPFS = async (value, config = DEFAULT_CONFIG) => {
   return hash
 }
 
-export const loadFromIPFS = (hash, timeout = 20000, config = DEFAULT_CONFIG) => {
+export const loadFromIPFS = (hash, timeout = 20000, config = configFactory()) => {
   if (!hash) {
     return null
   }

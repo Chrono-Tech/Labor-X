@@ -73,6 +73,10 @@ $gutter: 4rem;
   margin-bottom: 4rem;
 }
 
+.mainFields {
+  margin-bottom: 2rem;
+}
+
 .skillsRow {
   @include flex(row, flex-start, flex-end);
 }
@@ -163,4 +167,8 @@ $gutter: 4rem;
       flex: 1 1 auto;
     }
   }
+}
+
+.row {
+  margin-bottom: 1rem;
 }

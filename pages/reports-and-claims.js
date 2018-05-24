@@ -1,11 +1,9 @@
-import ReportsAndClaimsContent from 'components/ReportsAndClaims/ReportsAndClaims'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import ReportsAndClaimsContent from 'src/components/ReportsAndClaims/ReportsAndClaims'
+import { MainLayout } from 'src/components/layouts'
 
-class ReportsAndClaims extends React.Component {
+class ReportsAndClaimsPage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.reportsAndClaims'>
@@ -15,4 +13,4 @@ class ReportsAndClaims extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(ReportsAndClaims)
+export default connect()(ReportsAndClaimsPage)

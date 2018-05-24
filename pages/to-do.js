@@ -1,11 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import moment from 'moment'
-import withRedux from 'next-redux-wrapper'
 import { TodoContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
 import { TodoCard } from 'src/components/common'
-import initialStore from 'src/store'
-import 'styles/globals/globals.scss'
 
 const TODO = {
   todoLists: [
@@ -64,7 +62,7 @@ const TODO = {
   ],
 }
 
-class ToDo extends React.Component {
+class ToDoPage extends React.Component {
   render () {
     return (
       <MainLayout jobName='nav.toDo'>
@@ -74,4 +72,4 @@ class ToDo extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(ToDo)
+export default connect()(ToDoPage)

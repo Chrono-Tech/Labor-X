@@ -1,11 +1,9 @@
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
-import initialStore from 'src/store'
+import { connect } from 'react-redux'
 import { MainLayout } from 'src/components/layouts'
 import { OpportunitiesContent } from 'src/content'
-import 'styles/globals/globals.scss'
 
-class Opportunities extends React.Component {
+class OpportunitiesPage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.opportunities'>
@@ -15,4 +13,4 @@ class Opportunities extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(Opportunities)
+export default connect()(OpportunitiesPage)

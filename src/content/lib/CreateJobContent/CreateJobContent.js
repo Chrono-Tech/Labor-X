@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
-import { SignerModel, BoardModel, JobPostFormModel } from 'src/models'
+import { SignerModel, BoardModel, JobFormModel, JobIPFSModel, JobAddressModel, JobBudgetModel, JobPeriodModel, SkillModel, TagAreaModel, TagCategoryModel } from 'src/models'
 import { Router } from 'src/routes'
 import { signerSelector, boardsListSelector, createJob } from 'src/store'
 import CreateJobForm, { FORM_CREATE_JOB } from './CreateJobForm'
@@ -80,7 +80,8 @@ function mapStateToProps (state) {
     hasRequirements: formSelector(state, 'hasRequirements'),
     hasSkills: formSelector(state, 'hasSkills'),
     initialValues: {
-      boardId: null,
+      board: null,
+      tags: [],
       hasBudget: false,
       hasPeriod: false,
       hasAddress: false,
@@ -93,7 +94,51 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     async handleSubmit (values) {
-      await dispatch(createJob(new JobPostFormModel(values)))
+      console.log(values.skills, values.skills.reduce((mask, index) => (mask | Math.pow(2, index)), 0))
+      const data = new JobFormModel({
+        boardId: values.board,
+        category: TagCategoryModel.valueOf(values.category),
+        area: TagAreaModel.valueOf(values.area),
+        skills: SkillModel.arrayValueOfMask(values.skills.reduce((mask, index) => (mask | Math.pow(2, index)), 0)),
+        ipfs: new JobIPFSModel({
+          name: values.name,
+          intro: values.intro,
+          responsibilities: values.responsibilities,
+          requirements: values.requirements,
+          // logo: values.logo, // TODO @ipavlenko: Implement logo
+          address: new JobAddressModel(
+            !values.hasAddress
+              ? { isSpecified: false }
+              : {
+                isSpecified: true,
+                state: values.state,
+                city: values.city,
+                zip: values.zip,
+                street: values.street,
+                building: values.building,
+                suit: values.suit,
+              }
+          ),
+          budget: new JobBudgetModel(
+            !values.hasBudget
+              ? { isSpecified: false }
+              : {
+                isSpecified: true,
+                hourlyRate: values.hourlyRate,
+                totalHours: values.totalHours,
+              }
+          ),
+          period: new JobPeriodModel(
+            !values.hasPeriod
+              ? { isSpecified: false }
+              : {
+                since: values.since,
+                until: values.until,
+              }
+          ),
+        }),
+      })
+      await dispatch(createJob(data))
     },
   }
 }

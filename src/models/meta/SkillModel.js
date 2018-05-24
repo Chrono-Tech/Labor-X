@@ -25,6 +25,10 @@ export default class SkillModel extends AbstractModel {
   static arrayValueOfMask (mask) {
     return filterArrayByIndexMask(SKILLS_LIST, mask)
   }
+
+  static writeArrayToMask (array: SkillModel[]): Number {
+    return array.reduce((mask, element) => (mask | element.code), 0)
+  }
 }
 
 export const SKILLS_LIST = [

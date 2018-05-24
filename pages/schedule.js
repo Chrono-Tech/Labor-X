@@ -1,11 +1,9 @@
-import ScheduleContent from 'components/Schedule/Schedule'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import ScheduleContent from 'src/components/Schedule/Schedule'
+import { MainLayout } from 'src/components/layouts'
 
-class Schedule extends React.Component {
+class SchedulePage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.schedule'>
@@ -15,4 +13,4 @@ class Schedule extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(Schedule)
+export default connect()(SchedulePage)

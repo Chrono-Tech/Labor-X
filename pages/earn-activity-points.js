@@ -1,11 +1,9 @@
-import EarnActivityPointsContent from 'components/EarnActivityPoints/EarnActivityPoints'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import { MainLayout } from 'src/components/layouts'
+import EarnActivityPointsContent from 'src/components/EarnActivityPoints/EarnActivityPoints'
 
-class EarnActivityPoints extends React.Component {
+class EarnActivityPointsPage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.earnActivityPoints'>
@@ -15,4 +13,4 @@ class EarnActivityPoints extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(EarnActivityPoints)
+export default connect()(EarnActivityPointsPage)

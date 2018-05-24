@@ -1,9 +1,7 @@
-import JobBoards from 'components/JobBoards/JobBoards'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import JobBoards from 'src/components/JobBoards/JobBoards'
+import { MainLayout } from 'src/components/layouts'
 
 class MyJobBoardsPage extends React.Component {
   render () {
@@ -15,4 +13,4 @@ class MyJobBoardsPage extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(MyJobBoardsPage)
+export default connect()(MyJobBoardsPage)

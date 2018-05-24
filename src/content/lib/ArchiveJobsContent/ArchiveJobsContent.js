@@ -71,12 +71,9 @@ function mapStateToProps (state) {
   const signer = signerSelector()(state)
   const jobs = jobsListSelector()(state)
 
-  console.log(jobs.map(job => job.state.name))
-
   const allowedStatuses = [ JOB_STATE_FINISHED, JOB_STATE_FINALIZED ]
   const cards = jobs
     .filter((job) => allowedStatuses.find(state => {
-      console.log(job.state === state, state, job.state)
       return job.state === state
     })) // TODO @ipavlenko: Provide better filtering
     .map(job => ({
