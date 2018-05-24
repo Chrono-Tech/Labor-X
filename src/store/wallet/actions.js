@@ -52,6 +52,7 @@ export const decryptWallet = (entry, password) => (dispatch, getState) => {
 
   let wallet = web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
 
+  console.log('decrypt wallet')
   const model = new WalletModel({
     entry,
     wallet,

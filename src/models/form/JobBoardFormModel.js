@@ -1,15 +1,19 @@
 import PropTypes from 'prop-types'
-import { SkillModel, TagAreaModel, TagCategoryModel, SKILLS_LIST, TAG_AREAS_LIST, TAG_CATEGORIES_LIST } from 'src/models'
+import {
+  TagCategoryModel,
+  BoardRequirementModel,
+  BoardPostFeeModel
+} from 'src/models'
 import AbstractModel from '../AbstractModel'
-import {TAG_CATEGORY_ANY_MASK} from "../";
 
 const schemaFactory = () => ({
   name: PropTypes.string,
   logo: PropTypes.string,
   background: PropTypes.string,
   description: PropTypes.string,
-  tagCategories: PropTypes.string,
-  fee: PropTypes.string,
+  tagCategories: PropTypes.arrayOf(TagCategoryModel),
+  joinRequirement: PropTypes.instanceOf(BoardRequirementModel),
+  fee: PropTypes.instanceOf(BoardPostFeeModel),
   lhus: PropTypes.string,
 })
 
@@ -19,9 +23,9 @@ const defaultProps = {
   background: '',
   description: '',
   tagCategories: '',
+  joinRequirement: '',
   fee: '',
   lhus: '',
-  
 }
 
 export default class JobPostFormModel extends AbstractModel {
@@ -32,11 +36,8 @@ export default class JobPostFormModel extends AbstractModel {
   
   get categories(){
     return this.tagCategories
-      .split(',')
-      .map(s => +s)
-      .reduce((a, b) => (a + b))
+      .reduce((mask, element) => (mask | element.code), 0)
   }
-  
   
   get ipfsData () {
     return {

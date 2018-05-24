@@ -1,4 +1,4 @@
-import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, JobBoardFormModel } from 'src/models'
+import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TAG_AREAS_LIST } from 'src/models'
 import { storeIntoIPFS, loadFromIPFS, ipfsHashToBytes32 } from 'src/utils'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
@@ -137,21 +137,21 @@ export const boardCreate = (data) => async (dispatch, getState) => {
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
   
-  console.log('arguments', data, data.categories)
+  console.log('arguments', data, data.categories, data.joinRequirement.code, data.joinRequirement.code, TAG_AREAS_LIST[1].code)
   
   const detailsIPFSHash = await storeIntoIPFS(data.ipfsData)
   
-  
+
   // const tx = boardControlerDAO.createCreateBoardTx(
   //   signer.address,
-  //   0,
-  //   0,
+  //   data.joinRequirement.code,
+  //   TAG_AREAS_LIST[1].code,
   //   data.categories,
   //   detailsIPFSHash
   // )
   //
   //
   // await dispatch(executeTransaction({ tx, web3 }))
-  //
+
   
 }

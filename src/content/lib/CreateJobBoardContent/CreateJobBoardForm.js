@@ -1,30 +1,31 @@
 import React from 'react'
-import { Field, reduxForm, SubmissionError } from 'redux-form'
-import { connect } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
 import { CircularProgress } from 'material-ui'
 import { MuiThemeProvider } from 'material-ui/styles'
 import { MenuItem } from 'material-ui/Menu'
 import { SelectField, AutoComplete } from 'redux-form-material-ui'
 
 import { Image, Chip, Input, Button } from 'components/common'
-import { TAG_CATEGORIES_LIST, JobBoardFormModel } from 'src/models'
-import { boardCreate } from 'src/store'
+import {
+  TAG_CATEGORIES_LIST,
+  BOARD_REQUIREMENTS_LIST,
+  BOARD_POST_FEE_LIST,
+} from 'src/models'
 
-import css from './CreateJobBoard.scss'
-import {Router} from "../../routes";
+import css from './CreateJobBoardForm.scss'
 
 const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
 
 class CreateJobBoardForm extends React.Component {
-  state = {
-    requirementsValue: 1,
-    feeValue: 1,
-    categories: []
-  };
-
-  handleChangeRequirements = (event, index, value) => this.setState({ requirementsValue: value });
-  handleChangeFee = (event, index, value) => this.setState({ feeValue: value });
-
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      categories: []
+    }
+  }
+  
+  
   getTagsList(){
     return TAG_CATEGORIES_LIST
   }
@@ -40,16 +41,16 @@ class CreateJobBoardForm extends React.Component {
   }
   
   onAddCategory = (tag) => {
-    const { change, reset } = this.props
+    const { change } = this.props
     
     if (!this.state.categories.find(item => item.index === tag.index)) {
-
+      
       const newCategories = [...this.state.categories, tag]
-
+      
       this.setState({categories: newCategories }, () => {
         change('tagCategories', newCategories.map((item) => item.index).join(','))
       })
-
+      
     }
     
     change('searchCategory', '')
@@ -108,7 +109,7 @@ class CreateJobBoardForm extends React.Component {
                 name='name'
               />
             </div>
-
+            
             <div className={css.card}>
               <h3 className={css.cardTitle}>Categories</h3>
               <div className={css.flexRow}>
@@ -135,29 +136,33 @@ class CreateJobBoardForm extends React.Component {
                 { this.renderCategories() }
               </div>
             </div>
-
+            
             <div className={[css.card, css.noMarginBottom].join(' ')}>
-              <h3 className={css.cardTitle}>Join requirements</h3>
-              <div className={css.subtitle}>Specify which requirements should be met in order to join the board.</div>
+              <h3 className={css.cardTitle}>
+                Join requirements
+              </h3>
+              <div className={css.subtitle}>
+                Specify which requirements should be met in order to join the board.
+              </div>
               <Field
                 component={SelectField}
                 className={css.requirementsSelect}
-                value={this.state.requirementsValue}
-                onChange={this.handleChangeRequirements}
-                name='requirements'
+                name='joinRequirement'
               >
-                <MenuItem value={1} primaryText='Match job board categories' />
-                <MenuItem value={2} primaryText='Specific rating and verification' />
-                <MenuItem value={3} primaryText='By invitation only' />
+                {
+                  BOARD_REQUIREMENTS_LIST.map((item, i) => (
+                    <MenuItem key={i} value={item.index} primaryText={item.name} />
+                  ))
+                }
               </Field>
             </div>
-
+            
             <div className={css.chartContainer}>
               <h4>How much people can join?</h4>
               <p>Check our estimates for worker and clients based on your parameters</p>
               <div className={css.chart} />
             </div>
-
+            
             <div className={css.card}>
               <h3 className={css.cardTitle}>Job Post Fee</h3>
               <div className={css.subtitle}>Specify fee amount for posting job on the Job Board</div>
@@ -165,22 +170,22 @@ class CreateJobBoardForm extends React.Component {
                 <div className={css.feeInputs}>
                   <Field
                     component={SelectField}
-                    value={this.state.feeValue}
-                    onChange={this.handleChangeFee}
                     hintText='Fixed Fee'
-                    hintStyle={{ 'font-style': 'italic' }}
+                    hintStyle={{ fontStyle: 'italic' }}
                     name='fee'
                   >
-                    <MenuItem value={1} primaryText='Option 1' />
-                    <MenuItem value={2} primaryText='Option 2' />
-                    <MenuItem value={3} primaryText='Option 3' />
+                    {
+                      BOARD_POST_FEE_LIST.map((item, i) => (
+                        <MenuItem key={i} value={item.index} primaryText={item.name} />
+                      ))
+                    }
                   </Field>
                   <Field
                     lineEnabled
                     className={css.match}
                     type={Input.TYPES.TEXT}
                     component={Input}
-                    name='zip'
+                    name='lhus'
                     mods={Input.MODS.ALIGN_LEFT}
                     placeholder='ui.createJobBoard.value'
                   />
@@ -202,10 +207,10 @@ class CreateJobBoardForm extends React.Component {
                 </div>
               </div>
             </div>
-
+            
             <div className={css.card}>
               <h3 className={css.cardTitle}>Visuals</h3>
-              <div className={css.visuals}>
+              <div className={css.visuals} >
                 <div className={css.visualsContainer}>
                   <img src='/static/temp/become.png' alt='Logo' />
                   <a href='/'>UPLOAD LOGO</a>
@@ -223,55 +228,10 @@ class CreateJobBoardForm extends React.Component {
   }
 }
 
-const CreateJobBoard = reduxForm({
+export default reduxForm({
   form: FORM_CREATE_JOB_BOARD,
   initialValues: {
-    requirements: 1,
+    requirements: 0,
+    feeValue: 0,
   },
 })(CreateJobBoardForm)
-
-class CreateJobBoardWrapper extends React.Component {
-  
-  constructor(){
-    super()
-    
-    this.state = {
-      isLoading: false
-    }
-  }
-  
-  handleSubmit = async (values) => {
-    this.setState({
-      isLoading: true,
-    })
-    
-    console.log('handle', values)
-    try {
-      await this.props.handleSubmit(values)
-      // Router.pushRoute('/job-boards')
-    } finally {
-      this.setState({
-        isLoading: false,
-      })
-    }
-  }
-  
-  render(){
-    return (
-      <CreateJobBoard onSubmit={this.handleSubmit.bind(this)} isLoading={this.state.isLoading}/>
-    )
-  }
-}
-
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    async handleSubmit (values) {
-      // eslint-disable-next-line no-console
-      console.log('--CreateJobForm#onSubmit', values, this)
-      await dispatch(boardCreate(new JobBoardFormModel(values)))
-    },
-  }
-}
-
-export default connect(null, mapDispatchToProps)(CreateJobBoardWrapper)
