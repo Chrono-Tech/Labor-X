@@ -6,7 +6,6 @@ import { Link, Button, Input } from 'components/common'
 import 'styles/globals/globals.scss'
 import validate from './validate'
 
-
 import css from './AccountPasswordForm.scss'
 
 const FORM_ACCOUNT_PASSWORD = 'form/accountPassword'
