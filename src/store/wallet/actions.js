@@ -61,26 +61,6 @@ export const decryptWallet = (entry, password) => async (dispatch, getState) => 
 
 }
 
-export const validateSelectedWalletPassword = (password) => (dispatch, getState) => {
-  const state = getState()
-  const web3 = web3Selector()(state)
-  const { selectedWallet } = state.wallet
-  
-  web3.eth.accounts.wallet.clear()
-  
-  try {
-    web3.eth.accounts.wallet.decrypt(selectedWallet.encrypted, password)
-    
-    return true
-    
-  } catch(e){
-    
-    return false
-    
-  }
-  
-}
-
 export const validateWalletName = (name) => (dispatch, getState) => {
   const state = getState()
 

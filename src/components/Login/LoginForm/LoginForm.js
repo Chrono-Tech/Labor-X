@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm , SubmissionError } from 'redux-form'
+import { Field, reduxForm  } from 'redux-form'
 import { Button, Input, UserRow } from 'components/common'
 import { WalletEntryModel } from 'src/models'
-import { LoginSteps, validateSelectedWalletPassword } from 'src/store'
+import { LoginSteps } from 'src/store'
 
 import css from './LoginForm.scss'
 
