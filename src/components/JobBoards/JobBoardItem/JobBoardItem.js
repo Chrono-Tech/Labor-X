@@ -457,7 +457,7 @@ export class JobBoardItem extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isMyJobBoard: state.wallet.selectedWallet.encrypted[0].address === ownProps.jobBoard.creator.slice(2),
+  isMyJobBoard: state.wallet.selectedWallet.encrypted[0].address === ownProps.jobBoard.creator.slice(2).toLowerCase(),
 })
 
 function mapDispatchToProps (dispatch) {
