@@ -31,6 +31,7 @@ export const LOGIN_SET_RECOVERY_PASSWORD_MODE = 'login/setRecoveryPasswordMode'
 export const LOGIN_RESET_RECOVERY_PASSWORD_MODE = 'login/resetRecoveryPasswordMode'
 export const LOGIN_SET_RECOVERY_FORM_MNEMONIC = 'login/setRecoveryFormMnemonic'
 export const LOGIN_RESET_RECOVERY_FORM_MNEMONIC = 'login/resetRecoveryFormMnemonic'
+export const LOGIN_RESET_WALLET_RECOVERY_FORM = 'login/resetWalletRecoveryForm'
 
 export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
@@ -121,6 +122,12 @@ export const navigateToSelectLoginMethod = () => (dispatch) => {
   dispatch(changeStep(LoginSteps.SelectLoginMethod))
 }
 
+export const navigateToLoginForm = () => (dispatch) => {
+  dispatch(resetWalletRecoveryForm())
+  dispatch(resetRecoveryPasswordMode())
+  dispatch(changeStep(LoginSteps.Login))
+}
+
 export const navigateToRecoveryPassword = () => (dispatch, getState) => {
   const state = getState()
 
@@ -134,6 +141,14 @@ export const navigateToRecoveryPassword = () => (dispatch, getState) => {
 export const onSubmitRecoveryAccountForm = ({ mnemonic }) => (dispatch) => {
   dispatch(setRecoveryFormMnemonic(mnemonic))
   dispatch(changeStep(LoginSteps.RecoveryPasswordReset))
+}
+
+export const resetRecoveryPasswordMode = () => (dispatch) => {
+  dispatch({ type: LOGIN_RESET_RECOVERY_PASSWORD_MODE })
+}
+
+export const resetWalletRecoveryForm = () => (dispatch) => {
+  dispatch({ type: LOGIN_RESET_WALLET_RECOVERY_FORM })
 }
 
 export const onConfirmRecoveryPassword = ({ password }) => (dispatch, getState) => {

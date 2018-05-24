@@ -1,5 +1,4 @@
-import uniqid from 'uniqid'
-import Router from 'next/router'
+import { Router } from 'src/routes'
 
 import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'store'
 
@@ -37,7 +36,7 @@ export const generateNameWallet = () => (dispatch, getState) => {
     currentFoundWallet = walletsList.find(
       (item) => item.name === currentName
     )
-  
+    
     currentWalletNameCount++
   }
   while (currentFoundWallet)
@@ -91,7 +90,7 @@ export const downloadWallet = () => (dispatch, getState) => {
 }
 
 export const navigateToSelectWalletPage = () => (dispatch) => {
-  Router.push('/login')
+  Router.pushRoute('/login')
   dispatch(navigateToSelectWallet())
 }
 
@@ -102,11 +101,11 @@ export const onFinishCreateAccount = () => (dispatch, getState) => {
   
   dispatch(walletAdd(currentWallet))
   
-  Router.push('/dashboard')
+  Router.pushRoute('/login')
   
 }
 
 export const navigateToSelectMethod = () => (dispatch) => {
-  Router.push('/login')
+  Router.pushRoute('/login')
   dispatch(navigateToSelectLoginMethod())
 }

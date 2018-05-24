@@ -1,6 +1,5 @@
 import React  from 'react'
 import { reduxForm, Field, SubmissionError } from 'redux-form'
-import { connect } from 'react-redux'
 
 import { Link, Button, Input } from 'components/common'
 import 'styles/globals/globals.scss'

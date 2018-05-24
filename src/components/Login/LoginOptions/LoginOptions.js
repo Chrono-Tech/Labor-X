@@ -19,6 +19,7 @@ import {
   navigateToRecoveryPassword,
   onSignInSuccess,
   onSignInFail,
+  navigateToLoginForm,
 } from 'src/store'
 
 import { Button } from 'components/common'
@@ -49,6 +50,7 @@ class LoginOptions extends React.Component {
     onSubmitMnemonic: PropTypes.func,
     onSelectWallet: PropTypes.func,
     onChangeStep: PropTypes.func,
+    navigateToLoginForm: PropTypes.func,
     step: PropTypes.string,
     navigateToCreateWallet: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
@@ -101,6 +103,7 @@ class LoginOptions extends React.Component {
       onSignInSuccess,
       onSignInFail,
       createAccount,
+      navigateToLoginForm,
       onSubmitRecoveryAccountForm,
       onConfirmRecoveryPassword,
       navigateToRecoveryPassword,
@@ -132,6 +135,7 @@ class LoginOptions extends React.Component {
         component = (
           <RecoveryAccountForm
             onChangeStep={onChangeStep}
+            navigateToLoginForm={navigateToLoginForm}
             walletsList={walletsList}
             selectedWallet={selectedWalletRecoveryForm}
             onSubmitSuccess={onSubmitRecoveryAccountForm}
@@ -274,6 +278,7 @@ function mapDispatchToProps (dispatch) {
     onSubmitRecoveryAccountForm: (values) => dispatch(onSubmitRecoveryAccountForm(values)),
     onConfirmRecoveryPassword: (values) => dispatch(onConfirmRecoveryPassword(values)),
     navigateToRecoveryPassword: () => dispatch(navigateToRecoveryPassword()),
+    navigateToLoginForm: () => dispatch(navigateToLoginForm()),
   }
 }
 
