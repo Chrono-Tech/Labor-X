@@ -35,6 +35,7 @@ class RecoveryAccountForm extends React.Component {
   static propTypes = {
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     onChangeStep: PropTypes.func,
+    navigateToLoginForm: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
 
@@ -53,7 +54,7 @@ class RecoveryAccountForm extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList } = this.props
+    const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList, navigateToLoginForm } = this.props
     const wordsArray = new Array(12).fill()
 
     return (
@@ -76,9 +77,7 @@ class RecoveryAccountForm extends React.Component {
                 component={Input}
                 name={`word-${index}`}
                 placeholder={`word ${index + 1}`}
-                autoComplete={false}
                 mods={css.wordField}
-                lineEnabled={false}
               />)
             )
           }
@@ -89,8 +88,6 @@ class RecoveryAccountForm extends React.Component {
           type='hidden'
           component='input'
           name='mnemonic'
-          autoComplete={false}
-          lineEnabled={false}
         />
         <Button
           className={css.submitButtonWrapper}
@@ -104,7 +101,7 @@ class RecoveryAccountForm extends React.Component {
           errorClassName={css.formError}
         />
         <p className={css.descriptionBlock}>
-          or <button onClick={this.navigateToLogin.bind(this)} className={css.loginLink}>Login</button>
+          or <button onClick={navigateToLoginForm} className={css.loginLink}>Login</button>
         </p>
       </form>
     )

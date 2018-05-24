@@ -38,6 +38,11 @@ export default (state = initialState, action) => {
         ...state,
         selectedWalletRecoveryForm: action.wallet,
       }
+    case a.LOGIN_RESET_WALLET_RECOVERY_FORM:
+      return {
+        ...state,
+        selectedWalletRecoveryForm: null,
+      }
     case a.LOGIN_SET_RECOVERY_PASSWORD_MODE:
       return {
         ...state,
