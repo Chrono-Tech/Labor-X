@@ -17,6 +17,9 @@ export default class WalletModel extends AbstractModel {
 
   get signer () {
     // TODO @ipavlenko: Implement custom signers for hardware tokens
+    if (!this.wallet[0]) {
+      return null
+    }
     return new SignerModel({
       address: this.wallet[0].address.toLowerCase(),
       sign: this.wallet[0].sign,

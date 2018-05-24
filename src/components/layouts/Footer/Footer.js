@@ -8,9 +8,16 @@ export default class Footer extends React.Component {
   static propTypes = {
     footerClass: PropTypes.string,
   }
+  
+  static defaultProps = {
+    footerClass: '',
+  }
+  
   render (){
+    const { footerClass } = this.props
+    
     return (
-      <div className={css.footer}>
+      <div className={[css.footer, footerClass].join(' ')}>
         <div className={css.footerInner}>
           <Link href='/' className={css.footerLogo}>
             <img src='/static/images/labor-x-logo.svg' alt='' />

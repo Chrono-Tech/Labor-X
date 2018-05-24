@@ -1,9 +1,9 @@
 export { default as LoginOptions } from './LoginOptions/LoginOptions'
 export { default as SelectOption } from './SelectOption/SelectOption'
 
-export { default as PrivateKeyForm } from './PrivateKeyForm/PrivateKeyForm'
+export { default as PrivateKeyForm, FORM_PRIVATE_KEY } from './PrivateKeyForm/PrivateKeyForm'
 export { default as WalletFileForm } from './WalletFileForm/WalletFileForm'
-export { default as MnemonicForm } from './MnemonicForm/MnemonicForm'
+export { default as MnemonicForm, FORM_MNEMONIC } from './MnemonicForm/MnemonicForm'
 export { default as LearnMoreBlock } from './LearnMoreBlock/LearnMoreBlock'
 export { default as LoginForm, FORM_LOGIN } from './LoginForm/LoginForm'
 export { default as RecoveryAccountForm } from './RecoveryAccountForm/RecoveryAccountForm'

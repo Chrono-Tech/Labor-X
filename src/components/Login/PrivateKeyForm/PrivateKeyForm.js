@@ -10,17 +10,7 @@ import validate from './validate'
 
 import css from './PrivateKeyForm.scss'
 
-const FORM_PRIVATE_KEY = 'form/privateKey'
-
-const onSubmit = ({ key }) => {
-  const address = createAddressFromPrivateKey(key)
-
-  return new SignInModel({
-    method: SignInModel.METHODS.PRIVATE_KEY,
-    key: key,
-    address,
-  })
-}
+export const FORM_PRIVATE_KEY = 'form/privateKey'
 
 class PrivateKeyForm extends React.Component {
   static propTypes = {
@@ -61,4 +51,4 @@ class PrivateKeyForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: FORM_PRIVATE_KEY, validate, onSubmit })(PrivateKeyForm)
+export default reduxForm({ form: FORM_PRIVATE_KEY, validate })(PrivateKeyForm)
