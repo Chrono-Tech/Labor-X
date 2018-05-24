@@ -36,7 +36,7 @@ class CreateJobBoardForm extends React.Component {
     
     this.setState({ categories: newCategories })
     
-    change('tags', newCategories.map((item) => item.index).join(', '))
+    change('tagCategories', newCategories.map((item) => item.index).join(', '))
   }
   
   onAddCategory = (tag) => {
@@ -47,7 +47,7 @@ class CreateJobBoardForm extends React.Component {
       const newCategories = [...this.state.categories, tag]
 
       this.setState({categories: newCategories }, () => {
-        change('tags', newCategories.map((item) => item.index).join(','))
+        change('tagCategories', newCategories.map((item) => item.index).join(','))
       })
 
     }
@@ -248,7 +248,7 @@ class CreateJobBoardWrapper extends React.Component {
     console.log('handle', values)
     try {
       await this.props.handleSubmit(values)
-      Router.pushRoute('/job-boards')
+      // Router.pushRoute('/job-boards')
     } finally {
       this.setState({
         isLoading: false,

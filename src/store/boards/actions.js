@@ -137,22 +137,21 @@ export const boardCreate = (data) => async (dispatch, getState) => {
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
   
-  console.log('arguments', boardControlerDAO, signer)
+  console.log('arguments', data, data.categories)
   
-  const detailsIPFSHash = await storeIntoIPFS(data)
-  
-  const tx = boardControlerDAO.createCreateBoardTx(
-    signer.address,
-    0,
-    0,
-    data.categories,
-    detailsIPFSHash
-  )
+  const detailsIPFSHash = await storeIntoIPFS(data.ipfsData)
   
   
-  await dispatch(executeTransaction({ tx, web3 }))
-  
-  console.log('board create')
-  
+  // const tx = boardControlerDAO.createCreateBoardTx(
+  //   signer.address,
+  //   0,
+  //   0,
+  //   data.categories,
+  //   detailsIPFSHash
+  // )
+  //
+  //
+  // await dispatch(executeTransaction({ tx, web3 }))
+  //
   
 }
