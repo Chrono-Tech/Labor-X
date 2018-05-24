@@ -1,9 +1,10 @@
-import OpportunityViewContent from 'components/OpportunityView/OpportunityView'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { JobModel } from 'src/models'
+import { jobByIdSelector } from 'src/store'
+import { OpportunityViewContent } from 'src/content'
+import { MainLayout } from 'src/components/layouts'
 
 const OPPORTUNITY = {
   title: 'Install 10 Gas Ovens',
@@ -76,13 +77,33 @@ const OPPORTUNITY = {
 }
 
 class OpportunityViewPage extends React.Component {
+
+  static propTypes = {
+    job: PropTypes.instanceOf(JobModel),
+  }
+
+  static async getInitialProps ({ isServer, query }) {
+    return {
+      jobId: query.id,
+      isServer,
+    }
+  }
+
   render () {
-    return (
+    const { job } = this.props
+    return !job ? null : (
       <MainLayout title={OPPORTUNITY.title}>
-        <OpportunityViewContent {...OPPORTUNITY} />
+        <OpportunityViewContent job={job} {...OPPORTUNITY} />
       </MainLayout>
     )
   }
 }
 
-export default withRedux(initialStore)(OpportunityViewPage)
+function mapStateToProps (state, op) {
+  const job = jobByIdSelector(op.jobId)(state)
+  return {
+    job,
+  }
+}
+
+export default connect(mapStateToProps)(OpportunityViewPage)

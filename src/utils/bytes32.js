@@ -16,7 +16,19 @@ export const bytes32ToIPFSHash = (bytes) => {
   return bs58.encode(str)
 }
 
-export const bytes32ToNumber = (bytes) => Web3Utils.toBN(bytes).toNumber()
+export const bytes32ToNumber = (bytes, rethrow = true) => {
+  try {
+    return Web3Utils.toBN(bytes).toNumber()
+  } catch (e) {
+    if (rethrow) {
+      throw e
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('[utils] bytes32ToNumber', bytes, e)
+    }
+  }
+  return null
+}
 export const bytes32ToBigNumber = (bytes) => new BigNumber(Web3Utils.toBN(bytes))
 export const bytes32ToAddress = (bytes, zeroIsNull = false) => {
   const res = Web3Utils.padLeft(Web3Utils.toBN(bytes).toString('hex'), 40)

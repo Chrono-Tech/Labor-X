@@ -36,7 +36,7 @@ function propsWithDefaults (props) {
     intro: faker.lorem.sentence(10),
     responsibilities: faker.lorem.sentence(10),
     requirements: faker.lorem.sentence(10),
-    logo: faker.image.image(64, 64),
+    logo: faker.internet.avatar(),
     address: new JobAddressModel(props.address || {}),
     budget: new JobBudgetModel(props.budget || {}),
     period: new JobPeriodModel(props.period || {}),

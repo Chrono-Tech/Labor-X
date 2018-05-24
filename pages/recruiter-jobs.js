@@ -1,10 +1,8 @@
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 import RecruiterJobsContent from 'src/components/RecruiterJobs/RecruiterJobs'
 import { MainLayout } from 'src/components/layouts'
 import { JobCard } from 'src/components/common'
-import initialStore from 'src/store'
-import 'styles/globals/globals.scss'
 
 const RECRUITER_JOBS = {
   expectedRewards: 10,
@@ -58,4 +56,4 @@ class JobsPage extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(JobsPage)
+export default connect()(JobsPage)

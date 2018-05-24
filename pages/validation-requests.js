@@ -1,11 +1,9 @@
-import ValidationRequestsContent from 'components/ValidationRequests/ValidationRequests'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import ValidationRequestsContent from 'src/components/ValidationRequests/ValidationRequests'
+import { MainLayout } from 'src/components/layouts'
 
-class ValidationRequests extends React.Component {
+class ValidationRequestsPage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.validationRequests'>
@@ -15,4 +13,4 @@ class ValidationRequests extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(ValidationRequests)
+export default connect()(ValidationRequestsPage)

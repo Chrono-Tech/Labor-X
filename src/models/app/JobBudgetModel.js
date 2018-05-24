@@ -33,9 +33,18 @@ export default class JobBudgetModel extends AbstractModel {
 }
 
 function propsWithDefaults (props) {
+  const {
+    hourlyRate,
+    totalHours,
+    ...other
+  } = props
   return Object.assign({}, {
     isSpecified: faker.random.boolean(),
-    hourlyRate: String(faker.random.number({ min: 5, max: 40 })),
-    totalHours: String(faker.random.number({ min: 1, max: 40 }) * 5),
-  }, props)
+    hourlyRate: hourlyRate != null
+      ? String(hourlyRate)
+      : String(faker.random.number({ min: 5, max: 40 })),
+    totalHours: totalHours != null
+      ? String(totalHours)
+      : String(faker.random.number({ min: 1, max: 40 }) * 5),
+  }, other)
 }
