@@ -1,5 +1,17 @@
 // import BigNumber from 'bignumber.js'
-import { BoardModel, BoardIPFSModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TagModel, TagAreaModel, TagCategoryModel } from 'src/models'
+import {
+  BoardModel,
+  BoardIPFSModel,
+  BoardExtraModel,
+  BoardCreatedEvent,
+  BoardClosedEvent,
+  UserBindedEvent,
+  TagModel,
+  TagAreaModel,
+  TagCategoryModel,
+  BoardPostFeeModel,
+  BoardRequirementModel
+} from 'src/models'
 import { loadFromIPFS, bytes32ToIPFSHash, ipfsHashToBytes32  } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
@@ -90,16 +102,23 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       const ipfsHash = bytes32ToIPFSHash(_ipfs[i])
       const id = Number(_gotIds[i])
       const isSignerJoined = await this.getUserStatus(signer, id)
+      const ipfs = await loadFromIPFS(ipfsHash) || {}
+      console.log('board ipfs', ipfs)
+      
       boards.push(new BoardModel({
         id,
         creator: _creators[i],
         isActive: _status[i],
         tags: TagModel.arrayValueOfMask(_tags[i]),
         tagsArea: TagAreaModel.valueOf(_tagsAreas[i]),
-        tagsCategory: TagCategoryModel.valueOf(_tagsCategories[i]),
+        tagsCategory: TagCategoryModel.arrayValueOfMask(_tagsCategories[i]),
         ipfs: new BoardIPFSModel({
-          ...(await loadFromIPFS(ipfsHash) || {}),
+          ...ipfs,
+          joinRequirement: ipfs.joinRequirement !== undefined && BoardRequirementModel.valueOf(ipfs.joinRequirement),
+          fee: BoardPostFeeModel.valueOf(ipfs.fee),
+          lhus: ipfs.lhus !== undefined && +ipfs.lhus,
           hash: ipfsHash,
+          endorsingSkills: !!ipfs.endorsingSkills
         }),
         extra: new BoardExtraModel({
           isSignerJoined,

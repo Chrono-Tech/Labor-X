@@ -14,7 +14,8 @@ const schemaFactory = () => ({
   tagCategories: PropTypes.arrayOf(TagCategoryModel),
   joinRequirement: PropTypes.instanceOf(BoardRequirementModel),
   fee: PropTypes.instanceOf(BoardPostFeeModel),
-  lhus: PropTypes.string,
+  lhus: PropTypes.number,
+  endorsingSkills: PropTypes.bool,
 })
 
 const defaultProps = {
@@ -23,9 +24,10 @@ const defaultProps = {
   background: '',
   description: '',
   tagCategories: '',
-  joinRequirement: '',
-  fee: '',
-  lhus: '',
+  joinRequirement: 0,
+  endorsingSkills: false,
+  fee: 0,
+  lhus: 0,
 }
 
 export default class JobPostFormModel extends AbstractModel {
@@ -35,19 +37,21 @@ export default class JobPostFormModel extends AbstractModel {
   }
   
   get categories(){
-    return this.tagCategories
-      .reduce((mask, element) => (mask | element.code), 0)
+    return TagCategoryModel.writeArrayToMask(this.tagCategories)
   }
   
   get ipfsData () {
+    console.log('ipfsData', this.fee && this.fee.index)
     return {
       hash: this.hash, // ipfs hash of the object itself
       name: this.name,
       logo: this.logo,
       background: this.background,
       description: this.description,
-      fee: this.fee,
-      lhus: this.lhus,
+      joinRequirement: this.joinRequirement && this.joinRequirement.index,
+      fee: this.fee && this.fee.index,
+      lhus: this.lhus !== undefined && +this.lhus,
+      endorsingSkills: !!this.endorsingSkills,
     }
   }
 }

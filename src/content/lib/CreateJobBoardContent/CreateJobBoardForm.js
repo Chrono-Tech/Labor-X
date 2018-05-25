@@ -1,11 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 import { CircularProgress } from 'material-ui'
 import { MuiThemeProvider } from 'material-ui/styles'
 import { MenuItem } from 'material-ui/Menu'
 import { SelectField, AutoComplete } from 'redux-form-material-ui'
 
-import { Image, Chip, Input, Button } from 'components/common'
+import { Image, Chip, Input, Button, Icon, Checkbox } from 'components/common'
 import {
   TAG_CATEGORIES_LIST,
   BOARD_REQUIREMENTS_LIST,
@@ -14,9 +15,14 @@ import {
 
 import css from './CreateJobBoardForm.scss'
 
-const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
+export const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
 
 class CreateJobBoardForm extends React.Component {
+  static propTypes = {
+    isSpecificRequirements: PropTypes.bool,
+    change: PropTypes.func,
+  }
+  
   constructor(props) {
     super(props);
     
@@ -30,8 +36,9 @@ class CreateJobBoardForm extends React.Component {
     return TAG_CATEGORIES_LIST
   }
   
-  onRemoveCategory(tag){
-    const { categories, change } = this.state
+  onRemoveCategory(tag, i){
+    const { categories } = this.state
+    const { change } = this.props
     
     const newCategories = categories.filter(item => item.index !== tag.index)
     
@@ -40,7 +47,7 @@ class CreateJobBoardForm extends React.Component {
     change('tagCategories', newCategories.map((item) => item.index).join(', '))
   }
   
-  onAddCategory = (tag) => {
+  onAddCategory(tag) {
     const { change } = this.props
     
     if (!this.state.categories.find(item => item.index === tag.index)) {
@@ -50,7 +57,6 @@ class CreateJobBoardForm extends React.Component {
       this.setState({categories: newCategories }, () => {
         change('tagCategories', newCategories.map((item) => item.index).join(','))
       })
-      
     }
     
     change('searchCategory', '')
@@ -65,15 +71,116 @@ class CreateJobBoardForm extends React.Component {
     const { categories } = this.state
     
     return categories && categories.map((item, i) => (
-      <Chip key={i} value={item.name} onRemove={(value) => this.onRemoveCategory(value)} />
+      <Chip key={i} value={item.name} onRemove={(value) => this.onRemoveCategory(item)} />
     ))
   }
   
+  renderSpecificRequirementsContent(){
+    return (
+      <div>
+        <div className={css.specificRequirementsBlock}>
+          <div className={css.specificRequirement}>
+            <h3 className={css.cardTitle}>
+              Rating Requirements
+            </h3>
+            <div className={css.subtitle}>
+              Specify which requirements should be met in order to join the board.
+            </div>
+            <div>
+              <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
+              <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
+              <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
+              <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
+              <Icon className={css.semiTransparentStar} size={36} {...Icon.SETS.STAR} />
+            </div>
+          </div>
+          
+          <div className={[css.specificRequirement, css.specificRequirementRight].join(' ')}>
+            <h3 className={css.cardTitle}>
+              Validation Level Requirements
+            </h3>
+            <div className={css.subtitle}>
+              Indicates which users' information are validated.
+            </div>
+            <div>
+              <div className={css.securityRating}>
+                <Icon size={38} {...Icon.SETS.SECURITY} />
+                <span className={css.securityRatingCount}>1</span>
+                
+                <div className={[css.popover, css.popoverArrow, css.arrowRight].join(' ')}>
+                  <b>Level 1</b>
+                  <div className={css.popoverDescription}>
+                    Ether email or phone is validated.
+                  </div>
+                </div>
+                
+              </div>
+              <div className={css.securityRating}>
+                <Icon size={38} {...Icon.SETS.SECURITY} />
+                <span className={css.securityRatingCount}>2</span>
+  
+                <div className={[css.popover, css.popoverArrow, css.arrowRight].join(' ')}>
+                  <b>Level 2</b>
+                  <div className={css.popoverDescription}>
+                    ID, email or phone are validated.
+                  </div>
+                </div>
+                
+              </div>
+              <div className={css.securityRating}>
+                <Icon size={38} {...Icon.SETS.SECURITY} />
+                <span className={css.securityRatingCount}>3</span>
+                
+                <div className={[css.popover, css.popoverArrow, css.arrowRight].join(' ')}>
+                  <b>Level 3</b>
+                  <div className={css.popoverDescription}>
+                    Address, ID, email or phone are validated.
+                  </div>
+                </div>
+                
+              </div>
+              <div className={[css.securityRating, css.securityRatingLast].join(' ')}>
+                <Icon size={38} {...Icon.SETS.SECURITY} />
+                <span className={css.securityRatingCount}>4</span>
+  
+                <div className={[css.popover, css.popoverArrow, css.arrowRight].join(' ')}>
+                  <b>Job Board Rating</b>
+                  <div className={css.popoverDescription}>
+                    Insurance, work permit, certificates, recommendations and other supportive documents, address, ID, email or phone are validated.
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className={css.specificRequirementsBlock}>
+          <div className={css.specificRequirement}>
+            <h3 className={css.cardTitle}>
+              Skills
+            </h3>
+            <div className={css.subtitle}>
+              <Field
+                component={Checkbox}
+                className={css.field}
+                name='endorsingSkills'
+                label='Worker skills must be endorsed'
+                material
+                defaultTheme={true}
+                />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  
   render () {
-    const { onSubmit, handleSubmit, isLoading } = this.props
+    const { onSubmit, handleSubmit, isLoading, isSpecificRequirements } = this.props
     return (
       <MuiThemeProvider>
-        <form name={FORM_CREATE_JOB_BOARD} className={css.main}>
+        <form name={FORM_CREATE_JOB_BOARD} className={css.main} onSubmit={handleSubmit}>
           <div className={css.title}>
             <div className={css.titleBar}>
               <Button
@@ -92,7 +199,6 @@ class CreateJobBoardForm extends React.Component {
                 <Button
                   className={css.doneButton}
                   label='terms.done'
-                  // type={Button.TYPES.SUBMIT}
                   mods={Button.MODS.FLAT}
                   onClick={this.props.handleSubmit}
                 />
@@ -115,9 +221,10 @@ class CreateJobBoardForm extends React.Component {
               <div className={css.flexRow}>
                 <Field
                   className={css.find}
+                  style={{marginRight: 10}}
                   component={AutoComplete}
                   onNewRequest={this.onAddCategory.bind(this)}
-                  filter={this.searchCategoryFilter}
+                  filter={this.searchCategoryFilter.bind(this)}
                   dataSourceConfig={{
                     text: 'name',
                     value: 'name'
@@ -125,7 +232,6 @@ class CreateJobBoardForm extends React.Component {
                   dataSource={this.getTagsList()}
                   name='searchCategory'
                   placeholder='Find'
-                  mods={Input.MODS.ALIGN_LEFT}
                 />
                 <Field
                   component='input'
@@ -148,6 +254,10 @@ class CreateJobBoardForm extends React.Component {
                 component={SelectField}
                 className={css.requirementsSelect}
                 name='joinRequirement'
+                selectedMenuItemStyle={{fontSize: 14}}
+                menuItemStyle={{fontSize: 14}}
+                labelStyle={{fontSize: 14}}
+                style={{width: 300}}
               >
                 {
                   BOARD_REQUIREMENTS_LIST.map((item, i) => (
@@ -155,6 +265,11 @@ class CreateJobBoardForm extends React.Component {
                   ))
                 }
               </Field>
+              
+              {
+                isSpecificRequirements ? this.renderSpecificRequirementsContent() : null
+              }
+              
             </div>
             
             <div className={css.chartContainer}>
@@ -231,7 +346,11 @@ class CreateJobBoardForm extends React.Component {
 export default reduxForm({
   form: FORM_CREATE_JOB_BOARD,
   initialValues: {
+    tagCategories: '',
     requirements: 0,
+    fee: 0,
     feeValue: 0,
+    endorsingSkills: false,
+    joinRequirement: 0,
   },
 })(CreateJobBoardForm)

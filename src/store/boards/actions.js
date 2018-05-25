@@ -5,7 +5,7 @@ import { signerSelector } from '../wallet/selectors'
 import { boardByIdSelector } from './selectors'
 import { executeTransaction } from '../ethereum/actions'
 import { web3Selector } from '../ethereum/selectors'
-
+import {SkillModel, TAG_CATEGORIES_LIST, TagCategoryModel, TAGS_LIST} from "../../models";
 
 
 export const BOARDS_CLEAR = 'boards/clear'
@@ -137,21 +137,23 @@ export const boardCreate = (data) => async (dispatch, getState) => {
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
   
-  console.log('arguments', data, data.categories, data.joinRequirement.code, data.joinRequirement.code, TAG_AREAS_LIST[1].code)
-  
   const detailsIPFSHash = await storeIntoIPFS(data.ipfsData)
   
+  console.log('boardCreate', [signer.address,
+    TAGS_LIST[1].index,
+    TAG_AREAS_LIST[1].index,
+    data.categories,
+    detailsIPFSHash], data.ipfsData)
+  const tx = boardControlerDAO.createCreateBoardTx(
+    signer.address,
+    TAGS_LIST[1].index,
+    TAG_AREAS_LIST[1].index,
+    data.categories,
+    detailsIPFSHash
+  )
 
-  // const tx = boardControlerDAO.createCreateBoardTx(
-  //   signer.address,
-  //   data.joinRequirement.code,
-  //   TAG_AREAS_LIST[1].code,
-  //   data.categories,
-  //   detailsIPFSHash
-  // )
-  //
-  //
-  // await dispatch(executeTransaction({ tx, web3 }))
+
+  await dispatch(executeTransaction({ tx, web3 }))
 
   
 }

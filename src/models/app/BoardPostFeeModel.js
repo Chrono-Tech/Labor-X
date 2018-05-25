@@ -15,7 +15,7 @@ export default class BoardPostFeeModel extends AbstractModel {
   }
   
   get code () {
-    return Math.pow(4, this.index) // odd bit mask
+    return Math.pow(2, this.index) // odd bit mask
   }
   
   static valueOf (index) {
@@ -43,4 +43,4 @@ export const BOARD_POST_FEE_LIST = [
   }),
 ]
 
-export const BOARD_POST_MASK = Math.pow(4, BOARD_POST_FEE_LIST.length + 1) - 1 // cover odd bit mask
+export const BOARD_POST_MASK = Math.pow(2, BOARD_POST_FEE_LIST.length + 1) - 1 // cover odd bit mask

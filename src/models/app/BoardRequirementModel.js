@@ -35,7 +35,7 @@ export const BOARD_REQUIREMENTS_LIST = [
   }),
   new BoardRequirementModel({
     index: 1,
-    name: 'Specific rating and verification',
+    name: 'Specific rating and validation level',
   }),
   new BoardRequirementModel({
     index: 2,

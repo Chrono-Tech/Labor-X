@@ -13,7 +13,7 @@ export const balanceByPocket = (pocket) => createSelector(
 export const currencySelector = (currency) => createSelector(
   () => {
     return [
-      new CurrencyModel({ name: 'lhr', value: new BigNumber(25) })
+      new CurrencyModel({ name: 'lhr', value: new BigNumber(25.0) })
     ]
   },
   (currencyList) => currencyList.find((item) => item.name === currency)
