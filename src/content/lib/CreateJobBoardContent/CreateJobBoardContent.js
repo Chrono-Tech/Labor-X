@@ -32,7 +32,7 @@ class CreateJobBoardContent extends React.Component {
     console.log('handle', values)
     try {
       await this.props.handleSubmit(values)
-      // Router.pushRoute('/job-boards')
+      Router.pushRoute('/job-boards')
     } finally {
       this.setState({
         isLoading: false,
@@ -63,7 +63,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     async handleSubmit (values) {
-      console.log('handleSubmit', values)
+      
       await dispatch(boardCreate(
         new JobBoardFormModel({
           name: values.name,

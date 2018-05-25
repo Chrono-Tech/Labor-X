@@ -88,7 +88,6 @@ export default class BoardControllerDAO extends AbstractContractDAO {
   async getBoardsByIds (signer, ids: Number[]) {
     const boards = []
     const response = await this.contract.methods.getBoardsByIds(ids).call()
-    console.log('getBoardsByIds', response)
     const {
       _gotIds,
       _creators,
@@ -103,7 +102,6 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       const id = Number(_gotIds[i])
       const isSignerJoined = await this.getUserStatus(signer, id)
       const ipfs = await loadFromIPFS(ipfsHash) || {}
-      console.log('board ipfs', ipfs)
       
       boards.push(new BoardModel({
         id,

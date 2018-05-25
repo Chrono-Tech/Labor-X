@@ -24,7 +24,6 @@ class BalanceCollapsible extends React.Component {
 
     const lhrCurrency = currencyLHR && currencyLHR.value && currencyLHR.value.multipliedBy(balance.value) || 0
 
-    console.log('balance', balance.value.toString())
     return formatMoney(lhrCurrency, "$", 2, ",", ".")
   }
   
