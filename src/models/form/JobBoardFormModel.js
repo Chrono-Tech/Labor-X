@@ -41,7 +41,6 @@ export default class JobPostFormModel extends AbstractModel {
   }
   
   get ipfsData () {
-    console.log('ipfsData', this.fee && this.fee.index)
     return {
       hash: this.hash, // ipfs hash of the object itself
       name: this.name,

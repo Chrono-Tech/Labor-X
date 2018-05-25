@@ -156,11 +156,6 @@ export const boardCreate = (data) => async (dispatch, getState) => {
   
   const detailsIPFSHash = await storeIntoIPFS(data.ipfsData)
   
-  console.log('boardCreate', [signer.address,
-    TAGS_LIST[1].index,
-    TAG_AREAS_LIST[1].index,
-    data.categories,
-    detailsIPFSHash], data.ipfsData)
   const tx = boardControlerDAO.createCreateBoardTx(
     signer.address,
     TAGS_LIST[1].index,
