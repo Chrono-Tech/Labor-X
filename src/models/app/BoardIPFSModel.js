@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
 import faker from 'faker'
 
-import {BoardPostFeeModel} from 'src/models'
+import {BoardPostFeeModel, BoardRequirementModel} from 'src/models'
 import AbstractModel from '../AbstractModel'
-import {BoardRequirementModel} from "../index";
 
 const schemaFactory = () => ({
   hash: PropTypes.string.isRequired, // ipfs hash of the object itself
@@ -19,7 +18,6 @@ const schemaFactory = () => ({
 
 export default class BoardIPFSModel extends AbstractModel {
   constructor (props) {
-    console.log('BOARD ipfs model props', props)
     super(propsWithDefaults(props), schemaFactory())
     Object.assign(this, propsWithDefaults(props))
     Object.freeze(this)
@@ -30,11 +28,11 @@ function propsWithDefaults (props) {
   return Object.assign({}, {
     name: faker.company.companyName(),
     description: faker.lorem.sentence(10),
-    logo: faker.image.image(64, 64),
     background: faker.image.image(64, 64),
     fee: new BoardPostFeeModel(),
     lhus: 0,
     endorsingSkills: false,
-    joinRequirement: new BoardRequirementModel()
+    joinRequirement: new BoardRequirementModel(),
+    logo: faker.internet.avatar(),
   }, props)
 }

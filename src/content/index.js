@@ -5,4 +5,6 @@ export { default as ActiveJobsContent } from './lib/ActiveJobsContent/ActiveJobs
 export { default as PostedJobsContent } from './lib/PostedJobsContent/PostedJobsContent'
 export { default as ArchiveJobsContent } from './lib/ArchiveJobsContent/ArchiveJobsContent'
 export { default as OpportunitiesContent } from './lib/OpportunitiesContent/OpportunitiesContent'
+export { default as OpportunityViewContent } from './lib/OpportunityViewContent/OpportunityViewContent'
+export { default as RecruiterJobsContent } from './lib/RecruiterJobsContent/RecruiterJobsContent'
 export { default as TodoContent } from './lib/TodoContent/TodoContent'

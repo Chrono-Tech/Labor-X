@@ -1,11 +1,9 @@
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
-import initialStore from 'src/store'
+import { connect } from 'react-redux'
 import { ActiveJobsContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
-import 'styles/globals/globals.scss'
 
-class ActiveJobs extends React.Component {
+class ActiveJobsPage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.activeJobs'>
@@ -15,4 +13,4 @@ class ActiveJobs extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(ActiveJobs)
+export default connect()(ActiveJobsPage)

@@ -17,6 +17,9 @@ import {
   onSubmitRecoveryAccountForm,
   onConfirmRecoveryPassword,
   navigateToRecoveryPassword,
+  onSignInSuccess,
+  onSignInFail,
+  navigateToLoginForm,
 } from 'src/store'
 
 import { Button } from 'components/common'
@@ -40,11 +43,14 @@ import css from './LoginOptions.scss'
 class LoginOptions extends React.Component {
   static propTypes = {
     signIn: PropTypes.func,
+    onSignInSuccess: PropTypes.func,
+    onSignInFail: PropTypes.func,
     createAccount: PropTypes.func,
     onSubmitPrivateKey: PropTypes.func,
     onSubmitMnemonic: PropTypes.func,
     onSelectWallet: PropTypes.func,
     onChangeStep: PropTypes.func,
+    navigateToLoginForm: PropTypes.func,
     step: PropTypes.string,
     navigateToCreateWallet: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
@@ -94,7 +100,10 @@ class LoginOptions extends React.Component {
       onSelectWallet,
       selectedWallet,
       signIn,
+      onSignInSuccess,
+      onSignInFail,
       createAccount,
+      navigateToLoginForm,
       onSubmitRecoveryAccountForm,
       onConfirmRecoveryPassword,
       navigateToRecoveryPassword,
@@ -126,6 +135,7 @@ class LoginOptions extends React.Component {
         component = (
           <RecoveryAccountForm
             onChangeStep={onChangeStep}
+            navigateToLoginForm={navigateToLoginForm}
             walletsList={walletsList}
             selectedWallet={selectedWalletRecoveryForm}
             onSubmitSuccess={onSubmitRecoveryAccountForm}
@@ -146,7 +156,9 @@ class LoginOptions extends React.Component {
             onChangeStep={onChangeStep}
             walletsList={walletsList}
             selectedWallet={selectedWallet}
-            onSubmitSuccess={signIn}
+            onSubmit={signIn}
+            onSubmitSuccess={onSignInSuccess}
+            onSubmitFail={onSignInFail}
             onClickForgotPassword={navigateToRecoveryPassword}
           />)
         break
@@ -257,6 +269,8 @@ function mapDispatchToProps (dispatch) {
   return {
     onChangeStep: (step) => dispatch(changeStep(step)),
     signIn: (password) => dispatch(signIn(password)),
+    onSignInSuccess: () => dispatch(onSignInSuccess()),
+    onSignInFail: () => dispatch(onSignInFail()),
     createAccount: ({ walletName, password }) => dispatch(createAccount(walletName, password)),
     onSubmitPrivateKey: (signInModel) => dispatch(onSubmitPrivateKey(signInModel)),
     onSubmitMnemonic: (signInModel) => dispatch(onSubmitMnemonic(signInModel)),
@@ -264,6 +278,7 @@ function mapDispatchToProps (dispatch) {
     onSubmitRecoveryAccountForm: (values) => dispatch(onSubmitRecoveryAccountForm(values)),
     onConfirmRecoveryPassword: (values) => dispatch(onConfirmRecoveryPassword(values)),
     navigateToRecoveryPassword: () => dispatch(navigateToRecoveryPassword()),
+    navigateToLoginForm: () => dispatch(navigateToLoginForm()),
   }
 }
 

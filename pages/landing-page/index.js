@@ -1,15 +1,16 @@
-import { Link, Carousel, ParallaxBox } from 'components/common'
-import { Footer } from 'components/layouts'
-import ReactDOM from 'react-dom'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import ReactDOM from 'react-dom'
 import Head from 'next/head'
-import initialStore, { hideCookiesNotice, getCookiesNoticeValue } from 'store'
-import 'styles/globals/globals.scss'
+import PropTypes from 'prop-types'
+
+import { Link, Carousel, ParallaxBox } from 'src/components/common'
+import { Footer } from 'src/components/layouts'
+import { hideCookiesNotice, getCookiesNoticeValue } from 'src/store'
+
 import css from './index.scss'
 
-class Index extends React.Component {
+class LandingPage extends React.Component {
   static propTypes = {
     hideCookiesNotice: PropTypes.func,
     getCookiesNoticeValue: PropTypes.func,
@@ -322,4 +323,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRedux(initialStore, mapStateToProps, mapDispatchToProps)(Index)
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage)

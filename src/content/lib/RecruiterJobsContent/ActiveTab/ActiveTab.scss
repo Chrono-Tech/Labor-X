@@ -1,0 +1,8 @@
+.root {
+  > * {
+    margin-top: 4rem;
+  }
+  &:first-child {
+    margin-top: 0;
+  }
+}

@@ -1,11 +1,9 @@
-import MyProfileContent from 'components/MyProfile/MyProfile'
-import { MainLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from 'store'
+import { connect } from 'react-redux'
+import MyProfileContent from 'src/components/MyProfile/MyProfile'
+import { MainLayout } from 'src/components/layouts'
 
-class MyProfile extends React.Component {
+class MyProfilePage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.myProfile'>
@@ -15,4 +13,4 @@ class MyProfile extends React.Component {
   }
 }
 
-export default withRedux(initialStore)(MyProfile)
+export default connect()(MyProfilePage)

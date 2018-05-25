@@ -4,13 +4,19 @@ import { connect } from 'react-redux'
 import pluralize from 'pluralize'
 import { Popover, Icon } from 'src/components/common'
 import { BoardModel } from 'src/models'
-import { joinBoard } from 'src/store'
+import { joinBoard, terminateBoard } from 'src/store'
 import css from './JobBoardItem.scss'
+import {Button} from "../../common";
+import Dialog from "../../common/Dialog/Dialog";
+import RaisedButton from "material-ui/RaisedButton";
+import FlatButton from "material-ui/FlatButton";
 
 export class JobBoardItem extends React.Component {
   static propTypes = {
     jobBoard: PropTypes.instanceOf(BoardModel),
     onJoinBoard: PropTypes.func,
+    onTerminateBoard: PropTypes.func,
+    isMyJobBoard: PropTypes.bool,
   }
 
   constructor () {
@@ -21,6 +27,8 @@ export class JobBoardItem extends React.Component {
       securityPopover: false,
       actionPopover: false,
       isJoinInProgress: false,
+      isTerminateDialogOpen: false,
+      isTerminateProgress: false,
     }
   }
 
@@ -61,6 +69,21 @@ export class JobBoardItem extends React.Component {
     }
   }
 
+  handleTerminateClick = () => this.setState({ isTerminateDialogOpen: true })
+
+  handleTerminateApproveClick = async () => {
+    this.setState({ isTerminateProgress: true })
+    try {
+      await this.props.onTerminateBoard(this.props.jobBoard.id)
+    } finally {
+      this.setState({ isTerminateProgress: false, isTerminateDialogOpen: false })
+    }
+  }
+
+  handleTerminateRejectClick = () => this.setState({ isTerminateDialogOpen: false })
+
+  handleTerminateDialogClose = () => this.setState({ isTerminateDialogOpen: false })
+
   getRatingStars () {
     const { jobBoard } = this.props
 
@@ -87,42 +110,44 @@ export class JobBoardItem extends React.Component {
         arrowPosition={Popover.ARROW_POSITION.LEFT}
         className={css.starsPopover}
       >
-        <div className={css.popoverHeader}>Job Board Rating</div>
-        <div className={css.popoverDescription}>Rating given by the board participants.</div>
-        <table className={css.starsRatingTable}>
-          <tbody>
-            <tr>
-              <td className={css.countStars}>5 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>4 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>3 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>2 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr>
-              <td className={css.countStars}>1 stars</td>
-              <td className={css.countStarsVotes}>220</td>
-              <td className={css.countRating}><span className={css.countRatingTrack} /></td>
-            </tr>
-            <tr className={css.totalRow}>
-              <td>Total</td>
-              <td>860</td>
-              <td />
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <div className={css.popoverHeader}>Job Board Rating</div>
+          <div className={css.popoverDescription}>Rating given by the board participants.</div>
+          <table className={css.starsRatingTable}>
+            <tbody>
+              <tr>
+                <td className={css.countStars}>5 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr>
+                <td className={css.countStars}>4 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr>
+                <td className={css.countStars}>3 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr>
+                <td className={css.countStars}>2 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr>
+                <td className={css.countStars}>1 stars</td>
+                <td className={css.countStarsVotes}>220</td>
+                <td className={css.countRating}><span className={css.countRatingTrack} /></td>
+              </tr>
+              <tr className={css.totalRow}>
+                <td>Total</td>
+                <td>860</td>
+                <td />
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </Popover>
     )
   }
@@ -136,14 +161,16 @@ export class JobBoardItem extends React.Component {
         arrowPosition={Popover.ARROW_POSITION.LEFT}
         className={css.securityPopover}
       >
-        <div className={css.popoverHeader}>Validation</div>
-        <div className={css.popoverDescription}>The Job Board Owner has successfully passed our Validation</div>
-        <ul className={css.securityDoneList}>
-          <li className={css.listItem}>Email is validated</li>
-          <li className={css.listItem}>ID is validated</li>
-          <li className={css.listItem}>Address is validated</li>
-          <li className={css.listItem}>Certificates are validated</li>
-        </ul>
+        <div>
+          <div className={css.popoverHeader}>Validation</div>
+          <div className={css.popoverDescription}>The Job Board Owner has successfully passed our Validation</div>
+          <ul className={css.securityDoneList}>
+            <li className={css.listItem}>Email is validated</li>
+            <li className={css.listItem}>ID is validated</li>
+            <li className={css.listItem}>Address is validated</li>
+            <li className={css.listItem}>Certificates are validated</li>
+          </ul>
+        </div>
       </Popover>
     )
   }
@@ -166,7 +193,7 @@ export class JobBoardItem extends React.Component {
     )
 
     return (
-      <button className={css.actionButton} onClick={onClick} disabled={isDisabled}>
+      <button key='join' className={css.actionButton} onClick={onClick} disabled={isDisabled}>
         {text}
         {this.renderActionsTooltip({
           src: '/static/images/svg/help-white-clear.svg',
@@ -213,16 +240,14 @@ export class JobBoardItem extends React.Component {
   }
 
   renderJoinedActions () {
-    return (
-      <div>
-        <button className={css.actionButtonView}>
-          View
-        </button>
-        <span className={css.actionButtonJoined}>
-          Joined
-        </span>
-      </div>
-    )
+    return [
+      <button key='view' className={css.actionButtonView}>
+        View
+      </button>,
+      <span key='joined' className={css.actionButtonJoined}>
+        Joined
+      </span>,
+    ]
   }
 
   renderApprovalActions () {
@@ -249,15 +274,20 @@ export class JobBoardItem extends React.Component {
   }
 
   renderActions () {
-    const { jobBoard } = this.props
-
-    if (jobBoard.extra.isSignerJoined) {
-      return this.renderJoinedActions()
-    }
-    return this.renderDefaultActionButton(
-      'Join the Board',
-      this.state.isJoinInProgress,
-      () => this.handleJoinBoard(jobBoard.id)
+    const { jobBoard, isMyJobBoard } = this.props
+    return (
+      <div>
+        {
+          isMyJobBoard
+            ? <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>Terminate</button>
+            : null
+        }
+        {
+          jobBoard.extra.isSignerJoined
+            ? this.renderJoinedActions()
+            : this.renderDefaultActionButton('Join the Board', this.state.isJoinInProgress, () => this.handleJoinBoard(jobBoard.id))
+        }
+      </div>
     )
     // switch (jobBoard.status) {
     //   case BoardModel.STATUS.UNASSIGNED:
@@ -329,6 +359,33 @@ export class JobBoardItem extends React.Component {
     ) : null
   }
 
+  renderTerminateDialog () {
+    return (
+      <Dialog
+        title='Are you absolutely sure?'
+        open={this.state.isTerminateDialogOpen}
+        onRequestClose={this.handleTerminateDialogClose}
+        actions={[
+          <FlatButton
+            disabled={this.state.isTerminateProgress}
+            label='NO'
+            onClick={this.handleTerminateRejectClick}
+            type={Button.TYPES.SUBMIT}
+          />,
+          <RaisedButton
+            primary
+            disabled={this.state.isTerminateProgress}
+            label={this.state.isTerminateProgress ? 'Loading' : 'YES'}
+            onClick={this.handleTerminateApproveClick}
+            type={Button.TYPES.SUBMIT}
+          />,
+        ]}
+      >
+        This action cannot be undone. This will permanently terminate this job board
+      </Dialog>
+    )
+  }
+
   render () {
     const { jobBoard } = this.props
 
@@ -393,16 +450,21 @@ export class JobBoardItem extends React.Component {
             </div>
           </div>
         </div>
+        { this.renderTerminateDialog() }
       </div>
     )
   }
 }
 
+const mapStateToProps = (state, ownProps) => ({
+  isMyJobBoard: state.wallet.selectedWallet.encrypted[0].address === ownProps.jobBoard.creator.slice(2).toLowerCase(),
+})
+
 function mapDispatchToProps (dispatch) {
   return {
     onJoinBoard: (boardId) => dispatch(joinBoard(boardId)),
-    // stack: state.modals.stack,
+    onTerminateBoard: (boardId) => dispatch(terminateBoard(boardId)),
   }
 }
 
-export default connect(null, mapDispatchToProps)(JobBoardItem)
+export default connect(mapStateToProps, mapDispatchToProps)(JobBoardItem)

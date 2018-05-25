@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import { Field, reduxForm, propTypes } from 'redux-form'
-import { Toggle, SelectField, Checkbox, DatePicker, TextField } from 'redux-form-material-ui'
+import { Toggle, SelectField, DatePicker, TextField } from 'redux-form-material-ui'
 import { MuiThemeProvider, CircularProgress, MenuItem } from 'material-ui'
-import { Image, Input, Chip, Badge, Translate, NumberInput, Button, ValidatedCheckbox } from 'src/components/common'
+import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox } from 'src/components/common'
 import { SignerModel, BoardModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST } from 'src/models'
 import validate from './validate'
 import css from './CreateJobForm.scss'
@@ -90,7 +90,6 @@ class CreateJobForm extends React.Component {
                   className={css.inputSection}
                   component={TextField}
                   name='intro'
-                  multiLine
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.intro' />}
                 />
@@ -98,7 +97,6 @@ class CreateJobForm extends React.Component {
                   className={css.inputSection}
                   component={TextField}
                   name='responsibilities'
-                  multiLine
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.responsibilities' />}
                 />
@@ -106,7 +104,6 @@ class CreateJobForm extends React.Component {
                   className={css.inputSection}
                   component={TextField}
                   name='requirements'
-                  multiLine
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.requirements' />}
                 />

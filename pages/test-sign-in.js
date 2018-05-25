@@ -1,10 +1,8 @@
-import { Button, Link } from 'components/common'
-import { LoginLayout } from 'components/layouts'
-import withRedux from 'next-redux-wrapper'
 import React from 'react'
-import 'styles/globals/globals.scss'
-import initialStore from '../src/store'
-import { signOut } from '../src/store/login/actions'
+import { connect } from 'react-redux'
+import { Button, Link } from 'src/components/common'
+import { LoginLayout } from 'src/components/layouts'
+import { signOut } from 'src/store'
 
 function mapStateToProps (state) {
   return state.login
@@ -16,7 +14,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-class TestSignIn extends React.Component {
+class TestSignInPage extends React.Component {
   handleSingOut = () => this.props.signOut()
 
   render () {
@@ -38,4 +36,4 @@ class TestSignIn extends React.Component {
   }
 }
 
-export default withRedux(initialStore, mapStateToProps, mapDispatchToProps)(TestSignIn)
+export default connect(mapStateToProps, mapDispatchToProps)(TestSignInPage)

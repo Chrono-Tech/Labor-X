@@ -36,7 +36,7 @@ export const generateNameWallet = () => (dispatch, getState) => {
     currentFoundWallet = walletsList.find(
       (item) => item.name === currentName
     )
-  
+    
     currentWalletNameCount++
   }
   while (currentFoundWallet)

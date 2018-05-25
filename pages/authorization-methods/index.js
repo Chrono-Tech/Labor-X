@@ -1,20 +1,17 @@
 import React  from 'react'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Head from 'next/head'
-import withRedux from 'next-redux-wrapper'
 
-import { Link } from 'components/common'
-import { AccountLayout } from 'components/layouts'
-import { AuthorizationMethodsForm } from 'components/Account'
-import initialStore, { } from 'store'
+import { AccountLayout } from 'src/components/layouts'
+import { AuthorizationMethodsForm } from 'src/components/Account'
 
-import 'styles/globals/globals.scss'
 import css from './index.scss'
 
 class AuthorizationMethods extends React.Component {
 
   render () {
-    
+
     return (
       <div className={css.root}>
         <Head>
@@ -34,4 +31,4 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({}, dispatch)
 }
 
-export default withRedux(initialStore, null, mapDispatchToProps)(AuthorizationMethods)
+export default connect(null, mapDispatchToProps)(AuthorizationMethods)
