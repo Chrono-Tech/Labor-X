@@ -1,0 +1,183 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.main {
+  width: 100%;
+}
+
+.header {
+  background: url(/static/images/worker-profile-background.jpg) no-repeat center top;
+  background-size: cover;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.headerBlock {
+  width: 1000px;
+  margin: 30px auto 0;
+  background: #fff;
+}
+
+.titleBlock {
+  margin: 0;
+  color: $color-white;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+
+}
+
+.titleBar {
+  @include flex(row, flex-start, stretch);
+  height: 70px;
+  background-color: $color-azure;
+  border-bottom: 0.1rem solid rgba($color-white, 0.2);
+}
+
+.titleBarRight {
+  @include flex(row, flex-start, stretch);
+  margin-left: auto;
+}
+
+.cancelButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.helpButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.doneButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.securityRatingShield {
+  margin-top: -2px;
+}
+
+.workerBlock {
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  background: #fff;
+  //margin-bottom: 50px;
+  display: flex;
+  padding: 40px 40px 38px 40px;
+  color: #333333;
+}
+
+.logoBlock {
+  margin-right: 38px;
+  max-width: 30%;
+  //width: 180px;
+}
+
+.contentBlock {
+  flex: 1;
+}
+
+.titleBlock {
+  margin-bottom: 20px;
+}
+
+.title {
+  border: none;
+  background: transparent;
+  color: #333333;
+  font-size: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 6px;
+  text-align: left;
+
+  &:hover, &:focus {
+    color: #00A0D2;
+  }
+}
+
+.subtitle {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #F0F0F0;
+  margin-bottom: 16px;
+}
+
+.ratingBlock {
+  display: flex;
+  border-bottom: 1px solid #F0F0F0;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.starsWrapper {
+  margin-right: 40px;
+  position: relative;
+
+  &:hover .popover {
+    display: block;
+  }
+}
+
+.securityBadge{
+  position: relative;
+  margin-top: -2px;
+}
+
+
+.popover {
+  @include popover;
+  @include popoverArrowLeft;
+
+  b {
+    font-weight: 500;
+  }
+}
+
+.securityRating {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+}
+
+.securityRatingShield {
+  margin-top: -2px;
+}
+
+.jobInfoBlock {
+  color: #333333;
+  font-family: roboto, sans-serif;
+  font-size: 35px;
+  font-weight: 200;
+  margin-right: 45px;
+
+  .jobInfoCount {
+    letter-spacing: -1px;
+  }
+
+  .jobInfoDescribe {
+    color: #7F7F7F;
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+}
+
+.jobInfo {
+  display: flex;
+}
+
+.aboutJob {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

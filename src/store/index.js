@@ -15,6 +15,7 @@ const loggerMiddleware = createLogger({
   level:      'info',
   collapsed:  true,
   serialize: true,
+  predicate: () => typeof window !== 'undefined'
 })
 
 const web3 = typeof window !== 'undefined'
