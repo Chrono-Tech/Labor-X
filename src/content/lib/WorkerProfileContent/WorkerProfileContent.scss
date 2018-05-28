@@ -9,14 +9,17 @@
   background: url(/static/images/worker-profile-background.jpg) no-repeat center top;
   background-size: cover;
   margin: auto;
-  overflow: hidden;
+  padding-top: 60px;
   position: relative;
+}
+
+.flexRow {
+  @include flex(row, flex-start, center);
 }
 
 .headerBlock {
   width: 1000px;
-  margin: 30px auto 0;
-  background: #fff;
+  margin: 60px auto 0;
 }
 
 .titleBlock {
@@ -30,7 +33,9 @@
 .titleBar {
   @include flex(row, flex-start, stretch);
   height: 70px;
+  padding-left: 25px;
   background-color: $color-azure;
+  border-radius: 5px 5px 0 0;
   border-bottom: 0.1rem solid rgba($color-white, 0.2);
 }
 
@@ -60,26 +65,30 @@
 
 .workerBlock {
   box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
-  border-radius: 5px;
   background: #fff;
-  //margin-bottom: 50px;
   display: flex;
-  padding: 40px 40px 38px 40px;
+  flex-direction: column;
   color: #333333;
+}
+
+.workerBlockInner {
+  padding: 40px 40px 30px 40px;
+  display: flex;
+  border-bottom: 1px solid #F0F0F0;
 }
 
 .logoBlock {
   margin-right: 38px;
   max-width: 30%;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
   //width: 180px;
 }
 
-.contentBlock {
+.workerContentBlock {
   flex: 1;
-}
-
-.titleBlock {
-  margin-bottom: 20px;
 }
 
 .title {
@@ -89,7 +98,7 @@
   font-size: 30px;
   font-weight: 500;
   cursor: pointer;
-  margin-bottom: 6px;
+  margin: 10px 0 10px;
   text-align: left;
 
   &:hover, &:focus {
@@ -98,16 +107,19 @@
 }
 
 .subtitle {
-  padding-bottom: 20px;
+  padding-bottom: 25px;
   border-bottom: 1px solid #F0F0F0;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  color: #7F7F7F;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .ratingBlock {
   display: flex;
   border-bottom: 1px solid #F0F0F0;
   margin-bottom: 25px;
-  padding-bottom: 15px;
+  padding-bottom: 5px;
   position: relative;
 }
 
@@ -120,19 +132,14 @@
   }
 }
 
-.securityBadge{
-  position: relative;
-  margin-top: -2px;
+.popover {
+
 }
 
-
-.popover {
-  @include popover;
-  @include popoverArrowLeft;
-
-  b {
-    font-weight: 500;
-  }
+.securityBadge {
+  position: relative;
+  margin-top: -4px;
+  margin-right: 40px;
 }
 
 .securityRating {
@@ -147,7 +154,15 @@
   color: #fff;
 }
 
-.securityRatingShield {
+.workerStatus {
+  background: $color-green;
+  color: $color-white;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 12px;
+  line-height: 24px;
+  text-transform: uppercase;
+  padding: 0 14px;
   margin-top: -2px;
 }
 
@@ -180,4 +195,115 @@
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.daysBlock {
+  white-space: nowrap;
+
+  span {
+    margin-right: 10px;
+  }
+}
+.inactiveDay {
+  color: #BFBFBF;
+}
+
+.popoverHeader {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.popoverDescription {
+  font-weight: 300;
+  line-height: 22px;
+  margin: 10px 0 10px;
+}
+
+.headerMenu {
+  display: block;
+  position: relative;
+  border-bottom: 1px solid $color-azure;
+  list-style: none;
+  padding: 0 40px;
+}
+
+.headerLink {
+  background: transparent;
+  border: 0;
+  color: $color-gray50;
+  font-weight: 400;
+  text-transform: uppercase;
+  border-bottom: 5px solid transparent;
+  cursor: pointer;
+  padding: 16px 20px 12px;
+
+  &:hover {
+    border-color: $color-gray50;
+  }
+
+  &.linkActive {
+    border-color: $color-azure;
+    color: $color-azure;
+    font-weight: 700;
+  }
+}
+
+.messageLink {
+  background: $color-azure;
+  border: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 0px 5px 8px rgba(0,0,0,0.1);
+  position: absolute;
+  cursor: pointer;
+  top: -30px;
+  right: 40px;
+
+  &:hover {
+    background: $color-blue;
+  }
+}
+
+.messageIcon {
+  color: #fff;
+}
+
+
+.securityDoneList {
+  color: #333;
+  font-weight: 400;
+  list-style: none;
+
+  .listItem {
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 16px;
+    line-height: 24px;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      background: url('/static/images/svg/security-done.svg');
+      position: absolute;
+      top:0;
+      left:0;
+    }
+
+  }
+}
+
+.contentWrapper {
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+  width: 1000px;
+  min-height: 500px;
+  background: #fff;
+  margin: 0 auto 150px;
+  border-radius: 0 0 5px 5px;
+}
+
+.statusPopover {
+  width: 250px;
 }

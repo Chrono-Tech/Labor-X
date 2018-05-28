@@ -3,6 +3,7 @@ import React from 'react'
 import { Transition } from 'react-transition-group'
 import css from './Tip.scss'
 import { Translate } from 'components/common'
+import Popover from "../Popover/Popover";
 
 const DELAY = 250
 
@@ -26,9 +27,30 @@ const transitionStyles = {
 }
 
 export default class Tip extends React.Component {
+  static POSITION = {
+    LEFT: 'left',
+    CENTER: 'center',
+    RIGHT: 'right',
+  }
+  
   static propTypes = {
     title: PropTypes.string,
     tip: PropTypes.string,
+    tipContent: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    tipClassName: PropTypes.string,
+    position: PropTypes.oneOf([
+      Tip.POSITION.LEFT,
+      Tip.POSITION.CENTER,
+      Tip.POSITION.RIGHT,
+    ]),
+  }
+  
+  static defaultProps = {
+    position: Tip.POSITION.RIGHT,
+    title: '',
+    tip: '',
+    tipClassName: '',
+    tipContent: null,
   }
 
   constructor () {
@@ -41,14 +63,45 @@ export default class Tip extends React.Component {
   handleMouseEnter = () => this.setState({ isShow: true })
 
   handleMouseLeave = () => this.setState({ isShow: false })
+  
+  getArrowPosition(){
+    const { position } = this.props
+    
+    
+    switch (position) {
+      case Popover.ARROW_POSITION.LEFT:
+        return css.arrowLeft
+    
+      case Popover.ARROW_POSITION.CENTER:
+        return css.arrowCenter
+    
+      case Popover.ARROW_POSITION.RIGHT:
+        return css.arrowRight
+    
+      default:
+        return css.arrowRight
+    }
+  }
+  
+  renderTipContent(){
+    const { tipContent } = this.props
+    
+    if (tipContent){
+      return (<div className={css.content}>{ tipContent }</div>)
+    }
+    
+    return (
+      <div className={css.content}>
+        {this.props.title && <div className={css.title}><Translate value={this.props.title} /></div>}
+        <p><Translate value={this.props.tip} /></p>
+      </div>
+    )
+  }
 
   renderTip = () => (state) => (
     <div className={css.root} style={transitionStyles[ state ]}>
-      <div className={css.wrapper}>
-        <div className={css.content}>
-          {this.props.title && <div className={css.title}><Translate value={this.props.title} /></div>}
-          <p><Translate value={this.props.tip} /></p>
-        </div>
+      <div className={[css.wrapper, this.getArrowPosition(), this.props.tipClassName].join(' ')}>
+        { this.renderTipContent()}
       </div>
     </div>
   )

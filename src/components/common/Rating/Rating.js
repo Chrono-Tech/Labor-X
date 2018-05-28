@@ -2,20 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import pluralize from 'pluralize'
 
-import { Icon } from 'components/common'
+import { Icon, Tip} from 'components/common'
 import css from './Rating.scss'
 
 
 export default class Rating extends React.Component {
   static propTypes = {
     starSize: PropTypes.number,
-    title: PropTypes.element,
-    description: PropTypes.element,
+    tip: PropTypes.shape({
+      title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+      description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+      tipClassName: PropTypes.string,
+    }),
+    disableTip: PropTypes.bool,
     rating: PropTypes.number,
     className: PropTypes.string,
-    popoverClassName: PropTypes.string,
-    disablePopover: PropTypes.bool,
-    popoverContent: PropTypes.element,
     starsTable: PropTypes.shape({
       stars: PropTypes.arrayOf(
         PropTypes.shape({
@@ -32,7 +33,7 @@ export default class Rating extends React.Component {
     rating: 0,
     starSize: 20,
     starsTable: null,
-    popoverClassName: '',
+    tip: null,
     className: '',
   }
   
@@ -74,16 +75,12 @@ export default class Rating extends React.Component {
   }
   
   renderPopoverContent(){
-    const { starsTable, popoverContent, title, description } = this.props
-    
-    if (popoverContent){
-      return (<div className={css.popover}>{ popoverContent }</div>)
-    }
+    const { starsTable, tip } = this.props
     
     return (
-      <div className={css.popover}>
-        { title ? (<div className={css.popoverHeader}>{ title }</div>) : null }
-        { description ? (<div className={css.popoverDescription}>{ description }</div>) : null }
+      <div>
+        { tip.title ? (<div className={css.popoverHeader}>{ tip.title }</div>) : null }
+        { tip.description ? (<div className={css.popoverDescription}>{ tip.description }</div>) : null }
         { starsTable ? this.renderRatingTable() : null }
       </div>
     )
@@ -105,13 +102,26 @@ export default class Rating extends React.Component {
     return starsArray
   }
   
+  renderContent(){
+    const { disablePopover, tip } = this.props
+  
+    if (disablePopover) {
+      return this.renderStars()
+    }
+    
+    return (
+      <Tip tipContent={this.renderPopoverContent()} position={Tip.POSITION.LEFT}>
+        { this.renderStars() }
+      </Tip>
+    )
+  }
+  
   render () {
-    const { className, disablePopover } = this.props
+    const { className } = this.props
     
     return (
       <div className={[css.main, className].join(' ')}>
-        { this.renderStars() }
-        { disablePopover ? null: this.renderPopoverContent() }
+        { this.renderContent() }
       </div>
     
     )
