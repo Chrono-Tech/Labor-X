@@ -4,7 +4,8 @@ import { Field, reduxForm } from 'redux-form'
 import { CircularProgress } from 'material-ui'
 import { MuiThemeProvider } from 'material-ui/styles'
 import { MenuItem } from 'material-ui/Menu'
-import { SelectField, AutoComplete } from 'redux-form-material-ui'
+import AutoComplete from 'material-ui/AutoComplete'
+import { SelectField } from 'redux-form-material-ui'
 
 import { Image, Chip, Input, Button, Icon, Checkbox } from 'components/common'
 import {
@@ -100,7 +101,7 @@ class CreateJobBoardForm extends React.Component {
               Validation Level Requirements
             </h3>
             <div className={css.subtitle}>
-              Indicates which users' information are validated.
+              Indicates which users&apos; information are validated.
             </div>
             <div>
               <div className={css.securityRating}>

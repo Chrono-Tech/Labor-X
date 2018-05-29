@@ -14,7 +14,9 @@ const schemaFactory = () => ({
     PropTypes.instanceOf(TagModel)
   ),
   tagsArea: PropTypes.instanceOf(TagAreaModel),
-  tagsCategory: PropTypes.instanceOf(TagCategoryModel),
+  tagsCategory: PropTypes.arrayOf(
+    PropTypes.instanceOf(TagCategoryModel)
+  ),
   ipfs: PropTypes.instanceOf(BoardIPFSModel),
   extra: PropTypes.instanceOf(BoardExtraModel),
 })

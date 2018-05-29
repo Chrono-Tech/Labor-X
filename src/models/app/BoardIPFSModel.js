@@ -29,10 +29,10 @@ function propsWithDefaults (props) {
     name: faker.company.companyName(),
     description: faker.lorem.sentence(10),
     background: faker.image.image(64, 64),
-    fee: new BoardPostFeeModel(),
+    fee: null,
     lhus: 0,
     endorsingSkills: false,
-    joinRequirement: new BoardRequirementModel(),
+    joinRequirement: null,
     logo: faker.internet.avatar(),
   }, props)
 }

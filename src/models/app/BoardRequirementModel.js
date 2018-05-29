@@ -10,7 +10,6 @@ const schemaFactory = () => ({
 export default class BoardRequirementModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
-    Object.assign(this, props)
     Object.freeze(this)
   }
   
@@ -19,6 +18,10 @@ export default class BoardRequirementModel extends AbstractModel {
   }
   
   static valueOf (index) {
+    if (!index){
+      return null
+    }
+    
     return BOARD_REQUIREMENTS_LIST[index]
   }
   

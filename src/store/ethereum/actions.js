@@ -47,11 +47,8 @@ export const executeTransaction = ({ web3, tx }) => async (dispatch, getState) =
     isSubmitted: true,
     isAccepted: true,
   })
-  console.log('execute 1')
   
   await dispatch({ type: TX_CREATE, entry })
-  
-  console.log('execute 2')
   
   return dispatch(processTransaction({
     web3,
@@ -96,9 +93,7 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
     // eslint-disable-next-line no-console
     console.log('signer', signer, entry)
     const signed = await signer.signTransaction(omitBy(entry.tx, isNil))
-    console.log('signer1', signed)
     const raw = signed.rawTransaction
-    console.log('signer2', raw)
     dispatch({
       type: TX_STATUS,
       key: entry.key,

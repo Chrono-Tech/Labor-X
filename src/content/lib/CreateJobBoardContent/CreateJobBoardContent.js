@@ -29,7 +29,6 @@ class CreateJobBoardContent extends React.Component {
       isLoading: true,
     })
     
-    console.log('handle', values)
     try {
       await this.props.handleSubmit(values)
       Router.pushRoute('/job-boards')

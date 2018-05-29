@@ -81,7 +81,6 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       signer,
       array.map((element, index) => index + 1)
     )
-    console.log('getBoards', boards, length)
     return boards
   }
 
@@ -112,9 +111,9 @@ export default class BoardControllerDAO extends AbstractContractDAO {
         tagsCategory: TagCategoryModel.arrayValueOfMask(_tagsCategories[i]),
         ipfs: new BoardIPFSModel({
           ...ipfs,
-          joinRequirement: ipfs.joinRequirement !== undefined && BoardRequirementModel.valueOf(ipfs.joinRequirement),
-          fee: BoardPostFeeModel.valueOf(ipfs.fee),
-          lhus: ipfs.lhus !== undefined && +ipfs.lhus,
+          joinRequirement: ipfs.joinRequirement !== undefined ? BoardRequirementModel.valueOf(ipfs.joinRequirement) : null,
+          fee: ipfs.fee !== undefined ? BoardPostFeeModel.valueOf(ipfs.fee) : null,
+          lhus: ipfs.lhus !== undefined ? +ipfs.lhus : 0,
           hash: ipfsHash,
           endorsingSkills: !!ipfs.endorsingSkills
         }),
