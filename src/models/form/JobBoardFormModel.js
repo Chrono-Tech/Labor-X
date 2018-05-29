@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import {
   TagCategoryModel,
   BoardRequirementModel,
-  BoardPostFeeModel
+  BoardPostFeeModel,
 } from 'src/models'
 import AbstractModel from '../AbstractModel'
 
@@ -36,7 +36,7 @@ export default class JobPostFormModel extends AbstractModel {
     Object.freeze(this)
   }
   
-  get categories(){
+  get categories (){
     return TagCategoryModel.writeArrayToMask(this.tagCategories)
   }
   

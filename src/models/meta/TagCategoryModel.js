@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
+import { filterArrayByIndexMask, FILTER_MODE_ODD } from 'src/utils'
 import AbstractModel from '../AbstractModel'
-import {filterArrayByIndexMask, FILTER_MODE_ODD} from 'src/utils'
 
 const schemaFactory = () => ({
   index: PropTypes.number.isRequired,

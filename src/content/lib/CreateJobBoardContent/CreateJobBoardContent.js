@@ -1,26 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {formValueSelector} from 'redux-form'
+import { formValueSelector } from 'redux-form'
 
 import {
   TagCategoryModel,
   JobBoardFormModel,
   BoardPostFeeModel,
   BoardRequirementModel,
-  BOARD_REQUIREMENTS_LIST
+  BOARD_REQUIREMENTS_LIST,
 } from 'src/models'
 import { boardCreate } from 'src/store'
 import { Router } from 'src/routes'
 import CreateJobBoard, { FORM_CREATE_JOB_BOARD } from './CreateJobBoardForm'
 
-
 class CreateJobBoardContent extends React.Component {
   
-  constructor(){
+  constructor (){
     super()
     
     this.state = {
-      isLoading: false
+      isLoading: false,
     }
   }
   
@@ -39,11 +38,11 @@ class CreateJobBoardContent extends React.Component {
     }
   }
   
-  render(){
+  render (){
     const { isSpecificRequirements } = this.props
     return (
       <CreateJobBoard
-        onSubmit={this.handleSubmit.bind(this)}
+        onSubmit={this.handleSubmit}
         isLoading={this.state.isLoading}
         isSpecificRequirements={isSpecificRequirements}
       />
@@ -55,7 +54,7 @@ const mapStateToProps = (state) => {
   const formSelector = formValueSelector(FORM_CREATE_JOB_BOARD)
   
   return {
-    isSpecificRequirements: formSelector(state, 'joinRequirement') == 1
+    isSpecificRequirements: formSelector(state, 'joinRequirement') == 1,
   }
 }
 

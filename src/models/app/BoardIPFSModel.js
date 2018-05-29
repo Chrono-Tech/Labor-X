@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import faker from 'faker'
 
-import {BoardPostFeeModel, BoardRequirementModel} from 'src/models'
+import { BoardPostFeeModel, BoardRequirementModel } from 'src/models'
 import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({

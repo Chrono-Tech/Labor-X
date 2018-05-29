@@ -10,7 +10,7 @@ import {
   TagAreaModel,
   TagCategoryModel,
   BoardPostFeeModel,
-  BoardRequirementModel
+  BoardRequirementModel,
 } from 'src/models'
 import { loadFromIPFS, bytes32ToIPFSHash, ipfsHashToBytes32  } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
@@ -115,7 +115,7 @@ export default class BoardControllerDAO extends AbstractContractDAO {
           fee: ipfs.fee !== undefined ? BoardPostFeeModel.valueOf(ipfs.fee) : null,
           lhus: ipfs.lhus !== undefined ? +ipfs.lhus : 0,
           hash: ipfsHash,
-          endorsingSkills: !!ipfs.endorsingSkills
+          endorsingSkills: !!ipfs.endorsingSkills,
         }),
         extra: new BoardExtraModel({
           isSignerJoined,

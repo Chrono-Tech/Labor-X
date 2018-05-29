@@ -6,10 +6,10 @@ import { Popover, Icon } from 'src/components/common'
 import { BoardModel } from 'src/models'
 import { joinBoard, terminateBoard } from 'src/store'
 import css from './JobBoardItem.scss'
-import {Button} from "../../common";
-import Dialog from "../../common/Dialog/Dialog";
-import RaisedButton from "material-ui/RaisedButton";
-import FlatButton from "material-ui/FlatButton";
+import { Button } from "../../common"
+import Dialog from "../../common/Dialog/Dialog"
+import RaisedButton from "material-ui/RaisedButton"
+import FlatButton from "material-ui/FlatButton"
 
 export class JobBoardItem extends React.Component {
   static propTypes = {
@@ -343,7 +343,7 @@ export class JobBoardItem extends React.Component {
   renderBoardTags () {
     const { jobBoard } = this.props
     const tags = [
-      jobBoard.tagsCategory.name,
+      jobBoard.tagsCategory.map(t => t.name),
       ...jobBoard.tags.map(t => t.name),
     ]
     return tags.join(', ')

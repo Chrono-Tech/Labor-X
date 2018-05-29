@@ -1,12 +1,10 @@
-import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TAG_AREAS_LIST } from 'src/models'
-import { storeIntoIPFS, loadFromIPFS, ipfsHashToBytes32 } from 'src/utils'
+import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TAG_AREAS_LIST, TAGS_LIST } from 'src/models'
+import { storeIntoIPFS } from 'src/utils'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { boardByIdSelector } from './selectors'
 import { executeTransaction } from '../ethereum/actions'
 import { web3Selector } from '../ethereum/selectors'
-import {SkillModel, TAG_CATEGORIES_LIST, TagCategoryModel, TAGS_LIST} from "../../models";
-
 
 export const BOARDS_CLEAR = 'boards/clear'
 export const BOARDS_SAVE = 'boards/save'
@@ -164,8 +162,6 @@ export const boardCreate = (data) => async (dispatch, getState) => {
     detailsIPFSHash
   )
 
-
   await dispatch(executeTransaction({ tx, web3 }))
-
   
 }

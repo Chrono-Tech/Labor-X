@@ -5,13 +5,12 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   name: PropTypes.string,
-  value: PropTypes.instanceOf(BigNumber)
+  value: PropTypes.instanceOf(BigNumber),
 })
 
 export default class CurrencyModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
-    Object.assign(this, props)
     Object.freeze(this)
   }
 }

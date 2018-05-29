@@ -24,20 +24,19 @@ class CreateJobBoardForm extends React.Component {
     change: PropTypes.func,
   }
   
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     
     this.state = {
-      categories: []
+      categories: [],
     }
   }
   
-  
-  getTagsList(){
+  getTagsList (){
     return TAG_CATEGORIES_LIST
   }
   
-  onRemoveCategory(tag, i){
+  onRemoveCategory (tag, i){
     const { categories } = this.state
     const { change } = this.props
     
@@ -48,14 +47,14 @@ class CreateJobBoardForm extends React.Component {
     change('tagCategories', newCategories.map((item) => item.index).join(', '))
   }
   
-  onAddCategory(tag) {
+  onAddCategory (tag) {
     const { change } = this.props
     
     if (!this.state.categories.find(item => item.index === tag.index)) {
       
       const newCategories = [...this.state.categories, tag]
       
-      this.setState({categories: newCategories }, () => {
+      this.setState({ categories: newCategories }, () => {
         change('tagCategories', newCategories.map((item) => item.index).join(','))
       })
     }
@@ -63,12 +62,12 @@ class CreateJobBoardForm extends React.Component {
     change('searchCategory', '')
   }
   
-  searchCategoryFilter(searchText, key){
+  searchCategoryFilter (searchText, key){
     return searchText !== '' &&
       String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
   }
   
-  renderCategories(){
+  renderCategories (){
     const { categories } = this.state
     
     return categories && categories.map((item, i) => (
@@ -76,7 +75,7 @@ class CreateJobBoardForm extends React.Component {
     ))
   }
   
-  renderSpecificRequirementsContent(){
+  renderSpecificRequirementsContent (){
     return (
       <div>
         <div className={css.specificRequirementsBlock}>
@@ -168,8 +167,8 @@ class CreateJobBoardForm extends React.Component {
                 name='endorsingSkills'
                 label='Worker skills must be endorsed'
                 material
-                defaultTheme={true}
-                />
+                defaultTheme
+              />
             </div>
           </div>
         </div>
@@ -222,13 +221,13 @@ class CreateJobBoardForm extends React.Component {
               <div className={css.flexRow}>
                 <Field
                   className={css.find}
-                  style={{marginRight: 10}}
+                  style={{ marginRight: 10 }}
                   component={AutoComplete}
                   onNewRequest={this.onAddCategory.bind(this)}
                   filter={this.searchCategoryFilter.bind(this)}
                   dataSourceConfig={{
                     text: 'name',
-                    value: 'name'
+                    value: 'name',
                   }}
                   dataSource={this.getTagsList()}
                   name='searchCategory'
@@ -255,10 +254,10 @@ class CreateJobBoardForm extends React.Component {
                 component={SelectField}
                 className={css.requirementsSelect}
                 name='joinRequirement'
-                selectedMenuItemStyle={{fontSize: 14}}
-                menuItemStyle={{fontSize: 14}}
-                labelStyle={{fontSize: 14}}
-                style={{width: 300}}
+                selectedMenuItemStyle={{ fontSize: 14 }}
+                menuItemStyle={{ fontSize: 14 }}
+                labelStyle={{ fontSize: 14 }}
+                style={{ width: 300 }}
               >
                 {
                   BOARD_REQUIREMENTS_LIST.map((item, i) => (

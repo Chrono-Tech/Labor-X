@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
+import { filterArrayByIndexMask } from 'src/utils'
 import AbstractModel from '../AbstractModel'
-import {filterArrayByIndexMask} from 'src/utils'
 
 const schemaFactory = () => ({
   index: PropTypes.number.isRequired,
@@ -14,7 +14,7 @@ export default class BoardRequirementModel extends AbstractModel {
   }
   
   get code () {
-    return Math.pow(4, this.index) // odd bit mask
+    return Math.pow(2, this.index) // odd bit mask
   }
   
   static valueOf (index) {
@@ -46,4 +46,4 @@ export const BOARD_REQUIREMENTS_LIST = [
   }),
 ]
 
-export const BOARD_REQUIREMENT_MASK = Math.pow(4, BOARD_REQUIREMENTS_LIST.length + 1) - 1 // cover odd bit mask
+export const BOARD_REQUIREMENT_MASK = Math.pow(2, BOARD_REQUIREMENTS_LIST.length + 1) - 1 // cover odd bit mask

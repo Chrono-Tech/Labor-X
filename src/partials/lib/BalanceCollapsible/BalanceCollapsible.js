@@ -6,7 +6,6 @@ import { MuiThemeProvider } from 'material-ui/styles'
 import { formatMoney, formatNumber } from 'accounting'
 
 import { Image } from 'components/common'
-import { BalanceMicro } from 'src/micros'
 import { PocketModel, BalanceModel, CurrencyModel } from 'src/models'
 import { signerSelector, ethPocketSelector, balanceByPocket, currencySelector } from 'src/store'
 
@@ -16,7 +15,7 @@ class BalanceCollapsible extends React.Component {
   static propTypes = {
     pocket: PropTypes.instanceOf(PocketModel).isRequired,
     balance: PropTypes.instanceOf(BalanceModel),
-    currencyLHR: PropTypes.instanceOf(CurrencyModel)
+    currencyLHR: PropTypes.instanceOf(CurrencyModel),
   }
 
   getBalanceSum (){
@@ -27,7 +26,7 @@ class BalanceCollapsible extends React.Component {
     return formatMoney(lhrCurrency, "$", 2, ",", ".")
   }
   
-  getBalance(){
+  getBalance (){
     const { balance } = this.props
     
     return formatNumber(balance.value)
