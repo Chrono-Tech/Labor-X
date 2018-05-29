@@ -133,12 +133,11 @@ export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
 
   if (searchText){
     searchText = String(searchText).toLowerCase()
-    currentList = currentList.filter((board) => String(board.name || '').toLowerCase().includes(searchText) )
+    currentList = currentList.filter((board) => (String(board.ipfs.name || '').toLowerCase().includes(searchText)))
   }
 
   dispatch({
     type: BOARDS_FILTER,
     boardsList: currentList,
   })
-
 }

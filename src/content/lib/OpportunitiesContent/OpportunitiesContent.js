@@ -1,10 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { reduxForm, Field } from 'redux-form'
 import PropTypes from 'prop-types'
 import { SignerModel, JOB_STATE_CREATED } from 'src/models'
-import { signerSelector, jobsListSelector, boardByIdSelector } from 'src/store'
+import { signerSelector, jobsFilteredListSelector, boardByIdSelector, updateFilterJobs } from 'src/store'
 import { Translate, OpportunityCard, Input, Image } from 'src/components/common'
 import css from './OpportunitiesContent.scss'
+
+const FORM_JOBS = 'form/jobs'
+
+const onSubmit = (values, dispatch) => {
+  dispatch(updateFilterJobs(values))
+}
 
 export class OpportunitiesContent extends React.Component {
   static propTypes = {
@@ -25,7 +32,9 @@ export class OpportunitiesContent extends React.Component {
               icon={Image.ICONS.SEARCH}
               color={Image.COLORS.BLACK}
             />
-            <Input
+            <Field
+              component={Input}
+              name='searchText'
               className={css.search}
               lineEnabled
               type={Input.TYPES.TEXT}
@@ -51,7 +60,7 @@ export class OpportunitiesContent extends React.Component {
 
 function mapStateToProps (state) {
   const signer = signerSelector()(state)
-  const jobs = jobsListSelector()(state)
+  const jobs = jobsFilteredListSelector()(state)
 
   const allowedStates = [ JOB_STATE_CREATED ]
   const cards = jobs
@@ -73,14 +82,13 @@ function mapDispatchToProps (/*dispatch*/) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OpportunitiesContent)
+const form = reduxForm({
+  form: FORM_JOBS,
+  fields: ['searchText'],
+  onChange: (values, dispatch) => {
+    dispatch(updateFilterJobs(values))
+  },
+  onSubmit,
+})(OpportunitiesContent)
 
-// [
-//  {
-//    icon: '/static/temp/get-started.png',
-//    jobName: 'Install 10 Gas Ovens',
-//    title: 'Get Started at Become Involved',
-//    payTotal: 80,
-//    payHour: 2,
-//  },
-// ]
+export default connect(mapStateToProps, mapDispatchToProps)(form)
