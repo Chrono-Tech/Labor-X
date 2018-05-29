@@ -10,18 +10,7 @@ import validate from './validate'
 
 import css from './MnemonicForm.scss'
 
-const FORM_MNEMONIC = 'form/mnemonic'
-
-const onSubmit = ({ mnemonic }) => {
-  const address = createAddressFromMnemonic(mnemonic)
-
-  return new SignInModel({
-    isHD: true,
-    address: address,
-    method: SignInModel.METHODS.MNEMONIC,
-    key: mnemonic,
-  })
-}
+export const FORM_MNEMONIC = 'form/mnemonic'
 
 class MnemonicForm extends React.Component {
   static propTypes = {
@@ -63,4 +52,4 @@ class MnemonicForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: FORM_MNEMONIC, validate, onSubmit })(MnemonicForm)
+export default reduxForm({ form: FORM_MNEMONIC, validate })(MnemonicForm)

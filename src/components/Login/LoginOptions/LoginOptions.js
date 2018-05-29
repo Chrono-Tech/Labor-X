@@ -12,7 +12,11 @@ import {
   changeStep,
   LoginSteps,
   onSubmitMnemonic,
+  onSubmitMnemonicSuccess,
+  onSubmitMnemonicFail,
   onSubmitPrivateKey,
+  onSubmitPrivateKeySuccess,
+  onSubmitPrivateKeyFail,
   onSelectWallet,
   onSubmitRecoveryAccountForm,
   onConfirmRecoveryPassword,
@@ -47,7 +51,11 @@ class LoginOptions extends React.Component {
     onSignInFail: PropTypes.func,
     createAccount: PropTypes.func,
     onSubmitPrivateKey: PropTypes.func,
+    onSubmitPrivateKeySuccess: PropTypes.func,
+    onSubmitPrivateKeyFail: PropTypes.func,
     onSubmitMnemonic: PropTypes.func,
+    onSubmitMnemonicSuccess: PropTypes.func,
+    onSubmitMnemonicFail: PropTypes.func,
     onSelectWallet: PropTypes.func,
     onChangeStep: PropTypes.func,
     navigateToLoginForm: PropTypes.func,
@@ -95,7 +103,11 @@ class LoginOptions extends React.Component {
       onChangeStep,
       step,
       onSubmitMnemonic,
+      onSubmitMnemonicSuccess,
+      onSubmitMnemonicFail,
       onSubmitPrivateKey,
+      onSubmitPrivateKeySuccess,
+      onSubmitPrivateKeyFail,
       walletsList,
       onSelectWallet,
       selectedWallet,
@@ -114,13 +126,25 @@ class LoginOptions extends React.Component {
 
     switch (step) {
       case LoginSteps.Mnemonic:
-        component = (<MnemonicForm onChangeStep={onChangeStep} onSubmitSuccess={onSubmitMnemonic} />)
+        component = (
+          <MnemonicForm
+            onChangeStep={onChangeStep}
+            onSubmit={onSubmitMnemonic}
+            onSubmitSuccess={onSubmitMnemonicSuccess}
+            onSubmitFail={onSubmitMnemonicFail}
+          />)
         break
       case LoginSteps.WalletFile:
         component = (<WalletFileForm onChangeStep={onChangeStep} onSubmitSuccess={signIn} />)
         break
       case LoginSteps.PrivateKey:
-        component = (<PrivateKeyForm onChangeStep={onChangeStep} onSubmitSuccess={onSubmitPrivateKey} />)
+        component = (
+          <PrivateKeyForm
+            onChangeStep={onChangeStep}
+            onSubmit={onSubmitPrivateKey}
+            onSubmitSuccess={onSubmitPrivateKeySuccess}
+            onSubmitFail={onSubmitPrivateKeyFail}
+          />)
         break
       case LoginSteps.CreateWallet:
         component = (<CreateAccount onChangeStep={onChangeStep} onSubmitSuccess={createAccount} />)
@@ -272,8 +296,12 @@ function mapDispatchToProps (dispatch) {
     onSignInSuccess: () => dispatch(onSignInSuccess()),
     onSignInFail: () => dispatch(onSignInFail()),
     createAccount: ({ walletName, password }) => dispatch(createAccount(walletName, password)),
-    onSubmitPrivateKey: (signInModel) => dispatch(onSubmitPrivateKey(signInModel)),
-    onSubmitMnemonic: (signInModel) => dispatch(onSubmitMnemonic(signInModel)),
+    onSubmitPrivateKey: (values) => dispatch(onSubmitPrivateKey(values)),
+    onSubmitPrivateKeySuccess: (values) => dispatch(onSubmitPrivateKeySuccess(values)),
+    onSubmitPrivateKeyFail: (values) => dispatch(onSubmitPrivateKeyFail(values)),
+    onSubmitMnemonic: (values) => dispatch(onSubmitMnemonic(values)),
+    onSubmitMnemonicSuccess: (values) => dispatch(onSubmitMnemonicSuccess(values)),
+    onSubmitMnemonicFail: (values) => dispatch(onSubmitMnemonicFail(values)),
     onSelectWallet: (signInModel) => dispatch(onSelectWallet(signInModel)),
     onSubmitRecoveryAccountForm: (values) => dispatch(onSubmitRecoveryAccountForm(values)),
     onConfirmRecoveryPassword: (values) => dispatch(onConfirmRecoveryPassword(values)),
