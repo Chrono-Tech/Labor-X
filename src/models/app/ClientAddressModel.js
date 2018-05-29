@@ -14,7 +14,7 @@ export const schemaFactory = () => ({
   suit: PropTypes.string,
 })
 
-export default class JobAddressModel extends AbstractModel {
+export default class ClientAddressModel extends AbstractModel {
   constructor (props) {
     super(propsWithDefaults(props), schemaFactory())
     Object.freeze(this)

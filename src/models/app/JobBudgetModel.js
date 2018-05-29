@@ -24,6 +24,13 @@ export default class JobBudgetModel extends AbstractModel {
     return null
   }
 
+  get awardUSD (): BigNumber {
+    if (this.isSpecified) {
+      return this.award.multipliedBy(40)
+    }
+    return null
+  }
+
   get hourlyRateAward (): BigNumber {
     if (this.isSpecified) {
       return new BigNumber(this.hourlyRate)
