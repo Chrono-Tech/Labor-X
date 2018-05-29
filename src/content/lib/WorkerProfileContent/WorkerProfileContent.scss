@@ -109,7 +109,6 @@
 .subtitle {
   padding-bottom: 25px;
   border-bottom: 1px solid #F0F0F0;
-  margin-bottom: 20px;
   color: #7F7F7F;
   font-size: 16px;
   font-weight: 500;
@@ -118,8 +117,9 @@
 .ratingBlock {
   display: flex;
   border-bottom: 1px solid #F0F0F0;
-  margin-bottom: 25px;
-  padding-bottom: 5px;
+  margin-bottom: 23px;
+  padding-bottom: 12px;
+  padding-top: 20px;
   position: relative;
 }
 

@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Transition } from 'react-transition-group'
-import css from './Tip.scss'
-import { Translate } from 'components/common'
-import Popover from "../Popover/Popover";
 
+import { Translate } from 'components/common'
+
+import css from './Tip.scss'
 const DELAY = 250
 
 const transitionStyles = {
@@ -69,13 +69,13 @@ export default class Tip extends React.Component {
     
     
     switch (position) {
-      case Popover.ARROW_POSITION.LEFT:
+      case Tip.POSITION.LEFT:
         return css.arrowLeft
     
-      case Popover.ARROW_POSITION.CENTER:
+      case Tip.POSITION.CENTER:
         return css.arrowCenter
     
-      case Popover.ARROW_POSITION.RIGHT:
+      case Tip.POSITION.RIGHT:
         return css.arrowRight
     
       default:

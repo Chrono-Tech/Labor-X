@@ -11,7 +11,6 @@ $size: 12px;
   transition: opacity 250ms;
   visibility: hidden;
   opacity: 1;
-  padding-top: 10px;
 }
 
 .wrapper {
@@ -22,6 +21,7 @@ $size: 12px;
   border-radius: $borderRadius;
   min-width: 270px;
   padding: 20px;
+  margin-top: 10px;
   color: $color-black;
   z-index: 99;
 
