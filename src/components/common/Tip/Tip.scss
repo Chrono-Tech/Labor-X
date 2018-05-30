@@ -1,8 +1,10 @@
 @import "~styles/globals/variables";
+@import "~styles/globals/mixins";
 
-$borderWidth: 0.2rem;
+$borderWidth: 2px;
 $border: $borderWidth solid $color-black;
-$size: 1.6rem;
+$borderRadius: 5px;
+$size: 12px;
 
 .root {
   position: relative;
@@ -12,43 +14,41 @@ $size: 1.6rem;
 }
 
 .wrapper {
-  padding-top: 2rem - $borderWidth;
+  top: 100%;
   position: absolute;
-  width: 27rem;
-  right: -10px;
+  background: $color-white;
+  border: $borderWidth solid $color-black;
+  border-radius: $borderRadius;
+  min-width: 270px;
+  padding: 20px;
+  margin-top: 10px;
+  color: $color-black;
+  z-index: 99;
 
   &:before {
     content: '';
-    width: $size + $borderWidth*2;
-    height: $size + $borderWidth*2;
+    display: block;
     position: absolute;
-    top: $size/2 + $borderWidth;
+    top: -$size + $borderWidth*2;
+    width: $size;
+    height: $size;
+    border: 2px solid $color-black;
     transform: rotateZ(45deg);
-    right: $size;
-    background-color: $color-black;
+    background-color: $color-white;
     z-index: 1;
   }
 
   &:after {
     content: '';
-    width: $size;
+    width: 100%;
     height: $size;
     position: absolute;
-    top: $size/2 + $borderWidth*2;
-    transform: rotateZ(45deg);
-    right: $size + $borderWidth;
+    top: 0;
+    left: 0;
+    border-radius: $borderRadius;
     background-color: $color-white;
     z-index: 3;
   }
-}
-
-.content {
-  position: relative;
-  color: $color-black;
-  background-color: $color-white;
-  padding: 2rem;
-  border: $borderWidth solid $color-black;
-  z-index: 2;
 }
 
 .title {
@@ -58,4 +58,16 @@ $size: 1.6rem;
 
 .pointer {
   cursor: pointer;
+}
+
+.arrowLeft {
+  @include popoverArrowLeft;
+}
+
+.arrowCenter {
+  @include popoverArrowCenter;
+}
+
+.arrowRight {
+  @include popoverArrowRight;
 }

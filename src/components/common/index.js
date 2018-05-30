@@ -22,6 +22,8 @@ export { default as FeedbackCard } from './FeedbackCard/FeedbackCard'
 export { default as OpportunityCard } from './OpportunityCard/OpportunityCard'
 export { default as TodoCard } from './TodoCard/TodoCard'
 export { default as ActiveJobCard } from './ActiveJobCard/ActiveJobCard'
+export { default as Rating } from './Rating/Rating'
+export { default as SecurityShield } from './SecurityShield/SecurityShield'
 
 //elements
 export { default as Badge } from './Badge/Badge'

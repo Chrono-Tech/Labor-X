@@ -1,0 +1,61 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.main {
+  position: relative;
+
+  &:hover .popover {
+    display: block;
+  }
+}
+
+.star {
+  margin-right: 3px;
+
+}
+
+.starsRatingTable {
+  font-size: 12px;
+  font-weight: 400;
+  width: 100%;
+}
+
+.countStars, .countStarsVotes {
+  padding: 0 16px 4px 0;
+  white-space: nowrap;
+}
+
+.totalRow {
+  font-weight: 500;
+}
+
+.countRatingTrack {
+  background: #E6BF6E;
+  height: 5px;
+  width: 50%;
+  display: inline-block;
+}
+
+.countRating {
+  width: 100%;
+
+}
+
+.popover {
+  @include popover;
+  @include popoverArrowLeft;
+  width: 300px;
+  top: 30px;
+  left: -12px;
+}
+
+.popoverHeader {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.popoverDescription {
+  font-weight: 300;
+  line-height: 22px;
+  margin-top: 10px;
+}
