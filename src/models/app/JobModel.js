@@ -7,7 +7,7 @@ import JobStateModel from './JobStateModel'
 import JobIPFSModel from './JobIPFSModel'
 import JobExtraModel from './JobExtraModel'
 
-const schemaFactory = () => ({
+export const schemaFactory = () => ({
   id: PropTypes.number.isRequired,
   client: PropTypes.string.isRequired,
   worker: PropTypes.string,

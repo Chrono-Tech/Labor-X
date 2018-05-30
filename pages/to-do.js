@@ -4,6 +4,8 @@ import moment from 'moment'
 import { TodoContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
 import { TodoCard } from 'src/components/common'
+import {todoJobsSelector} from "../src/store";
+
 
 const TODO = {
   todoLists: [
@@ -66,10 +68,19 @@ class ToDoPage extends React.Component {
   render () {
     return (
       <MainLayout jobName='nav.toDo'>
-        <TodoContent {...TODO} />
+        <TodoContent {...TODO} todoJobs={this.props.todoJobs} />
       </MainLayout>
     )
   }
 }
 
-export default connect()(ToDoPage)
+const mapStateToProps = state => ({
+  todoJobs: todoJobsSelector()(state),
+})
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoPage)
+
