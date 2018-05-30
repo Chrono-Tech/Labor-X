@@ -22,6 +22,9 @@ export default class TodoContent extends React.Component {
         </div>
         <div className={css.content}>
           {this.props.todoJobs.map(x => <pre>{JSON.stringify(x, null, '\t')}</pre>)}
+          {this.props.todoJobs.map(x => (
+            <TodoCard key={x.id} className={css.todoCard} job={x} />
+          ))}
           {/*{this.props.todoLists.map((list) => (*/}
             {/*<div key={uniqid()}>*/}
               {/*<h3 className={css.date}>{moment(list.date).format(dateFormat)} {moment(list.date).isSame(Date.now(), 'days') && '(Today)'}</h3>*/}

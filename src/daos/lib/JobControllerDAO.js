@@ -76,7 +76,7 @@ export default class JobControllerDAO extends AbstractContractDAO {
 
   async getJobsByIds (boardControllerDAO, ids: Number[]) {
     const data = await this.contract.methods.getJobsByIds(ids).call()
-    debugger
+    // debugger
     const parsed = []
     for (let i = 0; i < data.length; i += 16) {
       const [

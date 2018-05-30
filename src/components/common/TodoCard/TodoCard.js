@@ -2,6 +2,7 @@ import React from 'react'
 import { Image } from 'components/common'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import cn from 'classnames'
 import css from './TodoCard.scss'
 import { schemaFactory as jobSchemaFactory } from "../../../models/app/JobModel"
 
@@ -68,45 +69,40 @@ export default class TodoCard extends React.Component {
   }
 
   render () {
+    const { className, cardNote, job } = this.props
     return (
-      <div>{this.props.job.ipfs.name}</div>
+      <div className={cn(className, css.root, css[STATUSES.APPROVED])}>
+        <div className={css.todoInfo}>
+          {cardNote ? <p className={css.cardNote}>{cardNote}</p> : null}
+          <div className={css.rowInfo}>
+            { job.ipfs.period && job.ipfs.period.isSpecified ? <span>{moment(job.ipfs.period.since).format(dateFormat)}</span> : null }
+            <span className={css.medium}>{ job.ipfs.name }</span>
+            { job.ipfs.period && job.ipfs.period.isSpecified && !!this.daysUntil(job.ipfs.period.until) ? <span className={css.daysLeft}>{this.daysUntil(job.ipfs.period.until)} day(s) to go</span> : null }
+          </div>
+        </div>
+        <div className={css.progress}>
+          <div className={css.progressTimer}>
+            {/*{ status !== STATUSES.PROBLEM ? this.progressIcon() : null }*/}
+            {/*<p><span className={css.medium}>{workedTime > 0 ? this.workedTime() : 'Start Work'}</span> of {totalHours}h</p>*/}
+          </div>
+          <div className={css.actions}>
+            <Image
+              clickable
+              className={css.actionButton}
+              title='Complete Task'
+              icon={Image.ICONS.CHECKBOX_CIRCLE}
+              onClick={this.handleComplete}
+            />
+            <Image
+              clickable
+              className={css.actionButton}
+              title='Message'
+              icon={Image.ICONS.MESSAGE}
+              onClick={this.handleMessage}
+            />
+          </div>
+        </div>
+      </div>
     )
-    // const { className, status, cardNote, startDate, jobName, endDate, workedTime, totalHours } = this.props
-
-    // return (
-    //   <div className={[className, css.root, css[status]].join(' ')}>
-    //     <div className={css.todoInfo}>
-    //       {cardNote && <p className={css.cardNote}>{cardNote}</p>}
-    //       <div className={css.rowInfo}>
-    //         <span>{moment(startDate).format(dateFormat)}</span>
-    //         {/*<span className={css.medium}>{ jobName }</span>*/}
-    //         <span className={css.medium}>{ this.props.job.ipfs.name }</span>
-    //         {!!this.daysUntil(endDate) && <span className={css.daysLeft}>{this.daysUntil(endDate)} day(s) to go</span>}
-    //       </div>
-    //     </div>
-    //     <div className={css.progress}>
-    //       <div className={css.progressTimer}>
-    //         {status !== STATUSES.PROBLEM && this.progressIcon()}
-    //         <p><span className={css.medium}>{workedTime > 0 ? this.workedTime() : 'Start Work'}</span> of {totalHours}h</p>
-    //       </div>
-    //       <div className={css.actions}>
-    //         <Image
-    //           clickable
-    //           className={css.actionButton}
-    //           title='Complete Task'
-    //           icon={Image.ICONS.CHECKBOX_CIRCLE}
-    //           onClick={this.handleComplete}
-    //         />
-    //         <Image
-    //           clickable
-    //           className={css.actionButton}
-    //           title='Message'
-    //           icon={Image.ICONS.MESSAGE}
-    //           onClick={this.handleMessage}
-    //         />
-    //       </div>
-    //     </div>
-    //   </div>
-    // )
   }
 }
