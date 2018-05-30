@@ -12,7 +12,12 @@ class PostedJobsContent extends React.Component {
     cards: PropTypes.arrayOf(PropTypes.shape(JobCard.propTypes)).isRequired,
   }
 
-  componentDidMount () {
+  constructor (...args) {
+    super(...args)
+    this.handleOnClickReview = this.handleOnClickReview.bind(this)
+  }
+
+  handleOnClickReview () {
     const modal = {
       component: PayInvoiceDialog,
       props: {},
@@ -28,7 +33,7 @@ class PostedJobsContent extends React.Component {
           <div className={css.titleText}><Translate value='nav.postedJobs' /></div>
         </div>
         <div className={css.content}>
-          {cards.map((card) => (<JobCard {...card} key={card.job.id} />))}
+          {cards.map((card) => (<JobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.id} />))}
         </div>
       </div>
     )

@@ -28,7 +28,7 @@ export class ModalStack extends React.Component {
   render () {
     return (
       <div className={css.modalStack}>
-        { this.props.stack.length && (
+        { this.props.stack.length > 0 && (
           <div
             className={css.stackContainer}
             onClick={this.handleBgClick}
