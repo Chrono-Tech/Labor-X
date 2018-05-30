@@ -2,17 +2,26 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Translate, JobCard } from 'src/components/common'
-import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector } from 'src/store'
+import { PayInvoiceDialog } from 'src/partials'
+import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, modalsPush } from 'src/store'
 import css from './PostedJobsContent.scss'
 
 class PostedJobsContent extends React.Component {
   static propTypes = {
+    pushModal: PropTypes.func.isRequired,
     cards: PropTypes.arrayOf(PropTypes.shape(JobCard.propTypes)).isRequired,
+  }
+
+  componentDidMount () {
+    const modal = {
+      component: PayInvoiceDialog,
+      props: {},
+    }
+    this.props.pushModal(modal)
   }
 
   render () {
     const { cards } = this.props
-
     return (
       <div className={css.main}>
         <div className={css.title}>
@@ -39,9 +48,11 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (/*dispatch*/) {
+function mapDispatchToProps (dispatch) {
   return {
-    // stack: state.modals.stack,
+    pushModal (modal) {
+      dispatch(modalsPush(modal))
+    },
   }
 }
 
