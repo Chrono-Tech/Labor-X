@@ -94,6 +94,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     async handleSubmit (values) {
+      // eslint-disable-next-line no-console
       console.log(values.skills, values.skills.reduce((mask, index) => (mask | Math.pow(2, index)), 0))
       const data = new JobFormModel({
         boardId: values.board,
@@ -103,8 +104,8 @@ function mapDispatchToProps (dispatch) {
         ipfs: new JobIPFSModel({
           name: values.name,
           intro: values.intro,
-          responsibilities: values.responsibilities,
-          requirements: values.requirements,
+          responsibilities: [values.responsibilities],
+          minimumRequirements: [values.requirements],
           // logo: values.logo, // TODO @ipavlenko: Implement logo
           address: new JobAddressModel(
             !values.hasAddress

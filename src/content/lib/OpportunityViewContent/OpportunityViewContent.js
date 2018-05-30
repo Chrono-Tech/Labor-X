@@ -2,8 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
+import moment from 'moment'
 import { Router } from 'src/routes'
-import { JobModel, BoardModel, JobOfferFormModel } from 'src/models'
+import { JobModel, BoardModel, JobOfferFormModel, ClientModel } from 'src/models'
 import { createJobOffer, signerSelector, boardByIdSelector } from 'src/store'
 import { Image, Button, Tab } from 'src/components/common'
 import DescriptionTab from './DescriptionTab/DescriptionTab'
@@ -14,10 +15,7 @@ export class OpportunityViewContent extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
     board: PropTypes.instanceOf(BoardModel),
-    title: PropTypes.string.isRequired,
-    refString: PropTypes.string.isRequired,
-    description: PropTypes.shape(DescriptionTab.propTypes).isRequired,
-    company: PropTypes.shape(CompanyTab.propTypes).isRequired,
+    client: PropTypes.instanceOf(ClientModel),
     onPostOffer: PropTypes.func.isRequired,
   }
 
@@ -65,14 +63,14 @@ export class OpportunityViewContent extends React.Component {
       key: 'description',
       title: 'Description',
       content: (props, state, handlePostOffer) => (
-        <DescriptionTab {...props.description} isOfferPosting={state.isOfferPosting} onPostOffer={handlePostOffer} />
+        <DescriptionTab job={props.job} isOfferPosting={state.isOfferPosting} onPostOffer={handlePostOffer} />
       ),
     },
     {
       key: 'info',
       title: 'Company info',
       content: (props) => (
-        <CompanyTab {...props.company} />
+        <CompanyTab {...props.company} board={props.board} client={props.client} />
       ),
     },
   ]
@@ -107,8 +105,8 @@ export class OpportunityViewContent extends React.Component {
         <div className={css.content}>
           <div className={css.header}>
             <h2>{job.ipfs.name}</h2>
-            <p>{this.props.refString}</p>
-            <p className={css.opportunityAge}>1h ago</p>
+            <p>Ref {job.ipfs.refString}</p>
+            <p className={css.opportunityAge}>{moment(job.ipfs.period.since).fromNow()}</p>
           </div>
           <div className={css.tabs}>
             {this.tabs.map((tab, index) => (
@@ -135,9 +133,12 @@ export class OpportunityViewContent extends React.Component {
 function mapStateToProps (state, op) {
   const signer = signerSelector()(state)
   const board = boardByIdSelector(op.job.boardId)(state)
+  // TODO aevalyakin recieve client data from blockchain
+  const client = new ClientModel({})
   return {
     signer,
     board,
+    client,
   }
 }
 
