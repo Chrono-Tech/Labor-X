@@ -35,6 +35,7 @@ export default class Image extends React.PureComponent {
     MESSAGE: 'message',
     CLOSE: 'close',
     CHECK: 'check',
+    RATING: 'rating',
   }
 
   static COLORS = {

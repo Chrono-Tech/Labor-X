@@ -67,6 +67,28 @@ const profileInputStyles = {
     fontWeight: 300,
   },
 }
+const filterInputStyles = {
+  underlineStyle: {
+    bottom: 2,
+  },
+  underlineFocusStyle: {
+    bottom: 2,
+    borderColor: '#e0e0e0',
+    borderBottomWidth: 1,
+  },
+  inputStyle: {
+    fontSize: 14,
+    color: 'white',
+  },
+  style: {
+    width: '165px',
+  },
+  floatingLabelStyle: {
+    top: 39,
+    fontSize: 14,
+    fontWeight: 300,
+  },
+}
 
 const WrapperInput = (props) => {
   const theme = props.muiTheme && props.muiTheme.customStyles || {}
@@ -105,6 +127,7 @@ export default class Input extends React.Component {
     DEFAULT: 'default',
     LOGIN: 'login',
     PROFILE: 'profile',
+    FILTER: 'filter',
   }
 
   static propTypes = {
@@ -144,6 +167,7 @@ export default class Input extends React.Component {
       Input.MATERIAL_THEME.DEFAULT,
       Input.MATERIAL_THEME.LOGIN,
       Input.MATERIAL_THEME.PROFILE,
+      Input.MATERIAL_THEME.FILTER,
     ]),
     materialInputStyles: PropTypes.object,
   }
@@ -196,6 +220,10 @@ export default class Input extends React.Component {
 
       case Input.MATERIAL_THEME.PROFILE:
         theme = profileInputStyles
+        break
+
+      case Input.MATERIAL_THEME.FILTER:
+        theme = filterInputStyles
         break
 
       default:

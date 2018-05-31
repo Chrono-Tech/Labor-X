@@ -35,7 +35,7 @@ const WrapperCheckbox = (props) => {
       label={props.label}
       className={props.className}
       {...props.input}
-      checked={props.input.value}
+      checked={!!props.input.value}
       onCheck={props.onCheck}
       {...theme}
     />
@@ -43,7 +43,7 @@ const WrapperCheckbox = (props) => {
 }
 
 WrapperCheckbox.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]), // node for <Translate /> component
   className: PropTypes.string,
   input: PropTypes.shape({
     name: PropTypes.string,
@@ -78,7 +78,7 @@ export default class Checkbox extends React.Component {
     material: false,
     defaultTheme: true,
   }
-  
+
   render () {
     const { className, label, input, onCheck, defaultTheme } = this.props
     const classNames = [css.root]
@@ -93,7 +93,9 @@ export default class Checkbox extends React.Component {
           className={classNames.join(' ')}
           input={input}
           onCheck={(event, value) => {
-            input.onChange(value)
+            if (typeof input.onChange === 'function') {
+              input.onChange(value)
+            }
             onCheck && onCheck(value)
           }}
         />
