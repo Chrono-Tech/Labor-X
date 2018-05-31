@@ -1,28 +1,18 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Router } from 'src/routes'
 import { Translate, JobCard } from 'src/components/common'
-import { PayInvoiceDialog } from 'src/partials'
-import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, modalsPush } from 'src/store'
+import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector } from 'src/store'
 import css from './PostedJobsContent.scss'
 
 class PostedJobsContent extends React.Component {
   static propTypes = {
-    pushModal: PropTypes.func.isRequired,
     cards: PropTypes.arrayOf(PropTypes.shape(JobCard.propTypes)).isRequired,
   }
 
-  constructor (...args) {
-    super(...args)
-    this.handleOnClickReview = this.handleOnClickReview.bind(this)
-  }
-
-  handleOnClickReview () {
-    const modal = {
-      component: PayInvoiceDialog,
-      props: {},
-    }
-    this.props.pushModal(modal)
+  handleOnClickReview (jobId) {
+    Router.push(`/review-applicants/${jobId}`)
   }
 
   render () {
@@ -53,11 +43,8 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (/*dispatch*/) {
   return {
-    pushModal (modal) {
-      dispatch(modalsPush(modal))
-    },
   }
 }
 

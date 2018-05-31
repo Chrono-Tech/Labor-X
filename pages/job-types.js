@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import JobTypesContent from 'src/components/JobTypes/JobTypes'
+import { JobTypesContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
 
 class JobTypesPage extends React.Component {

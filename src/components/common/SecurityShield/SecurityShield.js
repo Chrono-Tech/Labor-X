@@ -14,16 +14,16 @@ export default class SecurityShield extends React.Component {
       doneList: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     }),
   }
-  
+
   static defaultProps = {
     level: 0,
   }
-  
-  renderShield(){
+
+  renderShield (){
     const { level } = this.props
-  
+
     const securityIcon = level ? Icon.SETS.SECURITY : Icon.SETS.SECURITY_NONE
-  
+
     return (
       <div>
         <Icon className={css.securityRatingShield} size={31} {...securityIcon} />
@@ -31,10 +31,10 @@ export default class SecurityShield extends React.Component {
       </div>
     )
   }
-  
-  renderPopoverContent(){
+
+  renderPopoverContent (){
     const { tip } = this.props
-    
+
     return (
       <div>
         { tip.title ? (<div className={css.popoverHeader}>{ tip.title }</div>) : null }
@@ -43,21 +43,21 @@ export default class SecurityShield extends React.Component {
       </div>
     )
   }
-  
-  renderContent(){
+
+  renderContent (){
     const { tip } = this.props
-    
+
     if (!tip) {
       return this.renderShield()
     }
-    
+
     return (
       <Tip tipContent={this.renderPopoverContent()} position={Tip.POSITION.LEFT}>
         { this.renderShield() }
       </Tip>
     )
   }
-  
+
   render () {
     return (
       <div className={css.root}>

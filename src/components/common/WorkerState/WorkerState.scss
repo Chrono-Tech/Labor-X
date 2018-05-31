@@ -1,0 +1,25 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include flex(column, center, center);
+  width: 8rem;
+  color: $color-white;
+  background: $color-gray30;
+  font-size: $pSmallSize;
+  font-weight: $font-weight-medium;
+  line-height: 1.4rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  padding: 0 1.4rem;
+}
+
+.avaliable {
+  background: $color-green;
+}
+
+.busy {
+  &:hover {
+    background: $color-red;
+  }
+}

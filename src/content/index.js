@@ -8,3 +8,5 @@ export { default as OpportunityViewContent } from './lib/OpportunityViewContent/
 export { default as RecruiterJobsContent } from './lib/RecruiterJobsContent/RecruiterJobsContent'
 export { default as TodoContent } from './lib/TodoContent/TodoContent'
 export { default as WorkerProfileContent } from './lib/WorkerProfileContent/WorkerProfileContent'
+export { default as ReviewApplicantsContent } from './lib/ReviewApplicantsContent/ReviewApplicantsContent'
+export { default as JobTypesContent } from './lib/JobTypesContent/JobTypesContent'

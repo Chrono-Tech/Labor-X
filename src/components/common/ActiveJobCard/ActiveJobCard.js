@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
-import { Link, Image } from 'src/components/common'
+import { Link, Image, Button } from 'src/components/common'
 import { JobModel, BoardModel, ProfileModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE } from 'src/models'
 import css from './ActiveJobCard.scss'
 
@@ -15,6 +15,16 @@ export default class ActiveJobCard extends React.Component {
     notice: PropTypes.instanceOf(JobNoticeModel),
     worker: PropTypes.instanceOf(ProfileModel),
     recruiter: PropTypes.instanceOf(ProfileModel),
+    onClickReview: PropTypes.func,
+  }
+
+  constructor (...args) {
+    super(...args)
+    this.handleReview = this.handleReview.bind(this)
+  }
+
+  handleReview () {
+    this.props.onClickReview()
   }
 
   handleMessage () {
@@ -58,7 +68,12 @@ export default class ActiveJobCard extends React.Component {
               <Link className={css.link} href='/recruiter-profile'><p>{recruiter.ipfs.name} (Recruiter)</p></Link>
             </div>
           )}
-          <Link className={css.review} href='/client-job'><p>REVIEW</p></Link>
+          <Button
+            label='REVIEW'
+            className={css.review}
+            mods={Button.MODS.FLAT}
+            onClick={this.handleReview}
+          />
           <Image
             clickable
             className={css.actionButton}

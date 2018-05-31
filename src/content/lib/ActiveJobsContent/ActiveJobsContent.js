@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
 import { SignerModel } from 'src/models'
-import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, profileSelector } from 'src/store'
+import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, profileSelector, modalsPush } from 'src/store'
+import { PayInvoiceDialog } from 'src/partials'
 import { Translate, ActiveJobCard } from 'src/components/common'
 import css from './ActiveJobsContent.scss'
 
@@ -23,6 +24,20 @@ class ActiveJobsContent extends React.Component {
         cards: PropTypes.arrayOf(PropTypes.shape(ActiveJobCard.propTypes)),
       })
     ),
+    pushModal: PropTypes.func.isRequired,
+  }
+
+  constructor (...args) {
+    super(...args)
+    this.handleOnClickReview = this.handleOnClickReview.bind(this)
+  }
+
+  handleOnClickReview () {
+    const modal = {
+      component: PayInvoiceDialog,
+      props: {},
+    }
+    this.props.pushModal(modal)
   }
 
   renderHead ({ toPayCount, inProgressCount, totalCount }) {
@@ -57,7 +72,7 @@ class ActiveJobsContent extends React.Component {
             <div className={css.section} key={key}>
               <h3>{moment(date).format(dateFormat)}</h3>
               {cards.map((card) => (
-                <ActiveJobCard {...card} key={card.job.key} />
+                <ActiveJobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.key} />
               ))}
             </div>
           ))}
@@ -101,9 +116,11 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (/*dispatch*/) {
+function mapDispatchToProps (dispatch) {
   return {
-    // stack: state.modals.stack,
+    pushModal (modal) {
+      dispatch(modalsPush(modal))
+    },
   }
 }
 
