@@ -37,6 +37,7 @@ function propsWithDefaults (props) {
     budget,
     period,
     responsibilities,
+    profileRequirements,
     ...data
   } = props
   return Object.assign({}, {

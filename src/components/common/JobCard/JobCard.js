@@ -4,16 +4,26 @@ import moment from 'moment'
 import cn from 'classnames'
 import pluralize from 'pluralize'
 import { JobModel, JOB_STATE_FINALIZED, BoardModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE } from 'src/models'
-import { Link, Counter } from 'src/components/common'
+import { Link, Counter, Button } from 'src/components/common'
 import css from './JobCard.scss'
 
 const dateFormat = 'DD MMM YYYY'
 
 export default class JobCard extends React.Component {
   static propTypes = {
+    onClickReview: PropTypes.func,
     job: PropTypes.instanceOf(JobModel).isRequired,
     board: PropTypes.instanceOf(BoardModel),
     notice: PropTypes.instanceOf(JobNoticeModel),
+  }
+
+  constructor (...args) {
+    super(...args)
+    this.handleReview = this.handleReview.bind(this)
+  }
+
+  handleReview () {
+    this.props.onClickReview()
   }
 
   renderFooter ({ job, notice }) {
@@ -39,7 +49,12 @@ export default class JobCard extends React.Component {
             </div>
           )
         }
-        <Link className={css.review} href='/client-job'><p>REVIEW</p></Link>
+        <Button
+          label='REVIEW'
+          className={css.review}
+          mods={Button.MODS.FLAT}
+          onClick={this.handleReview}
+        />
       </div>
     )
   }
