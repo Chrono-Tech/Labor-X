@@ -20,13 +20,6 @@ export default class TodoCard extends React.Component {
   static propTypes = {
     job: jobSchemaFactory(),
     className: PropTypes.string,
-    // jobName: PropTypes.string.isRequired,
-    // cardNote: PropTypes.string,
-    // status: PropTypes.oneOf(Object.values(STATUSES)).isRequired,
-    // startDate: PropTypes.instanceOf(Date).isRequired,
-    // endDate: PropTypes.instanceOf(Date),
-    // totalHours: PropTypes.number,
-    // workedTime: PropTypes.number,
   }
 
   static STATUSES = STATUSES
@@ -51,22 +44,22 @@ export default class TodoCard extends React.Component {
     return moment(date).diff(moment(), 'days')
   }
 
-  leadZero (value) {
-    return value < 10 ? `0${value}` : value
-  }
+  // leadZero (value) {
+  //   return value < 10 ? `0${value}` : value
+  // }
 
-  progressIcon () {
-    return this.props.status === STATUSES.IN_PROGRESS ?
-      <Image icon={Image.ICONS.PAUSE} /> : <Image icon={Image.ICONS.PLAY} />
-  }
+  // progressIcon () {
+  //   return this.props.status === STATUSES.IN_PROGRESS ?
+  //     <Image icon={Image.ICONS.PAUSE} /> : <Image icon={Image.ICONS.PLAY} />
+  // }
 
-  workedTime () {
-    const dur = moment.duration(this.props.workedTime, 'seconds')
-    const hours = Math.trunc(dur.asHours())
-    const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
-    const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
-    return this.props.status === STATUSES.PROBLEM ? `${hours}h` : `${hours}:${minutes}:${seconds}`
-  }
+  // workedTime () {
+  //   const dur = moment.duration(this.props.workedTime, 'seconds')
+  //   const hours = Math.trunc(dur.asHours())
+  //   const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
+  //   const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
+  //   return this.props.status === STATUSES.PROBLEM ? `${hours}h` : `${hours}:${minutes}:${seconds}`
+  // }
 
   render () {
     const { className, cardNote, job } = this.props

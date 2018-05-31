@@ -21,22 +21,12 @@ export default class TodoContent extends React.Component {
           <div className={css.titleText}><Translate value='nav.toDo' /></div>
         </div>
         <div className={css.content}>
-          {this.props.todoJobs.map(x => <pre>{JSON.stringify(x, null, '\t')}</pre>)}
           {this.props.todoJobs.map(x => (
-            <TodoCard key={x.id} className={css.todoCard} job={x} />
+            <div key={x.id}>
+              <h3 className={css.date}>{moment(x.ipfs.period.since).format(dateFormat)} {moment(x.ipfs.period.since).isSame(Date.now(), 'days') && '(Today)'}</h3>
+              <TodoCard className={css.todoCard} job={x} />
+            </div>
           ))}
-          {/*{this.props.todoLists.map((list) => (*/}
-            {/*<div key={uniqid()}>*/}
-              {/*<h3 className={css.date}>{moment(list.date).format(dateFormat)} {moment(list.date).isSame(Date.now(), 'days') && '(Today)'}</h3>*/}
-              {/*{list.todos.map((todo) => (*/}
-                {/*<TodoCard*/}
-                  {/*key={uniqid()}*/}
-                  {/*className={css.todoCard}*/}
-                  {/*{...todo}*/}
-                {/*/>*/}
-              {/*))}*/}
-            {/*</div>*/}
-          {/*))}*/}
           <div className={css.feedback}>
             <h3 className={css.feedbackTitle}>Give Feedback</h3>
             <p>Give feedback to people you were working with!</p>
