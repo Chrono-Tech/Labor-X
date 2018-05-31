@@ -12,6 +12,11 @@ export default class Select extends React.Component {
       value: PropTypes.string,
       name: PropTypes.string,
     })),
+    profileTheme: PropTypes.object,
+  }
+
+  static defaultProps = {
+    profileTheme: {},
   }
 
   renderMenuItems (){

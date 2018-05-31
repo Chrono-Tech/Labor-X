@@ -64,6 +64,10 @@
   color: $color-warn;
 }
 
+.icon-rating:before {
+  content: '\F01A';
+}
+
 .icon-security:before {
   content: '\F01C';
 }

@@ -14,7 +14,6 @@ const profileTheme = {
     bottom: 2,
   },
   hintStyle: {
-    color: '#7F7F7F',
     fontSize: 14,
     fontStyle: 'italic',
   },
@@ -42,20 +41,23 @@ class WrapperSelect extends React.Component {
       ]),
     }),
     children: PropTypes.element,
+    profileTheme: PropTypes.object, // custom styles for profileTheme
   }
 
   render () {
     const { input, label, meta, children, ...custom } = this.props
 
+    const profileThemeCustom = { ...profileTheme, ...this.props.profileTheme }
+
     return (
       <SelectField
         floatingLabelText={label}
         errorText={meta.touched && meta.error}
-        style={profileTheme.style}
-        hintStyle={profileTheme.hintStyle}
-        underlineStyle={profileTheme.underlineStyle}
-        underlineFocusStyle={profileTheme.underlineFocusStyle}
-        iconStyle={profileTheme.iconStyle}
+        style={profileThemeCustom.style}
+        hintStyle={profileThemeCustom.hintStyle}
+        underlineStyle={profileThemeCustom.underlineStyle}
+        underlineFocusStyle={profileThemeCustom.underlineFocusStyle}
+        iconStyle={profileThemeCustom.iconStyle}
         {...input}
         onChange={(event, index, value) => input.onChange(value)}
         children={children}

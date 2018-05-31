@@ -19,6 +19,7 @@
 
 .root {
   @include card;
+  width: 100%;
   > div {
     @include flex(row, flex-start, center);
     height: 6rem;

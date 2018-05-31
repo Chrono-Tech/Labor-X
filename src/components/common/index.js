@@ -10,6 +10,7 @@ export { default as UserRow } from './UserRow/UserRow'
 export { default as Checkbox } from './Checkbox/Checkbox'
 export { default as ValidatedCheckbox } from './ValidatedCheckbox/ValidatedCheckbox'
 export { default as Radio } from './Radio/Radio'
+export { default as RadioIcon } from './RadioIcon/RadioIcon'
 export { default as Dialog } from './Dialog/Dialog'
 export { default as Popover } from './Popover/Popover'
 
