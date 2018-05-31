@@ -1,56 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import moment from 'moment'
+import PropTypes from 'prop-types'
+
 import { TodoContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
-import { TodoCard } from 'src/components/common'
+import { todoJobsSelector } from "../src/store";
+import { schemaFactory as jobSchemaFactory } from "../src/models/app/JobModel"
 
 const TODO = {
-  todoLists: [
-    {
-      date: new Date(),
-      todos: [
-        {
-          jobName: 'Install 10 Gas Ovens',
-          status: TodoCard.STATUSES.PROBLEM,
-          startDate: moment().hours(19).minutes(30).toDate(),
-          workedTime: 133200,
-          totalHours: 40,
-          cardNote: 'RE-DO TODAY',
-        },
-        {
-          jobName: 'Install 10 Gas Ovens',
-          status: TodoCard.STATUSES.IN_PROGRESS,
-          startDate: moment().hours(13).minutes(30).toDate(),
-          endDate: moment().add(3, 'days').hours(19).minutes(30).toDate(),
-          workedTime: 4850,
-          totalHours: 40,
-        },
-        {
-          jobName: 'Pick-up 3 sofas',
-          status: TodoCard.STATUSES.ATTENTION,
-          startDate: moment().hours(13).minutes(30).toDate(),
-          endDate: moment().hours(19).minutes(30).toDate(),
-          workedTime: 0,
-          totalHours: 2,
-          cardNote: 'DUE TODAY',
-        },
-      ],
-    },
-    {
-      date: moment().add(1, 'days').toDate(),
-      todos: [
-        {
-          jobName: 'Plumber Required',
-          status: TodoCard.STATUSES.APPROVED,
-          startDate: moment().add(1, 'days').hours(9).minutes(0).toDate(),
-          endDate: moment().add(1, 'days').hours(13).minutes(30).toDate(),
-          workedTime: 1200,
-          totalHours: 6,
-        },
-      ],
-    },
-  ],
   feedbackCards: [
     {
       title: 'Move Stuff from A to B and C and D',
@@ -63,13 +20,22 @@ const TODO = {
 }
 
 class ToDoPage extends React.Component {
+  propTypes = {
+    todoJobs: PropTypes.arrayOf(jobSchemaFactory()),
+  }
+
   render () {
     return (
       <MainLayout jobName='nav.toDo'>
-        <TodoContent {...TODO} />
+        <TodoContent {...TODO} todoJobs={this.props.todoJobs} />
       </MainLayout>
     )
   }
 }
 
-export default connect()(ToDoPage)
+const mapStateToProps = state => ({
+  todoJobs: todoJobsSelector()(state),
+})
+
+export default connect(mapStateToProps)(ToDoPage)
+

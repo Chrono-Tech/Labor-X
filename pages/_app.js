@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import App, { Container } from 'next/app'
 import initStore from 'src/store'
+import { ModalStack } from 'src/partials'
 import 'styles/globals/globals.scss'
 
 export class MyApp extends App {
@@ -18,7 +19,10 @@ export class MyApp extends App {
     return (
       <Container>
         <Provider store={store}>
-          <Component {...pageProps} />
+          <div>
+            <Component {...pageProps} />
+            <ModalStack />
+          </div>
         </Provider>
       </Container>
     )
