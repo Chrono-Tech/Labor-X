@@ -28,7 +28,7 @@ export default class ActiveJobCard extends React.Component {
     return (
       <div
         className={cn(css.root, {
-          [css.applied]: true,
+          'applied': true,
           [css.approved]: true,
           [css.inProgress]: true,
           [css.attention]: notice && notice.type === NOTICE_TYPE_MESSAGE,

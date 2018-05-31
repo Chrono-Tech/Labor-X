@@ -15,6 +15,16 @@
   align-items: $align-items;
 }
 
+@mixin position($position, $top: auto, $right: auto, $bottom: auto, $left: auto, $width: auto, $height: auto) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+  width: $width;
+  height: $height;
+}
+
 @mixin card {
   border-radius: .5rem;
   background-color: $paperColor;
