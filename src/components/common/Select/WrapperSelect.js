@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import SelectField from 'material-ui/SelectField'
 
-const profileTheme = {
+const profileThemeSelect = {
   underlineStyle: {
     bottom: 2,
   },
@@ -45,9 +45,10 @@ class WrapperSelect extends React.Component {
   }
 
   render () {
-    const { input, label, meta, children, ...custom } = this.props
 
-    const profileThemeCustom = { ...profileTheme, ...this.props.profileTheme }
+    const { input, label, meta, children, profileTheme, muiTheme, ...custom } = this.props
+
+    const profileThemeCustom = { ...profileThemeSelect, ...profileTheme }
 
     return (
       <SelectField
