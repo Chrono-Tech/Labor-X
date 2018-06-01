@@ -8,3 +8,4 @@ export { default as OpportunitiesContent } from './lib/OpportunitiesContent/Oppo
 export { default as OpportunityViewContent } from './lib/OpportunityViewContent/OpportunityViewContent'
 export { default as RecruiterJobsContent } from './lib/RecruiterJobsContent/RecruiterJobsContent'
 export { default as TodoContent } from './lib/TodoContent/TodoContent'
+export { default as WorkerProfileContent } from './lib/WorkerProfileContent/WorkerProfileContent'

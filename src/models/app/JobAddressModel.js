@@ -19,6 +19,10 @@ export default class JobAddressModel extends AbstractModel {
     super(propsWithDefaults(props), schemaFactory())
     Object.freeze(this)
   }
+
+  get location () {
+    return `${this.building}${this.suit ? '/' + this.suit : ''}, ${this.street}, ${this.city}, ${this.state}`
+  }
 }
 
 function propsWithDefaults (props) {

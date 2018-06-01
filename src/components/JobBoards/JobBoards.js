@@ -75,15 +75,6 @@ class JobBoards extends React.Component {
     change('categories_reset', false)
   }
 
-  renderActiveCategories () {
-    const { activeCategoriesFilter } = this.props
-
-    return TAG_CATEGORIES_LIST
-      .filter((tag) => activeCategoriesFilter && activeCategoriesFilter[String(tag.name).toUpperCase()] )
-      .map((tag) => tag.name)
-      .join(', ') || ''
-  }
-
   toggleFilterBlock () {
     this.setState({ isVisibleFilterBlock: !this.state.isVisibleFilterBlock })
   }
@@ -106,6 +97,15 @@ class JobBoards extends React.Component {
 
     return emptyRatingFilter && emptyLevelFilter && emptyCategoriesResetFilter
 
+  }
+
+  renderActiveCategories () {
+    const { activeCategoriesFilter } = this.props
+
+    return TAG_CATEGORIES_LIST
+      .filter((tag) => activeCategoriesFilter && activeCategoriesFilter[String(tag.name).toUpperCase()] )
+      .map((tag) => tag.name)
+      .join(', ') || ''
   }
 
   renderCategories () {

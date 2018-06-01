@@ -10,6 +10,7 @@ export { default as UserRow } from './UserRow/UserRow'
 export { default as Checkbox } from './Checkbox/Checkbox'
 export { default as ValidatedCheckbox } from './ValidatedCheckbox/ValidatedCheckbox'
 export { default as Radio } from './Radio/Radio'
+export { default as RadioIcon } from './RadioIcon/RadioIcon'
 export { default as Dialog } from './Dialog/Dialog'
 export { default as Popover } from './Popover/Popover'
 
@@ -22,6 +23,8 @@ export { default as FeedbackCard } from './FeedbackCard/FeedbackCard'
 export { default as OpportunityCard } from './OpportunityCard/OpportunityCard'
 export { default as TodoCard } from './TodoCard/TodoCard'
 export { default as ActiveJobCard } from './ActiveJobCard/ActiveJobCard'
+export { default as Rating } from './Rating/Rating'
+export { default as SecurityShield } from './SecurityShield/SecurityShield'
 
 //elements
 export { default as Badge } from './Badge/Badge'

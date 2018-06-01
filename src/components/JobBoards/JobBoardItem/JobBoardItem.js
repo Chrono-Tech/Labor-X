@@ -2,14 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import pluralize from 'pluralize'
-import { Popover, Icon } from 'src/components/common'
+import { RaisedButton, FlatButton } from 'material-ui'
+import { Popover, Icon, Button, Dialog } from 'src/components/common'
 import { BoardModel } from 'src/models'
 import { joinBoard, terminateBoard } from 'src/store'
 import css from './JobBoardItem.scss'
-import { Button } from "../../common"
-import Dialog from "../../common/Dialog/Dialog"
-import RaisedButton from "material-ui/RaisedButton"
-import FlatButton from "material-ui/FlatButton"
 
 export class JobBoardItem extends React.Component {
   static propTypes = {

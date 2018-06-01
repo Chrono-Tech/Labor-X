@@ -1,0 +1,11 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  width: 40rem;
+  height: 45rem;
+  background: $color-white;
+  border-radius: 5px;
+  padding: 1.5rem;
+  border: 1px solid $color-azure;
+}

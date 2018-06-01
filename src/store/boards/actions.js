@@ -142,7 +142,6 @@ export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
     type: BOARDS_FILTER,
     boardsList: currentList,
   })
-
 }
 
 export const boardCreate = (data) => async (dispatch, getState) => {

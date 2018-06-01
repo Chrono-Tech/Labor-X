@@ -1,10 +1,12 @@
-import Router from 'next/router'
+import bip39 from 'bip39'
 import { stopSubmit } from 'redux-form'
 
-import { WalletEntryModel } from 'src/models'
+import { Router } from 'src/routes'
+import { WalletEntryModel, SignInModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
 
-import { FORM_LOGIN } from 'src/components/Login'
+import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
+import {web3Selector} from "../ethereum/selectors";
 
 export const LoginSteps = {
   Ledger: 'ledger',
@@ -48,7 +50,7 @@ export const signIn = ({ password }) => async (dispatch, getState) => {
 export const onSignInSuccess = () => (dispatch) => {
   dispatch({ type: LOGIN_SIGN_IN })
   
-  Router.push('/dashboard')
+  Router.pushRoute('/dashboard')
 }
 
 export const onSignInFail = () =>  (dispatch) => {
@@ -70,20 +72,60 @@ export const createAccount = (walletName, password) => (dispatch, getState) => {
 
     dispatch(changeStep(LoginSteps.SelectWallet))
   } else {
-    Router.push('/account-password')
+    Router.pushRoute('/account-password')
   }
 }
 
-export const onSubmitMnemonic = (signInModel) => (dispatch) => {
+export const onSubmitMnemonic = (values) => (dispatch, getState) => {
+  
+  const web3 = web3Selector()(getState())
+  web3.eth.accounts.wallet.clear()
+  
+  const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(values.mnemonic)}`)
+  
+  
+  const signInModel = new SignInModel({
+    method: SignInModel.METHODS.MNEMONIC,
+    key: values.mnemonic,
+    address: account.address,
+  })
+  
   dispatch(setSignInModel(signInModel))
-  dispatch(navigateToCreateWallet())
 
 }
 
-export const onSubmitPrivateKey = (signInModel) => (dispatch) => {
-  dispatch(setSignInModel(signInModel))
+export const onSubmitMnemonicSuccess = () => (dispatch) => {
   dispatch(navigateToCreateWallet())
+}
 
+export const onSubmitMnemonicFail = () => (dispatch) => {
+  dispatch(stopSubmit(FORM_MNEMONIC, { key: 'Wrong mnemonic' }))
+}
+
+export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
+  
+  const web3 = web3Selector()(getState())
+  web3.eth.accounts.wallet.clear()
+  
+  const account = await web3.eth.accounts.privateKeyToAccount(`0x${values.key}`)
+  
+  const signInModel = new SignInModel({
+    method: SignInModel.METHODS.PRIVATE_KEY,
+    key: values.key,
+    address: account.address,
+  })
+
+  dispatch(setSignInModel(signInModel))
+  
+}
+
+export const onSubmitPrivateKeySuccess = () => (dispatch) => {
+  dispatch(navigateToCreateWallet())
+}
+
+export const onSubmitPrivateKeyFail = () => (dispatch) => {
+  dispatch(stopSubmit(FORM_PRIVATE_KEY, { key: 'Wrong private key' }))
+  
 }
 
 export const selectWalletRecoveryForm = (wallet) => (dispatch) => {
@@ -160,7 +202,7 @@ export const onConfirmRecoveryPassword = ({ password }) => (dispatch, getState) 
 
   dispatch({ type: LOGIN_RESET_RECOVERY_PASSWORD_MODE })
 
-  Router.push('/dashboard')
+  Router.pushRoute('/dashboard')
 }
 
 export const changeStep = (step) => (dispatch) => {

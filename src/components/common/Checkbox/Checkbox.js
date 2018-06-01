@@ -84,7 +84,7 @@ export default class Checkbox extends React.Component {
     material: false,
     defaultTheme: true,
   }
-  
+
   render () {
     const { className, label, input, onCheck, defaultTheme } = this.props
     const classNames = [css.root]
@@ -99,7 +99,9 @@ export default class Checkbox extends React.Component {
           className={classNames.join(' ')}
           input={input}
           onCheck={(event, value) => {
-            input.onChange(value)
+            if (typeof input.onChange === 'function') {
+              input.onChange(value)
+            }
             onCheck && onCheck(value)
           }}
         />

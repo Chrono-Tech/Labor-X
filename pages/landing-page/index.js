@@ -297,7 +297,7 @@ class LandingPage extends React.Component {
             </div>
           </ParallaxBox>
         </div>
-        <Footer />
+        <Footer footerClass={css.footer} />
         <div className={[css.navigationBottom, this.state.isVisibleNavBottom ? '' : css.navigationBottomHide].join(' ')}>
           <div className={css.bottomButtonBackground} />
           <div className={css.bottomButtonWrapper}>

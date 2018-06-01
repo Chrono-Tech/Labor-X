@@ -7,6 +7,7 @@ import { web3Selector } from '../ethereum/selectors'
 
 export const JOBS_CLEAR = 'jobs/clear'
 export const JOBS_SAVE = 'jobs/save'
+export const JOBS_FILTER = 'jobs/filter'
 
 // Sholud be called only once
 export const initJobs = () => async (dispatch, getState) => {
@@ -87,4 +88,23 @@ export const createJobOffer = (form: JobOfferFormModel) => async (dispatch, getS
     form.ontop
   )
   await dispatch(executeTransaction({ tx, web3 }))
+}
+
+export const updateFilterJobs = (filterFields) => (dispatch, getState) => {
+  const state = getState()
+
+  const { list } = state.jobs
+
+  let { searchText } = filterFields
+  let currentList = [...list] || []
+
+  if (searchText){
+    searchText = String(searchText).toLowerCase()
+    currentList = currentList.filter((job) => (String(job.ipfs.name || '').toLowerCase().includes(searchText)))
+  }
+
+  dispatch({
+    type: JOBS_FILTER,
+    jobsList: currentList,
+  })
 }
