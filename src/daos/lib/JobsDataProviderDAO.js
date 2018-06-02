@@ -1,8 +1,6 @@
-import BigNumber from 'bignumber.js'
 import {
   JobModel,
   JobIPFSModel,
-  JobPostedEvent,
   JobStateModel,
   JobExtraModel,
   TagAreaModel,
@@ -15,7 +13,6 @@ import {
 } from 'src/models'
 import {
   loadFromIPFS,
-  ipfsHashToBytes32,
   bytes32ToIPFSHash,
   bytes32ToNumber,
   bytes32ToAddress,
@@ -23,7 +20,9 @@ import {
 } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
-export default class JobControllerDAO extends AbstractContractDAO {
+const DEFAULT_ANY_FILTER_PARAM = 0
+
+export default class JobsDataProviderDAO extends AbstractContractDAO {
   constructor ({ address, history, abi }) {
     super({ address, history, abi })
   }
@@ -33,18 +32,11 @@ export default class JobControllerDAO extends AbstractContractDAO {
       this.disconnect()
     }
     // eslint-disable-next-line no-console
-    console.log('[JobControllerDAO] Connect')
+    console.log(`[${this.constructor.name}] Connect`)
     this.contract = new web3.eth.Contract(this.abi.abi, this.address, options)
     this.history = this.history != null // nil check
       ? new web3.eth.Contract(this.abi.abi, this.history, options)
       : this.contract
-
-    this.jobPostedEmitter = this.history.events.JobPosted({})
-      .on('data', this.handleJobPostedData.bind(this))
-      .on('error', this.handleError.bind(this))
-    // this.jobClosedEmitter = this.contract.events.JobClosed({})
-    //   .on('data', this.handleJobClosedData.bind(this))
-    //   .on('error', this.handleError.bind(this))
 
     return this.token
   }
@@ -64,6 +56,36 @@ export default class JobControllerDAO extends AbstractContractDAO {
     return this.contract != null // nil check
   }
 
+  async getJobsForWorker (
+    address: String,
+    stateMask: Number = DEFAULT_ANY_FILTER_PARAM,
+    skillsArea: Number = DEFAULT_ANY_FILTER_PARAM,
+    skillsCategory: Number = DEFAULT_ANY_FILTER_PARAM,
+    skills: Number = DEFAULT_ANY_FILTER_PARAM,
+    pausedMask: Number = DEFAULT_ANY_FILTER_PARAM,
+    fromId: Number = DEFAULT_ANY_FILTER_PARAM,
+    limit: Number = 99999
+  ) {
+    const jobs = await this.contract.methods.getJobForWorker(address, stateMask, skillsArea, skillsCategory, skills, pausedMask, fromId, limit).call()
+
+    return jobs
+  }
+
+  async getJobsForClient (
+    address: String,
+    stateMask: Number = DEFAULT_ANY_FILTER_PARAM,
+    skillsArea: Number = DEFAULT_ANY_FILTER_PARAM,
+    skillsCategory: Number = DEFAULT_ANY_FILTER_PARAM,
+    skills: Number = DEFAULT_ANY_FILTER_PARAM,
+    pausedMask: Number = DEFAULT_ANY_FILTER_PARAM,
+    fromId: Number = DEFAULT_ANY_FILTER_PARAM,
+    limit: Number = 99999)
+  {
+    const jobs = await this.contract.methods.getJobsForClient(address, stateMask, skillsArea, skillsCategory, skills, pausedMask, fromId, limit).call()
+
+    return jobs
+  }
+
   async getJobs (boardControllerDAO, /* client, worker, fromId = 1, limit = 10 */) {
     const length = await this.contract.methods.getJobsCount().call()
     const array = Array.from({ length })
@@ -75,10 +97,10 @@ export default class JobControllerDAO extends AbstractContractDAO {
   }
 
   async getJobsByIds (boardControllerDAO, ids: Number[]) {
+    const JOBS_RESULT_OFFSET = 21
     const data = await this.contract.methods.getJobsByIds(ids).call()
-    // debugger
     const parsed = []
-    for (let i = 0; i < data.length; i += 16) {
+    for (let i = 0; i < data.length; i += JOBS_RESULT_OFFSET) {
       const [
         idBytes,
         boardIdBytes,
@@ -89,14 +111,19 @@ export default class JobControllerDAO extends AbstractContractDAO {
         skillsBytes,
         ipfsHashBytes,
         stateBytes,
+        flowTypeBytes,
+        pausedBytes,
+        defaultPayBytes,
         createdAtBytes,
         acceptedAtBytes,
         pendingStartAtBytes,
         startTimeBytes,
+        pausedAtBytes,
+        pausedForBytes,
         pendingFinishAtBytes,
         finishTimeBytes,
         finalizedAtBytes,
-      ] = data.slice(i, i + 16)
+      ] = data.slice(i, i + JOBS_RESULT_OFFSET)
       parsed.push({
         id: bytes32ToNumber(idBytes),
         boardId: bytes32ToNumber(boardIdBytes),
@@ -107,10 +134,15 @@ export default class JobControllerDAO extends AbstractContractDAO {
         skills: bytes32ToNumber(skillsBytes),
         ipfsHash: bytes32ToIPFSHash(ipfsHashBytes),
         state: bytes32ToNumber(stateBytes),
+        flowType: bytes32ToNumber(flowTypeBytes),
+        paused: !!bytes32ToNumber(pausedBytes),
+        defaultPay: bytes32ToNumber(defaultPayBytes),
         createdAt: bytes32ToDate(createdAtBytes, true),
         acceptedAt: bytes32ToDate(acceptedAtBytes, true),
         pendingStartAt: bytes32ToDate(pendingStartAtBytes, true),
         startTime: bytes32ToDate(startTimeBytes, true),
+        pausedAt: bytes32ToDate(pausedAtBytes, true),
+        pausedFor: bytes32ToDate(pausedForBytes, true),
         pendingFinishAt: bytes32ToDate(pendingFinishAtBytes, true),
         finishTime: bytes32ToDate(finishTimeBytes, true),
         finalizedAt: bytes32ToDate(finalizedAtBytes, true),
@@ -133,6 +165,10 @@ export default class JobControllerDAO extends AbstractContractDAO {
       finishTime,
       finalizedAt,
       boardId,
+      paused,
+      defaultPay,
+      pausedAt,
+      pausedFor,
     }) => {
       return new JobModel({
         id,
@@ -147,6 +183,10 @@ export default class JobControllerDAO extends AbstractContractDAO {
           ...(await loadFromIPFS(ipfsHash) || {}),
           hash: ipfsHash,
         }),
+        paused,
+        defaultPay,
+        pausedAt,
+        pausedFor,
         extra: new JobExtraModel({
           // TODO Fetch counts
           createdAt,
@@ -196,48 +236,4 @@ export default class JobControllerDAO extends AbstractContractDAO {
     return job
   }
 
-  createPostJobTx (sender: String, flowType: Number, area: Number, category: Number, skills: Number, defaultPay: Number, detailsIPFSHash: String) {
-    const data = this.contract.methods.postJob(flowType, area, category, skills, defaultPay, ipfsHashToBytes32(detailsIPFSHash)).encodeABI()
-    return {
-      from: sender,
-      to: this.address,
-      data,
-    }
-  }
-
-  createPostJobOfferTx (sender: String, jobId: Number, rate: BigNumber, estimate: BigNumber, ontop: BigNumber) {
-    const data = this.contract.methods.postJobOffer(jobId, rate, estimate, ontop).encodeABI()
-    return {
-      from: sender,
-      to: this.address,
-      data,
-    }
-  }
-
-  handleJobPostedData (data) {
-    // eslint-disable-next-line no-console
-    console.log('[JobControllerDAO] JobPosted', data)
-    const { returnValues } = data
-    setImmediate(() => {
-      this.emit('JobPosted', {
-        data,
-        event: new JobPostedEvent({
-          key: `${data.transactionHash}/${data.logIndex}`,
-          self: returnValues.self,
-          jobId: Number(returnValues.jobId),
-          client: returnValues.client,
-          skills: Number(returnValues.skills), // bit-mask,
-          skillsArea: Number(returnValues.skillsArea),
-          skillsCategory: Number(returnValues.skillsCategory),
-          detailsIPFSHash: returnValues.detailsIPFSHash,
-          bindStatus: returnValues.bindStatus,
-        }),
-      })
-    })
-  }
-
-  handleError (error) {
-    // eslint-disable-next-line no-console
-    console.error('[JobControllerDAO] Error in subscription', error)
-  }
 }

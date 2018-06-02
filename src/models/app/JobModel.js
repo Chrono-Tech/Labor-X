@@ -20,6 +20,10 @@ export const schemaFactory = () => ({
   skills: PropTypes.arrayOf(
     PropTypes.instanceOf(SkillModel)
   ),
+  paused: PropTypes.bool,
+  defaultPay: PropTypes.number,
+  pausedAt: PropTypes.number,
+  pausedFor: PropTypes.number,
 })
 
 export default class JobModel extends AbstractModel {

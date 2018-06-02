@@ -11,6 +11,7 @@ export default (values) => {
     tags: notEmpty(values.tags),
     legal: notEmpty(values.legal),
     board: notEmpty(values.board),
+    skills: notEmpty(values.skills),
     // conclusion: required(values.conclusion),
   }
 }
