@@ -20,14 +20,14 @@ export const initJobs = () => async (dispatch, getState) => {
 
 export const reloadJobs = () => async (dispatch, getState) => {
   const state = getState()
-  const jobControllerDAO = daoByType('JobController')(state)
+  const jobsDataProviderDAO = daoByType('JobsDataProvider')(state)
   const boardControlerDAO = daoByType('BoardController')(state)
   const signer = signerSelector()(state)
   dispatch({
     type: JOBS_CLEAR,
   })
   if (signer) {
-    const jobs = await jobControllerDAO.getJobs(boardControlerDAO, signer.address)
+    const jobs = await jobsDataProviderDAO.getJobs(boardControlerDAO, signer.address)
     dispatch({ type: JOBS_SAVE, jobs })
   }
 }
@@ -36,9 +36,9 @@ export const handleJobPosted = (e: JobPostedEvent) => async (dispatch, getState)
   // eslint-disable-next-line no-console
   console.log('jobs/handleJobPosted', e)
   const state = getState()
-  const jobControllerDAO = daoByType('JobController')(state)
+  const jobsDataProviderDAO = daoByType('JobsDataProvider')(state)
   const boardControlerDAO = daoByType('BoardController')(state)
-  const job = await jobControllerDAO.getJobById(boardControlerDAO, e.jobId)
+  const job = await jobsDataProviderDAO.getJobById(boardControlerDAO, e.jobId)
   dispatch({
     type: JOBS_SAVE,
     jobs: [ job ],
@@ -64,9 +64,11 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
 
   const tx = jobControllerDAO.createPostJobTx(
     signer.address,
+    1, // flowType enum { TM = 1, FIXED_PRICE = 2 }
     form.area.code,
     form.category.code,
     SkillModel.writeArrayToMask(form.skills),
+    0, // defaultPay todo check what this parameter is for and mark up field on create job form
     detailsIPFSHash
   )
   await dispatch(executeTransaction({ tx, web3 }))
