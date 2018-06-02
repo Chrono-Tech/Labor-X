@@ -21,6 +21,10 @@ export default class TagModel extends AbstractModel {
   static arrayValueOfMask (mask) {
     return filterArrayByIndexMask(TAGS_LIST, mask)
   }
+  
+  static writeArrayToMask (array) {
+    return array.reduce((mask, element) => (mask | element.code), 0)
+  }
 }
 
 export const TAGS_LIST = [

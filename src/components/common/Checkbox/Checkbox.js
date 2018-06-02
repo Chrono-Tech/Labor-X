@@ -43,11 +43,14 @@ const WrapperCheckbox = (props) => {
 }
 
 WrapperCheckbox.propTypes = {
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]), // node for <Translate /> component
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
   className: PropTypes.string,
   input: PropTypes.shape({
     name: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.bool,
   }),
   onCheck: PropTypes.func,
 }
@@ -57,11 +60,14 @@ const CustomCheckbox = muiThemeable()(WrapperCheckbox)
 export default class Checkbox extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+    ]),
     onClick: PropTypes.func,
     input: PropTypes.shape({
       name: PropTypes.string,
-      value: PropTypes.string,
+      value: PropTypes.bool,
     }),
     material: PropTypes.bool,
     defaultTheme: PropTypes.bool,

@@ -4,6 +4,15 @@
   @include flex(row, flex-start, center);
 }
 
+.flexRowTokenName {
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+.flexRowTokenBalance {
+  flex-wrap: wrap;
+}
+
 .myFundsHeader {
   color: #333333;
   font-size: 20px !important;
@@ -33,5 +42,5 @@
 }
 .tokenBalance {
   font-weight: 400;
-  margin-right: 14px;
+  margin: 0 14px 3px 0;
 }

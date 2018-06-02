@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import CreateJobBoardContent from 'src/components/CreateJobBoard/CreateJobBoard'
+
+import { CreateJobBoardContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
 
 class CreateJobBoardPage extends React.Component {

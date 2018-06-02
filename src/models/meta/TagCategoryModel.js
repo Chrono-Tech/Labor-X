@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { filterArrayByIndexMask, FILTER_MODE_ODD } from 'src/utils'
 import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
@@ -19,6 +20,14 @@ export default class TagCategoryModel extends AbstractModel {
 
   static valueOf (index) {
     return TAG_CATEGORIES_LIST[index]
+  }
+  
+  static arrayValueOfMask (mask, mode = FILTER_MODE_ODD) {
+    return filterArrayByIndexMask(TAG_CATEGORIES_LIST, mask, mode)
+  }
+  
+  static writeArrayToMask (array) {
+    return array.reduce((mask, element) => (mask | element.code), 0)
   }
 }
 
