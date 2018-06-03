@@ -1,0 +1,145 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 100rem;
+
+.main {
+  flex-grow: 1;
+  margin-bottom: 20rem;
+  .title {
+    height: 9rem;
+    margin: 0;
+    padding: 4rem 4rem 0;
+    color: $color-white;
+    background-image: $gradientBlueToGreen;
+    .titleBar {
+      @include flex(row, flex-start, stretch);
+      max-width: calc(#{$maxWidth} - 4rem);
+      height: 5rem;
+      border-top-left-radius: .5rem;
+      border-top-right-radius: .5rem;
+      background-color: $color-azure;
+      .backButton {
+        color: $color-white;
+        background-color: $color-azure;
+      }
+    }
+  }
+  .content {
+    @include card;
+    margin-left: 4rem;
+    max-width: calc(#{$maxWidth} - 4rem);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    .header {
+      @include flex(row, flex-start, stretch);
+      position: relative;
+      color: $color-white;
+      height: 16rem;
+      padding: 4rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom: 1px solid rgba($color-black, .1);
+      .jobInfoContainer {
+        @include flex(row, flex-start, stretch);
+        padding-top: 1.5rem;
+        .jobInfo {
+          margin-right: 2rem;
+          font-size: $h4Size;
+        }
+      }
+      .jobProgressContainer {
+        @include flex(row, flex-start, stretch);
+        align-self: flex-end;
+        margin-left: auto;
+        font-size: $h3Size;
+      }
+      .jobName {
+        @include flex(row, flex-start, center);
+        height: 6rem;
+      }
+      .jobMenu {
+        @include position(absolute, $bottom: -7rem, $right: 13rem);
+        @include flex(column, center, center);
+        cursor: pointer;
+        height: 4rem;
+        width: 4rem;
+        background-color: $color-azure;
+        border-radius: 50%;
+        &:hover {
+          background-color: $color-blue;
+          .jobDropdown {
+            visibility: visible;
+          }
+        }
+        .jobDropdown {
+          @include position(absolute, $bottom: -16rem, $right: 0);
+          visibility: hidden;
+          .jobDropdownEntry {
+            @include flex(column, center, center);
+            margin: 1rem 0;
+            height: 4rem;
+            width: 16rem;
+            border-radius: 2rem;
+            color: $color-white;
+            background-color: $color-azure;
+            &:hover {
+              background-color: $color-blue;
+            }
+          }
+        }
+      }
+      .messageIcon {
+        @include flex(column, center, center);
+        @include position(absolute, $bottom: -8rem, $right: 4rem);
+        cursor: pointer;
+        background-color: $color-azure;
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        &:hover {
+          background-color: $color-blue;
+        }
+      }
+    }
+    .tabs {
+      @include flex(row, flex-start, stretch);
+      padding: 0 3rem;
+      height: 5rem;
+      margin-bottom: 3rem;
+      .tab {
+        @include flex(row, center, center);
+        outline-color: transparent;
+        cursor: pointer;
+        user-select: none;
+        color: $color-white;
+        min-width: 16rem;
+        padding: .5rem 2rem;
+        font-size: $h4Size;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        &:hover:not(.tabActive) {
+          background-color: rgba($color-black, .3);
+        }
+      }
+      .tabActive {
+        border-bottom: .5rem solid $color-white;
+        padding-bottom: 0;
+        &:hover {
+          background-color: 0;
+        }
+      }
+    }
+    .tabContent {
+      min-height: 60rem;
+    }
+  }
+}
+
+.bgGreen {
+  background-color: $color-todo1;
+}
+
+.bgGrey {
+  background-color: $color-gray50;
+}
