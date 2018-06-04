@@ -57,22 +57,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
   }
 
   async getJobsForWorker (
-    address: String,
-    stateMask: Number = DEFAULT_ANY_FILTER_PARAM,
-    skillsArea: Number = DEFAULT_ANY_FILTER_PARAM,
-    skillsCategory: Number = DEFAULT_ANY_FILTER_PARAM,
-    skills: Number = DEFAULT_ANY_FILTER_PARAM,
-    pausedMask: Number = DEFAULT_ANY_FILTER_PARAM,
-    fromId: Number = DEFAULT_ANY_FILTER_PARAM,
-    limit: Number = 99999
-  ) {
-    const jobs = await this.contract.methods.getJobForWorker(address, stateMask, skillsArea, skillsCategory, skills, pausedMask, fromId, limit).call()
-
-    return jobs
-  }
-
-  async getJobsForClient (
-    address: String,
+    workerAddress: String,
     stateMask: Number = DEFAULT_ANY_FILTER_PARAM,
     skillsArea: Number = DEFAULT_ANY_FILTER_PARAM,
     skillsCategory: Number = DEFAULT_ANY_FILTER_PARAM,
@@ -81,7 +66,39 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
     fromId: Number = DEFAULT_ANY_FILTER_PARAM,
     limit: Number = 99999)
   {
-    const jobs = await this.contract.methods.getJobsForClient(address, stateMask, skillsArea, skillsCategory, skills, pausedMask, fromId, limit).call()
+    const jobs = await this.contract.methods.getJobForWorker(
+      workerAddress,
+      stateMask,
+      skillsArea,
+      skillsCategory,
+      skills,
+      pausedMask,
+      fromId,
+      limit
+    ).call()
+    return jobs
+  }
+
+  async getJobsForClient (
+    clientAddress: String,
+    stateMask: Number = DEFAULT_ANY_FILTER_PARAM,
+    skillsArea: Number = DEFAULT_ANY_FILTER_PARAM,
+    skillsCategory: Number = DEFAULT_ANY_FILTER_PARAM,
+    skills: Number = DEFAULT_ANY_FILTER_PARAM,
+    pausedMask: Number = DEFAULT_ANY_FILTER_PARAM,
+    fromId: Number = DEFAULT_ANY_FILTER_PARAM,
+    limit: Number = 99999)
+  {
+    const jobs = await this.contract.methods.getJobsForClient(
+      clientAddress,
+      stateMask,
+      skillsArea,
+      skillsCategory,
+      skills,
+      pausedMask,
+      fromId,
+      limit
+    ).call()
 
     return jobs
   }

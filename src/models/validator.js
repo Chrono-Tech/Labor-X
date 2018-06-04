@@ -5,7 +5,6 @@ import Web3 from 'web3'
 
 export const privateKey = (value) => {
   try {
-    // console.log(value)
     wallet.fromPrivateKey(Buffer.from(value, 'hex'))
     return null
   } catch (e) {
