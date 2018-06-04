@@ -1,6 +1,6 @@
 import { Button, Image } from 'components/common'
 import React from 'react'
-import Router from 'next/router'
+import { Router } from 'src/routes'
 import css from './JobTypesContent.scss'
 
 export default class JobTypesContent extends React.Component {
