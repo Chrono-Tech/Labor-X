@@ -1,6 +1,6 @@
 import { Router } from 'src/routes'
 
-import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'store'
+import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'src/store'
 
 export const CREATE_ACCOUNT_SET_MNEMONIC = 'createAccount/setMnemonic'
 export const CREATE_ACCOUNT_SET_PASSWORD = 'createAccount/setPassword'

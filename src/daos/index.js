@@ -5,6 +5,7 @@ import ERC20_LIBRARY_ABI from '@laborx/sc-abi/build/contracts/ERC20Library.json'
 import ERC20_INTERFACE_ABI from '@laborx/sc-abi/build/contracts/ERC20Interface.json'
 import MULTI_EVENTS_HISTORY_ABI from '@laborx/sc-abi/build/contracts/MultiEventsHistory.json'
 import JOB_CONTROLLER_ABI from '@laborx/sc-abi/build/contracts/JobController.json'
+import JOBS_DATA_PROVIDER_ABI from '@laborx/sc-abi/build/contracts/JobsDataProvider.json'
 import BOARD_CONTROLLER_ABI from '@laborx/sc-abi/build/contracts/BoardController.json'
 
 import ContractsManagerDAO from './lib/ContractsManagerDAO'
@@ -12,6 +13,7 @@ import ERC20LibraryDAO from './lib/ERC20LibraryDAO'
 import JobControllerDAO from './lib/JobControllerDAO'
 import BoardControllerDAO from './lib/BoardControllerDAO'
 import ERC20TokenDAO from './lib/ERC20TokenDAO'
+import JobsDataProviderDAO from "./lib/JobsDataProviderDAO"
 
 export { default as ethDAO } from './lib/ETHDAO'
 export { default as AbstractContractDAO } from './lib/AbstractContractDAO'
@@ -20,6 +22,7 @@ export { default as AbstractTokenDAO } from './lib/AbstractTokenDAO'
 export { default as ETHTokenDAO } from './lib/ETHTokenDAO'
 export { default as ContractsManagerDAO } from './lib/ContractsManagerDAO'
 export { default as JobControllerDAO } from './lib/JobControllerDAO'
+export { default as JobsDataProviderDAO } from './lib/JobsDataProviderDAO'
 export { default as BoardControllerDAO } from './lib/BoardControllerDAO'
 export { default as ERC20LibraryDAO } from './lib/ERC20LibraryDAO'
 
@@ -40,6 +43,12 @@ export const JOB_CONTROLLER = new ContractModel({
   type: "JobController",
   abi: JOB_CONTROLLER_ABI,
   DAOClass: JobControllerDAO,
+})
+
+export const JOBS_DATA_PROVIDER = new ContractModel({
+  type: "JobsDataProvider",
+  abi: JOBS_DATA_PROVIDER_ABI,
+  DAOClass: JobsDataProviderDAO,
 })
 
 export const BOARD_CONTROLLER = new ContractModel({

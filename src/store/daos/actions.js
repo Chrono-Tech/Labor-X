@@ -5,6 +5,7 @@ import {
   ERC20_LIBRARY,
   JOB_CONTROLLER,
   BOARD_CONTROLLER,
+  JOBS_DATA_PROVIDER,
 } from 'src/daos'
 
 export const DAOS_REGISTER = 'daos/register'
@@ -28,6 +29,7 @@ export const initDAOs = ({ web3 }) => async (dispatch) => {
     ERC20_LIBRARY,
     JOB_CONTROLLER,
     BOARD_CONTROLLER,
+    JOBS_DATA_PROVIDER,
   ]
 
   const models = await Promise.all(

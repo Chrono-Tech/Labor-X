@@ -35,6 +35,7 @@ export default class Image extends React.PureComponent {
     MESSAGE: 'message',
     CLOSE: 'close',
     CHECK: 'check',
+    STAR: 'star',
     RATING: 'rating',
     MORE: 'more',
   }
@@ -73,6 +74,10 @@ export default class Image extends React.PureComponent {
     CHECK: {
       icon: Image.ICONS.CHECK,
       color: Image.COLORS.WHITE,
+    },
+    STAR: {
+      icon: Image.ICONS.STAR,
+      color: Image.COLORS.GOLD,
     },
   }
 

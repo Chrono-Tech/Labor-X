@@ -1,4 +1,5 @@
-import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent } from 'src/models'
+import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TAG_AREAS_LIST, TAGS_LIST } from 'src/models'
+import { storeIntoIPFS } from 'src/utils'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { boardByIdSelector } from './selectors'
@@ -8,6 +9,7 @@ import { web3Selector } from '../ethereum/selectors'
 export const BOARDS_CLEAR = 'boards/clear'
 export const BOARDS_SAVE = 'boards/save'
 export const BOARDS_FILTER = 'boards/filter'
+export const BOARD_CREATE= 'boards/create'
 
 export const initBoards = () => async (dispatch, getState) => {
   const state = getState()
@@ -122,22 +124,43 @@ export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
   if (level && !isNaN(parseInt(level))) {
     level = parseInt(level)
 
-    currentList = currentList.filter((board) => board.validationLevel >= level)
+    currentList = currentList.filter((board) => board.ipfs.validationLevel >= level)
   }
 
   if (rating && !isNaN(parseInt(rating))) {
     rating = parseInt(rating)
 
-    currentList = currentList.filter((board) => board.rating >= rating)
+    currentList = currentList.filter((board) => board.ipfs.rating >= rating)
   }
 
   if (searchText){
     searchText = String(searchText).toLowerCase()
-    currentList = currentList.filter((board) => String(board.name || '').toLowerCase().includes(searchText) )
+    currentList = currentList.filter((board) => String(board.ipfs.name || '').toLowerCase().includes(searchText) )
   }
 
   dispatch({
     type: BOARDS_FILTER,
     boardsList: currentList,
   })
+}
+
+export const boardCreate = (data) => async (dispatch, getState) => {
+  const state = getState()
+  
+  const boardControlerDAO = daoByType('BoardController')(state)
+  const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
+  
+  const detailsIPFSHash = await storeIntoIPFS(data.ipfsData)
+  
+  const tx = boardControlerDAO.createCreateBoardTx(
+    signer.address,
+    TAGS_LIST[1].index,
+    TAG_AREAS_LIST[1].index,
+    data.categories,
+    detailsIPFSHash
+  )
+
+  await dispatch(executeTransaction({ tx, web3 }))
+  
 }

@@ -39,6 +39,7 @@ export const broadcastTransaction = ({ web3, signed }) => async () => {
 
 export const executeTransaction = ({ web3, tx }) => async (dispatch, getState) => {
   const prepared = await dispatch(prepareTransaction({ web3, tx }))
+  console.log('execute')
   const entry = new TxEntryModel({
     key: uniqid(),
     tx: prepared,
@@ -46,7 +47,9 @@ export const executeTransaction = ({ web3, tx }) => async (dispatch, getState) =
     isSubmitted: true,
     isAccepted: true,
   })
+  
   await dispatch({ type: TX_CREATE, entry })
+  
   return dispatch(processTransaction({
     web3,
     entry: pendingEntrySelector(entry.tx.from, entry.key)(getState()),
@@ -88,7 +91,7 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
     // eslint-disable-next-line no-console
     console.log('tx', omitBy(entry.tx, isNil))
     // eslint-disable-next-line no-console
-    console.log('signer', signer)
+    console.log('signer', signer, entry)
     const signed = await signer.signTransaction(omitBy(entry.tx, isNil))
     const raw = signed.rawTransaction
     dispatch({

@@ -1,33 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
-import { formatNumber } from 'accounting'
-import { Action, Image } from 'components/common'
-import { BalanceMicro } from 'src/micros'
-import { SignerModel, PocketModel } from 'src/models'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import { MuiThemeProvider } from 'material-ui/styles'
-import { signerSelector, ethPocketSelector, balanceByPocket } from 'src/store'
+import { formatMoney, formatNumber } from 'accounting'
+
+import { Image } from 'components/common'
+import { PocketModel, BalanceModel, CurrencyModel } from 'src/models'
+import { signerSelector, ethPocketSelector, balanceByPocket, currencySelector } from 'src/store'
 
 import css from './BalanceCollapsible.scss'
-import { BalanceModel } from 'src/models'
 
 class BalanceCollapsible extends React.Component {
   static propTypes = {
     pocket: PropTypes.instanceOf(PocketModel).isRequired,
     balance: PropTypes.instanceOf(BalanceModel),
+    currencyLHR: PropTypes.instanceOf(CurrencyModel),
   }
 
+  getBalanceSum (){
+    const { balance, currencyLHR } = this.props
+
+    const lhrCurrency = currencyLHR && currencyLHR.value && currencyLHR.value.multipliedBy(balance.value) || 0
+
+    return formatMoney(lhrCurrency, "$", 2, ",", ".")
+  }
+  
   getBalance (){
     const { balance } = this.props
-
-    const lhrCurrency = 25
-
-    return formatNumber(balance.amount * lhrCurrency, 2)
+    
+    return formatNumber(balance.value)
   }
+  
   render (){
-    const { pocket, balance } = this.props
+    const { pocket } = this.props
 
     return (
       <MuiThemeProvider>
@@ -39,18 +45,18 @@ class BalanceCollapsible extends React.Component {
           >
             <div className={css.myFundsHeader}>
               <span>My Funds</span>
-              <span className={css.myFundsSum}>≈ { this.getBalance() }</span>
+              <span className={css.myFundsSum}>≈ { this.getBalanceSum() }</span>
             </div>
           </CardHeader>
           <CardText className={css.collapseText} style={{ padding: 0 }} expandable>
             <div className={css.tokenBlock}>
-              <div className={css.flexRow}>
+              <div className={[css.flexRow, css.flexRowTokenName].join(' ')}>
                 <Image className={css.tokenImage} href={Image.TOKENS.LHR} />
                 <div className={css.tokenName}>{pocket.token.dao.token.name}</div>
               </div>
-              <div className={css.flexRow}>
-                <div className={css.tokenBalance}><BalanceMicro pocket={pocket} /></div>
-                <span className={css.myFundsSum}>${ this.getBalance() }</span>
+              <div className={[css.flexRow, css.flexRowTokenBalance].join(' ')}>
+                <div className={css.tokenBalance}>{ this.getBalance() }</div>
+                <span className={css.myFundsSum}>{ this.getBalanceSum() }</span>
               </div>
             </div>
           </CardText>
@@ -60,15 +66,16 @@ class BalanceCollapsible extends React.Component {
   }
 }
 
-const mapStateToProps = (state, op) => {
+const mapStateToProps = (state) => {
   const signer = signerSelector()(state)
   const pocket = ethPocketSelector(signer.address)(state)
   const balance = balanceByPocket(pocket)(state)
+  const currencyLHR = currencySelector('lhr')(state)
 
   return {
-    signer,
     pocket,
     balance,
+    currencyLHR,
   }
 }
 
