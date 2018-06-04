@@ -17,6 +17,8 @@ pages/**
 *.js
 src/**/*.js
 
+!pages/client-job-view.js
+
 !src/content/lib/CreateJobContent/validate.js
 !src/daos/index.js
 !src/daos/lib/ContractsManagerDAO.js
@@ -25,3 +27,11 @@ src/**/*.js
 !src/models/app/JobModel.js
 !src/store/daos/actions.js
 !src/store/jobs/actions.js
+!src/routes.js
+!src/components/common/Icon/Icon.js
+!src/content/index.js
+!src/content/lib/ContentJobViewContent/ContentJobViewContent.js
+!src/content/lib/ContentJobViewContent/ContractTab/ContractTab.js
+!src/content/lib/ContentJobViewContent/GeneralTab/GeneralTab.js
+!src/content/lib/ContentJobViewContent/InfoTab/InfoTab.js
+!src/content/lib/ContentJobViewContent/LogTab/LogTab.js
