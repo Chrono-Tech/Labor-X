@@ -54,7 +54,7 @@ export default class Rating extends React.Component {
           {
             starsTable && starsTable.stars && starsTable.stars.map((item) => (
               <tr>
-                <td className={css.countStars}>{item.star} pluralize('star', item.star)</td>
+                <td className={css.countStars}>{item.star} {pluralize('star', item.star)}</td>
                 <td className={css.countStarsVotes}>{item.votes}</td>
                 <td className={css.countRating}>
                   <span style={{ width: this.getRatingTrackWidth() }} className={css.countRatingTrack} />
