@@ -7,9 +7,11 @@ import { web3Selector } from '../ethereum/selectors'
 
 export const JOBS_CLEAR = 'jobs/clear'
 export const JOBS_SAVE = 'jobs/save'
+export const JOBS_CLIENT_SAVE = 'jobs/client_save'
+export const JOBS_WORKER_SAVE = 'jobs/worker_save'
 export const JOBS_FILTER = 'jobs/filter'
 
-// Sholud be called only once
+// Should be called only once
 export const initJobs = () => async (dispatch, getState) => {
   const state = getState()
   daoByType('JobController')(state)
@@ -20,15 +22,26 @@ export const initJobs = () => async (dispatch, getState) => {
 
 export const reloadJobs = () => async (dispatch, getState) => {
   const state = getState()
-  const jobsDataProviderDAO = daoByType('JobsDataProvider')(state)
   const boardControlerDAO = daoByType('BoardController')(state)
+  const JobDataProviderDAO = daoByType('JobsDataProvider')(state)
   const signer = signerSelector()(state)
   dispatch({
     type: JOBS_CLEAR,
   })
+
   if (signer) {
-    const jobs = await jobsDataProviderDAO.getJobs(boardControlerDAO, signer.address)
-    dispatch({ type: JOBS_SAVE, jobs })
+    const jobs = await JobDataProviderDAO.getJobs(boardControlerDAO)
+    dispatch({ type: JOBS_SAVE, jobList: jobs })
+
+    if (signer.profile.ipfs.isWorker) {
+      const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
+      dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
+    }
+
+    if (signer.profile.ipfs.isClient) {
+      const jobs = await JobDataProviderDAO.getJobsForClient(signer.address)
+      dispatch({ type: JOBS_CLIENT_SAVE, jobList: jobs })
+    }
   }
 }
 
@@ -41,7 +54,7 @@ export const handleJobPosted = (e: JobPostedEvent) => async (dispatch, getState)
   const job = await jobsDataProviderDAO.getJobById(boardControlerDAO, e.jobId)
   dispatch({
     type: JOBS_SAVE,
-    jobs: [ job ],
+    jobList: [ job ],
   })
   return job
 }

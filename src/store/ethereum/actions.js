@@ -39,7 +39,6 @@ export const broadcastTransaction = ({ web3, signed }) => async () => {
 
 export const executeTransaction = ({ web3, tx }) => async (dispatch, getState) => {
   const prepared = await dispatch(prepareTransaction({ web3, tx }))
-  console.log('execute')
   const entry = new TxEntryModel({
     key: uniqid(),
     tx: prepared,
@@ -104,7 +103,8 @@ export const signTransaction = ({ entry }) => async (dispatch, getState) => {
       },
     })
   } catch (e) {
-    console.log('Nononon!!!!!!!!!!!!!', e)
+    // eslint-disable-next-line no-console
+    console.log('signTransaction error: ', e)
     dispatch({
       type: TX_STATUS,
       key: entry.key,

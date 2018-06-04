@@ -27,6 +27,11 @@ src/**/*.js
 !src/models/app/JobModel.js
 !src/store/daos/actions.js
 !src/store/jobs/actions.js
+!src/models/validator.js
+!src/models/wallets/SignerModel.js
+!src/models/wallets/WalletModel.js
+!src/store/ethereum/actions.js
+!src/store/jobs/reducer.js
 !src/routes.js
 !src/components/common/Icon/Icon.js
 !src/content/index.js
