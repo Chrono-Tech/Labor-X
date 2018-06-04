@@ -1,0 +1,116 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+  .title {
+    height: 9rem;
+    margin: 0;
+    padding: 4rem 4rem 0;
+    color: $color-white;
+    background-image: $gradientBlueToGreen;
+    .titleBar {
+      @include flex(row, flex-start, stretch);
+      max-width: 70rem;
+      height: 5rem;
+      border-top-left-radius: .5rem;
+      border-top-right-radius: .5rem;
+      background-color: $color-azure;
+      .backButton {
+        color: $color-white;
+        background-color: $color-azure;
+      }
+    }
+  }
+  .content {
+    padding-left: 4rem;
+    width: 100%;
+    max-width: $maxWidth;
+    .header {
+      @include card;
+      padding: 0 3rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      .jobHeader {
+        @include flex(row, flex-start, center);
+        height: 8rem;
+        border-bottom: solid 1px $color-gray5;
+      }
+      .jobName {
+        @include flex(row, flex-start, center);
+        position: relative;
+        height: 6rem;
+        .jobMenu {
+          @include position(absolute, $top: -2rem, $right: 0);
+          @include flex(column, center, center);
+          cursor: pointer;
+          height: 4rem;
+          width: 4rem;
+          background-color: $color-azure;
+          border-radius: 50%;
+          &:hover {
+            background-color: $color-blue;
+            .jobDropdown {
+              visibility: visible;
+            }
+          }
+          .jobDropdown {
+            @include position(absolute, $top: 4rem, $right: 0);
+            visibility: hidden;
+            .jobDropdownEntry {
+              @include flex(column, center, center);
+              margin: 1rem 0;
+              height: 4rem;
+              width: 16rem;
+              border-radius: 2rem;
+              color: $color-white;
+              background-color: $color-azure;
+              &:hover {
+                background-color: $color-blue;
+              }
+            }
+          }
+        }
+      }
+    }
+    .contentContainer {
+      @include flex(column, center, stretch);
+      flex: 1;
+      .filterRow {
+        @include flex(row, flex-start, center);
+        margin-top: 2rem;
+        flex: 1;
+        width: 100%;
+        .searchRow {
+          @include flex(row, flex-start, center);
+          flex: 2;
+          > * {
+            margin-left: 1.5rem;
+          }
+          .search {
+            flex-grow: 1;
+          }
+        }
+      }
+    }
+    .block {
+      margin-top: 4rem;
+      > h4 {
+        margin-bottom: 2rem;
+      }
+      .cards {
+        display: flex;
+        flex: 1;
+        width: 100%;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        > * {
+          margin-bottom: 2rem;
+        }
+      }
+    }
+  }
+}

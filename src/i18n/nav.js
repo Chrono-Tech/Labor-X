@@ -40,5 +40,6 @@ export default {
   recruiterJobs: 'Recruiter Jobs',
   createJob: 'Post a Job',
   jobTypes: 'Job Types',
+  reviewApplicants: 'Review Applicants',
   clientJobView: 'Client Job View',
 }

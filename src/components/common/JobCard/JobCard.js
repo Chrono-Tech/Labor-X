@@ -11,10 +11,10 @@ const dateFormat = 'DD MMM YYYY'
 
 export default class JobCard extends React.Component {
   static propTypes = {
-    onClickReview: PropTypes.func,
     job: PropTypes.instanceOf(JobModel).isRequired,
     board: PropTypes.instanceOf(BoardModel),
     notice: PropTypes.instanceOf(JobNoticeModel),
+    onClickReview: PropTypes.func,
   }
 
   constructor (...args) {
@@ -23,7 +23,7 @@ export default class JobCard extends React.Component {
   }
 
   handleReview () {
-    this.props.onClickReview()
+    this.props.onClickReview(this.props.job.id)
   }
 
   renderFooter ({ job, notice }) {

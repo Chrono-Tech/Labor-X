@@ -1,0 +1,89 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include card;
+  width: 100%;
+  border-left-width: .5rem;
+  border-left-style: solid;
+  border-left-color: transparent;
+  > div {
+    padding: 0 2rem;
+  }
+}
+
+.attention {
+  border-left-color: $color-gold;
+}
+
+.workerRow {
+  @include flex(row, flex-start, center);
+  height: 9rem;
+  border-bottom: solid 1px $color-gray5;
+}
+
+.workerName {
+  @include flex(row, flex-start, center);
+  flex-grow: 1;
+}
+
+.extraData {
+  @include flex(row, flex-start, center);
+  margin-left: auto;
+  > * {
+    margin-left: 2rem;
+  }
+}
+
+.icon {
+  margin-right: 1rem;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.link {
+  font-weight: initial;
+  &:hover {
+    color: $color-blue;
+  }
+}
+
+.footerRow {
+  @include flex(row, flex-start, center);
+  font-size: $pSize;
+  height: 4rem;
+  &:hover {
+    color: $color-red;
+  }
+}
+
+.offer {
+  margin-right: 1rem;
+}
+
+.date {
+  font-size: $pMediumSize;
+  color: $color-gray50;
+}
+
+.actions {
+  @include flex(row, flex-start, center);
+  margin-left: auto;
+  > * {
+    margin-left: 2rem;
+  }
+}
+
+.buttonBlue {
+  min-width: 10rem;
+  color: $color-azure;
+  background-color: transparent;
+}
+
+.buttonRed {
+  min-width: 10rem;
+  color: $color-red;
+  background-color: transparent;
+}

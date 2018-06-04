@@ -23,8 +23,7 @@ export { default as FeedbackCard } from './FeedbackCard/FeedbackCard'
 export { default as OpportunityCard } from './OpportunityCard/OpportunityCard'
 export { default as TodoCard } from './TodoCard/TodoCard'
 export { default as ActiveJobCard } from './ActiveJobCard/ActiveJobCard'
-export { default as Rating } from './Rating/Rating'
-export { default as SecurityShield } from './SecurityShield/SecurityShield'
+export { default as WorkerCard } from './WorkerCard/WorkerCard'
 
 //elements
 export { default as Badge } from './Badge/Badge'
@@ -33,6 +32,9 @@ export { default as Chip } from './Chip/Chip'
 export { default as Tag } from './Tag/Tag'
 export { default as Counter } from './Counter/Counter'
 export { default as Tab } from './Tab/Tab'
+export { default as Rating } from './Rating/Rating'
+export { default as SecurityShield } from './SecurityShield/SecurityShield'
+export { default as WorkerState } from './WorkerState/WorkerState'
 
 // forms
 export { default as Button } from './Button/Button'

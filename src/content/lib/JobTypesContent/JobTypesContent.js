@@ -1,15 +1,15 @@
 import { Button, Image } from 'components/common'
 import React from 'react'
-import Router from 'next/router'
-import css from './JobTypes.scss'
+import { Router } from 'src/routes'
+import css from './JobTypesContent.scss'
 
-export default class JobTypes extends React.Component {
+export default class JobTypesContent extends React.Component {
   handlePostJob () {
-    Router.push('/create-job')
+    Router.pushRoute('/create-job')
   }
 
   handleHireWorker () {
-    Router.push('/hire-worker')
+    Router.pushRoute('/hire-worker')
   }
 
   render () {
