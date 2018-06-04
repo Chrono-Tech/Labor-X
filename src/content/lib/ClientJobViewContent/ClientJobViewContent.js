@@ -24,7 +24,7 @@ export class ClientJobViewContent extends React.Component {
   }
 
   handleBack () {
-    Router.push('/jobs')
+    Router.pushRoute('/jobs')
   }
 
   handleTabClick = (index) => {
