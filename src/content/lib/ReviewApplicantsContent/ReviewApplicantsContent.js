@@ -29,7 +29,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   handleBack () {
-    Router.push('/active-jobs')
+    Router.pushRoute('/active-jobs')
   }
 
   renderEmptyListMessage (){
@@ -158,13 +158,9 @@ function mapStateToProps () {
   }
 }
 
-function mapDispatchToProps () {
-  return {}
-}
-
 const form = reduxForm({
   form: FORM_REVIEW_APPLICANTS,
   fields: ['searchReviewApplicants'],
 })(ReviewApplicantsContent)
 
-export default connect(mapStateToProps, mapDispatchToProps)(form)
+export default connect(mapStateToProps)(form)

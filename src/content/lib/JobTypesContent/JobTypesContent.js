@@ -5,11 +5,11 @@ import css from './JobTypesContent.scss'
 
 export default class JobTypesContent extends React.Component {
   handlePostJob () {
-    Router.push('/create-job')
+    Router.pushRoute('/create-job')
   }
 
   handleHireWorker () {
-    Router.push('/hire-worker')
+    Router.pushRoute('/hire-worker')
   }
 
   render () {

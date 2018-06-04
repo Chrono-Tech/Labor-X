@@ -12,7 +12,7 @@ class PostedJobsContent extends React.Component {
   }
 
   handleOnClickReview (jobId) {
-    Router.push(`/review-applicants/${jobId}`)
+    Router.pushRoute(`/review-applicants/${jobId}`)
   }
 
   render () {
@@ -43,9 +43,4 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (/*dispatch*/) {
-  return {
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostedJobsContent)
+export default connect(mapStateToProps)(PostedJobsContent)
