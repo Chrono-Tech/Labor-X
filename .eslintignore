@@ -34,9 +34,14 @@ src/**/*.js
 !src/models/app/WorkerIPFSModel.js
 !src/models/app/WorkerModel.js
 !src/models/app/StateModel.js
+!src/models/validator.js
+!src/models/wallets/SignerModel.js
+!src/models/wallets/WalletModel.js
 
 !src/store/daos/actions.js
 !src/store/jobs/actions.js
+!src/store/ethereum/actions.js
+!src/store/jobs/reducer.js
 
 !src/components/common/Icon/Icon.js
 !src/components/common/index.js
