@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
-import { SignerModel } from 'src/models'
+import { SignerModel, JobModel } from 'src/models'
 import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, profileSelector, modalsPush } from 'src/store'
 import { PayInvoiceDialog } from 'src/partials'
 import { Translate, ActiveJobCard } from 'src/components/common'
@@ -32,10 +32,10 @@ class ActiveJobsContent extends React.Component {
     this.handleOnClickReview = this.handleOnClickReview.bind(this)
   }
 
-  handleOnClickReview () {
+  handleOnClickReview (job, worker) {
     const modal = {
       component: PayInvoiceDialog,
-      props: {},
+      props: { job, worker },
     }
     this.props.pushModal(modal)
   }
@@ -88,6 +88,7 @@ function mapStateToProps (state) {
 
   const cards = jobs
     .filter((/*job*/) => true) // TODO @ipavlenko: Only active jobs
+    .filter(job => job instanceof JobModel )
     .map(job => ({
       job,
       board: boardByIdSelector(job.boardId)(state),

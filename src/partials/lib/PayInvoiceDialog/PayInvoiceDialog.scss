@@ -2,10 +2,89 @@
 @import "~styles/globals/mixins";
 
 .root {
-  width: 40rem;
-  height: 45rem;
+  @include flex(column, flex-start, stretch);
+  width: 50rem;
+  height: 55rem;
   background: $color-white;
   border-radius: 5px;
-  padding: 1.5rem;
-  border: 1px solid $color-azure;
+  padding: 4rem 0 2rem;
+  border-top: 1rem solid $color-azure;
+  .header {
+    padding: 0 2rem;
+    border-bottom: .5rem solid $color-gray10;
+    .headerInfo {
+      margin: 3rem 0;
+      @include flex(row, flex-start, stretch);
+      .worker {
+        @include flex(row, flex-start, center);
+        img {
+          margin-right: 1rem;
+          width: 3rem;
+          height: 3rem;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+      > * {
+        margin-right: 1.5rem;
+      }
+      .infoString {
+        line-height: 1.1;
+        font-size: $pSize;
+      }
+    }
+  }
+  .body {
+    padding: 2rem;
+    border-bottom: .2rem solid $color-gray10;
+    .invoiceRow {
+      @include flex(row, space-between, center);
+      height: 4rem;
+      border-bottom: .1rem solid $color-gray10;
+    }
+    .totalRow {
+      @include flex(row, space-between, center);
+      padding: 1rem 0 2rem;
+      .totalPrice {
+        @include flex(column, flex-start, flex-end);
+      }
+    }
+  }
+  .notice {
+    padding: 2rem;
+    line-height: 1.1;
+    font-size: $pSize;
+    .link {
+      color: $color-azure;
+      font-weight: $font-weight-medium;
+    }
+  }
+  .actions {
+    @include flex(row, flex-end, stretch);
+    margin-top: auto;
+    padding: 0 2rem;
+    > * {
+      margin-left: 2rem;
+    }
+    .payAction {
+      @include flex(column, center, center);
+      font-weight: $font-weight-bold;
+      background-color: $color-green !important;
+      padding: 12px 0;
+      color: $color-white;
+      &:hover {
+        background-color: darken($color-green, 5) !important;
+      }
+    }
+    .declineAction {
+      @include flex(column, center, center);
+      font-weight: $font-weight-bold;
+      background-color: $color-red !important;
+      padding: 1.2rem 0;
+      color: $color-white;
+      &:hover {
+        background-color: darken($color-red, 5) !important;
+      }
+    }
+  }
 }
