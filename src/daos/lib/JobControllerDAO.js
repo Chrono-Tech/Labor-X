@@ -1,6 +1,8 @@
 import BigNumber from 'bignumber.js'
 import {
   JobPostedEvent,
+  JobPausedEvent,
+  JobResumedEvent,
 } from 'src/models'
 import {
   ipfsHashToBytes32,
@@ -25,6 +27,12 @@ export default class JobControllerDAO extends AbstractContractDAO {
 
     this.jobPostedEmitter = this.history.events.JobPosted({})
       .on('data', this.handleJobPostedData.bind(this))
+      .on('error', this.handleError.bind(this))
+    this.jobResumeEmitter = this.history.events.WorkResumed({})
+      .on('data', this.handleJobResumedData.bind(this))
+      .on('error', this.handleError.bind(this))
+    this.jobPausedEmitter = this.history.events.WorkPaused({})
+      .on('data', this.handleJobPausedData.bind(this))
       .on('error', this.handleError.bind(this))
     // this.jobClosedEmitter = this.contract.events.JobClosed({})
     //   .on('data', this.handleJobClosedData.bind(this))
@@ -66,6 +74,20 @@ export default class JobControllerDAO extends AbstractContractDAO {
     }
   }
 
+  async resumeJobWork (jobId: Number) {
+    const code = await this.contract.methods.resumeWork(jobId).call()
+    return {
+      code,
+    }
+  }
+
+  pauseJobWork (jobId: Number) {
+    const code = this.contract.methods.pauseWork(jobId).call()
+    return {
+      code,
+    }
+  }
+
   handleJobPostedData (data) {
     // eslint-disable-next-line no-console
     console.log('[JobControllerDAO] JobPosted', data)
@@ -83,6 +105,38 @@ export default class JobControllerDAO extends AbstractContractDAO {
           skillsCategory: Number(returnValues.skillsCategory),
           detailsIPFSHash: returnValues.detailsIPFSHash,
           bindStatus: returnValues.bindStatus,
+        }),
+      })
+    })
+  }
+
+  handleJobResumedData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] JobResumed', data)
+    const { returnValues } = data
+    setImmediate(() => {
+      this.emit('JobResumed', {
+        data,
+        event: new JobResumedEvent({
+          key: `${data.transactionHash}/${data.logIndex}`,
+          self: returnValues.self,
+          jobId: Number(returnValues.jobId),
+        }),
+      })
+    })
+  }
+
+  handleJobPausedData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] JobPaused', data)
+    const { returnValues } = data
+    setImmediate(() => {
+      this.emit('JobPaused', {
+        data,
+        event: new JobPausedEvent({
+          key: `${data.transactionHash}/${data.logIndex}`,
+          self: returnValues.self,
+          jobId: Number(returnValues.jobId),
         }),
       })
     })
