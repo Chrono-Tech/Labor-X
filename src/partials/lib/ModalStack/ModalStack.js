@@ -25,6 +25,10 @@ export class ModalStack extends React.Component {
     this.props.dispatchModalsClear()
   }
 
+  handleModalClick (e) {
+    e.stopPropagation()
+  }
+
   render () {
     return (
       <div className={css.modalStack}>
@@ -38,6 +42,7 @@ export class ModalStack extends React.Component {
           >
             { this.props.stack.map((modal) => (
               <modal.component
+                onClick={this.handleModalClick}
                 key={modal.key}
                 {...modal.props}
               />

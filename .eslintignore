@@ -65,6 +65,7 @@ src/**/*.js
 !src/content/lib/PostedJobsContent/PostedJobsContent.js
 !src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
 
+!src/partials/**
 
 
 

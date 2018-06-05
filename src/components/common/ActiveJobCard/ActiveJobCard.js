@@ -24,7 +24,7 @@ export default class ActiveJobCard extends React.Component {
   }
 
   handleReview () {
-    this.props.onClickReview()
+    this.props.onClickReview(this.props.job, this.props.worker)
   }
 
   handleMessage () {
