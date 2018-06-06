@@ -28,7 +28,7 @@ export { default as ERC20LibraryDAO } from './lib/ERC20LibraryDAO'
 
 export const CONTRACTS_MANAGER = new ContractModel({
   type: "ContractsManager",
-  address: CONTRACTS_MANAGER_ABI.networks['135744'].address,
+  address: CONTRACTS_MANAGER_ABI.networks['88'].address,
   abi: CONTRACTS_MANAGER_ABI,
   DAOClass: ContractsManagerDAO,
 })

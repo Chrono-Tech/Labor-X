@@ -7,7 +7,7 @@
     ""
   ],
   "dependencies": {
-    "@laborx/sc-abi": "^0.0.7",
+    "@laborx/sc-abi": "0.0.8",
     "accounting": "^0.4.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "bignumber.js": "^6.0.0",
@@ -87,5 +87,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
-  "pre-commit": [ "lint" ]
+  "pre-commit": [
+    "lint"
+  ]
 }
