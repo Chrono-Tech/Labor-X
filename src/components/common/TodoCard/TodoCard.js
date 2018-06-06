@@ -3,8 +3,9 @@ import { Image } from 'components/common'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
+import { schemaFactory as jobSchemaFactory } from "src/models/app/JobModel"
+
 import css from './TodoCard.scss'
-import { schemaFactory as jobSchemaFactory } from "../../../models/app/JobModel"
 
 const STATUSES = {
   APPLIED: 'applied',
@@ -19,14 +20,15 @@ const dateFormat = 'h:mm A'
 export default class TodoCard extends React.Component {
   static propTypes = {
     job: jobSchemaFactory(),
-    className: PropTypes.string,
+    resumeJobWork: PropTypes.func,
+    pauseJobWork: PropTypes.func,
   }
 
   static STATUSES = STATUSES
 
   constructor (props, context){
     super(props, context)
-    this.workedTime = this.workedTime.bind(this)
+    this.workedTimeRender = this.workedTimeRender.bind(this)
     this.progressIcon = this.progressIcon.bind(this)
   }
 
@@ -40,31 +42,77 @@ export default class TodoCard extends React.Component {
     console.log('Opportunity-view-handleMessage')
   }
 
+  handlePausePlayClick = () => {
+    this.props.job.paused ? this.props.resumeJobWork(this.props.job.id) : this.props.pauseJobWork(this.props.job.id)
+  }
+
+  getTodoStatus = () => {
+    const { job } = this.props
+
+    if (!job.paused) {
+      return STATUSES.IN_PROGRESS
+    } else if (job.state.name === 'WORK_REJECTED') {
+      return STATUSES.PROBLEM
+    } else if (job.ipfs.period && this.daysUntil(job.ipfs.period.until) === 1) {
+      return STATUSES.ATTENTION
+    } else {
+      return STATUSES.APPROVED
+    }
+  }
+
+  getCardNote = () => {
+    const { job } = this.props
+    if (job.state.name === 'WORK_REJECTED') {
+      return 'RE-DO TODAY'
+    } else if (job.ipfs.period && this.daysUntil(job.ipfs.period.until) <= 1) {
+      return 'DUE TODAY'
+    } else {
+      return ''
+    }
+  }
+
+  workedTimeRender () {
+    const dur = moment.duration(this.workedTimeSeconds(), 'seconds')
+    const hours = Math.trunc(dur.asHours())
+    const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
+    const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
+    return `${hours}:${minutes}:${seconds}`
+  }
+
+  workedTimeSeconds = () => {
+    const { finishTime, startTime, pausedFor } = this.props.job
+    const fromTime = finishTime ? finishTime : +new Date
+    return fromTime - startTime - pausedFor
+  }
+
+  totalHours = () => {
+    const { job } = this.props
+    return job.ipfs.period && job.ipfs.period.isSpecified && job.ipfs.period.totalHours
+  }
+
+  leadZero (value) {
+    return value < 10 ? `0${value}` : value
+  }
+
   daysUntil (date) {
     return moment(date).diff(moment(), 'days')
   }
 
-  // leadZero (value) {
-  //   return value < 10 ? `0${value}` : value
-  // }
-
-  // progressIcon () {
-  //   return this.props.status === STATUSES.IN_PROGRESS ?
-  //     <Image icon={Image.ICONS.PAUSE} /> : <Image icon={Image.ICONS.PLAY} />
-  // }
-
-  // workedTime () {
-  //   const dur = moment.duration(this.props.workedTime, 'seconds')
-  //   const hours = Math.trunc(dur.asHours())
-  //   const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
-  //   const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
-  //   return this.props.status === STATUSES.PROBLEM ? `${hours}h` : `${hours}:${minutes}:${seconds}`
-  // }
+  progressIcon () {
+    return (
+      <Image
+        onClick={this.handlePausePlayClick}
+        icon={this.props.job.paused ? Image.ICONS.PAUSE : Image.ICONS.PLAY}
+      />
+    )
+  }
 
   render () {
-    const { className, cardNote, job } = this.props
+    const { job } = this.props
+    const cardNote = this.getCardNote()
+
     return (
-      <div className={cn(className, css.root, css[STATUSES.APPROVED])}>
+      <div className={cn(css.root, css[this.getTodoStatus()])}>
         <div className={css.todoInfo}>
           {cardNote ? <p className={css.cardNote}>{cardNote}</p> : null}
           <div className={css.rowInfo}>
@@ -75,8 +123,8 @@ export default class TodoCard extends React.Component {
         </div>
         <div className={css.progress}>
           <div className={css.progressTimer}>
-            {/*{ status !== STATUSES.PROBLEM ? this.progressIcon() : null }*/}
-            {/*<p><span className={css.medium}>{workedTime > 0 ? this.workedTime() : 'Start Work'}</span> of {totalHours}h</p>*/}
+            { this.progressIcon() }
+            <p><span className={css.medium}>{this.workedTimeSeconds() > 0 ? this.workedTimeRender() : 'Start Work'}</span> of {this.totalHours()}h</p>
           </div>
           <div className={css.actions}>
             <Image

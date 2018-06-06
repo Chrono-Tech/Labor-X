@@ -21,6 +21,7 @@ src/**/*.js
 !pages/job-types.js
 !pages/opportunity-view.js
 !pages/revie-applicants.js
+!pages/to-do.js
 
 !src/routes.js
 
@@ -28,13 +29,17 @@ src/**/*.js
 !src/daos/lib/ContractsManagerDAO.js
 !src/daos/lib/JobControllerDAO.js
 !src/daos/lib/JobsDataProviderDAO.js
+!src/daos/lib/ContractsManagerDAO.js
 
 !src/models/app/JobModel.js
 !src/models/app/WorkerExtraModel.js
 !src/models/app/WorkerIPFSModel.js
 !src/models/app/WorkerModel.js
 !src/models/app/StateModel.js
+!src/models/app/JobPausedEvent.js
+!src/models/app/JobResumedEvent.js
 !src/models/validator.js
+!src/models/index.js
 !src/models/wallets/SignerModel.js
 !src/models/wallets/WalletModel.js
 
@@ -42,6 +47,7 @@ src/**/*.js
 !src/store/jobs/actions.js
 !src/store/ethereum/actions.js
 !src/store/jobs/reducer.js
+!src/store/jobs/selectors.js
 
 !src/components/common/Icon/Icon.js
 !src/components/common/index.js
@@ -49,6 +55,7 @@ src/**/*.js
 !src/components/common/JobCard/JobCard.js
 !src/components/common/WorkerCard/WorkerCard.js
 !src/components/common/WorkerState/WorkerState.js
+!src/components/common/TodoCard/TodoCard.js
 !src/components/common/Icon/Icon.js
 !src/components/common/Rating/Rating.js
 !src/components/common/SecurityShield/SecurityShield.js
@@ -64,6 +71,7 @@ src/**/*.js
 !src/content/lib/JobTypesContent/JobTypesContent.js
 !src/content/lib/PostedJobsContent/PostedJobsContent.js
 !src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
+!src/content/lib/TodoContent/TodoContent.js
 
 !src/partials/**
 

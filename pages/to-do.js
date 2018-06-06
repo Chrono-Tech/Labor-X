@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-
 import { TodoContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
-import { todoJobsSelector } from "../src/store";
-import { schemaFactory as jobSchemaFactory } from "../src/models/app/JobModel"
+import { todoJobsSelector, resumeJobWork, pauseJobWork } from "src/store"
+import { schemaFactory as jobSchemaFactory } from "src/models/app/JobModel"
 
 const TODO = {
   feedbackCards: [
@@ -20,14 +19,18 @@ const TODO = {
 }
 
 class ToDoPage extends React.Component {
-  propTypes = {
+  static propTypes = {
     todoJobs: PropTypes.arrayOf(jobSchemaFactory()),
+    resumeJobWork: PropTypes.func,
+    pauseJobWork: PropTypes.func,
   }
 
   render () {
+    const { resumeJobWork, pauseJobWork } = this.props
+
     return (
       <MainLayout jobName='nav.toDo'>
-        <TodoContent {...TODO} todoJobs={this.props.todoJobs} />
+        <TodoContent {...TODO} resumeJobWork={resumeJobWork} pauseJobWork={pauseJobWork} todoJobs={this.props.todoJobs} />
       </MainLayout>
     )
   }
@@ -37,5 +40,17 @@ const mapStateToProps = state => ({
   todoJobs: todoJobsSelector()(state),
 })
 
-export default connect(mapStateToProps)(ToDoPage)
+const mapDispatchToProps = dispatch => {
+
+  return {
+    resumeJobWork: (jobId: Number) => {
+      dispatch(resumeJobWork(jobId))
+    },
+    pauseJobWork: (jobId: Number) => {
+      dispatch(pauseJobWork(jobId))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoPage)
 

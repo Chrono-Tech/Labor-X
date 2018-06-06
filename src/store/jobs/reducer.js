@@ -34,7 +34,7 @@ const mutations = {
     const clientList = Object.values(clientByKey)
     return { ...state, byKey, list, clientList, clientByKey }
   },
-  [JOBS_WORKER_SAVE] (state, jobs) { // { jobs }
+  [JOBS_WORKER_SAVE] (state, jobs) {
     const newJobsByKey = jobs.jobList.reduce((x, job) => {
       x[job.key] = job
       return x
