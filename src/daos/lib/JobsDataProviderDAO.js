@@ -17,6 +17,7 @@ import {
   bytes32ToNumber,
   bytes32ToAddress,
   bytes32ToDate,
+  bytes32ToBigNumber,
 } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
@@ -151,7 +152,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         skills: bytes32ToNumber(skillsBytes),
         ipfsHash: bytes32ToIPFSHash(ipfsHashBytes),
         state: bytes32ToNumber(stateBytes),
-        flowType: bytes32ToNumber(flowTypeBytes),
+        flowType: bytes32ToBigNumber(flowTypeBytes),
         paused: !!bytes32ToNumber(pausedBytes),
         defaultPay: bytes32ToNumber(defaultPayBytes),
         createdAt: bytes32ToDate(createdAtBytes, true),
