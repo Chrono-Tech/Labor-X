@@ -15,9 +15,9 @@ import {
   loadFromIPFS,
   bytes32ToIPFSHash,
   bytes32ToNumber,
+  bytes32ToBigNumber,
   bytes32ToAddress,
   bytes32ToDate,
-  bytes32ToBigNumber,
 } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 
