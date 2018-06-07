@@ -11,7 +11,7 @@ const persistConfig = () => ({
 
 const mutations = {
   [USER_SAVE] (state, { user }) {
-    return { ...user }
+    return user
   },
 }
 

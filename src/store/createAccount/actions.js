@@ -1,6 +1,7 @@
 import { Router } from 'src/routes'
 
 import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'src/store'
+import { generateNameWalletSelector } from "./selectors"
 
 export const CREATE_ACCOUNT_SET_MNEMONIC = 'createAccount/setMnemonic'
 export const CREATE_ACCOUNT_SET_PASSWORD = 'createAccount/setPassword'
@@ -22,28 +23,6 @@ export const setAccountTypes = (types) => (dispatch) => {
   dispatch({ type: CREATE_ACCOUNT_SET_ACCOUNT_TYPES, types })
 }
 
-export const generateNameWallet = () => (dispatch, getState) => {
-  const state = getState()
-
-  const { walletsList } = state.wallet
-
-  let currentName
-  let currentFoundWallet
-  let currentWalletNameCount = 0
-
-  do {
-    currentName = currentWalletNameCount ? `${DEFAULT_ACCOUNT_PREFFIX} ${currentWalletNameCount}` : DEFAULT_ACCOUNT_PREFFIX
-    currentFoundWallet = walletsList.find(
-      (item) => item.name === currentName
-    )
-
-    currentWalletNameCount++
-  }
-  while (currentFoundWallet)
-
-  return currentName
-}
-
 export const resetCurrentWallet = () => (dispatch) => {
   dispatch({ type: CREATE_ACCOUNT_RESET_CURRENT_WALLET })
 }
@@ -57,7 +36,7 @@ export const createUserAccount = () => async (dispatch, getState) => {
   const state = getState()
 
   const { password, mnemonic, accountTypes } = state.createAccount
-  const name = dispatch(generateNameWallet())
+  const name = generateNameWalletSelector()(state)
 
   dispatch(resetCurrentWallet())
 

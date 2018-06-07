@@ -66,7 +66,11 @@ export const createAccount = (walletName, password) => async (dispatch, getState
   const signInModel = state.login.signIn
 
   if (signInModel) {
-    const wallet = await dispatch(createWallet({ [signInModel.method] : signInModel.key,  name: walletName, password: password }))
+    const wallet = await dispatch(createWallet({
+      [signInModel.method]: signInModel.key,
+      name: walletName,
+      password: password,
+    }))
 
     dispatch(walletAdd(wallet))
 

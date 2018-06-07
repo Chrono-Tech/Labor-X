@@ -12,7 +12,6 @@ const schemaFactory = () => ({
 export default class HashSetEvent extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
-    Object.assign(this, props)
     Object.freeze(this)
   }
 }

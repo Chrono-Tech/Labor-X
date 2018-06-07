@@ -11,18 +11,18 @@ import css from './AccountLayout.scss'
 export default class AccountLayout extends React.Component {
   constructor (props){
     super(props)
-    
+
     this.state = {
       activePage: 0,
     }
   }
-  
+
   navigateBack () {
     if (this.state.activePage - 1  >= 0) {
       this.setState({ activePage: this.state.activePage - 1 })
     }
   }
-  
+
   navigateNext () {
     if (this.state.activePage + 1 <= this.props.children.length) {
       this.setState(
@@ -31,24 +31,24 @@ export default class AccountLayout extends React.Component {
           const pagesWrapper = ReactDOM.findDOMNode(this.refs.pagesWrapper)
           pagesWrapper && pagesWrapper.scrollIntoView()
         })
-      
+
     }
   }
-  
+
   renderChildren (){
     const pageProps = {
       navigateBack: this.navigateBack.bind(this),
       navigateNext: this.navigateNext.bind(this),
     }
-    
+
     return React.Children.map(this.props.children, (item, index) => {
       return this.state.activePage === index ? (
         <div key={index}>
           {
             React.cloneElement(item, {
               ...pageProps,
-              onSubmitSuccess: (props) => {
-                item.props.onSubmitSuccess && item.props.onSubmitSuccess(props)
+              onSubmitSuccess: async (props) => {
+                item.props.onSubmitSuccess && await item.props.onSubmitSuccess(props)
                 this.navigateNext(props)
               },
             })
@@ -56,12 +56,12 @@ export default class AccountLayout extends React.Component {
         </div>) : null
     })
   }
-  
+
   render () {
     const { contentClassName, title } = this.props
-    
+
     const contentClassNames = [css.main].concat(contentClassName)
-    
+
     return (
       <div className={css.root}>
         <div className={css.contentWrapper}>
@@ -73,7 +73,7 @@ export default class AccountLayout extends React.Component {
             </div>
           </div>
           <div className={css.topSection}>
-        
+
             <div className={css.topSectionBlock}>
               {
                 this.state.activePage !== 0 ? (
@@ -81,7 +81,7 @@ export default class AccountLayout extends React.Component {
                     <img src='/static/images/svg/back.svg' alt='' />
                   </button>) : null
               }
-          
+
               <Link href='/' className={css.helpLink}>
                 <img src='/static/images/svg/help-white.svg' alt='' />
               </Link>

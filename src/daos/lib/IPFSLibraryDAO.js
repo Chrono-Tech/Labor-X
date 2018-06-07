@@ -47,7 +47,6 @@ export default class IPFSLibraryDAO extends AbstractContractDAO {
 
   createSetHashTx (from, itemName, itemHash) {
     const itemNameInBytes32 = web3.utils.asciiToHex(itemName)
-    // const itemNameInBytes32 = web3.utils.padLeft(web3.utils.toHex(itemName), 32, '0')
     const itemHashInBytes32 = ipfsHashToBytes32(itemHash)
     const data = this.contract.methods.setHash(itemNameInBytes32, itemHashInBytes32).encodeABI()
     return {
