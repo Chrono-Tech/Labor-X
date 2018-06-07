@@ -30,6 +30,7 @@ class LandingPage extends React.Component {
       activeIndex: 0,
       isVisibleNavBottom: true,
     }
+    this.carouselRef = null
   }
 
   componentDidMount (){
@@ -57,7 +58,10 @@ class LandingPage extends React.Component {
   }
 
   learnMoreVisibility = () => {
-    let carousel = ReactDOM.findDOMNode(this.refs.carousel)
+    let carousel = ReactDOM.findDOMNode(this.carouselRef)
+    if (!carousel) {
+      return
+    }
     let rect = carousel.getBoundingClientRect()
     if (rect.top + rect.height < 0){
       this.setState({ isVisibleNavBottom: false })
@@ -96,7 +100,7 @@ class LandingPage extends React.Component {
             </Link>
           </div>
           <Carousel
-            ref='carousel'
+            ref={(ref) => this.carouselRef = ref}
             content={[
               { link: '/', imgSrc: '/static/images/laborx-promo-slider-01_together-tobetter-future.jpg' },
               { link: '/', imgSrc: '/static/images/laborx-promo-slider-02_work.jpg' },
