@@ -35,6 +35,11 @@ export default class Radio extends React.Component {
     values: [],
   }
 
+  constructor (...args) {
+    super(...args)
+    this.renderRadioButtons = this.renderRadioButtons.bind(this)
+  }
+
   renderRadioButtons () {
     const { values, radioButtonClassName, input } = this.props
 

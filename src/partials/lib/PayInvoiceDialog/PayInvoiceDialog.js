@@ -11,7 +11,6 @@ export default class PayInvoiceDialog extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel),
     worker: PropTypes.instanceOf(ProfileModel),
-    onClick: PropTypes.func,
   }
 
   handlePay () {
@@ -27,13 +26,7 @@ export default class PayInvoiceDialog extends React.Component {
   render () {
     const { job, worker } = this.props
     return job && worker ? (
-      <div
-        className={css.root}
-        onClick={this.props.onClick}
-        onKeyPress={this.props.onClick}
-        tabIndex={0}
-        role='button'
-      >
+      <div className={css.root}>
         <div className={css.header}>
           <h2>Invoice #1/{moment().format(dateFormat)}</h2>
           <div className={css.headerInfo}>

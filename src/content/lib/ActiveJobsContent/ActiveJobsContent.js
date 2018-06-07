@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
-import { SignerModel, JobModel } from 'src/models'
+import { SignerModel, JobModel, ProfileModel } from 'src/models'
 import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, profileSelector, modalsPush } from 'src/store'
-import { PayInvoiceDialog } from 'src/partials'
+import { PayInvoiceDialog, PaidInvoiceDialog, DeclineInvoiceDialog } from 'src/partials'
 import { Translate, ActiveJobCard } from 'src/components/common'
 import css from './ActiveJobsContent.scss'
 
@@ -30,12 +30,37 @@ class ActiveJobsContent extends React.Component {
   constructor (...args) {
     super(...args)
     this.handleOnClickReview = this.handleOnClickReview.bind(this)
+    this.handlePaidInvoice = this.handlePaidInvoice.bind(this)
+    this.handleDeclineInvoice = this.handleDeclineInvoice.bind(this)
   }
 
   handleOnClickReview (job, worker) {
     const modal = {
       component: PayInvoiceDialog,
       props: { job, worker },
+    }
+    this.props.pushModal(modal)
+  }
+
+  handlePaidInvoice () {
+    // TODO aevalyakin pickin any suitable card, need to be placed on appropriate card
+    const card = this.props.groups[0].cards.filter(({ job, worker }) => job && worker )[0]
+    card.recruiter = new ProfileModel({})
+
+    const modal = {
+      component: PaidInvoiceDialog,
+      props: { ...card },
+    }
+    this.props.pushModal(modal)
+  }
+  handleDeclineInvoice () {
+    // TODO aevalyakin pickin any suitable card, need to be placed on appropriate card
+    const card = this.props.groups[0].cards.filter(({ job, worker }) => job && worker )[0]
+    card.recruiter = new ProfileModel({})
+
+    const modal = {
+      component: DeclineInvoiceDialog,
+      props: { ...card },
     }
     this.props.pushModal(modal)
   }
@@ -76,6 +101,22 @@ class ActiveJobsContent extends React.Component {
               ))}
             </div>
           ))}
+          <div
+            onClick={this.handlePaidInvoice}
+            onKeyPress={this.handlePaidInvoice}
+            role='button'
+            tabIndex={0}
+          >
+            CASE: PAID INVOICE
+          </div>
+          <div
+            onClick={this.handleDeclineInvoice}
+            onKeyPress={this.handleDeclineInvoice}
+            role='button'
+            tabIndex={0}
+          >
+            CASE: DECLINE INVOICE
+          </div>
         </div>
       </div>
     )
