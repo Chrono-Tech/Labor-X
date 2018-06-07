@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { TextField } from 'redux-form-material-ui'
 import { MuiThemeProvider } from 'material-ui/styles'
-import { Button, Image } from 'src/components/common'
+import { Button, Image, Radio } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
 import css from './DeclineInvoiceDialog.scss'
 
@@ -72,24 +72,12 @@ export default class DeclineInvoiceDialog extends React.Component {
             </div>
             <div className={css.delegate}>
               <h4>Delegate management to</h4>
-              <div className={css.radioRow}>
-                <div className={css.radio} />
-                <p>I`ll handle myself</p>
-              </div>
-              <div className={css.radioRow}>
-                <div className={css.radio} />
-                <p>Recruiter ({recruiter.ipfs.name})</p>
-              </div>
-              <div className={css.radioRow}>
-                <div className={css.radio} />
-                <p>LaborX team for refund</p>
-              </div>
-              {/* <Radio
+              <Radio
+                primary
                 name='handle'
+                radioButtonClassName={css.radio}
                 input={{
                   onChange: this.handleRadioChange,
-                  value: '1',
-                  checked: true,
                 }}
                 material
                 values={[
@@ -106,7 +94,7 @@ export default class DeclineInvoiceDialog extends React.Component {
                     label: 'LaborX team for refund',
                   },
                 ]}
-              /> */}
+              />
             </div>
           </div>
           <div className={css.actions}>

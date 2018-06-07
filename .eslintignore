@@ -59,6 +59,7 @@ src/**/*.js
 !src/components/common/Icon/Icon.js
 !src/components/common/Rating/Rating.js
 !src/components/common/SecurityShield/SecurityShield.js
+!src/components/common/Radio/Radio.js
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/validate.js

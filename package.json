@@ -23,7 +23,7 @@
     "faker": "^4.1.0",
     "ipfs-api": "^22.0.0",
     "joi": "^13.1.2",
-    "material-ui": "^0.20.0",
+    "material-ui": "0.20.0",
     "moment": "^2.22.1",
     "next": "^6.0.3",
     "next-redux-wrapper": "^2.0.0-beta.6",
