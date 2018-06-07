@@ -3,7 +3,7 @@ import { Image } from 'components/common'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
-import { schemaFactory as jobSchemaFactory } from "src/models/app/JobModel"
+import { JobModel } from "src/models"
 
 import css from './TodoCard.scss'
 
@@ -19,9 +19,10 @@ const dateFormat = 'h:mm A'
 
 export default class TodoCard extends React.Component {
   static propTypes = {
-    job: jobSchemaFactory(),
+    job: PropTypes.instanceOf(JobModel),
     resumeJobWork: PropTypes.func,
     pauseJobWork: PropTypes.func,
+    completeJobWork: PropTypes.func,
   }
 
   static STATUSES = STATUSES
@@ -30,11 +31,13 @@ export default class TodoCard extends React.Component {
     super(props, context)
     this.workedTimeRender = this.workedTimeRender.bind(this)
     this.progressIcon = this.progressIcon.bind(this)
+    this.handleComplete = this.handleComplete.bind(this)
   }
 
   handleComplete () {
     // eslint-disable-next-line no-console
     console.log('Opportunity-view-handleComplete')
+    this.props.completeJobWork(this.props.job)
   }
 
   handleMessage () {
@@ -81,7 +84,7 @@ export default class TodoCard extends React.Component {
 
   workedTimeSeconds = () => {
     const { finishTime, startTime, pausedFor } = this.props.job
-    const fromTime = finishTime ? finishTime : +new Date
+    const fromTime = finishTime ? finishTime : + new Date
     return fromTime - startTime - pausedFor
   }
 

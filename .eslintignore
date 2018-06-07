@@ -73,7 +73,7 @@ src/**/*.js
 !src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
 !src/content/lib/TodoContent/TodoContent.js
 
-!src/partials/**
+!src/partials/
 
 
 

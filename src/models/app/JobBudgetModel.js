@@ -46,7 +46,7 @@ function propsWithDefaults (props) {
     ...other
   } = props
   return Object.assign({}, {
-    isSpecified: faker.random.boolean(),
+    isSpecified: true,
     hourlyRate: hourlyRate != null
       ? String(hourlyRate)
       : String(faker.random.number({ min: 5, max: 40 })),

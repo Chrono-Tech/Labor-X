@@ -1,20 +1,37 @@
-import { Translate, FeedbackCard, TodoCard } from 'components/common'
 import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import moment from 'moment'
-import { schemaFactory as jobSchemaFactory } from "src/models/app/JobModel"
+import { connect } from 'react-redux'
+import { Translate, FeedbackCard, TodoCard } from 'components/common'
+import { SendInvoiceDialog } from 'src/partials'
+import { modalsPush } from 'src/store'
+import { JobModel } from "src/models"
 
 import css from './TodoContent.scss'
 
 const dateFormat = 'DD MMMM YYYY, ddd'
 
-export default class TodoContent extends React.Component {
+class TodoContent extends React.Component {
   static propTypes = {
-    todoJobs: PropTypes.arrayOf(jobSchemaFactory()),
+    todoJobs: PropTypes.arrayOf(PropTypes.instanceOf(JobModel)),
     feedbackCards: PropTypes.arrayOf(PropTypes.shape(FeedbackCard.propTypes)),
     resumeJobWork: PropTypes.func,
     pauseJobWork: PropTypes.func,
+    pushModal: PropTypes.func.isRequired,
+  }
+
+  constructor (props, context){
+    super(props, context)
+    this.completeJobWork = this.completeJobWork.bind(this)
+  }
+
+  completeJobWork (job) {
+    const modal = {
+      component: SendInvoiceDialog,
+      props: { job },
+    }
+    this.props.pushModal(modal)
   }
 
   render () {
@@ -29,7 +46,7 @@ export default class TodoContent extends React.Component {
           {this.props.todoJobs && this.props.todoJobs.map(x => (
             <div key={x.id}>
               <h3 className={css.date}>{moment(x.ipfs.period.since).format(dateFormat)} {moment(x.ipfs.period.since).isSame(Date.now(), 'days') && '(Today)'}</h3>
-              <TodoCard className={css.todoCard} job={x} resumeJobWork={resumeJobWork} pauseJobWork={pauseJobWork} />
+              <TodoCard className={css.todoCard} job={x} resumeJobWork={resumeJobWork} pauseJobWork={pauseJobWork} completeJobWork={this.completeJobWork} />
             </div>
           ))}
           <div className={css.feedback}>
@@ -44,3 +61,13 @@ export default class TodoContent extends React.Component {
     )
   }
 }
+
+function mapDispatchToProps (dispatch) {
+  return {
+    pushModal (modal) {
+      dispatch(modalsPush(modal))
+    },
+  }
+}
+
+export default connect(null, mapDispatchToProps)(TodoContent)

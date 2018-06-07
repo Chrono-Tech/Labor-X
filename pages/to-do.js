@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { TodoContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
 import { todoJobsSelector, resumeJobWork, pauseJobWork } from "src/store"
-import { schemaFactory as jobSchemaFactory } from "src/models/app/JobModel"
+import { JobModel } from "src/models"
 
 const TODO = {
   feedbackCards: [
@@ -20,17 +20,16 @@ const TODO = {
 
 class ToDoPage extends React.Component {
   static propTypes = {
-    todoJobs: PropTypes.arrayOf(jobSchemaFactory()),
+    todoJobs: PropTypes.arrayOf(PropTypes.instanceOf(JobModel)),
     resumeJobWork: PropTypes.func,
     pauseJobWork: PropTypes.func,
   }
 
   render () {
-    const { resumeJobWork, pauseJobWork } = this.props
-
+    const { resumeJobWork, pauseJobWork, todoJobs } = this.props
     return (
       <MainLayout jobName='nav.toDo'>
-        <TodoContent {...TODO} resumeJobWork={resumeJobWork} pauseJobWork={pauseJobWork} todoJobs={this.props.todoJobs} />
+        <TodoContent {...TODO} resumeJobWork={resumeJobWork} pauseJobWork={pauseJobWork} todoJobs={todoJobs} />
       </MainLayout>
     )
   }

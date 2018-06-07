@@ -43,6 +43,10 @@ strong {
   line-height: $pLineHeight;
 }
 
+strong {
+  font-weight: $font-weight-medium;
+}
+
 h1 {
   font-size: $h1Size;
   font-weight: $font-weight-thin;
