@@ -6,12 +6,15 @@
   width: 0;
   height: 0;
   z-index: 1500;
+  .stackContainer {
+    @include position(fixed, $top: 0, $left: 0);
+    @include flex(column, center, center);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color-black, .4);
+    .modal {
+      outline: none;
+    }
+  }
 }
 
-.stackContainer {
-  @include position(fixed, $top: 0, $left: 0);
-  @include flex(column, center, center);
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba($color-black, .4);
-}

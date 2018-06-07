@@ -1,0 +1,100 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include flex(column, flex-start, stretch);
+  width: 50rem;
+  height: 62rem;
+  background: $color-white;
+  border-radius: 5px;
+  padding: 4rem 0 2rem;
+  border-top: 1rem solid $color-red;
+  h2 {
+    color: $color-red;
+  }
+  .header {
+    padding: 0 2rem;
+    border-bottom: .5rem solid $color-gray10;
+    .headerInfo {
+      margin: 3rem 0;
+      @include flex(row, flex-start, stretch);
+      .worker {
+        @include flex(row, flex-start, center);
+        img {
+          margin-right: 1rem;
+          width: 3rem;
+          height: 3rem;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+      > * {
+        margin-right: 1rem;
+      }
+      .infoString {
+        font-size: $pSize;
+      }
+    }
+  }
+  .body {
+    padding: 0 2rem 2rem;
+    .upload {
+      @include flex(row, flex-start, center);
+      padding: 2rem 0;
+      border-bottom: .1rem solid $color-gray10;
+      .uploadIcon {
+        margin-right: 1rem;
+      }
+      .uploadLabel {
+        color: $color-azure;
+        font-weight: $font-weight-medium;
+      }
+    }
+    .delegate {
+      padding: 2rem 0;
+      h4 {
+        padding: 1rem 0 2rem;
+      }
+      .radioRow {
+        @include flex(row, flex-start, center);
+        padding: 1rem 0;
+        .radio {
+          margin-right: 2rem;
+          height: 2rem;
+          width: 2rem;
+          border-radius: 50%;
+          border: .3rem solid $color-azure;
+        }
+      }
+    }
+  }
+  .actions {
+    @include flex(row, flex-end, stretch);
+    margin-top: auto;
+    padding: 0 2rem;
+    > * {
+      margin-left: 2rem;
+    }
+    .cancelAction {
+      @include flex(column, center, center);
+      font-weight: $font-weight-bold;
+      background-color: transparent !important;
+      padding: 12px 0;
+      color: $color-azure;
+      box-shadow: none;
+      &:hover {
+        background-color: darken($color-white, 5) !important;
+      }
+    }
+    .proceedAction {
+      @include flex(column, center, center);
+      font-weight: $font-weight-bold;
+      background-color: $color-red !important;
+      padding: 12px 0;
+      color: $color-white;
+      &:hover {
+        background-color: darken($color-red, 5) !important;
+      }
+    }
+  }
+}

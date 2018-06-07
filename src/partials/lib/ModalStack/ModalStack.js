@@ -41,11 +41,16 @@ export class ModalStack extends React.Component {
             role='button'
           >
             { this.props.stack.map((modal) => (
-              <modal.component
-                onClick={this.handleModalClick}
+              <div
                 key={modal.key}
-                {...modal.props}
-              />
+                className={css.modal}
+                onClick={this.handleModalClick}
+                onKeyPress={this.handleModalClick}
+                role='button'
+                tabIndex={0}
+              >
+                <modal.component {...modal.props} />
+              </div>
             )) }
           </div>
         )}
