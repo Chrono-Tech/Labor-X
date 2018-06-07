@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Image, Link } from 'components/common'
 import React from 'react'
 import css from './SecondMenu.scss'
+import {userSelector} from "../../../store/user/selectors";
 
 class SecondMenu extends React.Component {
   static propTypes = {
@@ -95,7 +96,7 @@ class SecondMenu extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  accountTypes: state.user.accountTypes,
+  accountTypes: userSelector()(state).accountTypes,
 })
 
 export default connect(mapStateToProps)(SecondMenu)

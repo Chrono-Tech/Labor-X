@@ -4,6 +4,7 @@ import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { executeTransaction } from '../ethereum/actions'
 import { web3Selector } from '../ethereum/selectors'
+import {userSelector} from "../user/selectors";
 
 export const JOBS_CLEAR = 'jobs/clear'
 export const JOBS_SAVE = 'jobs/save'
@@ -30,18 +31,19 @@ export const reloadJobs = () => async (dispatch, getState) => {
   const JobDataProviderDAO = daoByType('JobsDataProvider')(state)
 
   const signer = signerSelector()(state)
+  const user = userSelector()(state)
 
   dispatch({ type: JOBS_CLEAR })
 
   const jobs = await JobDataProviderDAO.getJobs(boardControlerDAO)
   dispatch({ type: JOBS_SAVE, jobList: jobs })
 
-  if (state.user.accountTypes.worker) {
+  if (user.accountTypes.worker) {
     const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
     dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
   }
 
-  if (state.user.accountTypes.client) {
+  if (user.accountTypes.client) {
     const jobs = await JobDataProviderDAO.getJobsForClient(signer.address)
     dispatch({ type: JOBS_CLIENT_SAVE, jobList: jobs })
   }

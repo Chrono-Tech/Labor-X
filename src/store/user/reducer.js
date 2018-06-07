@@ -2,7 +2,7 @@ import storage from "redux-persist/lib/storage"
 import { persistReducer } from "redux-persist"
 import { USER_SAVE } from './actions'
 
-export const initialState = null
+export const initialState = {}
 
 const persistConfig = () => ({
   key: 'user',
@@ -11,7 +11,7 @@ const persistConfig = () => ({
 
 const mutations = {
   [USER_SAVE] (state, { user }) {
-    return user
+    return { user }
   },
 }
 

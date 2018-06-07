@@ -42,9 +42,7 @@ export const setSignInModel = (signInModel) => (dispatch) => {
 export const signIn = ({ password }) => async (dispatch, getState) => {
   const state = getState()
   const { selectedWallet } = state.wallet
-
   await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
-
 }
 
 export const onSignInSuccess = () => (dispatch) => {
