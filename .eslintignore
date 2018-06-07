@@ -75,5 +75,19 @@ src/**/*.js
 
 !src/partials/**
 
+!src/components/layouts/SecondMenu/SecondMenu.js
+!src/daos/index.js
+!src/store/createAccount/actions.js
+!src/store/daos/actions.js
+!src/store/ethereum/actions.js
+!src/store/index.js
+!src/store/jobs/actions.js
+!src/store/login/actions.js
+!src/store/reducers.js
+!src/store/user/actions.js
+!src/store/user/reducer.js
+!src/store/wallet/actions.js
+
+
 
 

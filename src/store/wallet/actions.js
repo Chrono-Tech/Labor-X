@@ -6,6 +6,10 @@ import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
 import { changeStep as loginChangeStep } from './../login/actions'
+import { storeIntoIPFS } from "../../utils"
+import { daoByType } from "../daos/selectors"
+import { getUserData } from "../user/actions"
+import { executeTransaction } from "../ethereum/actions"
 
 export const WALLETS_ADD = 'wallets/add'
 export const WALLETS_SELECT = 'wallets/select'
@@ -46,17 +50,20 @@ export const walletRemove = (name) => (dispatch) => {
   dispatch({ type: WALLETS_REMOVE, name })
 }
 
-export const decryptWallet = (entry, password) =>  (dispatch, getState) => {
+export const decryptWallet = (entry, password) => async (dispatch, getState) => {
   const web3 = web3Selector()(getState())
   web3.eth.accounts.wallet.clear()
 
   let wallet =  web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
 
+  // eslint-disable-next-line no-console
   console.log('decrypt wallet')
   const model = new WalletModel({
     entry,
     wallet,
   })
+
+  await dispatch(getUserData(wallet[0].address))
 
   dispatch(walletLoad(model))
 
@@ -98,9 +105,14 @@ export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch, ge
   dispatch(walletUpdate(newWallet))
 }
 
-export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = {} }) => (dispatch, getState) => {
-  const web3 = web3Selector()(getState())
+export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = {} }) => async (dispatch, getState) => {
+
+  const state = getState()
+
+  const web3 = web3Selector()(state)
+
   web3.eth.accounts.wallet.clear()
+
   let wallet = web3.eth.accounts.wallet.create(numberOfAccounts)
 
   if (privateKey) {
@@ -113,12 +125,24 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
     wallet.add(account)
   }
 
-  return new WalletEntryModel({
+  const walletEntry =  new WalletEntryModel({
     key: uniqid(),
     name,
     types,
     encrypted: wallet.encrypt(password),
   })
+
+  const address = walletEntry.encrypted[0].address
+
+  const accountTypesIpfsHash = await storeIntoIPFS(types)
+
+  const IPFSLibrary = daoByType('IPFSLibrary')(state)
+
+  const setHashTx = IPFSLibrary.createSetHashTx(address, 'accountTypes', accountTypesIpfsHash)
+
+  await dispatch(executeTransaction({ tx: setHashTx, web3, signer: wallet[0] }))
+
+  return walletEntry
 
 }
 

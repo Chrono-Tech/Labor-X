@@ -7,6 +7,7 @@ import MULTI_EVENTS_HISTORY_ABI from '@laborx/sc-abi/build/contracts/MultiEvents
 import JOB_CONTROLLER_ABI from '@laborx/sc-abi/build/contracts/JobController.json'
 import JOBS_DATA_PROVIDER_ABI from '@laborx/sc-abi/build/contracts/JobsDataProvider.json'
 import BOARD_CONTROLLER_ABI from '@laborx/sc-abi/build/contracts/BoardController.json'
+import IPFS_LIBRARY_ABI from '@laborx/sc-abi/build/contracts/IPFSLibrary.json'
 
 import ContractsManagerDAO from './lib/ContractsManagerDAO'
 import ERC20LibraryDAO from './lib/ERC20LibraryDAO'
@@ -14,6 +15,7 @@ import JobControllerDAO from './lib/JobControllerDAO'
 import BoardControllerDAO from './lib/BoardControllerDAO'
 import ERC20TokenDAO from './lib/ERC20TokenDAO'
 import JobsDataProviderDAO from "./lib/JobsDataProviderDAO"
+import IPFSLibraryDAO from "./lib/IPFSLibraryDAO"
 
 export { default as ethDAO } from './lib/ETHDAO'
 export { default as AbstractContractDAO } from './lib/AbstractContractDAO'
@@ -67,6 +69,12 @@ export const ERC20_INTERFACE = new ContractModel({
   type: 'ERC20Interface',
   abi: ERC20_INTERFACE_ABI,
   DAOClass: ERC20TokenDAO,
+})
+
+export const IPFS_LIBRARY = new ContractModel({
+  type: 'IPFSLibrary',
+  abi: IPFS_LIBRARY_ABI,
+  DAOClass: IPFSLibraryDAO,
 })
 
 // export const MULTI_EVENTS_HISTORY = "MultiEventsHistory"
