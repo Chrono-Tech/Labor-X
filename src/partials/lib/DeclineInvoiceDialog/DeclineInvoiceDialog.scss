@@ -3,7 +3,7 @@
 
 .root {
   @include flex(column, flex-start, stretch);
-  width: 50rem;
+  width: 52rem;
   height: 62rem;
   background: $color-white;
   border-radius: 5px;
@@ -55,16 +55,8 @@
       h4 {
         padding: 1rem 0 2rem;
       }
-      .radioRow {
-        @include flex(row, flex-start, center);
+      .radio {
         padding: 1rem 0;
-        .radio {
-          margin-right: 2rem;
-          height: 2rem;
-          width: 2rem;
-          border-radius: 50%;
-          border: .3rem solid $color-azure;
-        }
       }
     }
   }

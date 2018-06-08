@@ -1,6 +1,5 @@
-.radio {
-
-}
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
 
 .radioWrapper {
   width: 18px;
@@ -8,19 +7,7 @@
   border-radius: 50%;
   line-height: 18px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.25);
   background: transparent;
-}
-
-.radioWrapperChecked {
-  border: none;
-  background: #fff;
-}
-
-.radioIcon {
-  width: 10px;
-  height: 10px;
-  background: #333;
 }
 
 .radioWrapperChecked {
@@ -29,6 +16,27 @@
   border-radius: 50%;
   line-height: 18px;
   text-align: center;
-  border: 5px solid #fff;
   background: transparent;
+  border: none;
+}
+
+
+.white {
+  .radioWrapper {
+    border: 1px solid rgba($color-white, 0.25);
+  }
+  .radioWrapperChecked {
+    background: $color-white;
+    border: 5px solid $color-white;
+  }
+}
+
+.primary {
+  .radioWrapper {
+    border: 1px solid $color-azure;
+  }
+  .radioWrapperChecked {
+    background: $color-azure;
+    border: 5px solid $color-azure;
+  }
 }
