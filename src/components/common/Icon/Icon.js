@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import cn from 'classnames'
 import css from './Icon.scss'
 
 export default class Image extends React.PureComponent {
   static propTypes = {
+    className: PropTypes.string,
+    onClick: PropTypes.func,
     icon: PropTypes.string,
     title: PropTypes.string,
     color: PropTypes.string,
-    className: PropTypes.string,
     faded: PropTypes.bool,
     href: PropTypes.string,
     size: PropTypes.number,
@@ -38,6 +40,7 @@ export default class Image extends React.PureComponent {
     STAR: 'star',
     RATING: 'rating',
     MORE: 'more',
+    ADD_CIRCLE: 'add-circle',
   }
 
   static COLORS = {
@@ -82,19 +85,22 @@ export default class Image extends React.PureComponent {
   }
 
   render () {
-    const { className, color, faded, icon, size } = this.props
-    let classnames = [css.root]
-    className && classnames.push(className)
-
-    // specific material icons
-    color && classnames.push(css[ color ])
-    faded && classnames.push(css.faded)
-    icon && css[`icon-${icon}`] && classnames.push(css[ `icon-${icon}` ])
-
+    const { className, color, faded, icon, size, onClick } = this.props
     return (
       <i
+        onClick={onClick}
+        onKeyPress={onClick}
+        tabIndex={0}
+        role='button'
         style={size ? { fontSize: size } : null}
-        className={classnames.join(' ')}
+        className={cn([
+          css.root,
+          className,
+          faded,
+          icon && css[`icon-${icon}`],
+          color && css[color],
+          onClick && css.clickable,
+        ])}
       />
     )
   }

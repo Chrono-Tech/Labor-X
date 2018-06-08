@@ -667,7 +667,7 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@laborx/sc-abi@0.0.8":
+"@laborx/sc-abi@^0.0.8":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@laborx/sc-abi/-/sc-abi-0.0.8.tgz#09ce2caf4a30630983360c005366a4abb4fc2bc3"
 

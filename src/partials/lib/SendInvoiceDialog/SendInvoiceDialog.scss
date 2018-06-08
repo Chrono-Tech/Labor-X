@@ -1,0 +1,86 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include flex(column, flex-start, stretch);
+  width: 45rem;
+  min-height: 55rem;
+  background: $color-white;
+  border-radius: 5px;
+  padding: 3rem 0 2rem;
+  border-top: 1rem solid $color-azure;
+  h2 {
+    padding-bottom: 2rem;
+  }
+  .header {
+    padding: 0 2rem 2rem;
+    border-bottom: .5rem solid $color-gray10;
+    font-size: $pSize;
+    .headerInfo {
+      .link {
+        color: $color-azure;
+      }
+    }
+    .client {
+      @include flex(row, flex-start, center);
+      margin-top: 2rem;
+      img {
+        margin-right: 1rem;
+        width: 3rem;
+        height: 3rem;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+  .body {
+    padding: 3rem 2rem;
+    .bodyRow {
+      @include flex(row, space-between, center);
+      min-height: 4rem;
+      .expense {
+        flex-basis: 50%;
+      }
+      .fieldWithIcon {
+        @include flex(row, flex-start, center);
+        flex-basis: 40%;
+        .icon {
+          margin-left: auto;
+          padding-left: 1rem;
+        }
+      }
+      .amount {
+        @include flex(row, flex-end, center);
+      }
+    }
+  }
+  .actions {
+    @include flex(row, flex-end, stretch);
+    margin-top: auto;
+    padding: 0 2rem;
+    > * {
+      margin-left: 2rem;
+    }
+    .cancelAction {
+      @include flex(column, center, center);
+      font-weight: $font-weight-bold;
+      background-color: transparent !important;
+      padding: 12px 0;
+      color: $color-azure;
+      box-shadow: none;
+      &:hover {
+        background-color: darken($color-white, 5) !important;
+      }
+    }
+    .sendAction {
+      @include flex(column, center, center);
+      font-weight: $font-weight-bold;
+      background-color: $color-azure !important;
+      padding: 12px 0;
+      color: $color-white;
+      &:hover {
+        background-color: darken($color-azure, 5) !important;
+      }
+    }
+  }
+}
