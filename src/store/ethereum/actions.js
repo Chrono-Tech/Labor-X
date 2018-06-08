@@ -3,7 +3,6 @@ import uniqid from 'uniqid'
 import BigNumber from 'bignumber.js'
 import { omitBy, isNil } from 'lodash'
 import { TxExecModel, TxEntryModel } from 'src/models'
-import { signerSelector } from '../wallet/selectors'
 import { pendingEntrySelector } from './selectors'
 
 export const WEB3_UPDATE = 'web3/update'
@@ -37,7 +36,7 @@ export const broadcastTransaction = ({ web3, signed }) => async () => {
   return web3.eth.sendSignedTransaction(signed)
 }
 
-export const executeTransaction = ({ web3, tx }) => async (dispatch, getState) => {
+export const executeTransaction = ({ web3, tx, signer }) => async (dispatch, getState) => {
   const prepared = await dispatch(prepareTransaction({ web3, tx }))
   const entry = new TxEntryModel({
     key: uniqid(),
@@ -46,12 +45,13 @@ export const executeTransaction = ({ web3, tx }) => async (dispatch, getState) =
     isSubmitted: true,
     isAccepted: true,
   })
-  
+
   await dispatch({ type: TX_CREATE, entry })
-  
+
   return dispatch(processTransaction({
     web3,
     entry: pendingEntrySelector(entry.tx.from, entry.key)(getState()),
+    signer,
   }))
 }
 
@@ -72,21 +72,20 @@ export const prepareTransaction = ({ web3, tx }) => async (dispatch) => {
   })
 }
 
-export const processTransaction = ({ web3, entry }) => async (dispatch, getState) => {
+export const processTransaction = ({ web3, entry, signer }) => async (dispatch, getState) => {
   assert.ok(entry instanceof TxEntryModel, '123')
-  await dispatch(signTransaction({ entry }))
+  await dispatch(signTransaction({ entry, signer }))
   return dispatch(sendSignedTransaction({
     web3,
     entry: pendingEntrySelector(entry.tx.from, entry.key)(getState()),
   }))
 }
 
-export const signTransaction = ({ entry }) => async (dispatch, getState) => {
+export const signTransaction = ({ entry, signer }) => async (dispatch) => {
   assert.ok(entry instanceof TxEntryModel)
-  const rootState = getState()
   try {
     // TODO @ipavlenko: Replace with signer selector
-    const signer = signerSelector()(rootState)
+    // const signer = signerSelector()(rootState)
     // eslint-disable-next-line no-console
     console.log('tx', omitBy(entry.tx, isNil))
     // eslint-disable-next-line no-console

@@ -4,6 +4,7 @@ import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { executeTransaction } from '../ethereum/actions'
 import { web3Selector } from '../ethereum/selectors'
+import {userSelector} from "../user/selectors";
 
 export const JOBS_CLEAR = 'jobs/clear'
 export const JOBS_SAVE = 'jobs/save'
@@ -23,28 +24,30 @@ export const initJobs = () => async (dispatch, getState) => {
 }
 
 export const reloadJobs = () => async (dispatch, getState) => {
+
   const state = getState()
+
   const boardControlerDAO = daoByType('BoardController')(state)
   const JobDataProviderDAO = daoByType('JobsDataProvider')(state)
+
   const signer = signerSelector()(state)
-  dispatch({
-    type: JOBS_CLEAR,
-  })
+  const user = userSelector()(state)
 
-  if (signer) {
-    const jobs = await JobDataProviderDAO.getJobs(boardControlerDAO)
-    dispatch({ type: JOBS_SAVE, jobList: jobs })
+  dispatch({ type: JOBS_CLEAR })
 
-    if (signer.profile.ipfs.isWorker) {
-      const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
-      dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
-    }
+  const jobs = await JobDataProviderDAO.getJobs(boardControlerDAO)
+  dispatch({ type: JOBS_SAVE, jobList: jobs })
 
-    if (signer.profile.ipfs.isClient) {
-      const jobs = await JobDataProviderDAO.getJobsForClient(signer.address)
-      dispatch({ type: JOBS_CLIENT_SAVE, jobList: jobs })
-    }
+  if (user.accountTypes.worker) {
+    const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
+    dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
   }
+
+  if (user.accountTypes.client) {
+    const jobs = await JobDataProviderDAO.getJobsForClient(signer.address)
+    dispatch({ type: JOBS_CLIENT_SAVE, jobList: jobs })
+  }
+
 }
 
 export const handleJobPaused = (e) => async (dispatch, getState) => {
@@ -126,7 +129,7 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
     0, // defaultPay todo check what this parameter is for and mark up field on create job form
     detailsIPFSHash
   )
-  await dispatch(executeTransaction({ tx, web3 }))
+  await dispatch(executeTransaction({ tx, web3, signer }))
 }
 
 export const createJobOffer = (form: JobOfferFormModel) => async (dispatch, getState) => {
@@ -144,7 +147,7 @@ export const createJobOffer = (form: JobOfferFormModel) => async (dispatch, getS
     form.estimate,
     form.ontop
   )
-  await dispatch(executeTransaction({ tx, web3 }))
+  await dispatch(executeTransaction({ tx, web3, signer }))
 }
 
 export const updateFilterJobs = (filterFields) => (dispatch, getState) => {

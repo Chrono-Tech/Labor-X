@@ -6,6 +6,7 @@ import {
   JOB_CONTROLLER,
   BOARD_CONTROLLER,
   JOBS_DATA_PROVIDER,
+  IPFS_LIBRARY,
 } from 'src/daos'
 
 export const DAOS_REGISTER = 'daos/register'
@@ -30,6 +31,7 @@ export const initDAOs = ({ web3 }) => async (dispatch) => {
     JOB_CONTROLLER,
     BOARD_CONTROLLER,
     JOBS_DATA_PROVIDER,
+    IPFS_LIBRARY,
   ]
 
   const models = await Promise.all(
