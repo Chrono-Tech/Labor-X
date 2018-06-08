@@ -3,7 +3,6 @@ import faker from 'faker'
 import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
-  publishedAt: PropTypes.instanceOf(Date),
   createdAt: PropTypes.instanceOf(Date),
   acceptedAt: PropTypes.instanceOf(Date),
   pendingStartAt: PropTypes.instanceOf(Date),
