@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
-import { SignerModel, JobModel, ProfileModel } from 'src/models'
+import { SignerModel, JobModel, ProfileModel, JOB_STATE_FINALIZED, JOB_STATE_FINISHED } from 'src/models'
 import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, profileSelector, modalsPush } from 'src/store'
 import { PayInvoiceDialog, PaidInvoiceDialog, DeclineInvoiceDialog } from 'src/partials'
 import { Translate, ActiveJobCard } from 'src/components/common'
@@ -89,6 +89,7 @@ class ActiveJobsContent extends React.Component {
 
   render () {
     const { groups, totalCount, toPayCount, inProgressCount } = this.props
+
     return groups == null ? null : (
       <div className={css.main}>
         {!groups.length ? null : this.renderHead({ totalCount, toPayCount, inProgressCount })}
@@ -126,9 +127,10 @@ class ActiveJobsContent extends React.Component {
 function mapStateToProps (state) {
   const signer = signerSelector()(state)
   const jobs = jobsListSelector()(state)
+  const inActiveJobStates = [ JOB_STATE_FINALIZED, JOB_STATE_FINISHED ]
 
   const cards = jobs
-    .filter((/*job*/) => true) // TODO @ipavlenko: Only active jobs
+    .filter((job) => !inActiveJobStates.includes(job.state))
     .filter(job => job instanceof JobModel )
     .map(job => ({
       job,
@@ -142,7 +144,8 @@ function mapStateToProps (state) {
     .filter(card => card.worker != null)
     .length
 
-  const groups = groupBy(cards, card => moment(card.job.extra.publishedAt).format('YYYY-MM-DD'))
+  const groups = groupBy(cards, card => moment(card.job.extra.createdAt).format('YYYY-MM-DD'))
+
   return {
     signer,
     totalCount: cards.length,
@@ -151,7 +154,7 @@ function mapStateToProps (state) {
     groups: Object.entries(groups)
       .map(([key, cards]) => ({
         key,
-        date: cards[0].job.extra.publishedAt,
+        date: cards[0].job.extra.createdAt,
         cards,
       }))
       .sort((a, b) => -moment(a.date).diff(moment(b.date))),

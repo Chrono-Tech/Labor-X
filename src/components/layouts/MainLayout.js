@@ -12,6 +12,7 @@ export class MainLayout extends React.Component {
     isMenu: PropTypes.bool,
     customTitle: PropTypes.func,
     signer: PropTypes.instanceOf(SignerModel),
+    children: PropTypes.element.isRequired,
     pockets: PropTypes.arrayOf(
       PropTypes.instanceOf(PocketModel)
     ),
@@ -23,7 +24,7 @@ export class MainLayout extends React.Component {
   }
 
   render () {
-    const { signer, pockets, children, isMenu, customTitle } = this.props
+    const { signer, pockets, isMenu, children } = this.props
 
     return (signer === null || !pockets.length) ? null : (
       <BalanceSubscription key={signer.address} pockets={pockets}>
