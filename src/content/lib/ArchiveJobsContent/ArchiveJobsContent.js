@@ -75,7 +75,7 @@ function mapStateToProps (state) {
   const cards = jobs
     .filter((job) => allowedStatuses.find(state => {
       return job.state === state
-    })) // TODO @ipavlenko: Provide better filtering
+    }))
     .map(job => ({
       job,
       board: boardByIdSelector(job.boardId)(state),
@@ -88,7 +88,7 @@ function mapStateToProps (state) {
     .filter(card => card.worker != null)
     .length
 
-  const groups = groupBy(cards, card => moment(card.job.extra.publishedAt).format('YYYY-MM-DD'))
+  const groups = groupBy(cards, card => moment(card.job.extra.createdAt).format('YYYY-MM-DD'))
   return {
     signer,
     totalCount: cards.length,
@@ -97,7 +97,7 @@ function mapStateToProps (state) {
     groups: Object.entries(groups)
       .map(([key, cards]) => ({
         key,
-        date: cards[0].job.extra.publishedAt,
+        date: cards[0].job.extra.createdAt,
         cards,
       }))
       .sort((a, b) => -moment(a.date).diff(moment(b.date))),

@@ -3,3 +3,6 @@ export { default as CompleteProfileWidget } from './lib/CompleteProfileWidget/Co
 export { default as BalanceCollapsible } from './lib/BalanceCollapsible/BalanceCollapsible'
 export { default as ModalStack } from './lib/ModalStack/ModalStack'
 export { default as PayInvoiceDialog } from './lib/PayInvoiceDialog/PayInvoiceDialog'
+export { default as PaidInvoiceDialog } from './lib/PaidInvoiceDialog/PaidInvoiceDialog'
+export { default as DeclineInvoiceDialog } from './lib/DeclineInvoiceDialog/DeclineInvoiceDialog'
+export { default as SendInvoiceDialog } from './lib/SendInvoiceDialog/SendInvoiceDialog'

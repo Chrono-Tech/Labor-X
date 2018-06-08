@@ -56,8 +56,6 @@ export const decryptWallet = (entry, password) => async (dispatch, getState) => 
 
   let wallet =  web3.eth.accounts.wallet.decrypt(entry.encrypted, password)
 
-  // eslint-disable-next-line no-console
-  console.log('decrypt wallet')
   const model = new WalletModel({
     entry,
     wallet,

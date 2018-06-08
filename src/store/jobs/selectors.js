@@ -20,6 +20,6 @@ export const jobByIdSelector = (id) => createSelector(
 export const todoJobsSelector = () => createSelector(
   jobsListSelector(),
   (jobsList) => {
-    return jobsList.filter((job) => job.state.name === 'STARTED')
+    return jobsList.filter((job) => job.state && job.state.name === 'STARTED')
   }
 )

@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
-import { SignerModel, JobModel } from 'src/models'
+import { SignerModel, JobModel, ProfileModel, JOB_STATE_FINALIZED, JOB_STATE_FINISHED } from 'src/models'
 import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, profileSelector, modalsPush } from 'src/store'
-import { PayInvoiceDialog } from 'src/partials'
+import { PayInvoiceDialog, PaidInvoiceDialog, DeclineInvoiceDialog } from 'src/partials'
 import { Translate, ActiveJobCard } from 'src/components/common'
 import css from './ActiveJobsContent.scss'
 
@@ -30,12 +30,37 @@ class ActiveJobsContent extends React.Component {
   constructor (...args) {
     super(...args)
     this.handleOnClickReview = this.handleOnClickReview.bind(this)
+    this.handlePaidInvoice = this.handlePaidInvoice.bind(this)
+    this.handleDeclineInvoice = this.handleDeclineInvoice.bind(this)
   }
 
   handleOnClickReview (job, worker) {
     const modal = {
       component: PayInvoiceDialog,
       props: { job, worker },
+    }
+    this.props.pushModal(modal)
+  }
+
+  handlePaidInvoice () {
+    // TODO aevalyakin pickin any suitable card, need to be placed on appropriate card
+    const card = this.props.groups[0].cards.filter(({ job, worker }) => job && worker )[0]
+    card.recruiter = new ProfileModel({})
+
+    const modal = {
+      component: PaidInvoiceDialog,
+      props: { ...card },
+    }
+    this.props.pushModal(modal)
+  }
+  handleDeclineInvoice () {
+    // TODO aevalyakin pickin any suitable card, need to be placed on appropriate card
+    const card = this.props.groups[0].cards.filter(({ job, worker }) => job && worker )[0]
+    card.recruiter = new ProfileModel({})
+
+    const modal = {
+      component: DeclineInvoiceDialog,
+      props: { ...card },
     }
     this.props.pushModal(modal)
   }
@@ -64,6 +89,7 @@ class ActiveJobsContent extends React.Component {
 
   render () {
     const { groups, totalCount, toPayCount, inProgressCount } = this.props
+
     return groups == null ? null : (
       <div className={css.main}>
         {!groups.length ? null : this.renderHead({ totalCount, toPayCount, inProgressCount })}
@@ -76,6 +102,22 @@ class ActiveJobsContent extends React.Component {
               ))}
             </div>
           ))}
+          <div
+            onClick={this.handlePaidInvoice}
+            onKeyPress={this.handlePaidInvoice}
+            role='button'
+            tabIndex={0}
+          >
+            CASE: PAID INVOICE
+          </div>
+          <div
+            onClick={this.handleDeclineInvoice}
+            onKeyPress={this.handleDeclineInvoice}
+            role='button'
+            tabIndex={0}
+          >
+            CASE: DECLINE INVOICE
+          </div>
         </div>
       </div>
     )
@@ -85,9 +127,10 @@ class ActiveJobsContent extends React.Component {
 function mapStateToProps (state) {
   const signer = signerSelector()(state)
   const jobs = jobsListSelector()(state)
+  const inActiveJobStates = [ JOB_STATE_FINALIZED, JOB_STATE_FINISHED ]
 
   const cards = jobs
-    .filter((/*job*/) => true) // TODO @ipavlenko: Only active jobs
+    .filter((job) => !inActiveJobStates.includes(job.state))
     .filter(job => job instanceof JobModel )
     .map(job => ({
       job,
@@ -101,7 +144,8 @@ function mapStateToProps (state) {
     .filter(card => card.worker != null)
     .length
 
-  const groups = groupBy(cards, card => moment(card.job.extra.publishedAt).format('YYYY-MM-DD'))
+  const groups = groupBy(cards, card => moment(card.job.extra.createdAt).format('YYYY-MM-DD'))
+
   return {
     signer,
     totalCount: cards.length,
@@ -110,7 +154,7 @@ function mapStateToProps (state) {
     groups: Object.entries(groups)
       .map(([key, cards]) => ({
         key,
-        date: cards[0].job.extra.publishedAt,
+        date: cards[0].job.extra.createdAt,
         cards,
       }))
       .sort((a, b) => -moment(a.date).diff(moment(b.date))),

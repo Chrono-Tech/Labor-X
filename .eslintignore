@@ -38,6 +38,7 @@ src/**/*.js
 !src/models/app/StateModel.js
 !src/models/app/JobPausedEvent.js
 !src/models/app/JobResumedEvent.js
+!src/models/app/JobExtraModel.js
 !src/models/validator.js
 !src/models/index.js
 !src/models/wallets/SignerModel.js
@@ -48,6 +49,7 @@ src/**/*.js
 !src/store/ethereum/actions.js
 !src/store/jobs/reducer.js
 !src/store/jobs/selectors.js
+!src/store/wallet/actions.js
 
 !src/components/common/Icon/Icon.js
 !src/components/common/index.js
@@ -59,6 +61,10 @@ src/**/*.js
 !src/components/common/Icon/Icon.js
 !src/components/common/Rating/Rating.js
 !src/components/common/SecurityShield/SecurityShield.js
+!src/components/common/Radio/Radio.js
+!src/components/layouts/MainLayout.js
+!src/components/layouts/SecondMenu/SecondMenu.js
+
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/validate.js
@@ -68,12 +74,13 @@ src/**/*.js
 !src/content/lib/ContentJobViewContent/InfoTab/InfoTab.js
 !src/content/lib/ContentJobViewContent/LogTab/LogTab.js
 !src/content/lib/ActiveJobsContent/ActiveJobsContent.js
+!src/content/lib/ArchiveJobsContent/ArchiveJobsContent.js
 !src/content/lib/JobTypesContent/JobTypesContent.js
 !src/content/lib/PostedJobsContent/PostedJobsContent.js
 !src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
 !src/content/lib/TodoContent/TodoContent.js
 
-!src/partials/**
+!src/partials/
 
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/daos/index.js
