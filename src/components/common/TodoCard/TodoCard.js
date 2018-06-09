@@ -1,9 +1,11 @@
 import React from 'react'
+import { connect } from "react-redux"
 import { Image } from 'components/common'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
-import { JobModel } from "src/models"
+import { JobModel, JOB_STATE_WORK_REJECTED } from "src/models"
+import { pauseJobWork, resumeJobWork } from "src/store"
 
 import css from './TodoCard.scss'
 
@@ -17,7 +19,7 @@ const STATUSES = {
 
 const dateFormat = 'h:mm A'
 
-export default class TodoCard extends React.Component {
+class TodoCard extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel),
     resumeJobWork: PropTypes.func,
@@ -46,6 +48,8 @@ export default class TodoCard extends React.Component {
   }
 
   handlePausePlayClick = () => {
+    // eslint-disable-next-line no-console
+    console.log('handlePausePlayClick: ', this.props.job.paused)
     this.props.job.paused ? this.props.resumeJobWork(this.props.job.id) : this.props.pauseJobWork(this.props.job.id)
   }
 
@@ -54,7 +58,7 @@ export default class TodoCard extends React.Component {
 
     if (!job.paused) {
       return STATUSES.IN_PROGRESS
-    } else if (job.state.name === 'WORK_REJECTED') {
+    } else if (job.state === JOB_STATE_WORK_REJECTED) {
       return STATUSES.PROBLEM
     } else if (job.ipfs.period && this.daysUntil(job.ipfs.period.until) === 1) {
       return STATUSES.ATTENTION
@@ -65,7 +69,7 @@ export default class TodoCard extends React.Component {
 
   getCardNote = () => {
     const { job } = this.props
-    if (job.state.name === 'WORK_REJECTED') {
+    if (job.state.name === JOB_STATE_WORK_REJECTED) {
       return 'RE-DO TODAY'
     } else if (job.ipfs.period && this.daysUntil(job.ipfs.period.until) <= 1) {
       return 'DUE TODAY'
@@ -83,9 +87,10 @@ export default class TodoCard extends React.Component {
   }
 
   workedTimeSeconds = () => {
-    const { finishTime, startTime, pausedFor } = this.props.job
+    const { finishTime, extra, pausedFor } = this.props.job
+    const { startTime } = extra
     const fromTime = finishTime ? finishTime : + new Date
-    return fromTime - startTime - pausedFor
+    return fromTime - startTime.valueOf() - pausedFor
   }
 
   totalHours = () => {
@@ -127,7 +132,7 @@ export default class TodoCard extends React.Component {
         <div className={css.progress}>
           <div className={css.progressTimer}>
             { this.progressIcon() }
-            <p><span className={css.medium}>{this.workedTimeSeconds() > 0 ? this.workedTimeRender() : 'Start Work'}</span> of {this.totalHours()}h</p>
+            <p><span className={css.medium}>{this.workedTimeSeconds() > 0 ? this.workedTimeRender() : 'Start Work'}</span> {this.totalHours() ? `of  ${this.totalHours()}h` : `h` }</p>
           </div>
           <div className={css.actions}>
             <Image
@@ -150,3 +155,16 @@ export default class TodoCard extends React.Component {
     )
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    resumeJobWork: (jobId: Number) => {
+      dispatch(resumeJobWork(jobId))
+    },
+    pauseJobWork: (jobId: Number) => {
+      dispatch(pauseJobWork(jobId))
+    },
+  }
+}
+
+export default connect(null, mapDispatchToProps)(TodoCard)

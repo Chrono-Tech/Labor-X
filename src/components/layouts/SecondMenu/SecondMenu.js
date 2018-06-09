@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Image, Link } from 'components/common'
 import React from 'react'
 import css from './SecondMenu.scss'
-import { userSelector } from "../../../store/user/selectors"
 
 class SecondMenu extends React.Component {
   static propTypes = {
@@ -96,7 +95,14 @@ class SecondMenu extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  accountTypes: userSelector()(state).accountTypes,
+
+  // @todo remove hardcode after fixing accountTypes support for all users
+  // accountTypes: userSelector()(state).accountTypes,
+  accountTypes: {
+    worker: true,
+    client: true,
+    recruter: true,
+  },
 })
 
 export default connect(mapStateToProps)(SecondMenu)

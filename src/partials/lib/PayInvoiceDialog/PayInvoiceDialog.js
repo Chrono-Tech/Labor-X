@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Button, Link } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
+
 import css from './PayInvoiceDialog.scss'
 
 const dateFormat = 'DD.MM.YYYY'
@@ -11,16 +12,16 @@ export default class PayInvoiceDialog extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel),
     worker: PropTypes.instanceOf(ProfileModel),
+    confirmEndWork: PropTypes.func.isRequired,
+    cancelJob: PropTypes.func.isRequired,
   }
 
-  handlePay () {
-    // eslint-disable-next-line no-console
-    console.log('PayInvoiceDialog-handlePay')
+  handlePay = () => {
+    this.props.confirmEndWork(this.props.job.id)
   }
 
-  handleDecline () {
-    // eslint-disable-next-line no-console
-    console.log('PayInvoiceDialog-handleDecline')
+  handleDecline = () => {
+    this.props.cancelJob(this.props.job.id)
   }
 
   render () {
@@ -50,7 +51,7 @@ export default class PayInvoiceDialog extends React.Component {
         <div className={css.body}>
           <div className={css.invoiceRow}>
             <p>Install 10 Gas Ovens</p>
-            <p>LHUS 76.00</p>
+            <p>{job.ipfs.budget.award && `LHUS ${job.ipfs.budget.award.toFixed(2)}`}</p>
           </div>
           <div className={css.invoiceRow}>
             <p>Gas Tubes</p>
@@ -59,8 +60,8 @@ export default class PayInvoiceDialog extends React.Component {
           <div className={css.totalRow}>
             <strong>Total</strong>
             <div className={css.totalPrice}>
-              <strong>LHUS 76.25</strong>
-              <p>$3,050</p>
+              <strong>{job.ipfs.budget.award && `LHUS ${job.ipfs.budget.award.toFixed(2)}`}</strong>
+              <p>{`$${job.ipfs.budget.awardUSD && job.ipfs.budget.awardUSD.toString()}`}</p>
             </div>
           </div>
         </div>

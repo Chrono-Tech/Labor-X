@@ -46,6 +46,8 @@ export { default as JobProfileRequirementsModel } from './app/JobProfileRequirem
 export { default as JobPostedEvent } from './app/JobPostedEvent'
 export { default as JobResumedEvent } from './app/JobResumedEvent'
 export { default as JobPausedEvent } from './app/JobPausedEvent'
+export { default as JobConfirmEndWorkEvent } from './app/JobConfirmEndWorkEvent'
+export { default as WorkRejectedEvent } from './app/WorkRejectedEvent'
 export { default as JobCanceledEvent } from './app/JobCanceledEvent'
 export { default as JobNoticeModel } from './app/JobNoticeModel'
 export { default as ClientModel } from './app/ClientModel'
