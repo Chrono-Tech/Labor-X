@@ -1,10 +1,11 @@
+import BigNumber from 'bignumber.js'
 import { storeIntoIPFS } from 'src/utils'
 import { JobModel, JobPostedEvent, JobCanceledEvent, JobFormModel, JobOfferFormModel, SkillModel } from 'src/models'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { executeTransaction } from '../ethereum/actions'
 import { web3Selector } from '../ethereum/selectors'
-import {userSelector} from "../user/selectors";
+import { userSelector } from "../user/selectors"
 
 export const JOBS_CLEAR = 'jobs/clear'
 export const JOBS_SAVE = 'jobs/save'
@@ -32,6 +33,14 @@ export const reloadJobs = () => async (dispatch, getState) => {
 
   const signer = signerSelector()(state)
   const user = userSelector()(state)
+
+
+  JobDataProviderDAO.getJobOffers(14)
+  console.log('createSetSkillsTx')
+  const web3 = web3Selector()(state)
+  const userLibraryDAO = daoByType('UserLibrary')(state)
+  const tx = userLibraryDAO.createSetSkillsTx(signer.address, '0xb605f3263f0671067f4ee963c1e8deb7ad158cfc', new BigNumber(0b1), new BigNumber(0b1), new BigNumber(0xFFFFFFF))
+  await dispatch(executeTransaction({ tx, web3, signer }))
 
   dispatch({ type: JOBS_CLEAR })
 

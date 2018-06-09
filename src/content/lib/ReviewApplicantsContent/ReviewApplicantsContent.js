@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { Router } from 'src/routes'
 import { JobModel, WorkerModel } from 'src/models'
+import { reloadJobsApplicants, jobsApplicantsSelector, profileSelector } from 'src/store'
 import { Button, Input, Image, Icon, WorkerCard } from 'src/components/common'
 import css from './ReviewApplicantsContent.scss'
 
@@ -12,6 +13,7 @@ const FORM_REVIEW_APPLICANTS = 'form/review-applicants'
 export class ReviewApplicantsContent extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
+    reloadJobsApplicants: PropTypes.func,
     cards: PropTypes.arrayOf(PropTypes.shape({
       worker: PropTypes.instanceOf(WorkerModel),
       data: PropTypes.instanceOf(Date),
@@ -38,6 +40,10 @@ export class ReviewApplicantsContent extends React.Component {
         Worker list is empty
       </div>
     )
+  }
+
+  componentDidMount () {
+    this.props.reloadJobsApplicants()
   }
 
   render () {
@@ -118,7 +124,17 @@ export class ReviewApplicantsContent extends React.Component {
   }
 }
 
-function mapStateToProps () {
+function mapStateToProps (state, op) {
+  const applicants = jobsApplicantsSelector(op.job.id)(state)
+
+  // eslint-disable-next-line
+  console.log('applicants', applicants)
+
+  // const cards = applicants.map(applicant => ({
+  //   applicant,
+  //   profile: profileSelector(applicant.worker)
+  // }))
+
   // TODO aevalyakin get workers and data from backend
   const cards = [
     {
@@ -158,9 +174,17 @@ function mapStateToProps () {
   }
 }
 
+function mapDispatchToProps (dispatch, op) {
+  return {
+    reloadJobsApplicants: () => dispatch(reloadJobsApplicants({
+      jobId: op.job.id
+    })),
+  }
+}
+
 const form = reduxForm({
   form: FORM_REVIEW_APPLICANTS,
   fields: ['searchReviewApplicants'],
 })(ReviewApplicantsContent)
 
-export default connect(mapStateToProps)(form)
+export default connect(mapStateToProps, mapDispatchToProps)(form)

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import BigNumber from 'bignumber.js'
 import AbstractModel from '../AbstractModel'
 import TagCategoryModel from '../meta/TagCategoryModel'
 import TagAreaModel from '../meta/TagAreaModel'
@@ -20,6 +21,7 @@ export const schemaFactory = () => ({
   skills: PropTypes.arrayOf(
     PropTypes.instanceOf(SkillModel)
   ),
+  flowType: PropTypes.instanceOf(BigNumber),
   paused: PropTypes.bool,
   defaultPay: PropTypes.number,
   pausedAt: PropTypes.number,

@@ -1,8 +1,9 @@
-import { DAOS_REGISTER } from './actions'
+import { DAOS_REGISTER, DAOS_INITIALIZED } from './actions'
 
 export const initialState = {
   byType: {},
   byAddress: {},
+  isInitialized: false,
 }
 
 const mutations = {
@@ -19,6 +20,12 @@ const mutations = {
       },
     }
   },
+  [DAOS_INITIALIZED] (state, { isInitialized }) {
+    return {
+      ...state,
+      isInitialized,
+    }
+  }
 }
 
 export default (state = initialState, { type, ...other }) => {
