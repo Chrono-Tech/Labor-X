@@ -254,4 +254,9 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
     return job
   }
 
+  async getJobOffers (id) {
+    const offers = await this.contract.methods.getJobOffers(id, 0, 100).call()
+    return offers
+  }
+
 }

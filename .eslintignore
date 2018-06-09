@@ -95,6 +95,11 @@ src/**/*.js
 !src/store/user/reducer.js
 !src/store/wallet/actions.js
 
+!src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
+!src/daos/lib/JobsDataProviderDAO.js
+!src/models/app/JobOfferFormModel.js
+!src/store/jobs/actions.js
+!src/store/jobs/reducer.js
 
 
 

@@ -7,6 +7,7 @@ const schemaFactory = () => ({
   rate: PropTypes.instanceOf(BigNumber).isRequired,
   estimate: PropTypes.instanceOf(BigNumber).isRequired,
   ontop: PropTypes.instanceOf(BigNumber).isRequired,
+  worker: PropTypes.string.isRequired,
 })
 
 export default class JobOfferFormModel extends AbstractModel {
