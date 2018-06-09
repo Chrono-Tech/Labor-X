@@ -6,26 +6,32 @@ import { Router } from 'src/routes'
 import { JobModel, WorkerModel } from 'src/models'
 import { Button, Input, Image, Icon, WorkerCard } from 'src/components/common'
 import css from './ReviewApplicantsContent.scss'
+import { getJobOffers } from "../../../store"
 
 const FORM_REVIEW_APPLICANTS = 'form/review-applicants'
 
 export class ReviewApplicantsContent extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
-    cards: PropTypes.arrayOf(PropTypes.shape({
+    applicants: PropTypes.arrayOf(PropTypes.shape({
       worker: PropTypes.instanceOf(WorkerModel),
       data: PropTypes.instanceOf(Date),
       offer: PropTypes.number,
     })),
-    cardsOfferSent: PropTypes.arrayOf(PropTypes.shape({
+    worker: PropTypes.shape({
       worker: PropTypes.instanceOf(WorkerModel),
       data: PropTypes.instanceOf(Date),
       offer: PropTypes.number,
-    })),
+    }),
+    getJobOffers: PropTypes.func.isRequired,
   }
 
   constructor (props) {
     super(props)
+  }
+
+  componentDidMount () {
+    this.props.getJobOffers()
   }
 
   handleBack () {
@@ -41,8 +47,8 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   render () {
-    const { job, cards, cardsOfferSent } = this.props
-    return !cards ? null : (
+    const { job, applicants, worker } = this.props
+    return !applicants ? null : (
       <div className={css.main}>
         <div className={css.title}>
           <div className={css.titleBar}>
@@ -98,17 +104,16 @@ export class ReviewApplicantsContent extends React.Component {
               />
             </div>
             <div className={css.block}>
-              <h4>Sent Offer</h4>
+              <h4>Selected Worker</h4>
               <div className={css.cards}>
-                { cardsOfferSent &&  cardsOfferSent.map((card) => (<WorkerCard offerSent {...card} key={card.worker.key} />))}
-                { cardsOfferSent && !cardsOfferSent.length && this.renderEmptyListMessage() }
+                { worker ? <WorkerCard offerSent {...worker} /> : this.renderEmptyListMessage() }
               </div>
             </div>
             <div className={css.block}>
-              <h4>Job Applicants ({cards.length})</h4>
+              <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                { cards &&  cards.map((card) => (<WorkerCard {...card} key={card.worker.key} />))}
-                { cards && !cards.length && this.renderEmptyListMessage() }
+                { applicants &&  applicants.map((card) => (<WorkerCard {...card} key={card.worker.key} />))}
+                { applicants && !applicants.length && this.renderEmptyListMessage() }
               </div>
             </div>
           </form>
@@ -118,49 +123,32 @@ export class ReviewApplicantsContent extends React.Component {
   }
 }
 
-function mapStateToProps () {
+function mapStateToProps (state, ownProps) {
   // TODO aevalyakin get workers and data from backend
-  const cards = [
-    {
-      worker: new WorkerModel({}),
+  const applicants = state.jobs.offers.offers
+    ? state.jobs.offers.offers.map(x => ({
+      worker: new WorkerModel({ id: x.worker }),
       date: new Date(),
-      offer: 10,
-    },
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-    },
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-    },
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-    },
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-    },
-  ]
-
-  const cardsOfferSent = [
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-      offer: 9,
-    },
-  ]
-
+      offer: x.rate,
+    })) : null
+  const worker = ownProps.job.worker && state.jobs.offers.offers ? {
+    worker: new WorkerModel({}),
+    date: new Date(),
+    offer: state.jobs.offers.offers.find(x => x.worker.toLowerCase() === ownProps.job.worker.toLowerCase()).rate,
+  } : null
   return {
-    cardsOfferSent,
-    cards,
+    worker,
+    applicants,
   }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  getJobOffers: () => dispatch(getJobOffers(ownProps.job.id)),
+})
 
 const form = reduxForm({
   form: FORM_REVIEW_APPLICANTS,
   fields: ['searchReviewApplicants'],
 })(ReviewApplicantsContent)
 
-export default connect(mapStateToProps)(form)
+export default connect(mapStateToProps, mapDispatchToProps)(form)

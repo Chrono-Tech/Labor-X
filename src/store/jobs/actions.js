@@ -4,7 +4,7 @@ import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { executeTransaction } from '../ethereum/actions'
 import { web3Selector } from '../ethereum/selectors'
-import {userSelector} from "../user/selectors";
+// import { userSelector } from "../user/selectors"
 
 export const JOBS_CLEAR = 'jobs/clear'
 export const JOBS_SAVE = 'jobs/save'
@@ -30,23 +30,23 @@ export const reloadJobs = () => async (dispatch, getState) => {
   const boardControlerDAO = daoByType('BoardController')(state)
   const JobDataProviderDAO = daoByType('JobsDataProvider')(state)
 
-  const signer = signerSelector()(state)
-  const user = userSelector()(state)
+  // const signer = signerSelector()(state)
+  // const user = userSelector()(state)
 
   dispatch({ type: JOBS_CLEAR })
 
   const jobs = await JobDataProviderDAO.getJobs(boardControlerDAO)
   dispatch({ type: JOBS_SAVE, jobList: jobs })
 
-  if (user.accountTypes.worker) {
-    const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
-    dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
-  }
-
-  if (user.accountTypes.client) {
-    const jobs = await JobDataProviderDAO.getJobsForClient(signer.address)
-    dispatch({ type: JOBS_CLIENT_SAVE, jobList: jobs })
-  }
+  // if (user.accountTypes.worker) { // @todo return when getJobs methods will accept filter by all entries thought bit masks
+  //   const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
+  //   dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
+  // }
+  //
+  // if (user.accountTypes.client) {
+  //   const jobs = await JobDataProviderDAO.getJobsForClient(signer.address)
+  //   dispatch({ type: JOBS_CLIENT_SAVE, jobList: jobs })
+  // }
 
 }
 
@@ -167,4 +167,36 @@ export const updateFilterJobs = (filterFields) => (dispatch, getState) => {
     type: JOBS_FILTER,
     jobsList: currentList,
   })
+}
+
+export const GET_JOBS_OFFERS_REQUEST = 'GET_JOBS_OFFERS_REQUEST'
+export const GET_JOBS_OFFERS_SUCCESS = 'GET_JOBS_OFFERS_SUCCESS'
+export const GET_JOBS_OFFERS_FAILURE = 'GET_JOBS_OFFERS_FAILURE'
+
+export const getJobOffersRequest = () => ({ type: GET_JOBS_OFFERS_REQUEST })
+export const getJobOffersSuccess = (offers) => ({ type: GET_JOBS_OFFERS_SUCCESS, offers })
+export const getJobOffersFailure = (err) => ({ type: GET_JOBS_OFFERS_FAILURE, err })
+
+export const getJobOffers = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(getJobOffersRequest())
+    const state = getState()
+    const JobsDataProviderDAO = daoByType('JobsDataProvider')(state)
+    const rawOffers = await JobsDataProviderDAO.getJobOffers(id)
+    // eslint-disable-next-line no-underscore-dangle
+    const parsedOffers = rawOffers._workers.reduce((result, x, i) => result.concat({
+      jobId: id,
+      worker: x,
+      estimate: parseInt(rawOffers._estimates[i]), // eslint-disable-line no-underscore-dangle
+      ontop: parseInt(rawOffers._onTops[i]), // eslint-disable-line no-underscore-dangle
+      rate: parseInt(rawOffers._rates[i]), // eslint-disable-line no-underscore-dangle
+    }), [])
+
+    const offers = parsedOffers.map(x => new JobOfferFormModel(x))
+    dispatch(getJobOffersSuccess(offers))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(getJobOffersFailure(err))
+  }
 }

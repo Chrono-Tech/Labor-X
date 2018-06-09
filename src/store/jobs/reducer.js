@@ -1,4 +1,7 @@
-import { JOBS_CLEAR, JOBS_SAVE, JOBS_FILTER, JOBS_CLIENT_SAVE, JOBS_WORKER_SAVE } from './actions'
+import {
+  JOBS_CLEAR, JOBS_SAVE, JOBS_FILTER, JOBS_CLIENT_SAVE, JOBS_WORKER_SAVE,
+  GET_JOBS_OFFERS_REQUEST, GET_JOBS_OFFERS_FAILURE, GET_JOBS_OFFERS_SUCCESS,
+} from './actions'
 
 export const initialState = {
   list: [],
@@ -8,6 +11,11 @@ export const initialState = {
   byKey: {},
   clientByKey: {},
   workerByKey: {},
+  offers: {
+    loading: false,
+    offers: null,
+    err: null,
+  },
 }
 
 const mutations = {
@@ -52,6 +60,11 @@ const mutations = {
       filtered: jobsList,
     }
   },
+
+  [GET_JOBS_OFFERS_REQUEST]: (state) => ({ ...state, offers: { ...state.offers, loading: true } }),
+  [GET_JOBS_OFFERS_SUCCESS]: (state, { offers }) => ({ ...state, offers: { ...state.offers, loading: false, offers } }),
+  [GET_JOBS_OFFERS_FAILURE]: (state, { err }) => ({ ...state, offers: { ...state.offers, loading: false, err } }),
+
 }
 
 export default (state = initialState, { type, ...other }) => {
