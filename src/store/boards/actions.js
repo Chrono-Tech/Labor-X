@@ -161,6 +161,5 @@ export const boardCreate = (data) => async (dispatch, getState) => {
     detailsIPFSHash
   )
 
-  await dispatch(executeTransaction({ tx, web3 }))
-  
+  await dispatch(executeTransaction({ tx, web3, signer }))
 }

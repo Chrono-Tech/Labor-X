@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { formValueSelector } from 'redux-form'
+import { formValueSelector, getFormSyncErrors } from 'redux-form'
 
 import {
   TagCategoryModel,
@@ -39,9 +39,10 @@ class CreateJobBoardContent extends React.Component {
   }
   
   render (){
-    const { isSpecificRequirements } = this.props
+    const { isSpecificRequirements, formErrors } = this.props
     return (
       <CreateJobBoard
+        formErrors={formErrors}
         onSubmit={this.handleSubmit}
         isLoading={this.state.isLoading}
         isSpecificRequirements={isSpecificRequirements}
@@ -54,6 +55,7 @@ const mapStateToProps = (state) => {
   const formSelector = formValueSelector(FORM_CREATE_JOB_BOARD)
   
   return {
+    formErrors: getFormSyncErrors(FORM_CREATE_JOB_BOARD)(state),
     isSpecificRequirements: formSelector(state, 'joinRequirement') == 1,
   }
 }
@@ -72,7 +74,7 @@ const mapDispatchToProps = (dispatch) => {
           tagCategories: values.tagCategories && values.tagCategories.split(',').map(item => TagCategoryModel.valueOf(item)) || [],
           joinRequirement: BoardRequirementModel.valueOf(values.joinRequirement),
           fee: BoardPostFeeModel.valueOf(values.fee),
-          lhus: values.lhus,
+          lhus: +values.lhus,
         })
       ))
     },

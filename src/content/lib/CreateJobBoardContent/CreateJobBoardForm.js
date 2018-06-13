@@ -7,7 +7,7 @@ import { MenuItem } from 'material-ui/Menu'
 import AutoComplete from 'material-ui/AutoComplete'
 import { SelectField } from 'redux-form-material-ui'
 
-import { Image, Chip, Input, Button, Icon, Checkbox } from 'components/common'
+import { Image, Chip, Input, Button, Icon, Checkbox, RadioIcon } from 'components/common'
 import {
   TAG_CATEGORIES_LIST,
   BOARD_REQUIREMENTS_LIST,
@@ -15,6 +15,7 @@ import {
 } from 'src/models'
 
 import css from './CreateJobBoardForm.scss'
+import validate from "./validate"
 
 export const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
 
@@ -22,6 +23,7 @@ class CreateJobBoardForm extends React.Component {
   static propTypes = {
     isSpecificRequirements: PropTypes.bool,
     change: PropTypes.func,
+    formErrors: PropTypes.any,
   }
   
   constructor (props) {
@@ -87,11 +89,30 @@ class CreateJobBoardForm extends React.Component {
               Specify which requirements should be met in order to join the board.
             </div>
             <div>
-              <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
-              <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
-              <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
-              <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
-              <Icon className={css.semiTransparentStar} size={36} {...Icon.SETS.STAR} />
+              <Field
+                component={RadioIcon}
+                radioButtonClassName={css.field}
+                name='rating_requirements'
+                label='Rating'
+                checkedIcon={(
+                  <div className={[css.iconWrapper, css.checkedIconWrapper].join(' ')}>
+                    <Icon className={css.star} size={36} {...Icon.SETS.STAR} />
+                  </div>
+                )}
+                uncheckedIcon={(
+                  <div className={[css.iconWrapper, css.checkedIconWrapper].join(' ')}>
+                    <Icon className={css.semiTransparentStar} size={36} {...Icon.SETS.STAR} />
+                  </div>
+                )}
+                values={[
+                  { value: 1 },
+                  { value: 2 },
+                  { value: 3 },
+                  { value: 4 },
+                  { value: 5 },
+                ]}
+                material
+              />
             </div>
           </div>
           
@@ -177,7 +198,7 @@ class CreateJobBoardForm extends React.Component {
   }
   
   render () {
-    const { onSubmit, handleSubmit, isLoading, isSpecificRequirements } = this.props
+    const { onSubmit, handleSubmit, isLoading, submitFailed, isSpecificRequirements, formErrors } = this.props
     return (
       <MuiThemeProvider>
         <form name={FORM_CREATE_JOB_BOARD} className={css.main} onSubmit={handleSubmit}>
@@ -229,6 +250,7 @@ class CreateJobBoardForm extends React.Component {
                     text: 'name',
                     value: 'name',
                   }}
+                  errorText={formErrors.searchCategory && submitFailed ? formErrors.searchCategory : null}
                   dataSource={this.getTagsList()}
                   name='searchCategory'
                   placeholder='Find'
@@ -349,8 +371,8 @@ export default reduxForm({
     tagCategories: '',
     requirements: 0,
     fee: 0,
-    feeValue: 0,
     endorsingSkills: false,
     joinRequirement: 0,
   },
+  validate,
 })(CreateJobBoardForm)
