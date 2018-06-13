@@ -25,7 +25,7 @@ class ReviewApplicants extends React.Component {
     ])
     */
     return {
-      jobId: query.id,
+      jobId: Number(query.id),
       isServer,
     }
   }

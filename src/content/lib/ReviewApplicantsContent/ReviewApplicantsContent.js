@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import uniqid from 'uniqid'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { Router } from 'src/routes'
-import { JobModel, WorkerModel } from 'src/models'
+import { JobModel, ProfileModel, JobOfferModel } from 'src/models'
 import { reloadJobsApplicants, jobsApplicantsSelector, profileSelector } from 'src/store'
 import { Button, Input, Image, Icon, WorkerCard } from 'src/components/common'
 import css from './ReviewApplicantsContent.scss'
@@ -13,21 +14,19 @@ const FORM_REVIEW_APPLICANTS = 'form/review-applicants'
 export class ReviewApplicantsContent extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
-    reloadJobsApplicants: PropTypes.func,
-    cards: PropTypes.arrayOf(PropTypes.shape({
-      worker: PropTypes.instanceOf(WorkerModel),
-      data: PropTypes.instanceOf(Date),
-      offer: PropTypes.number,
-    })),
-    cardsOfferSent: PropTypes.arrayOf(PropTypes.shape({
-      worker: PropTypes.instanceOf(WorkerModel),
-      data: PropTypes.instanceOf(Date),
-      offer: PropTypes.number,
+    reloadJobsApplicants: PropTypes.func.isRequired,
+    applicants: PropTypes.arrayOf(PropTypes.shape({
+      offer: PropTypes.instanceOf(JobOfferModel),
+      worker: PropTypes.instanceOf(ProfileModel),
     })),
   }
 
   constructor (props) {
     super(props)
+  }
+
+  componentDidMount () {
+    this.props.reloadJobsApplicants()
   }
 
   handleBack () {
@@ -42,13 +41,9 @@ export class ReviewApplicantsContent extends React.Component {
     )
   }
 
-  componentDidMount () {
-    this.props.reloadJobsApplicants()
-  }
-
   render () {
-    const { job, cards, cardsOfferSent } = this.props
-    return !cards ? null : (
+    const { job, applicants/*, worker*/ } = this.props
+    return !applicants ? null : (
       <div className={css.main}>
         <div className={css.title}>
           <div className={css.titleBar}>
@@ -103,18 +98,17 @@ export class ReviewApplicantsContent extends React.Component {
                 color={Image.COLORS.BLACK}
               />
             </div>
-            <div className={css.block}>
-              <h4>Sent Offer</h4>
+            {/* <div className={css.block}>
+              <h4>Selected Worker</h4>
               <div className={css.cards}>
-                { cardsOfferSent &&  cardsOfferSent.map((card) => (<WorkerCard offerSent {...card} key={card.worker.key} />))}
-                { cardsOfferSent && !cardsOfferSent.length && this.renderEmptyListMessage() }
+                { worker ? <WorkerCard offerSent {...worker} /> : this.renderEmptyListMessage() }
               </div>
-            </div>
+            </div> */}
             <div className={css.block}>
-              <h4>Job Applicants ({cards.length})</h4>
+              <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                { cards &&  cards.map((card) => (<WorkerCard {...card} key={card.worker.key} />))}
-                { cards && !cards.length && this.renderEmptyListMessage() }
+                { applicants &&  applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} />))}
+                { applicants && !applicants.length && this.renderEmptyListMessage() }
               </div>
             </div>
           </form>
@@ -125,59 +119,21 @@ export class ReviewApplicantsContent extends React.Component {
 }
 
 function mapStateToProps (state, op) {
-  const applicants = jobsApplicantsSelector(op.job.id)(state)
-
-  // eslint-disable-next-line
-  console.log('applicants', applicants)
-
-  // const cards = applicants.map(applicant => ({
-  //   applicant,
-  //   profile: profileSelector(applicant.worker)
-  // }))
-
-  // TODO aevalyakin get workers and data from backend
-  const cards = [
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-      offer: 10,
-    },
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-    },
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-    },
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-    },
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-    },
-  ]
-
-  const cardsOfferSent = [
-    {
-      worker: new WorkerModel({}),
-      date: new Date(),
-      offer: 9,
-    },
-  ]
+  const offers = jobsApplicantsSelector(op.job.id)(state)
+  const applicants = !offers ? null : offers.map(offer => ({
+    offer,
+    worker: profileSelector(offer.worker)(state),
+  }))
 
   return {
-    cardsOfferSent,
-    cards,
+    applicants,
   }
 }
 
 function mapDispatchToProps (dispatch, op) {
   return {
     reloadJobsApplicants: () => dispatch(reloadJobsApplicants({
-      jobId: op.job.id
+      jobId: op.job.id,
     })),
   }
 }

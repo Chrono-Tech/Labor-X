@@ -51,9 +51,11 @@ export class OpportunitiesContent extends React.Component {
 
   renderFilter () {
     const selectThemeStyle = {
-      color: 'white',
       width: '180px',
       marginLeft: '-5px',
+    }
+    const labelSelectFilter = {
+      color: 'white',
     }
 
     return (
@@ -75,7 +77,7 @@ export class OpportunitiesContent extends React.Component {
             type='select'
             label=''
             autoWidth
-            profileTheme={{ style: selectThemeStyle }}
+            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
             values={[
               { value: 'date', name: 'Date' },
               { value: 'budget', name: 'Budget' },
@@ -169,7 +171,7 @@ export class OpportunitiesContent extends React.Component {
             name='location_city'
             type='select'
             autoWidth
-            profileTheme={{ style: selectThemeStyle }}
+            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
             values={[
               { value: 'Russia', name: 'Russia' },
             ]}
@@ -181,7 +183,7 @@ export class OpportunitiesContent extends React.Component {
             name='location_town'
             type='select'
             autoWidth
-            profileTheme={{ style: selectThemeStyle }}
+            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
             values={[
               { value: 'Moscow', name: 'Moscow' },
             ]}
@@ -287,9 +289,22 @@ function mapStateToProps (state) {
   const formValues = getFormValues(FORM_SEARCH_OPPORTUNITIES)(state)
   const cards = opportunitiesFilteredListSelector(formValues)(state)
 
+  const defaultCategoriesValues = {}
+  TAG_CATEGORIES_LIST.map((tag) => {
+    defaultCategoriesValues[tag.name] = false
+  })
+
   return {
     signer,
     cards,
+    initialValues: {
+      reverse_order: true,
+      recruting_services: true,
+      sort_by: 'date',
+      location_city: 'Russia',
+      location_town: 'Moscow',
+      ...defaultCategoriesValues,
+    },
   }
 }
 

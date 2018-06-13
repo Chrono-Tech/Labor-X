@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
 import { Link, Image, Button } from 'src/components/common'
-import { JobModel, BoardModel, ProfileModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE } from 'src/models'
+import { JobModel, BoardModel, ProfileModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE, JOB_STATE_FINISHED } from 'src/models'
+
 import css from './ActiveJobCard.scss'
 
 const dateFormat = 'h:mm A'
@@ -68,19 +69,19 @@ export default class ActiveJobCard extends React.Component {
               <Link className={css.link} href='/recruiter-profile'><p>{recruiter.ipfs.name} (Recruiter)</p></Link>
             </div>
           )}
-          <Button
+          {job.state === JOB_STATE_FINISHED && <Button
             label='REVIEW'
             className={css.review}
             mods={Button.MODS.FLAT}
             onClick={this.handleReview}
-          />
-          <Image
+          />}
+          {job.state === JOB_STATE_FINISHED && <Image
             clickable
             className={css.actionButton}
             title='Message'
             icon={Image.ICONS.MESSAGE}
             onClick={this.handleMessage}
-          />
+          />}
         </div>
       </div>
     )

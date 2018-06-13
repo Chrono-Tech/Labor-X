@@ -24,7 +24,7 @@ export const schemaFactory = () => ({
   flowType: PropTypes.instanceOf(BigNumber),
   paused: PropTypes.bool,
   defaultPay: PropTypes.number,
-  pausedAt: PropTypes.number,
+  pausedAt: PropTypes.instanceOf(Date),
   pausedFor: PropTypes.number,
 })
 

@@ -161,7 +161,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         pendingStartAt: bytes32ToDate(pendingStartAtBytes, true),
         startTime: bytes32ToDate(startTimeBytes, true),
         pausedAt: bytes32ToDate(pausedAtBytes, true),
-        pausedFor: bytes32ToDate(pausedForBytes, true),
+        pausedFor: bytes32ToNumber(pausedForBytes, true),
         pendingFinishAt: bytes32ToDate(pendingFinishAtBytes, true),
         finishTime: bytes32ToDate(finishTimeBytes, true),
         finalizedAt: bytes32ToDate(finalizedAtBytes, true),
@@ -289,8 +289,6 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         onTop: bytes32ToBigNumber(_onTops[0]),
       })
     }
-
-    console.log('jobId', jobId, '\ndata', data, '\nparsed', parsed)
 
     return parsed.map(offer => new JobOfferModel(offer))
   }

@@ -67,7 +67,10 @@ export default class Checkbox extends React.Component {
     onClick: PropTypes.func,
     input: PropTypes.shape({
       name: PropTypes.string,
-      value: PropTypes.bool,
+      value: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.string,
+      ]),
     }),
     material: PropTypes.bool,
     defaultTheme: PropTypes.bool,
@@ -77,7 +80,7 @@ export default class Checkbox extends React.Component {
   static defaultProps = {
     label: null,
     input: {
-      value: '',
+      value: false,
       checked: false,
       name: 'checkbox',
     },
@@ -97,7 +100,7 @@ export default class Checkbox extends React.Component {
         <CustomCheckbox
           label={<Translate value={label} />}
           className={classNames.join(' ')}
-          input={input}
+          input={{...input, value: !!input.value}}
           onCheck={(event, value) => {
             if (typeof input.onChange === 'function') {
               input.onChange(value)

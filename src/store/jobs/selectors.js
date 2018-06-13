@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { JOB_STATE_STARTED } from 'src/models'
 
 export const jobsSelector = () => (state) => state.jobs
 
@@ -20,6 +21,6 @@ export const jobByIdSelector = (id) => createSelector(
 export const todoJobsSelector = () => createSelector(
   jobsListSelector(),
   (jobsList) => {
-    return jobsList.filter((job) => job.state && job.state.name === 'STARTED')
+    return jobsList.filter((job) => job.state && job.state === JOB_STATE_STARTED)
   }
 )

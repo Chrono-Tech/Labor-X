@@ -1,11 +1,19 @@
-import BigNumber from 'bignumber.js'
 import { storeIntoIPFS } from 'src/utils'
-import { JobModel, JobPostedEvent, JobCanceledEvent, JobFormModel, JobOfferFormModel, SkillModel } from 'src/models'
+import {
+  JobModel,
+  JobConfirmEndWorkEvent,
+  JobPostedEvent,
+  JobPausedEvent,
+  JobResumedEvent,
+  JobCanceledEvent,
+  JobFormModel,
+  JobOfferFormModel,
+  SkillModel,
+} from 'src/models'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
 import { executeTransaction } from '../ethereum/actions'
 import { web3Selector } from '../ethereum/selectors'
-import { userSelector } from "../user/selectors"
 
 export const JOBS_CLEAR = 'jobs/clear'
 export const JOBS_SAVE = 'jobs/save'
@@ -13,14 +21,30 @@ export const JOBS_CLIENT_SAVE = 'jobs/client_save'
 export const JOBS_WORKER_SAVE = 'jobs/worker_save'
 export const JOBS_FILTER = 'jobs/filter'
 
+export const refreshJob = (jobId: Number) => async (dispatch, getState) => {
+  // eslint-disable-next-line no-console
+  console.log('refreshJob: ', jobId)
+  const state = getState()
+  const jobsDataProviderDAO = daoByType('JobsDataProvider')(state)
+  const boardControlerDAO = daoByType('BoardController')(state)
+  const job = await jobsDataProviderDAO.getJobById(boardControlerDAO, jobId)
+  dispatch({
+    type: JOBS_WORKER_SAVE,
+    jobList: [ job ],
+  })
+  return job
+}
+
 // Should be called only once
 export const initJobs = () => async (dispatch, getState) => {
   const state = getState()
   daoByType('JobController')(state)
     .on('JobPosted', ({ event }) => dispatch(handleJobPosted(event)))
     .on('JobCanceled', ({ event }) => dispatch(handleJobCanceled(event)))
-    .on('WorkPaused', ({ event }) => dispatch(handleJobPaused(event)))
-    .on('WorkResumed', ({ event }) => dispatch(handleJobResumed(event)))
+    .on('JobPaused', ({ event }) => dispatch(handleJobPaused(event)))
+    .on('JobResumed', ({ event }) => dispatch(handleJobResumed(event)))
+    .on('JobConfirmEndWork', ({ event }) => dispatch(handleJobConfirmEndWork(event)))
+    .on('JobCanceled', ({ event }) => dispatch(handleJobCanceled(event)))
   await dispatch(reloadJobs())
 }
 
@@ -30,38 +54,26 @@ export const reloadJobs = () => async (dispatch, getState) => {
 
   const boardControlerDAO = daoByType('BoardController')(state)
   const JobDataProviderDAO = daoByType('JobsDataProvider')(state)
-
-  const signer = signerSelector()(state)
-  const user = userSelector()(state)
-
-
-  JobDataProviderDAO.getJobOffers(14)
-  console.log('createSetSkillsTx')
-  const web3 = web3Selector()(state)
-  const userLibraryDAO = daoByType('UserLibrary')(state)
-  const tx = userLibraryDAO.createSetSkillsTx(signer.address, '0xb605f3263f0671067f4ee963c1e8deb7ad158cfc', new BigNumber(0b1), new BigNumber(0b1), new BigNumber(0xFFFFFFF))
-  await dispatch(executeTransaction({ tx, web3, signer }))
-
   dispatch({ type: JOBS_CLEAR })
 
   const jobs = await JobDataProviderDAO.getJobs(boardControlerDAO)
   dispatch({ type: JOBS_SAVE, jobList: jobs })
 
-  if (user.accountTypes.worker) {
-    const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
-    dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
-  }
-
-  if (user.accountTypes.client) {
-    const jobs = await JobDataProviderDAO.getJobsForClient(signer.address)
-    dispatch({ type: JOBS_CLIENT_SAVE, jobList: jobs })
-  }
+  // if (user.accountTypes.worker) { // @todo return when getJobs methods will accept filter by all entries thought bit masks
+  //   const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
+  //   dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
+  // }
+  //
+  // if (user.accountTypes.client) {
+  //   const jobs = await JobDataProviderDAO.getJobsForClient(signer.address)
+  //   dispatch({ type: JOBS_CLIENT_SAVE, jobList: jobs })
+  // }
 
 }
 
-export const handleJobPaused = (e) => async (dispatch, getState) => {
+export const handleJobPaused = (e: JobPausedEvent) => async (dispatch, getState) => {
   // eslint-disable-next-line no-console
-  console.log('jobs/handleJobPaused', e)
+  console.log('handleJobPaused', e)
   const state = getState()
   const jobsDataProviderDAO = daoByType('JobsDataProvider')(state)
   const boardControlerDAO = daoByType('BoardController')(state)
@@ -73,50 +85,68 @@ export const handleJobPaused = (e) => async (dispatch, getState) => {
   return job
 }
 
-export const handleJobResumed = (e) => async (dispatch, getState) => {
+export const handleJobResumed = (e: JobResumedEvent) => async (dispatch) => {
   // eslint-disable-next-line no-console
-  console.log('jobs/handleJobPaused', e)
-  const state = getState()
-  const jobsDataProviderDAO = daoByType('JobsDataProvider')(state)
-  const boardControlerDAO = daoByType('BoardController')(state)
-  const job = await jobsDataProviderDAO.getJobById(boardControlerDAO, e.jobId)
-  dispatch({
-    type: JOBS_WORKER_SAVE,
-    jobList: [ job ],
-  })
-  return job
+  console.log('handleJobPaused', e)
+  dispatch(refreshJob(e.jobId))
 }
 
-export const handleJobPosted = (e: JobPostedEvent) => async (dispatch, getState): JobModel => {
+export const handleJobPosted = (e: JobPostedEvent) => async (dispatch): JobModel => {
   // eslint-disable-next-line no-console
   console.log('jobs/handleJobPosted', e)
-  const state = getState()
-  const jobsDataProviderDAO = daoByType('JobsDataProvider')(state)
-  const boardControlerDAO = daoByType('BoardController')(state)
-  const job = await jobsDataProviderDAO.getJobById(boardControlerDAO, e.jobId)
-  dispatch({
-    type: JOBS_SAVE,
-    jobList: [ job ],
-  })
-  return job
+  dispatch(refreshJob(e.jobId))
 }
 
-export const handleJobCanceled = (e: JobCanceledEvent) => async (/*dispatch, getState*/) => {
-  // TODO @ipavlenko: Implement
+export const handleJobCanceled = (e: JobCanceledEvent) => async (dispatch) => {
   // eslint-disable-next-line no-console
   console.log('jobs/handleJobCanceled', e)
+  dispatch(refreshJob(e.jobId))
+}
+
+export const handleJobConfirmEndWork = (e: JobConfirmEndWorkEvent) => async (dispatch) => {
+  // eslint-disable-next-line no-console
+  console.log('jobs/handleJobConfirmEndWork', e)
+  dispatch(refreshJob(e.jobId))
 }
 
 export const resumeJobWork = (jobId: Number) => async (dispatch, getState) => {
   const state = getState()
-  const jobsController = daoByType('JobController')(state)
-  jobsController.resumeJobWork(jobId)
+  const jobControllerDAO = daoByType('JobController')(state)
+  const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
+
+  const tx = jobControllerDAO.createResumeJobWorkTx(
+    signer.address,
+    jobId
+  )
+  await dispatch(executeTransaction({ tx, web3 }))
 }
 
 export const pauseJobWork = (jobId: Number) => async (dispatch, getState) => {
   const state = getState()
+  const jobControllerDAO = daoByType('JobController')(state)
+  const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
+
+  const tx = jobControllerDAO.createPauseJobWorkTx(
+    signer.address,
+    jobId
+  )
+  await dispatch(executeTransaction({ tx, web3 }))
+}
+
+export const confirmEndWork = (jobId: Number) => async (dispatch, getState) => {
+  const state = getState()
   const jobsController = daoByType('JobController')(state)
-  jobsController.pauseJobWork(jobId)
+  const signer = signerSelector()(state)
+  await jobsController.confirmEndWork(signer.address, jobId)
+}
+
+export const cancelJob = (jobId: Number) => async (dispatch, getState) => {
+  const state = getState()
+  const jobsController = daoByType('JobController')(state)
+  const signer = signerSelector()(state)
+  await jobsController.cancelJob(signer.address, jobId)
 }
 
 export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
@@ -176,4 +206,36 @@ export const updateFilterJobs = (filterFields) => (dispatch, getState) => {
     type: JOBS_FILTER,
     jobsList: currentList,
   })
+}
+
+export const GET_JOBS_OFFERS_REQUEST = 'GET_JOBS_OFFERS_REQUEST'
+export const GET_JOBS_OFFERS_SUCCESS = 'GET_JOBS_OFFERS_SUCCESS'
+export const GET_JOBS_OFFERS_FAILURE = 'GET_JOBS_OFFERS_FAILURE'
+
+export const getJobOffersRequest = () => ({ type: GET_JOBS_OFFERS_REQUEST })
+export const getJobOffersSuccess = (offers) => ({ type: GET_JOBS_OFFERS_SUCCESS, offers })
+export const getJobOffersFailure = (err) => ({ type: GET_JOBS_OFFERS_FAILURE, err })
+
+export const getJobOffers = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(getJobOffersRequest())
+    const state = getState()
+    const JobsDataProviderDAO = daoByType('JobsDataProvider')(state)
+    const rawOffers = await JobsDataProviderDAO.getJobOffers(id)
+    // eslint-disable-next-line no-underscore-dangle
+    const parsedOffers = rawOffers._workers.reduce((result, x, i) => result.concat({
+      jobId: id,
+      worker: x,
+      estimate: parseInt(rawOffers._estimates[i]), // eslint-disable-line no-underscore-dangle
+      ontop: parseInt(rawOffers._onTops[i]), // eslint-disable-line no-underscore-dangle
+      rate: parseInt(rawOffers._rates[i]), // eslint-disable-line no-underscore-dangle
+    }), [])
+
+    const offers = parsedOffers.map(x => new JobOfferFormModel(x))
+    dispatch(getJobOffersSuccess(offers))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(getJobOffersFailure(err))
+  }
 }
