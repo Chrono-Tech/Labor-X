@@ -1,19 +1,19 @@
-import { APPLICANTS_CLEAR, APPLICANTS_SAVE } from './actions'
+import { OFFERS_CLEAR, OFFERS_SAVE } from './actions'
 
 export const initialState = {
   byJobKey: {},
 }
 
 const mutations = {
-  [APPLICANTS_CLEAR] () {
+  [OFFERS_CLEAR] () {
     return initialState
   },
-  [APPLICANTS_SAVE] (state, { jobId, applicants }) {
+  [OFFERS_SAVE] (state, { jobId, offers }) {
     return {
       ...state,
       byJobKey: {
         ...state.byJobKey,
-        [`job-${jobId}`]: applicants,
+        [`job-${jobId}`]: offers,
       },
     }
   },

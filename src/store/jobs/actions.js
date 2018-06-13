@@ -207,35 +207,3 @@ export const updateFilterJobs = (filterFields) => (dispatch, getState) => {
     jobsList: currentList,
   })
 }
-
-export const GET_JOBS_OFFERS_REQUEST = 'GET_JOBS_OFFERS_REQUEST'
-export const GET_JOBS_OFFERS_SUCCESS = 'GET_JOBS_OFFERS_SUCCESS'
-export const GET_JOBS_OFFERS_FAILURE = 'GET_JOBS_OFFERS_FAILURE'
-
-export const getJobOffersRequest = () => ({ type: GET_JOBS_OFFERS_REQUEST })
-export const getJobOffersSuccess = (offers) => ({ type: GET_JOBS_OFFERS_SUCCESS, offers })
-export const getJobOffersFailure = (err) => ({ type: GET_JOBS_OFFERS_FAILURE, err })
-
-export const getJobOffers = (id) => async (dispatch, getState) => {
-  try {
-    dispatch(getJobOffersRequest())
-    const state = getState()
-    const JobsDataProviderDAO = daoByType('JobsDataProvider')(state)
-    const rawOffers = await JobsDataProviderDAO.getJobOffers(id)
-    // eslint-disable-next-line no-underscore-dangle
-    const parsedOffers = rawOffers._workers.reduce((result, x, i) => result.concat({
-      jobId: id,
-      worker: x,
-      estimate: parseInt(rawOffers._estimates[i]), // eslint-disable-line no-underscore-dangle
-      ontop: parseInt(rawOffers._onTops[i]), // eslint-disable-line no-underscore-dangle
-      rate: parseInt(rawOffers._rates[i]), // eslint-disable-line no-underscore-dangle
-    }), [])
-
-    const offers = parsedOffers.map(x => new JobOfferFormModel(x))
-    dispatch(getJobOffersSuccess(offers))
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err)
-    dispatch(getJobOffersFailure(err))
-  }
-}

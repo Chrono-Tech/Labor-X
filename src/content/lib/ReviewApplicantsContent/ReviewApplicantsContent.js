@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { Router } from 'src/routes'
 import { JobModel, ProfileModel, JobOfferModel } from 'src/models'
-import { reloadJobsApplicants, jobsApplicantsSelector, profileSelector } from 'src/store'
+import { reloadJobsOffers, jobsOffersSelector, profileSelector } from 'src/store'
 import { Button, Input, Image, Icon, WorkerCard } from 'src/components/common'
 import css from './ReviewApplicantsContent.scss'
 
@@ -14,7 +14,7 @@ const FORM_REVIEW_APPLICANTS = 'form/review-applicants'
 export class ReviewApplicantsContent extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
-    reloadJobsApplicants: PropTypes.func.isRequired,
+    reloadJobsOffers: PropTypes.func.isRequired,
     applicants: PropTypes.arrayOf(PropTypes.shape({
       offer: PropTypes.instanceOf(JobOfferModel),
       worker: PropTypes.instanceOf(ProfileModel),
@@ -26,7 +26,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   componentDidMount () {
-    this.props.reloadJobsApplicants()
+    this.props.reloadJobsOffers()
   }
 
   handleBack () {
@@ -119,7 +119,7 @@ export class ReviewApplicantsContent extends React.Component {
 }
 
 function mapStateToProps (state, op) {
-  const offers = jobsApplicantsSelector(op.job.id)(state)
+  const offers = jobsOffersSelector(op.job.id)(state)
   const applicants = !offers ? null : offers.map(offer => ({
     offer,
     worker: profileSelector(offer.worker)(state),
@@ -132,7 +132,7 @@ function mapStateToProps (state, op) {
 
 function mapDispatchToProps (dispatch, op) {
   return {
-    reloadJobsApplicants: () => dispatch(reloadJobsApplicants({
+    reloadJobsOffers: () => dispatch(reloadJobsOffers({
       jobId: op.job.id,
     })),
   }
