@@ -58,12 +58,10 @@ src/**/*.js
 !src/components/common/WorkerCard/WorkerCard.js
 !src/components/common/WorkerState/WorkerState.js
 !src/components/common/TodoCard/TodoCard.js
-!src/components/common/Icon/Icon.js
 !src/components/common/Rating/Rating.js
 !src/components/common/SecurityShield/SecurityShield.js
 !src/components/common/Radio/Radio.js
 !src/components/layouts/MainLayout.js
-!src/components/layouts/SecondMenu/SecondMenu.js
 
 
 !src/content/index.js
@@ -82,7 +80,7 @@ src/**/*.js
 
 !src/partials/
 
-!src/components/layouts/SecondMenu/SecondMenu.js
+src/components/layouts/SecondMenu/SecondMenu.js
 !src/daos/index.js
 !src/store/createAccount/actions.js
 !src/store/daos/actions.js

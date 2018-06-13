@@ -16,8 +16,6 @@ class TodoContent extends React.Component {
   static propTypes = {
     todoJobs: PropTypes.arrayOf(PropTypes.instanceOf(JobModel)),
     feedbackCards: PropTypes.arrayOf(PropTypes.shape(FeedbackCard.propTypes)),
-    resumeJobWork: PropTypes.func,
-    pauseJobWork: PropTypes.func,
     pushModal: PropTypes.func.isRequired,
   }
 
@@ -35,8 +33,6 @@ class TodoContent extends React.Component {
   }
 
   render () {
-    const { resumeJobWork, pauseJobWork } = this.props
-
     return (
       <div className={css.main}>
         <div className={css.title}>
@@ -46,7 +42,7 @@ class TodoContent extends React.Component {
           {this.props.todoJobs && this.props.todoJobs.map(x => (
             <div key={x.id}>
               <h3 className={css.date}>{moment(x.ipfs.period.since).format(dateFormat)} {moment(x.ipfs.period.since).isSame(Date.now(), 'days') && '(Today)'}</h3>
-              <TodoCard className={css.todoCard} job={x} resumeJobWork={resumeJobWork} pauseJobWork={pauseJobWork} completeJobWork={this.completeJobWork} />
+              <TodoCard className={css.todoCard} job={x} />
             </div>
           ))}
           <div className={css.feedback}>

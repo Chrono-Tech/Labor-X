@@ -22,7 +22,7 @@ export const schemaFactory = () => ({
   ),
   paused: PropTypes.bool,
   defaultPay: PropTypes.number,
-  pausedAt: PropTypes.number,
+  pausedAt: PropTypes.instanceOf(Date),
   pausedFor: PropTypes.number,
 })
 

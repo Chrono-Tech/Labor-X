@@ -4,9 +4,19 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
 import { SignerModel, JobModel, ProfileModel, JOB_STATE_FINALIZED, JOB_STATE_FINISHED } from 'src/models'
-import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector, profileSelector, modalsPush } from 'src/store'
+import {
+  confirmEndWork,
+  cancelJob,
+  signerSelector,
+  jobsListSelector,
+  boardByIdSelector,
+  newJobNoticeSelector,
+  profileSelector,
+  modalsPush,
+} from 'src/store'
 import { PayInvoiceDialog, PaidInvoiceDialog, DeclineInvoiceDialog } from 'src/partials'
 import { Translate, ActiveJobCard } from 'src/components/common'
+
 import css from './ActiveJobsContent.scss'
 
 const dateFormat = 'DD MMMM YYYY, ddd'
@@ -25,6 +35,8 @@ class ActiveJobsContent extends React.Component {
       })
     ),
     pushModal: PropTypes.func.isRequired,
+    confirmEndWork: PropTypes.func.isRequired,
+    cancelJob: PropTypes.func.isRequired,
   }
 
   constructor (...args) {
@@ -35,9 +47,10 @@ class ActiveJobsContent extends React.Component {
   }
 
   handleOnClickReview (job, worker) {
+    const { confirmEndWork, cancelJob } = this.props
     const modal = {
       component: PayInvoiceDialog,
-      props: { job, worker },
+      props: { job, worker, confirmEndWork, cancelJob },
     }
     this.props.pushModal(modal)
   }
@@ -165,6 +178,12 @@ function mapDispatchToProps (dispatch) {
   return {
     pushModal (modal) {
       dispatch(modalsPush(modal))
+    },
+    confirmEndWork (jobId: Number) {
+      dispatch(confirmEndWork(jobId))
+    },
+    cancelJob (jobId: Number) {
+      dispatch(cancelJob(jobId))
     },
   }
 }

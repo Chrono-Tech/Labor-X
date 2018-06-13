@@ -24,6 +24,9 @@ const profileThemeSelect = {
     bottom: 0,
     padding: 0,
   },
+  labelStyle: {
+    color: 'blue'
+  },
 }
 
 class WrapperSelect extends React.Component {
@@ -40,7 +43,10 @@ class WrapperSelect extends React.Component {
         PropTypes.object,
       ]),
     }),
-    children: PropTypes.element,
+    children: PropTypes.oneOfType([
+      PropTypes.element,
+      PropTypes.arrayOf(PropTypes.element),
+    ]),
     profileTheme: PropTypes.object, // custom styles for profileTheme
   }
 
@@ -59,6 +65,7 @@ class WrapperSelect extends React.Component {
         underlineStyle={profileThemeCustom.underlineStyle}
         underlineFocusStyle={profileThemeCustom.underlineFocusStyle}
         iconStyle={profileThemeCustom.iconStyle}
+        labelStyle={profileThemeCustom.labelStyle}
         {...input}
         onChange={(event, index, value) => input.onChange(value)}
         children={children}

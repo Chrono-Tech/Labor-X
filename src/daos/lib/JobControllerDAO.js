@@ -3,6 +3,7 @@ import {
   JobPostedEvent,
   JobPausedEvent,
   JobResumedEvent,
+  JobConfirmEndWorkEvent,
 } from 'src/models'
 import {
   ipfsHashToBytes32,
@@ -33,6 +34,12 @@ export default class JobControllerDAO extends AbstractContractDAO {
       .on('error', this.handleError.bind(this))
     this.jobPausedEmitter = this.history.events.WorkPaused({})
       .on('data', this.handleJobPausedData.bind(this))
+      .on('error', this.handleError.bind(this))
+    this.jobConfirmEndWorkEmitter = this.history.events.WorkFinished({})
+      .on('data', this.handleConfirmEndWorkData.bind(this))
+      .on('error', this.handleError.bind(this))
+    this.jobCanceledEmitter = this.history.events.JobCanceled({})
+      .on('data', this.handleCancelJobData.bind(this))
       .on('error', this.handleError.bind(this))
     // this.jobClosedEmitter = this.contract.events.JobClosed({})
     //   .on('data', this.handleJobClosedData.bind(this))
@@ -74,17 +81,43 @@ export default class JobControllerDAO extends AbstractContractDAO {
     }
   }
 
-  async resumeJobWork (jobId: Number) {
-    const code = await this.contract.methods.resumeWork(jobId).call()
+  createResumeJobWorkTx (sender: String, jobId: Number) {
+    const data = this.contract.methods.resumeWork(jobId).encodeABI()
     return {
-      code,
+      from: sender,
+      to: this.address,
+      data,
     }
   }
 
-  pauseJobWork (jobId: Number) {
-    const code = this.contract.methods.pauseWork(jobId).call()
+  createPauseJobWorkTx (sender: String, jobId: Number) {
+    const data = this.contract.methods.pauseWork(jobId).encodeABI()
     return {
-      code,
+      from: sender,
+      to: this.address,
+      data,
+    }
+  }
+
+  confirmEndWork (sender: String, jobId: Number) {
+    // eslint-disable-next-line no-console
+    console.log('confirmEndWork Start: ', jobId, sender)
+    const data = this.contract.methods.confirmEndWork(jobId).encodeABI()
+    return {
+      from: sender,
+      to: this.address,
+      data,
+    }
+  }
+
+  cancelJob (sender: String, jobId: Number) {
+    // eslint-disable-next-line no-console
+    console.log('cancelJob Start: ', jobId, sender)
+    const data = this.contract.methods.cancelJob(jobId).encodeABI()
+    return {
+      from: sender,
+      to: this.address,
+      data,
     }
   }
 
@@ -121,6 +154,7 @@ export default class JobControllerDAO extends AbstractContractDAO {
           key: `${data.transactionHash}/${data.logIndex}`,
           self: returnValues.self,
           jobId: Number(returnValues.jobId),
+          resumedAt: new Date(returnValues.at),
         }),
       })
     })
@@ -132,6 +166,39 @@ export default class JobControllerDAO extends AbstractContractDAO {
     const { returnValues } = data
     setImmediate(() => {
       this.emit('JobPaused', {
+        data,
+        event: new JobPausedEvent({
+          key: `${data.transactionHash}/${data.logIndex}`,
+          self: returnValues.self,
+          jobId: Number(returnValues.jobId),
+          pausedAt: new Date(returnValues.at),
+        }),
+      })
+    })
+  }
+
+  handleConfirmEndWorkData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] ConfirmEndWork', data)
+    const { returnValues } = data
+    setImmediate(() => {
+      this.emit('ConfirmEndWork', {
+        data,
+        event: new JobConfirmEndWorkEvent({
+          key: `${data.transactionHash}/${data.logIndex}`,
+          self: returnValues.self,
+          jobId: Number(returnValues.jobId),
+        }),
+      })
+    })
+  }
+
+  handleCancelJobData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] cancelJobData', data)
+    const { returnValues } = data
+    setImmediate(() => {
+      this.emit('cancelJob', {
         data,
         event: new JobPausedEvent({
           key: `${data.transactionHash}/${data.logIndex}`,

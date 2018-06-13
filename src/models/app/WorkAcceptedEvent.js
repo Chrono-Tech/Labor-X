@@ -5,10 +5,10 @@ const schemaFactory = () => ({
   key: PropTypes.string.isRequired,
   jobId: PropTypes.number.isRequired,
   self: PropTypes.string.isRequired,
-  pausedAt: PropTypes.instanceOf(Date),
+  client: PropTypes.string.isRequired,
 })
 
-export default class JobPausedEvent extends AbstractModel {
+export default class WorkAcceptedEvent extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
     Object.assign(this, props)
