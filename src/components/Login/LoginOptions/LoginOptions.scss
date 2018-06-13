@@ -1,0 +1,90 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+
+}
+
+.componentWrapper {
+  & + * {
+    display: none;
+  }
+}
+.loadingMessage {
+  text-align: center;
+  padding: 40px 130px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 24px;
+  margin-bottom: 45px;
+
+  @media (max-width: 640px) {
+    padding: 40px 20px;
+  }
+
+
+}
+
+.loadingMessageHeader {
+  line-height: 24px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 50px;
+}
+
+.actionButton {
+  box-shadow: none;
+  background-color: #00A0D2;
+  color: #fff;
+  padding: 13px 40px;
+  border-radius: 21px;
+  width: 10rem !important;
+
+  &.actionButtonLeft {
+    background-color: transparent;
+    color: #00A0D2;
+
+    &:hover {
+      background-color: #E5F5FA !important;
+    }
+  }
+
+  &:hover {
+    background-color: #0088C3 !important;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.actionsWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.dialogTitle {
+  padding: 40px 50px 20px 20px !important;
+  border-top: 10px solid #00A0D2;
+  font-size: $h2Size !important;
+  font-weight: $font-weight-medium !important;
+  color: #333333 !important;
+}
+
+.dialogContent {
+  color: #333333 !important;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+}
+
+.dialog {
+  max-width: 320px !important;
+  border-radius: 5px !important;
+  overflow: hidden;
+}
+.actionWrapper {
+  padding-bottom: 4rem !important;
+}

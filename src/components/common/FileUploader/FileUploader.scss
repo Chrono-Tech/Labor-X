@@ -1,0 +1,42 @@
+@import "~styles/globals/variables";
+
+.root {
+
+}
+
+.invert {
+  .error {
+    color: $color-white;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 2.2rem;
+  background-color: rgba($color-black, 0.25);
+  cursor: pointer;
+
+  &.uploading,
+  &.uploaded {
+    cursor: default;
+  }
+}
+
+.label {
+  flex-grow: 1;
+  text-align: center;
+  color: $color-white;
+  font-weight: $font-weight-bold;
+}
+
+.input {
+  display: none;
+}
+
+.error {
+  margin-top: 1rem;
+  color: $color-error;
+  text-align: center;
+}

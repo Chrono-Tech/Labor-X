@@ -1,0 +1,105 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include flex(row, space-between, stretch);
+  flex-grow: 1;
+  color: $color-white;
+}
+
+.headerLeft {
+  @include flex(row, flex-start, stretch);
+  margin-left: 3rem;
+}
+
+.headerRight {
+  @include flex(row, flex-end, center);
+  margin-right: 3rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+}
+
+.logoImg {
+  width: 9rem;
+  height: 2.3rem;
+  color: red;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+}
+
+.actionItem {
+  color: $color-white;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 1.5rem 2.2rem;
+  border-radius: $border-radius;
+  //background-color: #555;
+
+  &:hover {
+    font-weight: $font-weight-bold;
+    background-color: rgba($color-white, 0.2);
+  }
+}
+
+.points {
+  display: flex;
+  align-items: center;
+  margin-left: 3rem;
+}
+
+.pointsIcon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.pointsValue {
+  margin-left: 1rem;
+  color: $color-white;
+  font-weight: $font-weight-bold;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-left: 4rem;
+}
+
+.profileWrapper {
+  position: relative; // for counter
+  cursor: pointer;
+  max-height: 5rem;
+}
+
+.profileIcon {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+}
+
+.profileCounter {
+  $border: 0.3rem;
+  $size: 1.6rem;
+
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-red;
+  font-size: $pSmallSize;
+  font-weight: $font-weight-bold;
+  width: $size + $border*2;
+  height: $size + $border*2;
+  border-radius: $size + $border*2;
+  border: $border solid $color-blue;
+  right: -$border;
+  bottom: -$border;
+}

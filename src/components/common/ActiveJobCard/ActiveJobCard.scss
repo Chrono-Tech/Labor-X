@@ -1,0 +1,97 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.jobAwardRow {
+  @include flex(row, flex-start, center);
+  margin-left: auto;
+  > * {
+    @include flex(row, flex-end, center);
+    margin-left: 4rem;
+  }
+}
+
+.review {
+  margin-left: auto;
+  width: 10rem;
+  color: $color-azure;
+  background-color: transparent;
+}
+
+.icon {
+  margin-right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.root {
+  @include card;
+  border-left-width: 1rem;
+  border-left-style: solid;
+  > div {
+    @include flex(row, flex-start, center);
+    height: 6rem;
+    border-bottom: solid 1px $color-gray5;
+    padding: 0 2rem;
+  }
+}
+
+.rowInfo {
+  @include flex(row, flex-start, center);
+  min-height: 9rem;
+  > * {
+    margin-right: 1rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.iconAndName {
+  @include flex(row, flex-start, center);
+  margin-right: 4rem;
+}
+
+.link {
+  font-weight: $font-weight-regular;
+  &:hover {
+    font-weight: $font-weight-regular;
+    color: $color-blue;
+  }
+}
+
+.actionButton {
+  margin-left: 1rem;
+  padding: 1rem 1.5rem;
+  color: $color-azure;
+}
+
+.medium {
+  font-weight: $font-weight-medium;
+}
+
+.report {
+  font-weight: $font-weight-light;
+  color: $color-red;
+}
+
+.applied {
+  border-left-color: $color-gray50;
+}
+
+.approved {
+  border-left-color: $color-azure;
+}
+
+.inProgress {
+  border-left-color: $color-green;
+}
+
+.attention {
+  border-left-color: $color-gold;
+}
+
+.problem {
+  border-left-color: $color-red;
+}

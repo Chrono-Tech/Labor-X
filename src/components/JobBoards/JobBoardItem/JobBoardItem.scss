@@ -1,0 +1,449 @@
+.main {
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  background: #fff;
+  margin-bottom: 50px;
+  display: flex;
+  padding: 40px 40px 38px 40px;
+  color: #333333;
+
+}
+
+.logoBlock {
+  margin-right: 38px;
+  max-width: 30%;
+  //width: 180px;
+}
+
+.contentBlock {
+  flex: 1;
+}
+
+.logoLink {
+  background: transparent;
+  border: 0;
+  max-width: 180px;
+  min-width: 120px;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+  }
+}
+
+.titleBlock {
+  margin-bottom: 20px;
+}
+
+.title {
+  border: none;
+  background: transparent;
+  color: #333333;
+  font-size: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 6px;
+  text-align: left;
+
+  &:hover, &:focus {
+    color: #00A0D2;
+  }
+}
+
+.category {
+  background: transparent;
+  border: none;
+  color: #7F7F7F;
+  font-weight: 300;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.categoryWrapper {
+  border-bottom: 1px solid #F0F0F0;
+  margin-bottom: 16px;
+}
+
+.starsWrapper {
+  margin-right: 40px;
+  position: relative;
+}
+
+.securityBadge{
+  position: relative;
+  margin-top: -2px;
+}
+
+.star {
+  margin-right: 3px;
+}
+
+.ratingBlock {
+  display: flex;
+  border-bottom: 1px solid #F0F0F0;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.jobInfoBlock {
+  color: #333333;
+  font-family: roboto, sans-serif;
+  font-size: 35px;
+  font-weight: 200;
+  margin-right: 45px;
+
+  .jobInfoCount {
+    letter-spacing: -1px;
+  }
+
+  .jobInfoDescribe {
+    color: #7F7F7F;
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+}
+
+.jobInfo {
+  display: flex;
+}
+
+.aboutJob {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.actionButton {
+  background: #00A0D2;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 21px;
+  padding:0 0 0 20px;
+  line-height: 40px;
+  border: 0;
+  cursor: pointer;
+  margin-top: 15px;
+
+  &:hover, &:focus {
+    background: #0088C3;
+  }
+
+  &[disabled] {
+    background: #C5C5C5;
+    cursor: not-allowed;
+  }
+
+  .actionButtonTooltip {
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+    margin-left: 37px;
+  }
+}
+
+.actionButtonTooltip {
+  padding: 0 8px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  display: inline-block;
+  height: 100%;
+  position: relative;
+
+  img {
+    opacity: 0.25;
+    vertical-align: middle;
+    margin-top: -2px;
+  }
+}
+
+.actionButtonJoined {
+  font-weight: 500;
+  border: 1px solid #92CC72;
+  border-radius: 3px;
+  color: #92CC72;
+  padding: 0 74px;
+  line-height: 40px;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.actionButtonView {
+  color: #00A0D2;
+  font-weight: 700;
+  background: #fff;
+  border: 0;
+  text-transform: uppercase;
+  padding: 0 34px;
+  line-height: 42px;
+  display: inline-block;
+  margin: 15px 9px 0 0;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:hover, &:focus {
+    background: #F7F7F7;
+  }
+}
+
+.actionButtonTerminate {
+  color: #c25451;
+  font-weight: 700;
+  background: #fff;
+  border: 0;
+  text-transform: uppercase;
+  padding: 0 34px;
+  line-height: 42px;
+  display: inline-block;
+  margin-right: 9px;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:hover, &:focus {
+    background: #F7F7F7;
+  }
+}
+
+.actionButtonApproval {
+  color: #333333;
+  font-weight: 500;
+  background: #fff;
+  padding: 0 0 0 57px;
+  line-height: 40px;
+  border: 1px solid #333333;
+  border-radius: 3px;
+  margin-top: 20px;
+
+  .actionButtonTooltip {
+    margin-left: 16px;
+  }
+}
+
+.popover {
+  display: none;
+  top: 100%;
+  position: absolute;
+  background: #fff;
+  border: 2px solid #333333;
+  padding: 20px;
+  font-family: roboto, sans-serif;
+  z-index: 99;
+
+  b {
+    font-weight: 500;
+  }
+}
+
+.popoverVisible {
+  display: block;
+}
+
+.popoverPaper {
+  box-shadow: none !important;
+  background: #fff;
+  border: 2px solid #333333;
+  position: relative;
+  padding: 10px;
+
+  &:before {
+    content: '';
+    display: block;
+    border: 2px solid #333;
+    background-color: #FFFFFF;
+    transform: matrix(0.7071,-0.7071,0.7071,0.7071,-3,8);
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: -16px;
+    left: 10px;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    background: #fff;
+    width: 30px;
+    height: 12px;
+    position: absolute;
+    top:0;
+    left:0;
+  }
+}
+
+.popoverArrow {
+  &:before {
+    content: '';
+    display: block;
+    border: 2px solid #333;
+    background-color: #FFFFFF;
+    transform: matrix(0.7071,-0.7071,0.7071,0.7071,-3,8);
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: -16px;
+  }
+  &:after {
+    content: '';
+    display: block;
+    background: #fff;
+    width: 100%;
+    height: 12px;
+    position: absolute;
+    top:0;
+    left:0;
+  }
+}
+
+.arrowLeft {
+  left: -13px;
+
+  &:before {
+    left: 15px;
+  }
+}
+
+.arrowCenter {
+  &:before {
+    left: 0;
+    right: 0;
+  }
+}
+
+.arrowRight {
+  right: -8px;
+
+  &:before {
+    right: 15px;
+  }
+}
+
+
+.starsPopover {
+  width: 300px;
+
+}
+
+.popoverHeader {
+  color: #333;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 26px;
+}
+
+.popoverDescription {
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 12px;
+  color: #333;
+  line-height: 22px;
+
+}
+
+.starsRatingTable {
+  font-size: 12px;
+  font-weight: 400;
+  width: 100%;
+
+  .countStars, .countStarsVotes {
+    padding: 0 16px 4px 0;
+    white-space: nowrap;
+  }
+
+  .totalRow {
+    font-weight: 500;
+  }
+
+  .countRating {
+    width: 100%;
+
+    .countRatingTrack {
+      background: #E6BF6E;
+      height: 5px;
+      width: 50%;
+      display: inline-block;
+    }
+  }
+}
+
+
+.actionPopover {
+  width: 300px;
+  color: #333;
+  text-align: left;
+
+  .popoverDescription {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.securityPopover {
+  width: 300px;
+  top: 110%;
+
+  .popoverDescription {
+    margin-bottom: 16px;
+  }
+}
+
+.securityDoneList {
+  color: #333;
+  font-weight: 400;
+  list-style: none;
+
+  .listItem {
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 16px;
+    line-height: 24px;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      background: url('/static/images/svg/security-done.svg');
+      position: absolute;
+      top:0;
+      left:0;
+    }
+
+  }
+}
+
+.popoverVerifyList {
+  color: #333333;
+  font-weight: 400;
+  list-style-type: decimal;
+  list-style-position: unset;
+  padding-left: 20px;
+
+  .listItem {
+    line-height: 22px;
+  }
+}
+
+.approvalPopover {
+  width: 300px;
+}
+
+.securityRating {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+}
+
+.securityRatingShield {
+  margin-top: -2px;
+}

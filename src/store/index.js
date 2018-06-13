@@ -1,49 +1,70 @@
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { browserHistory } from 'react-router'
+import { i18nReducer, syncTranslationWithStore } from 'react-redux-i18n'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { persistStore } from 'redux-persist'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import { reducer as formReducer } from 'redux-form'
+import { createLogger } from 'redux-logger'
+import * as thunkMiddleware from 'redux-thunk'
+import web3Factory from 'src/web3'
+import { initFrontend, initBackend } from './bootstrap'
+import { login, landing, ethereum, daos, tokens, wallet, balances, createAccount, boards, jobs, modals, user } from './reducers'
 
-import { ipfsReducers } from './ipfs/ipfsReducers'
-import { networkReducers } from './network/networkReducers'
-import { userReducers } from './user/userReducers'
-import { setupNode as setupIpfsNode } from './ipfs/ipfsActions'
-import { transactionReducers } from './transaction/transactionReducers'
-
-import { routerReducer, routerMiddleware } from 'react-router-redux'
-
-const routingMiddleware = routerMiddleware(browserHistory)
+export * from './actions'
 
 const loggerMiddleware = createLogger({
-  // stateTransformer
+  level:      'info',
+  collapsed:  true,
+  serialize: true,
+  predicate: () => typeof window !== 'undefined',
 })
 
-const appReducers = combineReducers({
-  network: networkReducers,
-  ipfs: ipfsReducers,
-  routing: routerReducer,
-  user: userReducers,
-  transaction: transactionReducers
-})
+const web3 = typeof window !== 'undefined'
+  ? web3Factory()
+  : null
 
-/**
- * This reducer just clean state on logout
- */
-const rootReducer = (state, action) => {
-  if (action.type === 'USER/LOGOUT') {
-    state = undefined
+export default (initialState = {}) => {
+
+  const reducer = combineReducers({
+    form: formReducer,
+    i18n: i18nReducer,
+    login,
+    landing,
+    ethereum: ethereum({ web3 }),
+    daos,
+    tokens,
+    boards,
+    jobs,
+    wallet: wallet({ web3 }),
+    balances,
+    createAccount,
+    modals,
+    user: user(),
+  })
+
+  // Here you can recover state sent from the backend
+  const extra = {
+    i18n: initialState.i18n,
   }
-  return appReducers(state, action)
-}
 
-export const store = createStore(
-  rootReducer,
-  applyMiddleware(
-    routingMiddleware,
-    thunkMiddleware,
-    loggerMiddleware
+  const store = createStore(
+    reducer,
+    extra,
+    composeWithDevTools(
+      process.env.NODE_ENV !== 'production'
+        ? applyMiddleware(thunkMiddleware.default, loggerMiddleware)
+        : applyMiddleware(thunkMiddleware.default)
+    )
   )
-)
 
-export const start = () => {
-  store.dispatch(setupIpfsNode())
+  syncTranslationWithStore(store)
+
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line
+    store.__persistor = persistStore(store)
+    store.dispatch(initFrontend(store)({ web3 }))
+  } else {
+    store.dispatch(initBackend())
+  }
+
+  return store
 }

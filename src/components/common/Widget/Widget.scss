@@ -1,0 +1,46 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include card;
+}
+
+.headerBlue {
+  padding: 3rem;
+  border-radius: .5rem .5rem 0 0;
+  background-color: $color-blue94;
+  line-height: 1.2;
+  &:hover {
+    background-color: $color-primary;
+  }
+}
+
+.titleBlue {
+  color: $color-white;
+}
+
+
+.subtitleBlue {
+  color: $color-blue53;
+  font-weight: $font-weight-medium;
+}
+
+.headerWhite {
+  padding: 3rem;
+  border-radius: .5rem .5rem 0 0;
+  background-color: $color-white;
+  line-height: 1.2;
+}
+
+.titleWhite {
+  color: $color-black;
+}
+
+.subtitleWhite {
+  margin-top: 1.5rem;
+  color: $color-black;
+}
+
+.content {
+  padding: 3rem;
+}

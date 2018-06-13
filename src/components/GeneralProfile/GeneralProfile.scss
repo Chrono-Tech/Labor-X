@@ -1,0 +1,434 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+b {
+  font-weight: bold;
+}
+
+.main {
+  width: 100%;
+}
+.titleBlock {
+  height: 9rem;
+  margin: 0;
+  padding: 4rem 4rem 0;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.pageHeader {
+
+}
+
+.titleBar {
+  @include flex(row, flex-start, stretch);
+  max-width: 70rem;
+  height: 5rem;
+  border-radius: 5px 5px 0px 0px;
+  background-color: $color-azure;
+  border-bottom: 0.1rem solid rgba($color-white, 0.2);
+}
+
+.titleBarRight {
+  @include flex(row, flex-start, stretch);
+  margin-left: auto;
+}
+
+.cancelButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.helpButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.doneButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.card {
+  @include flex(column, flex-start, flex-start);
+  @include card;
+  margin-bottom: 4rem;
+  border-radius: 5px;
+}
+
+.cardWrapper {
+  padding: 3rem;
+  width: 100%;
+  @include flex(row, flex-start, flex-start);
+
+}
+
+.cardWrapperContacts {
+  padding: 30px;
+
+}
+
+.cardTitle {
+  margin: 10px 0 13px;
+}
+
+.flexRow {
+  @include flex(row, flex-start, flex-end);
+  margin-bottom: 10px;
+}
+
+.flexAdditionalRow {
+  @include flex(row, flex-start, flex-end);
+  margin-bottom: 20px;
+}
+
+.contentWrapper {
+  padding-left: 4rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  max-width: 74rem;
+}
+
+.icon {
+  font-size: 36px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.cardActionTitle {
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.cardActionTitleSuccess {
+  color: $color-green;
+}
+
+.cardActionTitleError {
+  color: $color-red;
+}
+
+.cardActionTitleWarning {
+  color: $color-warn;
+}
+
+.collapseWrapper {
+  box-shadow: none !important;
+  width: 100% !important;
+}
+.collapseHeader {
+  box-shadow: none !important;
+  padding: 17px 50px 17px 28px !important;
+  border-top: 1px solid #E5E5E5;
+
+  &:hover, &:focus {
+    background: #F7F7F7;
+
+    .cardActionTitle, .icon {
+      color: $color-blue;
+    }
+  }
+
+
+}
+.collapseText {
+  padding: 30px !important;
+  line-height: 20px;
+  border-top: 1px solid #F7F7F7;
+}
+
+.openIcon {
+  margin-top: -6px;
+  margin-left: -12px;
+  display: inline-block;
+  overflow: visible;
+  font-size: 32px;
+}
+
+.blockCircle {
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  margin-right: 40px;
+  background: #F7F7F7;
+  color: #BFBFBF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blockCircleIcon {
+  font-size: 60px;
+  color: #BFBFBF;
+}
+
+.avatarBlock {
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  margin-right: 40px;
+  background: #F7F7F7;
+  color: #BFBFBF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #F0F0F0;
+  overflow: hidden;
+  position: relative;
+
+  &:hover .avatarUploadButton {
+    display: block;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.avatarUploadButton {
+  background: rgba(0,0,0,0.6);
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  cursor: pointer;
+  display: none;
+  line-height: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+
+  text-align: center;
+
+  .avatarUploadIcon {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 21px 0 2px;
+    line-height: 24px;
+  }
+
+  .avatarUploadButtonText {
+
+  }
+}
+
+.field {
+  width: 230px !important;
+  margin-right: 40px;
+
+  input {
+    &::placeholder {
+      color: #7F7F7F;
+      font-style: italic;
+    }
+  }
+}
+
+.shortField {
+  width: 64px !important;
+  margin-right: 40px;
+
+  input {
+    &::placeholder {
+      color: #7F7F7F;
+      font-style: italic;
+    }
+  }
+}
+
+.phoneField {
+  width: 140px !important;
+  //margin-right: 40px;
+
+  input {
+    &::placeholder {
+      color: #333;
+    }
+  }
+}
+
+.fieldLastName {
+  margin-right: 0;
+}
+
+.dateSelect {
+  width: 64px !important;
+  margin-right: 20px;
+}
+
+.langField {
+  width: 64px !important;
+  margin-right: 30px;
+}
+
+.buildingField {
+  width: 107px !important;
+  margin-right: 17px;
+}
+
+.suitField {
+  width: 107px !important;
+  margin-right: 38px;
+}
+
+
+.listItem {
+  color: #333 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 0 !important;
+  border-top: 1px solid #F7F7F7 !important;
+  border-bottom: 1px solid #F7F7F7 !important;
+  margin: 0 -30px !important;
+
+  &:hover {
+    .listItemTitle,
+    .fileIcon {
+      color: $color-blue;
+    }
+  }
+
+  .listItemTitle {
+    color: #333;
+  }
+
+  .fileIcon {
+    font-size: 30px;
+    color: #333;
+  }
+
+  .fileActionIcon {
+    font-size: 30px;
+    color: #BFBFBF;
+
+    &:hover {
+      color: $color-blue;
+    }
+  }
+}
+
+.listItemIssue {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #00A0D2 !important;
+  padding: 0 !important;
+  border-top: 1px solid #F7F7F7 !important;
+  margin: 0 -30px !important;
+
+  &:hover {
+    .listItemTitle,
+    .fileIcon {
+      color: $color-blue;
+    }
+  }
+
+  .listItemTitle {
+    color: #333;
+  }
+
+  .fileIcon {
+    font-size: 30px;
+    color: #333;
+  }
+
+  .fileActionIcon {
+    font-size: 30px;
+    color: #BFBFBF;
+
+    &:hover {
+      color: $color-blue;
+    }
+  }
+}
+
+.list {
+  padding: 30px 0 0 !important;
+}
+
+.validateButton {
+  border: 0;
+  color: #fff;
+  font-weight: 700;
+  background-color: #00A0D2;
+  border-radius: 21px;
+  line-height: 40px;
+  padding: 0 65px;
+  cursor: pointer;
+  margin-top: 30px;
+
+  &:hover, &:focus {
+    background: #0088C3;
+  }
+}
+
+.cancelValidation {
+  background: transparent;
+  color: #0088C3;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 30px;
+  border: 0;
+  cursor: pointer;
+}
+
+.eventBlock {
+  //border: 1px solid #E5E5E5;
+  background: #fff;
+  border-radius: 0 0 5px 5px;
+  margin-bottom: 40px;
+}
+
+.issueTextBlock {
+  margin-bottom: 10px;
+}
+
+.issueTitle {
+  color: #00A0D2;
+}
+
+.issueIcon {
+  color: #00A0D2;
+}
+
+.userBlock {
+  display: flex;
+  color: #333;
+  margin-bottom: 25px;
+
+  .userAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-right: 12px;
+  }
+
+
+  .userName {
+    font-weight: 500;
+    margin-top: 5px;
+  }
+
+  .userPosition {
+    font-weight: 300;
+    color: #7F7F7F;
+  }
+}
+
+
+:global(.slides-enter) {
+  opacity: 0.01;
+}
+
+:global(.slides-enter.slides-enter-active) {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+:global(.slides-leave) {
+  opacity: 1;
+}

@@ -1,0 +1,277 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+}
+
+.title {
+  height: 9rem;
+  margin: 0;
+  padding: 4rem 4rem 0;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.submitProgress {
+  align-self: center;
+}
+
+.titleBar {
+  @include flex(row, flex-start, stretch);
+  max-width: 70rem;
+  height: 5rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  background-color: $color-azure;
+  border-bottom: 0.1rem solid rgba($color-white, 0.2);
+}
+
+.titleBarRight {
+  @include flex(row, flex-start, stretch);
+  margin-left: auto;
+}
+
+.content {
+  padding-left: 4rem;
+  max-width: $maxWidth;
+}
+
+.cancelButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.helpButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.doneButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.card {
+  @include flex(column, flex-start, flex-start);
+  @include card;
+  padding: 4rem;
+  margin-bottom: 4rem;
+}
+
+.headline {
+  padding: 0;
+  margin-bottom: 4rem;
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.boardHeadline {
+  padding: 4rem;
+}
+
+.flexRow {
+  @include flex(row, flex-start, flex-end);
+}
+
+.cardTitle {
+  margin-bottom: 2rem;
+}
+
+.chartContainer {
+  @include flex(column, flex-start, center);
+  padding: 4rem 0 3rem;
+  margin-bottom: 4rem;
+  width: 100%;
+  color: $color-white;
+  background: $gradientBlueToGreen;
+}
+
+.chart {
+  margin-top: 3rem;
+  width: 22rem;
+  height: 22rem;
+  background-color: darken($color-green, 30%);
+  border-radius: 50%;
+}
+
+.find {
+  width: 8rem;
+  color: $color-gray30;
+  margin-right: 2rem;
+}
+
+.match {
+  color: $color-gray30;
+  padding-bottom: .9rem;
+}
+
+.noMarginBottom {
+  margin-bottom: 0;
+}
+
+.requirementsSelect {
+  margin: 30px 0 0;
+}
+
+.feeInputs {
+  @include flex(row, space-between, flex-end);
+  margin: 2rem 0;
+  > * {
+    flex-basis: 45%;
+  }
+}
+
+.feeActions {
+  @include flex(row, flex-start, flex-start);
+}
+
+.feeActionsIcon {
+  margin-right: 1rem;
+}
+
+.cardContent {
+  @include flex(column, flex-start, stretch);
+  width: 100%;
+}
+
+.delimiter {
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: solid .1rem $color-gray5;
+}
+
+.visuals {
+  @include flex(row, space-around, center);
+  width: 100%;
+}
+
+.visualsContainer {
+  @include flex(column, flex-start, center);
+  img {
+    margin-bottom: 2rem;
+    width: 15rem;
+    height: 10rem;
+    object-fit: contain;
+  }
+}
+
+.specificRequirementsBlock {
+  display: flex;
+  margin-top: 40px;
+}
+
+.specificRequirement {
+  flex: 1;
+
+  &.specificRequirementRight {
+    padding-left: 60px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    color: #7F7F7F;
+    font-weight: 300;
+    line-height: 22px;
+    margin-bottom: 20px;
+  }
+}
+
+.star {
+  margin-right: 16px;
+}
+.semiTransparentStar {
+  opacity: 0.4;
+}
+
+.securityRating {
+  position: relative;
+  display: inline-block;
+  margin-right: 13px;
+
+  &:hover .popover {
+    display: block;
+  }
+
+  .securityRatingCount {
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    line-height: 34px;
+    color: #fff;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+  }
+
+  &.securityRatingLast i {
+    opacity: 0.4;
+  }
+}
+
+.popover {
+  display: none;
+  top: 100%;
+  position: absolute;
+  background: #fff;
+  border: 2px solid #333333;
+  padding: 20px;
+  font-family: roboto, sans-serif;
+  z-index: 99;
+  width: 200px;
+  border-radius: 5px;
+
+  b {
+    font-weight: 500;
+  }
+}
+
+.popoverArrow {
+  &:before {
+    content: '';
+    display: block;
+    border: 2px solid #333;
+    background-color: #FFFFFF;
+    transform: matrix(0.7071,-0.7071,0.7071,0.7071,-3,8);
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: -16px;
+  }
+  &:after {
+    content: '';
+    display: block;
+    background: #fff;
+    width: 100%;
+    height: 12px;
+    position: absolute;
+    top:0;
+    left:0;
+  }
+}
+
+.arrowRight {
+  right: -16px;
+
+  &:before {
+    right: 15px;
+  }
+}
+
+.popoverHeader {
+
+}
+
+.popoverDescription {
+  margin-top: 10px;
+  line-height: 22px;
+}

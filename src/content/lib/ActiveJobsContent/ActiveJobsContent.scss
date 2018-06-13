@@ -1,0 +1,59 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+}
+
+.title {
+  margin: 0;
+  padding: 5rem 0 5rem 4rem;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.titleStats {
+  @include flex(row, flex-start, flex-end);
+  margin-top: 4rem;
+  color: $color-white;
+  > div {
+    @include flex(column, flex-start, flex-start);
+    margin-right: 6rem;
+    > div {
+      margin-top: .5rem;
+    }
+  }
+}
+
+.titleStatsCounter {
+  color: $color-white;
+}
+
+.titleText {
+  font-size: $h1Size;
+  font-weight: $font-weight-thin;
+  letter-spacing: -0.1rem;
+  line-height: 1;
+}
+
+.content {
+  padding-left: 4rem;
+  margin-bottom: 30rem;
+  max-width: $maxWidth;
+}
+
+.section {
+  margin-top: 4rem;
+  > * {
+    margin-bottom: 4rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.medium {
+  font-weight: $font-weight-medium;
+}

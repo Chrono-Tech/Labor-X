@@ -1,0 +1,85 @@
+@import "~styles/globals/variables";
+
+.root {
+  text-align: center;
+  padding: 40px 130px;
+}
+
+.title {
+  color: $color-white;
+  margin-bottom: 4rem;
+}
+
+.input {
+  margin-bottom: 4rem;
+}
+
+.row {
+  margin-top: 2rem;
+}
+
+.header {
+  line-height: 24px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 50px;
+}
+
+.submitButton {
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #fff !important;
+  padding: 12px 0;
+  margin-bottom: 30px;
+
+  &:hover {
+    background-color: #E5F5FA !important;
+  }
+}
+
+.backButton {
+  margin-left: 5px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline;
+  font-weight: 300;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.otherActions {
+  color: #BFE7F4;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.keyField {
+  margin-top: 0;
+  margin-bottom: 38px;
+
+  input {
+    font-size: 16px;
+    line-height: 22px;
+    color: #A8EAFF;
+    border-bottom: 1px solid #A8EAFF;
+    outline: none;
+
+    &:hover, &:focus {
+      border-bottom: 1px solid #fff;
+      color: #fff;
+    }
+
+    &::placeholder {
+      font-weight: 400;
+      font-size: 16px;
+    }
+
+  }
+
+}

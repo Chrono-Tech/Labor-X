@@ -1,0 +1,54 @@
+@import "~styles/globals/variables";
+
+.root {
+
+}
+
+.input {
+  display: none;
+}
+
+.title {
+  margin-bottom: 2rem;
+}
+
+.subtitle {
+  margin-top: 2rem;
+  text-align: right;
+  color: $color-gray50;
+}
+
+.content {
+  display: flex;
+  border-bottom: 0.1rem solid $color-gray10;
+  align-items: center;
+}
+
+.increment,
+.decrement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: $numberInputControlSize;
+  height: $numberInputControlSize;
+
+  color: $color-primary;
+  font-size: $numberInputControlSize;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-gray5;
+  }
+}
+
+.decrement {
+
+}
+
+.value {
+  flex-grow: 1;
+  font-size: $h1Size;
+  line-height: 1;
+  text-align: center;
+}

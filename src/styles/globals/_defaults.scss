@@ -1,0 +1,101 @@
+
+html {
+  font-size: 62.5%; // 1rem = 10px
+  height: 100%;
+}
+
+body {
+  font-size: $pSize;
+  color: $color-black;
+  font-weight: $font-weight-light;
+  background-color: #f7f7f7;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.show-overlay {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  position: fixed;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#__next {
+  min-height: 100%;
+}
+
+div[data-reactroot] {
+  position: relative;
+}
+
+a,
+p,
+b,
+i,
+strong {
+  line-height: $pLineHeight;
+}
+
+strong {
+  font-weight: $font-weight-medium;
+}
+
+h1 {
+  font-size: $h1Size;
+  font-weight: $font-weight-thin;
+  letter-spacing: -0.1rem;
+  line-height: 1;
+}
+
+h2 {
+  font-size: $h2Size;
+  font-weight: $font-weight-medium;
+}
+
+h3 {
+  font-size: $h3Size;
+  font-weight: $font-weight-medium;
+}
+
+h4 {
+  font-size: $h4Size;
+  font-weight: $font-weight-medium;
+}
+
+a,
+a:hover,
+a:visited,
+a:focus
+{
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+}
+
+button {
+  outline: none;
+}
+
+:global(.slides-enter) {
+  opacity: 0.01;
+}
+
+:global(.slides-enter.slides-enter-active) {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+:global(.slides-leave) {
+  opacity: 1;
+}
+
+:global(.slides-leave.slides-leave-active) {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

@@ -1,0 +1,64 @@
+@import "~styles/globals/variables";
+
+.root {
+  width: 2.4rem;
+  height: 2.4rem;
+  color: currentColor;
+}
+
+// ------- color ------
+
+.red {
+  color: $color-red;
+}
+
+.blue {
+  color: $color-blue;
+}
+
+.green {
+  color: $color-green;
+}
+
+.gold {
+  color: $color-gold;
+}
+
+.grey {
+  color: $color-gray10;
+}
+
+.grey30 {
+  color: $color-gray30;
+}
+
+.black {
+  color: $color-black;
+}
+
+.white {
+  color: $color-white;
+}
+
+.error {
+  color: $color-error;
+}
+
+.warn {
+  color: $color-warn;
+}
+
+// ------ opt ----------
+
+.clickable {
+  cursor: pointer;
+  outline: none;
+}
+
+.faded {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,153 @@
+@import "~styles/globals/fonts";
+@import "~styles/globals/variables";
+
+.root {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  font-family: 'ChronoBankIcons';
+  font-style: normal;
+  line-height: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+  outline: none;
+}
+
+
+.faded {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.red {
+  color: $color-red;
+}
+
+.blue {
+  color: $color-blue;
+}
+
+.green {
+  color: $color-green;
+}
+
+.gold {
+  color: $color-gold;
+}
+
+.grey {
+  color: $color-gray10;
+}
+
+.grey30 {
+  color: $color-gray30;
+}
+
+.black {
+  color: $color-black;
+}
+
+.white {
+  color: $color-white;
+}
+
+.error {
+  color: $color-error;
+}
+
+.warn {
+  color: $color-warn;
+}
+
+.icon-rating:before {
+  content: '\F019';
+}
+
+.icon-security:before {
+  content: '\F01C';
+}
+
+.icon-security-check:before {
+  content: '\F01A';
+}
+
+.icon-security-shield:before {
+  content: '\F07F';
+}
+
+.icon-filter:before {
+  content: '\F04E';
+}
+
+.icon-security-upgrade:before {
+  content: '\F04E';
+}
+
+.icon-security-upgrade:before {
+  content: '\F04E';
+}
+
+.icon-security-none:before {
+  content: '\F04F';
+}
+
+.icon-message-warning:before {
+  content: '\F073';
+}
+
+.icon-drop-1:before {
+  content: '\F062';
+}
+
+.icon-phone-email:before {
+  content: '\F079';
+}
+
+.icon-upload:before {
+  content: '\F082';
+}
+
+.icon-home:before {
+  content: '\F089';
+}
+
+.icon-file:before {
+  content: '\F066';
+}
+
+.icon-delete:before {
+  content: '\F05D';
+}
+
+.icon-message:before {
+  content: '\F086';
+}
+
+.icon-close:before {
+  content: '\F059';
+}
+
+.icon-check:before {
+  content: '\F058';
+}
+
+.icon-search:before {
+  content: '\F07E';
+}
+
+.icon-star:before {
+  content: '\F019';
+}
+
+.icon-more:before {
+  content: '\F074';
+}
+
+.icon-add-circle:before {
+  content: '\F053';
+}

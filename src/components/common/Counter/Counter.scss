@@ -1,0 +1,29 @@
+@import "~styles/globals/variables";
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-white;
+  font-size: $pMediumSize;
+  min-width: 5rem;
+  padding: 0.2rem 0;
+  border-radius: 1.2rem;
+  font-weight: $font-weight-medium;
+}
+
+.zero {
+  background-color: $color-gray10;
+}
+
+.positive {
+  background-color: $color-gold;
+}
+
+.zeroPercent {
+  background-color: $color-blue;
+}
+
+.positivePercent {
+  background-color: $color-green;
+}

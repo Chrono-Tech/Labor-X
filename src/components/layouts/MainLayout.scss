@@ -1,0 +1,28 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$minWidth: 102.4rem;
+
+.header {
+  min-width: $minWidth;
+  background-color: $color-primary;
+}
+
+.headerWrapper {
+  @include flex(row, flex-start, stretch);
+  width: 100%;
+  margin: 0;
+  min-height: 9rem;
+}
+
+.page {
+  @include flex(row, flex-start, stretch);
+  min-width: $minWidth;
+  margin: 0;
+}
+
+.menu {
+  flex-grow: 0;
+  min-width: 22.5rem;
+  //box-shadow: 0.5rem 0 0.8rem rgba($color-super-black, 0.1);
+}

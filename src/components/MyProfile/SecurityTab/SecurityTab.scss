@@ -1,0 +1,80 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.card {
+  @include card;
+  @include flex(row, flex-start, flex-start);
+  padding: 3.6rem;
+  margin-bottom: 4rem;
+}
+
+.twofaImage {
+  margin-right: 3rem;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+}
+
+.iconImage {
+  @include flex(row, center, center);
+  margin-right: 3rem;
+  width: 10rem;
+  min-width: 10rem;
+  height: 10rem;
+  font-size: 5rem;
+  border-radius: 50%;
+  background-color: $color-gray5;
+  color: $color-gray30;
+}
+
+.header {
+  padding: 1rem 0 2rem;
+  font-weight: $font-weight-bold;
+  font-size: $h3Size;
+}
+
+.twofaDesc {
+  line-height: $pLineHeight;
+}
+
+.badges {
+  @include flex(row, flex-start, flex-start);
+  padding: 3rem 0;
+  margin-bottom: 3rem;
+  border-bottom: solid 0.1rem $color-gray10;
+  > * {
+    margin-right: 2rem;
+    height: 3.2rem;
+    object-fit: contain;
+  }
+}
+
+.proceedButton {
+  width: 10rem;
+  height: 3.6rem;
+}
+
+.passwords {
+  @include flex(row, flex-start, flex-start);
+  margin: 1rem 0 3rem;
+  color: $color-gray30;
+  > * {
+    margin-right: 1rem;
+  }
+}
+
+th {
+  padding: 1rem 0;
+  min-width: 12rem;
+  border-bottom: solid 0.1rem $color-gray10;
+  border-top: solid 0.1rem $color-gray10;
+  font-size: $pSize;
+  font-weight: $font-weight-medium;
+}
+
+td {
+  padding-top: 2rem;
+  padding-right: 2rem;
+  font-size: $pSize;
+  font-weight: $font-weight-light;
+}

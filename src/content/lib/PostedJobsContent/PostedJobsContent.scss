@@ -1,0 +1,31 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+
+.main {
+  flex-grow: 1;
+}
+
+.title {
+  margin: 0;
+  padding: 5rem 0 5rem 4rem;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.titleText {
+  font-size: $h1Size;
+  font-weight: $font-weight-thin;
+  letter-spacing: -0.1rem;
+  line-height: 1;
+}
+
+.content {
+  padding-left: 4rem;
+  margin-bottom: 30rem;
+  max-width: $maxWidth;
+  > * {
+    margin-top: 4rem;
+  }
+}

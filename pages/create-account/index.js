@@ -1,0 +1,76 @@
+import React  from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import Head from 'next/head'
+import bip39 from 'bip39'
+
+import { AccountLayout } from 'src/components/layouts'
+import { AccountPasswordForm, ShowMnemonic, ConfirmMnemonic, BackupWallet } from 'src/components/Account'
+import { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, onFinishCreateAccount, navigateToSelectMethod } from 'src/store'
+
+import css from './index.scss'
+
+class CreateAccount extends React.Component {
+
+  constructor (){
+    super()
+
+    this.state = {
+      activePage: null,
+    }
+  }
+
+  static async getInitialProps ({ store }) {
+    const mnemonic = bip39.generateMnemonic()
+
+    store.dispatch(setMnemonic(mnemonic))
+    return { mnemonic }
+  }
+
+  componentWillMount (){
+    const { setMnemonic, mnemonic } = this.props
+
+    setMnemonic(mnemonic)
+  }
+
+  onSubmitAccountPasswordForm ({ password, types }){
+    const { setPassword, setAccountTypes } = this.props
+
+    setPassword(password)
+    setAccountTypes(types)
+  }
+
+  render () {
+    const { onFinishCreateAccount, downloadWallet, createUserAccount, navigateToSelectMethod } = this.props
+
+    return (
+      <div className={css.root}>
+        <Head>
+          <title>LaborX</title>
+          <link rel='shortcut icon' type='image/x-icon' href='/static/favicon.ico' />
+          <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
+        </Head>
+        <AccountLayout title='Create New Acccount'>
+          <AccountPasswordForm navigateToSelectMethod={navigateToSelectMethod} onSubmitSuccess={this.onSubmitAccountPasswordForm.bind(this)} />
+          <ShowMnemonic />
+          <ConfirmMnemonic onSubmitSuccess={createUserAccount} />
+          <BackupWallet onClickDownload={downloadWallet} onClickFinish={onFinishCreateAccount} />
+        </AccountLayout>
+      </div>
+    )
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    setMnemonic,
+    setPassword,
+    setAccountTypes,
+    createUserAccount,
+    downloadWallet,
+    onFinishCreateAccount,
+    navigateToSelectMethod,
+  }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(CreateAccount)

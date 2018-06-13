@@ -1,0 +1,73 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$borderWidth: 2px;
+$border: $borderWidth solid $color-black;
+$borderRadius: 5px;
+$size: 12px;
+
+.root {
+  position: relative;
+  transition: opacity 250ms;
+  visibility: hidden;
+  opacity: 1;
+}
+
+.wrapper {
+  top: 100%;
+  position: absolute;
+  background: $color-white;
+  border: $borderWidth solid $color-black;
+  border-radius: $borderRadius;
+  min-width: 270px;
+  padding: 20px;
+  margin-top: 10px;
+  color: $color-black;
+  z-index: 99;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -$size + $borderWidth*2;
+    width: $size;
+    height: $size;
+    border: 2px solid $color-black;
+    transform: rotateZ(45deg);
+    background-color: $color-white;
+    z-index: 1;
+  }
+
+  &:after {
+    content: '';
+    width: 100%;
+    height: $size;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: $borderRadius;
+    background-color: $color-white;
+    z-index: 3;
+  }
+}
+
+.title {
+  font-weight: $font-weight-medium;
+  margin-bottom: 2rem;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.arrowLeft {
+  @include popoverArrowLeft;
+}
+
+.arrowCenter {
+  @include popoverArrowCenter;
+}
+
+.arrowRight {
+  @include popoverArrowRight;
+}

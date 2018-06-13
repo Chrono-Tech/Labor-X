@@ -1,0 +1,46 @@
+@import "~styles/globals/mixins";
+
+.flexRow {
+  @include flex(row, flex-start, center);
+}
+
+.flexRowTokenName {
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+.flexRowTokenBalance {
+  flex-wrap: wrap;
+}
+
+.myFundsHeader {
+  color: #333333;
+  font-size: 20px !important;
+  line-height: 20px;
+  font-weight: 500;
+  @include flex(row, space-between, center);
+}
+
+.myFundsSum {
+  color: #7F7F7F;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.tokenBlock {
+  padding: 20px 9px 20px 20px;
+  @include flex(row, space-between, center);
+}
+.tokenImage {
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin-right: 10px;
+}
+.tokenName {
+  font-weight: 500;
+}
+.tokenBalance {
+  font-weight: 400;
+  margin: 0 14px 3px 0;
+}

@@ -1,0 +1,65 @@
+.root {
+  padding: 50px 20px 25px;
+}
+
+.buttonsWrapper {
+  margin-bottom: 48px;
+
+  .methodButton {
+    box-shadow: 4px 4px 2px rgba(70,93,140,0.2);
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #E5E5E5;
+    width: 122px;
+    padding: 15px 0;
+    margin: 0 10px 10px 0;
+    color: #333333;
+    cursor: pointer;
+    font-weight: 500;
+
+    @media (max-width: 1024px){
+      width: 112px;
+      margin: 0 8px 10px 0;
+    }
+
+    &:hover {
+      background: #F7F7F7;
+    }
+
+    img {
+      width: 48px;
+      display: block;
+      margin: 0 auto 4px;
+    }
+  }
+}
+
+.pageDescription {
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 50px;
+}
+
+.createAccountDescription {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #333333;
+  margin-bottom: 5px;
+}
+
+.createAccountLink {
+  color: #00A0D2;
+  font-family: roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  display: inline-block;
+  margin-bottom: 35px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

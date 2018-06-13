@@ -1,0 +1,38 @@
+@import "~styles/globals/variables";
+
+.nav {
+  display: flex;
+  flex-grow: 1;
+  align-items: stretch;
+  margin-left: 6rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  margin-left: 5rem;
+  color: $color-blue-light;
+  border-bottom: 0.6rem solid transparent;
+  padding-top: 0.6rem; // for align
+  text-transform: uppercase;
+  font-size: $h4Size;
+  font-weight: $font-weight-regular;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:hover {
+    font-weight: $font-weight-regular;
+    border-bottom-color: $color-blue-light;
+  }
+}
+
+.navItemSelected {
+  &,
+  &:hover {
+    color: $color-white;
+    border-bottom-color: $color-white;
+    font-weight: $font-weight-medium;
+  }
+}

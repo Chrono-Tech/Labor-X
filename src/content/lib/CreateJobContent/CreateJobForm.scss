@@ -1,0 +1,174 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 74rem;
+$gutter: 4rem;
+
+.main {
+  flex-grow: 1;
+}
+
+.title {
+  height: 9rem;
+  margin: 0;
+  padding: 4rem 4rem 0;
+  color: $color-white;
+  background-image: $gradientBlueToGreen;
+}
+
+.titleBar {
+  @include flex(row, flex-start, stretch);
+  max-width: 70rem;
+  height: 5rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  background-color: $color-azure;
+  border-bottom: 0.1rem solid rgba($color-white, 0.2);
+}
+
+.titleBarRight {
+  @include flex(row, flex-start, stretch);
+  margin-left: auto;
+}
+
+.cancelButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.helpButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.doneButton {
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.submitProgress {
+  align-self: center;
+}
+
+.content {
+  padding-left: 4rem;
+  max-width: $maxWidth;
+}
+
+.headline {
+  padding: 0;
+  margin-bottom: 4rem;
+  color: $color-white;
+  background-color: $color-azure;
+}
+
+.boardHeadline {
+  margin: 0;
+  padding: 4rem;
+}
+
+.card {
+  @include card;
+  padding: 3rem;
+  margin-bottom: 4rem;
+}
+
+.mainFields {
+  margin-bottom: 2rem;
+}
+
+.skillsRow {
+  @include flex(row, flex-start, flex-end);
+}
+
+.twoColumn {
+  @include flex(row, flex-start, flex-start);
+  > * {
+    flex-basis: 50%;
+    margin-right: 2rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.find {
+  width: 8rem;
+  color: $color-gray30;
+  margin-right: 2rem;
+}
+
+.postFee {
+  align-self: center;
+}
+
+.inputSection {
+  margin-bottom: 3rem;
+  min-height: 4rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.selectSection {
+  margin-bottom: 1rem;
+  min-height: 4rem;
+}
+
+.badgesContainer {
+  @include flex(column, flex-start, center);
+  padding: 4rem 0 3rem;
+  width: 100%;
+  color: $color-white;
+  background: $gradientBlueToGreen;
+}
+
+.badges {
+  @include flex(row, space-around, center);
+  margin-top: 3rem;
+}
+
+.noMarginBottom {
+  margin-bottom: 0;
+}
+
+.hourlyRatingColumn {
+  @include flex(column, flex-start, center);
+  > * {
+    min-width: 30rem;
+  }
+}
+
+.hourlyRating {
+  margin-top: 4rem;
+}
+
+.hourlyRatingGraph {
+  min-width: 20rem;
+  min-height: 20rem;
+  background-color: $todo;
+  margin-top: 2rem;
+}
+
+.companyAddress {
+  margin-bottom: 4rem;
+}
+
+.cardHeading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  > * {
+    flex: 0 0 auto;
+    &:first-child {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+.row {
+  margin-bottom: 1rem;
+}

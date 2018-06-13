@@ -1,0 +1,107 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  // TODO @dkchv: temp
+  //display: none;
+  display: block;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  z-index: 99;
+}
+
+.overlay {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  z-index: 100;
+}
+
+.content {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 35rem;
+  background-color: $color-white;
+  z-index: 101;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 10px;
+    background: linear-gradient(to right,rgba(0,0,0,0) 50%,rgba(0,0,0,0.1) );
+    height: 100%;
+    position: absolute;
+    left: -10px;
+  }
+}
+
+.profileBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(to bottom, $color-blue, $color-green 100%);
+  min-height: 22rem;
+}
+
+.avatar {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.username {
+  color: $color-white;
+  text-transform: capitalize;
+}
+
+.stats {
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    height: 1rem;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba($color-super-black, 0.1), rgba($color-super-black, 0) 50%);
+  }
+}
+
+.mainStat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 2rem 3rem 3rem;
+}
+
+.shield {
+  background: url(/static/images/icon-shield.svg) no-repeat;
+  min-width: 3rem;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-medium;
+  color: $color-white;
+  font-size: $pBigSize;
+}
+
+.stars {
+  display: flex;
+  overflow: hidden;
+}
+
+.star {
+  max-width: 3rem;
+  font-size: 3rem;
+}
