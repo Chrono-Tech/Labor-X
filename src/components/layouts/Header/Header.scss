@@ -50,6 +50,12 @@
   }
 }
 
+button.actionItem {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .points {
   display: flex;
   align-items: center;

@@ -106,5 +106,7 @@ src/components/layouts/SecondMenu/SecondMenu.js
 !src/store/jobs/actions.js
 !src/store/jobs/reducer.js
 
+!src/components/layouts/Header/Header.js
+!src/components/layouts/SecondMenu/SecondMenu.js
 
 
