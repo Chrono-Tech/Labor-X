@@ -7,9 +7,11 @@ import {
   BOARD_CONTROLLER,
   JOBS_DATA_PROVIDER,
   IPFS_LIBRARY,
+  USER_LIBRARY,
 } from 'src/daos'
 
 export const DAOS_REGISTER = 'daos/register'
+export const DAOS_INITIALIZED = 'daos/initialized'
 
 export const initDAOs = ({ web3 }) => async (dispatch) => {
   const contractManagerDAO = CONTRACTS_MANAGER.create()
@@ -32,6 +34,7 @@ export const initDAOs = ({ web3 }) => async (dispatch) => {
     BOARD_CONTROLLER,
     JOBS_DATA_PROVIDER,
     IPFS_LIBRARY,
+    USER_LIBRARY,
   ]
 
   const models = await Promise.all(
@@ -56,4 +59,9 @@ export const initDAOs = ({ web3 }) => async (dispatch) => {
       model,
     })
   }
+
+  dispatch({
+    type: DAOS_INITIALIZED,
+    isInitialized: true,
+  })
 }

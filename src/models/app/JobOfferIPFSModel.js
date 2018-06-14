@@ -1,25 +1,26 @@
 import PropTypes from 'prop-types'
+import Chance from 'chance'
 import faker from 'faker'
 import AbstractModel from '../AbstractModel'
 
+const chance = new Chance()
+
 const schemaFactory = () => ({
   hash: PropTypes.string.isRequired, // ipfs hash of the object itself
-  name: PropTypes.string,
-  avatar: PropTypes.string, // Any supported URL path, including //example.com/path/to/image, https://example.com/path/to/image , ipfs://example.com/path/to/image
+  appliedDate: PropTypes.instanceOf(Date),
 })
 
-export default class WorkerIPFSModel extends AbstractModel {
+export default class JobOfferIPFSModel extends AbstractModel {
   constructor (props) {
     super(propsWithDefaults(props), schemaFactory())
-    Object.assign(this, propsWithDefaults(props))
     Object.freeze(this)
   }
 }
 
 function propsWithDefaults (props) {
+  const { hash, appliedDate, ...other } = props
   return Object.assign({}, {
     hash: faker.random.uuid(),
-    name: faker.name.findName(),
-    avatar: faker.internet.avatar(),
-  }, props)
+    appliedDate: props.appliedDate ? new Date(props.appliedDate) : chance.date(),
+  }, other)
 }

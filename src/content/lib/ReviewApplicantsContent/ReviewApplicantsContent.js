@@ -1,29 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import uniqid from 'uniqid'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { Router } from 'src/routes'
-import { JobModel, WorkerModel } from 'src/models'
+import { JobModel, ProfileModel, JobOfferModel } from 'src/models'
+import { reloadJobsOffers, jobsOffersSelector, profileSelector } from 'src/store'
 import { Button, Input, Image, Icon, WorkerCard } from 'src/components/common'
 import css from './ReviewApplicantsContent.scss'
-import { getJobOffers } from "../../../store"
 
 const FORM_REVIEW_APPLICANTS = 'form/review-applicants'
 
 export class ReviewApplicantsContent extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
+    reloadJobsOffers: PropTypes.func.isRequired,
     applicants: PropTypes.arrayOf(PropTypes.shape({
-      worker: PropTypes.instanceOf(WorkerModel),
-      data: PropTypes.instanceOf(Date),
-      offer: PropTypes.number,
+      offer: PropTypes.instanceOf(JobOfferModel),
+      worker: PropTypes.instanceOf(ProfileModel),
     })),
-    worker: PropTypes.shape({
-      worker: PropTypes.instanceOf(WorkerModel),
-      data: PropTypes.instanceOf(Date),
-      offer: PropTypes.number,
-    }),
-    getJobOffers: PropTypes.func.isRequired,
   }
 
   constructor (props) {
@@ -31,7 +26,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   componentDidMount () {
-    this.props.getJobOffers()
+    this.props.reloadJobsOffers()
   }
 
   handleBack () {
@@ -47,7 +42,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   render () {
-    const { job, applicants, worker } = this.props
+    const { job, applicants/*, worker*/ } = this.props
     return !applicants ? null : (
       <div className={css.main}>
         <div className={css.title}>
@@ -103,16 +98,16 @@ export class ReviewApplicantsContent extends React.Component {
                 color={Image.COLORS.BLACK}
               />
             </div>
-            <div className={css.block}>
+            {/* <div className={css.block}>
               <h4>Selected Worker</h4>
               <div className={css.cards}>
                 { worker ? <WorkerCard offerSent {...worker} /> : this.renderEmptyListMessage() }
               </div>
-            </div>
+            </div> */}
             <div className={css.block}>
               <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                { applicants &&  applicants.map((card) => (<WorkerCard {...card} key={card.worker.key} />))}
+                { applicants &&  applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} />))}
                 { applicants && !applicants.length && this.renderEmptyListMessage() }
               </div>
             </div>
@@ -123,28 +118,25 @@ export class ReviewApplicantsContent extends React.Component {
   }
 }
 
-function mapStateToProps (state, ownProps) {
-  // TODO aevalyakin get workers and data from backend
-  const applicants = state.jobs.offers.offers
-    ? state.jobs.offers.offers.map(x => ({
-      worker: new WorkerModel({ id: x.worker }),
-      date: new Date(),
-      offer: x.rate,
-    })) : null
-  const worker = ownProps.job.worker && state.jobs.offers.offers ? {
-    worker: new WorkerModel({}),
-    date: new Date(),
-    offer: state.jobs.offers.offers.find(x => x.worker.toLowerCase() === ownProps.job.worker.toLowerCase()).rate,
-  } : null
+function mapStateToProps (state, op) {
+  const offers = jobsOffersSelector(op.job.id)(state)
+  const applicants = !offers ? null : offers.map(offer => ({
+    offer,
+    worker: profileSelector(offer.worker)(state),
+  }))
+
   return {
-    worker,
     applicants,
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  getJobOffers: () => dispatch(getJobOffers(ownProps.job.id)),
-})
+function mapDispatchToProps (dispatch, op) {
+  return {
+    reloadJobsOffers: () => dispatch(reloadJobsOffers({
+      jobId: op.job.id,
+    })),
+  }
+}
 
 const form = reduxForm({
   form: FORM_REVIEW_APPLICANTS,

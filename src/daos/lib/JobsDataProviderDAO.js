@@ -3,6 +3,7 @@ import {
   JobIPFSModel,
   JobStateModel,
   JobExtraModel,
+  JobOfferModel,
   TagAreaModel,
   TagCategoryModel,
   SkillModel,
@@ -195,18 +196,18 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         worker,
         boardId,
         state: JobStateModel.valueOf(state),
-        area: TagAreaModel.valueOf(skillsArea),
-        category: TagCategoryModel.valueOf(skillsCategory),
+        area: TagAreaModel.valueOfCode(skillsArea),
+        category: TagCategoryModel.valueOfCode(skillsCategory),
         skills: SkillModel.arrayValueOfMask(skills),
         ipfs: new JobIPFSModel({
           ...(await loadFromIPFS(ipfsHash) || {}),
           hash: ipfsHash,
         }),
+        flowType,
         paused,
         defaultPay,
         pausedAt,
         pausedFor,
-        flowType,
         extra: new JobExtraModel({
           // TODO Fetch counts
           createdAt,
@@ -256,9 +257,39 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
     return job
   }
 
-  async getJobOffers (id) {
-    const offers = await this.contract.methods.getJobOffers(id, 0, 100).call()
-    return offers
-  }
+  async getJobOffers (
+    jobId: Number,
+    fromId: Number = 0,
+    limit: Number = 1000
+  ) {
+    const data = await this.contract.methods.getJobOffers(
+      jobId,
+      fromId,
+      limit
+    ).call()
 
+    const {
+      _id,
+      _workers,
+      _rates,
+      _estimates,
+      _onTops,
+    } = data
+
+    if(!_id) { return [] }
+
+    const parsed = []
+    // eslint-disable-next-line no-underscore-dangle
+    for (let i = 0; i < data._workers.length; i++) {
+      parsed.push({
+        jobId,
+        worker: bytes32ToAddress(_workers[0], true),
+        rate: bytes32ToBigNumber(_rates[0]),
+        estimate: bytes32ToBigNumber(_estimates[0]),
+        onTop: bytes32ToBigNumber(_onTops[0]),
+      })
+    }
+
+    return parsed.map(offer => new JobOfferModel(offer))
+  }
 }

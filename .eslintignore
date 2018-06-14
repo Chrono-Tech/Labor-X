@@ -20,7 +20,7 @@ src/**/*.js
 !pages/client-job-view.js
 !pages/job-types.js
 !pages/opportunity-view.js
-!pages/revie-applicants.js
+!pages/review-applicants.js
 !pages/to-do.js
 
 !src/routes.js
@@ -28,6 +28,7 @@ src/**/*.js
 !src/daos/index.js
 !src/daos/lib/ContractsManagerDAO.js
 !src/daos/lib/JobControllerDAO.js
+!src/daos/lib/UserLibraryDAO.js
 !src/daos/lib/JobsDataProviderDAO.js
 !src/daos/lib/ContractsManagerDAO.js
 
@@ -43,6 +44,9 @@ src/**/*.js
 !src/models/index.js
 !src/models/wallets/SignerModel.js
 !src/models/wallets/WalletModel.js
+!src/models/app/JobOfferModel.js
+!src/models/app/ProfileModel.js
+!src/models/app/JobOfferIPFSModel.js
 
 !src/store/daos/actions.js
 !src/store/jobs/actions.js
@@ -50,6 +54,8 @@ src/**/*.js
 !src/store/jobs/reducer.js
 !src/store/jobs/selectors.js
 !src/store/wallet/actions.js
+
+!src/store/applicants/
 
 !src/components/common/Icon/Icon.js
 !src/components/common/index.js
