@@ -42,7 +42,7 @@ $maxWidth: 100rem;
       border-bottom: 1px solid rgba($color-black, .1);
       .jobInfoContainer {
         @include flex(row, flex-start, stretch);
-        padding-top: 1.5rem;
+        //padding-top: 1.5rem;
         .jobInfo {
           margin-right: 2rem;
           font-size: $h4Size;
@@ -57,6 +57,14 @@ $maxWidth: 100rem;
       .jobName {
         @include flex(row, flex-start, center);
         height: 6rem;
+
+        color: #FFFFFF;
+        line-height: 36px;
+        font-family: roboto, sans-serif;
+        font-size: 30px;
+        font-weight: 500;
+        text-transform: none;
+        margin-bottom: 0;
       }
       .jobMenu {
         @include position(absolute, $bottom: -7rem, $right: 13rem);
@@ -125,8 +133,10 @@ $maxWidth: 100rem;
       .tabActive {
         border-bottom: .5rem solid $color-white;
         padding-bottom: 0;
+        outline: none;
         &:hover {
-          background-color: 0;
+          //background-color: 0;
+          //border-bottom: .5rem solid $color-white;
         }
       }
     }

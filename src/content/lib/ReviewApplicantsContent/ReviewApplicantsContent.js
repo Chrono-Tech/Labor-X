@@ -30,7 +30,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   handleBack () {
-    Router.pushRoute('/active-jobs')
+    Router.pushRoute('/posted-jobs')
   }
 
   renderEmptyListMessage (){

@@ -158,66 +158,69 @@ class CreateJobForm extends React.Component {
               mods={Input.MODS.BOXED}
             /> */}
 
-            <div className={css.card}>
-              <div className={css.cardHeading}>
-                <h3><Translate value='ui.createJob.jobBoard' /></h3>
-                <div>
-                  <Field
-                    component={Toggle}
-                    name='hasRequirements'
-                  />
+            <div className={css.card} style={{ padding: '3rem 0' }}>
+              <div style={{ padding: '0 3rem 3rem' }}>
+                <div className={css.cardHeading}>
+                  <h3><Translate value='ui.createJob.jobBoard' /></h3>
+                  {/*<div>*/}
+                    {/*<Field*/}
+                      {/*component={Toggle}*/}
+                      {/*name='hasRequirements'*/}
+                    {/*/>*/}
+                  {/*</div>*/}
                 </div>
-              </div>
-              <div>
-                <div className={css.twoColumn}>
-                  <Field
-                    component={SelectField}
-                    name='board'
-                    hintText={<Translate value='ui.createJob.jobBoard' />}
-                  >
-                    {boards.map(board => (
-                      <MenuItem key={board.key} value={board.id} primaryText={board.ipfs.name} />
-                    ))}
-                  </Field>
-                  <div className={css.postFee}>
-                    Post Fee (no-refund): LHUS 1.00 (USD 30.00)
+                <div>
+                  <div className={css.twoColumn}>
+                    <Field
+                      component={SelectField}
+                      name='board'
+                      hintText={<Translate value='ui.createJob.jobBoard' />}
+                    >
+                      {boards.map(board => (
+                        <MenuItem key={board.key} value={board.id} primaryText={board.ipfs.name} />
+                      ))}
+                    </Field>
+                    <div className={css.postFee}>
+                      Post Fee (no-refund): LHUS 1.00 (USD 30.00)
+                    </div>
                   </div>
                 </div>
-                {!hasRequirements ? null : (
-                  <div>
-                    <div className={css.badgesContainer}>
-                      <h4><Translate value='ui.createJob.badgesTitle' /></h4>
-                      <p><Translate value='ui.createJob.badgesSubtitle' /></p>
-                      <div className={css.badges}>
-                        <Badge value='1+' title='terms.rating' />
-                        <Badge value='term.any' title='terms.validation' />
-                        <Badge value='term.any' title='terms.endorsement' />
-                        <Badge value='term.any' title='terms.categories' />
-                      </div>
+              </div>
+                <div>
+                  <div className={css.badgesContainer}>
+                    <h4><Translate value='ui.createJob.badgesTitle' /></h4>
+                    <p><Translate value='ui.createJob.badgesSubtitle' /></p>
+                    <div className={css.badges}>
+                      <Badge value='1+' title='terms.rating' />
+                      <Badge value='term.any' title='terms.validation' />
+                      <Badge value='term.any' title='terms.endorsement' />
+                      <Badge value='term.any' title='terms.categories' />
                     </div>
-                    <div className={css.card}>
-                      <div className={css.hourlyRatingColumn}>
-                        <Field
-                          component={SelectField}
-                          hintText='Force Worker Rating'
-                          hintStyle={{ fontStyle: 'italic' }}
-                          value={this.state.hourlyRatingValue}
-                          onChange={this.handleChangeHourlyRating}
-                          name='hourlyRating'
-                        >
-                          <MenuItem value={1} primaryText='Force Worker Rating' />
-                          <MenuItem value={2} primaryText='Force Worker Rating' />
-                          <MenuItem value={3} primaryText='Force Worker Rating' />
-                        </Field>
-                        <div className={css.hourlyRating}>
-                          <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
-                          <div className={css.hourlyRatingGraph} />
+                  </div>
+                  <div className={css.card} style={{boxShadow: 'none'}}>
+                    <div className={css.hourlyRatingColumn}>
+                      <Field
+                        component={SelectField}
+                        hintText='Force Worker Rating'
+                        hintStyle={{ fontStyle: 'italic' }}
+                        value={this.state.hourlyRatingValue}
+                        onChange={this.handleChangeHourlyRating}
+                        name='hourlyRating'
+                      >
+                        <MenuItem value={1} primaryText='Force Worker Rating' />
+                        <MenuItem value={2} primaryText='Force Worker Rating' />
+                        <MenuItem value={3} primaryText='Force Worker Rating' />
+                      </Field>
+                      <div className={css.hourlyRating}>
+                        <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
+                        <div className={css.hourlyRatingGraph}>
+                          <img src='/static/images/create-job-average-hour-price-per-validation-level-chart.png'/>
                         </div>
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+
             </div>
 
             <div className={css.card}>
