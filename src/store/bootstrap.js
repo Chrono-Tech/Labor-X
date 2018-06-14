@@ -1,10 +1,13 @@
 import translations from 'i18n'
 import { I18n, loadTranslations, setLocale } from 'react-redux-i18n'
+import { Router } from 'src/routes'
 
 import { initTokens } from './tokens/actions'
 import { initDAOs } from './daos/actions'
+import { unrestrictedPages, logoutFinished } from './login/actions'
 import { initBoards } from './boards/actions'
 import { initJobs } from './jobs/actions'
+import { logout } from './wallet/actions'
 import { signerSelector } from './wallet/selectors'
 
 const startI18n = () => (dispatch, getState) => {
@@ -25,10 +28,20 @@ export const initFrontend = (store) => ({ web3 }) => async (dispatch) => {
 
   let previousAddress = null
   const handleSignerUpdate = () => {
-    const currentSigner = signerSelector()(store.getState())
+    const state = store.getState()
+    const currentSigner = signerSelector()(state)
     const currentAddress = currentSigner != null // nil check
       ? currentSigner.address
       : null
+
+    if (Router.route && Router.route === '/') {
+      store.dispatch(logoutFinished())
+    }
+
+    if (!currentSigner && !state.login.logoutStarted && Router.route && !unrestrictedPages.some((page) => page === Router.route)) {
+      store.dispatch(logout())
+    }
+
     if (currentAddress !== previousAddress) {
       // eslint-disable-next-line
       console.log('Signer changed to ', currentAddress)

@@ -5,7 +5,7 @@ import { WalletModel, WalletEntryModel } from 'src/models'
 import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
-import { changeStep as loginChangeStep } from './../login/actions'
+import { changeStep as loginChangeStep, logoutStarted } from './../login/actions'
 import { storeIntoIPFS } from "../../utils"
 import { daoByType } from "../daos/selectors"
 import { getUserData } from "../user/actions"
@@ -145,6 +145,7 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
 }
 
 export const logout = () => (dispatch) => {
+  dispatch(logoutStarted())
   dispatch(walletSelect(null))
   dispatch(walletLoad(null))
   dispatch(loginChangeStep(null))

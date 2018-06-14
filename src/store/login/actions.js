@@ -8,6 +8,8 @@ import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicF
 import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
 import { web3Selector } from "../ethereum/selectors"
 
+export const unrestrictedPages = [ '/', '/login', '/create-account', '/landing-page']
+
 export const LoginSteps = {
   Ledger: 'ledger',
   Trezor: 'trezor',
@@ -34,6 +36,8 @@ export const LOGIN_RESET_RECOVERY_PASSWORD_MODE = 'login/resetRecoveryPasswordMo
 export const LOGIN_SET_RECOVERY_FORM_MNEMONIC = 'login/setRecoveryFormMnemonic'
 export const LOGIN_RESET_RECOVERY_FORM_MNEMONIC = 'login/resetRecoveryFormMnemonic'
 export const LOGIN_RESET_WALLET_RECOVERY_FORM = 'login/resetWalletRecoveryForm'
+export const LOGOUT_STARTED = 'logout/started'
+export const LOGOUT_FINISHED = 'logout/finished'
 
 export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
@@ -57,6 +61,14 @@ export const onSignInFail = () =>  (dispatch) => {
 
 export const signOut = () => (dispatch) => {
   dispatch({ type: LOGIN_SIGN_OUT })
+}
+
+export const logoutStarted = () => (dispatch) => {
+  dispatch({ type: LOGOUT_STARTED })
+}
+
+export const logoutFinished = () => (dispatch) => {
+  dispatch({ type: LOGOUT_FINISHED })
 }
 
 export const createAccount = (walletName, password) => async (dispatch, getState) => {
