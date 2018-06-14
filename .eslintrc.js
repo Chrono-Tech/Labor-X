@@ -19,6 +19,8 @@ module.exports = {
   rules: {
     'import/no-extraneous-dependencies': 'off', // TODO Use webpack resolver possible to solve issues with aliased modules
     'import/prefer-default-export': 'off',
-    'arrow-parens': 'off'
+    'arrow-parens': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
   }
 }
