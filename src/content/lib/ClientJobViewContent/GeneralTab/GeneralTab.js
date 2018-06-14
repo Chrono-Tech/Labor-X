@@ -27,14 +27,18 @@ export default class GeneralTab extends React.Component {
             <h3>Deadline:</h3>
             <span className={css.dataText}>{moment(job.ipfs.period.until).format(dateFormat)}</span>
           </div>
-          {job.ipfs.budget.isSpecified && <div className={css.dataRow}>
-            <h3>Hours:</h3>
-            <span className={css.dataText}>{job.ipfs.budget.totalHours}</span>
-          </div>}
-          {job.ipfs.budget.isSpecified && <div className={css.dataRow}>
-            <h3>Est. Budget:</h3>
-            <span className={css.dataText}>{`LHUS ${job.ipfs.budget.award.toString()} (${job.ipfs.budget.awardUSD.toString()})`}</span>
-          </div>}
+          {job.ipfs.budget.isSpecified && (
+            <div className={css.dataRow}>
+              <h3>Hours:</h3>
+              <span className={css.dataText}>{job.ipfs.budget.totalHours}</span>
+            </div>
+          )}
+          {job.ipfs.budget.isSpecified && (
+            <div className={css.dataRow}>
+              <h3>Est. Budget:</h3>
+              <span className={css.dataText}>{`LHUS ${job.ipfs.budget.award.toString()} (${job.ipfs.budget.awardUSD.toString()})`}</span>
+            </div>
+          )}
         </div>
       </div>
     )
