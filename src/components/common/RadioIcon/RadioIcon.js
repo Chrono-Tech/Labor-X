@@ -40,7 +40,7 @@ export default class RadioIcon extends React.Component {
   }
 
   renderButtons () {
-    const { values, checkedIcon, uncheckedIcon } = this.props
+    const { values, input, checkedIcon, uncheckedIcon } = this.props
 
     return values.map((item) => {
       return (<Checkbox
@@ -52,6 +52,7 @@ export default class RadioIcon extends React.Component {
           height: '43px',
           flexDirection: 'row',
         }}
+        input={input}
         checkedIcon={checkedIcon}
         uncheckedIcon={uncheckedIcon}
         classes={[css.checkbox]}

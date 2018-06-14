@@ -32,7 +32,7 @@ const defaultProps = {
 
 export default class JobPostFormModel extends AbstractModel {
   constructor (props) {
-    super(Object.assign(defaultProps, props), schemaFactory())
+    super(Object.assign({}, defaultProps, props), schemaFactory())
     Object.freeze(this)
   }
   
