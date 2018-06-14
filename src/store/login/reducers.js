@@ -4,6 +4,7 @@ const initialState = {
   isSignIn: false,
   signIn: null,
   step: null,
+  logoutStarted: false,
   selectedWalletRecoveryForm: null,
   isRecoveryPasswordMode: false,
   recoveryFormMnemonic: '',
@@ -21,6 +22,16 @@ export default (state = initialState, action) => {
         ...state,
         isSignIn: false,
         signIn: null,
+      }
+    case a.LOGOUT_STARTED:
+      return {
+        ...state,
+        logoutStarted: true,
+      }
+    case a.LOGOUT_FINISHED:
+      return {
+        ...state,
+        logoutStarted: false,
       }
     case a.LOGIN_SET_SIGN_IN_MODEL:
       return {
