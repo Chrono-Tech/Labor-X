@@ -84,6 +84,8 @@ src/**/*.js
 !src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
 !src/content/lib/TodoContent/TodoContent.js
 !src/content/lib/OpportunityViewContent/
+!src/content/lib/OpportunityViewContent/OpportunityViewContent.js
+!src/content/lib/OpportunityViewContent/DescriptionTab/DescriptionTab.js
 
 !src/partials/
 

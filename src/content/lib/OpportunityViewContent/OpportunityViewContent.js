@@ -50,12 +50,15 @@ export class OpportunityViewContent extends React.Component {
           ontop: new BigNumber(0),
         })
       )
-      Router.push('/opportunities')
-    } finally {
-      this.setState({
-        isOfferPosting: false,
-      })
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn('handlePostOffer Error: ', e)
     }
+    this.setState({
+      isOfferPosting: false,
+    }, () => {
+      Router.push('/applications-and-offers')
+    })
   }
 
   tabs = [
@@ -105,8 +108,8 @@ export class OpportunityViewContent extends React.Component {
         <div className={css.content}>
           <div className={css.header}>
             <h2>{job.ipfs.name}</h2>
-            <p>Ref {job.ipfs.refString}</p>
-            <p className={css.opportunityAge}>{moment(job.ipfs.period.since).fromNow()}</p>
+            <p>Ref {job.id}</p>
+            <p className={css.opportunityAge}>{moment(job.extra.createdAt).fromNow()}</p>
           </div>
           <div className={css.tabs}>
             {this.tabs.map((tab, index) => (
