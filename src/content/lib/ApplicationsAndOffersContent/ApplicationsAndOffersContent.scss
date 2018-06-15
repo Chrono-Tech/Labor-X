@@ -1,0 +1,50 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 80rem;
+
+.main {
+  flex-grow: 1;
+  .title {
+    @include flex(column, flex-start, flex-start);
+    margin: 0;
+    padding-top: 5rem;
+    padding-left: 5rem;
+    color: $color-white;
+    background-image: $gradientBlueToGreen;
+    .titleText {
+      font-size: $h1Size;
+      font-weight: $font-weight-thin;
+      letter-spacing: -0.1rem;
+      line-height: 1;
+    }
+    .titleStats {
+      @include flex(row, flex-start, flex-end);
+      margin: 3rem 0;
+      color: $color-white;
+      > div {
+        @include flex(column, flex-start, flex-start);
+        margin-right: 6rem;
+        > div {
+          margin-top: .5rem;
+        }
+      }
+      .titleStatsCounter {
+        color: $color-white;
+      }
+    }
+    .tabs {
+      margin-top: auto;
+      .tab {
+        min-width: 14rem;
+      }
+    }
+  }
+  .content {
+    padding-left: 4rem;
+    max-width: $maxWidth;
+  }
+}
+
+
+

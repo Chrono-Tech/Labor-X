@@ -17,6 +17,7 @@ pages/**
 *.js
 src/**/*.js
 
+!pages/_app
 !pages/client-job-view.js
 !pages/job-types.js
 !pages/opportunity-view.js
@@ -84,6 +85,7 @@ src/**/*.js
 !src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
 !src/content/lib/TodoContent/TodoContent.js
 !src/content/lib/OpportunityViewContent/
+!src/content/lib/ApplicationsAndOffersContent/
 
 !src/partials/
 

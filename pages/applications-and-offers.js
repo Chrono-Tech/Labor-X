@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { MainLayout } from 'src/components/layouts'
-import ApplicationsAndOffersContent from 'src/components/ApplicationsAndOffers/ApplicationsAndOffers'
+import { ApplicationsAndOffersContent } from 'src/content'
 
 class ApplicationsAndOffers extends React.Component {
   render () {
