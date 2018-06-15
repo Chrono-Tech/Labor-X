@@ -107,7 +107,7 @@ export class ReviewApplicantsContent extends React.Component {
             <div className={css.block}>
               <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                { applicants &&  applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} />))}
+                { applicants &&  applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} jobId={this.props.job.id} />))}
                 { applicants && !applicants.length && this.renderEmptyListMessage() }
               </div>
             </div>

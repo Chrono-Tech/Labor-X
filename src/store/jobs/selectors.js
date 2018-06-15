@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect'
 import { JOB_STATE_STARTED } from 'src/models'
+import { currentAddressSelector } from "../wallet/selectors"
+import { JOB_STATE_OFFER_ACCEPTED, JOB_STATE_PENDING_START } from "../../models"
 
 export const jobsSelector = () => (state) => state.jobs
 
@@ -20,7 +22,13 @@ export const jobByIdSelector = (id) => createSelector(
 
 export const todoJobsSelector = () => createSelector(
   jobsListSelector(),
-  (jobsList) => {
-    return jobsList.filter((job) => job.state && job.state === JOB_STATE_STARTED)
+  currentAddressSelector(),
+  (jobsList, address) => {
+    if (!address) return []
+    return jobsList.filter((job) => (
+      job.worker === address.toLowerCase() &&
+      job.state &&
+      (job.state === JOB_STATE_STARTED || job.state === JOB_STATE_OFFER_ACCEPTED || job.state === JOB_STATE_PENDING_START)
+    ))
   }
 )

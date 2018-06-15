@@ -27,7 +27,7 @@ $maxWidth: 100rem;
   }
   .content {
     @include card;
-    margin-left: 4rem;
+    margin: 0 4rem;
     max-width: calc(#{$maxWidth} - 4rem);
     border-top-left-radius: 0;
     border-top-right-radius: 0;

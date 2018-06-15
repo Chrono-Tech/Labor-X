@@ -1,27 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import moment from 'moment'
 import cn from 'classnames'
 import { ProfileModel, JobOfferModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield, WorkerState } from 'src/components/common'
 import css from './WorkerCard.scss'
+import { acceptOffer } from "../../../store"
 
 const dateFormat = 'DD MMM YYYY h:mm A'
 
-export default class WorkerCard extends React.Component {
+class WorkerCard extends React.Component {
   static propTypes = {
     offer: PropTypes.instanceOf(JobOfferModel).isRequired,
     worker: PropTypes.instanceOf(ProfileModel).isRequired,
     offerSent: PropTypes.bool,
+    acceptOffer: PropTypes.func,
+    jobId: PropTypes.number,
   }
 
   static defaultProps = {
     offerSent: false,
   }
 
-  handleReviewOffer () {
+  handleReviewOffer = () => {
     // eslint-disable-next-line no-console
     console.log('WorkerCard-handleReviewOffer')
+    this.props.acceptOffer()
   }
 
   handleViewOffer () {
@@ -72,7 +77,8 @@ export default class WorkerCard extends React.Component {
         <div className={css.actions}>
           { offerAmount != null
             ? <Button
-              label='REVIEW&nbsp;THE&nbsp;OFFER'
+              // label='REVIEW&nbsp;THE&nbsp;OFFER'
+              label='ACCEPT OFFER'
               className={css.buttonBlue}
               mods={Button.MODS.FLAT}
               onClick={this.handleReviewOffer}
@@ -117,3 +123,9 @@ export default class WorkerCard extends React.Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  acceptOffer: () => dispatch(acceptOffer(ownProps.jobId, ownProps.worker.address)),
+})
+
+export default connect(null, mapDispatchToProps)(WorkerCard)

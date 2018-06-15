@@ -17,6 +17,6 @@ export const signerSelector = () => createSelector(
 )
 
 export const currentAddressSelector = () => createSelector(
-  walletModelSelector(),
-  (wallet) => wallet ? wallet.wallet[0].address : null
+  signerSelector(),
+  (signer) => signer ? signer.address : null
 )

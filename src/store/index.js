@@ -51,7 +51,8 @@ export default (initialState = {}) => {
     reducer,
     extra,
     composeWithDevTools(
-      process.env.NODE_ENV !== 'production'
+      // process.env.NODE_ENV !== 'production'
+      true
         ? applyMiddleware(thunkMiddleware.default, loggerMiddleware)
         : applyMiddleware(thunkMiddleware.default)
     )

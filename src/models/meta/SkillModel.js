@@ -15,7 +15,7 @@ export default class SkillModel extends AbstractModel {
   }
 
   get code () {
-    return Math.pow(2, this.index)
+    return Math.pow(4, this.index)
   }
 
   static valueOf (index) {
@@ -43,6 +43,14 @@ export const SKILLS_LIST = [
   new SkillModel({
     index: 2,
     name: 'Skill 3',
+  }),
+  new SkillModel({
+    index: 3,
+    name: 'Skill 4',
+  }),
+  new SkillModel({
+    index: 4,
+    name: 'Skill 5',
   }),
 ]
 

@@ -20,10 +20,12 @@ export default class CompanyTab extends React.Component {
             { client.ipfs.logo && <img className={css.icon} src={client.ipfs.logo} alt='' /> }
             <p><span className={css.medium}>{client.ipfs.name}</span> <span className={css.pale}>(Client)</span></p>
           </div>
-          <div className={css.nameRow}>
-            { board.ipfs.logo && <img className={css.icon} src={board.ipfs.logo} alt='' /> }
-            <p><span className={css.medium}>{board.ipfs.name}</span> <span className={css.pale}>(Job Board)</span></p>
-          </div>
+          { !board ? null : (
+            <div className={css.nameRow}>
+              { board.ipfs.logo && <img className={css.icon} src={board.ipfs.logo} alt='' /> }
+              <p><span className={css.medium}>{board.ipfs.name}</span> <span className={css.pale}>(Job Board)</span></p>
+            </div>
+          )}
         </div>
         <div className={css.delimiter} />
         <div className={css.block}>

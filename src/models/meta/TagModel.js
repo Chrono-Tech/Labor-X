@@ -15,14 +15,14 @@ export default class TagModel extends AbstractModel {
   }
 
   get code () {
-    return Math.pow(2, this.index)
+    return Math.pow(4, this.index)
   }
 
   static arrayValueOfMask (mask) {
     return filterArrayByIndexMask(TAGS_LIST, mask)
   }
-  
-  static writeArrayToMask (array) {
+
+  static writeArrayToMask (array) { // fix. when user select index=2 than it returns 4 instead of 16
     return array.reduce((mask, element) => (mask | element.code), 0)
   }
 }
