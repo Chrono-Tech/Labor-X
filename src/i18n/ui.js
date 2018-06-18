@@ -135,11 +135,17 @@ export default {
     legal: 'Legal',
     tags: 'Tags',
 
+    flowType: 'Flow type',
     hourlyRate: 'Hourly Rate, LHUS',
     totalHours: 'Total Hours',
+    fixedPrice: 'Fixed Price',
+    budgetApproximateLabel: 'The budget is approximate',
 
     badgesSubtitle: 'By posting your job in the selected Job Board the following workers will be able able to apply.',
     hourlyRatingTitle: 'Average hourly charge per rating, LHUS',
+
+    allowCustomOffers: 'Allow Custom Offers',
+    startWorkAllowance: 'Start of Work Allowance',
 
     jobHeadlinePlaceholder: 'Enter Job Headline',
     intro: 'Intro',

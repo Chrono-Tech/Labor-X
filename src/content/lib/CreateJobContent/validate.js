@@ -12,6 +12,7 @@ export default (values) => {
     legal: notEmpty(values.legal),
     board: notEmpty(values.board),
     skills: notEmpty(values.skills),
-    // conclusion: required(values.conclusion),
+    conclusion: notEmpty(values.conclusion),
+    flowType: notEmpty(values.flowType),
   }
 }

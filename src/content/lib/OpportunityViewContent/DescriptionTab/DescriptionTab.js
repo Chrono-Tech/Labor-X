@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import moment from 'moment'
+import { Tip } from 'components/common'
 import { CircularProgress, MuiThemeProvider } from 'material-ui'
 import { Image, Button, Tag } from 'src/components/common'
 import { JobModel } from 'src/models'
@@ -32,6 +33,53 @@ export default class DescriptionTab extends React.Component {
     console.log('Opportunity-view-handleReport')
   }
 
+  getRequirements = () => {
+    const { job } = this.props
+    const requirements = []
+
+    if (typeof job.ipfs.profileRequirements.reviewCount !== 'undefined') {
+      requirements.push({ key: 'reviewCount', message: `${job.ipfs.profileRequirements.reviewCount} Reviews` })
+    }
+
+    if (typeof job.ipfs.profileRequirements.rating !== 'undefined') {
+      requirements.push({ key: 'rating', message: `Rating ${job.ipfs.profileRequirements.rating}+` })
+    }
+
+    if (typeof job.ipfs.profileRequirements.validationLevel !== 'undefined') {
+      requirements.push({ key: 'validationLevel', message: `Account Validation Level ${job.ipfs.profileRequirements.validationLevel}+` })
+    }
+
+    return requirements
+  }
+
+  getApplyButton = () => {
+    const button = (<Button
+      type='button'
+      label='APPLY'
+      disabled
+      className={css.applyButton}
+      mods={Button.MODS.FLAT}
+      onClick={this.handleApply}
+    />)
+
+    if (this.isSkillsFit()) {
+      return button
+    }
+
+    return (
+      <Tip
+        position='center'
+        title='Attention'
+        tip='Your skills are not appropriate for this opportunity'
+      >
+        {button}
+      </Tip>)
+  }
+
+  isSkillsFit = () => {
+    return false
+  }
+
   render () {
     const { isOfferPosting, job } = this.props
     return (
@@ -56,30 +104,20 @@ export default class DescriptionTab extends React.Component {
             </ul>
           </div>
           <div className={css.delimiter} />
+          {job.ipfs.profileRequirements.isSpecified &&
           <div className={css.profile}>
             <h3>laborX Profile Requirements</h3>
-            <div className={css.profileRequirement}>
-              <Image
-                icon={Image.ICONS.CHECKBOX_CIRCLE}
-                color={Image.COLORS.GREEN}
-              />
-              <p>{`${job.ipfs.profileRequirements.reviewCount} Reviews`}</p>
-            </div>
-            <div className={css.profileRequirement}>
-              <Image
-                icon={Image.ICONS.CHECKBOX_CIRCLE}
-                color={Image.COLORS.GREEN}
-              />
-              <p>{`Rating ${job.ipfs.profileRequirements.rating}+`}</p>
-            </div>
-            <div className={css.profileRequirement}>
-              <Image
-                icon={Image.ICONS.CHECKBOX_CIRCLE}
-                color={Image.COLORS.GREEN}
-              />
-              <p>{`Account Validation Level ${job.ipfs.profileRequirements.validationLevel}`}</p>
-            </div>
-          </div>
+            {this.getRequirements().map((requirement) => {
+              return (
+                <div key={requirement.key} className={css.profileRequirement}>
+                  <Image
+                    icon={Image.ICONS.CHECKBOX_CIRCLE}
+                    color={Image.COLORS.GREEN}
+                  />
+                  <p>{requirement.message}</p>
+                </div>)
+            })}
+          </div>}
           <div className={css.delimiter} />
           <div className={css.infoBlock}>
             <div className={css.infoRow}>
@@ -140,13 +178,7 @@ export default class DescriptionTab extends React.Component {
                 onClick={this.handleSave}
               />
               {!isOfferPosting ? null : <CircularProgress className={css.submitProgress} size={24} />}
-              <Button
-                type='button'
-                label='APPLY'
-                className={css.applyButton}
-                mods={Button.MODS.FLAT}
-                onClick={this.handleApply}
-              />
+              {this.getApplyButton()}
             </div>
           </div>
         </div>
