@@ -17,7 +17,7 @@ export default class OpportunityCard extends React.Component {
         {board
           ? (
             <div>
-              {!board.ipfs.logo ? null : (
+              {!board.ipfs.logo ? <img className={css.icon} src='/static/temp/get-started.png' alt='' /> : (
                 <img className={css.icon} src={board.ipfs.logo} alt={board.ipfs.name} />
               )}
               <p>{board.ipfs.name}</p>

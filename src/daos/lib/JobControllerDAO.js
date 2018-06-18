@@ -41,6 +41,12 @@ export default class JobControllerDAO extends AbstractContractDAO {
     this.jobCanceledEmitter = this.history.events.JobCanceled({})
       .on('data', this.handleCancelJobData.bind(this))
       .on('error', this.handleError.bind(this))
+    this.jobErrorCode = this.history.events.ErrorCode({})
+      .on('data', this.handleErrorCodeData.bind(this))
+      .on('error', this.handleError.bind(this))
+    this.jobJobOfferAccepted = this.history.events.JobOfferAccepted({})
+      .on('data', this.handleJobOfferAcceptedData.bind(this))
+      .on('error', this.handleError.bind(this))
     // this.jobClosedEmitter = this.contract.events.JobClosed({})
     //   .on('data', this.handleJobClosedData.bind(this))
     //   .on('error', this.handleError.bind(this))
@@ -116,6 +122,38 @@ export default class JobControllerDAO extends AbstractContractDAO {
     const data = this.contract.methods.cancelJob(jobId).encodeABI()
     return {
       from: sender,
+      to: this.address,
+      data,
+    }
+  }
+
+  async acceptOffer (from, jobId, workerAddress, calculatedLockAmountForWorker) {
+    const data = this.contract.methods.acceptOffer(jobId, workerAddress).encodeABI()
+    return {
+      from,
+      to: this.address,
+      data,
+      value: +calculatedLockAmountForWorker,
+    }
+  }
+
+  async calculateLockAmountFor (workerAddress, jobId) {
+    return this.contract.methods.calculateLockAmountFor(workerAddress, jobId).call()
+  }
+
+  async startWork (from, jobId) {
+    const data = this.contract.methods.startWork(jobId).encodeABI()
+    return {
+      from,
+      to: this.address,
+      data,
+    }
+  }
+
+  async confirmStartWork (from, jobId) {
+    const data = this.contract.methods.confirmStartWork(jobId).encodeABI()
+    return {
+      from,
       to: this.address,
       data,
     }
@@ -207,6 +245,16 @@ export default class JobControllerDAO extends AbstractContractDAO {
         }),
       })
     })
+  }
+
+  handleErrorCodeData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] ErrorCode', data)
+  }
+
+  handleJobOfferAcceptedData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] JobOfferAccepted', data)
   }
 
   handleError (error) {

@@ -74,7 +74,7 @@
     "styled-jsx-plugin-postcss": "^0.1.2"
   },
   "scripts": {
-    "dev": "node --max_old_space_size=8000 server.js",
+    "dev": "node --max_old_space_size=4096 server.js",
     "start:wo-router": "next start",
     "start": "NODE_ENV=production node server.js",
     "build": "next build",

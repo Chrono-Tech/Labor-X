@@ -19,6 +19,7 @@ export class ReviewApplicantsContent extends React.Component {
       offer: PropTypes.instanceOf(JobOfferModel),
       worker: PropTypes.instanceOf(ProfileModel),
     })),
+    worker: PropTypes.instanceOf(ProfileModel),
   }
 
   constructor (props) {
@@ -30,7 +31,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   handleBack () {
-    Router.pushRoute('/active-jobs')
+    Router.pushRoute('/posted-jobs')
   }
 
   renderEmptyListMessage (){
@@ -42,7 +43,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   render () {
-    const { job, applicants/*, worker*/ } = this.props
+    const { job, applicants, worker } = this.props
     return !applicants ? null : (
       <div className={css.main}>
         <div className={css.title}>
@@ -98,16 +99,16 @@ export class ReviewApplicantsContent extends React.Component {
                 color={Image.COLORS.BLACK}
               />
             </div>
-            {/* <div className={css.block}>
+            <div className={css.block}>
               <h4>Selected Worker</h4>
               <div className={css.cards}>
                 { worker ? <WorkerCard offerSent {...worker} /> : this.renderEmptyListMessage() }
               </div>
-            </div> */}
+            </div>
             <div className={css.block}>
               <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                { applicants &&  applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} />))}
+                { applicants &&  applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} jobId={this.props.job.id} job={this.props.job} />))}
                 { applicants && !applicants.length && this.renderEmptyListMessage() }
               </div>
             </div>
@@ -125,8 +126,13 @@ function mapStateToProps (state, op) {
     worker: profileSelector(offer.worker)(state),
   }))
 
+  const worker = op.job.worker && applicants && applicants.length
+    ? applicants.find(x => x.worker.address.toLowerCase() === op.job.worker.toLowerCase())
+    : null
+
   return {
-    applicants,
+    applicants: worker ? applicants.filter(x => x.worker.address.toLowerCase() !== op.job.worker.toLowerCase()) : applicants,
+    worker,
   }
 }
 

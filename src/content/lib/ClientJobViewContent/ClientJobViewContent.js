@@ -24,7 +24,7 @@ export class ClientJobViewContent extends React.Component {
   }
 
   handleBack () {
-    Router.pushRoute('/jobs')
+    Router.pushRoute('/posted-jobs')
   }
 
   handleTabClick = (index) => {
@@ -82,7 +82,7 @@ export class ClientJobViewContent extends React.Component {
         <div className={css.content}>
           <div className={cn(css.header, job.state === JobStateModel.JOB_STATE_STARTED ? css.bgGreen : css.bgGrey)}>
             <div>
-              <h2>{job.ipfs.name}</h2>
+              <h2 className={css.jobName}>{job.ipfs.name}</h2>
               <div className={css.jobInfoContainer}>
                 <p className={css.jobInfo}>Ref {job.ipfs.refString}</p>
                 <p className={css.jobInfo}>{client.ipfs.name} (Client)</p>

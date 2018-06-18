@@ -2,7 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
-import { SignerModel, BoardModel, JobFormModel, JobIPFSModel, JobAddressModel, JobBudgetModel, JobPeriodModel, SkillModel, TagAreaModel, TagCategoryModel } from 'src/models'
+import { SignerModel, BoardModel, JobFormModel, JobIPFSModel,
+  JobAddressModel, JobBudgetModel, JobPeriodModel,
+  SkillModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST }
+  from 'src/models'
 import { Router } from 'src/routes'
 import { signerSelector, boardsListSelector, createJob } from 'src/store'
 import CreateJobForm, { FORM_CREATE_JOB } from './CreateJobForm'
@@ -17,8 +20,10 @@ export class CreateJobContent extends React.Component {
     hasBudget: PropTypes.bool,
     hasPeriod: PropTypes.bool,
     hasAddress: PropTypes.bool,
-    hasRequirements: PropTypes.bool,
     hasSkills: PropTypes.bool,
+    allowCustomOffers: PropTypes.bool,
+    startWorkAllowance: PropTypes.bool,
+    flowType: PropTypes.number,
   }
 
   state = {
@@ -46,8 +51,10 @@ export class CreateJobContent extends React.Component {
       hasBudget,
       hasPeriod,
       hasAddress,
-      hasRequirements,
       hasSkills,
+      allowCustomOffers,
+      startWorkAllowance,
+      flowType,
     } = this.props
     const { isLoading } = this.state
     return signer == null ? null : (
@@ -56,8 +63,10 @@ export class CreateJobContent extends React.Component {
         hasBudget={hasBudget}
         hasPeriod={hasPeriod}
         hasAddress={hasAddress}
-        hasRequirements={hasRequirements}
         hasSkills={hasSkills}
+        allowCustomOffers={allowCustomOffers}
+        startWorkAllowance={startWorkAllowance}
+        flowType={flowType}
         boards={boards}
         isLoading={isLoading}
         onSubmit={this.handleSubmit}
@@ -77,16 +86,18 @@ function mapStateToProps (state) {
     hasBudget: formSelector(state, 'hasBudget'),
     hasPeriod: formSelector(state, 'hasPeriod'),
     hasAddress: formSelector(state, 'hasAddress'),
-    hasRequirements: formSelector(state, 'hasRequirements'),
-    hasSkills: formSelector(state, 'hasSkills'),
+    allowCustomOffers: formSelector(state, 'allowCustomOffers'),
+    startWorkAllowance: formSelector(state, 'startWorkAllowance'),
+    flowType: formSelector(state, 'flowType'),
     initialValues: {
       board: null,
+      flowType: 1,
       tags: [],
       hasBudget: false,
       hasPeriod: false,
       hasAddress: false,
-      hasRequirements: false,
-      hasSkills: false,
+      allowCustomOffers: false,
+      startWorkAllowance: false,
     },
   }
 }
@@ -95,17 +106,20 @@ function mapDispatchToProps (dispatch) {
   return {
     async handleSubmit (values) {
       // eslint-disable-next-line no-console
-      console.log(values.skills, values.skills.reduce((mask, index) => (mask | Math.pow(2, index)), 0))
+      console.log('values', values)
       const data = new JobFormModel({
         boardId: values.board,
-        category: TagCategoryModel.valueOf(values.category),
-        area: TagAreaModel.valueOf(values.area),
-        skills: SkillModel.arrayValueOfMask(values.skills.reduce((mask, index) => (mask | Math.pow(2, index)), 0)),
+        flowType: values.flowType,
+        category: TAG_CATEGORIES_LIST[0],
+        area: TAG_AREAS_LIST[0],
+        skills: SkillModel.arrayValueOfMask(SKILLS_LIST.reduce((mask, index) => (mask | Math.pow(2, index)), 0)),
         ipfs: new JobIPFSModel({
+          boardId: values.board,
           name: values.name,
           intro: values.intro,
           responsibilities: [values.responsibilities],
           minimumRequirements: [values.requirements],
+          conclusion: [values.conclusion],
           // logo: values.logo, // TODO @ipavlenko: Implement logo
           address: new JobAddressModel(
             !values.hasAddress

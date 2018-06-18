@@ -183,26 +183,28 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
       pendingFinishAt,
       finishTime,
       finalizedAt,
-      boardId,
+      // boardId,
       paused,
       defaultPay,
       pausedAt,
       pausedFor,
       flowType,
     }) => {
+      const ipfsValue = await loadFromIPFS(ipfsHash)
+      const ipfs = new JobIPFSModel({
+        ...(ipfsValue || {}),
+        hash: ipfsHash,
+      })
       return new JobModel({
         id,
         client,
         worker,
-        boardId,
+        boardId: ipfs.boardId || 0,
         state: JobStateModel.valueOf(state),
         area: TagAreaModel.valueOfCode(skillsArea),
         category: TagCategoryModel.valueOfCode(skillsCategory),
         skills: SkillModel.arrayValueOfMask(skills),
-        ipfs: new JobIPFSModel({
-          ...(await loadFromIPFS(ipfsHash) || {}),
-          hash: ipfsHash,
-        }),
+        ipfs,
         flowType,
         paused,
         defaultPay,

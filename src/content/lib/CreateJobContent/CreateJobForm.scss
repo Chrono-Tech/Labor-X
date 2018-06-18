@@ -71,14 +71,35 @@ $gutter: 4rem;
   @include card;
   padding: 3rem;
   margin-bottom: 4rem;
+  .cardHeading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    > * {
+      flex: 0 0 auto;
+      &:first-child {
+        flex: 1 1 auto;
+      }
+    }
+  }
+  .description {
+    margin: 2rem 0;
+  }
 }
 
 .mainFields {
   margin-bottom: 2rem;
 }
 
-.skillsRow {
-  @include flex(row, flex-start, flex-end);
+.tagsRow {
+  @include flex(row, flex-start, flex-start);
+  .tags {
+    @include flex(row, flex-start, center);
+    flex-wrap: wrap;
+  }
 }
 
 .twoColumn {
@@ -92,8 +113,20 @@ $gutter: 4rem;
   }
 }
 
+.budgetWidget {
+  @include flex(row, space-around, flex-start);
+  margin: 3rem 0;
+  > * {
+    flex-basis: 50%;
+    margin-right: 2rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 .find {
-  width: 8rem;
+  max-width: 8rem;
   color: $color-gray30;
   margin-right: 2rem;
 }
@@ -117,6 +150,7 @@ $gutter: 4rem;
 
 .badgesContainer {
   @include flex(column, flex-start, center);
+  margin: 2rem 0;
   padding: 4rem 0 3rem;
   width: 100%;
   color: $color-white;
@@ -137,16 +171,17 @@ $gutter: 4rem;
   > * {
     min-width: 30rem;
   }
+  .hourlyRating {
+    @include flex(column, flex-start, center);
+    margin-top: 4rem;
+  }
 }
 
-.hourlyRating {
-  margin-top: 4rem;
-}
 
 .hourlyRatingGraph {
   min-width: 20rem;
   min-height: 20rem;
-  background-color: $todo;
+  //background-color: $todo;
   margin-top: 2rem;
 }
 
@@ -154,21 +189,15 @@ $gutter: 4rem;
   margin-bottom: 4rem;
 }
 
-.cardHeading {
-  display: flex;
-  align-items: center;
-  margin-bottom: 3rem;
-  &:last-child {
-    margin-bottom: 0;
-  }
-  > * {
-    flex: 0 0 auto;
-    &:first-child {
-      flex: 1 1 auto;
-    }
-  }
-}
-
 .row {
   margin-bottom: 1rem;
+}
+
+.addressCheckbox {
+  margin: 1rem 0;
+}
+
+.calendar {
+  margin-top: 2rem;
+  object-fit: contain;
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Router from 'next/router'
+import Router from 'src/routes'
 import Dialog from 'material-ui/Dialog'
 
 import {
@@ -95,7 +95,7 @@ class LoginOptions extends React.Component {
   }
 
   navigateToCreateAccount (){
-    Router.push('/create-account')
+    Router.pushRoute('/create-account')
   }
 
   renderComponent () {
@@ -285,7 +285,7 @@ function mapStateToProps (state) {
     selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
     step: state.login.step,
-    walletsList: state.wallet.walletsList.map((wallet) => new WalletEntryModel(wallet)),
+    walletsList: (state.wallet.walletsList || []).map((wallet) => new WalletEntryModel(wallet)),
   }
 }
 

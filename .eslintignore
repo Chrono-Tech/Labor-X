@@ -74,7 +74,7 @@ src/**/*.js
 
 
 !src/content/index.js
-!src/content/lib/CreateJobContent/validate.js
+!src/content/lib/CreateJobContent/
 !src/content/lib/ClientJobViewContent/ClientJobViewContent.js
 !src/content/lib/ClientJobViewContent/ContractTab/ContractTab.js
 !src/content/lib/ClientJobViewContent/GeneralTab/GeneralTab.js
@@ -88,6 +88,8 @@ src/**/*.js
 !src/content/lib/TodoContent/TodoContent.js
 !src/content/lib/OpportunityViewContent/
 !src/content/lib/ApplicationsAndOffersContent/
+!src/content/lib/OpportunityViewContent/OpportunityViewContent.js
+!src/content/lib/OpportunityViewContent/DescriptionTab/DescriptionTab.js
 
 !src/partials/
 
