@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import pluralize from 'pluralize'
 import { JobModel, BoardModel } from 'src/models'
-import { Link, Counter, Button } from 'src/components/common'
+import { Link, Button, Tip } from 'src/components/common'
 import css from './WorkerJobCard.scss'
+
+const dateFormat = 'DD MMM YYYY'
 
 export default class WorkerJobCard extends React.Component {
   static propTypes = {
@@ -29,26 +30,55 @@ export default class WorkerJobCard extends React.Component {
     this.props.onClickReview(this.props.job.id)
   }
 
-  renderFooter (notice) {
+  renderFooter = () => {
+    const { notice, onClickReview, onClickReviewOffer, onClickDismiss } = this.props
     return (
       <div>
         { !notice ? null : (
-          <div className={css.notice}>{notice.label}</div>
+          <Tip
+            position={Tip.POSITION.LEFT}
+            tipContent={(
+              <div>
+                <div className={css.tipTitle}>{moment().diff(notice.date, 'days') > 0 ? moment(notice.date).format(dateFormat) : moment(notice.date).fromNow()}</div>
+                <p>{notice.description}</p>
+              </div>
+            )}
+          >
+            <div className={css.notice}>{notice.label}</div>
+          </Tip>
         )}
-        <Button
-          label='REVIEW'
-          className={css.review}
-          mods={Button.MODS.FLAT}
-          onClick={this.handleReview}
-        />
+        { onClickReview && (
+          <Button
+            label='REVIEW'
+            className={css.blueAction}
+            mods={Button.MODS.FLAT}
+            onClick={onClickReview}
+          />
+        )}
+        { onClickReviewOffer && (
+          <Button
+            label='REVIEW OFFER'
+            labelClassName={css.actionLable}
+            className={css.blueAction}
+            mods={Button.MODS.FLAT}
+            onClick={onClickReviewOffer}
+          />
+        )}
+        { onClickDismiss && (
+          <Button
+            label='DISMISS APPLICATION'
+            labelClassName={css.actionLable}
+            className={css.redAction}
+            mods={Button.MODS.FLAT}
+            onClick={onClickDismiss}
+          />
+        )}
       </div>
     )
   }
 
   render () {
     const { job, board, notice } = this.props
-    console.log('job', job)
-
     return (
       <div
         className={css.root}

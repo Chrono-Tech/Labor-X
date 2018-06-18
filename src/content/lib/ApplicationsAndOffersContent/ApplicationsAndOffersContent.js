@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import SwipeableViews from 'react-swipeable-views'
 import { connect } from 'react-redux'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import { Translate } from 'components/common'
 import { jobsListSelector, boardByIdSelector } from 'src/store'
 import { JobModel, BoardModel } from 'src/models'
-import TabContent from './TabContent/TabContent'
+import OffersTabContent from './OffersTabContent/OffersTabContent'
+import ApplicationsTabContent from './ApplicationsTabContent/ApplicationsTabContent'
 import css from './ApplicationsAndOffersContent.scss'
 
 const style = {
@@ -21,12 +23,31 @@ const inkBarStyle = {
 class ApplicationsAndOffersContent extends React.Component {
   static propTypes = {
     applications: PropTypes.arrayOf(PropTypes.shape({
-      job: PropTypes.instanceOf(JobModel).isRequired,
-      board: PropTypes.instanceOf(BoardModel).isRequired,
+      job: PropTypes.instanceOf(JobModel),
+      board: PropTypes.instanceOf(BoardModel),
+      notice: PropTypes.shape({
+        label: PropTypes.string,
+        description: PropTypes.string,
+        date: PropTypes.instanceOf(Date),
+      }),
+    })),
+    applicationsApproved: PropTypes.arrayOf(PropTypes.shape({
+      job: PropTypes.instanceOf(JobModel),
+      board: PropTypes.instanceOf(BoardModel),
+      notice: PropTypes.shape({
+        label: PropTypes.string,
+        description: PropTypes.string,
+        date: PropTypes.instanceOf(Date),
+      }),
     })),
     offers: PropTypes.arrayOf(PropTypes.shape({
-      job: PropTypes.instanceOf(JobModel).isRequired,
-      board: PropTypes.instanceOf(BoardModel).isRequired,
+      job: PropTypes.instanceOf(JobModel),
+      board: PropTypes.instanceOf(BoardModel),
+      notice: PropTypes.shape({
+        label: PropTypes.string,
+        description: PropTypes.string,
+        date: PropTypes.instanceOf(Date),
+      }),
     })),
   }
 
@@ -44,7 +65,7 @@ class ApplicationsAndOffersContent extends React.Component {
   };
 
   render () {
-    const { applications, offers } = this.props
+    const { applications, applicationsApproved, offers } = this.props
 
     return (
       <div className={css.main}>
@@ -76,8 +97,8 @@ class ApplicationsAndOffersContent extends React.Component {
             index={this.state.slideIndex}
             onChangeIndex={this.handleChange}
           >
-            <TabContent cards={applications} />
-            <TabContent cards={offers} />
+            <ApplicationsTabContent applicationsApproved={applicationsApproved} applications={applications} />
+            <OffersTabContent offers={offers} />
           </SwipeableViews>
         </div>
       </div>
@@ -86,15 +107,55 @@ class ApplicationsAndOffersContent extends React.Component {
 }
 
 function mapStateToProps (state) {
-  // TODO @aevalyakin get only offers for this worker
-  const jobs = jobsListSelector()(state) || []
-  const cards = jobs.map(job => ({
-    job,
-    board: boardByIdSelector(job.boardId)(state),
-  }))
-  return {
-    applications: cards,
-    offers: cards,
+  // TODO @aevalyakin bind data
+  const jobs = jobsListSelector()(state)
+  const filteredJobs = jobs.filter(job => job.boardId > 0)
+  if (filteredJobs && filteredJobs.length > 0) {
+    const job = filteredJobs[0]
+    return {
+      // Applied by worker and approved by client
+      applicationsApproved: [
+        {
+          job: jobs[0],
+          board: boardByIdSelector(job.boardId)(state),
+          notice: {
+            label: 'UPDATED',
+            description: 'Get Started has picked you to do this job! Please review contract and we will send notification about your decision to the client.',
+            date: moment().subtract(2, 'hours').toDate(),
+          },
+        },
+      ],
+      // Applied by worker but not approved by client yet
+      applications: [
+        {
+          job: jobs[0],
+          board: boardByIdSelector(job.boardId)(state),
+          notice: {
+            label: 'ON REVIEW',
+            description: 'Your application is under review. We will send you a notification once decision has been made.',
+            date: new Date('12-12-2017'),
+          },
+        },
+      ],
+      // Offers from client
+      offers: [
+        {
+          job: jobs[0],
+          board: boardByIdSelector(job.boardId)(state),
+          notice: {
+            label: 'ENDS IN 1 DAY',
+            description: 'Get Started has sent you an offer! Please review the offer and we will send notification about your decision to the client.',
+            date: moment().subtract(2, 'hours').toDate(),
+          },
+        },
+      ],
+    }
+  } else {
+    return {
+      applications: [],
+      applicationsApproved: [],
+      offers: [],
+    }
   }
 }
 

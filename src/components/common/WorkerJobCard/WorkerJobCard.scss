@@ -29,19 +29,27 @@
   }
   .notice {
     @include flex(row, center, center);
+    padding: .5rem 1rem;
+    color: $color-white;
+    font-weight: $font-weight-regular;
     text-transform: uppercase;
     background-color: $color-gold;
     border-radius: 1.2rem;
   }
-  .report {
-    font-weight: $font-weight-light;
-    color: $color-red;
-  }
-  .review {
+  .blueAction {
     margin-left: auto;
-    width: 10rem;
+    // width: 10rem;
     color: $color-azure;
     background-color: transparent;
+  }
+  .redAction {
+    margin-left: auto;
+    // width: 10rem;
+    color: $color-red;
+    background-color: transparent;
+  }
+  .actionLable {
+    white-space: nowrap;
   }
   .icon {
     margin-right: 1rem;
@@ -49,5 +57,9 @@
     height: 3rem;
     border-radius: 50%;
     object-fit: cover;
+  }
+  .tipTitle {
+    font-weight: $font-weight-medium;
+    margin-bottom: 2rem;
   }
 }
