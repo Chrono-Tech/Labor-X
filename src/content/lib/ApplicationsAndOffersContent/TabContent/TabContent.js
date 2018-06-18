@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { JobModel, BoardModel } from 'src/models'
-import { JobCard } from 'components/common'
+import { WorkerJobCard } from 'components/common'
 import css from './TabContent.scss'
 
 export default class TabContent extends React.Component {
@@ -16,7 +16,7 @@ export default class TabContent extends React.Component {
   render () {
     return (
       <div className={css.content}>
-        { this.props.cards.map(card => (<JobCard job={card.job} board={card.board} key={uniqid()} />)) }
+        { this.props.cards.map(card => (<WorkerJobCard job={card.job} board={card.board} key={uniqid()} />)) }
       </div>
     )
   }
