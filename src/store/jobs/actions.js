@@ -161,7 +161,7 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
 
   const tx = jobControllerDAO.createPostJobTx(
     signer.address,
-    1, // flowType enum { TM = 1, FIXED_PRICE = 2 }
+    form.flowType,
     form.area.code,
     form.category.code,
     SkillModel.writeArrayToMask(form.skills),

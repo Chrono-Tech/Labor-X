@@ -25,7 +25,7 @@ export class OpportunityViewContent extends React.Component {
   }
 
   handleBack () {
-    Router.push('/opportunities')
+    Router.pushRoute('/opportunities')
   }
 
   handleCalendar = () => {
@@ -50,7 +50,7 @@ export class OpportunityViewContent extends React.Component {
           ontop: new BigNumber(0),
         })
       )
-      Router.push('/opportunities')
+      Router.pushRoute('/opportunities')
     } finally {
       this.setState({
         isOfferPosting: false,
