@@ -4,17 +4,6 @@ import cn from 'classnames'
 import css from './Icon.scss'
 
 export default class Image extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    onClick: PropTypes.func,
-    icon: PropTypes.string,
-    title: PropTypes.string,
-    color: PropTypes.string,
-    faded: PropTypes.bool,
-    href: PropTypes.string,
-    size: PropTypes.number,
-  }
-
   static defaultTypes = {
     icon: '',
     size: 14,
@@ -82,6 +71,17 @@ export default class Image extends React.PureComponent {
       icon: Image.ICONS.STAR,
       color: Image.COLORS.GOLD,
     },
+  }
+
+  static propTypes = {
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+    icon: PropTypes.string,
+    title: PropTypes.string,
+    color: PropTypes.string,
+    faded: PropTypes.bool,
+    href: PropTypes.string,
+    size: PropTypes.number,
   }
 
   render () {

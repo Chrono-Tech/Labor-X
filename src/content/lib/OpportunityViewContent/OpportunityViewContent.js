@@ -25,7 +25,7 @@ export class OpportunityViewContent extends React.Component {
   }
 
   handleBack () {
-    Router.push('/opportunities')
+    Router.pushRoute('/opportunities')
   }
 
   handleCalendar = () => {
@@ -38,10 +38,10 @@ export class OpportunityViewContent extends React.Component {
   }
 
   handlePostOffer = async () => {
-    this.setState({
-      isOfferPosting: true,
-    })
     try {
+      this.setState({
+        isOfferPosting: true,
+      })
       await this.props.onPostOffer(
         new JobOfferFormModel({
           jobId: this.props.job.id,
@@ -50,15 +50,15 @@ export class OpportunityViewContent extends React.Component {
           ontop: new BigNumber(0),
         })
       )
+      this.setState({
+        isOfferPosting: false,
+      }, () => {
+        Router.pushRoute('/applications-and-offers')
+      })
     } catch (e) {
       // eslint-disable-next-line no-console
       console.warn('handlePostOffer Error: ', e)
     }
-    this.setState({
-      isOfferPosting: false,
-    }, () => {
-      Router.push('/applications-and-offers')
-    })
   }
 
   tabs = [

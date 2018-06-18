@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cn from 'classnames'
 import { Field, reduxForm, propTypes } from 'redux-form'
 import { Toggle, SelectField, DatePicker, TextField } from 'redux-form-material-ui'
 import { MuiThemeProvider, CircularProgress, MenuItem } from 'material-ui'
-import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox } from 'src/components/common'
-import { SignerModel, BoardModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST } from 'src/models'
+import { Router } from 'src/routes'
+import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link } from 'src/components/common'
+import { SignerModel, BoardModel, FlowTypeModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST, FLOW_TYPES } from 'src/models'
 import validate from './validate'
 import css from './CreateJobForm.scss'
 
@@ -19,8 +19,9 @@ class CreateJobForm extends React.Component {
     hasBudget: PropTypes.bool,
     hasPeriod: PropTypes.bool,
     hasAddress: PropTypes.bool,
-    hasRequirements: PropTypes.bool,
-    hasSkills: PropTypes.bool,
+    allowCustomOffers: PropTypes.bool,
+    startWorkAllowance: PropTypes.bool,
+    flowType: PropTypes.number,
     boards: PropTypes.arrayOf(
       PropTypes.instanceOf(BoardModel)
     ),
@@ -35,8 +36,56 @@ class CreateJobForm extends React.Component {
   handleChangeHourlyRating = (event, index, value) => this.setState({ hourlyRatingValue: value })
   // handleChangeState = (event, index, value) => this.setState({ stateValue: value })
 
+  handleBack () {
+    Router.pushRoute('/job-types')
+  }
+
+  renderBudgetWidget = () => {
+    if (!this.props.flowType) return null
+    return FlowTypeModel.valueOf(this.props.flowType) === FLOW_TYPES.FIXED_PRICE ? (
+      <div className={css.budgetWidget}>
+        <div>
+          <Field
+            className={css.numberInput}
+            component={NumberInput}
+            name='hourlyRate'
+            title='ui.createJob.hourlyRate'
+            subtitle='USD 60.00'
+            max={1000}
+            min={0}
+          />
+        </div>
+        <div>
+          <Field
+            className={css.numberInput}
+            component={NumberInput}
+            name='totalHours'
+            title='ui.createJob.totalHours'
+            subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+            max={1000}
+            min={0}
+          />
+        </div>
+      </div>
+    ) : (
+      <div className={css.budgetWidget}>
+        <div>
+          <Field
+            className={css.numberInput}
+            component={NumberInput}
+            name='fixedPrice'
+            title='ui.createJob.fixedPrice'
+            subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+            max={1000}
+            min={0}
+          />
+        </div>
+      </div>
+    )
+  }
+
   render () {
-    const { isLoading, boards, hasBudget, hasPeriod, hasAddress, hasRequirements, hasSkills } = this.props
+    const { isLoading, boards, hasBudget, hasPeriod, hasAddress } = this.props
 
     return (
       <MuiThemeProvider>
@@ -48,6 +97,7 @@ class CreateJobForm extends React.Component {
                 icon={Image.SETS.ARROW_BACK}
                 type={Button.TYPES.SUBMIT}
                 mods={Button.MODS.FLAT}
+                onClick={this.handleBack}
               />
               <div className={css.titleBarRight}>
                 <Button
@@ -92,6 +142,7 @@ class CreateJobForm extends React.Component {
                   name='intro'
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.intro' />}
+                  hintText={<Translate value='ui.createJob.introPlaceholder' />}
                 />
                 <Field
                   className={css.inputSection}
@@ -99,6 +150,7 @@ class CreateJobForm extends React.Component {
                   name='responsibilities'
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.responsibilities' />}
+                  hintText={<Translate value='ui.createJob.responsibilitiesPlaceholder' />}
                 />
                 <Field
                   className={css.inputSection}
@@ -106,67 +158,22 @@ class CreateJobForm extends React.Component {
                   name='requirements'
                   fullWidth
                   floatingLabelText={<Translate value='ui.createJob.requirements' />}
+                  hintText={<Translate value='ui.createJob.requirementsPlaceholder' />}
+                />
+                <Field
+                  className={css.inputSection}
+                  component={TextField}
+                  name='conclusion'
+                  fullWidth
+                  floatingLabelText={<Translate value='ui.createJob.conclusion' />}
+                  hintText={<Translate value='ui.createJob.conclusionPlaceholder' />}
                 />
               </div>
             </div>
 
             <div className={css.card}>
               <div className={css.cardHeading}>
-                <h3><Translate value='ui.createJob.tags' /></h3>
-              </div>
-              <div className={cn(css.row, css.twoColumn)}>
-                <Field
-                  component={SelectField}
-                  floatingLabelText={<Translate value='ui.createJob.area' />}
-                  name='area'
-                >
-                  {TAG_AREAS_LIST.map(area => (
-                    <MenuItem key={area.index} value={area.index} primaryText={area.name} />
-                  ))}
-                </Field>
-                <Field
-                  component={SelectField}
-                  floatingLabelText={<Translate value='ui.createJob.category' />}
-                  name='category'
-                >
-                  {TAG_CATEGORIES_LIST.map(category => (
-                    <MenuItem key={category.index} value={category.index} primaryText={category.name} />
-                  ))}
-                </Field>
-              </div>
-              <div>
-                <Field
-                  component={SelectField}
-                  floatingLabelText={<Translate value='ui.createJob.skills' />}
-                  name='skills'
-                  multiple
-                  fullWidth
-                >
-                  {SKILLS_LIST.map(skill => (
-                    <MenuItem key={skill.index} value={skill.index} primaryText={skill.name} />
-                  ))}
-                </Field>
-              </div>
-            </div>
-
-            {/* <Field
-              className={css.inputSection}
-              component={Input}
-              name='conclusion'
-              label='ui.createJob.conclusion'
-              placeholder='ui.createJob.conclusionPlaceholder'
-              mods={Input.MODS.BOXED}
-            /> */}
-
-            <div className={css.card}>
-              <div className={css.cardHeading}>
                 <h3><Translate value='ui.createJob.jobBoard' /></h3>
-                <div>
-                  <Field
-                    component={Toggle}
-                    name='hasRequirements'
-                  />
-                </div>
               </div>
               <div>
                 <div className={css.twoColumn}>
@@ -183,40 +190,36 @@ class CreateJobForm extends React.Component {
                     Post Fee (no-refund): LHUS 1.00 (USD 30.00)
                   </div>
                 </div>
-                {!hasRequirements ? null : (
-                  <div>
-                    <div className={css.badgesContainer}>
-                      <h4><Translate value='ui.createJob.badgesTitle' /></h4>
-                      <p><Translate value='ui.createJob.badgesSubtitle' /></p>
-                      <div className={css.badges}>
-                        <Badge value='1+' title='terms.rating' />
-                        <Badge value='term.any' title='terms.validation' />
-                        <Badge value='term.any' title='terms.endorsement' />
-                        <Badge value='term.any' title='terms.categories' />
-                      </div>
-                    </div>
-                    <div className={css.card}>
-                      <div className={css.hourlyRatingColumn}>
-                        <Field
-                          component={SelectField}
-                          hintText='Force Worker Rating'
-                          hintStyle={{ fontStyle: 'italic' }}
-                          value={this.state.hourlyRatingValue}
-                          onChange={this.handleChangeHourlyRating}
-                          name='hourlyRating'
-                        >
-                          <MenuItem value={1} primaryText='Force Worker Rating' />
-                          <MenuItem value={2} primaryText='Force Worker Rating' />
-                          <MenuItem value={3} primaryText='Force Worker Rating' />
-                        </Field>
-                        <div className={css.hourlyRating}>
-                          <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
-                          <div className={css.hourlyRatingGraph} />
-                        </div>
-                      </div>
+                <div>
+                  <div className={css.badgesContainer}>
+                    <h4><Translate value='ui.createJob.badgesTitle' /></h4>
+                    <p><Translate value='ui.createJob.badgesSubtitle' /></p>
+                    <div className={css.badges}>
+                      <Badge value='1+' title='terms.rating' />
+                      <Badge value='term.any' title='terms.validation' />
+                      <Badge value='term.any' title='terms.endorsement' />
+                      <Badge value='term.any' title='terms.categories' />
                     </div>
                   </div>
-                )}
+                  <div className={css.hourlyRatingColumn}>
+                    <Field
+                      component={SelectField}
+                      hintText='Force Worker Rating'
+                      hintStyle={{ fontStyle: 'italic' }}
+                      value={this.state.hourlyRatingValue}
+                      onChange={this.handleChangeHourlyRating}
+                      name='hourlyRating'
+                    >
+                      <MenuItem value={1} primaryText='Force Worker Rating' />
+                      <MenuItem value={2} primaryText='Force Worker Rating' />
+                      <MenuItem value={3} primaryText='Force Worker Rating' />
+                    </Field>
+                    <div className={css.hourlyRating}>
+                      <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
+                      <img className={css.hourlyRatingGraph} src='/static/temp/avearage_rate.png' alt='avearage_rate' />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -231,32 +234,64 @@ class CreateJobForm extends React.Component {
                   />
                 </div>
               </div>
+              <div className={css.description}>
+                If you&apos;re not sure about the job budget yet you may set the module OFF.
+                You may also select an hourly-based or fixed budget. In addition you may specify if the given budget is approximate.
+                You&apos;ll be able to enter the budget before sending an offer to a worker or the offer is declined.
+                If you&apos;d like to select a worker service please use <Link href='/hire-worker'>Hire a Worker</Link>.
+              </div>
               {!hasBudget ? null : (
-                <div className={css.twoColumn}>
-                  <div>
-                    <Field
-                      className={css.numberInput}
-                      component={NumberInput}
-                      name='hourlyRate'
-                      title='ui.createJob.hourlyRate'
-                      subtitle='USD 60.00'
-                      max={1000}
-                      min={0}
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      className={css.numberInput}
-                      component={NumberInput}
-                      name='totalHours'
-                      title='ui.createJob.totalHours'
-                      subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
-                      max={1000}
-                      min={0}
-                    />
-                  </div>
+                <div>
+                  <Field
+                    component={SelectField}
+                    name='flowType'
+                    hintText={<Translate value='ui.createJob.flowType' />}
+                  >
+                    <MenuItem value={1} primaryText='Hourly Based' />
+                    <MenuItem value={2} primaryText='Fixed price' />
+                  </Field>
+                  { this.renderBudgetWidget() }
+
+                  <Field
+                    component={ValidatedCheckbox}
+                    name='budgetApproximate'
+                    label={<Translate value='ui.createJob.budgetApproximateLabel' />}
+                  />
                 </div>
               )}
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.allowCustomOffers' /></h3>
+                <div>
+                  <Field
+                    component={Toggle}
+                    name='allowCustomOffers'
+                    parse={Boolean}
+                  />
+                </div>
+              </div>
+              <div className={css.description}>
+                If you&apos;d like to receive custom offers from Workers enable this section and
+                you&apos;ll be able to review these offers along with all other Job Applicants.
+              </div>
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.startWorkAllowance' /></h3>
+                <div>
+                  <Field
+                    component={Toggle}
+                    name='startWorkAllowance'
+                    parse={Boolean}
+                  />
+                </div>
+              </div>
+              <div className={css.description}>
+                Set this option ON if you&apos;d like to confirm the start of the work. Note that without your confirmation the Worker will not be able to track time.
+              </div>
             </div>
 
             <div className={css.card}>
@@ -269,6 +304,10 @@ class CreateJobForm extends React.Component {
                   />
                 </div>
               </div>
+              <div className={css.description}>
+                If disabled selected Worker will able to set start and end dates.
+                Time the job can be started will be set by the Worker in both cases.
+              </div>
               {!hasPeriod ? null : (
                 <div className={css.twoColumn}>
                   <div>
@@ -277,6 +316,7 @@ class CreateJobForm extends React.Component {
                       component={DatePicker}
                       placeholder='Starts at'
                     />
+                    <img className={css.calendar} src='/static/temp/calendar.png' alt='calendar' />
                   </div>
                   <div>
                     <Field
@@ -284,6 +324,7 @@ class CreateJobForm extends React.Component {
                       component={DatePicker}
                       placeholder='Deadline'
                     />
+                    <img className={css.calendar} src='/static/temp/calendar.png' alt='calendar' />
                   </div>
                 </div>
               )}
@@ -301,15 +342,12 @@ class CreateJobForm extends React.Component {
               </div>
               {!hasAddress ? null : (
                 <div>
-                  {/*
-                    <div className={css.companyAddress}>
-                      <Field
-                        component={Checkbox}
-                        name='isCompanyAddress'
-                        label={<Translate value='ui.createJob.companyAddressLabel' />}
-                      />
-                    </div>
-                  */}
+                  <Field
+                    className={css.addressCheckbox}
+                    component={ValidatedCheckbox}
+                    name='companyAddress'
+                    label={<Translate value='ui.createJob.companyAddressLabel' />}
+                  />
                   <div className={css.twoColumn}>
                     <div>
                       <Field
@@ -376,34 +414,62 @@ class CreateJobForm extends React.Component {
               )}
             </div>
 
-            {/*
             <div className={css.card}>
               <div className={css.cardHeading}>
                 <h3><Translate value='ui.createJob.skills' /></h3>
-                <div>
-                  <Field
-                    component={Toggle}
-                    name='hasSkills'
-                  />
+              </div>
+              <div className={css.tagsRow}>
+                <Field
+                  className={css.find}
+                  component={TextField}
+                  name='searchSkill'
+                  hintText={<Translate value='terms.find' />}
+                />
+                <div className={css.tags}>
+                  {SKILLS_LIST.map(e => (
+                    <Chip value={e.name} key={e.index} />
+                  ))}
                 </div>
               </div>
-              {!hasSkills ? null : (
-                <div className={css.skillsRow}>
-                  <Field
-                    lineEnabled
-                    className={css.find}
-                    component={Input}
-                    name='searchSkill'
-                    placeholder='term.find'
-                    mods={Input.MODS.ALIGN_LEFT}
-                  />
-                  <Chip value='Inventory' />
-                  <Chip value='Monetary Exchange' />
-                  <Chip value='Ordering Supplies' />
-                </div>
-              )}
             </div>
-            */}
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.area' /></h3>
+              </div>
+              <div className={css.tagsRow}>
+                <Field
+                  className={css.find}
+                  component={TextField}
+                  name='searchArea'
+                  hintText={<Translate value='terms.find' />}
+                />
+                <div className={css.tags}>
+                  {TAG_AREAS_LIST.map(e => (
+                    <Chip value={e.name} key={e.index} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.category' /></h3>
+              </div>
+              <div className={css.tagsRow}>
+                <Field
+                  className={css.find}
+                  component={TextField}
+                  name='searchCategory'
+                  hintText={<Translate value='terms.find' />}
+                />
+                <div className={css.tags}>
+                  {TAG_CATEGORIES_LIST.map(e => (
+                    <Chip value={e.name} key={e.index} />
+                  ))}
+                </div>
+              </div>
+            </div>
 
             <div className={css.card}>
               <Field
