@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Router } from 'src/routes'
 import { Translate, JobCard } from 'src/components/common'
-import { signerSelector, jobsListSelector, boardByIdSelector, newJobNoticeSelector } from 'src/store'
+import { jobsListSelector, boardByIdSelector } from 'src/store'
 import css from './PostedJobsContent.scss'
 
 class PostedJobsContent extends React.Component {
@@ -31,14 +31,13 @@ class PostedJobsContent extends React.Component {
 }
 
 function mapStateToProps (state) {
-  const signer = signerSelector()(state)
   const jobs = jobsListSelector()(state)
 
   return {
     cards: jobs.map(job => ({
       job,
       board: boardByIdSelector(job.boardId)(state),
-      notice: newJobNoticeSelector(signer.address, job.id)(state),
+      // notice: newJobNoticeSelector(signer.address, job.id)(state),
     })),
   }
 }

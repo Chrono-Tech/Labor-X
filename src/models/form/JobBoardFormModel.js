@@ -5,6 +5,7 @@ import {
   BoardPostFeeModel,
 } from 'src/models'
 import AbstractModel from '../AbstractModel'
+import faker from "faker";
 
 const schemaFactory = () => ({
   name: PropTypes.string,
@@ -35,17 +36,17 @@ export default class JobPostFormModel extends AbstractModel {
     super(Object.assign({}, defaultProps, props), schemaFactory())
     Object.freeze(this)
   }
-  
+
   get categories (){
     return TagCategoryModel.writeArrayToMask(this.tagCategories)
   }
-  
+
   get ipfsData () {
     return {
       hash: this.hash, // ipfs hash of the object itself
       name: this.name,
-      logo: this.logo,
-      background: this.background,
+      logo: this.logo || faker.internet.avatar(),
+      background: this.background || faker.image.image(64, 64),
       description: this.description,
       joinRequirement: this.joinRequirement && this.joinRequirement.index,
       fee: this.fee && this.fee.index,

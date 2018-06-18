@@ -37,10 +37,10 @@ class TodoCard extends React.Component {
     this.handleComplete = this.handleComplete.bind(this)
   }
 
-  handleComplete () {
+  handleComplete = () => {
     // eslint-disable-next-line no-console
     console.log('Opportunity-view-handleComplete')
-    this.props.completeJobWork(this.props.job)
+    // this.props.completeJobWork(this.props.job)
   }
 
   handleMessage () {
@@ -166,6 +166,7 @@ const mapDispatchToProps = dispatch => ({
   resumeJobWork: (jobId: Number) => dispatch(resumeJobWork(jobId)),
   pauseJobWork: (jobId: Number) => dispatch(pauseJobWork(jobId)),
   startWork: (jobId: Number) => dispatch(startWork(jobId)),
+  // complete: (jobId: Number) => dispatch(startWork(jobId)),
 })
 
 export default connect(null, mapDispatchToProps)(TodoCard)
