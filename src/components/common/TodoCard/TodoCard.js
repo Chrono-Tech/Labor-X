@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
 import { JobModel, JOB_STATE_WORK_REJECTED } from "src/models"
-import { pauseJobWork, resumeJobWork } from "src/store"
+import { pauseJobWork, resumeJobWork, startWork } from "src/store"
 
 import css from './TodoCard.scss'
 
@@ -27,6 +27,7 @@ class TodoCard extends React.Component {
     resumeJobWork: PropTypes.func,
     pauseJobWork: PropTypes.func,
     completeJobWork: PropTypes.func,
+    startWork: PropTypes.func,
   }
 
   constructor (props, context){
@@ -36,10 +37,10 @@ class TodoCard extends React.Component {
     this.handleComplete = this.handleComplete.bind(this)
   }
 
-  handleComplete () {
+  handleComplete = () => {
     // eslint-disable-next-line no-console
     console.log('Opportunity-view-handleComplete')
-    this.props.completeJobWork(this.props.job)
+    // this.props.completeJobWork(this.props.job)
   }
 
   handleMessage () {
@@ -50,7 +51,11 @@ class TodoCard extends React.Component {
   handlePausePlayClick = () => {
     // eslint-disable-next-line no-console
     console.log('handlePausePlayClick: ', this.props.job.paused)
-    this.props.job.paused ? this.props.resumeJobWork(this.props.job.id) : this.props.pauseJobWork(this.props.job.id)
+    if (this.props.job.extra.startTime) {
+      this.props.job.paused ? this.props.resumeJobWork(this.props.job.id) : this.props.pauseJobWork(this.props.job.id)
+    } else {
+      this.props.startWork(this.props.job.id)
+    }
   }
 
   getTodoStatus = () => {
@@ -89,6 +94,7 @@ class TodoCard extends React.Component {
   workedTimeSeconds = () => {
     const { finishTime, extra, pausedFor } = this.props.job
     const { startTime } = extra
+    if (!startTime) return 0
     const fromTime = finishTime ? finishTime : + new Date
     return fromTime - startTime.valueOf() - pausedFor
   }
@@ -156,15 +162,11 @@ class TodoCard extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    resumeJobWork: (jobId: Number) => {
-      dispatch(resumeJobWork(jobId))
-    },
-    pauseJobWork: (jobId: Number) => {
-      dispatch(pauseJobWork(jobId))
-    },
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  resumeJobWork: (jobId: Number) => dispatch(resumeJobWork(jobId)),
+  pauseJobWork: (jobId: Number) => dispatch(pauseJobWork(jobId)),
+  startWork: (jobId: Number) => dispatch(startWork(jobId)),
+  // complete: (jobId: Number) => dispatch(startWork(jobId)),
+})
 
 export default connect(null, mapDispatchToProps)(TodoCard)

@@ -89,7 +89,7 @@ export default class JobCard extends React.Component {
           )
         }
         <div className={css.jobInfo}>
-          <Link className={css.jobName} href='/client-job'>
+          <Link className={css.jobName} href={`/client-job-view/${job.id}`}>
             <h4>{job.ipfs.name}</h4>
           </Link>
           <div className={css.jobDateAward}>

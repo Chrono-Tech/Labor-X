@@ -14,30 +14,30 @@ import { Router } from 'src/routes'
 import CreateJobBoard, { FORM_CREATE_JOB_BOARD } from './CreateJobBoardForm'
 
 class CreateJobBoardContent extends React.Component {
-  
+
   constructor (){
     super()
-    
+
     this.state = {
       isLoading: false,
     }
   }
-  
+
   handleSubmit = async (values) => {
     this.setState({
       isLoading: true,
     })
-    
+
     try {
       await this.props.handleSubmit(values)
-      Router.pushRoute('/job-boards')
+      Router.pushRoute('/my-jobs-boards')
     } finally {
       this.setState({
         isLoading: false,
       })
     }
   }
-  
+
   render (){
     const { isSpecificRequirements, formErrors } = this.props
     return (
@@ -53,7 +53,7 @@ class CreateJobBoardContent extends React.Component {
 
 const mapStateToProps = (state) => {
   const formSelector = formValueSelector(FORM_CREATE_JOB_BOARD)
-  
+
   return {
     formErrors: getFormSyncErrors(FORM_CREATE_JOB_BOARD)(state),
     isSpecificRequirements: formSelector(state, 'joinRequirement') == 1,
@@ -63,7 +63,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     async handleSubmit (values) {
-      
+
       await dispatch(boardCreate(
         new JobBoardFormModel({
           name: values.name,

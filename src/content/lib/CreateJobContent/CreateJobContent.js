@@ -114,6 +114,7 @@ function mapDispatchToProps (dispatch) {
         area: TAG_AREAS_LIST[0],
         skills: SkillModel.arrayValueOfMask(SKILLS_LIST.reduce((mask, index) => (mask | Math.pow(2, index)), 0)),
         ipfs: new JobIPFSModel({
+          boardId: values.board,
           name: values.name,
           intro: values.intro,
           responsibilities: [values.responsibilities],

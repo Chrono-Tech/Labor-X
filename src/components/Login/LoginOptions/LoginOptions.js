@@ -285,7 +285,7 @@ function mapStateToProps (state) {
     selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
     step: state.login.step,
-    walletsList: state.wallet.walletsList.map((wallet) => new WalletEntryModel(wallet)),
+    walletsList: (state.wallet.walletsList || []).map((wallet) => new WalletEntryModel(wallet)),
   }
 }
 

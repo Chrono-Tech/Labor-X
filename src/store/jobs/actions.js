@@ -59,7 +59,12 @@ export const reloadJobs = () => async (dispatch, getState) => {
   const jobs = await JobDataProviderDAO.getJobs(boardControlerDAO)
   dispatch({ type: JOBS_SAVE, jobList: jobs })
 
-  // if (user.accountTypes.worker) { // @todo return when getJobs methods will accept filter by all entries thought bit masks
+  // TODO return after getJobs methods full search implement
+
+  // const user = userSelector()(state)
+  // const signer = signerSelector()(state)
+  //
+  // if (user.accountTypes.worker) {
   //   const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
   //   dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
   // }
@@ -119,7 +124,7 @@ export const resumeJobWork = (jobId: Number) => async (dispatch, getState) => {
     signer.address,
     jobId
   )
-  await dispatch(executeTransaction({ tx, web3 }))
+  await dispatch(executeTransaction({ tx, web3, signer }))
 }
 
 export const pauseJobWork = (jobId: Number) => async (dispatch, getState) => {
@@ -132,7 +137,7 @@ export const pauseJobWork = (jobId: Number) => async (dispatch, getState) => {
     signer.address,
     jobId
   )
-  await dispatch(executeTransaction({ tx, web3 }))
+  await dispatch(executeTransaction({ tx, web3, signer }))
 }
 
 export const confirmEndWork = (jobId: Number) => async (dispatch, getState) => {
@@ -175,6 +180,7 @@ export const createJobOffer = (form: JobOfferFormModel) => async (dispatch, getS
   // eslint-disable-next-line no-console
   console.log('[jobs] createJobOffer from values', form)
   const state = getState()
+
   const jobControllerDAO = daoByType('JobController')(state)
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
@@ -206,4 +212,78 @@ export const updateFilterJobs = (filterFields) => (dispatch, getState) => {
     type: JOBS_FILTER,
     jobsList: currentList,
   })
+}
+
+export const ACCEPT_OFFER_REQUEST = 'ACCEPT_OFFER_REQUEST'
+export const ACCEPT_OFFER_SUCCESS = 'ACCEPT_OFFER_SUCCESS'
+export const ACCEPT_OFFER_FAILURE = 'ACCEPT_OFFER_FAILURE'
+
+const acceptOfferRequest = () => ({ type: ACCEPT_OFFER_REQUEST })
+const acceptOfferSuccess = (res) => ({ type: ACCEPT_OFFER_SUCCESS, res })
+const acceptOfferFailure = (err) => ({ type: ACCEPT_OFFER_FAILURE, err })
+
+export const acceptOffer = (jobId, workerAddress) => async (dispatch, getState) => {
+  try {
+    dispatch(acceptOfferRequest())
+    const state = getState()
+    const JobController = daoByType('JobController')(state)
+    const signer = signerSelector()(state)
+    const web3 = web3Selector()(state)
+    const calculatedLockAmountForWorker = await JobController.calculateLockAmountFor(workerAddress, jobId)
+    const tx = await JobController.acceptOffer(signer.address, jobId, workerAddress, calculatedLockAmountForWorker)
+    const res = await dispatch(executeTransaction({ tx, web3, signer }))
+    dispatch(acceptOfferSuccess(res))
+  } catch (err) {
+    dispatch(acceptOfferFailure(err))
+  }
+}
+
+export const START_WORK_REQUEST = 'START_WORK_REQUEST'
+export const START_WORK_SUCCESS = 'START_WORK_SUCCESS'
+export const START_WORK_FAILURE = 'START_WORK_FAILURE'
+
+const startWorkRequest = () => ({ type: START_WORK_REQUEST })
+const startWorkSuccess = (res) => ({ type: START_WORK_SUCCESS, res })
+const startWorkFailure = (err) => ({ type: START_WORK_FAILURE, err })
+
+export const startWork = (jobId: Number) => async (dispatch, getState) => {
+  try {
+    dispatch(startWorkRequest())
+    const state = getState()
+    const JobController = daoByType('JobController')(state)
+    const signer = signerSelector()(state)
+    const web3 = web3Selector()(state)
+    const tx = await JobController.startWork(signer.address, jobId)
+    const res = await dispatch(executeTransaction({ tx, web3, signer }))
+    dispatch(startWorkSuccess(res))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(startWorkFailure(err))
+  }
+}
+
+export const CONFIRM_START_WORK_REQUEST = 'CONFIRM_START_WORK_REQUEST'
+export const CONFIRM_START_WORK_SUCCESS = 'CONFIRM_START_WORK_SUCCESS'
+export const CONFIRM_START_WORK_FAILURE = 'CONFIRM_START_WORK_FAILURE'
+
+const confirmStartWorkRequest = () => ({ type: CONFIRM_START_WORK_REQUEST })
+const confirmStartWorkSuccess = (res) => ({ type: CONFIRM_START_WORK_SUCCESS, res })
+const confirmStartWorkFailure = (err) => ({ type: CONFIRM_START_WORK_FAILURE, err })
+
+export const confirmStartWork = (jobId: Number) => async (dispatch, getState) => {
+  try {
+    dispatch(confirmStartWorkRequest())
+    const state = getState()
+    const JobController = daoByType('JobController')(state)
+    const signer = signerSelector()(state)
+    const web3 = web3Selector()(state)
+    const tx = await JobController.confirmStartWork(signer.address, jobId)
+    const res = await dispatch(executeTransaction({ tx, web3, signer }))
+    dispatch(confirmStartWorkSuccess(res))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(confirmStartWorkFailure(err))
+  }
 }

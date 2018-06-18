@@ -43,7 +43,7 @@ $maxWidth: 74rem;
         position: relative;
         height: 6rem;
         .jobMenu {
-          @include position(absolute, $top: -2rem, $right: 0);
+          @include position(absolute, $top: -5rem, $right: 0);
           @include flex(column, center, center);
           cursor: pointer;
           height: 4rem;
