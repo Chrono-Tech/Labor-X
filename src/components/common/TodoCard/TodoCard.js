@@ -20,14 +20,14 @@ const STATUSES = {
 const dateFormat = 'h:mm A'
 
 class TodoCard extends React.Component {
+  static STATUSES = STATUSES
+
   static propTypes = {
     job: PropTypes.instanceOf(JobModel),
     resumeJobWork: PropTypes.func,
     pauseJobWork: PropTypes.func,
     completeJobWork: PropTypes.func,
   }
-
-  static STATUSES = STATUSES
 
   constructor (props, context){
     super(props, context)
