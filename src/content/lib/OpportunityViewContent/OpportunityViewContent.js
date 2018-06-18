@@ -25,7 +25,7 @@ export class OpportunityViewContent extends React.Component {
   }
 
   handleBack () {
-    Router.pushRoute('/job-types')
+    Router.pushRoute('/opportunities')
   }
 
   handleCalendar = () => {

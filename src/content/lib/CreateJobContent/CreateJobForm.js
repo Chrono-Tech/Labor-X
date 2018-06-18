@@ -5,7 +5,7 @@ import { Toggle, SelectField, DatePicker, TextField } from 'redux-form-material-
 import { MuiThemeProvider, CircularProgress, MenuItem } from 'material-ui'
 import { Router } from 'src/routes'
 import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link } from 'src/components/common'
-import { SignerModel, BoardModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST } from 'src/models'
+import { SignerModel, BoardModel, FlowTypeModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST, FLOW_TYPES } from 'src/models'
 import validate from './validate'
 import css from './CreateJobForm.scss'
 
@@ -37,12 +37,12 @@ class CreateJobForm extends React.Component {
   // handleChangeState = (event, index, value) => this.setState({ stateValue: value })
 
   handleBack () {
-    Router.pushRoute('/opportunities')
+    Router.pushRoute('/job-types')
   }
 
   renderBudgetWidget = () => {
     if (!this.props.flowType) return null
-    return this.props.flowType === 1 ? (
+    return FlowTypeModel.valueOf(this.props.flowType) === FLOW_TYPES.FIXED_PRICE ? (
       <div className={css.budgetWidget}>
         <div>
           <Field
