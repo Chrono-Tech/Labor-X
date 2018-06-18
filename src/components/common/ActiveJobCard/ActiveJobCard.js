@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
 import { Link, Button } from 'src/components/common'
-import { JobModel, BoardModel, ProfileModel, JobNoticeModel, JOB_STATE_FINISHED, JOB_STATE_PENDING_START } from 'src/models'
+import { JobModel, BoardModel, ProfileModel, JobNoticeModel, JOB_STATE_FINISHED, JOB_STATE_PENDING_START/*, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE */ } from 'src/models'
 
 import css from './ActiveJobCard.scss'
 import { confirmStartWork } from "../../../store"

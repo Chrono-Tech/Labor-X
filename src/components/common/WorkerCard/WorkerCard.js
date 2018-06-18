@@ -28,7 +28,7 @@ class WorkerCard extends React.Component {
 
   handleAcceptOffer = () => {
     // eslint-disable-next-line no-console
-    console.log('WorkerCard-handleReviewOffer')
+    console.log('WorkerCard-handleAcceptOffer')
     this.props.acceptOffer()
   }
 
@@ -39,7 +39,7 @@ class WorkerCard extends React.Component {
 
   handleReviewOffer () {
     // eslint-disable-next-line no-console
-    console.log('WorkerCard-handleViewOffer')
+    console.log('WorkerCard-handleReviewOffer')
   }
 
   handleDismissOffer () {

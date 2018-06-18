@@ -23,12 +23,10 @@ export const jobByIdSelector = (id) => createSelector(
 export const todoJobsSelector = () => createSelector(
   jobsListSelector(),
   currentAddressSelector(),
-  (jobsList, address) => {
-    if (!address) return []
-    return jobsList.filter((job) => (
+  (jobsList, address) => address
+    ? jobsList.filter((job) => (
       job.worker === address.toLowerCase() &&
       job.state &&
       (job.state === JOB_STATE_STARTED || job.state === JOB_STATE_OFFER_ACCEPTED || job.state === JOB_STATE_PENDING_START)
-    ))
-  }
+    )) : []
 )

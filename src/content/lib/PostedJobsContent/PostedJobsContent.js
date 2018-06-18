@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Router } from 'src/routes'
 import { Translate, JobCard } from 'src/components/common'
-import { jobsListSelector, boardByIdSelector } from 'src/store'
+import { jobsListSelector, boardByIdSelector/* , newJobNoticeSelector, signerSelector */ } from 'src/store'
 import css from './PostedJobsContent.scss'
 
 class PostedJobsContent extends React.Component {

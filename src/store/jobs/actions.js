@@ -59,10 +59,11 @@ export const reloadJobs = () => async (dispatch, getState) => {
   const jobs = await JobDataProviderDAO.getJobs(boardControlerDAO)
   dispatch({ type: JOBS_SAVE, jobList: jobs })
 
+  // TODO return after getJobs methods full search implement
+
   // const user = userSelector()(state)
   // const signer = signerSelector()(state)
-
-  // TODO return after getJobs methods full search implement
+  //
   // if (user.accountTypes.worker) {
   //   const jobs = await JobDataProviderDAO.getJobsForWorker(signer.address)
   //   dispatch({ type: JOBS_WORKER_SAVE, jobList: jobs })
@@ -168,7 +169,6 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
     form.flowType,
     form.area.code,
     form.category.code,
-    // form.skills[0].code,
     SkillModel.writeArrayToMask(form.skills),
     0, // defaultPay todo check what this parameter is for and mark up field on create job form
     detailsIPFSHash
