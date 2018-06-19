@@ -1,6 +1,8 @@
-import { daoByType } from "../"
-import { bytes32ToIPFSHash, loadFromIPFS } from "../../utils"
+import {daoByType} from "../daos/selectors"
+import {bytes32ToIPFSHash, loadFromIPFS, storeIntoIPFS} from "../../utils"
 import { UserAccountTypesModel, UserModel } from "../../models"
+import {web3Selector} from "../ethereum/selectors";
+import {executeTransaction} from './../ethereum/actions'
 
 export const USER_SAVE = 'user/save'
 
@@ -24,4 +26,18 @@ export const getUserData = (address) => async (dispatch, getState) => {
 
   return user
 
+}
+
+export const setUserAccountTypes = (address, accountTypes, signer) => async (dispatch, getState) => {
+  try {
+    const state = getState()
+    const IPFSLibrary = daoByType('IPFSLibrary')(state)
+    const web3 = web3Selector()(state)
+    const accountTypesIpfsHash = await storeIntoIPFS(accountTypes)
+    const tx = IPFSLibrary.createSetHashTx(address, 'accountTypes', accountTypesIpfsHash)
+    return await dispatch(executeTransaction({ tx, web3, signer }))
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
 }
