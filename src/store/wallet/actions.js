@@ -6,10 +6,7 @@ import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
 import { changeStep as loginChangeStep } from './../login/actions'
-import { storeIntoIPFS } from "../../utils"
-import { daoByType } from "../daos/selectors"
-import {getUserData, setUserAccountTypes} from "../user/actions"
-import { executeTransaction } from "../ethereum/actions"
+import { getUserData, setUserAccountTypes } from "../user/actions"
 
 export const WALLETS_ADD = 'wallets/add'
 export const WALLETS_SELECT = 'wallets/select'
@@ -103,7 +100,7 @@ export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch, ge
   dispatch(walletUpdate(newWallet))
 }
 
-export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = {} }) => async (dispatch, getState) => {
+export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = null }) => async (dispatch, getState) => {
 
   const state = getState()
 
@@ -132,7 +129,9 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
     encrypted: wallet.encrypt(password),
   })
 
-  await setUserAccountTypes(walletEntry.encrypted[0].address, types, account)
+  if (types) {
+    await dispatch(setUserAccountTypes(`0x${walletEntry.encrypted[0].address}`, types, account))
+  }
 
   return walletEntry
 
