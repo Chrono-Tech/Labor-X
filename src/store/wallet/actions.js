@@ -6,10 +6,7 @@ import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
 import { changeStep as loginChangeStep } from './../login/actions'
-import { storeIntoIPFS } from "../../utils"
-import { daoByType } from "../daos/selectors"
-import { getUserData } from "../user/actions"
-import { executeTransaction } from "../ethereum/actions"
+import { getUserData, setUserAccountTypes } from "../user/actions"
 
 export const WALLETS_ADD = 'wallets/add'
 export const WALLETS_SELECT = 'wallets/select'
@@ -103,7 +100,7 @@ export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch, ge
   dispatch(walletUpdate(newWallet))
 }
 
-export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = {} }) => async (dispatch, getState) => {
+export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = null }) => async (dispatch, getState) => {
 
   const state = getState()
 
@@ -113,13 +110,15 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
 
   let wallet = web3.eth.accounts.wallet.create(numberOfAccounts)
 
+  let account
+
   if (privateKey) {
-    const account = web3.eth.accounts.privateKeyToAccount(`0x${privateKey}`)
+    account = web3.eth.accounts.privateKeyToAccount(`0x${privateKey}`)
     wallet.add(account)
   }
 
   if (mnemonic) {
-    const account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
+    account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
     wallet.add(account)
   }
 
@@ -130,15 +129,9 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
     encrypted: wallet.encrypt(password),
   })
 
-  const address = walletEntry.encrypted[0].address
-
-  const accountTypesIpfsHash = await storeIntoIPFS(types)
-
-  const IPFSLibrary = daoByType('IPFSLibrary')(state)
-
-  const setHashTx = IPFSLibrary.createSetHashTx(address, 'accountTypes', accountTypesIpfsHash)
-
-  await dispatch(executeTransaction({ tx: setHashTx, web3, signer: wallet[0] }))
+  if (types) {
+    await dispatch(setUserAccountTypes(`0x${walletEntry.encrypted[0].address}`, types, account))
+  }
 
   return walletEntry
 
