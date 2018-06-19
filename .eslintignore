@@ -17,6 +17,7 @@ pages/**
 *.js
 src/**/*.js
 
+!pages/_app
 !pages/client-job-view.js
 !pages/job-types.js
 !pages/opportunity-view.js
@@ -36,7 +37,8 @@ src/**/*.js
 !src/models/app/WorkerExtraModel.js
 !src/models/app/WorkerIPFSModel.js
 !src/models/app/WorkerModel.js
-!src/models/app/StateModel.js
+!src/models/app/JobStateModel.js
+!src/models/app/FlowTypeModel.js
 !src/models/app/JobPausedEvent.js
 !src/models/app/JobResumedEvent.js
 !src/models/app/JobExtraModel.js
@@ -61,6 +63,7 @@ src/**/*.js
 !src/components/common/index.js
 !src/components/common/ActiveJobCard/ActiveJobCard.js
 !src/components/common/JobCard/JobCard.js
+!src/components/common/WorkerJobCard/WorkerJobCard.js
 !src/components/common/WorkerCard/WorkerCard.js
 !src/components/common/WorkerState/WorkerState.js
 !src/components/common/TodoCard/TodoCard.js
@@ -84,6 +87,7 @@ src/**/*.js
 !src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
 !src/content/lib/TodoContent/TodoContent.js
 !src/content/lib/OpportunityViewContent/
+!src/content/lib/ApplicationsAndOffersContent/
 !src/content/lib/OpportunityViewContent/OpportunityViewContent.js
 !src/content/lib/OpportunityViewContent/DescriptionTab/DescriptionTab.js
 

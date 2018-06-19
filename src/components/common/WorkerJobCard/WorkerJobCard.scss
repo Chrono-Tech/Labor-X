@@ -1,0 +1,65 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include card;
+  border-left-width: 1rem;
+  border-left-style: solid;
+  border-left-color: $color-gray50;
+  > div {
+    @include flex(row, flex-start, center);
+    height: 6rem;
+    border-bottom: solid 1px $color-gray5;
+    padding: 0 2rem;
+  }
+  .jobInfo {
+    min-height: 9rem;
+    .jobName {
+      &:hover {
+        color: $color-blue;
+      }
+    }
+  }
+  .jobDateAward {
+    @include flex(row, flex-start, center);
+    margin-left: auto;
+    > * {
+      margin-left: 4rem;
+    }
+  }
+  .notice {
+    @include flex(row, center, center);
+    padding: .5rem 1rem;
+    color: $color-white;
+    font-weight: $font-weight-regular;
+    text-transform: uppercase;
+    background-color: $color-gold;
+    border-radius: 1.2rem;
+  }
+  .blueAction {
+    margin-left: auto;
+    // width: 10rem;
+    color: $color-azure;
+    background-color: transparent;
+  }
+  .redAction {
+    margin-left: auto;
+    // width: 10rem;
+    color: $color-red;
+    background-color: transparent;
+  }
+  .actionLable {
+    white-space: nowrap;
+  }
+  .icon {
+    margin-right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .tipTitle {
+    font-weight: $font-weight-medium;
+    margin-bottom: 2rem;
+  }
+}

@@ -32,7 +32,7 @@ export default class Tip extends React.Component {
     CENTER: 'center',
     RIGHT: 'right',
   }
-  
+
   static propTypes = {
     title: PropTypes.string,
     tip: PropTypes.string,
@@ -44,7 +44,7 @@ export default class Tip extends React.Component {
       Tip.POSITION.RIGHT,
     ]),
   }
-  
+
   static defaultProps = {
     position: Tip.POSITION.RIGHT,
     title: '',
@@ -63,33 +63,33 @@ export default class Tip extends React.Component {
   handleMouseEnter = () => this.setState({ isShow: true })
 
   handleMouseLeave = () => this.setState({ isShow: false })
-  
+
   getArrowPosition(){
     const { position } = this.props
-    
-    
+
+
     switch (position) {
       case Tip.POSITION.LEFT:
         return css.arrowLeft
-    
+
       case Tip.POSITION.CENTER:
         return css.arrowCenter
-    
+
       case Tip.POSITION.RIGHT:
         return css.arrowRight
-    
+
       default:
         return css.arrowRight
     }
   }
-  
+
   renderTipContent(){
     const { tipContent } = this.props
-    
+
     if (tipContent){
       return (<div className={css.content}>{ tipContent }</div>)
     }
-    
+
     return (
       <div className={css.content}>
         {this.props.title && <div className={css.title}><Translate value={this.props.title} /></div>}

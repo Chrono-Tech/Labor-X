@@ -12,3 +12,4 @@ export { default as WorkerProfileContent } from './lib/WorkerProfileContent/Work
 export { default as ReviewApplicantsContent } from './lib/ReviewApplicantsContent/ReviewApplicantsContent'
 export { default as JobTypesContent } from './lib/JobTypesContent/JobTypesContent'
 export { default as ClientJobViewContent } from './lib/ClientJobViewContent/ClientJobViewContent'
+export { default as ApplicationsAndOffersContent } from './lib/ApplicationsAndOffersContent/ApplicationsAndOffersContent'

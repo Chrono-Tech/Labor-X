@@ -37,6 +37,12 @@ export default class JobBudgetModel extends AbstractModel {
     }
     return null
   }
+  get hourlyRateAwardUSD (): BigNumber {
+    if (this.isSpecified) {
+      return this.hourlyRateAward.multipliedBy(40)
+    }
+    return null
+  }
 }
 
 function propsWithDefaults (props) {
