@@ -5,8 +5,9 @@ import BigNumber from 'bignumber.js'
 import moment from 'moment'
 import { Router } from 'src/routes'
 import { JobModel, BoardModel, JobOfferFormModel, ClientModel } from 'src/models'
-import { createJobOffer, signerSelector, boardByIdSelector } from 'src/store'
+import { createJobOffer, signerSelector, boardByIdSelector, modalsPush } from 'src/store'
 import { Image, Button, Tab } from 'src/components/common'
+import { MakeOfferDialog } from 'src/partials'
 import DescriptionTab from './DescriptionTab/DescriptionTab'
 import CompanyTab from './CompanyTab/CompanyTab'
 import css from './OpportunityViewContent.scss'
@@ -17,6 +18,7 @@ export class OpportunityViewContent extends React.Component {
     board: PropTypes.instanceOf(BoardModel),
     client: PropTypes.instanceOf(ClientModel),
     onPostOffer: PropTypes.func.isRequired,
+    pushModal: PropTypes.func.isRequired,
   }
 
   state = {
@@ -35,6 +37,16 @@ export class OpportunityViewContent extends React.Component {
 
   handleTabClick = (index) => {
     this.setState({ currentTab: index })
+  }
+
+  handleMakeOffer = () => {
+    // eslint-disable-next-line no-console
+    console.log('OpportunityViewContent-handleMakeOffer')
+    const modal = {
+      component: MakeOfferDialog,
+      props: { job: this.props.job },
+    }
+    this.props.pushModal(modal)
   }
 
   handlePostOffer = async () => {
@@ -65,8 +77,8 @@ export class OpportunityViewContent extends React.Component {
     {
       key: 'description',
       title: 'Description',
-      content: (props, state, handlePostOffer) => (
-        <DescriptionTab job={props.job} isOfferPosting={state.isOfferPosting} onPostOffer={handlePostOffer} />
+      content: (props, state, handlePostOffer, handleMakeOffer) => (
+        <DescriptionTab job={props.job} isOfferPosting={state.isOfferPosting} onPostOffer={handlePostOffer} onMakeOffer={handleMakeOffer} />
       ),
     },
     {
@@ -125,7 +137,7 @@ export class OpportunityViewContent extends React.Component {
             ))}
           </div>
           <div className={css.tabContent}>
-            {this.tabs[this.state.currentTab].content(this.props, this.state, this.handlePostOffer)}
+            {this.tabs[this.state.currentTab].content(this.props, this.state, this.handlePostOffer, this.handleMakeOffer)}
           </div>
         </div>
       </div>
@@ -148,6 +160,7 @@ function mapStateToProps (state, op) {
 function mapDispatchToProps (dispatch) {
   return {
     onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form)),
+    pushModal (modal) { dispatch(modalsPush(modal)) },
   }
 }
 
