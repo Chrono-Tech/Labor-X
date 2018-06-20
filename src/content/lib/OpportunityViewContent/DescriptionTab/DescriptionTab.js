@@ -177,12 +177,14 @@ export default class DescriptionTab extends React.Component {
               mods={Button.MODS.FLAT}
               onClick={this.handleSave}
             />
-            <Button
-              label='Make Your Offer!'
-              className={css.makeOfferButton}
-              mods={Button.MODS.FLAT}
-              onClick={onMakeOffer}
-            />
+            { !job.ipfs.allowCustomOffer ? null : (
+              <Button
+                label='Make Your Offer!'
+                className={css.makeOfferButton}
+                mods={Button.MODS.FLAT}
+                onClick={onMakeOffer}
+              />
+            )}
             {!isOfferPosting ? null : <CircularProgress className={css.submitProgress} size={24} />}
             {this.getApplyButton()}
           </div>

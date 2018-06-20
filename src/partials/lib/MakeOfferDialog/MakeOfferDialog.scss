@@ -23,7 +23,16 @@
     }
   }
   .body {
-    padding: 3rem 2rem;
+    padding: 1rem 2rem;
+    > * {
+      margin-bottom: 1rem;
+    }
+    .twoColumn {
+      @include flex(row, space-between, flex-start);
+      > * {
+        flex-basis: calc(50% - 1rem)
+      }
+    }
   }
   .actions {
     @include flex(row, flex-end, stretch);
