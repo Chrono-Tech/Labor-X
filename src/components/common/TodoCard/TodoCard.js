@@ -8,9 +8,9 @@ import { JobModel, JOB_STATE_WORK_REJECTED } from "src/models"
 import { pauseJobWork, resumeJobWork, startWork } from "src/store"
 
 import css from './TodoCard.scss'
-import {JOB_STATE_STARTED} from "../../../models";
-import {SendInvoiceDialog} from "../../../partials";
-import {modalsPush} from "../../../store";
+import { JOB_STATE_STARTED } from "../../../models"
+import { SendInvoiceDialog } from "../../../partials"
+import { modalsPush } from "../../../store"
 
 const STATUSES = {
   APPLIED: 'applied',
@@ -32,6 +32,7 @@ class TodoCard extends React.Component {
     completeJobWork: PropTypes.func,
     startWork: PropTypes.func,
     endWork: PropTypes.func,
+    openSendInvoiceDialog: PropTypes.func,
   }
 
   constructor (props, context){
@@ -60,6 +61,10 @@ class TodoCard extends React.Component {
     } else {
       this.props.startWork(this.props.job.id)
     }
+  }
+
+  handleCompleteTaskIconClick = () => {
+    this.props.openSendInvoiceDialog()
   }
 
   getTodoStatus = () => {
@@ -151,7 +156,7 @@ class TodoCard extends React.Component {
                 className={css.actionButton}
                 title='Complete Task'
                 icon={Image.ICONS.CHECKBOX_CIRCLE}
-                onClick={this.props.openSendInvoiceDialog}
+                onClick={this.handleCompleteTaskIconClick}
               /> : null
             }
 

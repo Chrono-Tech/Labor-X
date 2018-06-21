@@ -1,12 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Dialog from 'material-ui/Dialog'
 import uniqid from 'uniqid'
 import moment from 'moment'
-import { connect } from 'react-redux'
 import { Translate, FeedbackCard, TodoCard } from 'components/common'
-import { SendInvoiceDialog } from 'src/partials'
-import { modalsPush } from 'src/store'
 import { JobModel } from "src/models"
 
 import css from './TodoContent.scss'

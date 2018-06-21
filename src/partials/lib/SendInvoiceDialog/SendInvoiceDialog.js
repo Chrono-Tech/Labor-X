@@ -9,7 +9,7 @@ import { Button, Link, Icon } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
 import css from './SendInvoiceDialog.scss'
 import ExpenseItem from './ExpenseItem'
-import {endWork, getById as getJobById, modalsClose} from "../../../store";
+import { endWork, getById as getJobById, modalsClose } from "../../../store"
 
 class SendInvoiceDialog extends React.Component {
   static propTypes = {
@@ -17,6 +17,7 @@ class SendInvoiceDialog extends React.Component {
     client: PropTypes.instanceOf(ProfileModel).isRequired,
     endWork: PropTypes.func,
     close: PropTypes.func,
+    getJobById: PropTypes.func,
   }
 
   constructor (props, context) {
