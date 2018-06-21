@@ -3,7 +3,7 @@ import React from 'react'
 import cn from 'classnames'
 import css from './Icon.scss'
 
-export default class Image extends React.PureComponent {
+export default class Icon extends React.PureComponent {
   static defaultTypes = {
     icon: '',
     size: 14,
@@ -30,6 +30,9 @@ export default class Image extends React.PureComponent {
     RATING: 'rating',
     MORE: 'more',
     ADD_CIRCLE: 'add-circle',
+    HELP: 'help',
+    HELP_OUTLINE: 'help-outline',
+    BACK: 'back',
   }
 
   static COLORS = {
@@ -48,28 +51,40 @@ export default class Image extends React.PureComponent {
 
   static SETS = {
     SECURITY: {
-      icon: Image.ICONS.SECURITY,
-      color: Image.COLORS.GREEN,
+      icon: Icon.ICONS.SECURITY,
+      color: Icon.COLORS.GREEN,
     },
     SECURITY_CHECK: {
-      icon: Image.ICONS.SECURITY_CHECK,
-      color: Image.COLORS.GREEN,
+      icon: Icon.ICONS.SECURITY_CHECK,
+      color: Icon.COLORS.GREEN,
     },
     SECURITY_SHIELD: {
-      icon: Image.ICONS.SECURITY_SHIELD,
-      color: Image.COLORS.RED,
+      icon: Icon.ICONS.SECURITY_SHIELD,
+      color: Icon.COLORS.RED,
     },
     SECURITY_NONE: {
-      icon: Image.ICONS.SECURITY_NONE,
-      color: Image.COLORS.RED,
+      icon: Icon.ICONS.SECURITY_NONE,
+      color: Icon.COLORS.RED,
     },
     CHECK: {
-      icon: Image.ICONS.CHECK,
-      color: Image.COLORS.WHITE,
+      icon: Icon.ICONS.CHECK,
+      color: Icon.COLORS.WHITE,
     },
     STAR: {
-      icon: Image.ICONS.STAR,
-      color: Image.COLORS.GOLD,
+      icon: Icon.ICONS.STAR,
+      color: Icon.COLORS.GOLD,
+    },
+    HELP: {
+      icon: Icon.ICONS.HELP,
+      color: Icon.COLORS.BLUE,
+    },
+    HELP_INVERT: {
+      icon: Icon.ICONS.HELP_OUTLINE,
+      color: Icon.COLORS.WHITE,
+    },
+    BACK_WHITE: {
+      icon: Icon.ICONS.BACK,
+      color: Icon.COLORS.WHITE,
     },
   }
 

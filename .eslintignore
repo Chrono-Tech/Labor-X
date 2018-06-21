@@ -23,6 +23,7 @@ src/**/*.js
 !pages/opportunity-view.js
 !pages/review-applicants.js
 !pages/to-do.js
+!pages/client-profile.js
 
 !src/routes.js
 
@@ -49,15 +50,20 @@ src/**/*.js
 !src/models/app/JobOfferModel.js
 !src/models/app/ProfileModel.js
 !src/models/app/JobOfferIPFSModel.js
+!src/models/app/ClientProfileModel.js
+!src/models/app/JobOfferFormModel.js
 
+!src/store/jobs/
+!src/store/index.js
+!src/store/reducers.js
 !src/store/daos/actions.js
-!src/store/jobs/actions.js
 !src/store/ethereum/actions.js
-!src/store/jobs/reducer.js
-!src/store/jobs/selectors.js
 !src/store/wallet/actions.js
-
 !src/store/applicants/
+!src/store/createAccount/actions.js
+!src/store/login/actions.js
+!src/store/user/actions.js
+!src/store/user/reducer.js
 
 !src/components/common/Icon/Icon.js
 !src/components/common/index.js
@@ -71,7 +77,8 @@ src/**/*.js
 !src/components/common/SecurityShield/SecurityShield.js
 !src/components/common/Radio/Radio.js
 !src/components/layouts/MainLayout.js
-
+!src/components/layouts/SecondMenu/SecondMenu.js
+!src/components/layouts/Header/Header.js
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/
@@ -88,31 +95,6 @@ src/**/*.js
 !src/content/lib/TodoContent/TodoContent.js
 !src/content/lib/OpportunityViewContent/
 !src/content/lib/ApplicationsAndOffersContent/
-!src/content/lib/OpportunityViewContent/OpportunityViewContent.js
-!src/content/lib/OpportunityViewContent/DescriptionTab/DescriptionTab.js
+!src/content/lib/ClientProfileContent/
 
 !src/partials/
-
-src/components/layouts/SecondMenu/SecondMenu.js
-!src/daos/index.js
-!src/store/createAccount/actions.js
-!src/store/daos/actions.js
-!src/store/ethereum/actions.js
-!src/store/index.js
-!src/store/jobs/actions.js
-!src/store/login/actions.js
-!src/store/reducers.js
-!src/store/user/actions.js
-!src/store/user/reducer.js
-!src/store/wallet/actions.js
-
-!src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
-!src/daos/lib/JobsDataProviderDAO.js
-!src/models/app/JobOfferFormModel.js
-!src/store/jobs/actions.js
-!src/store/jobs/reducer.js
-
-!src/components/layouts/Header/Header.js
-!src/components/layouts/SecondMenu/SecondMenu.js
-
-

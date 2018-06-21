@@ -62,7 +62,7 @@ class ApplicationsAndOffersContent extends React.Component {
     this.setState({
       slideIndex: value,
     })
-  };
+  }
 
   render () {
     const { applications, applicationsApproved, offers } = this.props
