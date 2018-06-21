@@ -4,12 +4,10 @@ import { ProfileModel, ProfileIPFSModel } from 'src/models'
 
 export const profileSelector = (address) => createSelector(
   (/*state*/) => {
-    return address == null // nil check
-      ? null
-      : new ProfileModel({
-        id: uniqid(),
-        address,
-        ipfs: new ProfileIPFSModel({}),
-      })
+    return new ProfileModel({
+      id: uniqid(),
+      address,
+      ipfs: new ProfileIPFSModel({}),
+    })
   }
 )

@@ -8,6 +8,9 @@ import { JobModel, JOB_STATE_WORK_REJECTED } from "src/models"
 import { pauseJobWork, resumeJobWork, startWork } from "src/store"
 
 import css from './TodoCard.scss'
+import {JOB_STATE_STARTED} from "../../../models";
+import {SendInvoiceDialog} from "../../../partials";
+import {modalsPush} from "../../../store";
 
 const STATUSES = {
   APPLIED: 'applied',
@@ -28,6 +31,7 @@ class TodoCard extends React.Component {
     pauseJobWork: PropTypes.func,
     completeJobWork: PropTypes.func,
     startWork: PropTypes.func,
+    endWork: PropTypes.func,
   }
 
   constructor (props, context){
@@ -40,7 +44,7 @@ class TodoCard extends React.Component {
   handleComplete = () => {
     // eslint-disable-next-line no-console
     console.log('Opportunity-view-handleComplete')
-    // this.props.completeJobWork(this.props.job)
+    this.props.openSendInvoiceDialog(this.props.job)
   }
 
   handleMessage () {
@@ -141,13 +145,16 @@ class TodoCard extends React.Component {
             <p><span className={css.medium}>{this.workedTimeSeconds() > 0 ? this.workedTimeRender() : 'Start Work'}</span> {this.totalHours() ? `of  ${this.totalHours()}h` : `h` }</p>
           </div>
           <div className={css.actions}>
-            <Image
-              clickable
-              className={css.actionButton}
-              title='Complete Task'
-              icon={Image.ICONS.CHECKBOX_CIRCLE}
-              onClick={this.handleComplete}
-            />
+            {
+              this.props.job.state === JOB_STATE_STARTED ? <Image
+                clickable
+                className={css.actionButton}
+                title='Complete Task'
+                icon={Image.ICONS.CHECKBOX_CIRCLE}
+                onClick={this.props.openSendInvoiceDialog}
+              /> : null
+            }
+
             <Image
               clickable
               className={css.actionButton}
@@ -162,11 +169,11 @@ class TodoCard extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   resumeJobWork: (jobId: Number) => dispatch(resumeJobWork(jobId)),
   pauseJobWork: (jobId: Number) => dispatch(pauseJobWork(jobId)),
   startWork: (jobId: Number) => dispatch(startWork(jobId)),
-  // complete: (jobId: Number) => dispatch(startWork(jobId)),
+  openSendInvoiceDialog: () => dispatch(modalsPush({ component: SendInvoiceDialog, props: { job: ownProps.job } })),
 })
 
 export default connect(null, mapDispatchToProps)(TodoCard)

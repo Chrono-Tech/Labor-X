@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { CreateJobContent } from 'src/content'
 import { MainLayout } from 'src/components/layouts'
 
@@ -13,4 +12,4 @@ class CreateJobPage extends React.Component {
   }
 }
 
-export default connect()(CreateJobPage)
+export default CreateJobPage

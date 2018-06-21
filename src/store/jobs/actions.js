@@ -140,13 +140,6 @@ export const pauseJobWork = (jobId: Number) => async (dispatch, getState) => {
   await dispatch(executeTransaction({ tx, web3, signer }))
 }
 
-export const confirmEndWork = (jobId: Number) => async (dispatch, getState) => {
-  const state = getState()
-  const jobsController = daoByType('JobController')(state)
-  const signer = signerSelector()(state)
-  await jobsController.confirmEndWork(signer.address, jobId)
-}
-
 export const cancelJob = (jobId: Number) => async (dispatch, getState) => {
   const state = getState()
   const jobsController = daoByType('JobController')(state)
@@ -212,6 +205,28 @@ export const updateFilterJobs = (filterFields) => (dispatch, getState) => {
     type: JOBS_FILTER,
     jobsList: currentList,
   })
+}
+
+export const GET_BY_ID_REQUEST = 'GET_BY_ID_REQUEST'
+export const GET_BY_ID_SUCCESS = 'GET_BY_ID_SUCCESS'
+export const GET_BY_ID_FAILURE = 'GET_BY_ID_FAILURE'
+
+const getByIdRequest = (req) => ({ type: GET_BY_ID_REQUEST, req })
+const getByIdSuccess = (res) => ({ type: GET_BY_ID_SUCCESS, res })
+const getByIdFailure = (err) => ({ type: GET_BY_ID_FAILURE, err })
+
+export const getById = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(getByIdRequest({ id }))
+    const state = getState()
+    const JobsDataProvider = daoByType('JobsDataProvider')(state)
+    const job = await JobsDataProvider.getJobById(null, id)
+    dispatch(getByIdSuccess(job))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(getByIdFailure(err))
+  }
 }
 
 export const ACCEPT_OFFER_REQUEST = 'ACCEPT_OFFER_REQUEST'
@@ -285,5 +300,80 @@ export const confirmStartWork = (jobId: Number) => async (dispatch, getState) =>
     // eslint-disable-next-line no-console
     console.error(err)
     dispatch(confirmStartWorkFailure(err))
+  }
+}
+
+export const END_WORK_REQUEST = 'END_WORK_REQUEST'
+export const END_WORK_SUCCESS = 'END_WORK_SUCCESS'
+export const END_WORK_FAILURE = 'END_WORK_FAILURE'
+
+const endWorkRequest = (req) => ({ type: END_WORK_REQUEST, req })
+const endWorkSuccess = (res) => ({ type: END_WORK_SUCCESS, res })
+const endWorkFailure = (err) => ({ type: END_WORK_FAILURE, err })
+
+export const endWork = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(endWorkRequest({ id }))
+    const state = getState()
+    const JobController = daoByType('JobController')(state)
+    const signer = signerSelector()(state)
+    const web3 = web3Selector()(state)
+    const tx = JobController.endWork(signer.address, id)
+    const res = await dispatch(executeTransaction({ tx, web3, signer }))
+    dispatch(endWorkSuccess(res))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(endWorkFailure(err))
+  }
+}
+
+export const CONFIRM_END_WORK_REQUEST = 'CONFIRM_END_WORK_REQUEST'
+export const CONFIRM_END_WORK_SUCCESS = 'CONFIRM_END_WORK_SUCCESS'
+export const CONFIRM_END_WORK_FAILURE = 'CONFIRM_END_WORK_FAILURE'
+
+const confirmEndWorkRequest = () => ({ type: CONFIRM_END_WORK_REQUEST })
+const confirmEndWorkSuccess = (res) => ({ type: CONFIRM_END_WORK_SUCCESS, res })
+const confirmEndWorkFailure = (err) => ({ type: CONFIRM_END_WORK_FAILURE, err })
+
+export const confirmEndWork = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(confirmEndWorkRequest())
+    const state = getState()
+    const JobController = daoByType('JobController')(state)
+    const signer = signerSelector()(state)
+    const web3 = web3Selector()(state)
+    const tx = JobController.confirmEndWork(signer.address, id)
+    const res = await dispatch(executeTransaction({ tx, web3, signer }))
+    dispatch(confirmEndWorkSuccess(res))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(confirmEndWorkFailure(err))
+  }
+}
+
+export const RELEASE_PAYMENT_REQUEST = 'RELEASE_PAYMENT_REQUEST'
+export const RELEASE_PAYMENT_SUCCESS = 'RELEASE_PAYMENT_SUCCESS'
+export const RELEASE_PAYMENT_FAILURE = 'RELEASE_PAYMENT_FAILURE'
+
+const releasePaymentRequest = () => ({ type: RELEASE_PAYMENT_REQUEST })
+const releasePaymentSuccess = (res) => ({ type: RELEASE_PAYMENT_SUCCESS, res })
+const releasePaymentFailure = (err) => ({ type: RELEASE_PAYMENT_FAILURE, err })
+
+export const releasePayment = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(releasePaymentRequest())
+    const state = getState()
+    const JobController = daoByType('JobController')(state)
+    const signer = signerSelector()(state)
+    const web3 = web3Selector()(state)
+    const tx = JobController.releasePayment(signer.address, id)
+    const res = await dispatch(executeTransaction({ tx, web3, signer }))
+    dispatch(releasePaymentSuccess(res))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(releasePaymentFailure(err))
   }
 }

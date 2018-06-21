@@ -1,4 +1,4 @@
-import React from 'react'
+import React  from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { connect } from 'react-redux'
@@ -8,11 +8,15 @@ import { MuiThemeProvider } from 'material-ui/styles'
 import { Button, Link, Icon } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
 import css from './SendInvoiceDialog.scss'
+import ExpenseItem from './ExpenseItem'
+import {endWork, getById as getJobById, modalsClose} from "../../../store";
 
 class SendInvoiceDialog extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
     client: PropTypes.instanceOf(ProfileModel).isRequired,
+    endWork: PropTypes.func,
+    close: PropTypes.func,
   }
 
   constructor (props, context) {
@@ -31,14 +35,14 @@ class SendInvoiceDialog extends React.Component {
     }
   }
 
-  handleCancel () {
-    // eslint-disable-next-line no-console
-    console.log('SendInvoiceDialog-handleCancel')
+  handleCancel = () => {
+    this.props.close()
   }
 
-  handleSend () {
-    // eslint-disable-next-line no-console
-    console.log('SendInvoiceDialog-handleSend')
+  handleSend = async () => {
+    await this.props.endWork()
+    await this.props.getJobById()
+    this.props.close()
   }
 
   handleAddExpense = () => {
@@ -169,49 +173,16 @@ class SendInvoiceDialog extends React.Component {
   }
 }
 
-function mapStateToProps (state, op) {
-  const client = profileSelector(op.job.client)(state)
-  return {
-    job: op.job,
-    client,
-  }
-}
+const mapStateToProps = (state, ownProps) => ({
+  job: ownProps.job,
+  client: profileSelector(ownProps.job.client)(state),
+})
 
-export default connect(mapStateToProps)(SendInvoiceDialog)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  endWork: () => dispatch(endWork(ownProps.job.id)),
+  getJobById: () => dispatch(getJobById(ownProps.job.id)),
+  close: () => dispatch(modalsClose()),
+})
 
-class ExpenseItem extends React.Component {
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-  }
+export default connect(mapStateToProps, mapDispatchToProps)(SendInvoiceDialog)
 
-  constructor (props, context) {
-    super(props, context)
-    this.handleRemove = this.handleRemove.bind(this)
-  }
-
-  handleRemove () {
-    this.props.onClick(this.props.index)
-  }
-
-  render () {
-    const { name, value } = this.props
-    return (
-      <div className={css.bodyRow}>
-        <p>{name}</p>
-        <div className={css.fieldWithIcon}>
-          <p>${value.toFixed(2)}</p>
-          <Icon
-            className={css.icon}
-            onClick={this.handleRemove}
-            size={30}
-            icon={Icon.ICONS.DELETE}
-            color={Icon.COLORS.GREY30}
-          />
-        </div>
-      </div>
-    )
-  }
-}
