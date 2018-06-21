@@ -86,15 +86,25 @@
 
 .reportButton {
   width: 12rem;
+  height: 4.5rem;
   color: $color-gray30;
   background-color: transparent;
 }
 
 .applyButton {
   width: 15rem;
+  height: 4.5rem;
   margin-left: 1rem;
   color: $color-white;
   background-color: $color-green;
+}
+
+.makeOfferButton {
+  width: 15rem;
+  height: 4.5rem;
+  margin-left: 1rem;
+  color: $color-white;
+  background-color: $color-azure;
 }
 
 .submitProgress {

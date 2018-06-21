@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import moment from 'moment'
 import { Tip } from 'components/common'
-import { CircularProgress, MuiThemeProvider } from 'material-ui'
+import { CircularProgress } from 'material-ui'
 import { Image, Button, Tag } from 'src/components/common'
 import { JobModel } from 'src/models'
 import css from './DescriptionTab.scss'
@@ -15,6 +15,7 @@ export default class DescriptionTab extends React.Component {
     job: PropTypes.instanceOf(JobModel).isRequired,
     isOfferPosting: PropTypes.bool,
     onPostOffer: PropTypes.func.isRequired,
+    onMakeOffer: PropTypes.func.isRequired,
   }
 
   handleSave = () => {
@@ -81,108 +82,114 @@ export default class DescriptionTab extends React.Component {
   }
 
   render () {
-    const { isOfferPosting, job } = this.props
+    const { isOfferPosting, job, onMakeOffer } = this.props
     return (
-      <MuiThemeProvider>
-        <div>
-          <div className={css.block}>
-            <h4>RESPONSIBILITIES</h4>
-            <ul>
-              {job.ipfs.responsibilities.map((e) => (<li key={uniqid()}><span>{e}</span></li>))}
-            </ul>
+      <div>
+        <div className={css.block}>
+          <h4>RESPONSIBILITIES</h4>
+          <ul>
+            {job.ipfs.responsibilities.map((e) => (<li key={uniqid()}><span>{e}</span></li>))}
+          </ul>
+        </div>
+        <div className={css.block}>
+          <h4>MINIMUM REQUIREMENTS</h4>
+          <ul>
+            {job.ipfs.minimumRequirements.map((e) => (<li key={uniqid()}><span>{e}</span></li>))}
+          </ul>
+        </div>
+        <div className={css.block}>
+          <h4>PREFERRED REQUIREMENTS</h4>
+          <ul>
+            {job.ipfs.preferredRequirements.map((e) => (<li key={uniqid()}><span>{e}</span></li>))}
+          </ul>
+        </div>
+        <div className={css.delimiter} />
+        {job.ipfs.profileRequirements.isSpecified &&
+        <div className={css.profile}>
+          <h3>laborX Profile Requirements</h3>
+          {this.getRequirements().map((requirement) => {
+            return (
+              <div key={requirement.key} className={css.profileRequirement}>
+                <Image
+                  icon={Image.ICONS.CHECKBOX_CIRCLE}
+                  color={Image.COLORS.GREEN}
+                />
+                <p>{requirement.message}</p>
+              </div>)
+          })}
+        </div>}
+        <div className={css.delimiter} />
+        <div className={css.infoBlock}>
+          <div className={css.infoRow}>
+            <div className={css.infoColumn}>
+              <div className={css.regular}>Category</div>
+              <Tag value={job.category.name} />
+            </div>
+            <div className={css.infoColumn}>
+              <div className={css.regular}>Starts at</div>
+              <p>{moment(job.ipfs.period.since).format(dateFormat)}</p>
+            </div>
+            <div className={css.infoColumn}>
+              <div className={css.regular}>Deadline</div>
+              <p>{moment(job.ipfs.period.until).format(dateFormat)}</p>
+            </div>
+            <div className={css.infoColumn}>
+              <div className={css.regular}>Location</div>
+              <p>{job.ipfs.address.location}</p>
+            </div>
           </div>
-          <div className={css.block}>
-            <h4>MINIMUM REQUIREMENTS</h4>
-            <ul>
-              {job.ipfs.minimumRequirements.map((e) => (<li key={uniqid()}><span>{e}</span></li>))}
-            </ul>
-          </div>
-          <div className={css.block}>
-            <h4>PREFERRED REQUIREMENTS</h4>
-            <ul>
-              {job.ipfs.preferredRequirements.map((e) => (<li key={uniqid()}><span>{e}</span></li>))}
-            </ul>
-          </div>
-          <div className={css.delimiter} />
-          {job.ipfs.profileRequirements.isSpecified &&
-          <div className={css.profile}>
-            <h3>laborX Profile Requirements</h3>
-            {this.getRequirements().map((requirement) => {
-              return (
-                <div key={requirement.key} className={css.profileRequirement}>
-                  <Image
-                    icon={Image.ICONS.CHECKBOX_CIRCLE}
-                    color={Image.COLORS.GREEN}
-                  />
-                  <p>{requirement.message}</p>
-                </div>)
-            })}
-          </div>}
-          <div className={css.delimiter} />
-          <div className={css.infoBlock}>
+          { job.ipfs.budget.isSpecified && (
             <div className={css.infoRow}>
               <div className={css.infoColumn}>
-                <div className={css.regular}>Category</div>
-                <Tag value={job.category.name} />
+                <div className={css.bold}>LHAU / HR</div>
+                <div className={css.bold}>{job.ipfs.budget.hourlyRate}</div>
               </div>
               <div className={css.infoColumn}>
-                <div className={css.regular}>Starts at</div>
-                <p>{moment(job.ipfs.period.since).format(dateFormat)}</p>
+                <div className={css.bold}>HOURS</div>
+                <div className={css.bold}>{job.ipfs.budget.totalHours}</div>
               </div>
               <div className={css.infoColumn}>
-                <div className={css.regular}>Deadline</div>
-                <p>{moment(job.ipfs.period.until).format(dateFormat)}</p>
-              </div>
-              <div className={css.infoColumn}>
-                <div className={css.regular}>Location</div>
-                <p>{job.ipfs.address.location}</p>
+                <div className={css.bold}>EST. BUDGET</div>
+                <div className={css.budgetRow}>
+                  <span className={css.bold}>{job.ipfs.budget.award.toString()}</span>
+                  <span> (${job.ipfs.budget.awardUSD.toString()})</span>
+                </div>
               </div>
             </div>
-            { job.ipfs.budget.isSpecified && (
-              <div className={css.infoRow}>
-                <div className={css.infoColumn}>
-                  <div className={css.bold}>LHAU / HR</div>
-                  <div className={css.bold}>{job.ipfs.budget.hourlyRate}</div>
-                </div>
-                <div className={css.infoColumn}>
-                  <div className={css.bold}>HOURS</div>
-                  <div className={css.bold}>{job.ipfs.budget.totalHours}</div>
-                </div>
-                <div className={css.infoColumn}>
-                  <div className={css.bold}>EST. BUDGET</div>
-                  <div className={css.budgetRow}>
-                    <span className={css.bold}>{job.ipfs.budget.award.toString()}</span>
-                    <span> (${job.ipfs.budget.awardUSD.toString()})</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className={css.delimiter} />
-          <div className={css.actionsBlock}>
+          )}
+        </div>
+        <div className={css.delimiter} />
+        <div className={css.actionsBlock}>
+          <Button
+            label='REPORT'
+            icon={{
+              icon: Image.ICONS.ERROR,
+              color: Image.COLORS.GREY30,
+            }}
+            className={css.reportButton}
+            mods={Button.MODS.FLAT}
+            onClick={this.handleReport}
+          />
+          <div className={css.actionsSaveApply}>
             <Button
-              label='REPORT'
-              icon={{
-                icon: Image.ICONS.ERROR,
-                color: Image.COLORS.GREY30,
-              }}
-              className={css.reportButton}
+              label='SAVE'
+              className={css.saveButton}
               mods={Button.MODS.FLAT}
-              onClick={this.handleReport}
+              onClick={this.handleSave}
             />
-            <div className={css.actionsSaveApply}>
+            { !job.ipfs.allowCustomOffer ? null : (
               <Button
-                label='SAVE'
-                className={css.saveButton}
+                label='Make Your Offer!'
+                className={css.makeOfferButton}
                 mods={Button.MODS.FLAT}
-                onClick={this.handleSave}
+                onClick={onMakeOffer}
               />
-              {!isOfferPosting ? null : <CircularProgress className={css.submitProgress} size={24} />}
-              {this.getApplyButton()}
-            </div>
+            )}
+            {!isOfferPosting ? null : <CircularProgress className={css.submitProgress} size={24} />}
+            {this.getApplyButton()}
           </div>
         </div>
-      </MuiThemeProvider>
+      </div>
     )
   }
 }
