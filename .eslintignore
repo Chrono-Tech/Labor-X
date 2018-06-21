@@ -54,8 +54,9 @@ src/**/*.js
 !src/models/app/ClientTypeModel.js
 !src/models/app/JobOfferFormModel.js
 
-!src/store/jobs/
 !src/store/index.js
+!src/store/jobs/
+!src/store/offers/
 !src/store/reducers.js
 !src/store/daos/actions.js
 !src/store/ethereum/actions.js
@@ -65,6 +66,7 @@ src/**/*.js
 !src/store/login/actions.js
 !src/store/user/actions.js
 !src/store/user/reducer.js
+!src/store/bootstrap.js
 
 !src/components/common/Icon/Icon.js
 !src/components/common/index.js

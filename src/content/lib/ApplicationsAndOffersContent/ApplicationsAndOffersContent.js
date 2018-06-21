@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import SwipeableViews from 'react-swipeable-views'
 import { connect } from 'react-redux'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import { Translate } from 'components/common'
-import { jobsListSelector, boardByIdSelector } from 'src/store'
+import { offersListSelector, boardByIdSelector, jobByIdSelector } from 'src/store'
 import { JobModel, BoardModel } from 'src/models'
 import OffersTabContent from './OffersTabContent/OffersTabContent'
 import ApplicationsTabContent from './ApplicationsTabContent/ApplicationsTabContent'
@@ -73,7 +72,7 @@ class ApplicationsAndOffersContent extends React.Component {
           <div className={css.titleText}><Translate value='nav.applicationsAndOffers' /></div>
           <div className={css.titleStats}>
             <div>
-              <h2 className={css.titleStatsCounter}>{applications.length}</h2>
+              <h2 className={css.titleStatsCounter}>{applicationsApproved.length}</h2>
               <div>Applications</div>
             </div>
             <div>
@@ -108,54 +107,26 @@ class ApplicationsAndOffersContent extends React.Component {
 
 function mapStateToProps (state) {
   // TODO @aevalyakin bind data
-  const jobs = jobsListSelector()(state)
-  const filteredJobs = jobs.filter(job => job.boardId > 0)
-  if (filteredJobs && filteredJobs.length > 0) {
-    const job = filteredJobs[0]
+
+  const myOffers = offersListSelector()(state)
+
+  const applicationsApproved = myOffers.map((offer) => {
+    const job = jobByIdSelector(offer.jobId)(state)
     return {
-      // Applied by worker and approved by client
-      applicationsApproved: [
-        {
-          job: jobs[0],
-          board: boardByIdSelector(job.boardId)(state),
-          notice: {
-            label: 'UPDATED',
-            description: 'Get Started has picked you to do this job! Please review contract and we will send notification about your decision to the client.',
-            date: moment().subtract(2, 'hours').toDate(),
-          },
-        },
-      ],
-      // Applied by worker but not approved by client yet
-      applications: [
-        {
-          job: jobs[0],
-          board: boardByIdSelector(job.boardId)(state),
-          notice: {
-            label: 'ON REVIEW',
-            description: 'Your application is under review. We will send you a notification once decision has been made.',
-            date: new Date('12-12-2017'),
-          },
-        },
-      ],
-      // Offers from client
-      offers: [
-        {
-          job: jobs[0],
-          board: boardByIdSelector(job.boardId)(state),
-          notice: {
-            label: 'ENDS IN 1 DAY',
-            description: 'Get Started has sent you an offer! Please review the offer and we will send notification about your decision to the client.',
-            date: moment().subtract(2, 'hours').toDate(),
-          },
-        },
-      ],
+      job,
+      board: boardByIdSelector(job.boardId)(state),
+      notice: {
+        label: 'ON REVIEW',
+        description: 'Your application is under review. We will send you a notification once decision has been made.',
+        date: new Date('12-12-2017'),
+      },
     }
-  } else {
-    return {
-      applications: [],
-      applicationsApproved: [],
-      offers: [],
-    }
+  })
+  
+  return {
+    applications:[],
+    applicationsApproved,
+    offers: [],
   }
 }
 
