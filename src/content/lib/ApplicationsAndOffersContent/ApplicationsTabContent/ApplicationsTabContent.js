@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { JobModel, BoardModel } from 'src/models'
 import { WorkerJobCard } from 'components/common'
+import { Router } from 'src/routes'
 import css from './ApplicationsTabContent.scss'
 
 export default class ApplicationsTabContent extends React.Component {
@@ -27,7 +28,8 @@ export default class ApplicationsTabContent extends React.Component {
     })),
   }
 
-  handleClickReviewOffer = () => {
+  handleClickReviewOffer = (jobId) => {
+    Router.pushRoute(`/client-job-view/${jobId}`)
     // eslint-disable-next-line no-console
     console.log('---ApplicationsTabContent handleClickReviewOffer')
   }
