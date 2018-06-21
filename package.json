@@ -74,11 +74,11 @@
     "styled-jsx-plugin-postcss": "^0.1.2"
   },
   "scripts": {
-    "dev": "node --max_old_space_size=4096 server.js",
+    "dev": "node --max_old_space_size=8000 server.js",
     "start:wo-router": "next start",
     "start": "NODE_ENV=production node server.js",
     "build": "next build",
-    "lint": "./node_modules/eslint/bin/eslint.js --ext .js,.jsx --fix src pages specs",
+    "lint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx --fix src pages specs",
     "testrpc": "testrpc --mnemonic \"video visa alcohol fault earth naive army senior major inherit convince electric\" --trace_request true | grep -Ev \"FilterSubprovider|eth_getFilterChanges\"",
     "docker:build": "/bin/bash ./bin/docker-build.sh",
     "docker:stop": "/bin/bash ./bin/docker-stop.sh",

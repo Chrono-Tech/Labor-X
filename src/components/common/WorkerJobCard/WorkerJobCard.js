@@ -23,11 +23,10 @@ export default class WorkerJobCard extends React.Component {
 
   constructor (...args) {
     super(...args)
-    this.handleReview = this.handleReview.bind(this)
   }
 
-  handleReview () {
-    this.props.onClickReview(this.props.job.id)
+  handleClickReview = () => {
+    this.props.onClickReviewOffer(this.props.job.id)
   }
 
   renderFooter = () => {
@@ -61,7 +60,7 @@ export default class WorkerJobCard extends React.Component {
             labelClassName={css.actionLable}
             className={css.blueAction}
             mods={Button.MODS.FLAT}
-            onClick={onClickReviewOffer}
+            onClick={this.handleClickReview}
           />
         )}
         { onClickDismiss && (
