@@ -108,10 +108,10 @@ class ApplicationsAndOffersContent extends React.Component {
 function mapStateToProps (state) {
   // TODO @aevalyakin bind data
 
-  const myOffers=offersListSelector()(state)
+  const myOffers = offersListSelector()(state)
 
   const applicationsApproved = myOffers.map((offer) => {
-    const job=jobByIdSelector(offer.jobId)(state)
+    const job = jobByIdSelector(offer.jobId)(state)
     return {
       job,
       board: boardByIdSelector(job.boardId)(state),
