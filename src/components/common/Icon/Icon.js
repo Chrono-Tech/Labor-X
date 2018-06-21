@@ -30,9 +30,11 @@ export default class Icon extends React.PureComponent {
     RATING: 'rating',
     MORE: 'more',
     ADD_CIRCLE: 'add-circle',
+    ADD: 'add',
     HELP: 'help',
     HELP_OUTLINE: 'help-outline',
     BACK: 'back',
+    EDIT: 'edit',
   }
 
   static COLORS = {

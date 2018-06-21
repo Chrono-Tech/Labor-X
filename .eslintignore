@@ -50,7 +50,8 @@ src/**/*.js
 !src/models/app/JobOfferModel.js
 !src/models/app/ProfileModel.js
 !src/models/app/JobOfferIPFSModel.js
-!src/models/app/ClientProfileModel.js
+!src/models/app/ClientIPFSModel.js
+!src/models/app/ClientTypeModel.js
 !src/models/app/JobOfferFormModel.js
 
 !src/store/jobs/

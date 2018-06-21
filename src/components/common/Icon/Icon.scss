@@ -2,6 +2,7 @@
 @import "~styles/globals/variables";
 
 .root {
+  outline: none;
   position: relative;
   display: inline-block;
   white-space: nowrap;
@@ -12,7 +13,6 @@
 
 .clickable {
   cursor: pointer;
-  outline: none;
 }
 
 
@@ -85,11 +85,7 @@
 }
 
 .icon-security-upgrade:before {
-  content: '\F04E';
-}
-
-.icon-security-upgrade:before {
-  content: '\F04E';
+  content: '\F07F';
 }
 
 .icon-security-none:before {
@@ -162,4 +158,12 @@
 
 .icon-back:before {
   content: '\F055';
+}
+
+.icon-edit:before {
+  content: '\F063';
+}
+
+.icon-add:before {
+  content: '\F054';
 }

@@ -1,7 +1,7 @@
 @import "~styles/globals/variables";
 @import "~styles/globals/mixins";
 
-$maxWidth: 74rem;
+$maxWidth: 77rem;
 
 .main {
   flex-grow: 1;
@@ -49,6 +49,8 @@ $maxWidth: 74rem;
     .header {
       @include flex(column, flex-start, flex-start);
       @include card;
+      position: relative;
+      margin-right: 3rem;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
       > h2 {
@@ -64,11 +66,17 @@ $maxWidth: 74rem;
           min-width: 14rem;
         }
       }
+      .addWorker {
+        @include flex(row, center, center);
+        @include position(absolute, $bottom: 3rem, $right: 3rem);
+        background-color: $color-azure;
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+      }
     }
     .tabContent {
-      margin-top: 6rem;
-      min-height: 90rem;
-      background-color: #FFF;
+      min-height: 80rem;
     }
   }
 }

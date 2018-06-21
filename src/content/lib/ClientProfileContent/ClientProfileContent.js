@@ -2,12 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SwipeableViews from 'react-swipeable-views'
 import { Tabs, Tab } from 'material-ui/Tabs'
+import { connect } from 'react-redux'
+import { reduxForm, formValueSelector, propTypes } from 'redux-form'
 import { Router } from 'src/routes'
 import { ProfileModel, ClientModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
 import GeneralTab from './GeneralTab/GeneralTab'
 import StuffTab from './StuffTab/StuffTab'
 import css from './ClientProfileContent.scss'
+
+const FORM_CLIENT_PROFILE = 'form/clientProfile'
 
 const style = {
   backgroundColor: 'transparent',
@@ -18,8 +22,9 @@ const inkBarStyle = {
   height: '5px',
 }
 
-export default class ClientProfileContent extends React.Component {
+class ClientProfileContent extends React.Component {
   static propTypes = {
+    ...propTypes,
     profile: PropTypes.shape({
       general: PropTypes.instanceOf(ProfileModel),
       client: PropTypes.instanceOf(ClientModel),
@@ -49,19 +54,16 @@ export default class ClientProfileContent extends React.Component {
     console.log('---ClientProfileContent handleHelp')
   }
 
-  handleSubmit = async (values) => {
+  handleClickAddWorker = () => {
     // eslint-disable-next-line no-console
-    console.log('---ClientProfileContent handleSubmit, values', values)
+    console.log('---ClientProfileContent handleClickAddWorker')
   }
 
   render () {
-    const { profile, stuff } = this.props
-
-    console.log('profile', profile)
-    console.log('stuff', stuff)
+    const { profile, stuff, handleSubmit, clientType } = this.props
 
     return (
-      <div className={css.main}>
+      <form className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
           <div className={css.titleBar}>
             <Button
@@ -77,7 +79,7 @@ export default class ClientProfileContent extends React.Component {
             <div className={css.buttonsRow}>
               <Icon
                 className={css.helpButton}
-                size={32}
+                size={28}
                 {...Icon.SETS.HELP_INVERT}
                 onClick={this.handleHelp}
               />
@@ -85,7 +87,7 @@ export default class ClientProfileContent extends React.Component {
                 className={css.doneButton}
                 label='terms.done'
                 mods={Button.MODS.FLAT}
-                onClick={this.handleSubmit}
+                type={Button.TYPES.SUBMIT}
               />
             </div>
           </div>
@@ -103,18 +105,58 @@ export default class ClientProfileContent extends React.Component {
               <Tab className={css.tab} label='GENERAL' value={0} />
               <Tab className={css.tab} label='STUFF' value={1} />
             </Tabs>
+            { this.state.slideIndex === 1 ? (
+              <Icon
+                className={css.addWorker}
+                color={Icon.COLORS.WHITE}
+                icon={Icon.ICONS.ADD}
+                size={24}
+                onClick={this.handleClickAddWorker}
+              />
+            ) : null }
           </div>
           <div className={css.tabContent}>
             <SwipeableViews
               index={this.state.slideIndex}
               onChangeIndex={this.handleChange}
             >
-              <GeneralTab generalProfile={profile.general} clientProfile={profile.client} />
+              <GeneralTab generalProfile={profile.general} clientType={clientType} />
               <StuffTab stuff={stuff} />
             </SwipeableViews>
           </div>
         </div>
-      </div>
+      </form>
     )
   }
 }
+
+const ClientProfileContentForm = reduxForm({
+  form: FORM_CLIENT_PROFILE,
+})(ClientProfileContent)
+
+function mapStateToProps (state, op) {
+  const formSelector = formValueSelector(FORM_CLIENT_PROFILE)
+
+  return {
+    clientType: formSelector(state, 'clientType'),
+    initialValues: {
+      name: op.profile.general.ipfs.name,
+      registered: op.profile.client.ipfs.registered,
+      website: op.profile.client.ipfs.website,
+      email: op.profile.client.ipfs.email,
+      description: op.profile.client.ipfs.description,
+      clientType: op.profile.client.ipfs.type,
+    },
+  }
+}
+
+function mapDispatchToProps () {
+  return {
+    onSubmit: async (values) => {
+      // eslint-disable-next-line no-console
+      console.log('---ClientProfileContent handleSubmit, values', values)
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientProfileContentForm)

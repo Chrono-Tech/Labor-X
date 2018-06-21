@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types'
 import faker from 'faker'
-import AbstractModel from '../AbstractModel'
 import ClientAddressModel from './JobAddressModel'
+import * as ClientType from './ClientTypeModel'
+import AbstractModel from '../AbstractModel'
+
+const { CLIENT_TYPES_LIST } = ClientType
+const ClientTypeModel = ClientType.default
 
 const schemaFactory = () => ({
   hash: PropTypes.string.isRequired, // ipfs hash of the object itself
@@ -12,6 +16,7 @@ const schemaFactory = () => ({
   email: PropTypes.string,
   description: PropTypes.string,
   address: PropTypes.instanceOf(ClientAddressModel),
+  type: PropTypes.instanceOf(ClientTypeModel),
 })
 
 export default class ClientIPFSModel extends AbstractModel {
@@ -32,5 +37,6 @@ function propsWithDefaults (props) {
     description: faker.lorem.sentence(20),
     logo: faker.internet.avatar(),
     address: new ClientAddressModel(props.address || {}),
+    type: faker.random.arrayElement(CLIENT_TYPES_LIST),
   }, props)
 }
