@@ -1,0 +1,66 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include flex(column, flex-start, stretch);
+  width: 45rem;
+  min-height: 55rem;
+  background: $color-white;
+  border-radius: 5px;
+  padding: 3rem 0 2rem;
+  border-top: 1rem solid $color-azure;
+  h2 {
+    padding-bottom: 2rem;
+  }
+  .header {
+    padding: 0 2rem 2rem;
+    border-bottom: .5rem solid $color-gray10;
+    font-size: $pSize;
+    .headerInfo {
+      .link {
+        color: $color-azure;
+      }
+    }
+  }
+  .body {
+    padding: 1rem 2rem;
+    > * {
+      margin-bottom: 1rem;
+    }
+    .twoColumn {
+      @include flex(row, space-between, flex-start);
+      > * {
+        flex-basis: calc(50% - 1rem)
+      }
+    }
+  }
+  .actions {
+    @include flex(row, flex-end, stretch);
+    margin-top: auto;
+    padding: 0 2rem;
+    > * {
+      margin-left: 2rem;
+    }
+    .cancelAction {
+      @include flex(column, center, center);
+      font-weight: $font-weight-bold;
+      background-color: transparent !important;
+      padding: 12px 0;
+      color: $color-azure;
+      box-shadow: none;
+      &:hover {
+        background-color: darken($color-white, 5) !important;
+      }
+    }
+    .applyAction {
+      @include flex(column, center, center);
+      font-weight: $font-weight-bold;
+      background-color: $color-azure !important;
+      padding: 12px 0;
+      color: $color-white;
+      &:hover {
+        background-color: darken($color-azure, 5) !important;
+      }
+    }
+  }
+}
