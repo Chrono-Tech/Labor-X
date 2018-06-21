@@ -2,6 +2,7 @@ import { OFFERS_CLEAR, OFFERS_SAVE } from './actions'
 
 export const initialState = {
   byJobKey: {},
+  list: [],
 }
 
 const mutations = {
@@ -15,6 +16,7 @@ const mutations = {
         ...state.byJobKey,
         [`job-${jobId}`]: offers,
       },
+      list: [...state.list, ...offers],
     }
   },
 }
