@@ -18,14 +18,12 @@ export const reloadJobsOffers = () => async (dispatch, getState) => {
     for (let job of state.jobs.list) {
       if (job.state === JOB_STATE_CREATED) 
       {setTimeout(async () => {
-        const allOffers = await jobDataProviderDAO.getJobOffers(job.id)
+        const offers = await jobDataProviderDAO.getJobOffers(job.id)
         //Filtering only my offers
-        const offers = allOffers.filter((item) => item.worker === signer.address )
         if (offers.length > 0) {
-          dispatch({ type: OFFERS_SAVE, jobId: job.id, offers  })
+          dispatch({ type: OFFERS_SAVE, jobId: job.id, offers })
         }
       }, 0)}      
     }
   }
-
 }

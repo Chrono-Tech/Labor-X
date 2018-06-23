@@ -4,7 +4,7 @@ import SwipeableViews from 'react-swipeable-views'
 import { connect } from 'react-redux'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import { Translate } from 'components/common'
-import { offersListSelector, boardByIdSelector, jobByIdSelector } from 'src/store'
+import { signerSelector, boardByIdSelector, jobByIdSelector, offersListByWorkerSelector } from 'src/store'
 import { JobModel, BoardModel } from 'src/models'
 import OffersTabContent from './OffersTabContent/OffersTabContent'
 import ApplicationsTabContent from './ApplicationsTabContent/ApplicationsTabContent'
@@ -108,7 +108,9 @@ class ApplicationsAndOffersContent extends React.Component {
 function mapStateToProps (state) {
   // TODO @aevalyakin bind data
 
-  const myOffers = offersListSelector()(state)
+
+  const signer = signerSelector()(state);
+  const myOffers = offersListByWorkerSelector(signer.address)(state)
 
   const applicationsApproved = myOffers.map((offer) => {
     const job = jobByIdSelector(offer.jobId)(state)

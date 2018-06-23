@@ -11,3 +11,13 @@ export const offersListSelector = () => createSelector(
   offersSelector(),
   (offers) => offers.list
 )
+
+export const offersListByWorkerSelector = (worker) => createSelector(
+  offersSelector(),
+  (offers) => offers.list.filter((item) => item.worker === worker)
+)
+
+export const offersCountForJobSelector = (jobId) => createSelector(
+  offersSelector(),
+  (offers) => offers.list.filter((item) => item.jobId === jobId).length
+)
