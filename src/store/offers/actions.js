@@ -1,4 +1,3 @@
-import { signerSelector } from 'src/store'
 import { daoByType } from '../daos/selectors'
 import { JOB_STATE_CREATED } from "./../../models/app/JobStateModel"
 
@@ -13,7 +12,6 @@ export const initJobOffers = () => async (dispatch) => {
 export const reloadJobsOffers = () => async (dispatch, getState) => {
   const state = getState()
   const jobDataProviderDAO = daoByType('JobsDataProvider')(state)
-  const signer = signerSelector()(state)
   if (state.jobs && state.jobs.list) {
     for (let job of state.jobs.list) {
       if (job.state === JOB_STATE_CREATED) 

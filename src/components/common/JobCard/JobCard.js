@@ -4,7 +4,7 @@ import moment from 'moment'
 import cn from 'classnames'
 import pluralize from 'pluralize'
 import { JobModel, JOB_STATE_FINALIZED, BoardModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE } from 'src/models'
-import { Link, Counter, Button } from 'src/components/common'
+import { Link, Button } from 'src/components/common'
 import css from './JobCard.scss'
 
 const dateFormat = 'DD MMM YYYY'
@@ -15,6 +15,7 @@ export default class JobCard extends React.Component {
     board: PropTypes.instanceOf(BoardModel),
     notice: PropTypes.instanceOf(JobNoticeModel),
     onClickReview: PropTypes.func,
+    applicantsCount: PropTypes.number,
   }
 
   constructor (...args) {

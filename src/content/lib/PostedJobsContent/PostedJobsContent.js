@@ -37,7 +37,7 @@ function mapStateToProps (state) {
     cards: jobs.map(job => ({
       job,
       board: boardByIdSelector(job.boardId)(state),
-      applicantsCount: offersCountForJobSelector(job.id)(state)
+      applicantsCount: offersCountForJobSelector(job.id)(state),
       // notice: newJobNoticeSelector(signer.address, job.id)(state),
     })),
   }

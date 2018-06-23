@@ -108,8 +108,7 @@ class ApplicationsAndOffersContent extends React.Component {
 function mapStateToProps (state) {
   // TODO @aevalyakin bind data
 
-
-  const signer = signerSelector()(state);
+  const signer = signerSelector()(state)
   const myOffers = offersListByWorkerSelector(signer.address)(state)
 
   const applicationsApproved = myOffers.map((offer) => {
