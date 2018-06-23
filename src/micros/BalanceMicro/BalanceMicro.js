@@ -21,7 +21,8 @@ export class BalanceMicro extends React.Component {
           ? (
             children != null
               ? children(balance)
-              : formatNumber(balance.amount, 2)
+              : formatNumber(balance.amount, 18)
+              // : balance.amount
           )
           : null
         }

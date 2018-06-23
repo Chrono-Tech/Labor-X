@@ -7,7 +7,10 @@ import { Link, Button } from 'src/components/common'
 import { JobModel, BoardModel, ProfileModel, JobNoticeModel, JOB_STATE_FINISHED, JOB_STATE_PENDING_START/*, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE */ } from 'src/models'
 
 import css from './ActiveJobCard.scss'
-import { confirmStartWork } from "../../../store"
+import {confirmStartWork, modalsOpen, modalsPush} from "../../../store"
+import {JOB_STATE_PENDING_FINISH} from "../../../models";
+import {DeclineInvoiceDialog} from "../../../partials";
+import PayInvoiceDialog from "../../../partials/lib/PayInvoiceDialog/PayInvoiceDialog";
 
 const dateFormat = 'h:mm A'
 
@@ -38,6 +41,19 @@ class ActiveJobCard extends React.Component {
 
   handleConfirmStartWork = () => {
     this.props.confirmStartWork()
+  }
+
+  handleReviewClick = () => {
+    this.props.openPayInvoiceDialog()
+    // // TODO aevalyakin pickin any suitable card, need to be placed on appropriate card
+    // const card = this.props.groups[0].cards.filter(({ job, worker }) => job && worker )[0]
+    // card.recruiter = new ProfileModel({})
+    //
+    // const modal = {
+    //   component: DeclineInvoiceDialog,
+    //   props: { ...card },
+    // }
+    // this.props.pushModal(modal)
   }
 
   render () {
@@ -82,11 +98,11 @@ class ActiveJobCard extends React.Component {
               <Link className={css.link} href='/recruiter-profile'><p>{recruiter.ipfs.name} (Recruiter)</p></Link>
             </div>
           )}
-          {job.state === JOB_STATE_FINISHED && <Button
+          {job.state === JOB_STATE_PENDING_FINISH && <Button
             label='REVIEW'
             className={css.review}
             mods={Button.MODS.FLAT}
-            onClick={this.handleReview}
+            onClick={this.handleReviewClick}
           />}
           {job.state === JOB_STATE_PENDING_START && <Button
             label='CONFIRM START'
@@ -109,6 +125,7 @@ class ActiveJobCard extends React.Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   confirmStartWork: () => dispatch(confirmStartWork(ownProps.job.id)),
+  openPayInvoiceDialog: () => dispatch(modalsPush({ component: PayInvoiceDialog, props: { job: ownProps.job, worker: new ProfileModel({}) } })),
 })
 
 export default connect(null, mapDispatchToProps)(ActiveJobCard)

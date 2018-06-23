@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import moment from 'moment'
 import { Button, Link } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
 
 import css from './PayInvoiceDialog.scss'
+import { pay} from "../../../store";
 
 const dateFormat = 'DD.MM.YYYY'
 
-export default class PayInvoiceDialog extends React.Component {
+class PayInvoiceDialog extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel),
     worker: PropTypes.instanceOf(ProfileModel),
@@ -17,7 +19,7 @@ export default class PayInvoiceDialog extends React.Component {
   }
 
   handlePay = () => {
-    this.props.confirmEndWork(this.props.job.id)
+    this.props.pay()
   }
 
   handleDecline = () => {
@@ -88,3 +90,10 @@ export default class PayInvoiceDialog extends React.Component {
     ) : null
   }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  pay: () => dispatch(pay(ownProps.job.id)),
+  // decline: () => dispatch(confirmEndWork(ownProps.jobId)),
+})
+
+export default connect(null, mapDispatchToProps)(PayInvoiceDialog)

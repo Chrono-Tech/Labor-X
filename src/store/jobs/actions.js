@@ -328,52 +328,29 @@ export const endWork = (id) => async (dispatch, getState) => {
   }
 }
 
-export const CONFIRM_END_WORK_REQUEST = 'CONFIRM_END_WORK_REQUEST'
-export const CONFIRM_END_WORK_SUCCESS = 'CONFIRM_END_WORK_SUCCESS'
-export const CONFIRM_END_WORK_FAILURE = 'CONFIRM_END_WORK_FAILURE'
+export const PAY_REQUEST = 'PAY_REQUEST'
+export const PAY_SUCCESS = 'PAY_SUCCESS'
+export const PAY_FAILURE = 'PAY_FAILURE'
 
-const confirmEndWorkRequest = () => ({ type: CONFIRM_END_WORK_REQUEST })
-const confirmEndWorkSuccess = (res) => ({ type: CONFIRM_END_WORK_SUCCESS, res })
-const confirmEndWorkFailure = (err) => ({ type: CONFIRM_END_WORK_FAILURE, err })
+const payRequest = (req) => ({ type: PAY_REQUEST, req })
+const paySuccess = (res) => ({ type: PAY_SUCCESS, res })
+const payFailure = (err) => ({ type: PAY_FAILURE, err })
 
-export const confirmEndWork = (id) => async (dispatch, getState) => {
+export const pay = (id) => async (dispatch, getState) => {
   try {
-    dispatch(confirmEndWorkRequest())
+    dispatch(payRequest({ id }))
     const state = getState()
     const JobController = daoByType('JobController')(state)
     const signer = signerSelector()(state)
     const web3 = web3Selector()(state)
-    const tx = JobController.confirmEndWork(signer.address, id)
-    const res = await dispatch(executeTransaction({ tx, web3, signer }))
-    dispatch(confirmEndWorkSuccess(res))
+    const confirmEndWorkTx = JobController.confirmEndWork(signer.address, id)
+    const confirmEndWorkRes = await dispatch(executeTransaction({ tx: confirmEndWorkTx, web3, signer }))
+    const releasePaymentTx = JobController.releasePayment(signer.address, id)
+    const releasePaymentRes = await dispatch(executeTransaction({ tx: releasePaymentTx, web3, signer }))
+    dispatch(paySuccess({ confirmEndWorkRes, releasePaymentRes }))
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err)
-    dispatch(confirmEndWorkFailure(err))
-  }
-}
-
-export const RELEASE_PAYMENT_REQUEST = 'RELEASE_PAYMENT_REQUEST'
-export const RELEASE_PAYMENT_SUCCESS = 'RELEASE_PAYMENT_SUCCESS'
-export const RELEASE_PAYMENT_FAILURE = 'RELEASE_PAYMENT_FAILURE'
-
-const releasePaymentRequest = () => ({ type: RELEASE_PAYMENT_REQUEST })
-const releasePaymentSuccess = (res) => ({ type: RELEASE_PAYMENT_SUCCESS, res })
-const releasePaymentFailure = (err) => ({ type: RELEASE_PAYMENT_FAILURE, err })
-
-export const releasePayment = (id) => async (dispatch, getState) => {
-  try {
-    dispatch(releasePaymentRequest())
-    const state = getState()
-    const JobController = daoByType('JobController')(state)
-    const signer = signerSelector()(state)
-    const web3 = web3Selector()(state)
-    const tx = JobController.releasePayment(signer.address, id)
-    const res = await dispatch(executeTransaction({ tx, web3, signer }))
-    dispatch(releasePaymentSuccess(res))
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err)
-    dispatch(releasePaymentFailure(err))
+    dispatch(payFailure(err))
   }
 }
