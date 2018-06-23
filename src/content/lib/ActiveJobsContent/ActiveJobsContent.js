@@ -5,7 +5,6 @@ import moment from 'moment'
 import { groupBy } from 'lodash'
 import { SignerModel, JobModel, ProfileModel, JOB_STATE_FINALIZED, JOB_STATE_FINISHED } from 'src/models'
 import {
-  confirmEndWork,
   cancelJob,
   signerSelector,
   jobsListSelector,
@@ -18,6 +17,11 @@ import { PayInvoiceDialog, PaidInvoiceDialog, DeclineInvoiceDialog } from 'src/p
 import { Translate, ActiveJobCard } from 'src/components/common'
 
 import css from './ActiveJobsContent.scss'
+import {
+  JOB_STATE_OFFER_ACCEPTED, JOB_STATE_PENDING_FINISH, JOB_STATE_PENDING_START,
+  JOB_STATE_STARTED,
+} from "../../../models"
+import { schemaFactory as jobSchemaFactory } from "../../../models/app/JobModel"
 
 const dateFormat = 'DD MMMM YYYY, ddd'
 
@@ -35,8 +39,8 @@ class ActiveJobsContent extends React.Component {
       })
     ),
     pushModal: PropTypes.func.isRequired,
-    confirmEndWork: PropTypes.func.isRequired,
     cancelJob: PropTypes.func.isRequired,
+    toPayJobs: PropTypes.arrayOf(PropTypes.shape(jobSchemaFactory())),
   }
 
   constructor (...args) {
@@ -47,10 +51,10 @@ class ActiveJobsContent extends React.Component {
   }
 
   handleOnClickReview (job, worker) {
-    const { confirmEndWork, cancelJob } = this.props
+    const { cancelJob } = this.props
     const modal = {
       component: PayInvoiceDialog,
-      props: { job, worker, confirmEndWork, cancelJob },
+      props: { job, worker, cancelJob },
     }
     this.props.pushModal(modal)
   }
@@ -101,12 +105,20 @@ class ActiveJobsContent extends React.Component {
   }
 
   render () {
-    const { groups, totalCount, toPayCount, inProgressCount } = this.props
+    const { groups, totalCount, inProgressCount } = this.props
 
     return groups == null ? null : (
       <div className={css.main}>
-        {!groups.length ? null : this.renderHead({ totalCount, toPayCount, inProgressCount })}
+        {!groups.length ? null : this.renderHead({ totalCount, toPayCount: this.props.toPayJobs.length, inProgressCount })}
         <div className={css.content}>
+          {
+            this.props.toPayJobs.length ? (
+              <div className={css.section}>
+                <h3>Review & Pay</h3>
+                { this.props.toPayJobs.map(job => <ActiveJobCard job={job} key={job.id} />) }
+              </div>
+            ) : null
+          }
           {groups.map(({ key, date, cards }) => (
             <div className={css.section} key={key}>
               <h3>{moment(date).format(dateFormat)}</h3>
@@ -138,9 +150,21 @@ class ActiveJobsContent extends React.Component {
 }
 
 function mapStateToProps (state) {
+
   const signer = signerSelector()(state)
   const jobs = jobsListSelector()(state)
   const inActiveJobStates = [ JOB_STATE_FINALIZED, JOB_STATE_FINISHED ]
+
+  const clientJobs = jobs.filter(x => x.client === signer.address)
+
+  const clientActiveJobs = clientJobs.filter(x =>
+    x.state === JOB_STATE_OFFER_ACCEPTED ||
+    x.state === JOB_STATE_PENDING_START ||
+    x.state === JOB_STATE_STARTED ||
+    x.state === JOB_STATE_PENDING_FINISH
+  )
+
+  const toPayJobs = clientActiveJobs.filter(x => x.state === JOB_STATE_PENDING_FINISH)
 
   const cards = jobs
     .filter((job) => !inActiveJobStates.includes(job.state))
@@ -163,6 +187,7 @@ function mapStateToProps (state) {
     signer,
     totalCount: cards.length,
     toPayCount: cards.length - inProgressCount,
+    toPayJobs,
     inProgressCount,
     groups: Object.entries(groups)
       .map(([key, cards]) => ({
@@ -178,9 +203,6 @@ function mapDispatchToProps (dispatch) {
   return {
     pushModal (modal) {
       dispatch(modalsPush(modal))
-    },
-    confirmEndWork (jobId: Number) {
-      dispatch(confirmEndWork(jobId))
     },
     cancelJob (jobId: Number) {
       dispatch(cancelJob(jobId))

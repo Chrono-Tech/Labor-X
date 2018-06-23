@@ -18,6 +18,11 @@ module.exports = withSass({
 
 
   webpack: (config, { dev }) => {
+
+    if (dev) {
+      config.devtool = 'cheap-module-source-map';
+    }
+
     config.resolve.alias = {
       'src': path.join(__dirname, 'src'),
       'styles': path.join(__dirname, 'src/styles'),

@@ -105,17 +105,6 @@ export default class JobControllerDAO extends AbstractContractDAO {
     }
   }
 
-  confirmEndWork (sender: String, jobId: Number) {
-    // eslint-disable-next-line no-console
-    console.log('confirmEndWork Start: ', jobId, sender)
-    const data = this.contract.methods.confirmEndWork(jobId).encodeABI()
-    return {
-      from: sender,
-      to: this.address,
-      data,
-    }
-  }
-
   cancelJob (sender: String, jobId: Number) {
     // eslint-disable-next-line no-console
     console.log('cancelJob Start: ', jobId, sender)
@@ -152,6 +141,33 @@ export default class JobControllerDAO extends AbstractContractDAO {
 
   async confirmStartWork (from, jobId) {
     const data = this.contract.methods.confirmStartWork(jobId).encodeABI()
+    return {
+      from,
+      to: this.address,
+      data,
+    }
+  }
+
+  endWork (from, id) {
+    const data = this.contract.methods.endWork(id).encodeABI()
+    return {
+      from,
+      to: this.address,
+      data,
+    }
+  }
+
+  confirmEndWork (from, id) {
+    const data = this.contract.methods.confirmEndWork(id).encodeABI()
+    return {
+      from,
+      to: this.address,
+      data,
+    }
+  }
+
+  releasePayment (from, id) {
+    const data = this.contract.methods.releasePayment(id).encodeABI()
     return {
       from,
       to: this.address,
