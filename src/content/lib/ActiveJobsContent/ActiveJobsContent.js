@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
 import { SignerModel, JobModel, ProfileModel, JOB_STATE_FINALIZED, JOB_STATE_FINISHED } from 'src/models'
-
-import { Dialog } from 'material-ui'
-
 import {
   cancelJob,
   signerSelector,
@@ -22,8 +19,9 @@ import { Translate, ActiveJobCard } from 'src/components/common'
 import css from './ActiveJobsContent.scss'
 import {
   JOB_STATE_OFFER_ACCEPTED, JOB_STATE_PENDING_FINISH, JOB_STATE_PENDING_START,
-  JOB_STATE_STARTED
-} from "../../../models";
+  JOB_STATE_STARTED,
+} from "../../../models"
+import { schemaFactory as jobSchemaFactory } from "../../../models/app/JobModel"
 
 const dateFormat = 'DD MMMM YYYY, ddd'
 
@@ -41,8 +39,8 @@ class ActiveJobsContent extends React.Component {
       })
     ),
     pushModal: PropTypes.func.isRequired,
-    confirmEndWork: PropTypes.func.isRequired,
     cancelJob: PropTypes.func.isRequired,
+    toPayJobs: PropTypes.arrayOf(PropTypes.shape(jobSchemaFactory())),
   }
 
   constructor (...args) {
@@ -53,10 +51,10 @@ class ActiveJobsContent extends React.Component {
   }
 
   handleOnClickReview (job, worker) {
-    const { confirmEndWork, cancelJob } = this.props
+    const { cancelJob } = this.props
     const modal = {
       component: PayInvoiceDialog,
-      props: { job, worker, confirmEndWork, cancelJob },
+      props: { job, worker, cancelJob },
     }
     this.props.pushModal(modal)
   }
@@ -107,7 +105,7 @@ class ActiveJobsContent extends React.Component {
   }
 
   render () {
-    const { groups, totalCount, toPayCount, inProgressCount } = this.props
+    const { groups, totalCount, inProgressCount } = this.props
 
     return groups == null ? null : (
       <div className={css.main}>
@@ -205,9 +203,6 @@ function mapDispatchToProps (dispatch) {
   return {
     pushModal (modal) {
       dispatch(modalsPush(modal))
-    },
-    confirmEndWork (jobId: Number) {
-      dispatch(confirmEndWork(jobId))
     },
     cancelJob (jobId: Number) {
       dispatch(cancelJob(jobId))

@@ -4,13 +4,12 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
 import { Link, Button } from 'src/components/common'
-import { JobModel, BoardModel, ProfileModel, JobNoticeModel, JOB_STATE_FINISHED, JOB_STATE_PENDING_START/*, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE */ } from 'src/models'
+import { JobModel, BoardModel, ProfileModel, JobNoticeModel, JOB_STATE_PENDING_START/*, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE */ } from 'src/models'
 
 import css from './ActiveJobCard.scss'
-import {confirmStartWork, modalsOpen, modalsPush} from "../../../store"
-import {JOB_STATE_PENDING_FINISH} from "../../../models";
-import {DeclineInvoiceDialog} from "../../../partials";
-import PayInvoiceDialog from "../../../partials/lib/PayInvoiceDialog/PayInvoiceDialog";
+import { confirmStartWork, modalsPush } from "../../../store"
+import { JOB_STATE_PENDING_FINISH } from "../../../models"
+import PayInvoiceDialog from "../../../partials/lib/PayInvoiceDialog/PayInvoiceDialog"
 
 const dateFormat = 'h:mm A'
 
@@ -23,6 +22,7 @@ class ActiveJobCard extends React.Component {
     recruiter: PropTypes.instanceOf(ProfileModel),
     onClickReview: PropTypes.func,
     confirmStartWork: PropTypes.func,
+    openPayInvoiceDialog: PropTypes.func,
   }
 
   constructor (...args) {
@@ -43,17 +43,8 @@ class ActiveJobCard extends React.Component {
     this.props.confirmStartWork()
   }
 
-  handleReviewClick = () => {
+  handleReviewInvoiceClick = () => {
     this.props.openPayInvoiceDialog()
-    // // TODO aevalyakin pickin any suitable card, need to be placed on appropriate card
-    // const card = this.props.groups[0].cards.filter(({ job, worker }) => job && worker )[0]
-    // card.recruiter = new ProfileModel({})
-    //
-    // const modal = {
-    //   component: DeclineInvoiceDialog,
-    //   props: { ...card },
-    // }
-    // this.props.pushModal(modal)
   }
 
   render () {
@@ -99,10 +90,10 @@ class ActiveJobCard extends React.Component {
             </div>
           )}
           {job.state === JOB_STATE_PENDING_FINISH && <Button
-            label='REVIEW'
+            label='REVIEW INVOICE'
             className={css.review}
             mods={Button.MODS.FLAT}
-            onClick={this.handleReviewClick}
+            onClick={this.handleReviewInvoiceClick}
           />}
           {job.state === JOB_STATE_PENDING_START && <Button
             label='CONFIRM START'

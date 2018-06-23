@@ -6,7 +6,7 @@ import { Button, Link } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
 
 import css from './PayInvoiceDialog.scss'
-import { pay} from "../../../store";
+import { pay } from "../../../store"
 
 const dateFormat = 'DD.MM.YYYY'
 
@@ -14,7 +14,7 @@ class PayInvoiceDialog extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel),
     worker: PropTypes.instanceOf(ProfileModel),
-    confirmEndWork: PropTypes.func.isRequired,
+    pay: PropTypes.func.isRequired,
     cancelJob: PropTypes.func.isRequired,
   }
 
