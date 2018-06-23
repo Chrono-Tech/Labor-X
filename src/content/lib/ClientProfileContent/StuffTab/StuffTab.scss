@@ -1,0 +1,41 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.content {
+  @include flex(row, flex-start, flex-start);
+  flex-wrap: wrap;
+  margin-top: 7rem;
+  padding-right: 3rem;
+  .workerCard {
+    @include flex(row, flex-start, center);
+    @include card;
+    flex-basis: calc(50% - 2rem);
+    margin-bottom: 3rem;
+    padding: 2rem;
+    &:nth-child(odd) {
+      margin-right: 4rem;
+    }
+    .worker {
+      @include flex(row, flex-start, center);
+      > img {
+        margin-right: 1.5rem;
+        width: 5rem;
+        height: 5rem;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      > p {
+        font-weight: $font-weight-medium;
+      }
+    }
+    .icon {
+      margin-left: auto;
+    }
+    &:hover {
+      background-color: rgba($color-black, .01);
+      p {
+        color: $color-azure;
+      }
+    }
+  }
+}

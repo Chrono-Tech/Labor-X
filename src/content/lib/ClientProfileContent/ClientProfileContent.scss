@@ -1,0 +1,82 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 77rem;
+
+.main {
+  flex-grow: 1;
+  margin-bottom: 20rem;
+  .title {
+    height: 9rem;
+    margin: 0;
+    padding: 4rem 4rem 0;
+    color: $color-white;
+    background-image: $gradientBlueToGreen;
+    .titleBar {
+      @include flex(row, flex-start, stretch);
+      max-width: 70rem;
+      height: 5rem;
+      border-top-left-radius: .5rem;
+      border-top-right-radius: .5rem;
+      background-color: $color-azure;
+      .backButton {
+        color: $color-white;
+        background-color: $color-azure;
+      }
+      .buttonsRow {
+        @include flex(row, flex-start, stretch);
+        margin-left: auto;
+        .helpButton {
+          @include flex(row, center, center);
+          width: 5rem;
+          height: 5rem;
+          &:hover {
+            background-color: rgba($color-black, .2);
+          }
+        }
+        .doneButton {
+          color: $color-white;
+          &:hover {
+            background-color: rgba($color-black, .2);
+          }
+        }
+      }
+    }
+  }
+  .content {
+    margin-left: 4rem;
+    max-width: calc(#{$maxWidth} - 4rem);
+    .header {
+      @include flex(column, flex-start, flex-start);
+      @include card;
+      position: relative;
+      margin-right: 3rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      > h2 {
+        align-self: stretch;
+        padding: 3rem;
+        border-bottom: solid .1rem $color-gray10;
+      }
+      .tabs {
+        padding: 0 3rem;
+        height: 5rem;
+        .tab {
+          color: $color-azure !important;
+          min-width: 14rem;
+        }
+      }
+      .addWorker {
+        @include flex(row, center, center);
+        @include position(absolute, $bottom: 3rem, $right: 3rem);
+        background-color: $color-azure;
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+      }
+    }
+    .tabContent {
+      min-height: 80rem;
+    }
+  }
+}

@@ -32,6 +32,7 @@
     "pre-commit": "^1.2.2",
     "react": "^16.2.0",
     "react-addons-css-transition-group": "^15.6.2",
+    "react-collapsible": "^2.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-redux-i18n": "^1.9.2",

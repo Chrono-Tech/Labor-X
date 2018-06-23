@@ -1,0 +1,127 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.content {
+  position: relative;
+  margin-top: 7rem;
+  padding-right: 3rem;
+  > * {
+    margin-bottom: 3rem;
+  }
+  .logoContainer {
+    @include position(absolute, -5rem, 6rem);
+    cursor: pointer;
+    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+    .logo {
+      position: relative;
+      > img {
+        position: absolute;
+        border-radius: 50%;
+        width: 10rem;
+        height: 10rem;
+        object-fit: cover;
+      }
+      .overlay {
+        @include flex(column, center, center);
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity .3s, visibility .3s;;
+        border-radius: 50%;
+        width: 10rem;
+        height: 10rem;
+        background-color: rgba($color-black, .6);
+        > p {
+          user-select: none;
+          text-align: center;
+          color: $color-white;
+          font-weight: $font-weight-medium;
+        }
+      }
+    }
+    &:hover {
+      .overlay {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+  .block {
+    @include card;
+    padding: 3rem;
+    > * {
+      margin-bottom: 1.5rem;
+    }
+    .twoColumn {
+      @include flex(row, flex-start, stretch);
+      > * {
+        &:first-child {
+          margin-right: 2.5%;
+          min-width: 47.5%;
+          max-width: 47.5%;;
+        }
+        &:last-child {
+          margin-left: 2.5%;
+          min-width: 47.5%;;
+          max-width: 47.5%;;
+        }
+      }
+    }
+  }
+  .upgradeBlock {
+    @include card;
+    .upgradeTitle {
+      @include flex(row, flex-start, center);
+      padding: 3rem;
+      h3 {
+        margin-left: 1rem;
+        color: $color-red;
+      }
+      &:hover {
+        background-color: rgba($color-black, .05);
+        h3 {
+          color: $color-azure;
+        }
+      }
+    }
+    .description {
+      margin: 1.5rem 3rem;
+    }
+    .documents {
+      .documentEntry {
+        @include flex(row, flex-start, center);
+        padding: 1.5rem 3rem;
+        border-bottom: 1px solid $color-gray3;
+        &:first-child {
+          border-top: 1px solid $color-gray3;
+        }
+        > * {
+          margin-right: 1rem;
+          &:nth-child(3) {
+            margin-left: auto;
+            margin-right: 0;
+          }
+        }
+        p {
+          font-weight: $font-weight-regular;
+        }
+        &:hover {
+          background-color: rgba($color-black, .05);
+          p {
+            color: $color-azure;
+          }
+        }
+      }
+    }
+    .validateButton {
+      margin: 3rem;
+    }
+  }
+}
+
+.link {
+  color: $color-azure;
+  font-weight: $font-weight-regular;
+}
