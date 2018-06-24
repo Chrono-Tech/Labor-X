@@ -4,7 +4,7 @@ import moment from 'moment'
 import cn from 'classnames'
 import pluralize from 'pluralize'
 import { JobModel, JOB_STATE_FINALIZED, BoardModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE } from 'src/models'
-import { Link, Counter, Button } from 'src/components/common'
+import { Link, Button } from 'src/components/common'
 import css from './JobCard.scss'
 
 const dateFormat = 'DD MMM YYYY'
@@ -15,6 +15,7 @@ export default class JobCard extends React.Component {
     board: PropTypes.instanceOf(BoardModel),
     notice: PropTypes.instanceOf(JobNoticeModel),
     onClickReview: PropTypes.func,
+    applicantsCount: PropTypes.number,
   }
 
   constructor (...args) {
@@ -26,7 +27,7 @@ export default class JobCard extends React.Component {
     this.props.onClickReview(this.props.job.id)
   }
 
-  renderFooter ({ job, notice }) {
+  renderFooter ({ notice, applicantsCount }) {
     return (
       <div>
         {notice
@@ -34,10 +35,10 @@ export default class JobCard extends React.Component {
             <p className={css.report}>Client has reported an issue in the job log</p>
           ) : (
             <div className={css.applicantsOffers}>
-              {!job.extra.applicantsCount ? null : (
-                <p>{pluralize('Applicant', job.extra.applicantsCount, true)} </p>
-              )}
-              {!job.extra.applicantsDelta ? null : (
+              { ! applicantsCount ? <p> {pluralize('Applicant', 0, true)} </p> : (
+                <p> {pluralize('Applicant', applicantsCount, true)} </p>
+              ) }
+              {/* {!job.extra.applicantsDelta ? null : (
                 <Counter value={job.extra.applicantsDelta} />
               )}
               {!job.extra.offersCount ? null : (
@@ -45,7 +46,7 @@ export default class JobCard extends React.Component {
               )}
               {!job.extra.offersDelta ? null : (
                 <Counter value={job.extra.offersDelta} />
-              )}
+              )} */}
             </div>
           )
         }
@@ -60,7 +61,7 @@ export default class JobCard extends React.Component {
   }
 
   render () {
-    const { job, board, notice } = this.props
+    const { job, board, notice, applicantsCount } = this.props
 
     return (
       <div
@@ -101,7 +102,7 @@ export default class JobCard extends React.Component {
             )}
           </div>
         </div>
-        {this.renderFooter({ job, notice })}
+        { this.renderFooter({ job, notice, applicantsCount }) }
       </div>
     )
   }
