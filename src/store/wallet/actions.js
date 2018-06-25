@@ -5,6 +5,8 @@ import { WalletModel, WalletEntryModel } from 'src/models'
 import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
+import * as api from './../../api/backend'
+
 import { changeStep as loginChangeStep } from './../login/actions'
 import { getUserData, setUserAccountTypes } from "../user/actions"
 
@@ -59,6 +61,8 @@ export const decryptWallet = (entry, password) => async (dispatch, getState) => 
   })
 
   await dispatch(getUserData(wallet[0].address))
+
+  await api.signin(wallet[0])
 
   dispatch(walletLoad(model))
 
