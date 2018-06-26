@@ -57,7 +57,6 @@ export default class DescriptionTab extends React.Component {
     const button = (<Button
       type='button'
       label='APPLY'
-      disabled
       className={css.applyButton}
       mods={Button.MODS.FLAT}
       onClick={this.handleApply}
@@ -78,7 +77,7 @@ export default class DescriptionTab extends React.Component {
   }
 
   isSkillsFit = () => {
-    return false
+    return true
   }
 
   render () {

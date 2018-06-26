@@ -4,10 +4,11 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   jobId: PropTypes.number.isRequired,
-  rate: PropTypes.instanceOf(BigNumber).isRequired,
-  estimate: PropTypes.instanceOf(BigNumber).isRequired,
-  ontop: PropTypes.instanceOf(BigNumber).isRequired,
+  rate: PropTypes.instanceOf(BigNumber),
+  estimate: PropTypes.instanceOf(BigNumber),
+  ontop: PropTypes.instanceOf(BigNumber),
   worker: PropTypes.string.isRequired,
+  price: PropTypes.instanceOf(BigNumber),
 })
 
 export default class JobOfferFormModel extends AbstractModel {

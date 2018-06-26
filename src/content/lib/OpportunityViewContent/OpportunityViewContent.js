@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
 import { Router } from 'src/routes'
-import { JobModel, BoardModel, JobOfferFormModel, ClientModel } from 'src/models'
+import { JobModel, BoardModel, JobOfferFormModel, ClientModel, WORKFLOW_FIXED_PRICE, WORKFLOW_TM } from 'src/models'
 import { createJobOffer, signerSelector, boardByIdSelector, modalsPush } from 'src/store'
 import { Image, Button, Tab } from 'src/components/common'
 import { MakeOfferDialog } from 'src/partials'
@@ -26,7 +26,7 @@ export class OpportunityViewContent extends React.Component {
     isOfferPosting: false,
   }
 
-  handleBack () {
+  handleBack() {
     Router.pushRoute('/opportunities')
   }
 
@@ -50,18 +50,33 @@ export class OpportunityViewContent extends React.Component {
   }
 
   handlePostOffer = async () => {
+    console.log("Send post offeer");
     try {
       this.setState({
         isOfferPosting: true,
       })
-      await this.props.onPostOffer(
-        new JobOfferFormModel({
-          jobId: this.props.job.id,
-          rate: new BigNumber(10),
-          estimate: new BigNumber(10),
-          ontop: new BigNumber(0),
-        })
-      )
+      const { job } = this.props;
+      const {hourlyRate, totalHours, fixedPrice} = job.ipfs.budget;
+      switch (Number(job.flowType)) {
+        case WORKFLOW_TM.index:
+          await this.props.onPostOffer(
+            new JobOfferFormModel({
+              jobId: job.id,
+              rate: new BigNumber(hourlyRate),
+              estimate: (new BigNumber(hourlyRate)).multipliedBy(totalHours),
+              ontop: new BigNumber(0),
+            })
+          )
+          break;
+        default: //fixed price workflow and another
+        await this.props.onPostOfferWithPrice(
+          new JobOfferFormModel({
+            jobId: job.id,
+            price: new BigNumber(fixedPrice)
+          })
+        )
+          break;
+      }
       this.setState({
         isOfferPosting: false,
       }, () => {
@@ -69,6 +84,7 @@ export class OpportunityViewContent extends React.Component {
       })
     } catch (e) {
       // eslint-disable-next-line no-console
+      this.setState({ isOfferPosting: false })
       console.warn('handlePostOffer Error: ', e)
     }
   }
@@ -90,7 +106,7 @@ export class OpportunityViewContent extends React.Component {
     },
   ]
 
-  render () {
+  render() {
     const { job } = this.props
     return (
       <div className={css.main}>
@@ -145,7 +161,7 @@ export class OpportunityViewContent extends React.Component {
   }
 }
 
-function mapStateToProps (state, op) {
+function mapStateToProps(state, op) {
   const signer = signerSelector()(state)
   const board = boardByIdSelector(op.job.boardId)(state)
   // TODO aevalyakin recieve client data from blockchain
@@ -157,10 +173,11 @@ function mapStateToProps (state, op) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form)),
-    pushModal (modal) { dispatch(modalsPush(modal)) },
+    onPostOfferWithPrice: async (form: JobOfferFormModel) => dispatch(createJobOfferWithPrice(form)),
+    pushModal(modal) { dispatch(modalsPush(modal)) },
   }
 }
 

@@ -91,7 +91,7 @@ function mapStateToProps (state) {
     flowType: formSelector(state, 'flowType'),
     initialValues: {
       board: null,
-      flowType: 1,
+      flowType: 2,
       tags: [],
       hasBudget: false,
       hasPeriod: false,
@@ -110,8 +110,8 @@ function mapDispatchToProps (dispatch) {
       const data = new JobFormModel({
         boardId: values.board,
         flowType: values.flowType,
-        category: TAG_CATEGORIES_LIST[0],
-        area: TAG_AREAS_LIST[0],
+        category: TAG_CATEGORIES_LIST[3],
+        area: TAG_AREAS_LIST[3],
         skills: SkillModel.arrayValueOfMask(SKILLS_LIST.reduce((mask, index) => (mask | Math.pow(2, index)), 0)),
         ipfs: new JobIPFSModel({
           boardId: values.board,
@@ -141,6 +141,7 @@ function mapDispatchToProps (dispatch) {
                 isSpecified: true,
                 hourlyRate: values.hourlyRate,
                 totalHours: values.totalHours,
+                fixedPrice: values.fixedPrice
               }
           ),
           period: new JobPeriodModel(

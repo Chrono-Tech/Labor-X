@@ -18,8 +18,8 @@ export default class FlowTypeModel extends AbstractModel {
 }
 
 export const WORKFLOW_NOT_SET = new FlowTypeModel({ index: 0, name: 'NOT_SET' })
-export const WORKFLOW_FIXED_PRICE  = new FlowTypeModel({ index: 1, name: 'FIXED_PRICE' })
-export const WORKFLOW_TM = new FlowTypeModel({ index: 2, name: 'TM' })
+export const WORKFLOW_FIXED_PRICE  = new FlowTypeModel({ index: 2, name: 'FIXED_PRICE' })
+export const WORKFLOW_TM = new FlowTypeModel({ index: 1, name: 'TM' })
 
 export const FLOW_TYPES_LIST = [
   WORKFLOW_NOT_SET,

@@ -188,6 +188,23 @@ export const createJobOffer = (form: JobOfferFormModel) => async (dispatch, getS
   await dispatch(executeTransaction({ tx, web3, signer }))
 }
 
+export const createJobOfferWithPrice = (form: JobOfferFormModel) => async (dispatch, getState) => {
+  // eslint-disable-next-line no-console
+  console.log('[jobs] createJobOffer from values', form)
+  const state = getState()
+
+  const jobControllerDAO = daoByType('JobController')(state)
+  const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
+
+  const tx = jobControllerDAO.createPostJobOfferWithPriceTx(
+    signer.address,
+    form.jobId,
+    form.price
+  )
+  await dispatch(executeTransaction({ tx, web3, signer }))
+}
+
 export const updateFilterJobs = (filterFields) => (dispatch, getState) => {
   const state = getState()
 

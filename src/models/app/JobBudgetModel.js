@@ -7,6 +7,7 @@ export const schemaFactory = () => ({
   isSpecified: PropTypes.bool,
   hourlyRate: PropTypes.string,
   totalHours: PropTypes.string,
+  fixedPrice: PropTypes.string
 })
 
 export default class JobBudgetModel extends AbstractModel {
