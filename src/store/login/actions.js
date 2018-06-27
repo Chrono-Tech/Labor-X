@@ -7,6 +7,8 @@ import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicF
 
 import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
 import { web3Selector } from "../ethereum/selectors"
+import { getUserData, userSave } from "../user/actions"
+import * as backendApi from "./../../api/backend"
 
 export const LoginSteps = {
   Ledger: 'ledger',
@@ -42,12 +44,15 @@ export const setSignInModel = (signInModel) => (dispatch) => {
 export const signIn = ({ password }) => async (dispatch, getState) => {
   const state = getState()
   const { selectedWallet } = state.wallet
-  await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
+  const walletModel = await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
+  const account = walletModel.wallet[0]
+  const user = await dispatch(getUserData(account.address))
+  const signinResBody = await backendApi.signin(account)
+  dispatch(userSave({ ...user, ...signinResBody }))
 }
 
 export const onSignInSuccess = () => (dispatch) => {
   dispatch({ type: LOGIN_SIGN_IN })
-
   Router.pushRoute('/dashboard')
 }
 

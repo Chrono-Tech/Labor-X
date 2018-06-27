@@ -1,11 +1,15 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import { List, ListItem } from 'material-ui/List'
 import FontIcon from 'material-ui/FontIcon'
-import { MuiThemeProvider } from 'material-ui/styles'
+
+import GeneralProfileLevel1 from './GeneralProfileLevel1'
 
 import { Input, Button, Image, Icon, Select } from 'components/common'
+
+import { reviewProfile } from './../../store/profile'
 
 import css from './GeneralProfile.scss'
 
@@ -28,9 +32,14 @@ class GeneralProfile extends React.Component {
     ERROR: 'error',
   }
 
+  componentDidMount () {
+    this.props.reviewProfile()
+  }
+
   getStatusIcon (){
 
   }
+
 
   renderCard ({ title, content }){
     return (
@@ -213,261 +222,187 @@ class GeneralProfile extends React.Component {
   }
 
   render () {
+    if (!this.props.profile) return <div>loading...</div>
+    if (this.props.profile instanceof Error) return <div>error {this.props.profile.message}</div>
+
     return (
-      <MuiThemeProvider>
-        <div className={css.main}>
-          <div className={css.titleBlock}>
-            <div className={css.titleBar}>
-              <Button
-                className={css.cancelButton}
-                icon={Image.SETS.ARROW_BACK}
-                type={Button.TYPES.SUBMIT}
-                mods={Button.MODS.FLAT}
-                label='My Profile'
-              />
-              <div className={css.titleBarRight}>
-                <Button
-                  className={css.doneButton}
-                  label='DONE'
-                  type={Button.TYPES.SUBMIT}
-                  mods={Button.MODS.FLAT}
-                />
-              </div>
+      <div className={css.main}>
+        <div className={css.titleBlock}>
+          <div className={css.titleBar}>
+            <Button className={css.cancelButton} icon={Image.SETS.ARROW_BACK} type={Button.TYPES.SUBMIT} mods={Button.MODS.FLAT} label='My Profile' />
+            <div className={css.titleBarRight}>
+              <Button className={css.doneButton} label='DONE' type={Button.TYPES.SUBMIT} mods={Button.MODS.FLAT} />
             </div>
           </div>
-          <div className={css.contentWrapper}>
-            <form name={FORM_GENERAL_PROFILE}>
-
-              <div className={css.card}>
-                <div className={css.cardWrapper}>
-                  <div>
-                    <div className={css.avatarBlock}>
-                      <img src='/static/images/profile-photo.jpg' alt='' />
-                      <div className={css.avatarUploadButton}>
-                        <Icon className={css.avatarUploadIcon} icon={Icon.ICONS.UPLOAD} />
-                        <br />
-                        <span className={css.avatarUploadButtonText}>
-                          Upload<br /> Photo
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className={css.cardTitle}>Photo, Name and Date of birth</h3>
-                    <div className={css.flexRow}>
-                      <Field
-                        component={Input}
-                        className={css.field}
-                        name='firstName'
-                        type='text'
-                        placeholder='First name'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-
-                      <Field
-                        component={Input}
-                        className={[css.field, css.fieldLastName].join(' ')}
-                        name='lastName'
-                        type='text'
-                        placeholder='Last name'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-                    </div>
-                    <div className={css.flexRow}>
-                      <Field
-                        className={css.dateSelect}
-                        component={Select}
-                        name='birthdayDate'
-                        placeholder='DD'
-                        hintText='DD'
-                        type='select'
-                        values={[
-                          { value: '01', name: '01' },
-                        ]}
-                      />
-                      <Field
-                        className={css.dateSelect}
-                        component={Select}
-                        name='birthdayMonth'
-                        placeholder='MM'
-                        hintText='MM'
-                        type='select'
-                        values={[
-                          { value: '01', name: '01' },
-                        ]}
-                      />
-                      <Field
-                        className={css.dateSelect}
-                        component={Select}
-                        name='birthdayYear'
-                        placeholder='YYYY'
-                        hintText='YYYY'
-                        type='select'
-                        values={[
-                          { value: '2018', name: '2018' },
-                        ]}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                { this.renderUserInfoStatus() }
-
-              </div>
-
-              <div className={css.card}>
-                <div className={[css.cardWrapper, css.cardWrapperContacts].join(' ')}>
-                  <div>
-                    <div className={css.blockCircle}>
-                      <Icon className={css.blockCircleIcon} icon={Icon.ICONS.PHONE_EMAIL} />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className={css.cardTitle}>Email and Phone</h3>
-                    <div className={css.flexRow}>
-                      <Field
-                        component={Input}
-                        className={css.field}
-                        name='email'
-                        placeholder='Email'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-
-                      <Field
-                        className={css.langField}
-                        component={Select}
-                        name='lang'
-                        placeholder='RU'
-                        hintText='RU'
-                        type='select'
-                        values={[
-                          { value: 'RU', name: 'RU' },
-                        ]}
-                      />
-
-                      <Field
-                        component={Input}
-                        className={css.phoneField}
-                        name='phone'
-                        placeholder='999 999 99 99'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-                    </div>
-                  </div>
-
-                </div>
-
-                { this.renderUserContactsStatus() }
-
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardWrapper}>
-                  <div>
-                    <div className={css.blockCircle}>
-                      <Icon className={css.blockCircleIcon} icon={Icon.ICONS.HOME} />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className={css.cardTitle}>Home Address</h3>
-                    <div className={css.flexRow}>
-                      <Field
-                        className={css.field}
-                        component={Select}
-                        name='country'
-                        placeholder='Country'
-                        hintText='Country'
-                        type='select'
-                        values={[
-                          { value: 'Russia', name: 'Russia' },
-                        ]}
-                      />
-                      <Field
-                        className={css.field}
-                        component={Select}
-                        name='state'
-                        placeholder='State'
-                        hintText='State'
-                        type='select'
-                        values={[
-                          { value: 'State', name: 'State' },
-                        ]}
-                      />
-                    </div>
-
-                    <div className={css.flexAdditionalRow}>
-                      <Field
-                        component={Input}
-                        className={css.field}
-                        name='city'
-                        placeholder='City'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-                      <Field
-                        component={Input}
-                        className={css.field}
-                        name='zip'
-                        placeholder='ZIP'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-                    </div>
-
-                    <div className={css.flexRow}>
-                      <Field
-                        component={Input}
-                        className={[css.field, css.buildingField].join(' ')}
-                        name='building'
-                        placeholder='Building #'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-
-                      <Field
-                        component={Input}
-                        className={[css.field, css.suitField].join(' ')}
-                        name='suit'
-                        placeholder='Suit'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-
-                      <Field
-                        component={Input}
-                        className={css.field}
-                        name='street'
-                        placeholder='Street'
-                        materialInput
-                        materialTheme={Input.MATERIAL_THEME.PROFILE}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                { this.renderAddressStatus() }
-
-              </div>
-
-              <div className={css.eventBlock}>
-                { this.renderWarningEvent() }
-              </div>
-
-              <div className={css.eventBlock}>
-                { this.renderIssueEvent() }
-              </div>
-
-            </form>
-          </div>
         </div>
-      </MuiThemeProvider>
+        <div className={css.contentWrapper}>
+          <GeneralProfileLevel1 />
+          {/*<GeneralProfileLevel1 profile={this.props.profile} onSubmit={this.props.submitLevel1} />*/}
+          {/*<GeneralProfileLevel1 profile={this.props.profile} onSubmit={this.props.submitLevel1} />*/}
+          {/*<GeneralProfileLevel1 profile={this.props.profile} onSubmit={this.props.submitLevel1} />*/}
+
+          {/*<form name={FORM_GENERAL_PROFILE}>*/}
+
+            {/*<div className={css.card}>*/}
+              {/*<div className={[css.cardWrapper, css.cardWrapperContacts].join(' ')}>*/}
+                {/*<div>*/}
+                  {/*<div className={css.blockCircle}>*/}
+                    {/*<Icon className={css.blockCircleIcon} icon={Icon.ICONS.PHONE_EMAIL} />*/}
+                  {/*</div>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<h3 className={css.cardTitle}>Email and Phone</h3>*/}
+                  {/*<div className={css.flexRow}>*/}
+                    {/*<Field*/}
+                      {/*component={Input}*/}
+                      {/*className={css.field}*/}
+                      {/*name='email'*/}
+                      {/*placeholder='Email'*/}
+                      {/*materialInput*/}
+                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+                    {/*/>*/}
+
+                    {/*<Field*/}
+                      {/*className={css.langField}*/}
+                      {/*component={Select}*/}
+                      {/*name='lang'*/}
+                      {/*placeholder='RU'*/}
+                      {/*hintText='RU'*/}
+                      {/*type='select'*/}
+                      {/*values={[*/}
+                        {/*{ value: 'RU', name: 'RU' },*/}
+                      {/*]}*/}
+                    {/*/>*/}
+
+                    {/*<Field*/}
+                      {/*component={Input}*/}
+                      {/*className={css.phoneField}*/}
+                      {/*name='phone'*/}
+                      {/*placeholder='999 999 99 99'*/}
+                      {/*materialInput*/}
+                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+                    {/*/>*/}
+                  {/*</div>*/}
+                {/*</div>*/}
+
+              {/*</div>*/}
+
+              {/*{ this.renderUserContactsStatus() }*/}
+
+            {/*</div>*/}
+
+            {/*<div className={css.card}>*/}
+              {/*<div className={css.cardWrapper}>*/}
+                {/*<div>*/}
+                  {/*<div className={css.blockCircle}>*/}
+                    {/*<Icon className={css.blockCircleIcon} icon={Icon.ICONS.HOME} />*/}
+                  {/*</div>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<h3 className={css.cardTitle}>Home Address</h3>*/}
+                  {/*<div className={css.flexRow}>*/}
+                    {/*<Field*/}
+                      {/*className={css.field}*/}
+                      {/*component={Select}*/}
+                      {/*name='country'*/}
+                      {/*placeholder='Country'*/}
+                      {/*hintText='Country'*/}
+                      {/*type='select'*/}
+                      {/*values={[*/}
+                        {/*{ value: 'Russia', name: 'Russia' },*/}
+                      {/*]}*/}
+                    {/*/>*/}
+                    {/*<Field*/}
+                      {/*className={css.field}*/}
+                      {/*component={Select}*/}
+                      {/*name='state'*/}
+                      {/*placeholder='State'*/}
+                      {/*hintText='State'*/}
+                      {/*type='select'*/}
+                      {/*values={[*/}
+                        {/*{ value: 'State', name: 'State' },*/}
+                      {/*]}*/}
+                    {/*/>*/}
+                  {/*</div>*/}
+
+                  {/*<div className={css.flexAdditionalRow}>*/}
+                    {/*<Field*/}
+                      {/*component={Input}*/}
+                      {/*className={css.field}*/}
+                      {/*name='city'*/}
+                      {/*placeholder='City'*/}
+                      {/*materialInput*/}
+                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+                    {/*/>*/}
+                    {/*<Field*/}
+                      {/*component={Input}*/}
+                      {/*className={css.field}*/}
+                      {/*name='zip'*/}
+                      {/*placeholder='ZIP'*/}
+                      {/*materialInput*/}
+                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+                    {/*/>*/}
+                  {/*</div>*/}
+
+                  {/*<div className={css.flexRow}>*/}
+                    {/*<Field*/}
+                      {/*component={Input}*/}
+                      {/*className={[css.field, css.buildingField].join(' ')}*/}
+                      {/*name='building'*/}
+                      {/*placeholder='Building #'*/}
+                      {/*materialInput*/}
+                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+                    {/*/>*/}
+
+                    {/*<Field*/}
+                      {/*component={Input}*/}
+                      {/*className={[css.field, css.suitField].join(' ')}*/}
+                      {/*name='suit'*/}
+                      {/*placeholder='Suit'*/}
+                      {/*materialInput*/}
+                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+                    {/*/>*/}
+
+                    {/*<Field*/}
+                      {/*component={Input}*/}
+                      {/*className={css.field}*/}
+                      {/*name='street'*/}
+                      {/*placeholder='Street'*/}
+                      {/*materialInput*/}
+                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+                    {/*/>*/}
+                  {/*</div>*/}
+                {/*</div>*/}
+              {/*</div>*/}
+
+              {/*{ this.renderAddressStatus() }*/}
+
+            {/*</div>*/}
+
+            {/*<div className={css.eventBlock}>*/}
+              {/*{ this.renderWarningEvent() }*/}
+            {/*</div>*/}
+
+            {/*<div className={css.eventBlock}>*/}
+              {/*{ this.renderIssueEvent() }*/}
+            {/*</div>*/}
+
+          {/*</form>*/}
+        </div>
+      </div>
 
     )
   }
 }
 
-export default reduxForm({ form: FORM_GENERAL_PROFILE })(GeneralProfile)
+// const form = reduxForm({ form: FORM_GENERAL_PROFILE })(GeneralProfile)
+
+const mapStateToProps = (state) => ({
+  profile: state.ui.generalProfile.profile
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  reviewProfile: () => dispatch(reviewProfile()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GeneralProfile)

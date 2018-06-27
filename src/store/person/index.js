@@ -1,17 +1,15 @@
-import PropTypes from 'prop-types'
 import storage from "redux-persist/lib/storage"
 import { persistReducer } from "redux-persist"
-import { USER_SAVE } from './actions'
-import UserModel from "../../models/app/UserModel"
+import { USER_SAVE, AVATAR_UPLOAD_SUCCESS } from './actions'
 
 export const schemaFactory = () => ({
-  user: PropTypes.instanceOf(UserModel),
+  byId: PropTypes.objectOf(PersonModel)
 })
 
-export const initialState = { user: null }
+export const initialState = {}
 
 const persistConfig = () => ({
-  key: 'user',
+  key: 'person',
   storage: storage,
 })
 
@@ -19,6 +17,9 @@ const mutations = {
   [USER_SAVE] (state, { user }) {
     return { user }
   },
+  [ AVATAR_UPLOAD_SUCCESS ] (state, { res }) {
+    return { ...state, user: { ...state.user, profile } }
+  }
 }
 
 const userReducer = (state = initialState, { type, ...other }) => {
