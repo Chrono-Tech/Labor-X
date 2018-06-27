@@ -113,7 +113,7 @@ export default class Icon extends React.PureComponent {
         className={cn([
           css.root,
           className,
-          faded,
+          faded && css.faded,
           icon && css[`icon-${icon}`],
           color && css[color],
           onClick && css.clickable,

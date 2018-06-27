@@ -8,7 +8,8 @@ export default (values) => {
   const searchCategoryError = validators.required(values.tagCategories)
   const feeError = validators.isDefined(values.fee)
   const lhusError = validators.required(values.lhus)
-  const ratingRequirementsError = validators.isDefined(values.rating_requirements)
+  const ratingRequirementsError = validators.isDefined(values.ratingRequirements)
+  const verificationRequirementsError = validators.isDefined(values.verificationRequirements)
   const joinRequirementError = validators.isDefined(values.joinRequirement)
 
   return {
@@ -16,7 +17,8 @@ export default (values) => {
     searchCategory: searchCategoryError ? searchCategoryError : null,
     fee: feeError  ? feeError : null,
     lhus: lhusError ? lhusError : null,
-    rating_requirements: values.joinRequirement === REQUIREMENTS_RATING && ratingRequirementsError ? ratingRequirementsError : null,
+    ratingRequirements: values.joinRequirement === REQUIREMENTS_RATING && ratingRequirementsError ? ratingRequirementsError : null,
+    verificationRequirements: values.joinRequirement === REQUIREMENTS_RATING && verificationRequirementsError ? verificationRequirementsError : null,
     joinRequirement: joinRequirementError ? joinRequirementError : null,
   }
 }

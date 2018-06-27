@@ -36,6 +36,7 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-redux-i18n": "^1.9.2",
+    "react-svg-donut-chart": "^1.0.0",
     "react-swipeable-views": "^0.12.14",
     "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",

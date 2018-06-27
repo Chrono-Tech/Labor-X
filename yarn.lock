@@ -8767,6 +8767,12 @@ react-style-proptype@^3.0.0:
   dependencies:
     prop-types "^15.5.4"
 
+react-svg-donut-chart@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-svg-donut-chart/-/react-svg-donut-chart-1.0.0.tgz#7496cfa95e26f0494bf78d7bfbd6a6028089d4c0"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-swipeable-views-core@^0.12.14:
   version "0.12.14"
   resolved "https://registry.yarnpkg.com/react-swipeable-views-core/-/react-swipeable-views-core-0.12.14.tgz#65271fd18dd9b359e39392fe065a8067e0d7bfdb"
