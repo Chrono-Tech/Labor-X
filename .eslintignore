@@ -101,3 +101,21 @@ src/**/*.js
 !src/content/lib/ClientProfileContent/
 
 !src/partials/
+
+!pages/general-profile.js
+!src/api/backend/index.js
+!src/api/backend/model/ProfileClientModel.js
+!src/api/backend/model/ProfileContactsModel.js
+!src/api/backend/model/ProfileModel.js
+!src/api/backend/model/ProfilePassportModel.js
+!src/api/backend/model/ProfilePersonalModel.js
+!src/api/backend/model/ProfilePersonalVerificationRequestModel.js
+!src/api/backend/model/ProfileRecruiterModel.js
+!src/api/backend/model/ProfileWorkerModel.js
+!src/content/lib/GeneralProfileContent/GeneralProfileContent.js
+!src/content/lib/GeneralProfileContent/GeneralProfileContent.scss
+!src/content/lib/GeneralProfileContent/PersonalForm.js
+!src/models/form/ProfilePersonalFormModel.js
+!src/store/index.js
+!src/store/ui/general-profile-page.js
+!src/store/ui/index.js

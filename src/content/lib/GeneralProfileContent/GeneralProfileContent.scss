@@ -432,3 +432,23 @@ b {
 :global(.slides-leave) {
   opacity: 1;
 }
+
+.avatarErrorText {
+  width: 100px;
+  position: relative;
+  bottom: 2px;
+  font-size: 12px;
+  line-height: 12px;
+  color: rgb(244, 67, 54);
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.validationComment {
+  position: relative;
+  bottom: 2px;
+  font-size: 12px;
+  line-height: 12px;
+  color: rgb(244, 67, 54);
+}
+

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import GeneralProfile from 'src/components/GeneralProfile/GeneralProfile'
+import GeneralProfileContent from 'src/content/lib/GeneralProfileContent/GeneralProfileContent'
 import { MainLayout } from 'src/components/layouts'
 
 class GeneralProfilePage extends React.Component {
@@ -8,7 +8,7 @@ class GeneralProfilePage extends React.Component {
   render () {
     return (
       <MainLayout title=''>
-        <GeneralProfile />
+        <GeneralProfileContent />
       </MainLayout>
     )
   }

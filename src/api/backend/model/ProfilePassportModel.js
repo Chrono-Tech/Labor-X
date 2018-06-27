@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import AbstractModel from './../../../models/AbstractModel'
-import AttachmentModel from "./AttachmentModel";
+import AttachmentModel from "./AttachmentModel"
 
 const schemaFactory = () => ({
   submitted: PropTypes.shape({
@@ -13,10 +13,10 @@ const schemaFactory = () => ({
     passport: PropTypes.string,
     expirationDate: PropTypes.string,
     attachments: PropTypes.arrayOf(PropTypes.instanceOf(AttachmentModel)),
-  })
+  }),
 })
 
-export default class ProfileLevel3Model extends AbstractModel {
+export default class ProfilePassportModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
     Object.freeze(this)

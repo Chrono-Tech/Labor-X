@@ -12,10 +12,10 @@ const schemaFactory = () => ({
   approved: PropTypes.shape({
     email: PropTypes.string,
     phone: PropTypes.string,
-  })
+  }),
 })
 
-export default class ProfileLevel2Model extends AbstractModel {
+export default class ProfileContactsModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
     Object.freeze(this)

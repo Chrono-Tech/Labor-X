@@ -1,19 +1,15 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import { reduxForm, Field } from 'redux-form'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import { List, ListItem } from 'material-ui/List'
 import FontIcon from 'material-ui/FontIcon'
+import CircularProgress from 'material-ui/CircularProgress'
 
-import GeneralProfileLevel1 from './GeneralProfileLevel1'
-
-import { Input, Button, Image, Icon, Select } from 'components/common'
-
-import { reviewProfile } from './../../store/profile'
-
-import css from './GeneralProfile.scss'
-
-const FORM_GENERAL_PROFILE = 'form/generalProfile'
+import PersonalForm from './PersonalForm'
+import { Button, Image, Icon } from './../../../components/common'
+import { getState as getPageState, reviewProfile } from '../../../store/ui/general-profile-page'
+import css from './GeneralProfileContent.scss'
 
 const listItemInnerStyle = {
   padding: '16px 56px 16px 62px',
@@ -24,22 +20,17 @@ const fontIconStyle = {
   top: -1,
 }
 
-class GeneralProfile extends React.Component {
-  static VALIDATE_STATUS = {
-    VALIDATED: 'validated',
-    UPGRADE: 'upgrade',
-    WARNING: 'warning',
-    ERROR: 'error',
+class GeneralProfileContent extends React.Component {
+
+  static propTypes = {
+    reviewProfileLoading: PropTypes.bool.isRequired,
+    reviewProfile: PropTypes.func.isRequired,
+    reviewProfileFailure: PropTypes.instanceOf(Error),
   }
 
   componentDidMount () {
     this.props.reviewProfile()
   }
-
-  getStatusIcon (){
-
-  }
-
 
   renderCard ({ title, content }){
     return (
@@ -191,7 +182,7 @@ class GeneralProfile extends React.Component {
         </div>
         <p className={css.issueTextBlock}>
           Hello Emilie,
-          unfortunately we couldn't verify this document. My-ID.pdf
+          unfortunately we couldn&#39;t verify this document. My-ID.pdf
         </p>
         <p className={css.issueTextBlock}>
           <b>Reason</b>: reason statement.
@@ -221,10 +212,15 @@ class GeneralProfile extends React.Component {
     return this.renderCard({ title, content })
   }
 
-  render () {
-    if (!this.props.profile) return <div>loading...</div>
-    if (this.props.profile instanceof Error) return <div>error {this.props.profile.message}</div>
+  renderContent () {
+    if (this.props.reviewProfileLoading) return <CircularProgress size={24} />
+    if (this.props.reviewProfileFailure) return <div>error {this.props.reviewProfileFailure.message}</div>
+    return [
+      <PersonalForm />,
+    ]
+  }
 
+  render () {
     return (
       <div className={css.main}>
         <div className={css.titleBlock}>
@@ -236,156 +232,153 @@ class GeneralProfile extends React.Component {
           </div>
         </div>
         <div className={css.contentWrapper}>
-          <GeneralProfileLevel1 />
-          {/*<GeneralProfileLevel1 profile={this.props.profile} onSubmit={this.props.submitLevel1} />*/}
-          {/*<GeneralProfileLevel1 profile={this.props.profile} onSubmit={this.props.submitLevel1} />*/}
-          {/*<GeneralProfileLevel1 profile={this.props.profile} onSubmit={this.props.submitLevel1} />*/}
+          {this.renderContent()}
 
           {/*<form name={FORM_GENERAL_PROFILE}>*/}
 
-            {/*<div className={css.card}>*/}
-              {/*<div className={[css.cardWrapper, css.cardWrapperContacts].join(' ')}>*/}
-                {/*<div>*/}
-                  {/*<div className={css.blockCircle}>*/}
-                    {/*<Icon className={css.blockCircleIcon} icon={Icon.ICONS.PHONE_EMAIL} />*/}
-                  {/*</div>*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                  {/*<h3 className={css.cardTitle}>Email and Phone</h3>*/}
-                  {/*<div className={css.flexRow}>*/}
-                    {/*<Field*/}
-                      {/*component={Input}*/}
-                      {/*className={css.field}*/}
-                      {/*name='email'*/}
-                      {/*placeholder='Email'*/}
-                      {/*materialInput*/}
-                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
-                    {/*/>*/}
+          {/*<div className={css.card}>*/}
+          {/*<div className={[css.cardWrapper, css.cardWrapperContacts].join(' ')}>*/}
+          {/*<div>*/}
+          {/*<div className={css.blockCircle}>*/}
+          {/*<Icon className={css.blockCircleIcon} icon={Icon.ICONS.PHONE_EMAIL} />*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*<div>*/}
+          {/*<h3 className={css.cardTitle}>Email and Phone</h3>*/}
+          {/*<div className={css.flexRow}>*/}
+          {/*<Field*/}
+          {/*component={Input}*/}
+          {/*className={css.field}*/}
+          {/*name='email'*/}
+          {/*placeholder='Email'*/}
+          {/*materialInput*/}
+          {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+          {/*/>*/}
 
-                    {/*<Field*/}
-                      {/*className={css.langField}*/}
-                      {/*component={Select}*/}
-                      {/*name='lang'*/}
-                      {/*placeholder='RU'*/}
-                      {/*hintText='RU'*/}
-                      {/*type='select'*/}
-                      {/*values={[*/}
-                        {/*{ value: 'RU', name: 'RU' },*/}
-                      {/*]}*/}
-                    {/*/>*/}
+          {/*<Field*/}
+          {/*className={css.langField}*/}
+          {/*component={Select}*/}
+          {/*name='lang'*/}
+          {/*placeholder='RU'*/}
+          {/*hintText='RU'*/}
+          {/*type='select'*/}
+          {/*values={[*/}
+          {/*{ value: 'RU', name: 'RU' },*/}
+          {/*]}*/}
+          {/*/>*/}
 
-                    {/*<Field*/}
-                      {/*component={Input}*/}
-                      {/*className={css.phoneField}*/}
-                      {/*name='phone'*/}
-                      {/*placeholder='999 999 99 99'*/}
-                      {/*materialInput*/}
-                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
-                    {/*/>*/}
-                  {/*</div>*/}
-                {/*</div>*/}
+          {/*<Field*/}
+          {/*component={Input}*/}
+          {/*className={css.phoneField}*/}
+          {/*name='phone'*/}
+          {/*placeholder='999 999 99 99'*/}
+          {/*materialInput*/}
+          {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+          {/*/>*/}
+          {/*</div>*/}
+          {/*</div>*/}
 
-              {/*</div>*/}
+          {/*</div>*/}
 
-              {/*{ this.renderUserContactsStatus() }*/}
+          {/*{ this.renderUserContactsStatus() }*/}
 
-            {/*</div>*/}
+          {/*</div>*/}
 
-            {/*<div className={css.card}>*/}
-              {/*<div className={css.cardWrapper}>*/}
-                {/*<div>*/}
-                  {/*<div className={css.blockCircle}>*/}
-                    {/*<Icon className={css.blockCircleIcon} icon={Icon.ICONS.HOME} />*/}
-                  {/*</div>*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                  {/*<h3 className={css.cardTitle}>Home Address</h3>*/}
-                  {/*<div className={css.flexRow}>*/}
-                    {/*<Field*/}
-                      {/*className={css.field}*/}
-                      {/*component={Select}*/}
-                      {/*name='country'*/}
-                      {/*placeholder='Country'*/}
-                      {/*hintText='Country'*/}
-                      {/*type='select'*/}
-                      {/*values={[*/}
-                        {/*{ value: 'Russia', name: 'Russia' },*/}
-                      {/*]}*/}
-                    {/*/>*/}
-                    {/*<Field*/}
-                      {/*className={css.field}*/}
-                      {/*component={Select}*/}
-                      {/*name='state'*/}
-                      {/*placeholder='State'*/}
-                      {/*hintText='State'*/}
-                      {/*type='select'*/}
-                      {/*values={[*/}
-                        {/*{ value: 'State', name: 'State' },*/}
-                      {/*]}*/}
-                    {/*/>*/}
-                  {/*</div>*/}
+          {/*<div className={css.card}>*/}
+          {/*<div className={css.cardWrapper}>*/}
+          {/*<div>*/}
+          {/*<div className={css.blockCircle}>*/}
+          {/*<Icon className={css.blockCircleIcon} icon={Icon.ICONS.HOME} />*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*<div>*/}
+          {/*<h3 className={css.cardTitle}>Home Address</h3>*/}
+          {/*<div className={css.flexRow}>*/}
+          {/*<Field*/}
+          {/*className={css.field}*/}
+          {/*component={Select}*/}
+          {/*name='country'*/}
+          {/*placeholder='Country'*/}
+          {/*hintText='Country'*/}
+          {/*type='select'*/}
+          {/*values={[*/}
+          {/*{ value: 'Russia', name: 'Russia' },*/}
+          {/*]}*/}
+          {/*/>*/}
+          {/*<Field*/}
+          {/*className={css.field}*/}
+          {/*component={Select}*/}
+          {/*name='state'*/}
+          {/*placeholder='State'*/}
+          {/*hintText='State'*/}
+          {/*type='select'*/}
+          {/*values={[*/}
+          {/*{ value: 'State', name: 'State' },*/}
+          {/*]}*/}
+          {/*/>*/}
+          {/*</div>*/}
 
-                  {/*<div className={css.flexAdditionalRow}>*/}
-                    {/*<Field*/}
-                      {/*component={Input}*/}
-                      {/*className={css.field}*/}
-                      {/*name='city'*/}
-                      {/*placeholder='City'*/}
-                      {/*materialInput*/}
-                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
-                    {/*/>*/}
-                    {/*<Field*/}
-                      {/*component={Input}*/}
-                      {/*className={css.field}*/}
-                      {/*name='zip'*/}
-                      {/*placeholder='ZIP'*/}
-                      {/*materialInput*/}
-                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
-                    {/*/>*/}
-                  {/*</div>*/}
+          {/*<div className={css.flexAdditionalRow}>*/}
+          {/*<Field*/}
+          {/*component={Input}*/}
+          {/*className={css.field}*/}
+          {/*name='city'*/}
+          {/*placeholder='City'*/}
+          {/*materialInput*/}
+          {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+          {/*/>*/}
+          {/*<Field*/}
+          {/*component={Input}*/}
+          {/*className={css.field}*/}
+          {/*name='zip'*/}
+          {/*placeholder='ZIP'*/}
+          {/*materialInput*/}
+          {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+          {/*/>*/}
+          {/*</div>*/}
 
-                  {/*<div className={css.flexRow}>*/}
-                    {/*<Field*/}
-                      {/*component={Input}*/}
-                      {/*className={[css.field, css.buildingField].join(' ')}*/}
-                      {/*name='building'*/}
-                      {/*placeholder='Building #'*/}
-                      {/*materialInput*/}
-                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
-                    {/*/>*/}
+          {/*<div className={css.flexRow}>*/}
+          {/*<Field*/}
+          {/*component={Input}*/}
+          {/*className={[css.field, css.buildingField].join(' ')}*/}
+          {/*name='building'*/}
+          {/*placeholder='Building #'*/}
+          {/*materialInput*/}
+          {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+          {/*/>*/}
 
-                    {/*<Field*/}
-                      {/*component={Input}*/}
-                      {/*className={[css.field, css.suitField].join(' ')}*/}
-                      {/*name='suit'*/}
-                      {/*placeholder='Suit'*/}
-                      {/*materialInput*/}
-                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
-                    {/*/>*/}
+          {/*<Field*/}
+          {/*component={Input}*/}
+          {/*className={[css.field, css.suitField].join(' ')}*/}
+          {/*name='suit'*/}
+          {/*placeholder='Suit'*/}
+          {/*materialInput*/}
+          {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+          {/*/>*/}
 
-                    {/*<Field*/}
-                      {/*component={Input}*/}
-                      {/*className={css.field}*/}
-                      {/*name='street'*/}
-                      {/*placeholder='Street'*/}
-                      {/*materialInput*/}
-                      {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
-                    {/*/>*/}
-                  {/*</div>*/}
-                {/*</div>*/}
-              {/*</div>*/}
+          {/*<Field*/}
+          {/*component={Input}*/}
+          {/*className={css.field}*/}
+          {/*name='street'*/}
+          {/*placeholder='Street'*/}
+          {/*materialInput*/}
+          {/*materialTheme={Input.MATERIAL_THEME.PROFILE}*/}
+          {/*/>*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*</div>*/}
 
-              {/*{ this.renderAddressStatus() }*/}
+          {/*{ this.renderAddressStatus() }*/}
 
-            {/*</div>*/}
+          {/*</div>*/}
 
-            {/*<div className={css.eventBlock}>*/}
-              {/*{ this.renderWarningEvent() }*/}
-            {/*</div>*/}
+          {/*<div className={css.eventBlock}>*/}
+          {/*{ this.renderWarningEvent() }*/}
+          {/*</div>*/}
 
-            {/*<div className={css.eventBlock}>*/}
-              {/*{ this.renderIssueEvent() }*/}
-            {/*</div>*/}
+          {/*<div className={css.eventBlock}>*/}
+          {/*{ this.renderIssueEvent() }*/}
+          {/*</div>*/}
 
           {/*</form>*/}
         </div>
@@ -395,14 +388,17 @@ class GeneralProfile extends React.Component {
   }
 }
 
-// const form = reduxForm({ form: FORM_GENERAL_PROFILE })(GeneralProfile)
-
-const mapStateToProps = (state) => ({
-  profile: state.ui.generalProfile.profile
-})
+const mapStateToProps = (state) => {
+  const pageState = getPageState(state)
+  return ({
+    reviewProfileLoading: pageState.reviewProfileLoading,
+    profile: pageState.profile,
+    reviewProfileFailure: pageState.reviewProfileFailure,
+  })
+}
 
 const mapDispatchToProps = (dispatch) => ({
   reviewProfile: () => dispatch(reviewProfile()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GeneralProfile)
+export default connect(mapStateToProps, mapDispatchToProps)(GeneralProfileContent)

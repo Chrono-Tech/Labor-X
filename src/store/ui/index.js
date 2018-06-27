@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux'
-import generalProfile from './general-profile'
-import myProfile from './my-profile'
+import generalProfilePage from './general-profile-page'
 
 export default combineReducers({
-  generalProfile,
-  myProfile,
+  generalProfilePage,
 })

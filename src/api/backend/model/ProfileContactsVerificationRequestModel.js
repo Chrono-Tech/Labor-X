@@ -6,7 +6,7 @@ export const schemaFactory = () => ({
   phone: PropTypes.string.isRequired,
 })
 
-export default class VerificationRequestLevel2Model extends AbstractModel {
+export default class VerificationRequestContactsModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
     Object.freeze(this)

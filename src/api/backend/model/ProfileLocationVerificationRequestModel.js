@@ -11,7 +11,7 @@ export const schemaFactory = () => ({
   attachments: PropTypes.arrayOf(PropTypes.string).isRequired,
 })
 
-export default class VerificationRequestLevel4Model extends AbstractModel {
+export default class VerificationRequestResidenceModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
     Object.freeze(this)
