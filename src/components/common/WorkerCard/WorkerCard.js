@@ -3,12 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import cn from 'classnames'
-import { ProfileModel, JobOfferModel } from 'src/models'
+import { ProfileModel, JobOfferModel, JobModel, JOB_STATE_CREATED, WorkerModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield, WorkerState } from 'src/components/common'
+import { acceptOffer } from 'src/store'
 import css from './WorkerCard.scss'
-import { acceptOffer } from "../../../store"
-import { JOB_STATE_CREATED } from "../../../models"
-import { schemaFactory } from "../../../models/app/JobModel"
 
 const dateFormat = 'DD MMM YYYY h:mm A'
 
@@ -16,10 +14,11 @@ class WorkerCard extends React.Component {
   static propTypes = {
     offer: PropTypes.instanceOf(JobOfferModel).isRequired,
     worker: PropTypes.instanceOf(ProfileModel).isRequired,
+    workerProfile: PropTypes.instanceOf(WorkerModel).isRequired,
+    job: PropTypes.instanceOf(JobModel),
     offerSent: PropTypes.bool,
     acceptOffer: PropTypes.func,
     jobId: PropTypes.number,
-    job: schemaFactory(),
   }
 
   static defaultProps = {
@@ -113,7 +112,7 @@ class WorkerCard extends React.Component {
   }
 
   render () {
-    const { worker, offer, offerSent } = this.props
+    const { worker, workerProfile, offer, offerSent } = this.props
     return (
       <div className={cn(css.root, {
         [css.attention]: !offerSent && offer,
@@ -130,9 +129,9 @@ class WorkerCard extends React.Component {
             </Link>
           </div>
           <div className={css.extraData}>
-            <Rating rating={worker.workerExtra.rating} />
-            <SecurityShield level={worker.workerExtra.validationLevel} />
-            <WorkerState state={worker.workerExtra.state} />
+            <Rating rating={workerProfile.extra.rating} />
+            <SecurityShield level={workerProfile.extra.validationLevel} />
+            <WorkerState state={workerProfile.extra.state} />
           </div>
         </div>
         { offerSent ? this.renderFooterOfferSent(offer) : this.renderFooter(offer) }
@@ -141,8 +140,13 @@ class WorkerCard extends React.Component {
   }
 }
 
+const mapStateToProps = () => ({
+  // TODO @aevalyakin get actual worker
+  workerProfile: new WorkerModel({}),
+})
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
   acceptOffer: () => dispatch(acceptOffer(ownProps.jobId, ownProps.worker.address)),
 })
 
-export default connect(null, mapDispatchToProps)(WorkerCard)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkerCard)
