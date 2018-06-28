@@ -141,7 +141,7 @@ function mapDispatchToProps (dispatch) {
                 isSpecified: true,
                 hourlyRate: values.hourlyRate,
                 totalHours: values.totalHours,
-                fixedPrice: values.fixedPrice
+                fixedPrice: values.fixedPrice,
               }
           ),
           period: new JobPeriodModel(

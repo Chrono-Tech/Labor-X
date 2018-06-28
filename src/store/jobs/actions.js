@@ -156,7 +156,7 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
   const web3 = web3Selector()(state)
 
   const detailsIPFSHash = await storeIntoIPFS(form.ipfs)
-
+  
   const tx = jobControllerDAO.createPostJobTx(
     signer.address,
     form.flowType,
@@ -200,7 +200,7 @@ export const createJobOfferWithPrice = (form: JobOfferFormModel) => async (dispa
   const tx = jobControllerDAO.createPostJobOfferWithPriceTx(
     signer.address,
     form.jobId,
-    form.price
+    form.fixedPrice
   )
   await dispatch(executeTransaction({ tx, web3, signer }))
 }

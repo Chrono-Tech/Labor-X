@@ -87,8 +87,8 @@ export default class JobControllerDAO extends AbstractContractDAO {
     }
   }
 
-  createPostJobOfferWithPriceTx (sender: String, jobId: Number, price: BigNumber) {
-    const data = this.contract.methods.postJobOfferWithPrice(jobId, price).encodeABI()
+  createPostJobOfferWithPriceTx (sender: String, jobId: Number, fixedPrice: BigNumber) {
+    const data = this.contract.methods.postJobOfferWithPrice(jobId, fixedPrice).encodeABI()
     return {
       from: sender,
       to: this.address,

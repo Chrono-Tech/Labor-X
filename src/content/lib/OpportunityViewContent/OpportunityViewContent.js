@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
 import { Router } from 'src/routes'
-import { JobModel, BoardModel, JobOfferFormModel, ClientModel, WORKFLOW_FIXED_PRICE, WORKFLOW_TM } from 'src/models'
-import { createJobOffer, signerSelector, boardByIdSelector, modalsPush } from 'src/store'
+import { JobModel, BoardModel, JobOfferFormModel, ClientModel, WORKFLOW_TM } from 'src/models'
+import { createJobOffer, createJobOfferWithPrice, signerSelector, boardByIdSelector, modalsPush } from 'src/store'
 import { Image, Button, Tab } from 'src/components/common'
 import { MakeOfferDialog } from 'src/partials'
 import DescriptionTab from './DescriptionTab/DescriptionTab'
@@ -19,6 +19,7 @@ export class OpportunityViewContent extends React.Component {
     client: PropTypes.instanceOf(ClientModel),
     onPostOffer: PropTypes.func.isRequired,
     pushModal: PropTypes.func.isRequired,
+    onPostOfferWithPrice: PropTypes.func,
   }
 
   state = {
@@ -26,7 +27,7 @@ export class OpportunityViewContent extends React.Component {
     isOfferPosting: false,
   }
 
-  handleBack() {
+  handleBack () {
     Router.pushRoute('/opportunities')
   }
 
@@ -44,38 +45,36 @@ export class OpportunityViewContent extends React.Component {
     console.log('OpportunityViewContent-handleMakeOffer')
     const modal = {
       component: MakeOfferDialog,
-      props: { job: this.props.job },
+      props: { job: this.props.job, makeOfferApply: this.handleMakeOfferApply },
     }
     this.props.pushModal(modal)
   }
 
-  handlePostOffer = async () => {
-    console.log("Send post offeer");
+  handleMakeOfferApply = async ({ fixedPrice, hourlyRate, totalHours }) => {
     try {
       this.setState({
         isOfferPosting: true,
       })
-      const { job } = this.props;
-      const {hourlyRate, totalHours, fixedPrice} = job.ipfs.budget;
+      const { job } = this.props 
       switch (Number(job.flowType)) {
         case WORKFLOW_TM.index:
           await this.props.onPostOffer(
             new JobOfferFormModel({
               jobId: job.id,
               rate: new BigNumber(hourlyRate),
-              estimate: (new BigNumber(hourlyRate)).multipliedBy(totalHours),
+              estimate: new BigNumber(totalHours),
               ontop: new BigNumber(0),
             })
           )
-          break;
+          break
         default: //fixed price workflow and another
-        await this.props.onPostOfferWithPrice(
-          new JobOfferFormModel({
-            jobId: job.id,
-            price: new BigNumber(fixedPrice)
-          })
-        )
-          break;
+          await this.props.onPostOfferWithPrice(
+            new JobOfferFormModel({
+              jobId: job.id,
+              fixedPrice: new BigNumber(fixedPrice),
+            })
+          )
+          break
       }
       this.setState({
         isOfferPosting: false,
@@ -85,7 +84,44 @@ export class OpportunityViewContent extends React.Component {
     } catch (e) {
       // eslint-disable-next-line no-console
       this.setState({ isOfferPosting: false })
-      console.warn('handlePostOffer Error: ', e)
+    }
+  }
+
+  handlePostOffer = async () => {
+    try {
+      this.setState({
+        isOfferPosting: true,
+      })
+      const { job } = this.props
+      const { hourlyRate, totalHours, fixedPrice } = job.ipfs.budget
+      switch (Number(job.flowType)) {
+        case WORKFLOW_TM.index:
+          await this.props.onPostOffer(
+            new JobOfferFormModel({
+              jobId: job.id,
+              rate: new BigNumber(hourlyRate),
+              estimate: new BigNumber(totalHours),
+              ontop: new BigNumber(0),
+            })
+          )
+          break
+        default: //fixed price workflow and another
+          await this.props.onPostOfferWithPrice(
+            new JobOfferFormModel({
+              jobId: job.id,
+              fixedPrice: new BigNumber(fixedPrice),
+            })
+          )
+          break
+      }
+      this.setState({
+        isOfferPosting: false,
+      }, () => {
+        Router.pushRoute('/applications-and-offers')
+      })
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      this.setState({ isOfferPosting: false })
     }
   }
 
@@ -106,7 +142,7 @@ export class OpportunityViewContent extends React.Component {
     },
   ]
 
-  render() {
+  render () {
     const { job } = this.props
     return (
       <div className={css.main}>
@@ -161,7 +197,7 @@ export class OpportunityViewContent extends React.Component {
   }
 }
 
-function mapStateToProps(state, op) {
+function mapStateToProps (state, op) {
   const signer = signerSelector()(state)
   const board = boardByIdSelector(op.job.boardId)(state)
   // TODO aevalyakin recieve client data from blockchain
@@ -173,11 +209,11 @@ function mapStateToProps(state, op) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form)),
     onPostOfferWithPrice: async (form: JobOfferFormModel) => dispatch(createJobOfferWithPrice(form)),
-    pushModal(modal) { dispatch(modalsPush(modal)) },
+    pushModal (modal) { dispatch(modalsPush(modal)) },
   }
 }
 

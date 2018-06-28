@@ -44,6 +44,7 @@ src/**/*.js
 !src/models/app/JobResumedEvent.js
 !src/models/app/JobExtraModel.js
 !src/models/validator.js
+!src/models/validator.lang.js
 !src/models/index.js
 !src/models/wallets/SignerModel.js
 !src/models/wallets/WalletModel.js
@@ -53,6 +54,7 @@ src/**/*.js
 !src/models/app/ClientIPFSModel.js
 !src/models/app/ClientTypeModel.js
 !src/models/app/JobOfferFormModel.js
+!src/models/app/JobBudgetModel.js
 
 !src/store/index.js
 !src/store/jobs/
@@ -67,6 +69,8 @@ src/**/*.js
 !src/store/user/actions.js
 !src/store/user/reducer.js
 !src/store/bootstrap.js
+!src/store/boards/selectors.js
+!src/store/jobs/actions.js
 
 !src/components/common/Icon/Icon.js
 !src/components/common/index.js
@@ -85,6 +89,7 @@ src/**/*.js
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/
+!src/content/lib/CreateJobContent/CreateJobContent.js
 !src/content/lib/ClientJobViewContent/ClientJobViewContent.js
 !src/content/lib/ClientJobViewContent/ContractTab/ContractTab.js
 !src/content/lib/ClientJobViewContent/GeneralTab/GeneralTab.js
@@ -97,7 +102,12 @@ src/**/*.js
 !src/content/lib/ReviewApplicantsContent/ReviewApplicantsContent.js
 !src/content/lib/TodoContent/TodoContent.js
 !src/content/lib/OpportunityViewContent/
+!src/content/lib/OpportunityViewContent/DescriptionTab/DescriptionTab.js
+!src/content/lib/OpportunityViewContent/OpportunityViewContent.js
 !src/content/lib/ApplicationsAndOffersContent/
 !src/content/lib/ClientProfileContent/
 
 !src/partials/
+!src/partials/lib/MakeOfferDialog/MakeOfferDialog.js
+!src/partials/lib/MakeOfferDialog/validate.js
+

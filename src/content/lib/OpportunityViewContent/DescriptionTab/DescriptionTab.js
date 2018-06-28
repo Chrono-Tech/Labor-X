@@ -53,13 +53,15 @@ export default class DescriptionTab extends React.Component {
     return requirements
   }
 
-  getApplyButton = () => {
+  getApplyButton = (props) => {
+    const { isOfferPosting } = props
     const button = (<Button
       type='button'
       label='APPLY'
       className={css.applyButton}
       mods={Button.MODS.FLAT}
       onClick={this.handleApply}
+      disabled={isOfferPosting}
     />)
 
     if (this.isSkillsFit()) {
@@ -176,16 +178,17 @@ export default class DescriptionTab extends React.Component {
               mods={Button.MODS.FLAT}
               onClick={this.handleSave}
             />
+            { !isOfferPosting ? null : <CircularProgress className={css.submitProgress} size={24} /> }
             { !job.ipfs.allowCustomOffer ? null : (
               <Button
                 label='Make Your Offer!'
                 className={css.makeOfferButton}
                 mods={Button.MODS.FLAT}
                 onClick={onMakeOffer}
+                disabled={isOfferPosting}
               />
             )}
-            {!isOfferPosting ? null : <CircularProgress className={css.submitProgress} size={24} />}
-            {this.getApplyButton()}
+            { this.getApplyButton(this.props) }
           </div>
         </div>
       </div>
