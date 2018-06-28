@@ -6,7 +6,7 @@ export const schemaFactory = () => ({
   phoneCode: PropTypes.string,
 })
 
-export default class ConfirmationRequestLevel2Model extends AbstractModel {
+export default class ProfileContactsConfirmationRequestModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
     Object.freeze(this)

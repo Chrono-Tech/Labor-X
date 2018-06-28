@@ -7,6 +7,9 @@ import FontIcon from 'material-ui/FontIcon'
 import CircularProgress from 'material-ui/CircularProgress'
 
 import PersonalForm from './PersonalForm'
+import ContactsForm from './ContactsForm'
+import ContactsFormConfirmationDialog from './ContactsFormConfirmationDialog'
+
 import { Button, Image, Icon } from './../../../components/common'
 import { getState as getPageState, reviewProfile } from '../../../store/ui/general-profile-page'
 import css from './GeneralProfileContent.scss'
@@ -217,6 +220,8 @@ class GeneralProfileContent extends React.Component {
     if (this.props.reviewProfileFailure) return <div>error {this.props.reviewProfileFailure.message}</div>
     return [
       <PersonalForm />,
+      <ContactsForm />,
+      <ContactsFormConfirmationDialog />,
     ]
   }
 

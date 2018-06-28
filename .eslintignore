@@ -119,3 +119,16 @@ src/**/*.js
 !src/store/index.js
 !src/store/ui/general-profile-page.js
 !src/store/ui/index.js
+
+!src/api/backend/index.js
+!src/api/backend/model/ProfileContactsConfirmationRequestModel.js
+!src/api/backend/model/ProfileContactsConfirmationResultsModel.js
+!src/api/backend/model/ProfileContactsVerificationRequestModel.js
+!src/content/lib/GeneralProfileContent/ContactsForm.js
+!src/content/lib/GeneralProfileContent/ContactsFormConfirmationDialog.js
+!src/content/lib/GeneralProfileContent/GeneralProfileContent.js
+!src/content/lib/GeneralProfileContent/GeneralProfileContent.scss
+!src/models/form/ProfileContactsFormModel.js
+!src/store/ui/general-profile-page.js
+!src/utils/validator.js
+
