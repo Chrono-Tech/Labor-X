@@ -1,0 +1,86 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.content {
+  position: relative;
+  margin-top: 7rem;
+  padding-right: 3rem;
+  > * {
+    margin-bottom: 3rem;
+  }
+  .logoContainer {
+    @include position(absolute, -5rem, 6rem);
+    cursor: pointer;
+    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+    .logo {
+      position: relative;
+      > img {
+        position: absolute;
+        border-radius: 50%;
+        width: 10rem;
+        height: 10rem;
+        object-fit: cover;
+      }
+      .overlay {
+        @include flex(column, center, center);
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity .3s, visibility .3s;;
+        border-radius: 50%;
+        width: 10rem;
+        height: 10rem;
+        background-color: rgba($color-black, .6);
+        > p {
+          user-select: none;
+          text-align: center;
+          color: $color-white;
+          font-weight: $font-weight-medium;
+        }
+      }
+    }
+    &:hover {
+      .overlay {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+  .block {
+    @include card;
+    padding: 3rem;
+    > * {
+      margin-bottom: 1.5rem;
+    }
+    .twoColumn {
+      @include flex(row, flex-start, stretch);
+      > * {
+        &:first-child {
+          margin-right: 2.5%;
+          min-width: 47.5%;
+          max-width: 47.5%;;
+        }
+        &:last-child {
+          margin-left: 2.5%;
+          min-width: 47.5%;;
+          max-width: 47.5%;;
+        }
+      }
+    }
+  }
+  .backgrounds {
+    @include flex(row, flex-start, stretch);
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+    > img {
+      margin-right: 1.5rem;
+      margin-bottom: 1.5rem;
+      width: 14rem;
+      height: 10rem;
+      object-fit: cover;
+      border-radius: .5rem;
+    }
+  }
+}

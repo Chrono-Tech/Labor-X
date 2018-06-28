@@ -1,0 +1,91 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.content {
+  position: relative;
+  margin-top: 7rem;
+  padding-right: 3rem;
+  > * {
+    margin-bottom: 3rem;
+  }
+  .block {
+    @include flex(column, flex-start, stretch);
+    @include card;
+    position: relative;
+    padding: 3rem;
+    > * {
+      margin-bottom: 1.5rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .cross {
+      @include position(absolute, .5rem, 1rem);
+    }
+    .scheduleRow {
+      @include flex(row, flex-start, stretch);
+      margin: 2rem 0;
+      > * {
+        margin-right: .5rem;
+        min-width: 7rem;
+      }
+    }
+  }
+  .serviceBlock {
+    @include card;
+    margin-bottom: 3rem;
+    .serviceBlockContent {
+      padding: 2rem 3rem;
+    }
+    .documentEntry {
+      @include flex(row, flex-start, center);
+      padding: 1.5rem 3rem;
+      border-top: 1px solid $color-gray3;
+      > p {
+        margin-left: 1rem;
+        font-weight: $font-weight-regular;
+      }
+      &:hover {
+        background-color: rgba($color-black, .05);
+        > p {
+          color: $color-azure;
+        }
+      }
+    }
+    .removeBlock {
+      @include flex(row, center, center);
+      padding: 1rem 0;
+      border-top: 1px solid $color-gray5;
+      &:hover {
+        cursor: pointer;
+        background-color: $color-gray5;
+      }
+    }
+  }
+}
+
+.twoColumn {
+  @include flex(row, flex-start, stretch);
+  > * {
+    &:first-child {
+      margin-right: 2.5%;
+      min-width: 47.5%;
+      max-width: 47.5%;;
+    }
+    &:last-child {
+      margin-left: 2.5%;
+      min-width: 47.5%;;
+      max-width: 47.5%;;
+    }
+  }
+}
+
+.link {
+  color: $color-azure;
+  font-weight: $font-weight-regular;
+}
+
+.linkRates {
+  margin-top: auto;
+  align-self: center;
+}

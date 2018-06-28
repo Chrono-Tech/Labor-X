@@ -20,7 +20,7 @@ class ClientProfilePage extends React.Component {
   render () {
     const { profile, stuff } = this.props
     return !profile && !stuff ? null : (
-      <MainLayout title='nav.ClientProfile'>
+      <MainLayout title='nav.clientProfile'>
         <ClientProfileContent profile={profile}  stuff={stuff} />
       </MainLayout>
     )

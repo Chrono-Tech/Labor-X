@@ -24,6 +24,7 @@ src/**/*.js
 !pages/review-applicants.js
 !pages/to-do.js
 !pages/client-profile.js
+!pages/worker-profile.js
 
 !src/routes.js
 
@@ -55,6 +56,7 @@ src/**/*.js
 !src/models/app/ClientTypeModel.js
 !src/models/app/JobOfferFormModel.js
 !src/models/app/JobBudgetModel.js
+!src/models/app/WorkerModel.js
 
 !src/store/index.js
 !src/store/jobs/
@@ -106,6 +108,7 @@ src/**/*.js
 !src/content/lib/OpportunityViewContent/OpportunityViewContent.js
 !src/content/lib/ApplicationsAndOffersContent/
 !src/content/lib/ClientProfileContent/
+!src/content/lib/WorkerProfileContent/
 
 !src/partials/
 !src/partials/lib/MakeOfferDialog/MakeOfferDialog.js
