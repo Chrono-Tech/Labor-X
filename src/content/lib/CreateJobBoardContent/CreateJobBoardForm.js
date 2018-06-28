@@ -289,7 +289,7 @@ class CreateJobBoardForm extends React.Component {
                 <div className={css.chart}>
                   { this.renderDonutChart() }
                   <div className={css.chartLabel}>
-                    <h2>{ canJoinAmount.clients + canJoinAmount.workers }</h2>
+                    <h2 className={css.chartLabelTitle}>{ canJoinAmount.clients + canJoinAmount.workers }</h2>
                     <p>Workers and</p>
                     <p>Clients</p>
                   </div>
@@ -370,6 +370,8 @@ export default reduxForm({
     fee: 0,
     endorsingSkills: false,
     joinRequirement: 0,
+    ratingRequirements: 0,
+    verificationRequirements: 0,
   },
   validate,
 })(CreateJobBoardForm)

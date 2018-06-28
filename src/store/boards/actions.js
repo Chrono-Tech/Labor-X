@@ -146,13 +146,13 @@ export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
 
 export const boardCreate = (data) => async (dispatch, getState) => {
   const state = getState()
-  
+
   const boardControlerDAO = daoByType('BoardController')(state)
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
-  
+
   const detailsIPFSHash = await storeIntoIPFS(data.ipfsData)
-  
+
   const tx = boardControlerDAO.createCreateBoardTx(
     signer.address,
     TAGS_LIST[1].index,

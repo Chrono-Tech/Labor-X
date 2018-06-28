@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
+import faker from 'faker'
 import {
   TagCategoryModel,
   BoardRequirementModel,
   BoardPostFeeModel,
 } from 'src/models'
 import AbstractModel from '../AbstractModel'
-import faker from "faker";
 
 const schemaFactory = () => ({
   name: PropTypes.string,
@@ -17,6 +17,8 @@ const schemaFactory = () => ({
   fee: PropTypes.instanceOf(BoardPostFeeModel),
   lhus: PropTypes.number,
   endorsingSkills: PropTypes.bool,
+  ratingRequirements: PropTypes.number,
+  verificationRequirements: PropTypes.number,
 })
 
 const defaultProps = {
@@ -29,9 +31,11 @@ const defaultProps = {
   endorsingSkills: false,
   fee: 0,
   lhus: 0,
+  ratingRequirements: 0,
+  verificationRequirements: 0,
 }
 
-export default class JobPostFormModel extends AbstractModel {
+export default class JobBoardFormModel extends AbstractModel {
   constructor (props) {
     super(Object.assign({}, defaultProps, props), schemaFactory())
     Object.freeze(this)
@@ -52,6 +56,8 @@ export default class JobPostFormModel extends AbstractModel {
       fee: this.fee && this.fee.index,
       lhus: this.lhus !== undefined && +this.lhus,
       endorsingSkills: !!this.endorsingSkills,
+      ratingRequirements: this.ratingRequirements,
+      verificationRequirements: this.verificationRequirements,
     }
   }
 }

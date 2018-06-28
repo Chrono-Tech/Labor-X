@@ -81,7 +81,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     async handleSubmit (values) {
-
+      // console.log('!!! --- values',
       await dispatch(boardCreate(
         new JobBoardFormModel({
           name: values.name,
@@ -93,8 +93,11 @@ const mapDispatchToProps = (dispatch) => {
           joinRequirement: BoardRequirementModel.valueOf(values.joinRequirement),
           fee: BoardPostFeeModel.valueOf(values.fee),
           lhus: +values.lhus,
+          ratingRequirements: values.ratingRequirements,
+          verificationRequirements: values.verificationRequirements,
         })
       ))
+      // )
     },
   }
 }
