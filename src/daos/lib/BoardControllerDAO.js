@@ -101,13 +101,13 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       const id = Number(_gotIds[i])
       const isSignerJoined = await this.getUserStatus(signer, id)
       const ipfs = await loadFromIPFS(ipfsHash) || {}
-      
+
       boards.push(new BoardModel({
         id,
         creator: _creators[i],
         isActive: _status[i],
         tags: TagModel.arrayValueOfMask(_tags[i]),
-        tagsArea: TagAreaModel.valueOf(_tagsAreas[i]),
+        tagsArea: TagAreaModel.valueOfCode(_tagsAreas[i]),
         tagsCategory: TagCategoryModel.arrayValueOfMask(_tagsCategories[i]),
         ipfs: new BoardIPFSModel({
           ...ipfs,

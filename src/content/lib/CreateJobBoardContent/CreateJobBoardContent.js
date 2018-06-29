@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { formValueSelector, getFormSyncErrors } from 'redux-form'
 
 import {
-  TagCategoryModel,
   JobBoardFormModel,
   BoardPostFeeModel,
   BoardRequirementModel,
@@ -17,7 +16,7 @@ class CreateJobBoardContent extends React.Component {
   static propTypes = {
     joinRequirement: PropTypes.number,
     formErrors: PropTypes.shape({
-      searchCategory: PropTypes.string,
+      searchTagsError: PropTypes.string,
     }),
     canJoinAmount: PropTypes.shape({
       clients: PropTypes.number,
@@ -81,7 +80,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     async handleSubmit (values) {
-      // console.log('!!! --- values',
       await dispatch(boardCreate(
         new JobBoardFormModel({
           name: values.name,
@@ -89,7 +87,9 @@ const mapDispatchToProps = (dispatch) => {
           background: '',
           description: '',
           endorsingSkills: values.endorsingSkills,
-          tagCategories: values.tagCategories && values.tagCategories.split(',').map(item => TagCategoryModel.valueOf(item)) || [],
+          tagsCategory: [values.tagsCategory],
+          tagsArea: [values.tagsArea],
+          tags: values.tags,
           joinRequirement: BoardRequirementModel.valueOf(values.joinRequirement),
           fee: BoardPostFeeModel.valueOf(values.fee),
           lhus: +values.lhus,
@@ -97,7 +97,6 @@ const mapDispatchToProps = (dispatch) => {
           verificationRequirements: values.verificationRequirements,
         })
       ))
-      // )
     },
   }
 }

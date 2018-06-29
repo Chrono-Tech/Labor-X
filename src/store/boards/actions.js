@@ -1,4 +1,4 @@
-import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent, TAG_AREAS_LIST, TAGS_LIST } from 'src/models'
+import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent } from 'src/models'
 import { storeIntoIPFS } from 'src/utils'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
@@ -155,9 +155,9 @@ export const boardCreate = (data) => async (dispatch, getState) => {
 
   const tx = boardControlerDAO.createCreateBoardTx(
     signer.address,
-    TAGS_LIST[1].index,
-    TAG_AREAS_LIST[1].index,
-    data.categories,
+    data.tagsBitmask,
+    data.areasBitmask,
+    data.categoriesBitmask,
     detailsIPFSHash
   )
 

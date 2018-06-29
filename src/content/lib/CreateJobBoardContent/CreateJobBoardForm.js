@@ -10,6 +10,9 @@ import { SelectField } from 'redux-form-material-ui'
 
 import { Image, Chip, Input, Button, Icon, Checkbox, RadioIcon, VerificationLevelSelector } from 'components/common'
 import {
+  TagModel,
+  TAGS_LIST,
+  TAG_AREAS_LIST,
   TAG_CATEGORIES_LIST,
   BOARD_REQUIREMENTS_LIST,
   BOARD_REQUIREMENTS,
@@ -29,7 +32,7 @@ class CreateJobBoardForm extends React.Component {
     isLoading: PropTypes.bool,
     handleSubmit: PropTypes.func,
     formErrors: PropTypes.shape({
-      searchCategory: PropTypes.string,
+      searchTagsError: PropTypes.string,
     }),
     canJoinAmount: PropTypes.shape({
       clients: PropTypes.number,
@@ -41,43 +44,56 @@ class CreateJobBoardForm extends React.Component {
     super(props)
 
     this.state = {
-      categories: [],
+      tags: [],
     }
   }
 
-  handleAddCategory = (tag) => {
+  handleAddTag = (tag) => {
     const { change } = this.props
 
-    if (!this.state.categories.find(item => item.index === tag.index)) {
+    if (tag instanceof TagModel && !this.state.tags.find(item => item.index === tag.index)) {
 
-      const newCategories = [...this.state.categories, tag]
+      const newTags = [...this.state.tags, tag]
 
-      this.setState({ categories: newCategories }, () => {
-        change('tagCategories', newCategories.map((item) => item.index).join(','))
+      this.setState({ tags: newTags }, () => {
+        change('tags', newTags)
       })
     }
 
-    change('searchCategory', '')
+    change('searchTags', '')
   }
 
   getTagsList () {
-    return TAG_CATEGORIES_LIST
+    return TAGS_LIST
   }
 
-  onRemoveCategory (tag) {
-    const { categories } = this.state
+  onRemoveTag (tag) {
+    const { tags } = this.state
     const { change } = this.props
 
-    const newCategories = categories.filter(item => item.index !== tag.index)
+    const newTags = tags.filter(item => item.index !== tag.index)
 
-    this.setState({ categories: newCategories })
+    this.setState({ tags: newTags })
 
-    change('tagCategories', newCategories.map((item) => item.index).join(', '))
+    change('tags', newTags)
   }
 
-  searchCategoryFilter = (searchText, key) => {
+  searchTagFilter = (searchText, key) => {
     return searchText !== '' &&
       String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
+  }
+
+  renderTags () {
+    const { tags } = this.state
+
+    return tags && tags.map((item) => (
+      <Chip
+        key={uniqid()}
+        value={item.name}
+        // eslint-disable-next-line react/jsx-no-bind
+        onRemove={() => this.onRemoveTag(item)}
+      />
+    ))
   }
 
   renderDonutChart = () => {
@@ -99,19 +115,6 @@ class CreateJobBoardForm extends React.Component {
         spacing={1}
       />
     )
-  }
-
-  renderCategories () {
-    const { categories } = this.state
-
-    return categories && categories.map((item) => (
-      <Chip
-        key={uniqid()}
-        value={item.name}
-        // eslint-disable-next-line react/jsx-no-bind
-        onRemove={() => this.onRemoveCategory(item)}
-      />
-    ))
   }
 
   renderSpecificRequirementsContent (){
@@ -225,30 +228,70 @@ class CreateJobBoardForm extends React.Component {
           </div>
 
           <div className={css.card}>
+            <h3 className={css.cardTitle}>Area</h3>
+            <div className={css.flexRow}>
+              <Field
+                component={SelectField}
+                name='tagsArea'
+                selectedMenuItemStyle={{ fontSize: 14 }}
+                menuItemStyle={{ fontSize: 14 }}
+                labelStyle={{ fontSize: 14 }}
+                style={{ width: 300 }}
+              >
+                {
+                  TAG_AREAS_LIST.map((item) => (
+                    <MenuItem key={uniqid()} value={item} primaryText={item.name} />
+                  ))
+                }
+              </Field>
+            </div>
+          </div>
+
+          <div className={css.card}>
             <h3 className={css.cardTitle}>Categories</h3>
+            <div className={css.flexRow}>
+              <Field
+                component={SelectField}
+                name='tagsCategory'
+                selectedMenuItemStyle={{ fontSize: 14 }}
+                menuItemStyle={{ fontSize: 14 }}
+                labelStyle={{ fontSize: 14 }}
+                style={{ width: 300 }}
+              >
+                {
+                  TAG_CATEGORIES_LIST.map((item) => (
+                    <MenuItem key={uniqid()} value={item} primaryText={item.name} />
+                  ))
+                }
+              </Field>
+            </div>
+          </div>
+
+          <div className={css.card}>
+            <h3 className={css.cardTitle}>Skills</h3>
             <div className={css.flexRow}>
               <Field
                 className={css.find}
                 style={{ marginRight: 10 }}
                 component={AutoComplete}
-                onNewRequest={this.handleAddCategory}
-                filter={this.searchCategoryFilter}
+                onNewRequest={this.handleAddTag}
+                filter={this.searchTagFilter}
                 dataSourceConfig={{
                   text: 'name',
                   value: 'name',
                 }}
-                errorText={formErrors.searchCategory && submitFailed ? formErrors.searchCategory : null}
+                errorText={formErrors.tags && submitFailed ? formErrors.tags : null}
                 dataSource={this.getTagsList()}
-                name='searchCategory'
-                placeholder='Find'
+                name='searchTags'
+                hintText='Find'
               />
               <Field
                 component='input'
                 type='hidden'
-                name='tagCategories'
+                name='tags'
                 readOnly
               />
-              { this.renderCategories() }
+              { this.renderTags() }
             </div>
           </div>
 
@@ -323,6 +366,9 @@ class CreateJobBoardForm extends React.Component {
                   name='lhus'
                   mods={Input.MODS.ALIGN_LEFT}
                   placeholder='ui.createJobBoard.value'
+                  floatingLabelStyle={{ visibility: 'hidden' }}
+                  floatingLabelText='empty'
+                  floatingLabelFixed
                 />
               </div>
               <div className={css.delimiter} />
@@ -365,7 +411,6 @@ class CreateJobBoardForm extends React.Component {
 export default reduxForm({
   form: FORM_CREATE_JOB_BOARD,
   initialValues: {
-    tagCategories: '',
     requirements: 0,
     fee: 0,
     endorsingSkills: false,

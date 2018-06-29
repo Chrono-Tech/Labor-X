@@ -43,7 +43,7 @@ export default class VerificationLevelSelector extends React.Component {
         )}
       >
         <Checkbox
-          key={`verificationCb${level}`}
+          name={`verificationCb${level}`}
           style={{
             width: '24px',
             height: '42px',
