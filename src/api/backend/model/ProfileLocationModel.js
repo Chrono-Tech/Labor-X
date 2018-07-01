@@ -24,7 +24,7 @@ const schemaFactory = () => ({
   })
 })
 
-export default class ProfileResidenceModel extends AbstractModel {
+export default class ProfileLocationModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
     Object.freeze(this)

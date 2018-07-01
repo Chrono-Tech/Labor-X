@@ -1,13 +1,10 @@
 import axios from 'axios'
 
-import ProfilePersonalVerificationRequestModel from "./model/ProfilePersonalVerificationRequestModel"
-import ProfileContactsVerificationRequestModel from "./model/ProfileContactsVerificationRequestModel"
 import FileModel from "./../../models/FileModel"
 import SigninResBodyModel from "./model/SigninResBodyModel"
 import ProfileModel from "./model/ProfileModel"
 import ImageModel from "./model/ImageModel"
-import ProfileContactsConfirmationRequestModel from "./model/ProfileContactsConfirmationRequestModel"
-import ProfileContactsConfirmationResultsModel from "./model/ProfileContactsConfirmationResultsModel"
+import AttachmentModel from "./model/AttachmentModel"
 
 const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
 
@@ -49,11 +46,27 @@ export const uploadImage = (file: FileModel, token: string) : ImageModel => {
   }).then(res => new ImageModel(res.data))
 }
 
-export const submitProfilePersonal = (data: ProfilePersonalVerificationRequestModel, token: string): ProfileModel => http.post(`${ API_URL }/security/me/profile/level1`, data, {
+export const uploadAttachment = (file: FileModel, token: string) : AttachmentModel => {
+  const formData = new FormData()
+  formData.append('image', file)
+  return http.post(`${ API_URL }/media/image/upload`, formData, {
+    headers: { Authorization: `Bearer ${ token }` },
+  }).then(res => new AttachmentModel(res.data))
+}
+
+export const submitProfilePersonal = (form, token: string): ProfileModel => http.post(`${ API_URL }/security/me/profile/level1`, form, {
   headers: { Authorization: `Bearer ${ token }` },
 }).then(res => ProfileModel.fromJson(res.data))
 
-export const submitProfileContacts = (data: ProfileContactsVerificationRequestModel, token: string): ProfileModel => http.post(`${ API_URL }/security/me/profile/level2`, data, {
+export const submitProfileContacts = (form, token: string): ProfileModel => http.post(`${ API_URL }/security/me/profile/level2`, form, {
+  headers: { Authorization: `Bearer ${ token }` },
+}).then(res => ProfileModel.fromJson(res.data))
+
+export const submitProfilePassport = (form, token: string): ProfileModel => http.post(`${ API_URL }/security/me/profile/level3`, form, {
+  headers: { Authorization: `Bearer ${ token }` },
+}).then(res => ProfileModel.fromJson(res.data))
+
+export const submitProfileLocation = (form, token: string): ProfileModel => http.post(`${ API_URL }/security/me/profile/level4`, form, {
   headers: { Authorization: `Bearer ${ token }` },
 }).then(res => ProfileModel.fromJson(res.data))
 
@@ -65,8 +78,8 @@ export const resendPhoneCode = (token: string): ProfileModel => http.post(`${ AP
   headers: { Authorization: `Bearer ${ token }` },
 }).then(res => ProfileModel.fromJson(res.data))
 
-export const confirmProfileContacts = (data: ProfileContactsConfirmationRequestModel, token: string): ProfileContactsConfirmationResultsModel => http.post(
+export const confirmProfileContacts = (form, token: string): { profile: ProfileModel } => http.post(
   `${ API_URL }/security/me/profile/level2/confirm`,
-  data,
+  form,
   { headers: { Authorization: `Bearer ${ token }` } }
-).then(res => ProfileContactsConfirmationResultsModel.fromJson(res.data))
+).then(res => ({ profile: ProfileModel.fromJson(res.data.profile) }))

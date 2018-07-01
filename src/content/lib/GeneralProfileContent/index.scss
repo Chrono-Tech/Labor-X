@@ -96,8 +96,8 @@ b {
 }
 
 .cardActionTitle {
-  font-size: 16px;
-  font-weight: 500;
+  //font-size: 16px;
+  //font-weight: 500;
   display: inline-block;
 }
 
@@ -156,6 +156,11 @@ b {
   display: flex;
   justify-content: center;
   align-items: center;
+  svg {
+    color: rgb(191, 191, 191) !important;
+    height: 50px !important;
+    width: 50px !important;
+  }
 }
 
 .blockCircleIcon {
@@ -226,6 +231,11 @@ b {
       font-style: italic;
     }
   }
+}
+
+.fieldBuilding,
+.fieldSuit {
+  width: 95px !important;
 }
 
 .shortField {

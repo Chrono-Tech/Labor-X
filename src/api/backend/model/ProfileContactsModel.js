@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import AbstractModel from './../../../models/AbstractModel'
+// import {GENERAL_PROFILE_VALIDATION_STATE} from "./ProfileModel";
 
 const schemaFactory = () => ({
   submitted: PropTypes.shape({

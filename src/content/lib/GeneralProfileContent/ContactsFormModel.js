@@ -12,7 +12,7 @@ export default class ProfileContactsFormModel extends AbstractModel {
     super(props, schemaFactory())
   }
 
-  static fromProfileContactsModel ({ approved, submitted } : ProfileContactsModel) {
+  static getInitialValues ({ approved, submitted } : ProfileContactsModel) {
     const profile = submitted || approved
     return new ProfileContactsFormModel(
       profile ? {
@@ -21,4 +21,5 @@ export default class ProfileContactsFormModel extends AbstractModel {
       } : {}
     )
   }
+
 }

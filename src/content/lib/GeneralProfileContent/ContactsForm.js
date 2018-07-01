@@ -5,94 +5,78 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
 import { TextField } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText, RaisedButton } from 'material-ui'
+import CommunicationContactsSvgIcon from 'material-ui/svg-icons/communication/contacts'
+// import NavigationExpandLessSvgIcon from 'material-ui/svg-icons/navigation/expand-less'
+// import NavigationExpandMoreSvgIcon from 'material-ui/svg-icons/navigation/expand-more'
 
 import { Icon } from "../../../components/common/index"
-import css from './GeneralProfileContent.scss'
-import ProfileContactsFormModel from "../../../models/form/ProfileContactsFormModel"
-import {
-  PROFILE_CONTACTS_FORM as FORM,
-  submitProfileContacts as submit,
-  getProfileContacts,
-  getProfileContactsIsApproved as getIsApproved,
-  getProfileContactsIsSubmitted as getIsSubmitted,
-  getProfileContactsValidationComment as getValidationComment,
-  getProfileContactsFormErrors as getFormErrors,
-  getProfileContactsFormMeta as getFormMeta,
-  getProfileContactsFormValues as getFormValues,
-  getProfileContactsIsEmailConfirmed as getIsEmailConfirmed,
-  getProfileContactsIsPhoneConfirmed as getIsPhoneConfirmed,
-  showProfileContactsConfirmationDialog as showConfirmationDialog,
-  getProfileContactsValidationState as getValidationState,
-  VALIDATION_STATE,
-} from "../../../store/ui/general-profile-page"
+import css from './index.scss'
 
-const validationStateTitle = {
-  [VALIDATION_STATE.INITIAL]: 'Validate',
-  [VALIDATION_STATE.WAITING]: 'Waiting for validation',
-  [VALIDATION_STATE.WARNING]: 'Waiting for You',
-  [VALIDATION_STATE.SUCCESS]: 'Validated',
-}
+import {
+  FORM_CONTACTS as FORM,
+  submitContacts as submit,
+  getContactsInitialValues as getInitialValues,
+  showValidateEmailDialog,
+  showValidatePhoneDialog,
+} from './../../../store/general-profile'
+import ProfileContactsModel from "../../../api/backend/model/ProfileContactsModel"
+import { VALIDATION_STATE_CLASS, VALIDATION_STATE_ICON } from "./index"
+import ProfileModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileModel"
+
+import ValidateEmailDialog from './ContactsFormValidateEmailDialog'
+import ValidatePhoneDialog from './ContactsFormValidatePhoneDialog'
+
+const setupText = 'Check your inbox or phone to complete validation. Don\'t forget to check junk mail too. Note that changing and saving information will require validation re-submit.'
+const finalText = 'Great Job! You have successfully passed validation. Note that changing and saving information will require validation re-submit.'
 
 class ContactsForm extends React.Component {
 
   static propTypes = {
-
-    dirty: PropTypes.bool.isRequired,
-    isSubmitted: PropTypes.bool.isRequired,
-    isApproved: PropTypes.bool.isRequired,
-    validationComment: PropTypes.bool.isRequired,
-    avatarUrl: PropTypes.string.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-    createNewAvatar: PropTypes.func.isRequired,
-    meta: PropTypes.objectOf(PropTypes.shape({
-      touched: PropTypes.bool,
-    })),
-    submitFailed: PropTypes.bool.isRequired,
-    errors: PropTypes.objectOf(PropTypes.string),
-    pristine: PropTypes.bool.isRequired,
-    isEmailConfirmed: PropTypes.bool.isRequired,
-    isPhoneConfirmed: PropTypes.bool.isRequired,
-    doSubmit: PropTypes.func.isRequired,
-    showConfirmationDialog: PropTypes.func.isRequired,
-    validationState: PropTypes.string.isRequired,
+    dirty: PropTypes.bool,
+    validationComment: PropTypes.bool,
+    handleSubmit: PropTypes.func,
+    reset: PropTypes.func,
+    validationState: PropTypes.string,
+    showValidateEmailDialog: PropTypes.func,
+    showValidatePhoneDialog: PropTypes.func,
+    openValidateEmailDialog: PropTypes.bool,
+    openValidatePhoneDialog: PropTypes.bool,
   }
 
-  handleSubmit = (values) => {
-    if (!this.props.isSubmitted || this.props.dirty) return this.props.doSubmit(values)
-    if (this.props.isSubmitted && this.props.pristine && (!this.props.isEmailConfirmed || this.props.isPhoneConfirmed)) return this.props.showConfirmationDialog()
+  handleValidateEmailClick = () => {
+    this.props.showValidateEmailDialog()
+  }
+
+  handleValidatePhoneClick = () => {
+    this.props.showValidatePhoneDialog()
   }
 
   handleResetClick = () => {
     this.props.reset()
   }
 
+  renderTitle () {
+    return this.props.dirty ? VALIDATION_STATE_TITLE.INITIAL : VALIDATION_STATE_TITLE[this.props.validationState]
+  }
+
+  renderText () {
+    return this.props.validationState === VALIDATION_STATE.SUCCESS && !this.props.dirty ? finalText : setupText
+  }
+
   render () {
     return (
-      <form className={css.card} onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+      <form className={css.card} onSubmit={this.props.handleSubmit}>
         <div className={css.cardWrapper}>
           <div>
             <div className={css.blockCircle}>
-              <Icon className={css.blockCircleIcon} icon={Icon.ICONS.PHONE_EMAIL} />
+              <CommunicationContactsSvgIcon />
             </div>
           </div>
           <div>
             <h3 className={css.cardTitle}>Email and Phone</h3>
             <div className={css.flexRow}>
-              <Field
-                component={TextField}
-                name='email'
-                hintText='Email'
-                className={css.field}
-              />
-            </div>
-            <div className={css.flexRow}>
-              <Field
-                component={TextField}
-                name='phone'
-                hintText='Phone'
-                className={css.field}
-              />
+              <Field component={TextField} name='email' hintText='Email' className={css.field} />
+              <Field component={TextField} name='phone' hintText='Phone' className={css.field} />
             </div>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
@@ -100,9 +84,9 @@ class ContactsForm extends React.Component {
         <Card className={css.collapseWrapper}>
           <CardHeader
             title={
-              <span className={classnames([css.cardActionTitle, css.cardActionTitleSuccess])}>
-                <Icon className={css.icon} {...Icon.SETS.SECURITY_CHECK} />
-                { validationStateTitle[ this.props.dirty ? VALIDATION_STATE.INITIAL : this.props.validationState ] }
+              <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+                <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+                { this.renderTitle() }
               </span>
             }
             closeIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
@@ -112,17 +96,17 @@ class ContactsForm extends React.Component {
             className={css.collapseHeader}
           />
           <CardText className={css.collapseText} expandable>
-            {
-              this.props.validationState === VALIDATION_STATE.SUCCESS
-                ? 'Great Job! You have successfully passed validation. Note that changing and saving information will require validation re-submit.'
-                : 'Validate your email or phone using options below. Note that saving information changes will require re-submit for validation.'
-            }
+            { this.renderText() }
             <br />
             <br />
             <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='reset' onClick={this.handleResetClick} />
+            <RaisedButton type='button' label='reset' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} />
+            <RaisedButton type='button' label='validate email' onClick={this.handleValidateEmailClick} style={{ marginRight: '1rem' }} />
+            <RaisedButton type='button' label='validate phone' onClick={this.handleValidatePhoneClick} style={{ marginRight: '1rem' }} />
           </CardText>
         </Card>
+        <ValidateEmailDialog />
+        <ValidatePhoneDialog />
       </form>
     )
   }
@@ -131,22 +115,16 @@ class ContactsForm extends React.Component {
 
 ContactsForm = reduxForm({ form: FORM })(ContactsForm)
 
-const mapStateToProps = (state) => ({
-  initialValues: ProfileContactsFormModel.fromProfileContactsModel(getProfileContacts(state)),
-  currentValues: getFormValues(state),
-  isSubmitted: getIsSubmitted(state),
-  isApproved: getIsApproved(state),
-  validationComment: getValidationComment(state),
-  errors: getFormErrors(state),
-  meta: getFormMeta(state),
-  isEmailConfirmed: getIsEmailConfirmed(state),
-  isPhoneConfirmed: getIsPhoneConfirmed(state),
-  validationState: getValidationState(state),
+const mapStateToProps = (state, { profile } : { profile: ProfileContactsModel }) => ({
+  initialValues: getInitialValues(profile),
+  validationState: ProfileModel.getValidationState(profile),
+  validationComment: ProfileModel.getValidationComment(profile),
 })
 
 const mapDispatchToProps = dispatch => ({
-  doSubmit: (values) => dispatch(submit(values)),
-  showConfirmationDialog: () => dispatch(showConfirmationDialog()),
+  onSubmit: (values) => dispatch(submit(values)),
+  showValidateEmailDialog: () => dispatch(showValidateEmailDialog()),
+  showValidatePhoneDialog: () => dispatch(showValidatePhoneDialog()),
 })
 
 ContactsForm = connect(mapStateToProps, mapDispatchToProps)(ContactsForm)

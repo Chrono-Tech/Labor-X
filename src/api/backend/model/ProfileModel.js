@@ -9,9 +9,22 @@ import ProfileClientModel from "./ProfileClientModel"
 import ProfileWorkerModel from "./ProfileWorkerModel"
 import ProfileRecruiterModel from "./ProfileRecruiterModel"
 
+export const VALIDATION_STATE = {
+  INITIAL: 'INITIAL',
+  WAITING: 'WAITING',
+  WARNING: 'WARNING',
+  SUCCESS: 'SUCCESS',
+}
+export const VALIDATION_STATE_TITLE = {
+  [VALIDATION_STATE.INITIAL]: 'Validate',
+  [VALIDATION_STATE.WAITING]: 'Validation is on review',
+  [VALIDATION_STATE.WARNING]: 'Validation issue',
+  [VALIDATION_STATE.SUCCESS]: 'Validated',
+}
+
 export const schemaFactory = () => ({
   id: PropTypes.string.isRequired,
-  ipfsHash: PropTypes.string.isRequired,
+  ipfsHash: PropTypes.string,
   level1: PropTypes.instanceOf(ProfilePersonalModel),
   level2: PropTypes.instanceOf(ProfileContactsModel),
   level3: PropTypes.instanceOf(ProfilePassportModel),
@@ -46,22 +59,21 @@ export default class ProfileModel extends AbstractModel {
   }
 
   static fromJson (data) {
-    if (data == null) return null
     return new ProfileModel({
       ...data,
       level1: new ProfilePersonalModel(data.level1),
       level2: new ProfileContactsModel(data.level2),
       level3: new ProfilePassportModel(data.level3),
       level4: new ProfileLocationModel(data.level4),
-      notifications: {
-        laborx: {
-          sms: new ProfileNotifications(data.notifications.laborx.sms),
-          email: new ProfileNotifications(data.notifications.laborx.email),
-        },
-      },
-      client: new ProfileClientModel({}),
-      worker: new ProfileWorkerModel({}),
-      recruiter: new ProfileRecruiterModel({}),
+      // notifications: {
+      //   laborx: {
+      //     sms: new ProfileNotifications(data.notifications.laborx.sms),
+      //     email: new ProfileNotifications(data.notifications.laborx.email),
+      //   },
+      // },
+      // client: new ProfileClientModel({}),
+      // worker: new ProfileWorkerModel({}),
+      // recruiter: new ProfileRecruiterModel({}),
     })
   }
 
@@ -69,6 +81,18 @@ export default class ProfileModel extends AbstractModel {
   get contacts () { return this.level2 }
   get passport () { return this.level3 }
   get location () { return this.level4 }
+
+  static getValidationState (profile) {
+    const { submitted, approved } = profile
+    if (!submitted && !approved) return VALIDATION_STATE.INITIAL
+    if (submitted && !submitted.validationComment) return VALIDATION_STATE.WAITING
+    if (submitted && submitted.validationComment) return VALIDATION_STATE.WARNING
+    if (!submitted && approved) return VALIDATION_STATE.SUCCESS
+  }
+
+  static getValidationComment (profile) {
+    return profile.submitted && profile.submitted.validationComment
+  }
 
 }
 
