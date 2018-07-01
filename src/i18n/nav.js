@@ -25,7 +25,7 @@ export default {
   jobs: 'Jobs',
   tools: 'Tools',
   schedule: 'Schedule',
-  workerStats: 'Worker Stats',
+  workerResume: 'Worker Stats',
   clientStats: 'Client Stats',
   recruiterStats: 'Recruiter Stats',
   saved: 'Saved',

@@ -1,167 +1,165 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import pluralize from 'pluralize'
-
-import { Image, Button, Icon, Rating, SecurityShield, Tip } from 'components/common'
+import SwipeableViews from 'react-swipeable-views'
+import { Tabs, Tab } from 'material-ui/Tabs'
+import { connect } from 'react-redux'
+import { reduxForm, propTypes } from 'redux-form'
+import { Router } from 'src/routes'
+import { ProfileModel, WorkerModel } from 'src/models'
+import { Icon, Image, Button } from 'src/components/common'
+import GeneralTab from './GeneralTab/GeneralTab'
+import WorkExperienceTab from './WorkExperienceTab/WorkExperienceTab'
+import ServicesTab from './ServicesTab/ServicesTab'
 import css from './WorkerProfileContent.scss'
 
+const FORM_WORKER_PROFILE = 'form/workerProfile'
 
-export default class WorkerProfileContent extends React.Component {
+const style = {
+  backgroundColor: 'transparent',
+}
+
+const inkBarStyle = {
+  backgroundColor: '#00A0D2',
+  height: '5px',
+}
+
+class WorkerProfileContent extends React.Component {
   static propTypes = {
+    ...propTypes,
+    profile: PropTypes.shape({
+      general: PropTypes.instanceOf(ProfileModel),
+      worker: PropTypes.instanceOf(WorkerModel),
+    }),
   }
-  
-  renderStatusPopoverContent(){
-    
-    return (
-      <div className={css.statusPopover}>
-        <div className={css.popoverHeader}>Availability</div>
-        <div className={css.popoverDescription}>
-          James Harvey is available to do job on:
-        </div>
-        <div className={css.daysBlock}>
-          <span className={css.inactiveDay}>Sun</span>
-          <span>Mo</span>
-          <span className={css.inactiveDay}>Tue</span>
-          <span>Wed</span>
-          <span>Thu</span>
-          <span>Fri</span>
-          <span>Sat</span>
-        </div>
-      </div>
-    )
-  }
-  
-  renderSecurityDoneList(){
-    return (
-      <ul className={css.securityDoneList}>
-        <li className={css.listItem}>Email is validated</li>
-        <li className={css.listItem}>ID is validated</li>
-        <li className={css.listItem}>Address is validated</li>
-        <li className={css.listItem}>Certificates are validated</li>
-      </ul>
-    )
-  }
-  
-  render () {
-    const jobsDone = 100, experience = 10, lhus = '20–27', name = 'Gogi',
-      subtitle = 'Worker Profile', logo = '/static/images/worker-crop.jpg', status = 'Available'
-    
-    return (
-      <div className={css.main}>
-        
-        <div className={css.header}>
-          
-          <div className={css.headerBlock}>
-  
-            <div className={css.titleBlock}>
-              <div className={css.titleBar}>
-                <Button
-                  className={css.cancelButton}
-                  icon={Image.SETS.ARROW_BACK}
-                  type={Button.TYPES.SUBMIT}
-                  mods={Button.MODS.FLAT}
-                  label='Back'
-                />
-              </div>
-            </div>
-            
-            <div className={css.workerBlock}>
-              <div className={css.workerBlockInner}>
-                <div className={css.logoBlock}>
-                  <img src={logo} alt='' />
-                </div>
-    
-                <div className={css.workerContentBlock}>
-                  <div className={css.titleBlock}>
-                    <div className={css.title}>
-                      { name }
-                    </div>
-      
-                    <div className={css.subtitle}>
-                      { subtitle }
-                    </div>
-    
-                  </div>
-    
-                  <div className={css.ratingBlock}>
-                    <div className={css.starsWrapper}>
-                      <Rating
-                        rating={3}
-                        tip={{
-                          title: 'Rating',
-                          description: 'Rating given by Clients and high skilled workers.'
-                        }}
-                      />
-                    </div>
-      
-                    <div className={css.securityBadge}>
-                      <SecurityShield
-                        tip={{
-                          title: 'Validation',
-                          description: 'James Harvey had successfully passed our Validation Process.',
-                          doneList: this.renderSecurityDoneList()
-                        }}
-                        level={4} />
-                    </div>
-                    
-                    <div className={css.workerBadge}>
-                      <Tip
-                        tipContent={this.renderStatusPopoverContent()}
-                        position={Tip.POSITION.LEFT}
-                      >
-                        <div className={css.workerStatus}>
-                          { status }
-                        </div>
-                      </Tip>
-                    </div>
-                  </div>
-    
-                  <div className={css.aboutJob}>
-                    <div className={css.jobInfo}>
-        
-                      <div className={css.jobInfoBlock}>
-                        <div className={css.jobInfoCount}>{jobsDone}</div>
-                        <div className={css.jobInfoDescribe}>{pluralize('Job', jobsDone)} done</div>
-                      </div>
-        
-                      <div className={css.jobInfoBlock}>
-                        <div className={css.jobInfoCount}>{ experience }</div>
-                        <div className={css.jobInfoDescribe}>{pluralize('Year', experience)} exp.</div>
-                      </div>
-      
-                      <div className={css.jobInfoBlock}>
-                        <div className={css.jobInfoCount}>{ lhus }</div>
-                        <div className={css.jobInfoDescribe}>Lhus per hour</div>
-                      </div>
-      
-                    </div>
-                    
-                  </div>
-  
-                </div>
-              </div>
-  
-              <div className={css.headerMenu}>
-                <button className={[css.headerLink, css.linkActive].join(' ')}>Resume</button>
-                <button className={css.headerLink}>Feedback</button>
-                <button className={css.messageLink}>
-                  <Icon className={css.messageIcon} size={28} icon={Icon.ICONS.MESSAGE} />
-                </button>
-              </div>
-              
-            </div>
-            
-            
-            
-          </div>
-          
-        </div>
-        
-        <div className={css.contentWrapper}>
-        
-        </div>
-      </div>
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      slideIndex: 0,
+    }
+  }
+
+  handleChange = (value) => {
+    this.setState({
+      slideIndex: value,
+    })
+  }
+
+  handleBack () {
+    Router.pushRoute('/my-profile')
+  }
+
+  handleHelp = () => {
+    // eslint-disable-next-line no-console
+    console.log('---WorkerProfileContent handleHelp')
+  }
+
+  handleClickAddWorker = () => {
+    // eslint-disable-next-line no-console
+    console.log('---WorkerProfileContent handleClickAddWorker')
+  }
+
+  render () {
+    const { profile, handleSubmit } = this.props
+
+    return (
+      <form className={css.main} onSubmit={handleSubmit}>
+        <div className={css.title}>
+          <div className={css.titleBar}>
+            <Button
+              className={css.backButton}
+              icon={{
+                icon: Image.ICONS.ARROW_BACK,
+                color: Image.COLORS.WHITE,
+              }}
+              mods={Button.MODS.FLAT}
+              label='My Profile'
+              onClick={this.handleBack}
+            />
+            <div className={css.buttonsRow}>
+              <Icon
+                className={css.helpButton}
+                size={28}
+                {...Icon.SETS.HELP_INVERT}
+                onClick={this.handleHelp}
+              />
+              <Button
+                className={css.doneButton}
+                label='terms.done'
+                mods={Button.MODS.FLAT}
+                type={Button.TYPES.SUBMIT}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={css.content}>
+          <div className={css.header}>
+            <h2>Worker Profile</h2>
+            <Tabs
+              className={css.tabs}
+              onChange={this.handleChange}
+              value={this.state.slideIndex}
+              tabItemContainerStyle={style}
+              inkBarStyle={inkBarStyle}
+            >
+              <Tab className={css.tab} label='GENERAL' value={0} />
+              <Tab className={css.tab} label='WORK EXPERIENCE' value={1} />
+              <Tab className={css.tab} label='SERVICES' value={2} />
+            </Tabs>
+            { this.state.slideIndex > 0 ? (
+              <Icon
+                className={css.addWorker}
+                color={Icon.COLORS.WHITE}
+                icon={Icon.ICONS.ADD}
+                size={24}
+                onClick={this.handleClickAddWorker}
+              />
+            ) : null }
+          </div>
+          <div className={css.tabContent}>
+            <SwipeableViews
+              index={this.state.slideIndex}
+              onChangeIndex={this.handleChange}
+            >
+              <GeneralTab generalProfile={profile.general} />
+              <WorkExperienceTab />
+              <ServicesTab workerProfile={profile.worker} />
+            </SwipeableViews>
+          </div>
+        </div>
+      </form>
     )
   }
 }
+
+const workerProfileContentForm = reduxForm({
+  form: FORM_WORKER_PROFILE,
+})(WorkerProfileContent)
+
+function mapStateToProps (state, op) {
+  return {
+    initialValues: {
+      experiences: [{}].concat(
+        op.profile.worker.ipfs.experience.map(exp => ({
+          position: exp.position,
+          organisation: exp.organisation,
+          responsibilities: exp.responsibilities,
+          workFrom: exp.workFrom,
+          workTo: exp.workTo,
+        })),
+      ),
+      services: [{}],
+    },
+  }
+}
+
+function mapDispatchToProps () {
+  return {
+    onSubmit: async (values) => {
+      // eslint-disable-next-line no-console
+      console.log('---WorkerProfileContent handleSubmit, values', values)
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(workerProfileContentForm)

@@ -90,6 +90,13 @@ export function moreThan (value, limit, isEqual = false) {
   return !isPassed ? isEqual ? 'Should be more than ${limit}' : 'Should be more or equal than ${limit}' : null
 }
 
+export const notEmptyArray = (value) => {
+  if (!Array.isArray(value) || value.length === 0) {
+    return `Should be not empty`
+  }
+  return null
+}
+
 export default {
   required,
   address,
@@ -104,4 +111,5 @@ export default {
   lowerThan,
   moreThan,
   validIpfsFileList,
+  notEmptyArray,
 }

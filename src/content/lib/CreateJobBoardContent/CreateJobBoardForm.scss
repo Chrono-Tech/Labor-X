@@ -87,15 +87,29 @@ $maxWidth: 74rem;
   width: 100%;
   color: $color-white;
   background: $gradientBlueToGreen;
+  .chart {
+    position: relative;
+    margin-top: 3rem;
+    width: 22rem;
+    height: 22rem;
+    background-color: darken($color-green, 30%);
+    border-radius: 50%;
+    > * {
+      position: absolute;
+    }
+    .chartLabel {
+      @include flex(column, center, center);
+      width: 100%;
+      height: 100%;
+      .chartLabelTitle {
+        margin-bottom: 1rem;
+        color: $color-white;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
 }
 
-.chart {
-  margin-top: 3rem;
-  width: 22rem;
-  height: 22rem;
-  background-color: darken($color-green, 30%);
-  border-radius: 50%;
-}
 
 .find {
   width: 8rem;
@@ -162,25 +176,25 @@ $maxWidth: 74rem;
   display: flex;
   margin-top: 40px;
 }
-
 .specificRequirement {
   flex: 1;
 
   &.specificRequirementRight {
     padding-left: 60px;
   }
-
   .cardTitle {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 10px;
   }
-
   .subtitle {
     color: #7F7F7F;
     font-weight: 300;
     line-height: 22px;
     margin-bottom: 20px;
+  }
+  .ratingRow {
+    width: 20rem;
   }
 }
 
@@ -216,62 +230,4 @@ $maxWidth: 74rem;
   &.securityRatingLast i {
     opacity: 0.4;
   }
-}
-
-.popover {
-  display: none;
-  top: 100%;
-  position: absolute;
-  background: #fff;
-  border: 2px solid #333333;
-  padding: 20px;
-  font-family: roboto, sans-serif;
-  z-index: 99;
-  width: 200px;
-  border-radius: 5px;
-
-  b {
-    font-weight: 500;
-  }
-}
-
-.popoverArrow {
-  &:before {
-    content: '';
-    display: block;
-    border: 2px solid #333;
-    background-color: #FFFFFF;
-    transform: matrix(0.7071,-0.7071,0.7071,0.7071,-3,8);
-    width: 12px;
-    height: 12px;
-    position: absolute;
-    top: -16px;
-  }
-  &:after {
-    content: '';
-    display: block;
-    background: #fff;
-    width: 100%;
-    height: 12px;
-    position: absolute;
-    top:0;
-    left:0;
-  }
-}
-
-.arrowRight {
-  right: -16px;
-
-  &:before {
-    right: 15px;
-  }
-}
-
-.popoverHeader {
-
-}
-
-.popoverDescription {
-  margin-top: 10px;
-  line-height: 22px;
 }

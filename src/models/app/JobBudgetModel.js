@@ -7,6 +7,7 @@ export const schemaFactory = () => ({
   isSpecified: PropTypes.bool,
   hourlyRate: PropTypes.string,
   totalHours: PropTypes.string,
+  fixedPrice: PropTypes.string,
 })
 
 export default class JobBudgetModel extends AbstractModel {
@@ -49,6 +50,7 @@ function propsWithDefaults (props) {
   const {
     hourlyRate,
     totalHours,
+    fixedPrice,
     ...other
   } = props
   return Object.assign({}, {
@@ -59,5 +61,8 @@ function propsWithDefaults (props) {
     totalHours: totalHours != null
       ? String(totalHours)
       : String(faker.random.number({ min: 1, max: 40 }) * 5),
+    fixedPrice: fixedPrice
+      ? String(fixedPrice)
+      : String(faker.random.number({ min: 1, max: 40 })),
   }, other)
 }

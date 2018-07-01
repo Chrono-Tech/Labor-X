@@ -1,4 +1,4 @@
-import { isArray, isObject, isMap, isSet, isEmpty, isString, isNil } from 'lodash'
+import { isArray, isObject, isMap, isSet, isEmpty, isString, isNil, isNumber, isFinite } from 'lodash'
 import { I18n } from 'react-redux-i18n'
 import wallet from 'ethereumjs-wallet'
 import Web3 from 'web3'
@@ -23,6 +23,13 @@ export const required = (value) => {
   return value
     ? null
     : 'validator.required'
+}
+
+export const isValidNumber = (value) => {
+  if (isNumber(Number(value)) && isFinite(Number(value))) 
+  {return null}
+  else
+  {return I18n.t('validator.invalidNumber')}
 }
 
 // eslint-disable-next-line complexity

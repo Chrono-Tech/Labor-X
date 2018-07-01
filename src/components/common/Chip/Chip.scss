@@ -9,7 +9,8 @@
   padding: 0 0 0 1.5rem;
   color: $color-white;
   margin-right: $chipMargin;
-  margin-bottom: $chipMargin;
+  margin-bottom: $chipMargin/2;
+  margin-top: $chipMargin/2;
   cursor: pointer;
 
   &:hover {
