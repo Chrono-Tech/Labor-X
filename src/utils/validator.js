@@ -1,5 +1,8 @@
-
 export const required = (value) => !value ? 'Required' : null
+
+export const minLength = minLength => value => value.length >= minLength
+export const length = (length) => (value) => value.length === length ? null : '5 characters length'
+export const maxLength = maxLength => value => value.length <= maxLength
 
 export const address = (value, required = true, blockchain = 'Ethereum') => {
   if ((!value && required) || (value && !/^0x[0-9a-f]{40}$/i.test(value))) {
