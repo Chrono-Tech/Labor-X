@@ -14,5 +14,5 @@ export const boardsFilteredListSelector = () => createSelector(
 
 export const boardByIdSelector = (id) => createSelector(
   boardsSelector(),
-  (boards) => boards.byKey[`board-${id}`]
+  (boards) => boards.byKey[`board-${id}`] 
 )

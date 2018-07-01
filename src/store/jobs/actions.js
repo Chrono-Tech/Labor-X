@@ -156,7 +156,7 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
   const web3 = web3Selector()(state)
 
   const detailsIPFSHash = await storeIntoIPFS(form.ipfs)
-
+  
   const tx = jobControllerDAO.createPostJobTx(
     signer.address,
     form.flowType,
@@ -184,6 +184,23 @@ export const createJobOffer = (form: JobOfferFormModel) => async (dispatch, getS
     form.rate,
     form.estimate,
     form.ontop
+  )
+  await dispatch(executeTransaction({ tx, web3, signer }))
+}
+
+export const createJobOfferWithPrice = (form: JobOfferFormModel) => async (dispatch, getState) => {
+  // eslint-disable-next-line no-console
+  console.log('[jobs] createJobOffer from values', form)
+  const state = getState()
+
+  const jobControllerDAO = daoByType('JobController')(state)
+  const signer = signerSelector()(state)
+  const web3 = web3Selector()(state)
+
+  const tx = jobControllerDAO.createPostJobOfferWithPriceTx(
+    signer.address,
+    form.jobId,
+    form.fixedPrice
   )
   await dispatch(executeTransaction({ tx, web3, signer }))
 }

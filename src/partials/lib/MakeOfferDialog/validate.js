@@ -1,8 +1,8 @@
-import { notEmpty, required } from 'models/validator'
+import { notEmpty, required, isValidNumber } from 'models/validator'
 
 export default (values) => {
-  return values.totalPrice ? {
-    totalPrice: notEmpty(values.totalPrice),
+  return values.fixedPrice ? {
+    fixedPrice: isValidNumber(values.fixedPrice),
   } : {
     totalBudget: notEmpty(values.totalBudget),
     totalHours: notEmpty(values.totalHours),
@@ -10,5 +10,5 @@ export default (values) => {
     endDate: required(values.endDate),
     startTime: required(values.startTime),
     description: notEmpty(values.description),
-  }
+  }  
 }
