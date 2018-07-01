@@ -23,14 +23,6 @@ export default class ProfilePersonalModel extends AbstractModel {
     Object.freeze(this)
   }
 
-  // getValidationState () {
-  //   const { submitted, approved } = this
-  //   if (!submitted && !approved) return GENERAL_PROFILE_VALIDATION_STATE.INITIAL
-  //   if (submitted && !submitted.validationComment) return GENERAL_PROFILE_VALIDATION_STATE.WAITING
-  //   if (submitted && submitted.validationComment) return GENERAL_PROFILE_VALIDATION_STATE.WARNING
-  //   if (!submitted && approved) return GENERAL_PROFILE_VALIDATION_STATE.SUCCESS
-  // }
-
   getSubmittedAvatar () {
     return this.submitted ? this.submitted.avatar : null
   }
@@ -38,9 +30,4 @@ export default class ProfilePersonalModel extends AbstractModel {
   getApprovedAvatar () {
     return this.approved ? this.approved.avatar : null
   }
-
-  getValidationComment () {
-    return this.submitted ? this.submitted.validationComment : null
-  }
-
 }

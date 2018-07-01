@@ -46,17 +46,17 @@ export default class ProfileModel extends AbstractModel {
     Object.freeze(this)
   }
 
-  getGeneralVerificationLevel () {
-    if (!(this.level1 && this.level1.approved)) return 0
-    if (!(this.level2 && this.level2.approved)) return 1
-    if (!(this.level3 && this.level3.approved)) return 2
-    if (!(this.level4 && this.level4.approved)) return 3
-    return 4
-  }
-
-  isGeneralApproved () {
-    return this.getGeneralVerificationLevel() === 4
-  }
+  // getGeneralVerificationLevel () {
+  //   if (!(this.level1 && this.level1.approved)) return 0
+  //   if (!(this.level2 && this.level2.approved)) return 1
+  //   if (!(this.level3 && this.level3.approved)) return 2
+  //   if (!(this.level4 && this.level4.approved)) return 3
+  //   return 4
+  // }
+  //
+  // isGeneralApproved () {
+  //   return this.getGeneralVerificationLevel() === 4
+  // }
 
   static fromJson (data) {
     return new ProfileModel({
@@ -65,15 +65,15 @@ export default class ProfileModel extends AbstractModel {
       level2: new ProfileContactsModel(data.level2),
       level3: new ProfilePassportModel(data.level3),
       level4: new ProfileLocationModel(data.level4),
-      // notifications: {
-      //   laborx: {
-      //     sms: new ProfileNotifications(data.notifications.laborx.sms),
-      //     email: new ProfileNotifications(data.notifications.laborx.email),
-      //   },
-      // },
-      // client: new ProfileClientModel({}),
-      // worker: new ProfileWorkerModel({}),
-      // recruiter: new ProfileRecruiterModel({}),
+      notifications: {
+        laborx: {
+          sms: new ProfileNotifications(data.notifications.laborx.sms),
+          email: new ProfileNotifications(data.notifications.laborx.email),
+        },
+      },
+      client: new ProfileClientModel({}),
+      worker: new ProfileWorkerModel({}),
+      recruiter: new ProfileRecruiterModel({}),
     })
   }
 
