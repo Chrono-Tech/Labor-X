@@ -24,6 +24,10 @@ export default class TagAreaModel extends AbstractModel {
   static valueOfCode (code) {
     return TAG_AREAS_LIST[Math.log2(code)/Math.log2(4)]
   }
+
+  static writeArrayToMask (array: TagAreaModel[]): Number {
+    return array.reduce((mask, element) => (mask | element.code), 0)
+  }
 }
 
 export const TAG_AREAS_LIST = [

@@ -37,6 +37,7 @@ export default class RadioIcon extends React.Component {
     this.setState({
       currentValue: i,
     })
+    this.props.input.onChange(i)
   }
 
   renderButtons () {

@@ -55,9 +55,12 @@ src/**/*.js
 !src/models/app/ClientTypeModel.js
 !src/models/app/JobOfferFormModel.js
 !src/models/app/WorkerModel.js
+!src/models/app/BoardRequirementModel.js
+!src/models/form/JobBoardFormModel.js
 
 !src/store/index.js
 !src/store/jobs/
+!src/store/boards/
 !src/store/offers/
 !src/store/reducers.js
 !src/store/daos/actions.js
@@ -81,6 +84,8 @@ src/**/*.js
 !src/components/common/Rating/Rating.js
 !src/components/common/SecurityShield/SecurityShield.js
 !src/components/common/Radio/Radio.js
+!src/components/common/VerificationLevelSelector/
+
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
@@ -102,5 +107,6 @@ src/**/*.js
 !src/content/lib/ApplicationsAndOffersContent/
 !src/content/lib/ClientProfileContent/
 !src/content/lib/WorkerProfileContent/
+!src/content/lib/CreateJobBoardContent/
 
 !src/partials/
