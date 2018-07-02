@@ -7,7 +7,7 @@
     ""
   ],
   "dependencies": {
-    "@laborx/sc-abi": "^0.0.8",
+    "@laborx/sc-abi": "0.0.9",
     "accounting": "^0.4.1",
     "axios": "^0.18.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
@@ -64,17 +64,23 @@
     "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
+    "babel-plugin-istanbul": "^4.1.6",
     "babel-plugin-module-resolver": "^3.1.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",
+    "coveralls": "^3.0.2",
     "eslint": "^4.18.1",
     "eslint-plugin-chronobank": "github:ChronoBank/eslint-plugin-chronobank",
     "eslint-plugin-chronobank-react": "github:ChronoBank/eslint-plugin-chronobank-react",
     "flow-bin": "^0.69.0",
     "ganache-cli": "^6.0.3",
+    "mocha": "^5.2.0",
     "node-sass": "^4.7.2",
     "normalize.css": "^8.0.0",
+    "nyc": "^12.0.2",
     "postcss-easy-import": "^3.0.0",
     "styled-jsx": "^2.2.5",
     "styled-jsx-plugin-postcss": "^0.1.2"
@@ -92,7 +98,9 @@
     "docker:restart": "yarn docker:stop; yarn docker:start",
     "docker:upgrade": "yarn docker:build && yarn docker:restart",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --opts .mocharc",
+    "test:coverage": "NODE_ENV=test ./node_modules/.bin/nyc yarn test"
   },
   "pre-commit": [
     "lint"

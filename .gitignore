@@ -4,3 +4,5 @@ node_modules/
 .next/
 build/
 yarn-error.log
+coverage
+.nyc_output
