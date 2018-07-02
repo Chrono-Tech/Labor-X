@@ -7,7 +7,7 @@ import { SignerModel, BoardModel, JobFormModel, JobIPFSModel,
   SkillModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST }
   from 'src/models'
 import { Router } from 'src/routes'
-import { signerSelector, boardsListSelector, createJob } from 'src/store'
+import { signerSelector, boardsListSelector, createJob, boardByIdSelector } from 'src/store'
 import CreateJobForm, { FORM_CREATE_JOB } from './CreateJobForm'
 
 export class CreateJobContent extends React.Component {
@@ -24,6 +24,7 @@ export class CreateJobContent extends React.Component {
     allowCustomOffers: PropTypes.bool,
     startWorkAllowance: PropTypes.bool,
     flowType: PropTypes.number,
+    selectedBoard: PropTypes.instanceOf(BoardModel),
   }
 
   state = {
@@ -55,6 +56,7 @@ export class CreateJobContent extends React.Component {
       allowCustomOffers,
       startWorkAllowance,
       flowType,
+      selectedBoard,
     } = this.props
     const { isLoading } = this.state
     return signer == null ? null : (
@@ -64,6 +66,7 @@ export class CreateJobContent extends React.Component {
         hasPeriod={hasPeriod}
         hasAddress={hasAddress}
         hasSkills={hasSkills}
+        selectedBoard={selectedBoard}
         allowCustomOffers={allowCustomOffers}
         startWorkAllowance={startWorkAllowance}
         flowType={flowType}
@@ -79,16 +82,19 @@ function mapStateToProps (state) {
   const signer = signerSelector()(state)
   const boards = boardsListSelector()(state)
   const formSelector = formValueSelector(FORM_CREATE_JOB)
+  const selectedBoard = boardByIdSelector(formSelector(state, 'board'))(state)
 
   return {
     signer,
     boards,
+    selectedBoard,
     hasBudget: formSelector(state, 'hasBudget'),
     hasPeriod: formSelector(state, 'hasPeriod'),
     hasAddress: formSelector(state, 'hasAddress'),
     allowCustomOffers: formSelector(state, 'allowCustomOffers'),
     startWorkAllowance: formSelector(state, 'startWorkAllowance'),
     flowType: formSelector(state, 'flowType'),
+    hourlyRating: formSelector(state, 'hourlyRating'),
     initialValues: {
       board: null,
       flowType: 1,
@@ -120,6 +126,7 @@ function mapDispatchToProps (dispatch) {
           responsibilities: [values.responsibilities],
           minimumRequirements: [values.requirements],
           conclusion: [values.conclusion],
+          hourlyRating: [values.hourlyRating],
           // logo: values.logo, // TODO @ipavlenko: Implement logo
           address: new JobAddressModel(
             !values.hasAddress

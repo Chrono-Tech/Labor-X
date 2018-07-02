@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, propTypes } from 'redux-form'
 import { Toggle, SelectField, DatePicker, TextField } from 'redux-form-material-ui'
 import { MuiThemeProvider, CircularProgress, MenuItem } from 'material-ui'
 import { Router } from 'src/routes'
-import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link } from 'src/components/common'
+import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
 import { SignerModel, BoardModel, FlowTypeModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST, FLOW_TYPES } from 'src/models'
+import t from "typy"
 import validate from './validate'
 import css from './CreateJobForm.scss'
 
@@ -25,6 +26,7 @@ class CreateJobForm extends React.Component {
     boards: PropTypes.arrayOf(
       PropTypes.instanceOf(BoardModel)
     ),
+    selectedBoard: PropTypes.instanceOf(BoardModel),
   }
 
   state = {
@@ -85,8 +87,11 @@ class CreateJobForm extends React.Component {
   }
 
   render () {
-    const { isLoading, boards, hasBudget, hasPeriod, hasAddress } = this.props
-
+    const { isLoading, boards, hasBudget, hasPeriod, hasAddress, selectedBoard } = this.props
+    const rating = t(selectedBoard, "extra.rating").safeObject
+    const validationLevel = t(selectedBoard, "extra.validationLevel").safeObject
+    const endorsingSkills = t(selectedBoard, "ipfs.endorsingSkills").safeObject
+    const joinRequirementIndex = t(selectedBoard, "ipfs.joinRequirement.index").safeObject
     return (
       <MuiThemeProvider>
         <div className={css.main}>
@@ -126,7 +131,7 @@ class CreateJobForm extends React.Component {
                 className={css.boardHeadline}
                 component={Input}
                 placeholder='ui.createJob.jobHeadlinePlaceholder'
-                mods={[ Input.MODS.INVERT, Input.MODS.HUGE ]}
+                mods={[Input.MODS.INVERT, Input.MODS.HUGE]}
                 name='name'
               />
             </div>
@@ -192,13 +197,30 @@ class CreateJobForm extends React.Component {
                 </div>
                 <div>
                   <div className={css.badgesContainer}>
-                    <h4><Translate value='ui.createJob.badgesTitle' /></h4>
+                    <h4><Translate value='ui.createJob.badgesTitle' />f</h4>
                     <p><Translate value='ui.createJob.badgesSubtitle' /></p>
                     <div className={css.badges}>
-                      <Badge value='1+' title='terms.rating' />
-                      <Badge value='term.any' title='terms.validation' />
-                      <Badge value='term.any' title='terms.endorsement' />
-                      <Badge value='term.any' title='terms.categories' />
+                      {
+                        //Match job board categories
+                        joinRequirementIndex === 0 &&
+                        <Fragment>
+                          <Tip
+                            position={Tip.POSITION.LEFT}
+                            tipContent={selectedBoard.tagsCategory && selectedBoard.tagsCategory.map(item => item.name).join(', ')}
+                          >
+                            <Badge value='Only' title='terms.categories' />
+                          </Tip>
+                        </Fragment>
+                      }
+                      {
+                        //Specific rating and validation level
+                        joinRequirementIndex === 1 && 
+                        <Fragment>
+                          <Badge value={rating + "+"} title='terms.rating' />
+                          <Badge value={validationLevel ? ""+validationLevel : "Any"} title='terms.validation'  />
+                          <Badge value={endorsingSkills ? "Need" : "Any"} title='terms.endorsement' />
+                        </Fragment>
+                      }
                     </div>
                   </div>
                   <div className={css.hourlyRatingColumn}>
@@ -210,9 +232,11 @@ class CreateJobForm extends React.Component {
                       onChange={this.handleChangeHourlyRating}
                       name='hourlyRating'
                     >
-                      <MenuItem value={1} primaryText='Force Worker Rating' />
-                      <MenuItem value={2} primaryText='Force Worker Rating' />
-                      <MenuItem value={3} primaryText='Force Worker Rating' />
+                      <MenuItem value={1} primaryText='Force Worker Rating 1' />
+                      <MenuItem value={2} primaryText='Force Worker Rating 2' />
+                      <MenuItem value={3} primaryText='Force Worker Rating 3' />
+                      <MenuItem value={3} primaryText='Force Worker Rating 4' />
+                      <MenuItem value={3} primaryText='Force Worker Rating 5' />
                     </Field>
                     <div className={css.hourlyRating}>
                       <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
@@ -250,7 +274,7 @@ class CreateJobForm extends React.Component {
                     <MenuItem value={1} primaryText='Hourly Based' />
                     <MenuItem value={2} primaryText='Fixed price' />
                   </Field>
-                  { this.renderBudgetWidget() }
+                  {this.renderBudgetWidget()}
 
                   <Field
                     component={ValidatedCheckbox}
