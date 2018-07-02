@@ -373,6 +373,7 @@ export default reduxForm({
     fee: 0,
     endorsingSkills: false,
     joinRequirement: 0,
+    rating_requirements: 0
   },
   validate,
 })(CreateJobBoardForm)

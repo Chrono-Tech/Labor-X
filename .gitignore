@@ -4,3 +4,4 @@ node_modules/
 .next/
 build/
 yarn-error.log
+.vscode/launch.json
