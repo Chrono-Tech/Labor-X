@@ -1,8 +1,7 @@
 {
   "env": {
     "test": {
-      "presets": [ "env" ],
-      "plugins": [ "istanbul" ]
+      "presets": [ "env" ]
     },
     "development": {
       "presets": [
@@ -26,11 +25,11 @@
         ],
         [
           "styled-jsx/babel", {
-          "optimizeForSpeed": true,
-          "plugins": [
-            "styled-jsx-plugin-postcss"
-          ]
-        }
+            "optimizeForSpeed": true,
+            "plugins": [
+              "styled-jsx-plugin-postcss"
+            ]
+          }
         ]
       ]
     }

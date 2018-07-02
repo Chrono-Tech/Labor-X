@@ -1,7 +1,7 @@
 import assert from 'assert'
-import validator from './_validator'
+import validator from './validator'
 
-describe('src/utils/_validator', () => {
+describe('src/utils/validator', () => {
   describe('#required', () => {
     it('should return null if value is truthy', () => {
       assert.strictEqual(validator.required('test'), null)

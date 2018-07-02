@@ -1,4 +1,4 @@
-import * as validators from 'src/utils/_validator'
+import * as validators from 'src/utils/validator'
 
 // eslint-disable-next-line complexity
 export default (values) => {
