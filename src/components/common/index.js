@@ -44,6 +44,7 @@ export { default as FileUploader } from './FileUploader/FileUploader'
 export { default as Select } from './Select/Select'
 export { default as NumberInput } from './NumberInput/NumberInput'
 export { default as Calendar } from './Calendar/Calendar'
+export { default as VerificationLevelSelector } from './VerificationLevelSelector/VerificationLevelSelector'
 
 // i18n
 export { default as Translate } from './Translate/Translate'

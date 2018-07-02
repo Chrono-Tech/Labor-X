@@ -1,8 +1,14 @@
+import PropTypes from 'prop-types'
 import storage from "redux-persist/lib/storage"
 import { persistReducer } from "redux-persist"
 import { USER_SAVE } from './actions'
+import UserModel from "../../models/app/UserModel"
 
-export const initialState = {}
+export const schemaFactory = () => ({
+  user: PropTypes.instanceOf(UserModel),
+})
+
+export const initialState = { user: null }
 
 const persistConfig = () => ({
   key: 'user',

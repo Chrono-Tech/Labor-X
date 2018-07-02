@@ -1,19 +1,29 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { formValueSelector, getFormSyncErrors } from 'redux-form'
 
 import {
-  TagCategoryModel,
   JobBoardFormModel,
   BoardPostFeeModel,
   BoardRequirementModel,
-  BOARD_REQUIREMENTS_LIST,
 } from 'src/models'
 import { boardCreate } from 'src/store'
 import { Router } from 'src/routes'
 import CreateJobBoard, { FORM_CREATE_JOB_BOARD } from './CreateJobBoardForm'
 
 class CreateJobBoardContent extends React.Component {
+  static propTypes = {
+    joinRequirement: PropTypes.number,
+    formErrors: PropTypes.shape({
+      searchTagsError: PropTypes.string,
+    }),
+    canJoinAmount: PropTypes.shape({
+      clients: PropTypes.number,
+      workers: PropTypes.number,
+    }),
+    handleSubmit: PropTypes.func,
+  }
 
   constructor (){
     super()
@@ -39,13 +49,14 @@ class CreateJobBoardContent extends React.Component {
   }
 
   render (){
-    const { isSpecificRequirements, formErrors } = this.props
+    const { joinRequirement, formErrors, canJoinAmount } = this.props
     return (
       <CreateJobBoard
         formErrors={formErrors}
         onSubmit={this.handleSubmit}
         isLoading={this.state.isLoading}
-        isSpecificRequirements={isSpecificRequirements}
+        joinRequirement={joinRequirement}
+        canJoinAmount={canJoinAmount}
       />
     )
   }
@@ -53,17 +64,22 @@ class CreateJobBoardContent extends React.Component {
 
 const mapStateToProps = (state) => {
   const formSelector = formValueSelector(FORM_CREATE_JOB_BOARD)
+  // TODO @aevalyakin compute actual data
+  const canJoinAmount = {
+    clients: 100,
+    workers: 200,
+  }
 
   return {
     formErrors: getFormSyncErrors(FORM_CREATE_JOB_BOARD)(state),
-    isSpecificRequirements: formSelector(state, 'joinRequirement') == 1,
+    joinRequirement: Number(formSelector(state, 'joinRequirement')),
+    canJoinAmount,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     async handleSubmit (values) {
-
       await dispatch(boardCreate(
         new JobBoardFormModel({
           name: values.name,
@@ -71,10 +87,14 @@ const mapDispatchToProps = (dispatch) => {
           background: '',
           description: '',
           endorsingSkills: values.endorsingSkills,
-          tagCategories: values.tagCategories && values.tagCategories.split(',').map(item => TagCategoryModel.valueOf(item)) || [],
+          tagsCategory: [values.tagsCategory],
+          tagsArea: [values.tagsArea],
+          tags: values.tags,
           joinRequirement: BoardRequirementModel.valueOf(values.joinRequirement),
           fee: BoardPostFeeModel.valueOf(values.fee),
           lhus: +values.lhus,
+          ratingRequirements: values.ratingRequirements,
+          verificationRequirements: values.verificationRequirements,
         })
       ))
     },

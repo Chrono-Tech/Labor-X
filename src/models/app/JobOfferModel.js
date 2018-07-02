@@ -12,6 +12,7 @@ export const schemaFactory = () => ({
   estimate: PropTypes.instanceOf(BigNumber),
   onTop: PropTypes.instanceOf(BigNumber),
   ipfs: PropTypes.instanceOf(JobOfferIPFSModel),
+  fixedPrice: PropTypes.instanceOf(BigNumber),
 })
 
 export default class JobOfferModel extends AbstractModel {

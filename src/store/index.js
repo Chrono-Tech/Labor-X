@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger'
 import * as thunkMiddleware from 'redux-thunk'
 import web3Factory from 'src/web3'
 import { initFrontend, initBackend } from './bootstrap'
-import { login, landing, ethereum, daos, tokens, wallet, balances, createAccount, boards, jobs, modals, user, offers } from './reducers'
+import { login, landing, ethereum, daos, tokens, wallet, balances, createAccount, boards, jobs, modals, user, offers, generalProfile } from './reducers'
 
 export * from './actions'
 
@@ -40,6 +40,7 @@ export default (initialState = {}) => {
     modals,
     user: user(),
     offers,
+    generalProfile,
   })
 
   // Here you can recover state sent from the backend

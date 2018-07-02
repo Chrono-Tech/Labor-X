@@ -1,0 +1,27 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.shieldRow {
+  @include flex(row, flex-start, center);
+  .icon {
+    @include flex(column, center, flex-start);
+    position: relative;
+    height: 4.2rem;
+    width: 2.4rem;
+    > * {
+      position: absolute;
+    }
+    > span {
+      color: $color-white;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+    }
+  }
+  .popoverDescription {
+    margin-top: 1rem;
+    line-height: 2.2rem;
+  }
+}

@@ -96,8 +96,8 @@ b {
 }
 
 .cardActionTitle {
-  font-size: 16px;
-  font-weight: 500;
+  //font-size: 16px;
+  //font-weight: 500;
   display: inline-block;
 }
 
@@ -156,6 +156,11 @@ b {
   display: flex;
   justify-content: center;
   align-items: center;
+  svg {
+    color: rgb(191, 191, 191) !important;
+    height: 50px !important;
+    width: 50px !important;
+  }
 }
 
 .blockCircleIcon {
@@ -226,6 +231,11 @@ b {
       font-style: italic;
     }
   }
+}
+
+.fieldBuilding,
+.fieldSuit {
+  width: 95px !important;
 }
 
 .shortField {
@@ -431,4 +441,27 @@ b {
 
 :global(.slides-leave) {
   opacity: 1;
+}
+
+.avatarErrorText {
+  width: 100px;
+  position: relative;
+  bottom: 2px;
+  font-size: 12px;
+  line-height: 12px;
+  color: rgb(244, 67, 54);
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.validationComment {
+  position: relative;
+  bottom: 2px;
+  font-size: 12px;
+  line-height: 12px;
+  color: rgb(244, 67, 54);
+}
+
+.resendButton {
+  margin-bottom: 8px;
 }

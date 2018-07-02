@@ -7,6 +7,7 @@ import { signerSelector } from 'src/store'
 
 import React from 'react'
 import css from './DashboardContent.scss'
+import {userSelector} from "../../../store/user/selectors";
 
 export class DashboardContent extends React.Component {
   static propTypes = {
@@ -36,21 +37,9 @@ export class DashboardContent extends React.Component {
                   isLink: true,
                   secondIcon: Image.SETS.MESSAGE_ERROR,
                 },
-                {
-                  href: '/recruiter-profile',
-                  label: 'nav.recruiterProfile',
-                  isLink: true,
-                },
-                {
-                  href: '/worker-profile',
-                  label: 'nav.workerProfile',
-                  isLink: true,
-                },
-                {
-                  href: '/client-profile',
-                  label: 'nav.clientProfile',
-                  isLink: true,
-                },
+                ...(this.props.user.accountTypes.client ? [ { href: '/client-profile', label: 'nav.clientProfile', isLink: true, } ] : []),
+                ...(this.props.user.accountTypes.worker ? [ { href: '/worker-profile', label: 'nav.workerProfile', isLink: true, } ] : []),
+                ...(this.props.user.accountTypes.recruiter ? [ { href: '/recruiter-profile', label: 'nav.recruiterProfile', isLink: true, } ] : []),
               ]}
             >
               If you&apos;d like you may continue to use LaborX network anonymous.
@@ -304,6 +293,7 @@ function mapStateToProps (state) {
   const signer = signerSelector()(state)
   return {
     signer,
+    user: userSelector()(state)
   }
 }
 

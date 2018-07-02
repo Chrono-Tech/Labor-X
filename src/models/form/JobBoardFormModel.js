@@ -1,22 +1,28 @@
 import PropTypes from 'prop-types'
+import faker from 'faker'
 import {
+  TagModel,
+  TagAreaModel,
   TagCategoryModel,
   BoardRequirementModel,
   BoardPostFeeModel,
 } from 'src/models'
 import AbstractModel from '../AbstractModel'
-import faker from "faker";
 
 const schemaFactory = () => ({
   name: PropTypes.string,
   logo: PropTypes.string,
   background: PropTypes.string,
   description: PropTypes.string,
-  tagCategories: PropTypes.arrayOf(TagCategoryModel),
+  tagsCategory: PropTypes.arrayOf(PropTypes.instanceOf(TagCategoryModel)),
+  tagsArea: PropTypes.arrayOf(PropTypes.instanceOf(TagAreaModel)),
+  tags: PropTypes.arrayOf(PropTypes.instanceOf(TagModel)),
   joinRequirement: PropTypes.instanceOf(BoardRequirementModel),
   fee: PropTypes.instanceOf(BoardPostFeeModel),
   lhus: PropTypes.number,
   endorsingSkills: PropTypes.bool,
+  ratingRequirements: PropTypes.number,
+  verificationRequirements: PropTypes.number,
 })
 
 const defaultProps = {
@@ -24,21 +30,33 @@ const defaultProps = {
   logo: '',
   background: '',
   description: '',
-  tagCategories: '',
+  tagsCategory: '',
+  tagsArea: '',
+  tags: '',
   joinRequirement: 0,
   endorsingSkills: false,
   fee: 0,
   lhus: 0,
+  ratingRequirements: 0,
+  verificationRequirements: 0,
 }
 
-export default class JobPostFormModel extends AbstractModel {
+export default class JobBoardFormModel extends AbstractModel {
   constructor (props) {
     super(Object.assign({}, defaultProps, props), schemaFactory())
     Object.freeze(this)
   }
 
-  get categories (){
-    return TagCategoryModel.writeArrayToMask(this.tagCategories)
+  get categoriesBitmask (){
+    return TagCategoryModel.writeArrayToMask(this.tagsCategory)
+  }
+
+  get areasBitmask (){
+    return TagAreaModel.writeArrayToMask(this.tagsArea)
+  }
+
+  get tagsBitmask (){
+    return TagModel.writeArrayToMask(this.tags)
   }
 
   get ipfsData () {
@@ -52,6 +70,8 @@ export default class JobPostFormModel extends AbstractModel {
       fee: this.fee && this.fee.index,
       lhus: this.lhus !== undefined && +this.lhus,
       endorsingSkills: !!this.endorsingSkills,
+      ratingRequirements: this.ratingRequirements,
+      verificationRequirements: this.verificationRequirements,
     }
   }
 }
