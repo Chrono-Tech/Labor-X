@@ -1,6 +1,7 @@
 import * as a from './actions'
 
 const initialState = {
+  openAccountNotFoundDialog: false,
   isSignIn: false,
   signIn: null,
   step: null,

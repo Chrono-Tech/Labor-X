@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, Form } from 'redux-form'
 
 import { Button, Input } from 'components/common'
 import SignInModel from 'src/models/SignInModel'
@@ -22,7 +22,7 @@ class PrivateKeyForm extends React.Component {
     const { handleSubmit, error, invalid, pristine, onChangeStep } = this.props
 
     return (
-      <form className={css.root} name={FORM_PRIVATE_KEY} onSubmit={handleSubmit}>
+      <Form className={css.root} name={FORM_PRIVATE_KEY} onSubmit={handleSubmit}>
         <h3 className={css.header}>Private key form</h3>
         <Field
           component={Input}
@@ -46,7 +46,7 @@ class PrivateKeyForm extends React.Component {
           or
           <button className={css.backButton} onClick={() => onChangeStep(LoginSteps.SelectLoginMethod)}>back</button>
         </div>
-      </form>
+      </Form>
     )
   }
 }

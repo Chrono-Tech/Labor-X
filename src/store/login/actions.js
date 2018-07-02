@@ -4,11 +4,10 @@ import { stopSubmit } from 'redux-form'
 import { Router } from 'src/routes'
 import { WalletEntryModel, SignInModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
-
-import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
-import { web3Selector } from "../ethereum/selectors"
-import { getUserData, userSave } from "../user/actions"
-import * as backendApi from "./../../api/backend"
+import { FORM_LOGIN, FORM_MNEMONIC } from 'src/components/Login'
+import { getUserData, userSave } from "src/store/user/actions"
+import { web3Selector } from "src/store/ethereum/selectors"
+import * as backendApi from "src/api/backend"
 
 export const LoginSteps = {
   Ledger: 'ledger',
@@ -101,37 +100,27 @@ export const onSubmitMnemonic = (values) => (dispatch, getState) => {
 }
 
 export const onSubmitMnemonicSuccess = () => (dispatch) => {
-  dispatch(navigateToCreateWallet())
+  dispatch(changeStep(LoginSteps.CreateWallet))
 }
 
 export const onSubmitMnemonicFail = () => (dispatch) => {
   dispatch(stopSubmit(FORM_MNEMONIC, { key: 'Wrong mnemonic' }))
 }
 
-export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
-
-  const web3 = web3Selector()(getState())
-  web3.eth.accounts.wallet.clear()
-
-  const account = await web3.eth.accounts.privateKeyToAccount(`0x${values.key}`)
-
-  const signInModel = new SignInModel({
-    method: SignInModel.METHODS.PRIVATE_KEY,
-    key: values.key,
-    address: account.address,
-  })
-
-  dispatch(setSignInModel(signInModel))
-
-}
-
-export const onSubmitPrivateKeySuccess = () => (dispatch) => {
-  dispatch(navigateToCreateWallet())
-}
-
-export const onSubmitPrivateKeyFail = () => (dispatch) => {
-  dispatch(stopSubmit(FORM_PRIVATE_KEY, { key: 'Wrong private key' }))
-
+export const onSubmitPrivateKey = ({ key }) => async (dispatch, getState) => {
+  try {
+    const state = getState()
+    const web3 = web3Selector()(state)
+    web3.eth.accounts.wallet.clear()
+    const account = await web3.eth.accounts.privateKeyToAccount(`0x${key}`)
+    // todo - is account exists ? go to create wallet step : show account 404 dialog
+    const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: key, address: account.address })
+    dispatch(setSignInModel(signInModel))
+    dispatch(changeStep(LoginSteps.CreateWallet))
+  } catch (err) {
+    // todo handle err
+    throw err
+  }
 }
 
 export const selectWalletRecoveryForm = (wallet) => (dispatch) => {
@@ -156,10 +145,6 @@ export const onSelectWallet = (wallet) => (dispatch, getState) => {
     dispatch(changeStep(LoginSteps.Login))
   }
 
-}
-
-export const navigateToCreateWallet = () => (dispatch) => {
-  dispatch(changeStep(LoginSteps.CreateWallet))
 }
 
 export const navigateToSelectWallet = () => (dispatch) => {
@@ -211,9 +196,7 @@ export const onConfirmRecoveryPassword = ({ password }) => (dispatch, getState) 
   Router.pushRoute('/dashboard')
 }
 
-export const changeStep = (step) => (dispatch) => {
-  dispatch({ type: LOGIN_CHANGE_STEP, step })
-}
+export const changeStep = (step) => ({ type: LOGIN_CHANGE_STEP, step })
 
 export const validateRecoveryForm = (mnemonic) => (dispatch, getState) => {
   const state = getState()
@@ -227,3 +210,8 @@ export const validateRecoveryForm = (mnemonic) => (dispatch, getState) => {
 export const setRecoveryFormMnemonic = (mnemonic) => (dispatch) => {
   return dispatch({ type: LOGIN_SET_RECOVERY_FORM_MNEMONIC, mnemonic })
 }
+
+export const SHOW_ACCOUNT_404_DIALOG = 'LOGIN/ACCOUNT_404_DIALOG/SHOW'
+export const HIDE_ACCOUNT_404_DIALOG = 'LOGIN/ACCOUNT_404_DIALOG/HIDE'
+export const showAccount404Dialog = () => ({ type: SHOW_ACCOUNT_404_DIALOG })
+export const hideAccount404Dialog = () => ({ type: HIDE_ACCOUNT_404_DIALOG })
