@@ -14,6 +14,8 @@ const schemaFactory = () => ({
   fee: PropTypes.instanceOf(BoardPostFeeModel),
   lhus: PropTypes.number,
   endorsingSkills: PropTypes.bool,
+  agreement: PropTypes.string,
+
 })
 
 export default class BoardIPFSModel extends AbstractModel {

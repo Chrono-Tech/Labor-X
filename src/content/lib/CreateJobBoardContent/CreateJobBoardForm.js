@@ -46,12 +46,36 @@ class CreateJobBoardForm extends React.Component {
 
     this.state = {
       tags: [],
+      agreement: {
+        loading: false,
+        loaded: false,
+        filename: null,
+      },
     }
   }
 
-  handleUploadAgreement = () => {
-    console.log('handleUploadAgreement')
+  handleUploadAgreement = (e) => {
+    const { change } = this.props
+    const file = e.target.files[0]
+    const reader  = new FileReader()
+    this.setState({ agreement: {
+      loading: true,
+      loaded: false,
+      filename: file.name,
+    },
+    })
 
+    reader.addEventListener('load', () => {
+      this.setState(prevState => ({ agreement: {
+        loading: false,
+        loaded: true,
+        filename: prevState.agreement.filename,
+      },
+      }))
+      change('agreement', reader.result)
+    }, false)
+
+    reader.readAsDataURL(file)
   }
 
   handleAddTag = (tag) => {
@@ -189,6 +213,57 @@ class CreateJobBoardForm extends React.Component {
               />
             </div>
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderAgreement = () => {
+    return (
+      <div className={css.card}>
+        <h3 className={css.cardTitle}>Legal Documents</h3>
+        <div className={css.subtitle}>
+        By default Users accepting our
+          <a href='/static/docs/laborx_standart_agreement.pdf'> Standard Terms and Conditions. </a>
+        If you need to have different Terms and Conditions, please upload it below.
+        Note that our team will need to review your document before the board publishes.
+        </div>
+        <div className={css.cardContent}>
+          <label
+            htmlFor='uploadAgreement'
+            className={css.agreementActions}
+          >
+            <div className={css.agreementActionsIcon}>
+              { this.state.agreement.loading ? <CircularProgress size={26} thickness={2} /> : null }
+              {
+                !this.state.agreement.loading && !this.state.agreement.loaded ?
+                  <Icon
+                    size={28}
+                    icon={Icon.ICONS.UPLOAD}
+                    color={Image.COLORS.BLUE}
+                  /> : null
+              }
+              { this.state.agreement.loaded ?
+                <Icon
+                  size={28}
+                  icon={Icon.ICONS.FILE}
+                  color={Image.COLORS.BLUE}
+                /> : null
+              }
+
+            </div>
+            {
+              this.state.agreement.filename == null
+                ? <p>Upload custom Terms and Conditions</p>
+                : <p>{ this.state.agreement.filename  }</p>
+            }
+          </label>
+          <input className={css.agreementInput} type='file' id='uploadAgreement' onChange={this.handleUploadAgreement} />
+          <Field
+            component='input'
+            type='hidden'
+            name='agreement'
+          />
         </div>
       </div>
     )
@@ -375,31 +450,7 @@ class CreateJobBoardForm extends React.Component {
             </div>
           </div>
 
-          <div className={css.card}>
-            <h3 className={css.cardTitle}>Legal Documents</h3>
-            <div className={css.subtitle}>
-              By default Users accepting our
-              <a href='/static/docs/laborx_standart_agreement.pdf'> Standard Terms and Conditions. </a>
-              If you need to have different Terms and Conditions, please upload it below.
-              Note that our team will need to review your document before the board publishes.
-            </div>
-            <div className={css.cardContent}>
-              <label
-                htmlFor='uploadAgreement'
-                className={css.agreementActions}
-              >
-                <div className={css.agreementActionsIcon}>
-                  <Icon
-                    size={28}
-                    icon={Icon.ICONS.UPLOAD}
-                    color={Image.COLORS.BLUE}
-                  />
-                </div>
-                <p>Upload custom Terms and Conditions</p>
-              </label>
-              <input className={css.agreementInput} type='file' id='uploadAgreement' onChange={this.handleUploadAgreement} />
-            </div>
-          </div>
+          { this.renderAgreement() }
 
           <div className={css.card}>
             <h3 className={css.cardTitle}>Visuals</h3>

@@ -94,6 +94,7 @@ const mapDispatchToProps = (dispatch) => {
           lhus: +values.lhus,
           ratingRequirements: values.ratingRequirements,
           verificationRequirements: values.verificationRequirements,
+          agreement: values.agreement,
         })
       ))
     },
