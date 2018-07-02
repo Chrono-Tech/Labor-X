@@ -3,18 +3,20 @@ os: linux
 group: stable
 language: node_js
 node_js:
-  - 6
+  - 8
 
 install:
-  - npm install
+  - yarn install
 
 cache:
   directories:
     - node_modules
 
 script:
-  - npm run lint
-  #- npm run build
+  - yarn run lint
+  - yarn run test:coverage
 
-after_script:
-    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+#after_script:
+#    - cat ./coverage/lcov.info | ./node_modules/./bin/coveralls
+
+after_success: ./node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls
