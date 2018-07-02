@@ -17,18 +17,16 @@ export default class BoardRequirementModel extends AbstractModel {
     return Math.pow(2, this.index) // odd bit mask
   }
   
-  static valueOf (index) {
-    if (!index){
-      return null
+  static valueOf (index = 0) {
+    if (index >= 0 && index < BOARD_REQUIREMENTS_LIST.length) {
+      return BOARD_REQUIREMENTS_LIST[index]
     }
-    
-    return BOARD_REQUIREMENTS_LIST[index]
+    return null
   }
   
   static arrayValueOfMask (mask) {
     return filterArrayByIndexMask(BOARD_REQUIREMENTS_LIST, mask)
   }
-  
 }
 
 export const BOARD_REQUIREMENTS_LIST = [
