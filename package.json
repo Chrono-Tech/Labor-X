@@ -103,6 +103,7 @@
     "test:coverage": "NODE_ENV=test ./node_modules/.bin/nyc yarn test"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "test"
   ]
 }
