@@ -193,36 +193,6 @@ class LoginOptions extends React.Component {
     return [<div key={step} className={css.componentWrapper}>{component}</div>]
   }
 
-  // renderDialog (){
-  //   return (
-  //     <Dialog
-  //       contentClassName={css.dialog}
-  //       open={this.state.isModalOpen}
-  //       title={<h2>LaborX account is not found</h2>}
-  //       titleClassName={css.dialogTitle}
-  //       bodyClassName={css.dialogContent}
-  //       actionsContainerClassName={css.actionWrapper}
-  //       actions={[
-  //         <Button
-  //           label='No'
-  //           onClick={this.closeModal.bind(this)}
-  //           buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
-  //           type={Button.TYPES.SUBMIT}
-  //         />,
-  //         <Button
-  //           label='YES'
-  //           onClick={this.navigateToCreateAccount.bind(this)}
-  //           buttonClassName={css.actionButton}
-  //           type={Button.TYPES.SUBMIT}
-  //         />,
-  //       ]}
-  //     >
-  //       LaborX account with the provided address is not found.
-  //       Would you like to Create a New Account?
-  //     </Dialog>
-  //   )
-  // }
-
   render () {
 
     return (

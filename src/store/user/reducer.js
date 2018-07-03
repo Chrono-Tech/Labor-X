@@ -3,8 +3,10 @@ import storage from "redux-persist/lib/storage"
 import { persistReducer } from "redux-persist"
 import { USER_SAVE } from './actions'
 import UserModel from "../../models/app/UserModel"
+import type Account from "../../models/web3/Account"
 
 export const schemaFactory = () => ({
+  existingAccount: Account,
   user: PropTypes.instanceOf(UserModel),
 })
 

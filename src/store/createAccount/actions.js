@@ -2,6 +2,7 @@ import { Router } from 'src/routes'
 
 import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'src/store'
 import { generateNameWalletSelector } from "./selectors"
+import type Account from "../../models/web3/Account"
 
 export const CREATE_ACCOUNT_SET_MNEMONIC = 'createAccount/setMnemonic'
 export const CREATE_ACCOUNT_SET_PASSWORD = 'createAccount/setPassword'
@@ -89,3 +90,6 @@ export const navigateToSelectMethod = () => (dispatch) => {
   Router.pushRoute('/login')
   dispatch(navigateToSelectLoginMethod())
 }
+
+export const EXISTING_ACCOUNT_CREATE = 'CREATE_ACCOUNT/EXISTING_ACCOUNT_CREATE'
+export const setAccount = (account: Account) => ({ type: EXISTING_ACCOUNT_CREATE, payload: account })

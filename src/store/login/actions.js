@@ -112,11 +112,15 @@ export const onSubmitPrivateKey = ({ key }) => async (dispatch, getState) => {
     const state = getState()
     const web3 = web3Selector()(state)
     web3.eth.accounts.wallet.clear()
-    const account = await web3.eth.accounts.privateKeyToAccount(`0x${key}`)
-    // todo - is account exists ? go to create wallet step : show account 404 dialog
+    const account = web3.eth.accounts.privateKeyToAccount(`0x${key}`)
     const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: key, address: account.address })
     dispatch(setSignInModel(signInModel))
-    dispatch(changeStep(LoginSteps.CreateWallet))
+    const person = await backendApi.reviewPerson(account.address.toLowerCase())
+    if (person) {
+      dispatch(changeStep(LoginSteps.CreateWallet))
+    } else {
+      dispatch(showAccount404Dialog())
+    }
   } catch (err) {
     // todo handle err
     throw err
@@ -215,3 +219,9 @@ export const SHOW_ACCOUNT_404_DIALOG = 'LOGIN/ACCOUNT_404_DIALOG/SHOW'
 export const HIDE_ACCOUNT_404_DIALOG = 'LOGIN/ACCOUNT_404_DIALOG/HIDE'
 export const showAccount404Dialog = () => ({ type: SHOW_ACCOUNT_404_DIALOG })
 export const hideAccount404Dialog = () => ({ type: HIDE_ACCOUNT_404_DIALOG })
+
+// // export const CREATE_ACCOUNT_PAGE_WITH_EXISTING_ACCOUNT_OPEN = 'LOGIN/CREATE_ACCOUNT_PAGE_WITH_EXISTING_ACCOUNT_OPEN'
+// export const openCreateAccountPageWithExistingAccount = (account) => (dispatch) => {
+//
+//   // ({ type: USER_CREATE, payload: account })
+// }
