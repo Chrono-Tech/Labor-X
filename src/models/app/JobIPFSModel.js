@@ -24,6 +24,7 @@ const schemaFactory = () => ({
   period: PropTypes.instanceOf(JobPeriodModel),
   profileRequirements: PropTypes.instanceOf(JobProfileRequirementsModel),
   allowCustomOffer: PropTypes.bool,
+  hourlyRating: PropTypes.number,
 })
 
 export default class JobIPFSModel extends AbstractModel {
@@ -58,5 +59,6 @@ function propsWithDefaults (props) {
     period: new JobPeriodModel(props.period || {}),
     profileRequirements: new JobProfileRequirementsModel(props.profileRequirements || {}),
     allowCustomOffer: true,
+    hourlyRating: 1,
   }, data)
 }

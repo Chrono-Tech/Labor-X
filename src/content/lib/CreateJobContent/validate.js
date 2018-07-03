@@ -14,5 +14,6 @@ export default (values) => {
     skills: notEmpty(values.skills),
     conclusion: notEmpty(values.conclusion),
     flowType: notEmpty(values.flowType),
+    hourlyRating: notEmpty(values.hourlyRating),
   }
 }

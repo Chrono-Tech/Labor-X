@@ -416,7 +416,7 @@ export default reduxForm({
     endorsingSkills: false,
     joinRequirement: 0,
     ratingRequirements: 0,
-    verificationRequirements: 0,
+    verificationRequirements: 0
   },
   validate,
 })(CreateJobBoardForm)
