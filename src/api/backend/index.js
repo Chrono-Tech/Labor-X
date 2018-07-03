@@ -24,7 +24,7 @@ function deepSortByKey (obj) {
 }
 
 export const signin = (account) : SigninResBodyModel => {
-  const body = { purpose: 'laborx-session' }
+  const body = { purpose: 'laborx' }
   const data = JSON.stringify(deepSortByKey(body))
   const { signature } = account.sign(data)
   return http.post('/security/signin/signature', body, {

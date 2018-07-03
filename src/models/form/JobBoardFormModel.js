@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import faker from 'faker'
 import {
   TagModel,
   TagAreaModel,
@@ -65,8 +64,6 @@ export default class JobBoardFormModel extends AbstractModel {
     return {
       hash: this.hash, // ipfs hash of the object itself
       name: this.name,
-      logo: this.logo || faker.internet.avatar(),
-      background: this.background || faker.image.image(64, 64),
       description: this.description,
       joinRequirement: this.joinRequirement && this.joinRequirement.index,
       fee: this.fee && this.fee.index,
@@ -75,6 +72,8 @@ export default class JobBoardFormModel extends AbstractModel {
       ratingRequirements: this.ratingRequirements,
       verificationRequirements: this.verificationRequirements,
       agreement: this.agreement && this.agreement,
+      logo: this.logo && this.logo,
+      background: this.background && this.background,
     }
   }
 }

@@ -59,6 +59,9 @@ $maxWidth: 74rem;
     .cardTitle {
       margin-bottom: 2rem;
     }
+    .skillsRow {
+      margin-top: 4rem;
+    }
     .cardContent {
       @include flex(column, flex-start, stretch);
       width: 100%;
@@ -79,20 +82,52 @@ $maxWidth: 74rem;
         }
       }
       .agreementInput {
+        position: absolute;
         visibility: hidden;
       }
     }
     .visuals {
-      @include flex(row, space-around, center);
+      @include flex(row, space-around, stretch);
       width: 100%;
       .visualsContainer {
-        @include flex(column, flex-start, center);
-        > img {
+        @include flex(column, center, center);
+        padding: 2rem;
+        width: 20rem;
+        .visual {
+          @include flex(column, center, center);
           margin-bottom: 2rem;
-          width: 15rem;
-          height: 10rem;
+          width: 12rem;
+          height: 8rem;
           object-fit: contain;
         }
+        > p {
+          margin-top: auto;
+          color: $color-azure;
+          font-weight: $font-weight-medium;
+        }
+        &:hover {
+          cursor: pointer;
+          background-color: $color-gray3;
+        }
+      }
+      .visualInput {
+        position: absolute;
+        visibility: hidden;
+      }
+    }
+  }
+  .twoColumn {
+    @include flex(row, flex-start, stretch);
+    > * {
+      &:first-child {
+        margin-right: 2.5%;
+        min-width: 47.5%;
+        max-width: 47.5%;;
+      }
+      &:last-child {
+        margin-left: 2.5%;
+        min-width: 47.5%;;
+        max-width: 47.5%;;
       }
     }
   }
