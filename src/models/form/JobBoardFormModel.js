@@ -23,6 +23,7 @@ const schemaFactory = () => ({
   endorsingSkills: PropTypes.bool,
   ratingRequirements: PropTypes.number,
   verificationRequirements: PropTypes.number,
+  agreement: PropTypes.string,
 })
 
 const defaultProps = {
@@ -39,6 +40,7 @@ const defaultProps = {
   lhus: 0,
   ratingRequirements: 0,
   verificationRequirements: 0,
+  agreement: null,
 }
 
 export default class JobBoardFormModel extends AbstractModel {
@@ -72,6 +74,7 @@ export default class JobBoardFormModel extends AbstractModel {
       endorsingSkills: !!this.endorsingSkills,
       ratingRequirements: this.ratingRequirements,
       verificationRequirements: this.verificationRequirements,
+      agreement: this.agreement && this.agreement,
     }
   }
 }

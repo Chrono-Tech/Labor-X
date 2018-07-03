@@ -5,7 +5,6 @@ import { formValueSelector, getFormSyncErrors } from 'redux-form'
 
 import {
   JobBoardFormModel,
-  BoardPostFeeModel,
   BoardRequirementModel,
 } from 'src/models'
 import { boardCreate } from 'src/store'
@@ -91,10 +90,11 @@ const mapDispatchToProps = (dispatch) => {
           tagsArea: [values.tagsArea],
           tags: values.tags,
           joinRequirement: BoardRequirementModel.valueOf(values.joinRequirement),
-          fee: BoardPostFeeModel.valueOf(values.fee),
+          fee: values.fee,
           lhus: +values.lhus,
           ratingRequirements: values.ratingRequirements,
           verificationRequirements: values.verificationRequirements,
+          agreement: values.agreement,
         })
       ))
     },

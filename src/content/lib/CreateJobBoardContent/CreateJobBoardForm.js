@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
+import cn from 'classnames'
 import DonutChart from "react-svg-donut-chart"
 import AutoComplete from 'material-ui/AutoComplete'
 import { Field, reduxForm } from 'redux-form'
 import { CircularProgress } from 'material-ui'
 import { MenuItem } from 'material-ui/Menu'
-import { SelectField } from 'redux-form-material-ui'
+import { SelectField, TextField } from 'redux-form-material-ui'
 
-import { Image, Chip, Input, Button, Icon, Checkbox, RadioIcon, VerificationLevelSelector } from 'components/common'
+import { Image, Chip, Input, Button, Icon, Checkbox, RadioIcon, VerificationLevelSelector, Translate } from 'components/common'
 import {
   TagModel,
   TAGS_LIST,
@@ -16,7 +17,7 @@ import {
   TAG_CATEGORIES_LIST,
   BOARD_REQUIREMENTS_LIST,
   BOARD_REQUIREMENTS,
-  BOARD_POST_FEE_LIST,
+  BOARD_POST_FEES,
 } from 'src/models'
 
 import css from './CreateJobBoardForm.scss'
@@ -45,7 +46,36 @@ class CreateJobBoardForm extends React.Component {
 
     this.state = {
       tags: [],
+      agreement: {
+        loading: false,
+        loaded: false,
+        filename: null,
+      },
     }
+  }
+
+  handleUploadAgreement = (e) => {
+    const { change } = this.props
+    const file = e.target.files[0]
+    const reader  = new FileReader()
+    this.setState({ agreement: {
+      loading: true,
+      loaded: false,
+      filename: file.name,
+    },
+    })
+
+    reader.addEventListener('load', () => {
+      this.setState(prevState => ({ agreement: {
+        loading: false,
+        loaded: true,
+        filename: prevState.agreement.filename,
+      },
+      }))
+      change('agreement', reader.result)
+    }, false)
+
+    reader.readAsDataURL(file)
   }
 
   handleAddTag = (tag) => {
@@ -188,6 +218,57 @@ class CreateJobBoardForm extends React.Component {
     )
   }
 
+  renderAgreement = () => {
+    return (
+      <div className={css.card}>
+        <h3 className={css.cardTitle}>Legal Documents</h3>
+        <div className={css.subtitle}>
+        By default Users accepting our
+          <a href='/static/docs/laborx_standart_agreement.pdf'> Standard Terms and Conditions. </a>
+        If you need to have different Terms and Conditions, please upload it below.
+        Note that our team will need to review your document before the board publishes.
+        </div>
+        <div className={css.cardContent}>
+          <label
+            htmlFor='uploadAgreement'
+            className={css.agreementActions}
+          >
+            <div className={css.agreementActionsIcon}>
+              { this.state.agreement.loading ? <CircularProgress size={26} thickness={2} /> : null }
+              {
+                !this.state.agreement.loading && !this.state.agreement.loaded ?
+                  <Icon
+                    size={28}
+                    icon={Icon.ICONS.UPLOAD}
+                    color={Image.COLORS.BLUE}
+                  /> : null
+              }
+              { this.state.agreement.loaded ?
+                <Icon
+                  size={28}
+                  icon={Icon.ICONS.FILE}
+                  color={Image.COLORS.BLUE}
+                /> : null
+              }
+
+            </div>
+            {
+              this.state.agreement.filename == null
+                ? <p>Upload custom Terms and Conditions</p>
+                : <p>{ this.state.agreement.filename  }</p>
+            }
+          </label>
+          <input className={css.agreementInput} type='file' id='uploadAgreement' onChange={this.handleUploadAgreement} />
+          <Field
+            component='input'
+            type='hidden'
+            name='agreement'
+          />
+        </div>
+      </div>
+    )
+  }
+
   render () {
     const { handleSubmit, isLoading, submitFailed, joinRequirement, formErrors, canJoinAmount } = this.props
     return (
@@ -295,7 +376,10 @@ class CreateJobBoardForm extends React.Component {
             </div>
           </div>
 
-          <div className={[css.card, css.noMarginBottom].join(' ')}>
+          <div className={cn([
+            css.card,
+            joinRequirement === BOARD_REQUIREMENTS.INVITATION_ONLY.index ? null : css.noMarginBottom ])}
+          >
             <h3 className={css.cardTitle}>
                 Join requirements
             </h3>
@@ -353,41 +437,20 @@ class CreateJobBoardForm extends React.Component {
                   name='fee'
                 >
                   {
-                    BOARD_POST_FEE_LIST.map((item) => (
-                      <MenuItem key={uniqid()} value={item.index} primaryText={item.name} />
-                    ))
+                    <MenuItem value={BOARD_POST_FEES.FIXED_FEE} primaryText={BOARD_POST_FEES.FIXED_FEE.label} />
                   }
                 </Field>
                 <Field
-                  lineEnabled
                   className={css.match}
-                  type={Input.TYPES.TEXT}
-                  component={Input}
+                  component={TextField}
                   name='lhus'
-                  mods={Input.MODS.ALIGN_LEFT}
-                  placeholder='ui.createJobBoard.value'
-                  floatingLabelStyle={{ visibility: 'hidden' }}
-                  floatingLabelText='empty'
-                  floatingLabelFixed
+                  hintText={<Translate value='ui.createJobBoard.value' />}
                 />
-              </div>
-              <div className={css.delimiter} />
-              <h3>Job Post Service Agreement</h3>
-              <div><span>By default Clients will be provided with our </span><a href='/'>Standard Agreement.</a></div>
-              <div className={css.delimiter} />
-              <div className={css.feeActions}>
-                <div className={css.feeActionsIcon}>
-                  <Image
-                    icon='file_upload'
-                    color={Image.COLORS.BLUE}
-                  />
-                </div>
-                <div>
-                  <a href='/'>Upload Custom Agreement</a>
-                </div>
               </div>
             </div>
           </div>
+
+          { this.renderAgreement() }
 
           <div className={css.card}>
             <h3 className={css.cardTitle}>Visuals</h3>
@@ -412,11 +475,11 @@ export default reduxForm({
   form: FORM_CREATE_JOB_BOARD,
   initialValues: {
     requirements: 0,
-    fee: 0,
+    fee: BOARD_POST_FEES.FIXED_FEE,
     endorsingSkills: false,
     joinRequirement: 0,
     ratingRequirements: 0,
-    verificationRequirements: 0,
+    verificationRequirements: 0
   },
   validate,
 })(CreateJobBoardForm)

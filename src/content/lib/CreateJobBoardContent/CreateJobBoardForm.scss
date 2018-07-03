@@ -37,6 +37,65 @@ $maxWidth: 74rem;
 .content {
   padding-left: 4rem;
   max-width: $maxWidth;
+  .headline {
+    padding: 0;
+    margin-bottom: 4rem;
+    color: $color-white;
+    background-color: $color-azure;
+    .boardHeadline {
+      padding: 4rem;
+    }
+  }
+  .card {
+    @include flex(column, flex-start, flex-start);
+    @include card;
+    padding: 4rem;
+    margin-bottom: 4rem;
+    &.noMarginBottom {
+      margin-bottom: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .cardTitle {
+      margin-bottom: 2rem;
+    }
+    .cardContent {
+      @include flex(column, flex-start, stretch);
+      width: 100%;
+      .agreementActions {
+        @include flex(row, flex-start, center);
+        margin-top: 4rem;
+        padding: 1rem 0;
+        &:hover {
+          cursor: pointer;
+          background-color: $color-gray3;
+        }
+        .agreementActionsIcon {
+          margin-right: 1.5rem;
+        }
+        > p {
+          color: $color-azure;
+          font-weight: $font-weight-medium;
+        }
+      }
+      .agreementInput {
+        visibility: hidden;
+      }
+    }
+    .visuals {
+      @include flex(row, space-around, center);
+      width: 100%;
+      .visualsContainer {
+        @include flex(column, flex-start, center);
+        > img {
+          margin-bottom: 2rem;
+          width: 15rem;
+          height: 10rem;
+          object-fit: contain;
+        }
+      }
+    }
+  }
 }
 
 .cancelButton {
@@ -54,30 +113,8 @@ $maxWidth: 74rem;
   background-color: $color-azure;
 }
 
-.card {
-  @include flex(column, flex-start, flex-start);
-  @include card;
-  padding: 4rem;
-  margin-bottom: 4rem;
-}
-
-.headline {
-  padding: 0;
-  margin-bottom: 4rem;
-  color: $color-white;
-  background-color: $color-azure;
-}
-
-.boardHeadline {
-  padding: 4rem;
-}
-
 .flexRow {
   @include flex(row, flex-start, flex-end);
-}
-
-.cardTitle {
-  margin-bottom: 2rem;
 }
 
 .chartContainer {
@@ -117,15 +154,6 @@ $maxWidth: 74rem;
   margin-right: 2rem;
 }
 
-.match {
-  color: $color-gray30;
-  padding-bottom: .9rem;
-}
-
-.noMarginBottom {
-  margin-bottom: 0;
-}
-
 .requirementsSelect {
   margin: 30px 0 0;
 }
@@ -138,63 +166,34 @@ $maxWidth: 74rem;
   }
 }
 
-.feeActions {
-  @include flex(row, flex-start, flex-start);
-}
-
-.feeActionsIcon {
-  margin-right: 1rem;
-}
-
-.cardContent {
-  @include flex(column, flex-start, stretch);
-  width: 100%;
-}
-
 .delimiter {
   padding-top: 2rem;
   margin-bottom: 2rem;
   border-bottom: solid .1rem $color-gray5;
 }
 
-.visuals {
-  @include flex(row, space-around, center);
-  width: 100%;
-}
-
-.visualsContainer {
-  @include flex(column, flex-start, center);
-  img {
-    margin-bottom: 2rem;
-    width: 15rem;
-    height: 10rem;
-    object-fit: contain;
-  }
-}
-
 .specificRequirementsBlock {
   display: flex;
   margin-top: 40px;
-}
-.specificRequirement {
-  flex: 1;
-
-  &.specificRequirementRight {
-    padding-left: 60px;
-  }
-  .cardTitle {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 10px;
-  }
-  .subtitle {
-    color: #7F7F7F;
-    font-weight: 300;
-    line-height: 22px;
-    margin-bottom: 20px;
-  }
-  .ratingRow {
-    width: 20rem;
+  .specificRequirement {
+    flex: 1;
+    &.specificRequirementRight {
+      padding-left: 60px;
+    }
+    .cardTitle {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #7F7F7F;
+      font-weight: 300;
+      margin-bottom: 20px;
+      line-height: 1.57;
+    }
+    .ratingRow {
+      width: 20rem;
+    }
   }
 }
 
