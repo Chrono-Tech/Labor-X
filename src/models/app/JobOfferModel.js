@@ -11,6 +11,7 @@ export const schemaFactory = () => ({
   rate: PropTypes.instanceOf(BigNumber),
   estimate: PropTypes.instanceOf(BigNumber),
   onTop: PropTypes.instanceOf(BigNumber),
+  createdAt: PropTypes.instanceOf(BigNumber),
   ipfs: PropTypes.instanceOf(JobOfferIPFSModel),
   fixedPrice: PropTypes.instanceOf(BigNumber),
 })

@@ -276,6 +276,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
       _rates,
       _estimates,
       _onTops,
+      _offerPostedAt,
     } = data
 
     if(!_id) { return [] }
@@ -289,6 +290,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         rate: bytes32ToBigNumber(_rates[0]),
         estimate: bytes32ToBigNumber(_estimates[0]),
         onTop: bytes32ToBigNumber(_onTops[0]),
+        createdAt: bytes32ToBigNumber(_offerPostedAt[0]),
       })
     }
 

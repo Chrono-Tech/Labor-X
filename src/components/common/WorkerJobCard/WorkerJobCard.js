@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { JobModel, BoardModel } from 'src/models'
+import { JobModel, BoardModel, JobOfferModel } from 'src/models'
 import { Link, Button, Tip } from 'src/components/common'
 import css from './WorkerJobCard.scss'
 
@@ -11,6 +11,7 @@ export default class WorkerJobCard extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
     board: PropTypes.instanceOf(BoardModel),
+    offer: PropTypes.instanceOf(JobOfferModel),
     notice: PropTypes.shape({
       label: PropTypes.string,
       description: PropTypes.string,
@@ -30,7 +31,7 @@ export default class WorkerJobCard extends React.Component {
   }
 
   renderFooter = () => {
-    const { notice, onClickReview, onClickReviewOffer, onClickDismiss } = this.props
+    const { notice, onClickReview, onClickReviewOffer, onClickDismiss, offer } = this.props
     return (
       <div>
         { !notice ? null : (
@@ -38,7 +39,7 @@ export default class WorkerJobCard extends React.Component {
             position={Tip.POSITION.LEFT}
             tipContent={(
               <div>
-                <div className={css.tipTitle}>{moment().diff(notice.date, 'days') > 0 ? moment(notice.date).format(dateFormat) : moment(notice.date).fromNow()}</div>
+                <div className={css.tipTitle}>{offer.createdAt ? moment(offer.createdAt).format(dateFormat) : moment(Date.now()).format(dateFormat)}</div>
                 <p>{notice.description}</p>
               </div>
             )}

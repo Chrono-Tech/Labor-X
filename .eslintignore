@@ -96,6 +96,8 @@ src/**/*.js
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/
+!src/content/lib/ApplicationsAndOffersContent/ApplicationsAndOffersContent.js
+!src/content/lib/ApplicationsAndOffersContent/ApplicationsTabContent/ApplicationsTabContent.js
 !src/content/lib/CreateJobContent/CreateJobContent.js
 !src/content/lib/ClientJobViewContent/ClientJobViewContent.js
 !src/content/lib/ClientJobViewContent/ContractTab/ContractTab.js

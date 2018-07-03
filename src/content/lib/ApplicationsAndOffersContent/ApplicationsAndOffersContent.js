@@ -116,6 +116,7 @@ function mapStateToProps (state) {
     return {
       job,
       board: boardByIdSelector(job.boardId)(state),
+      offer,
       notice: {
         label: 'ON REVIEW',
         description: 'Your application is under review. We will send you a notification once decision has been made.',
