@@ -6,3 +6,4 @@ build/
 yarn-error.log
 coverage
 .nyc_output
+.vscode/launch.json
