@@ -9,7 +9,9 @@ import {
 } from 'src/models'
 import { boardCreate } from 'src/store'
 import { Router } from 'src/routes'
-import CreateJobBoard, { FORM_CREATE_JOB_BOARD } from './CreateJobBoardForm'
+import CreateJobBoard from './CreateJobBoardForm'
+
+const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
 
 class CreateJobBoardContent extends React.Component {
   static propTypes = {

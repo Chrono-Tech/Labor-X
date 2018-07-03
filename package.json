@@ -49,6 +49,7 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0",
+    "typy": "^2.0.1",
     "reselect": "^3.0.1",
     "uniqid": "^4.1.1",
     "web3": "1.0.0-beta.33",

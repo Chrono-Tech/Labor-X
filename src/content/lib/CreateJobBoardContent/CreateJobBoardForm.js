@@ -23,7 +23,7 @@ import {
 import css from './CreateJobBoardForm.scss'
 import validate from "./validate"
 
-export const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
+const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
 
 class CreateJobBoardForm extends React.Component {
   static propTypes = {

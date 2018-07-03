@@ -31,7 +31,7 @@ function propsWithDefaults (props) {
     name: faker.company.companyName(),
     description: faker.lorem.sentence(10),
     background: faker.image.image(64, 64),
-    fee: null,
+    fee: faker.random.number({ min: 5, max: 40 }),
     lhus: 0,
     endorsingSkills: false,
     joinRequirement: null,
