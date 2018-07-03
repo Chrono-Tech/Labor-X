@@ -59,6 +59,7 @@ src/**/*.js
 !src/models/app/WorkerModel.js
 !src/models/app/JobIPFSModel.js
 !src/models/app/BoardRequirementModel.js
+!src/models/app/BoardPostFeeModel.js
 !src/models/form/JobBoardFormModel.js
 
 !src/store/index.js
