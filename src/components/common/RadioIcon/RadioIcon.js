@@ -10,6 +10,7 @@ export default class RadioIcon extends React.Component {
     radioButtonClassName: PropTypes.string,
     label: PropTypes.string,
     onClick: PropTypes.func,
+    onChange: PropTypes.func,
     checkedIcon: PropTypes.node,
     uncheckedIcon: PropTypes.node,
     values: PropTypes.arrayOf(PropTypes.shape({
@@ -37,7 +38,7 @@ export default class RadioIcon extends React.Component {
     this.setState({
       currentValue: i,
     })
-    this.props.input.onChange(i)
+    this.props.input.onChange(i);
   }
 
   renderButtons () {

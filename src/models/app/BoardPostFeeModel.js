@@ -13,34 +13,28 @@ export default class BoardPostFeeModel extends AbstractModel {
     Object.assign(this, props)
     Object.freeze(this)
   }
-  
+
   get code () {
     return Math.pow(2, this.index)
   }
-  
+
   static valueOf (index) {
     return BOARD_POST_FEE_LIST[index]
   }
-  
+
   static arrayValueOfMask (mask) {
     return filterArrayByIndexMask(BOARD_POST_FEE_LIST, mask)
   }
-  
+
 }
 
+export const BOARD_POST_FEE_FIXED_FEE = new BoardPostFeeModel({ index: 0, name: 'FIXED_FEE', label: 'Fixed fee' })
+
 export const BOARD_POST_FEE_LIST = [
-  new BoardPostFeeModel({
-    index: 0,
-    name: 'Fixed fee',
-  }),
-  new BoardPostFeeModel({
-    index: 1,
-    name: 'Option 2',
-  }),
-  new BoardPostFeeModel({
-    index: 2,
-    name: 'Option 3',
-  }),
+  BOARD_POST_FEE_FIXED_FEE,
 ]
 
-export const BOARD_POST_MASK = Math.pow(2, BOARD_POST_FEE_LIST.length + 1) - 1
+export const BOARD_POST_FEES = BOARD_POST_FEE_LIST.reduce((target, state) => ({
+  ...target,
+  [state.name]: state,
+}), Object.create(null))
