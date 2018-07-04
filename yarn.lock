@@ -7308,6 +7308,16 @@ mock-fs@^4.1.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/mock-fs/-/mock-fs-4.5.0.tgz#75245b966f7e3defe197b03454af9c5b355594b7"
 
+moment-isocalendar@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/moment-isocalendar/-/moment-isocalendar-0.1.0.tgz#61adc4742c3695a2f868dd33fbd669046a32e4b8"
+  dependencies:
+    moment ">=1.4.0"
+
+moment@>=1.4.0:
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
+
 moment@^2.11.2, moment@^2.21.0, moment@^2.22.1:
   version "2.22.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.1.tgz#529a2e9bf973f259c9643d237fda84de3a26e8ad"
@@ -10847,6 +10857,10 @@ typedarray-to-buffer@^3.1.2:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
+
+typy@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/typy/-/typy-2.0.1.tgz#bfc0caebceecb39d98fbc84488379978085b1fb5"
 
 ua-parser-js@^0.7.18, ua-parser-js@^0.7.9:
   version "0.7.18"

@@ -1,0 +1,39 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$cellWidth: 4.6rem;
+$cellHeight: 4.6rem;
+$headerHeight: 2.6rem;
+$borderWidth: .1rem;
+
+.month {
+  width: calc(7 * ($cellWidth + 2 * $borderWidth));
+  height: calc(6 * ($cellHeight + 2 * $borderWidth) + ($headerHeight + 2 * $borderWidth));
+  .headerCell {
+    width: $cellWidth;
+    height: $headerHeight;
+    font-size: $pMediumSize;
+    color: $color-gray30;
+  }
+  .cell {
+    padding: .5rem 1rem;
+    width: $cellWidth;
+    height: $cellHeight;
+    font-size: $pMediumSize;
+    font-weight: $font-weight-medium;
+    &.otherMonth {
+      color: $color-gray30;
+    }
+    &:hover {
+      background-color: $color-gray5;
+    }
+  }
+
+  table, th, td {
+    border: $borderWidth solid $color-gray10;
+    border-collapse: collapse;
+  }
+  .grey {
+    background-color: $color-gray3;
+  }
+}

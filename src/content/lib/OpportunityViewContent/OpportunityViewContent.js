@@ -6,7 +6,7 @@ import moment from 'moment'
 import { Router } from 'src/routes'
 import { JobModel, BoardModel, JobOfferFormModel, ClientModel, WORKFLOW_TM } from 'src/models'
 import { createJobOffer, createJobOfferWithPrice, signerSelector, boardByIdSelector, modalsPush } from 'src/store'
-import { Image, Button, Tab } from 'src/components/common'
+import { Image, Button, Tab, ScheduleWidget } from 'src/components/common'
 import { MakeOfferDialog } from 'src/partials'
 import DescriptionTab from './DescriptionTab/DescriptionTab'
 import CompanyTab from './CompanyTab/CompanyTab'
@@ -55,7 +55,7 @@ export class OpportunityViewContent extends React.Component {
       this.setState({
         isOfferPosting: true,
       })
-      const { job } = this.props 
+      const { job } = this.props
       switch (Number(job.flowType)) {
         case WORKFLOW_TM.index:
           await this.props.onPostOffer(
@@ -173,6 +173,7 @@ export class OpportunityViewContent extends React.Component {
           <div className={css.header}>
             <h2>{job.ipfs.name}</h2>
             <p>Ref {job.id}</p>
+            <ScheduleWidget />
             <p className={css.opportunityAge}>{moment(job.extra.createdAt).fromNow()}</p>
           </div>
           <div className={css.tabs}>

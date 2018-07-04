@@ -92,6 +92,7 @@ src/**/*.js
 !src/components/common/SecurityShield/SecurityShield.js
 !src/components/common/Radio/Radio.js
 !src/components/common/VerificationLevelSelector/
+!src/components/common/ScheduleWidget/
 
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
