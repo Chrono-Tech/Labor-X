@@ -9,7 +9,9 @@ import {
 } from 'src/models'
 import { boardCreate } from 'src/store'
 import { Router } from 'src/routes'
-import CreateJobBoard, { FORM_CREATE_JOB_BOARD } from './CreateJobBoardForm'
+import CreateJobBoard from './CreateJobBoardForm'
+
+const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
 
 class CreateJobBoardContent extends React.Component {
   static propTypes = {
@@ -22,6 +24,8 @@ class CreateJobBoardContent extends React.Component {
       workers: PropTypes.number,
     }),
     handleSubmit: PropTypes.func,
+    logo: PropTypes.string,
+    background: PropTypes.string,
   }
 
   constructor (){
@@ -48,7 +52,7 @@ class CreateJobBoardContent extends React.Component {
   }
 
   render (){
-    const { joinRequirement, formErrors, canJoinAmount } = this.props
+    const { joinRequirement, formErrors, canJoinAmount, logo, background } = this.props
     return (
       <CreateJobBoard
         formErrors={formErrors}
@@ -56,6 +60,8 @@ class CreateJobBoardContent extends React.Component {
         isLoading={this.state.isLoading}
         joinRequirement={joinRequirement}
         canJoinAmount={canJoinAmount}
+        logo={logo}
+        background={background}
       />
     )
   }
@@ -72,6 +78,8 @@ const mapStateToProps = (state) => {
   return {
     formErrors: getFormSyncErrors(FORM_CREATE_JOB_BOARD)(state),
     joinRequirement: Number(formSelector(state, 'joinRequirement')),
+    logo: formSelector(state, 'logo'),
+    background: formSelector(state, 'background'),
     canJoinAmount,
   }
 }
@@ -82,8 +90,6 @@ const mapDispatchToProps = (dispatch) => {
       await dispatch(boardCreate(
         new JobBoardFormModel({
           name: values.name,
-          logo: '',
-          background: '',
           description: '',
           endorsingSkills: values.endorsingSkills,
           tagsCategory: [values.tagsCategory],
@@ -95,6 +101,8 @@ const mapDispatchToProps = (dispatch) => {
           ratingRequirements: values.ratingRequirements,
           verificationRequirements: values.verificationRequirements,
           agreement: values.agreement,
+          logo: values.logo,
+          background: values.background,
         })
       ))
     },
