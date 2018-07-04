@@ -42,8 +42,8 @@ export default class ApplicationsTabContent extends React.Component {
   render () {
     return (
       <div className={css.content}>
-        { this.props.applicationsApproved.map(card => (<WorkerJobCard job={card.job} board={card.board} notice={card.notice} onClickReviewOffer={this.handleClickReviewOffer} key={uniqid()} />)) }
-        { this.props.applications.map(card => (<WorkerJobCard job={card.job} board={card.board} notice={card.notice} onClickDismiss={this.handleClickDismiss} key={uniqid()} />)) }
+        { this.props.applicationsApproved.map(card => (<WorkerJobCard offer={card.offer} job={card.job} board={card.board} notice={card.notice} onClickReviewOffer={this.handleClickReviewOffer} key={uniqid()} />)) }
+        { this.props.applications.map(card => (<WorkerJobCard offer={card.offer} job={card.job} board={card.board} notice={card.notice} onClickDismiss={this.handleClickDismiss} key={uniqid()} />)) }
       </div>
     )
   }

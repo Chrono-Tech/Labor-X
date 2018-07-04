@@ -7,7 +7,5 @@ yarn-error.log
 .vscode/launch.json
 coverage
 .nyc_output
-<<<<<<< HEAD
 .vscode/launch.json
-=======
->>>>>>> b86d443a6f230fe26d6a2318898ce03e0da8ef88
+
