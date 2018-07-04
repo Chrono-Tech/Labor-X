@@ -24,6 +24,7 @@
 
 .value {
   flex-grow: 1;
+  margin-right: 1.5rem;
 }
 
 .remove {
@@ -31,7 +32,6 @@
   align-items: center;
   justify-content: center;
   flex-grow: 0;
-  margin-left: 0.5rem;
   width: $chipHeight;
   height: $chipHeight;
   border-radius: $chipHeight/2;

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
 import { SignerModel, BoardModel, JobFormModel, JobIPFSModel,
   JobAddressModel, JobBudgetModel, JobPeriodModel,
-  SkillModel, TAG_CATEGORIES_LIST, TAG_AREAS_LIST, SKILLS_LIST }
+  SkillModel }
   from 'src/models'
 import { Router } from 'src/routes'
 import { signerSelector, boardsListSelector, createJob, boardByIdSelector } from 'src/store'
@@ -111,14 +111,14 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     async handleSubmit (values) {
-      // eslint-disable-next-line no-console
-      console.log('values', values)
+      // eslint-disable-next-line no-console 
+      const skills = SkillModel.arrayValueOfMask(values.selectedSkills.reduce((mask, index) => (mask | Math.pow(2, index)), 0))
       const data = new JobFormModel({
         boardId: values.board,
         flowType: values.flowType,
-        category: TAG_CATEGORIES_LIST[3],
-        area: TAG_AREAS_LIST[3],
-        skills: SkillModel.arrayValueOfMask(SKILLS_LIST.reduce((mask, index) => (mask | Math.pow(2, index)), 0)),
+        category: values.categories[0],
+        area: values.areas[0],
+        skills,
         ipfs: new JobIPFSModel({
           boardId: values.board,
           name: values.name,
