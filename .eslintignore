@@ -80,6 +80,7 @@ src/**/*.js
 !src/store/jobs/actions.js
 
 !src/components/common/Icon/Icon.js
+!src/components/common/Chip/Chip.js
 !src/components/common/index.js
 !src/components/common/ActiveJobCard/ActiveJobCard.js
 !src/components/common/JobCard/JobCard.js

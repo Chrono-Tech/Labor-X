@@ -23,7 +23,7 @@ import {
 import css from './CreateJobBoardForm.scss'
 import validate from "./validate"
 
-export const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
+const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
 
 class CreateJobBoardForm extends React.Component {
   static propTypes = {
@@ -39,6 +39,8 @@ class CreateJobBoardForm extends React.Component {
       clients: PropTypes.number,
       workers: PropTypes.number,
     }),
+    logo: PropTypes.string,
+    background: PropTypes.string,
   }
 
   constructor (props) {
@@ -51,14 +53,24 @@ class CreateJobBoardForm extends React.Component {
         loaded: false,
         filename: null,
       },
+      logo: {
+        loading: false,
+        loaded: false,
+        filename: null,
+      },
+      background: {
+        loading: false,
+        loaded: false,
+        filename: null,
+      },
     }
   }
 
-  handleUploadAgreement = (e) => {
+  handleUpload = (e, field) => {
     const { change } = this.props
     const file = e.target.files[0]
     const reader  = new FileReader()
-    this.setState({ agreement: {
+    this.setState({ [field]: {
       loading: true,
       loaded: false,
       filename: file.name,
@@ -66,16 +78,28 @@ class CreateJobBoardForm extends React.Component {
     })
 
     reader.addEventListener('load', () => {
-      this.setState(prevState => ({ agreement: {
+      this.setState(prevState => ({ [field]: {
         loading: false,
         loaded: true,
-        filename: prevState.agreement.filename,
+        filename: prevState[field].filename,
       },
       }))
-      change('agreement', reader.result)
+      change(field, reader.result)
     }, false)
 
     reader.readAsDataURL(file)
+  }
+
+  handleUploadAgreement = (e) => {
+    this.handleUpload(e, 'agreement')
+  }
+
+  handleUploadLogo = (e) => {
+    this.handleUpload(e, 'logo')
+  }
+
+  handleUploadBg = (e) => {
+    this.handleUpload(e, 'background')
   }
 
   handleAddTag = (tag) => {
@@ -234,21 +258,12 @@ class CreateJobBoardForm extends React.Component {
             className={css.agreementActions}
           >
             <div className={css.agreementActionsIcon}>
-              { this.state.agreement.loading ? <CircularProgress size={26} thickness={2} /> : null }
               {
-                !this.state.agreement.loading && !this.state.agreement.loaded ?
-                  <Icon
-                    size={28}
-                    icon={Icon.ICONS.UPLOAD}
-                    color={Image.COLORS.BLUE}
-                  /> : null
-              }
-              { this.state.agreement.loaded ?
-                <Icon
-                  size={28}
-                  icon={Icon.ICONS.FILE}
-                  color={Image.COLORS.BLUE}
-                /> : null
+                this.state.agreement.loaded
+                  ? <Icon size={28} icon={Icon.ICONS.FILE} color={Image.COLORS.BLUE} />
+                  : this.state.agreement.loading
+                    ? <CircularProgress size={26} thickness={2} />
+                    : <Icon size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
               }
 
             </div>
@@ -259,11 +274,59 @@ class CreateJobBoardForm extends React.Component {
             }
           </label>
           <input className={css.agreementInput} type='file' id='uploadAgreement' onChange={this.handleUploadAgreement} />
-          <Field
-            component='input'
-            type='hidden'
-            name='agreement'
-          />
+          <Field component='input' type='hidden' name='agreement' />
+        </div>
+      </div>
+    )
+  }
+
+  renderVisuals = () => {
+    const { logo, background } = this.props
+    return (
+      <div className={css.card}>
+        <h3 className={css.cardTitle}>Visuals</h3>
+        <div className={css.visuals} >
+          <label
+            className={css.visualsContainer}
+            htmlFor='uploadLogo'
+          >
+            {
+              this.state.logo.loaded
+                ? <img className={css.visual} src={logo} alt='Logo' />
+                : this.state.logo.loading
+                  ? <CircularProgress className={css.visual} size={26} thickness={2} />
+                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
+            }
+
+            {
+              this.state.logo.filename === null
+                ? <p>UPLOAD LOGO</p>
+                : <p>{this.state.logo.filename}</p>
+            }
+          </label>
+          <input className={css.visualInput} type='file' id='uploadLogo' onChange={this.handleUploadLogo} />
+          <Field component='input' type='hidden' name='logo' />
+
+          <label
+            className={css.visualsContainer}
+            htmlFor='uploadBg'
+          >
+            {
+              this.state.background.loaded
+                ? <img className={css.visual} src={background} alt='Background' />
+                : this.state.background.loading
+                  ? <CircularProgress className={css.visual} size={26} thickness={2} />
+                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
+            }
+
+            {
+              this.state.background.filename === null
+                ? <p>UPLOAD BACKGROUND</p>
+                : <p>{this.state.background.filename}</p>
+            }
+          </label>
+          <input className={css.visualInput} type='file' id='uploadBg' onChange={this.handleUploadBg} />
+          <Field component='input' type='hidden' name='background' />
         </div>
       </div>
     )
@@ -309,47 +372,48 @@ class CreateJobBoardForm extends React.Component {
           </div>
 
           <div className={css.card}>
-            <h3 className={css.cardTitle}>Area</h3>
-            <div className={css.flexRow}>
-              <Field
-                component={SelectField}
-                name='tagsArea'
-                selectedMenuItemStyle={{ fontSize: 14 }}
-                menuItemStyle={{ fontSize: 14 }}
-                labelStyle={{ fontSize: 14 }}
-                style={{ width: 300 }}
-              >
-                {
-                  TAG_AREAS_LIST.map((item) => (
-                    <MenuItem key={uniqid()} value={item} primaryText={item.name} />
-                  ))
-                }
-              </Field>
-            </div>
-          </div>
+            <div className={css.twoColumn}>
+              <div>
+                <h3 className={css.cardTitle}>Area</h3>
+                <div className={css.flexRow}>
+                  <Field
+                    component={SelectField}
+                    name='tagsArea'
+                    selectedMenuItemStyle={{ fontSize: 14 }}
+                    menuItemStyle={{ fontSize: 14 }}
+                    labelStyle={{ fontSize: 14 }}
+                    style={{ width: 300 }}
+                  >
+                    {
+                      TAG_AREAS_LIST.map((item) => (
+                        <MenuItem key={uniqid()} value={item} primaryText={item.name} />
+                      ))
+                    }
+                  </Field>
+                </div>
+              </div>
 
-          <div className={css.card}>
-            <h3 className={css.cardTitle}>Categories</h3>
-            <div className={css.flexRow}>
-              <Field
-                component={SelectField}
-                name='tagsCategory'
-                selectedMenuItemStyle={{ fontSize: 14 }}
-                menuItemStyle={{ fontSize: 14 }}
-                labelStyle={{ fontSize: 14 }}
-                style={{ width: 300 }}
-              >
-                {
-                  TAG_CATEGORIES_LIST.map((item) => (
-                    <MenuItem key={uniqid()} value={item} primaryText={item.name} />
-                  ))
-                }
-              </Field>
+              <div>
+                <h3 className={css.cardTitle}>Categories</h3>
+                <div className={css.flexRow}>
+                  <Field
+                    component={SelectField}
+                    name='tagsCategory'
+                    selectedMenuItemStyle={{ fontSize: 14 }}
+                    menuItemStyle={{ fontSize: 14 }}
+                    labelStyle={{ fontSize: 14 }}
+                    style={{ width: 300 }}
+                  >
+                    {
+                      TAG_CATEGORIES_LIST.map((item) => (
+                        <MenuItem key={uniqid()} value={item} primaryText={item.name} />
+                      ))
+                    }
+                  </Field>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className={css.card}>
-            <h3 className={css.cardTitle}>Skills</h3>
+            <h3 className={cn(css.cardTitle, css.skillsRow)}>Skills</h3>
             <div className={css.flexRow}>
               <Field
                 className={css.find}
@@ -452,19 +516,8 @@ class CreateJobBoardForm extends React.Component {
 
           { this.renderAgreement() }
 
-          <div className={css.card}>
-            <h3 className={css.cardTitle}>Visuals</h3>
-            <div className={css.visuals} >
-              <div className={css.visualsContainer}>
-                <img src='/static/temp/become.png' alt='Logo' />
-                <a href='/'>UPLOAD LOGO</a>
-              </div>
-              <div className={css.visualsContainer}>
-                <img src='/static/temp/example_bg.jpg' alt='Background' />
-                <a href='/'>UPLOAD BACKGROUND</a>
-              </div>
-            </div>
-          </div>
+          { this.renderVisuals() }
+
         </div>
       </form>
     )
@@ -479,7 +532,7 @@ export default reduxForm({
     endorsingSkills: false,
     joinRequirement: 0,
     ratingRequirements: 0,
-    verificationRequirements: 0
+    verificationRequirements: 0,
   },
   validate,
 })(CreateJobBoardForm)
