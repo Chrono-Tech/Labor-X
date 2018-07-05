@@ -100,7 +100,7 @@
     "docker:upgrade": "yarn docker:build && yarn docker:restart",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --opts .mocharc",
+    "test": "SET NODE_ENV=test ./node_modules/.bin/mocha --opts .mocharc",
     "test:coverage": "NODE_ENV=test ./node_modules/.bin/nyc yarn test"
   },
   "pre-commit": [

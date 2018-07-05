@@ -78,6 +78,7 @@ src/**/*.js
 !src/store/bootstrap.js
 !src/store/boards/selectors.js
 !src/store/jobs/actions.js
+!src/store/jobs/selectors.js
 
 !src/components/common/Icon/Icon.js
 !src/components/common/index.js
@@ -91,10 +92,12 @@ src/**/*.js
 !src/components/common/SecurityShield/SecurityShield.js
 !src/components/common/Radio/Radio.js
 !src/components/common/VerificationLevelSelector/
+!src/components/common/CompletedJobCard/CompletedJobCard.js
 
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
+!src/components/CompletedJobs/CompletedJobs.js
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/
