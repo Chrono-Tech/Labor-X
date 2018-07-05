@@ -40,7 +40,7 @@ class CreateJobForm extends React.Component {
   handleChangeHourlyRating = (event, index, value) => this.setState({ hourlyRatingValue: value })
   // handleChangeState = (event, index, value) => this.setState({ stateValue: value })
 
-  handleBack() {
+  handleBack () {
     Router.pushRoute('/job-types')
   }
 
@@ -226,20 +226,20 @@ class CreateJobForm extends React.Component {
         </div>
       </div>
     ) : (
-        <div className={css.budgetWidget}>
-          <div>
-            <Field
-              className={css.numberInput}
-              component={NumberInput}
-              name='fixedPrice'
-              title='ui.createJob.fixedPrice'
-              subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
-              max={1000}
-              min={0}
-            />
-          </div>
+      <div className={css.budgetWidget}>
+        <div>
+          <Field
+            className={css.numberInput}
+            component={NumberInput}
+            name='fixedPrice'
+            title='ui.createJob.fixedPrice'
+            subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+            max={1000}
+            min={0}
+          />
         </div>
-      )
+      </div>
+    )
   }
 
   renderSelectedTagsArea = (board) => {
@@ -295,7 +295,7 @@ class CreateJobForm extends React.Component {
     return null
   }
 
-  render() {
+  render () {
     const { isLoading, boards, hasBudget, hasPeriod, hasAddress, selectedBoard } = this.props
 
     return (

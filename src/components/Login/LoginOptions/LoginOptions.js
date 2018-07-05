@@ -15,8 +15,8 @@ import {
   onSubmitMnemonicSuccess,
   onSubmitMnemonicFail,
   onSubmitPrivateKey,
-  onSubmitPrivateKeySuccess,
-  onSubmitPrivateKeyFail,
+  // onSubmitPrivateKeySuccess,
+  // onSubmitPrivateKeyFail,
   onSelectWallet,
   onSubmitRecoveryAccountForm,
   onConfirmRecoveryPassword,
@@ -35,24 +35,32 @@ import {
   SelectOption,
   SelectWallet,
   LoginForm,
-  CreateAccount,
+  CreateWallet,
   RecoveryAccountForm,
   RecoveryPasswordResetForm,
 } from 'components/Login'
 
 import { WalletEntryModel } from 'src/models'
 
+import {
+  hideAccount404Dialog,
+  handleAccount404DialogYesClick,
+} from 'src/store/login/actions'
+
+import { getOpenAccount404Dialog } from 'src/store/login/selectors'
+
 import css from './LoginOptions.scss'
 
 class LoginOptions extends React.Component {
+
   static propTypes = {
     signIn: PropTypes.func,
     onSignInSuccess: PropTypes.func,
     onSignInFail: PropTypes.func,
     createAccount: PropTypes.func,
     onSubmitPrivateKey: PropTypes.func,
-    onSubmitPrivateKeySuccess: PropTypes.func,
-    onSubmitPrivateKeyFail: PropTypes.func,
+    // onSubmitPrivateKeySuccess: PropTypes.func,
+    // onSubmitPrivateKeyFail: PropTypes.func,
     onSubmitMnemonic: PropTypes.func,
     onSubmitMnemonicSuccess: PropTypes.func,
     onSubmitMnemonicFail: PropTypes.func,
@@ -88,6 +96,14 @@ class LoginOptions extends React.Component {
     }
   }
 
+  handleAccount404DialogNoClick = () => {
+    this.props.hideAccount404Dialog()
+  }
+
+  handleAccount404DialogYesClick = () => {
+    this.props.handleAccount404DialogYesClick()
+  }
+
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
 
   closeModal (){
@@ -106,8 +122,8 @@ class LoginOptions extends React.Component {
       onSubmitMnemonicSuccess,
       onSubmitMnemonicFail,
       onSubmitPrivateKey,
-      onSubmitPrivateKeySuccess,
-      onSubmitPrivateKeyFail,
+      // onSubmitPrivateKeySuccess,
+      // onSubmitPrivateKeyFail,
       walletsList,
       onSelectWallet,
       selectedWallet,
@@ -142,12 +158,12 @@ class LoginOptions extends React.Component {
           <PrivateKeyForm
             onChangeStep={onChangeStep}
             onSubmit={onSubmitPrivateKey}
-            onSubmitSuccess={onSubmitPrivateKeySuccess}
-            onSubmitFail={onSubmitPrivateKeyFail}
+            // onSubmitSuccess={onSubmitPrivateKeySuccess}
+            // onSubmitFail={onSubmitPrivateKeyFail}
           />)
         break
       case LoginSteps.CreateWallet:
-        component = (<CreateAccount onChangeStep={onChangeStep} onSubmitSuccess={createAccount} />)
+        component = (<CreateWallet onChangeStep={onChangeStep} onSubmitSuccess={createAccount} />)
         break
       case LoginSteps.SelectLoginMethod:
         component = (<SelectOption onChangeStep={onChangeStep} />)
@@ -193,36 +209,6 @@ class LoginOptions extends React.Component {
     return [<div key={step} className={css.componentWrapper}>{component}</div>]
   }
 
-  renderDialog (){
-    return (
-      <Dialog
-        contentClassName={css.dialog}
-        open={this.state.isModalOpen}
-        title={<h2>LaborX account is not found</h2>}
-        titleClassName={css.dialogTitle}
-        bodyClassName={css.dialogContent}
-        actionsContainerClassName={css.actionWrapper}
-        actions={[
-          <Button
-            label='No'
-            onClick={this.closeModal.bind(this)}
-            buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
-            type={Button.TYPES.SUBMIT}
-          />,
-          <Button
-            label='YES'
-            onClick={this.navigateToCreateAccount.bind(this)}
-            buttonClassName={css.actionButton}
-            type={Button.TYPES.SUBMIT}
-          />,
-        ]}
-      >
-        LaborX account with the provided address is not found.
-        Would you like to Create a New Account?
-      </Dialog>
-    )
-  }
-
   render () {
 
     return (
@@ -237,10 +223,37 @@ class LoginOptions extends React.Component {
         >
           {this.renderComponent()}
         </ReactCSSTransitionGroup>
-        { this.renderDialog() }
+        <Dialog
+          contentClassName={css.dialog}
+          open={this.props.openAccount404Dialog}
+          title={<h2>LaborX account is not found</h2>}
+          titleClassName={css.dialogTitle}
+          bodyClassName={css.dialogContent}
+          actionsContainerClassName={css.actionWrapper}
+          actions={[
+            <Button
+              label='No'
+              // onClick={this.closeModal.bind(this)}
+              onClick={this.handleAccount404DialogNoClick}
+              buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
+              type={Button.TYPES.SUBMIT}
+            />,
+            <Button
+              label='YES'
+              // onClick={this.navigateToCreateAccount.bind(this)}
+              onClick={this.handleAccount404DialogYesClick}
+              buttonClassName={css.actionButton}
+              type={Button.TYPES.SUBMIT}
+            />,
+          ]}
+        >
+          LaborX account with the provided address is not found.
+          Would you like to Create a New Account?
+        </Dialog>
       </div>
     )
   }
+
 }
 
 export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
@@ -286,6 +299,7 @@ function mapStateToProps (state) {
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
     step: state.login.step,
     walletsList: (state.wallet.walletsList || []).map((wallet) => new WalletEntryModel(wallet)),
+    openAccount404Dialog: getOpenAccount404Dialog(state),
   }
 }
 
@@ -297,8 +311,8 @@ function mapDispatchToProps (dispatch) {
     onSignInFail: () => dispatch(onSignInFail()),
     createAccount: ({ walletName, password }) => dispatch(createAccount(walletName, password)),
     onSubmitPrivateKey: (values) => dispatch(onSubmitPrivateKey(values)),
-    onSubmitPrivateKeySuccess: (values) => dispatch(onSubmitPrivateKeySuccess(values)),
-    onSubmitPrivateKeyFail: (values) => dispatch(onSubmitPrivateKeyFail(values)),
+    // onSubmitPrivateKeySuccess: (values) => dispatch(onSubmitPrivateKeySuccess(values)),
+    // onSubmitPrivateKeyFail: (values) => dispatch(onSubmitPrivateKeyFail(values)),
     onSubmitMnemonic: (values) => dispatch(onSubmitMnemonic(values)),
     onSubmitMnemonicSuccess: (values) => dispatch(onSubmitMnemonicSuccess(values)),
     onSubmitMnemonicFail: (values) => dispatch(onSubmitMnemonicFail(values)),
@@ -307,6 +321,8 @@ function mapDispatchToProps (dispatch) {
     onConfirmRecoveryPassword: (values) => dispatch(onConfirmRecoveryPassword(values)),
     navigateToRecoveryPassword: () => dispatch(navigateToRecoveryPassword()),
     navigateToLoginForm: () => dispatch(navigateToLoginForm()),
+    hideAccount404Dialog: () => dispatch(hideAccount404Dialog()),
+    handleAccount404DialogYesClick: () => dispatch(handleAccount404DialogYesClick()),
   }
 }
 

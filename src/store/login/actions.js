@@ -6,8 +6,11 @@ import { WalletEntryModel, SignInModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
 
 import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
-import { web3Selector } from "../ethereum/selectors"
-import { getUserData, userSave } from "../user/actions"
+import { web3Selector } from "src/store/ethereum/selectors"
+import { getAccountTypes, userSave } from "src/store/user/actions"
+import { setExistingAccount } from "src/store/createAccount/actions"
+import { getAccount } from "./selectors"
+
 import * as backendApi from "./../../api/backend"
 
 export const LoginSteps = {
@@ -46,9 +49,13 @@ export const signIn = ({ password }) => async (dispatch, getState) => {
   const { selectedWallet } = state.wallet
   const walletModel = await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
   const account = walletModel.wallet[0]
-  const user = await dispatch(getUserData(account.address))
-  const signinResBody = await backendApi.signin(account)
-  dispatch(userSave({ ...user, ...signinResBody }))
+  const { types } = selectedWallet
+  const roles = types
+    ? { isClient: types.client, isWorker: types.worker, isRecruiter: types.recruiter }
+    : null
+  const { token, profile, client, worker, recruiter } = await backendApi.signin(account, roles)
+  const accountTypes = { client: client.isRequested, worker: worker.isRequested, recruiter: recruiter.isRequested }
+  dispatch(userSave({ token, profile, accountTypes, client, worker, recruiter }))
 }
 
 export const onSignInSuccess = () => (dispatch) => {
@@ -106,32 +113,6 @@ export const onSubmitMnemonicSuccess = () => (dispatch) => {
 
 export const onSubmitMnemonicFail = () => (dispatch) => {
   dispatch(stopSubmit(FORM_MNEMONIC, { key: 'Wrong mnemonic' }))
-}
-
-export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
-
-  const web3 = web3Selector()(getState())
-  web3.eth.accounts.wallet.clear()
-
-  const account = await web3.eth.accounts.privateKeyToAccount(`0x${values.key}`)
-
-  const signInModel = new SignInModel({
-    method: SignInModel.METHODS.PRIVATE_KEY,
-    key: values.key,
-    address: account.address,
-  })
-
-  dispatch(setSignInModel(signInModel))
-
-}
-
-export const onSubmitPrivateKeySuccess = () => (dispatch) => {
-  dispatch(navigateToCreateWallet())
-}
-
-export const onSubmitPrivateKeyFail = () => (dispatch) => {
-  dispatch(stopSubmit(FORM_PRIVATE_KEY, { key: 'Wrong private key' }))
-
 }
 
 export const selectWalletRecoveryForm = (wallet) => (dispatch) => {
@@ -226,4 +207,36 @@ export const validateRecoveryForm = (mnemonic) => (dispatch, getState) => {
 
 export const setRecoveryFormMnemonic = (mnemonic) => (dispatch) => {
   return dispatch({ type: LOGIN_SET_RECOVERY_FORM_MNEMONIC, mnemonic })
+}
+
+export const ACCOUNT_404_DIALOG_SHOW = 'LOGIN/ACCOUNT_404_DIALOG/SHOW'
+export const ACCOUNT_404_DIALOG_HIDE = 'LOGIN/ACCOUNT_404_DIALOG/HIDE'
+export const showAccount404Dialog = () => ({ type: ACCOUNT_404_DIALOG_SHOW })
+export const hideAccount404Dialog = () => ({ type: ACCOUNT_404_DIALOG_HIDE })
+
+export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
+  try {
+    const web3 = web3Selector()(getState())
+    web3.eth.accounts.wallet.clear()
+    const account = web3.eth.accounts.privateKeyToAccount(`0x${values.key}`)
+    const person = await backendApi.getPerson(account.address)
+    const accountTypes = await dispatch(getAccountTypes(account.address))
+    if (person && accountTypes) {
+      const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY,  key: values.key,  address: account.address })
+      dispatch(setSignInModel(signInModel))
+      dispatch(navigateToCreateWallet())
+    } else {
+      dispatch(showAccount404Dialog())
+    }
+  } catch (err) {
+    dispatch(stopSubmit(FORM_PRIVATE_KEY, { key: 'Wrong private key' }))
+  }
+}
+
+export const handleAccount404DialogYesClick = () => (dispatch, getState) => {
+  const state = getState()
+  const account = getAccount(state)
+  dispatch(setExistingAccount(account))
+  dispatch(hideAccount404Dialog())
+  Router.pushRoute('/create-account')
 }

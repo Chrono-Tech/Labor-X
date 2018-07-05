@@ -6,7 +6,17 @@ import bip39 from 'bip39'
 
 import { AccountLayout } from 'src/components/layouts'
 import { AccountPasswordForm, ShowMnemonic, ConfirmMnemonic, BackupWallet } from 'src/components/Account'
-import { setMnemonic, setPassword, setAccountTypes, createUserAccount, downloadWallet, onFinishCreateAccount, navigateToSelectMethod } from 'src/store'
+import {
+  setMnemonic,
+  setPassword,
+  setAccountTypes,
+  createUserAccount,
+  downloadWallet,
+  onFinishCreateAccount,
+  navigateToSelectMethod,
+  handleAccountPasswordFormSubmitSuccess,
+} from 'src/store/createAccount/actions'
+import { getExistingAccount } from 'src/store/createAccount/selectors'
 
 import css from './index.scss'
 
@@ -33,11 +43,11 @@ class CreateAccount extends React.Component {
     setMnemonic(mnemonic)
   }
 
-  onSubmitAccountPasswordForm ({ password, types }){
-    const { setPassword, setAccountTypes } = this.props
-
-    setPassword(password)
-    setAccountTypes(types)
+  handleAccountPasswordFormSubmitSuccess = (values) => {
+    this.props.handleAccountPasswordFormSubmitSuccess(values)
+    // const { setPassword, setAccountTypes } = this.props
+    // setPassword(password)
+    // setAccountTypes(types)
   }
 
   render () {
@@ -45,13 +55,12 @@ class CreateAccount extends React.Component {
 
     return (
       <div className={css.root}>
-        <Head>
-          <title>LaborX</title>
-          <link rel='shortcut icon' type='image/x-icon' href='/static/favicon.ico' />
-          <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
-        </Head>
-        <AccountLayout title='Create New Acccount'>
-          <AccountPasswordForm navigateToSelectMethod={navigateToSelectMethod} onSubmitSuccess={this.onSubmitAccountPasswordForm.bind(this)} />
+        <AccountLayout title='Create New Account'>
+          <AccountPasswordForm
+            navigateToSelectMethod={navigateToSelectMethod}
+            onSubmitSuccess={this.handleAccountPasswordFormSubmitSuccess}
+            existingAccount={this.props.existingAccount}
+          />
           <ShowMnemonic />
           <ConfirmMnemonic onSubmitSuccess={createUserAccount} />
           <BackupWallet onClickDownload={downloadWallet} onClickFinish={onFinishCreateAccount} />
@@ -60,6 +69,10 @@ class CreateAccount extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  existingAccount: getExistingAccount(state),
+})
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
@@ -70,7 +83,8 @@ const mapDispatchToProps = (dispatch) => {
     downloadWallet,
     onFinishCreateAccount,
     navigateToSelectMethod,
+    handleAccountPasswordFormSubmitSuccess,
   }, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(CreateAccount)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAccount)

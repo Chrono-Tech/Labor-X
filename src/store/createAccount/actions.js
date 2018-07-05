@@ -1,7 +1,11 @@
 import { Router } from 'src/routes'
 
 import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'src/store'
-import { generateNameWalletSelector } from "./selectors"
+import { setSignInModel } from "src/store/login/actions"
+import { generateNameWalletSelector, getExistingAccount } from "./selectors"
+import { SignInModel } from "../../models"
+import * as backendApi from "../../api/backend"
+import { navigateToCreateWallet } from "../login/actions"
 
 export const CREATE_ACCOUNT_SET_MNEMONIC = 'createAccount/setMnemonic'
 export const CREATE_ACCOUNT_SET_PASSWORD = 'createAccount/setPassword'
@@ -32,14 +36,10 @@ export const setCurrentWallet = (encrypted) => (dispatch) => {
 }
 
 export const createUserAccount = () => async (dispatch, getState) => {
-
   const state = getState()
-
   const { password, mnemonic, accountTypes } = state.createAccount
   const name = generateNameWalletSelector()(state)
-
   dispatch(resetCurrentWallet())
-
   const encrypted = await dispatch(createWallet({
     name,
     password,
@@ -47,16 +47,12 @@ export const createUserAccount = () => async (dispatch, getState) => {
     numberOfAccounts: 0,
     types: accountTypes,
   }))
-
   dispatch(setCurrentWallet(encrypted))
-
 }
 
 export const downloadWallet = () => (dispatch, getState) => {
   const state = getState()
-
   const { currentWallet } = state.createAccount
-
   if (currentWallet) {
     const text = JSON.stringify(currentWallet.encrypted.length > 1 ? currentWallet.encrypted : currentWallet.encrypted[0])
     const element = document.createElement('a')
@@ -76,16 +72,32 @@ export const navigateToSelectWalletPage = () => (dispatch) => {
 
 export const onFinishCreateAccount = () => (dispatch, getState) => {
   const state = getState()
-
   const { currentWallet } = state.createAccount
-
   dispatch(walletAdd(currentWallet))
-
   Router.pushRoute('/login')
-
 }
 
 export const navigateToSelectMethod = () => (dispatch) => {
   Router.pushRoute('/login')
   dispatch(navigateToSelectLoginMethod())
+}
+
+export const SET_EXISTING_ACCOUNT = 'SET_EXISTING_ACCOUNT'
+export const setExistingAccount = (existingAccount) => ({ type: SET_EXISTING_ACCOUNT, existingAccount })
+
+export const handleAccountPasswordFormSubmitSuccess = ({ password, types }) => async (dispatch, getState) => {
+  const state = getState()
+  const existingAccount = getExistingAccount(state)
+  if (existingAccount) {
+    const { client, worker, recruiter } = types
+    const roles = { isClient: client, isWorker: worker, isRecruiter: recruiter }
+    await backendApi.signin(existingAccount, roles) // register user with roles
+    const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: existingAccount.privateKey, address: existingAccount.address })
+    dispatch(setSignInModel(signInModel))
+    dispatch(navigateToCreateWallet())
+    Router.pushRoute('/login')
+  } else {
+    dispatch(setPassword(password))
+    dispatch(setAccountTypes(types))
+  }
 }

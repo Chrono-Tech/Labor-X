@@ -4,11 +4,10 @@ import uniqid from 'uniqid'
 import ValidationTab from './ValidationTab/ValidationTab'
 import NotificationsTab from './NotificationsTab/NotificationsTab'
 import SecurityTab from './SecurityTab/SecurityTab'
-import css from './MyProfile.scss'
-import {reviewProfile} from "../../store/profile";
+import css from './MyProfile.scss';
 import {connect} from "react-redux";
 
-export default class MyProfile extends React.Component {
+class MyProfile extends React.Component {
   constructor (props, context){
     super(props, context)
     this.handleTabClick = this.handleTabClick.bind(this)
@@ -32,9 +31,9 @@ export default class MyProfile extends React.Component {
     }
   }
 
-  componentDidMount () {
-    this.props.reviewProfile()
-  }
+  // componentDidMount () {
+  //   this.props.reviewProfile()
+  // }
 
   handleTabClick (index) {
     this.setState({ currentTab: index })
@@ -68,11 +67,11 @@ export default class MyProfile extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  profile: state.ui.myProfile.profile
+  // profile: state.ui.myProfile.profile
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  reviewProfile: () => dispatch(reviewProfile()),
+  // reviewProfile: () => dispatch(reviewProfile()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GeneralProfile)
