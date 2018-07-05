@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
-import {DEFAULT_ACCOUNT_PREFFIX} from "./actions";
-import {walletsSelector} from "../";
+import { DEFAULT_ACCOUNT_PREFFIX } from "./actions";
+import { walletsSelector } from "../";
+
+export const getState = state => state.createAccount
+
+export const getExistingAccount = createSelector(getState, state => state.existingAccount)
 
 export const generateNameWalletSelector = () => createSelector(
   walletsSelector(),

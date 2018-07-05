@@ -1,8 +1,7 @@
 import * as actions from './actions'
-import { CREATE_ACCOUNT_SET_CURRENT_WALLET } from "./actions"
-import { CREATE_ACCOUNT_RESET_CURRENT_WALLET } from "./actions"
 
 const initialState = {
+  existingAccount: null,
   mnemonic: '',
   password: '',
   accountTypes: {},
@@ -36,6 +35,12 @@ export default (state = initialState, action) => {
         ...state,
         currentWallet: null,
       }
+
+    case actions.SET_EXISTING_ACCOUNT: return ({
+      ...state,
+      existingAccount: action.existingAccount,
+    })
+
     default:
       return state
   }

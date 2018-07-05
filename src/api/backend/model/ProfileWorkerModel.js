@@ -1,6 +1,9 @@
+import PropTypes from "prop-types"
 import AbstractModel from './../../../models/AbstractModel'
 
-const schemaFactory = () => ({})
+const schemaFactory = () => ({
+  isRequested: PropTypes.bool,
+})
 
 export default class ProfileWorkerModel extends AbstractModel {
   constructor (props) {
