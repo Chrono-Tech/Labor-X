@@ -3,6 +3,7 @@ import { bytes32ToIPFSHash, loadFromIPFS, storeIntoIPFS } from "../../utils"
 import { UserAccountTypesModel, UserModel } from "../../models"
 import { web3Selector } from "../ethereum/selectors"
 import { executeTransaction } from './../ethereum/actions'
+// import { createWithExistingAccount } from './../login/actions'
 
 export const USER_SAVE = 'user/save'
 

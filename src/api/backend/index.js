@@ -5,8 +5,10 @@ import SigninResBodyModel from "./model/SigninResBodyModel"
 import ProfileModel from "./model/ProfileModel"
 import ImageModel from "./model/ImageModel"
 import AttachmentModel from "./model/AttachmentModel"
+import PersonModel from "./model/PersonModel"
 
-const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+// const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+const API_URL = 'http://localhost:3000/api/v1'
 
 const http = axios.create({ baseURL: API_URL })
 
@@ -32,11 +34,20 @@ export const signin = (account) : SigninResBodyModel => {
   }).then(res => SigninResBodyModel.fromJson(res.data))
 }
 
-export const reviewProfile = (token: string): ProfileModel => {
-  return http.get(`${ API_URL }/security/me`, {
-    headers: { Authorization: `Bearer ${ token }` },
-  }).then(res => ProfileModel.fromJson(res.data))
-}
+export const reviewProfile = (token: string): ProfileModel => http
+  .get('/security/me', { headers: { Authorization: `Bearer ${ token }` } })
+  .then(res => ProfileModel.fromJson(res.data))
+
+export const reviewPerson = (address: string): Promise<PersonModel> => new Promise((resolve, reject) => {
+  http
+    .get('/security/person', { params: { address } })
+    .then(res => resolve(new PersonModel(res.data)))
+    .catch(res => res.response.status === 404 ? resolve(null) : reject(res))
+})
+
+export const searchPerson = (addresses: string[]): PersonModel => http
+  .post('/security/persons/query', addresses)
+  .then(res => res.data.map(x => new PersonModel(x)))
 
 export const uploadImage = (file: FileModel, token: string) : ImageModel => {
   const formData = new FormData()

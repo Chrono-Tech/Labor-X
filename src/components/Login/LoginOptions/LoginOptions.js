@@ -75,9 +75,9 @@ class LoginOptions extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      isModalOpen: props.walletsList.length === 0,
-    }
+    // this.state = {
+    //   isModalOpen: props.walletsList.length === 0,
+    // }
   }
 
   componentWillMount () {
@@ -142,8 +142,8 @@ class LoginOptions extends React.Component {
           <PrivateKeyForm
             onChangeStep={onChangeStep}
             onSubmit={onSubmitPrivateKey}
-            onSubmitSuccess={onSubmitPrivateKeySuccess}
-            onSubmitFail={onSubmitPrivateKeyFail}
+            // onSubmitSuccess={onSubmitPrivateKeySuccess}
+            // onSubmitFail={onSubmitPrivateKeyFail}
           />)
         break
       case LoginSteps.CreateWallet:
@@ -193,36 +193,6 @@ class LoginOptions extends React.Component {
     return [<div key={step} className={css.componentWrapper}>{component}</div>]
   }
 
-  renderDialog (){
-    return (
-      <Dialog
-        contentClassName={css.dialog}
-        open={this.state.isModalOpen}
-        title={<h2>LaborX account is not found</h2>}
-        titleClassName={css.dialogTitle}
-        bodyClassName={css.dialogContent}
-        actionsContainerClassName={css.actionWrapper}
-        actions={[
-          <Button
-            label='No'
-            onClick={this.closeModal.bind(this)}
-            buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
-            type={Button.TYPES.SUBMIT}
-          />,
-          <Button
-            label='YES'
-            onClick={this.navigateToCreateAccount.bind(this)}
-            buttonClassName={css.actionButton}
-            type={Button.TYPES.SUBMIT}
-          />,
-        ]}
-      >
-        LaborX account with the provided address is not found.
-        Would you like to Create a New Account?
-      </Dialog>
-    )
-  }
-
   render () {
 
     return (
@@ -237,7 +207,7 @@ class LoginOptions extends React.Component {
         >
           {this.renderComponent()}
         </ReactCSSTransitionGroup>
-        { this.renderDialog() }
+        {/*{ this.renderDialog() }*/}
       </div>
     )
   }
@@ -297,8 +267,8 @@ function mapDispatchToProps (dispatch) {
     onSignInFail: () => dispatch(onSignInFail()),
     createAccount: ({ walletName, password }) => dispatch(createAccount(walletName, password)),
     onSubmitPrivateKey: (values) => dispatch(onSubmitPrivateKey(values)),
-    onSubmitPrivateKeySuccess: (values) => dispatch(onSubmitPrivateKeySuccess(values)),
-    onSubmitPrivateKeyFail: (values) => dispatch(onSubmitPrivateKeyFail(values)),
+    // onSubmitPrivateKeySuccess: (values) => dispatch(onSubmitPrivateKeySuccess(values)),
+    // onSubmitPrivateKeyFail: (values) => dispatch(onSubmitPrivateKeyFail(values)),
     onSubmitMnemonic: (values) => dispatch(onSubmitMnemonic(values)),
     onSubmitMnemonicSuccess: (values) => dispatch(onSubmitMnemonicSuccess(values)),
     onSubmitMnemonicFail: (values) => dispatch(onSubmitMnemonicFail(values)),

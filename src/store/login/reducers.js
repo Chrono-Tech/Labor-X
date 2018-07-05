@@ -1,6 +1,7 @@
 import * as a from './actions'
 
 const initialState = {
+  openAccount404Dialog: false,
   isSignIn: false,
   signIn: null,
   step: null,
@@ -22,12 +23,11 @@ export default (state = initialState, action) => {
         isSignIn: false,
         signIn: null,
       }
-    case a.LOGIN_SET_SIGN_IN_MODEL:
-      return {
-        ...state,
-        isSignIn: false,
-        signIn: action.signInModel,
-      }
+    case a.LOGIN_SET_SIGN_IN_MODEL: return ({
+      ...state,
+      isSignIn: false,
+      signIn: action.signInModel,
+    })
     case a.LOGIN_CHANGE_STEP:
       return {
         ...state,
@@ -63,6 +63,16 @@ export default (state = initialState, action) => {
         ...state,
         isRecoveryPasswordMode: false,
       }
+
+    case a.SHOW_ACCOUNT_404_DIALOG: return ({
+      ...state,
+      openAccount404Dialog: true,
+    })
+    case a.HIDE_ACCOUNT_404_DIALOG: return ({
+      ...state,
+      openAccount404Dialog: false,
+    })
+
     default:
       return state
   }
