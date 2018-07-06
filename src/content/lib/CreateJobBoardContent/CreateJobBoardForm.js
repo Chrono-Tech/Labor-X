@@ -383,6 +383,7 @@ class CreateJobBoardForm extends React.Component {
                     menuItemStyle={{ fontSize: 14 }}
                     labelStyle={{ fontSize: 14 }}
                     style={{ width: 300 }}
+                    hintText='Select area'
                   >
                     {
                       TAG_AREAS_LIST.map((item) => (
@@ -403,6 +404,7 @@ class CreateJobBoardForm extends React.Component {
                     menuItemStyle={{ fontSize: 14 }}
                     labelStyle={{ fontSize: 14 }}
                     style={{ width: 300 }}
+                    hintText='Select category'
                   >
                     {
                       TAG_CATEGORIES_LIST.map((item) => (

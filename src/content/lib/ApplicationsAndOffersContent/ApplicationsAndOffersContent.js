@@ -9,6 +9,7 @@ import { JobModel, BoardModel } from 'src/models'
 import OffersTabContent from './OffersTabContent/OffersTabContent'
 import ApplicationsTabContent from './ApplicationsTabContent/ApplicationsTabContent'
 import css from './ApplicationsAndOffersContent.scss'
+// import {reloadJobsOffers} from "../../../store";
 
 const style = {
   backgroundColor: 'transparent',
@@ -55,6 +56,10 @@ class ApplicationsAndOffersContent extends React.Component {
     this.state = {
       slideIndex: 0,
     }
+  }
+
+  componentDidMount () {
+    // this.props.getOffers()
   }
 
   handleChange = (value) => {
@@ -124,12 +129,16 @@ function mapStateToProps (state) {
       },
     }
   })
-  
+
   return {
     applications:[],
     applicationsApproved,
     offers: [],
   }
 }
+
+// const mapDispatchToProps = dispatch => ({
+//   // getOffers: () => dispatch(reloadJobsOffers(45)),
+// })
 
 export default connect(mapStateToProps)(ApplicationsAndOffersContent)

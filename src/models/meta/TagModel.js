@@ -15,7 +15,7 @@ export default class TagModel extends AbstractModel {
   }
 
   get code () {
-    return Math.pow(2, this.index)
+    return Math.pow(4, this.index)
   }
 
   static arrayValueOfMask (mask) {

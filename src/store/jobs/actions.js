@@ -156,13 +156,15 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
   const web3 = web3Selector()(state)
 
   const detailsIPFSHash = await storeIntoIPFS(form.ipfs)
-  
+
+  const skillsMask = SkillModel.writeArrayToMask(form.skills)
+
   const tx = jobControllerDAO.createPostJobTx(
     signer.address,
     form.flowType,
     form.area.code,
     form.category.code,
-    SkillModel.writeArrayToMask(form.skills),
+    skillsMask,
     0, // defaultPay todo check what this parameter is for and mark up field on create job form
     detailsIPFSHash
   )
