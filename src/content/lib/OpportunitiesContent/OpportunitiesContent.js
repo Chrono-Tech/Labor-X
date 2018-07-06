@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { SignerModel, TAG_CATEGORIES_LIST } from 'src/models'
+import { SignerModel, TagCategoryModel, TAG_CATEGORIES_LIST, FILTERS_LIST } from 'src/models'
 import { reduxForm, Field, getFormValues } from 'redux-form'
 
 import { signerSelector, opportunitiesFilteredListSelector } from 'src/store'
@@ -15,6 +15,8 @@ export class OpportunitiesContent extends React.Component {
   static propTypes = {
     signer: PropTypes.instanceOf(SignerModel),
     cards: PropTypes.arrayOf(PropTypes.shape(OpportunityCard.propTypes)),
+    reset: PropTypes.func,
+    formValues: PropTypes.shape({})
   }
 
   constructor (props) {
@@ -26,11 +28,26 @@ export class OpportunitiesContent extends React.Component {
   }
 
   handleResetFilters = () => {
-    this.toggleFilter()
+    this.props.reset();
   }
 
-  toggleFilter = () => {
+  handleToggleFilter = () => {
     this.setState({ isVisibleFilter: !this.state.isVisibleFilter })
+  }
+
+  getCategoryNames = (formValues) => {
+    if (formValues && formValues.categories) {
+      const { categories } = formValues
+      const keys = Object.getOwnPropertyNames(categories).filter(key => categories[key])
+      const indexes = keys.map((key) => key.split("-")[1])
+      const names = indexes.map(index => {
+        return TagCategoryModel.valueOf(Number(index)).name
+      })
+      return names
+    }
+    else {
+      return []
+    }
   }
 
   renderCategories () {
@@ -40,7 +57,7 @@ export class OpportunitiesContent extends React.Component {
           key={tag.name}
           component={Checkbox}
           className={css.field}
-          name={`categories[${String(tag.name).toUpperCase()}]`}
+          name={`categories[index-${String(tag.index)}]`}
           label={tag.name.toString()}
           material
           defaultTheme={false}
@@ -59,13 +76,15 @@ export class OpportunitiesContent extends React.Component {
     }
 
     return (
-      <div className={css.filterBlock}>
+      <div className={[css.filterBlock, (this.state.isVisibleFilter ? "" : css.hideFilterBlock)].join(' ')}>
 
         <div className={css.resetRow}>
-          <b>Reset</b>
-          <button onClick={this.handleResetFilters} className={css.resetButton}>
+          <div onClick={this.handleResetFilters} className={css.resetButton}>
+            Reset
+          </div>
+          <div onClick={this.handleToggleFilter} className={css.resetButton}>
             <Icon size={24} icon={Icon.ICONS.CLOSE} />
-          </button>
+          </div>
         </div>
 
         <div className={css.filterContent}>
@@ -77,13 +96,11 @@ export class OpportunitiesContent extends React.Component {
             type='select'
             label=''
             autoWidth
+            floatingLabelText='Sorting by ..'
+            floatingLabelStyle={{ color: '#7F7F7F' }}
             profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
-            values={[
-              { value: 'date', name: 'Date' },
-              { value: 'budget', name: 'Budget' },
-              { value: 'hourly_rate', name: 'Hourly rate' },
-              { value: 'rating_required', name: 'Rating required' },
-            ]}
+            placeholder=''
+            values={FILTERS_LIST.map(item => ({ value: item.index.toString(), name: item.name }))}
           />
 
           <div className={css.hr} />
@@ -119,7 +136,7 @@ export class OpportunitiesContent extends React.Component {
             )}
             uncheckedIcon={(
               <div className={[css.iconWrapper, css.checkedIconWrapper].join(' ')}>
-                <Icon className={css.checkedIcon} size={40} icon={Icon.ICONS.RATING} color={Icon.COLORS.GOLD} />
+                <Icon className={css.checkedIcon} size={40} icon={Icon.ICONS.RATING} color={Icon.COLORS.GREY30} />
               </div>
             )}
             values={[
@@ -168,10 +185,12 @@ export class OpportunitiesContent extends React.Component {
           <Field
             component={Select}
             className={css.fieldSelect}
-            name='location_city'
+            name='location_country'
             type='select'
             autoWidth
             profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
+            floatingLabelText='Select country'
+            floatingLabelStyle={{ color: '#7F7F7F' }}
             values={[
               { value: 'Russia', name: 'Russia' },
             ]}
@@ -180,9 +199,11 @@ export class OpportunitiesContent extends React.Component {
           <Field
             component={Select}
             className={css.fieldSelect}
-            name='location_town'
+            name='location_city'
             type='select'
             autoWidth
+            floatingLabelText='Select city'
+            floatingLabelStyle={{ color: '#7F7F7F' }}
             profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
             values={[
               { value: 'Moscow', name: 'Moscow' },
@@ -229,7 +250,7 @@ export class OpportunitiesContent extends React.Component {
     )
   }
 
-  renderEmptyListMessage (){
+  renderEmptyListMessage () {
     return (
       <div className={css.emptyListMessage}>
         Opportunities list is empty
@@ -237,9 +258,20 @@ export class OpportunitiesContent extends React.Component {
     )
   }
 
+  renderSelectedCityAndCategories = () => {
+    const { formValues } = this.props
+    if (formValues) {
+      let selectedCategories = this.getCategoryNames(formValues).join(", ")
+      let city = formValues.location_city
+      if (selectedCategories !== "" && city!=="")
+      {city = city + ", "}
+      return (city && city) + (selectedCategories && selectedCategories)
+    }
+    else return ""
+  }
+
   render () {
     const { cards } = this.props
-
     return !cards ? null : (
       <div className={css.main}>
         <div className={css.title}>
@@ -263,8 +295,8 @@ export class OpportunitiesContent extends React.Component {
                     defaultTheme={false}
                   />
                 </div>
-                <div className={css.filterRow} onClick={this.toggleFilter}>
-                  <p>Sydney, Building, Industrial</p>
+                <div className={css.filterRow} onClick={this.handleToggleFilter}>
+                  <p> {this.renderSelectedCityAndCategories()}</p>
                   <Image
                     icon={Image.ICONS.FILTER}
                     color={Image.COLORS.BLACK}
@@ -272,11 +304,11 @@ export class OpportunitiesContent extends React.Component {
                 </div>
               </div>
               <div className={css.opportunities}>
-                { cards &&  cards.map((card) => (<OpportunityCard {...card} key={card.job.key} />))}
-                { cards && !cards.length && this.renderEmptyListMessage() }
+                {cards && cards.map((card) => (<OpportunityCard {...card} key={card.job.key} />))}
+                {cards && !cards.length && this.renderEmptyListMessage()}
               </div>
             </div>
-            { this.state.isVisibleFilter && this.renderFilter() }
+            {this.renderFilter()}
           </form>
         </div>
       </div>
@@ -297,13 +329,15 @@ function mapStateToProps (state) {
   return {
     signer,
     cards,
+    formValues,
     initialValues: {
       reverse_order: true,
       recruting_services: true,
-      sort_by: 'date',
-      location_city: 'Russia',
-      location_town: 'Moscow',
-      ...defaultCategoriesValues,
+      sort_by: '',
+      location_city: '',
+      location_town: '',
+      level: 0,
+      rating: 0,
     },
   }
 }

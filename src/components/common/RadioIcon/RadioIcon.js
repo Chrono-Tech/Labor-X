@@ -17,6 +17,10 @@ export default class RadioIcon extends React.Component {
       value: PropTypes.number,
       label: PropTypes.string,
     })),
+    input: PropTypes.shape({
+      value: PropTypes.number,
+      onChange: PropTypes.func,
+    }),
     material: PropTypes.bool,
   }
 
@@ -28,17 +32,10 @@ export default class RadioIcon extends React.Component {
 
   constructor (props) {
     super(props)
-
-    this.state = {
-      currentValue: 0,
-    }
   }
 
-  handleOnChange = (e, i) => {
-    this.setState({
-      currentValue: i,
-    })
-    this.props.input.onChange(i);
+  handleOnChange = (event) => {
+    this.props.input.onChange(Number(event.target.dataset.id))
   }
 
   renderButtons () {
@@ -47,7 +44,7 @@ export default class RadioIcon extends React.Component {
     return values.map((item) => {
       return (<Checkbox
         key={`checkboxKey${item.value}`}
-        checked={this.state.currentValue >= item.value}
+        checked={input.value >= item.value}
         style={{
           display: 'flex',
           width: '25px',
@@ -58,7 +55,8 @@ export default class RadioIcon extends React.Component {
         checkedIcon={checkedIcon}
         uncheckedIcon={uncheckedIcon}
         classes={[css.checkbox]}
-        onCheck={(value) => this.handleOnChange(value, item.value)}
+        onCheck={this.handleOnChange}
+        data-id={item.value}
       />)
     })
   }
