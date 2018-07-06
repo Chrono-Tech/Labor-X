@@ -97,6 +97,7 @@ src/**/*.js
 !src/components/common/SecurityShield/SecurityShield.js
 !src/components/common/Radio/Radio.js
 !src/components/common/RadioIcon/RadioIcon.js
+!src/components/common/OpportunityCard/OpportunityCard.js
 !src/components/common/VerificationLevelSelector/
 !src/components/common/CompletedJobCard/CompletedJobCard.js
 
@@ -195,3 +196,4 @@ src/**/*.js
 !src/store/ui/index.js
 !src/store/ui/page/general-profile/index.js
 !src/store/ui/page/general-profile/personal.js
+!src/store/opportunities/selectors.js

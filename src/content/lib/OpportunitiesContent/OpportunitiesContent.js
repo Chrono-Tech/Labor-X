@@ -16,7 +16,7 @@ export class OpportunitiesContent extends React.Component {
     signer: PropTypes.instanceOf(SignerModel),
     cards: PropTypes.arrayOf(PropTypes.shape(OpportunityCard.propTypes)),
     reset: PropTypes.func,
-    formValues: PropTypes.shape({})
+    formValues: PropTypes.shape({}),
   }
 
   constructor (props) {
@@ -28,7 +28,7 @@ export class OpportunitiesContent extends React.Component {
   }
 
   handleResetFilters = () => {
-    this.props.reset();
+    this.props.reset()
   }
 
   handleToggleFilter = () => {
@@ -331,7 +331,7 @@ function mapStateToProps (state) {
     cards,
     formValues,
     initialValues: {
-      reverse_order: true,
+      reverse_order: false,
       recruting_services: true,
       sort_by: '',
       location_city: '',
