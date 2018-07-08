@@ -8,6 +8,14 @@ export const USER_SAVE = 'user/save'
 
 export const userSave = (user) => ({ type: USER_SAVE, user })
 
+export const getAccountTypes = address => async (dispatch, getState) => {
+  const state = getState()
+  const IpfsLibrary = daoByType('IPFSLibrary')(state)
+  const accountTypesIpfsHash = await IpfsLibrary.getHash(address.toLowerCase(), 'accountTypes')
+  const accountTypes = await loadFromIPFS(bytes32ToIPFSHash(accountTypesIpfsHash))
+  return accountTypes
+}
+
 export const getUserData = (address) => async (dispatch, getState) => {
 
   const state = getState()

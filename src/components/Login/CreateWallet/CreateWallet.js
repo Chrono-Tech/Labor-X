@@ -6,13 +6,13 @@ import { Button, Input } from 'components/common'
 import { LoginSteps, validateWalletName } from 'store'
 import validate from './validate'
 
-import css from './CreateAccount.scss'
+import css from './CreateWallet.scss'
 
-const FORM_LOGIN = 'form/createAccount'
+const FORM_LOGIN = 'form/createWallet'
 
 const onSubmit = ({ walletName, password }, dispatch) => {
   const validateName = dispatch(validateWalletName(walletName))
-  
+
   if (!validateName){
     throw new SubmissionError({
       walletName: 'Please enter other wallet name',
@@ -44,7 +44,7 @@ class CreateAccount extends React.Component {
 
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
-        <div className={css.header}>Create account</div>
+        <div className={css.header}>Create wallet</div>
         <Field
           className={css.row}
           component={Input}

@@ -23,7 +23,7 @@ class PostedJobsContent extends React.Component {
           <div className={css.titleText}><Translate value='nav.postedJobs' /></div>
         </div>
         <div className={css.content}>
-          {cards.map((card) => (<JobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.id} />))}
+          {cards.sort(x => x.job.id).map((card) => (<JobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.id} />))}
         </div>
       </div>
     )

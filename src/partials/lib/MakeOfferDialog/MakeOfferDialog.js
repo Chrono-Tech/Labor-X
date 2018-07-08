@@ -22,10 +22,10 @@ class MakeOfferDialog extends React.Component {
   }
 
   handleSumbit = (e) => {
-    e.preventDefault() 
+    e.preventDefault()
     const { hourlyRate, totalHours, fixedPrice } = this.props
-    this.props.makeOfferApply({ hourlyRate, totalHours, fixedPrice }) 
-    this.props.handleCancel() 
+    this.props.makeOfferApply({ hourlyRate, totalHours, fixedPrice })
+    this.props.handleCancel()
   }
 
   renderHourRate (totalHours, totalBudget) {
@@ -75,7 +75,7 @@ class MakeOfferDialog extends React.Component {
           </div>
         </div>
         <div className={css.body}>
-          {FlowTypeModel.valueOf(job.flowType) === FLOW_TYPES.FIXED_PRICE ? (
+          {FlowTypeModel.valueOf(job.flowType).index === FLOW_TYPES.FIXED_PRICE.index ? (
             <Field
               fullWidth
               component={TextField}

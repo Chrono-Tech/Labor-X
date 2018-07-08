@@ -5,9 +5,6 @@ import ProfileContactsModel from "./ProfileContactsModel"
 import ProfilePassportModel from "./ProfilePassportModel"
 import ProfileLocationModel from "./ProfileLocationModel"
 import ProfileNotifications from "./ProfileNotifications"
-import ProfileClientModel from "./ProfileClientModel"
-import ProfileWorkerModel from "./ProfileWorkerModel"
-import ProfileRecruiterModel from "./ProfileRecruiterModel"
 
 export const VALIDATION_STATE = {
   INITIAL: 'INITIAL',
@@ -35,9 +32,6 @@ export const schemaFactory = () => ({
       email: PropTypes.instanceOf(ProfileNotifications),
     }),
   }),
-  client: PropTypes.instanceOf(ProfileClientModel),
-  worker: PropTypes.instanceOf(ProfileWorkerModel),
-  recruiter: PropTypes.instanceOf(ProfileRecruiterModel),
 })
 
 export default class ProfileModel extends AbstractModel {
@@ -71,9 +65,6 @@ export default class ProfileModel extends AbstractModel {
           email: new ProfileNotifications(data.notifications.laborx.email),
         },
       },
-      client: new ProfileClientModel({}),
-      worker: new ProfileWorkerModel({}),
-      recruiter: new ProfileRecruiterModel({}),
     })
   }
 

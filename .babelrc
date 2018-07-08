@@ -32,6 +32,36 @@
           }
         ]
       ]
+    },
+    "production": {
+      "presets": [
+        [
+          "next/babel"
+        ]
+      ],
+      "plugins": [
+        "transform-flow-strip-types",
+        [
+          "module-resolver", {
+          "root": ["./"],
+          "alias": {
+            "components": "./src/components",
+            "styles": "./src/styles",
+            "store": "./src/store",
+            "models": "./src/models",
+            "i18n": "./src/i18n"
+          }
+        }
+        ],
+        [
+          "styled-jsx/babel", {
+          "optimizeForSpeed": true,
+          "plugins": [
+            "styled-jsx-plugin-postcss"
+          ]
+        }
+        ]
+      ]
     }
   }
 }

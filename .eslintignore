@@ -45,6 +45,7 @@ src/**/*.js
 !src/models/app/JobResumedEvent.js
 !src/models/app/JobExtraModel.js
 !src/models/validator.js
+!src/models/FilterModel.js
 !src/models/validator.lang.js
 !src/models/index.js
 !src/models/wallets/SignerModel.js
@@ -78,9 +79,13 @@ src/**/*.js
 !src/store/bootstrap.js
 !src/store/boards/selectors.js
 !src/store/jobs/actions.js
+!src/store/jobs/selectors.js
+!src/store/opportunities/selectors.js
+
 
 !src/components/common/Icon/Icon.js
 !src/components/common/Chip/Chip.js
+!src/components/common/Select/WrapperSelect.js
 !src/components/common/index.js
 !src/components/common/ActiveJobCard/ActiveJobCard.js
 !src/components/common/JobCard/JobCard.js
@@ -91,12 +96,16 @@ src/**/*.js
 !src/components/common/Rating/Rating.js
 !src/components/common/SecurityShield/SecurityShield.js
 !src/components/common/Radio/Radio.js
+!src/components/common/RadioIcon/RadioIcon.js
+!src/components/common/OpportunityCard/OpportunityCard.js
 !src/components/common/VerificationLevelSelector/
 !src/components/common/ScheduleWidget/
+!src/components/common/CompletedJobCard/CompletedJobCard.js
 
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
+!src/components/CompletedJobs/CompletedJobs.js
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/
@@ -119,6 +128,7 @@ src/**/*.js
 !src/content/lib/OpportunityViewContent/
 !src/content/lib/OpportunityViewContent/DescriptionTab/DescriptionTab.js
 !src/content/lib/OpportunityViewContent/OpportunityViewContent.js
+!src/content/lib/OpportunitiesContent/OpportunitiesContent.js
 !src/content/lib/ApplicationsAndOffersContent/
 !src/content/lib/ClientProfileContent/
 !src/content/lib/WorkerProfileContent/
@@ -187,3 +197,4 @@ src/**/*.js
 !src/store/ui/index.js
 !src/store/ui/page/general-profile/index.js
 !src/store/ui/page/general-profile/personal.js
+!src/store/opportunities/selectors.js

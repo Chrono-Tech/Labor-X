@@ -9,6 +9,7 @@ export * from './meta/TagCategoryModel'
 export * from './app/JobNoticeModel'
 export * from './app/BoardRequirementModel'
 export * from './app/BoardPostFeeModel'
+export * from './FilterModel'
 
 export { default as AbstractModel } from './AbstractModel'
 export { default as HolderModel } from './utils/HolderModel'

@@ -23,5 +23,84 @@ $maxWidth: 74rem;
 
 .content {
   padding-left: 4rem;
+  padding-top: 4rem;
   max-width: $maxWidth;
+}
+
+.completedJobsStatsBlock {
+  display: flex;
+}
+
+.blockCounterCompleted {
+display: block;
+width: 120px;
+padding-top:35px;
+}
+
+.blockCounterCompletedCount {
+  font-size: 3.4rem;
+  font-weight: 500;
+}
+
+.blockCounterCompletedText {
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.blockTotalEarned {
+  display: block;
+  width: 230px;
+  padding-top:35px;
+}
+
+.blockMonthEarned {
+  display: block;
+  width: 230px;
+  padding-top:35px;
+}
+
+.blockTotalEarnedLx {
+  font-weight: 300;
+  color: #c7e7d1;
+  font-size: 3.4rem;
+}
+
+.blockTotalEarnedUsd {
+  margin-top: 0.5rem;
+  font-weight: 300;
+  font-size: 14px;
+  color: #c7e7d1
+}
+
+.lxIcon {
+font-family: 'ChronoBankIcons';
+display: inline-block;
+width: 40px;
+white-space: nowrap;
+font-size: 3.4rem;
+}
+
+%cardTitles {
+  display: block;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  line-height: 0px;
+  color: #333333;
+  font-family: roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.invoiceSentTitle {
+  @extend %cardTitles;
+}
+
+.completedTitle {
+  @extend %cardTitles;
+  padding-top: 4rem;
+}
+
+.finalizedTitle {
+  @extend %cardTitles;
+  padding-top: 4rem;
 }

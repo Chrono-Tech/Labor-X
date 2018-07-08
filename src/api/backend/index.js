@@ -5,8 +5,10 @@ import SigninResBodyModel from "./model/SigninResBodyModel"
 import ProfileModel from "./model/ProfileModel"
 import ImageModel from "./model/ImageModel"
 import AttachmentModel from "./model/AttachmentModel"
+import PersonModel from "./model/PersonModel"
 
-const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+// const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+const API_URL = 'http://localhost:3000/api/v1'
 
 const http = axios.create({ baseURL: API_URL })
 
@@ -23,14 +25,21 @@ function deepSortByKey (obj) {
   }, {})
 }
 
-export const signin = (account) : SigninResBodyModel => {
+export const signin = (account, roles) : SigninResBodyModel => {
   const body = { purpose: 'laborx' }
-  const data = JSON.stringify(deepSortByKey(body))
+  if (roles) body.roles = roles
+  const data = JSON.stringify(deepSortByKey({ url: '/api/v1/security/signin/signature/laborx', body }))
   const { signature } = account.sign(data)
-  return http.post('/security/signin/signature', body, {
+  return http.post('/security/signin/signature/laborx', body, {
     headers: { Authorization: `Signature ${ signature }` },
   }).then(res => SigninResBodyModel.fromJson(res.data))
 }
+
+export const getPerson = (address: string): Promise<PersonModel> => new Promise((resolve, reject) => http
+  .get('/security/person', { params: { address } })
+  .then(res => resolve(new PersonModel(res.data)))
+  .catch(res => res.response.status === 404 ? resolve(null) : reject(res))
+)
 
 export const reviewProfile = (token: string): ProfileModel => {
   return http.get(`${ API_URL }/security/me`, {

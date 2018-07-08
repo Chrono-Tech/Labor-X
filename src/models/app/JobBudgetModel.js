@@ -63,6 +63,6 @@ function propsWithDefaults (props) {
       : String(faker.random.number({ min: 1, max: 40 }) * 5),
     fixedPrice: fixedPrice
       ? String(fixedPrice)
-      : String(faker.random.number({ min: 1, max: 40 })),
+      : (faker.random.boolean() ? String(faker.random.number({ min: 1, max: 40 })) : null),
   }, other)
 }

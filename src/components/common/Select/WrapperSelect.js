@@ -25,7 +25,7 @@ const profileThemeSelect = {
     padding: 0,
   },
   labelStyle: {
-    color: 'blue'
+    color: 'blue',
   },
 }
 
@@ -34,6 +34,7 @@ class WrapperSelect extends React.Component {
     input: PropTypes.shape({
       value: PropTypes.string,
       name: PropTypes.string,
+      onChange: PropTypes.func,
     }),
     label: PropTypes.string,
     meta: PropTypes.shape({
@@ -47,7 +48,12 @@ class WrapperSelect extends React.Component {
       PropTypes.element,
       PropTypes.arrayOf(PropTypes.element),
     ]),
-    profileTheme: PropTypes.object, // custom styles for profileTheme
+    profileTheme:  PropTypes.shape({}), // custom styles for profileTheme
+    muiTheme: PropTypes.shape({}),
+  }
+
+  handleOnChange = (event, index, value) => {
+    this.props.input.onChange(value)
   }
 
   render () {
@@ -58,7 +64,6 @@ class WrapperSelect extends React.Component {
 
     return (
       <SelectField
-        floatingLabelText={label}
         errorText={meta.touched && meta.error}
         style={profileThemeCustom.style}
         hintStyle={profileThemeCustom.hintStyle}
@@ -67,10 +72,11 @@ class WrapperSelect extends React.Component {
         iconStyle={profileThemeCustom.iconStyle}
         labelStyle={profileThemeCustom.labelStyle}
         {...input}
-        onChange={(event, index, value) => input.onChange(value)}
-        children={children}
+        onChange={this.handleOnChange}
         {...custom}
-      />
+      >
+        {children}
+      </SelectField>
     )
   }
 }

@@ -100,26 +100,22 @@ export const resetPasswordWallet = (wallet, mnemonic, password) => (dispatch, ge
 }
 
 export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAccounts = 0, types = null }) => async (dispatch, getState) => {
-
   const state = getState()
-
   const web3 = web3Selector()(state)
-
   web3.eth.accounts.wallet.clear()
-
-  let wallet = web3.eth.accounts.wallet.create(numberOfAccounts)
+  const wallet = web3.eth.accounts.wallet.create(numberOfAccounts)
 
   let account
 
   if (privateKey) {
-    account = web3.eth.accounts.privateKeyToAccount(`0x${privateKey}`)
-    wallet.add(account)
+    account = web3.eth.accounts.privateKeyToAccount(`0x${privateKey.startsWith('0x') ? privateKey.substr(2) : privateKey}`)
   }
 
   if (mnemonic) {
     account = web3.eth.accounts.privateKeyToAccount(`0x${bip39.mnemonicToSeedHex(mnemonic)}`)
-    wallet.add(account)
   }
+
+  wallet.add(account)
 
   const walletEntry =  new WalletEntryModel({
     key: uniqid(),
@@ -133,7 +129,6 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
   }
 
   return walletEntry
-
 }
 
 export const logout = () => (dispatch) => {

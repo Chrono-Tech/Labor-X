@@ -1,0 +1,60 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include card;
+  margin-top: 2rem;
+  margin-top: 2rem;
+  > div {
+    @include flex(row, flex-start, center);
+    min-height: 50px;
+    border-bottom: solid 1px $color-gray5;
+    padding: 0 2rem;
+  }
+  .invoiceSentLabel {
+    @include flex(row, center, center);
+    padding: .3rem 1rem;
+    color: $color-white;
+    text-transform: uppercase;
+    background-color: $color-gold;
+    border-radius: 1.2rem;
+    font-family: roboto, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .completedLabel {
+    @include flex(row, center, center);
+    padding: .3rem 1rem;
+    color: $color-white;
+    text-transform: uppercase;
+    background-color: $color-gray30;
+    border-radius: 1.2rem;
+    font-family: roboto, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .finalizedLabel {
+    @include flex(row, center, center);
+    padding: .3rem 1rem;
+    color: $color-white;
+    text-transform: uppercase;
+    background-color: $color-gray30;
+    border-radius: 1.2rem;
+    font-family: roboto, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .cardInfo {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    padding-left: 3rem;
+  }  
+  .cardFooter {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 3rem;
+  }
+}
+
