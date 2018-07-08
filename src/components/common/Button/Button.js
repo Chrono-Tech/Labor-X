@@ -56,8 +56,8 @@ export default class Button extends React.Component {
     PRIMARY: 'primary',
   }
 
-  handleClick = () => this.props.onClick
-    ? this.props.onClick()
+  handleClick = (e) => this.props.onClick
+    ? this.props.onClick(e)
     : true
 
   renderButtonContent (){

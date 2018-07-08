@@ -25,15 +25,24 @@ export class OpportunityViewContent extends React.Component {
   state = {
     currentTab: 0,
     isOfferPosting: false,
+    isScheduleVisible: false,
   }
 
   handleBack () {
     Router.pushRoute('/opportunities')
   }
 
-  handleCalendar = () => {
-    // eslint-disable-next-line no-console
-    console.log('Opportunity-view-handleCalendar')
+  handleClickCalendar = (e) => {
+    e.stopPropagation()
+    this.setState(prevState => ({
+      isScheduleVisible: !prevState.isScheduleVisible,
+    }))
+  }
+
+  handleClickPage = () => {
+    this.setState({
+      isScheduleVisible: false,
+    })
   }
 
   handleTabClick = (index) => {
@@ -142,10 +151,31 @@ export class OpportunityViewContent extends React.Component {
     },
   ]
 
+  renderSchedule = () => {
+    return this.state.isScheduleVisible ? (
+      <ScheduleWidget
+        events={[
+          {
+            date: new Date(),
+            description: 'blah blah',
+          },
+          {
+            date: new Date(),
+            description: 'blah2 blah2',
+          },
+          {
+            date: moment(new Date()).add(1, 'd').toDate(),
+            description: 'blah3 blah3',
+          },
+        ]}
+      />
+    ) : null
+  }
+
   render () {
     const { job } = this.props
     return (
-      <div className={css.main}>
+      <div className={css.main} onClick={this.handleClickPage}>
         <div className={css.title}>
           <div className={css.titleBar}>
             <Button
@@ -165,15 +195,15 @@ export class OpportunityViewContent extends React.Component {
               }}
               className={css.calendarButton}
               mods={Button.MODS.FLAT}
-              onClick={this.handleCalendar}
+              onClick={this.handleClickCalendar}
             />
           </div>
         </div>
         <div className={css.content}>
+          {this.renderSchedule()}
           <div className={css.header}>
             <h2>{job.ipfs.name}</h2>
             <p>Ref {job.id}</p>
-            <ScheduleWidget />
             <p className={css.opportunityAge}>{moment(job.extra.createdAt).fromNow()}</p>
           </div>
           <div className={css.tabs}>

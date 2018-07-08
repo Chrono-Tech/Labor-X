@@ -3,19 +3,24 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import uniqid from 'uniqid'
 import cn from 'classnames'
+import { Tip } from 'src/components/common'
 import css from './ScheduleWidget.scss'
 
-const dateFormat = 'DD MMM YYYY'
+const calendarFormat = 'MMMM YYYY'
+const tipFormat = 'DD MMM YYYY, ddd'
 
 export default class ScheduleWidget extends React.Component {
   static propTypes = {
+    events: PropTypes.arrayOf(PropTypes.shape({
+      date: PropTypes.instanceOf(Date),
+      description: PropTypes.string,
+    })),
   }
 
-  renderMonth = (date) => {
+  renderMonth = (date, events = []) => {
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const firstDayOfMonth = moment(date).date(1)
     const calendarCurrentDay = firstDayOfMonth.subtract(firstDayOfMonth.day(), 'd')
-    console.log(firstDayOfMonth)
     return (
       <div className={css.month}>
         <table>
@@ -31,19 +36,34 @@ export default class ScheduleWidget extends React.Component {
                   [...Array(7)].map((e, index) => {
                     const day = calendarCurrentDay.date()
                     const month = calendarCurrentDay.month()
-                    calendarCurrentDay.add(1, 'd')
-                    return (
+                    const td =  (
                       <td
                         key={uniqid()}
                         className={cn(
                           css.cell,
                           index %  2 ? null : css.grey,
-                          month !== moment(date).month() ? css.otherMonth : null
+                          month !== moment(date).month() ? css.otherMonth : null,
+                          calendarCurrentDay.isSame(new Date(), 'day') ? css.currentDay : null
                         )}
                       >
-                        {day}
+                        <div>
+                          <p>{day}</p>
+                          {
+                            events.filter(e => calendarCurrentDay.isSame(e.date, 'day')).map(e => (
+                              <Tip
+                                title={moment(e.date).format(tipFormat)}
+                                tip={e.description}
+                                key={uniqid()}
+                              >
+                                <div className={css.event} />
+                              </Tip>
+                            ))
+                          }
+                        </div>
                       </td>
                     )
+                    calendarCurrentDay.add(1, 'd')
+                    return td
                   })
                 }
               </tr>
@@ -54,10 +74,22 @@ export default class ScheduleWidget extends React.Component {
     )
   }
 
+  renderCalendar = (date) => {
+    const { events } = this.props
+    return (
+      <div className={css.calendarRoot}>
+        <p>{moment(date).format(calendarFormat)}</p>
+        { this.renderMonth(date, events) }
+      </div>
+    )
+  }
+
   render () {
     return (
       <div className={css.root}>
-        { this.renderMonth(new Date('2018-05-05')) }
+        { this.renderCalendar( new Date() ) }
+        { this.renderCalendar( moment(new Date()).add(1, 'month').toDate() ) }
+        { this.renderCalendar( moment(new Date()).add(2, 'month').toDate() ) }
       </div>
     )
   }
