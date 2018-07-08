@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm  } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
 import { Button, Input, UserRow } from 'components/common'
 import { WalletEntryModel } from 'src/models'
 import { LoginSteps } from 'src/store'
@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, selectedWallet , walletsList, onClickForgotPassword } = this.props
+    const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList, onClickForgotPassword, fetchSignIn } = this.props
 
     return (
       <form className={css.root} name={FORM_LOGIN} onSubmit={handleSubmit}>
@@ -47,17 +47,21 @@ class LoginForm extends React.Component {
           lineEnabled={false}
           materialInput={false}
         />
-        <Button
-          className={css.row}
-          buttonClassName={css.submitButton}
-          type={Button.TYPES.SUBMIT}
-          label='Login'
-          primary
-          disabled={pristine || invalid}
-          error={error}
-          errorMods={css.errorForm}
-          mods={Button.MODS.INVERT}
-        />
+        {
+          !fetchSignIn ? <Button
+            className={css.row}
+            buttonClassName={css.submitButton}
+            type={Button.TYPES.SUBMIT}
+            label='Login'
+            primary
+            disabled={pristine || invalid}
+            error={error}
+            errorMods={css.errorForm}
+            mods={Button.MODS.INVERT}
+          />
+          :
+          <div className={css.spinner} />
+        }
         <div>
           <button onClick={onClickForgotPassword} className={css.forgotPasswordLink}>
             Forgot your password?

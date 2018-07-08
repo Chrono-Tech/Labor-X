@@ -105,6 +105,8 @@ src/**/*.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
 !src/components/CompletedJobs/CompletedJobs.js
+!src/components/Login/LoginForm/LoginForn.js
+!src/components/Login/LoginOptions/LoginOptions.js
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/
@@ -197,3 +199,4 @@ src/**/*.js
 !src/store/ui/page/general-profile/index.js
 !src/store/ui/page/general-profile/personal.js
 !src/store/opportunities/selectors.js
+!src/store/login/actions.js

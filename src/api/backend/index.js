@@ -7,8 +7,8 @@ import ImageModel from "./model/ImageModel"
 import AttachmentModel from "./model/AttachmentModel"
 import PersonModel from "./model/PersonModel"
 
-// const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
-const API_URL = 'http://localhost:3000/api/v1'
+const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+// const API_URL = 'http://localhost:3000/api/v1'
 
 const http = axios.create({ baseURL: API_URL })
 
@@ -28,9 +28,9 @@ function deepSortByKey (obj) {
 export const signin = (account, roles) : SigninResBodyModel => {
   const body = { purpose: 'laborx' }
   if (roles) body.roles = roles
-  const data = JSON.stringify(deepSortByKey({ url: '/api/v1/security/signin/signature/laborx', body }))
+  const data = JSON.stringify(deepSortByKey({ url: '/api/v1/security/signin/signature', body }))
   const { signature } = account.sign(data)
-  return http.post('/security/signin/signature/laborx', body, {
+  return http.post('/security/signin/signature', body, {
     headers: { Authorization: `Signature ${ signature }` },
   }).then(res => SigninResBodyModel.fromJson(res.data))
 }

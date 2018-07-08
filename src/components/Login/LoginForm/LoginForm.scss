@@ -183,3 +183,27 @@
     height: 1px !important;
   }
 }
+
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  font-size: 4rem;
+  border: 0.125em solid #f3f3f3;
+  border-top: 0.125em solid #3498db;
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  animation: spinner 2s linear infinite;
+  display: inline-block;
+  margin: 0 .5rem;
+  margin-bottom: 2rem;
+}

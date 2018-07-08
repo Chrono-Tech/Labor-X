@@ -72,6 +72,13 @@ class LoginOptions extends React.Component {
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     selectedWalletRecoveryForm: PropTypes.instanceOf(WalletEntryModel),
+    hideAccount404Dialog: PropTypes.func,
+    handleAccount404DialogYesClick: PropTypes.func,
+    onSubmitRecoveryAccountForm: PropTypes.func,
+    onConfirmRecoveryPassword: PropTypes.func,
+    navigateToRecoveryPassword: PropTypes.func,
+    fetchSignIn: PropTypes.bool,
+    openAccount404Dialog: PropTypes.func,
   }
 
   static defaultProps = {
@@ -83,9 +90,7 @@ class LoginOptions extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      isModalOpen: props.walletsList.length === 0,
-    }
+    this.state = {}
   }
 
   componentWillMount () {
@@ -105,10 +110,6 @@ class LoginOptions extends React.Component {
   }
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
-
-  closeModal (){
-    this.setState({ isModalOpen: false })
-  }
 
   navigateToCreateAccount (){
     Router.pushRoute('/create-account')
@@ -136,6 +137,7 @@ class LoginOptions extends React.Component {
       onConfirmRecoveryPassword,
       navigateToRecoveryPassword,
       selectedWalletRecoveryForm,
+      fetchSignIn,
     } = this.props
 
     let component
@@ -200,6 +202,7 @@ class LoginOptions extends React.Component {
             onSubmitSuccess={onSignInSuccess}
             onSubmitFail={onSignInFail}
             onClickForgotPassword={navigateToRecoveryPassword}
+            fetchSignIn={fetchSignIn}
           />)
         break
       default:
@@ -275,7 +278,7 @@ export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
 
     render () {
       return (
-        <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store.__persistor}>
+        <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store["__persistor"]}>
           <WrappedComponent {...this.props} />
         </PersistGate>
       )
@@ -295,6 +298,7 @@ const LoginOptionsLoader = (
 function mapStateToProps (state) {
 
   return {
+    fetchSignIn: state.login.fetchSignIn ,
     selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
     step: state.login.step,
