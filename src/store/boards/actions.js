@@ -152,7 +152,7 @@ export const boardCreate = (data) => async (dispatch, getState) => {
   const web3 = web3Selector()(state)
 
   const detailsIPFSHash = await storeIntoIPFS(data.ipfsData)
-
+  debugger
   const tx = boardControlerDAO.createCreateBoardTx(
     signer.address,
     data.tagsBitmask,

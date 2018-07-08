@@ -14,6 +14,8 @@ $gutter: 4rem;
   padding: 4rem 0 0;
   color: $color-white;
   background-image: $gradientBlueToGreen;
+  padding-left: 4rem;
+
 }
 
 .titleBar {
@@ -24,6 +26,7 @@ $gutter: 4rem;
   border-top-right-radius: .5rem;
   background-color: $color-azure;
   border-bottom: 0.1rem solid rgba($color-white, 0.2);
+  max-width: 66rem;
 }
 
 .titleBarRight {
@@ -51,8 +54,8 @@ $gutter: 4rem;
 }
 
 .content {
-  padding-left: 4rem;
-  max-width: $maxWidth;
+  //padding-left: 4rem;
+  //max-width: $maxWidth;
 }
 
 .headline {
@@ -200,4 +203,9 @@ $gutter: 4rem;
 .calendar {
   margin-top: 2rem;
   object-fit: contain;
+}
+
+.formContentWrapper {
+  padding-left: 4rem;
+  max-width: 70rem;
 }

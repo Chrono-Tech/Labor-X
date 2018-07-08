@@ -47,6 +47,9 @@ export default class JobControllerDAO extends AbstractContractDAO {
     this.jobJobOfferAccepted = this.history.events.JobOfferAccepted({})
       .on('data', this.handleJobOfferAcceptedData.bind(this))
       .on('error', this.handleError.bind(this))
+    this.jobJobOfferPosted = this.history.events.JobOfferPosted({})
+      .on('data', this.handleJobOfferPostedData.bind(this))
+      .on('error', this.handleError.bind(this))
     // this.jobClosedEmitter = this.contract.events.JobClosed({})
     //   .on('data', this.handleJobClosedData.bind(this))
     //   .on('error', this.handleError.bind(this))
@@ -280,6 +283,11 @@ export default class JobControllerDAO extends AbstractContractDAO {
   handleJobOfferAcceptedData (data) {
     // eslint-disable-next-line no-console
     console.log('[JobControllerDAO] JobOfferAccepted', data)
+  }
+
+  handleJobOfferPostedData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] JobOfferPosted', data)
   }
 
   handleError (error) {

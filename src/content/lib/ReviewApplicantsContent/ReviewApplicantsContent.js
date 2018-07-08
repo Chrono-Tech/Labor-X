@@ -44,7 +44,7 @@ export class ReviewApplicantsContent extends React.Component {
 
   render () {
     const { job, applicants, worker } = this.props
-    return !applicants ? null : (
+    return (
       <div className={css.main}>
         <div className={css.title}>
           <div className={css.titleBar}>
@@ -108,8 +108,8 @@ export class ReviewApplicantsContent extends React.Component {
             <div className={css.block}>
               <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                { applicants &&  applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} jobId={this.props.job.id} job={this.props.job} />))}
-                { applicants && !applicants.length && this.renderEmptyListMessage() }
+                { applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} jobId={this.props.job.id} job={this.props.job} />))}
+                { !applicants.length && this.renderEmptyListMessage() }
               </div>
             </div>
           </form>
@@ -121,7 +121,7 @@ export class ReviewApplicantsContent extends React.Component {
 
 function mapStateToProps (state, op) {
   const offers = jobsOffersSelector(op.job.id)(state)
-  const applicants = !offers ? null : offers.map(offer => ({
+  const applicants = !offers ? [] : offers.map(offer => ({
     offer,
     worker: profileSelector(offer.worker)(state),
   }))
@@ -138,9 +138,7 @@ function mapStateToProps (state, op) {
 
 function mapDispatchToProps (dispatch, op) {
   return {
-    reloadJobsOffers: () => dispatch(reloadJobsOffers({
-      jobId: op.job.id,
-    })),
+    reloadJobsOffers: () => dispatch(reloadJobsOffers(op.job.id)),
   }
 }
 
