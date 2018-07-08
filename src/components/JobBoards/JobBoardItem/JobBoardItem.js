@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import pluralize from 'pluralize'
-import { RaisedButton, FlatButton } from 'material-ui'
+import _Button from '@material-ui/core/Button'
+// import { RaisedButton, } from 'material-ui'
 import { Popover, Icon, Button, Dialog } from 'src/components/common'
 import { BoardModel } from 'src/models'
 import { joinBoard, terminateBoard } from 'src/store'
@@ -363,19 +364,18 @@ export class JobBoardItem extends React.Component {
         open={this.state.isTerminateDialogOpen}
         onRequestClose={this.handleTerminateDialogClose}
         actions={[
-          <FlatButton
+          <_Button
             disabled={this.state.isTerminateProgress}
-            label='NO'
             onClick={this.handleTerminateRejectClick}
             type={Button.TYPES.SUBMIT}
-          />,
-          <RaisedButton
-            primary
+          >NO</_Button>,
+          <_Button
+            variant="contained"
+            color="primary"
             disabled={this.state.isTerminateProgress}
-            label={this.state.isTerminateProgress ? 'Loading' : 'YES'}
             onClick={this.handleTerminateApproveClick}
             type={Button.TYPES.SUBMIT}
-          />,
+          >{this.state.isTerminateProgress ? 'Loading' : 'YES'}</_Button>,
         ]}
       >
         This action cannot be undone. This will permanently terminate this job board
