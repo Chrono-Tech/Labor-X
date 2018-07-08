@@ -5,7 +5,7 @@ export const OFFERS_CLEAR = 'offers/clear'
 export const OFFERS_SAVE = 'offers/save'
 
 // Should be called only once
-export const initJobOffers = () => async (dispatch) => {
+export const initJobOffers = () => async () => {
   // await dispatch(reloadJobsOffers())
 }
 
