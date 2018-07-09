@@ -3,13 +3,13 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
-import { TextField, DatePicker } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText, RaisedButton, IconButton } from 'material-ui'
 import { List, ListItem } from 'material-ui/List'
 import DeleteSvgIcon from '@material-ui/icons/Delete'
 import InsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
 import LocationCitySvgIcon from '@material-ui/icons/LocationCity'
-
+import Grid from '@material-ui/core/Grid'
 import ProfileModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileModel"
 import AttachmentModel from "../../../api/backend/model/AttachmentModel"
 import { VALIDATION_STATE_CLASS, VALIDATION_STATE_ICON } from "./index"
@@ -23,6 +23,7 @@ import {
   getPassportInitialValues as getInitialValues,
   resetPassport as reset,
 } from './../../../store/general-profile'
+import DatePickerField from "../../../components/DatePickerField"
 
 const setupText = 'Upload requested documents which can support that the entered information is valid. Note that changing and saving information will require validation re-submit.'
 const finalText = 'Great Job! You have successfully passed validation. Note that changing and saving information will require validation re-submit.'
@@ -94,10 +95,14 @@ class PassportForm extends React.Component {
           </div>
           <div>
             <h3 className={css.cardTitle}>Identity Card</h3>
-            <div className={css.flexRow}>
-              <Field component={TextField} name='passport' hintText='Passport ID' className={css.field} />
-              <Field component={DatePicker} name='expirationDate' hintText='Expiration Date' className={css.field} />
-            </div>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Field component={TextField} name='passport' placeholder='Passport ID' className={css.field} />
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={DatePickerField} name='expirationDate' emptyLabel='Expiration Date' />
+              </Grid>
+            </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>

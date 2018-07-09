@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import { Field, FieldArray } from 'redux-form'
-import { SelectField, TextField } from 'redux-form-material-ui'
+import TextField from 'redux-form-material-ui/lib/TextField'
+import Select from 'redux-form-material-ui/lib/Select'
 import { MenuItem } from 'material-ui'
 import { ValidatedCheckbox, Link, Icon } from 'src/components/common'
 import { WorkerModel } from 'src/models'
@@ -51,26 +52,26 @@ export default class ServicesTab extends React.Component {
           />
           <div className={css.twoColumn}>
             <Field
-              fullWidth
-              component={SelectField}
+              displayEmpty
+              component={Select}
               name={`${service}.category`}
-              floatingLabelText='Categoty'
             >
-              <MenuItem value={0} primaryText='Category 1' />
-              <MenuItem value={1} primaryText='Category 2' />
-              <MenuItem value={2} primaryText='Category 3' />
+              <MenuItem value='' disabled>Category</MenuItem>
+              <MenuItem value={0}>Category 1</MenuItem>
+              <MenuItem value={1}>Category 2</MenuItem>
+              <MenuItem value={2}>Category 3</MenuItem>
             </Field>
             <div />
           </div>
           <div className={css.twoColumn}>
             <Field
-              fullWidth
-              component={SelectField}
+              displayEmpty
+              component={Select}
               name={`${service}.fee`}
-              floatingLabelText='Fee'
             >
-              <MenuItem value={0} primaryText='Specific fee' />
-              <MenuItem value={1} primaryText='Specific fee' />
+              <MenuItem value='' disabled>Fee</MenuItem>
+              <MenuItem value={0}>Specific fee</MenuItem>
+              <MenuItem value={1}>Specific fee</MenuItem>
             </Field>
             <div className={css.twoColumn}>
               <Field

@@ -3,8 +3,9 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
-import { DatePicker, TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText, RaisedButton } from 'material-ui'
+import Grid from '@material-ui/core/Grid'
 
 import { Icon } from "../../../components/common/index"
 import css from './index.scss'
@@ -21,6 +22,7 @@ import {
 import ProfilePersonalModel from "../../../api/backend/model/ProfilePersonalModel"
 import ProfileModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileModel"
 import { VALIDATION_STATE_CLASS, VALIDATION_STATE_ICON } from "./index"
+import DatePickerField from "../../../components/DatePickerField"
 
 const DEFAULT_AVATAR = { url: '/static/images/profile-photo.jpg' }
 
@@ -84,10 +86,14 @@ class PersonalForm extends React.Component {
           </div>
           <div>
             <h3 className={css.cardTitle}>Photo, Name and Date of birth</h3>
-            <div className={css.flexRow}>
-              <Field component={TextField} name='userName' hintText='Name' className={css.field} />
-              <Field component={DatePicker} name='birthDate' hintText='Date of Birth' className={css.field} />
-            </div>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Field component={TextField} name='userName' placeholder='Name' className={css.field} />
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={DatePickerField} name='birthDate' emptyLabel='Date of Birth' />
+              </Grid>
+            </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>

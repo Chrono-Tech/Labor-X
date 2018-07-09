@@ -7,6 +7,7 @@ import { TextField } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText } from 'material-ui'
 import CommunicationContactsSvgIcon from '@material-ui/icons/Contacts'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 // import NavigationExpandLessSvgIcon from '@material-ui/icons/navigation/expand-less'
 // import NavigationExpandMoreSvgIcon from '@material-ui/icons/navigation/expand-more'
 
@@ -75,10 +76,14 @@ class ContactsForm extends React.Component {
           </div>
           <div>
             <h3 className={css.cardTitle}>Email and Phone</h3>
-            <div className={css.flexRow}>
-              <Field component={TextField} name='email' hintText='Email' className={css.field} />
-              <Field component={TextField} name='phone' hintText='Phone' className={css.field} />
-            </div>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Field component={TextField} name='email' placeholder='Email' className={css.field} />
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={TextField} name='phone' placeholder='Phone' className={css.field} />
+              </Grid>
+            </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>

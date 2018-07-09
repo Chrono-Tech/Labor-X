@@ -2,12 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { Field } from 'redux-form'
-import { DatePicker, SelectField, TextField } from 'redux-form-material-ui'
+import TextField from 'redux-form-material-ui/lib/TextField'
+import Select from 'redux-form-material-ui/lib/Select'
 import { MenuItem } from 'material-ui'
 import Collapsible from 'react-collapsible'
 import { ValidatedCheckbox, Link, Icon, Button } from 'src/components/common'
 import { ProfileModel, CLIENT_TYPES_LIST, CLIENT_TYPES, ClientTypeModel } from 'src/models'
 import css from './GeneralTab.scss'
+import DatePickerField from "../../../../components/DatePickerField"
 
 export default class GeneralTab extends React.Component {
   static propTypes = {
@@ -50,13 +52,13 @@ export default class GeneralTab extends React.Component {
             floatingLabelText='Name'
           />
           <Field
-            fullWidth
-            openToYearSelection
+            // fullWidth
+            // openToYearSelection
             name='registered'
-            component={DatePicker}
-            floatingLabelText='Registered In'
-            // eslint-disable-next-line react/jsx-no-bind
-            format={(value) => value === '' ? null : value}
+            component={DatePickerField}
+            // floatingLabelText='Registered In'
+            // // eslint-disable-next-line react/jsx-no-bind
+            // format={(value) => value === '' ? null : value}
           />
         </div>
         <div className={css.twoColumn}>
@@ -91,13 +93,13 @@ export default class GeneralTab extends React.Component {
         <h3>Info</h3>
         <div className={css.twoColumn}>
           <Field
-            fullWidth
-            openToYearSelection
+            // fullWidth
+            // openToYearSelection
             name='registered'
-            component={DatePicker}
-            floatingLabelText='Registered In'
-            // eslint-disable-next-line react/jsx-no-bind
-            format={(value) => value === '' ? null : value}
+            component={DatePickerField}
+            // floatingLabelText='Registered In'
+            // // eslint-disable-next-line react/jsx-no-bind
+            // format={(value) => value === '' ? null : value}
           />
           <Field
             fullWidth
@@ -139,13 +141,15 @@ export default class GeneralTab extends React.Component {
           <h3>Organisation Type</h3>
           <div className={css.twoColumn}>
             <Field
-              fullWidth
-              component={SelectField}
+              displayEmpty
+              // fullWidth
+              component={Select}
               name='clientType'
-              hintText='Organisation Type'
+              // hintText='Organisation Type'
             >
+              <MenuItem key={uniqid()} value='' disabled>Organisation Type</MenuItem>
               {CLIENT_TYPES_LIST.map(type => (
-                <MenuItem key={uniqid()} value={type} primaryText={type.label} />
+                <MenuItem key={uniqid()} value={type}>{type.label}</MenuItem>
               ))}
             </Field>
             <div />

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Field, FieldArray } from 'redux-form'
-import { DatePicker, TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui'
 import Collapsible from 'react-collapsible'
 import { Icon, Button, Translate, Chip } from 'src/components/common'
 import { SKILLS_LIST } from 'src/models'
 import css from './WorkExperienceTab.scss'
+import DatePickerField from "../../../../components/DatePickerField"
 
 export default class WorkExperienceTab extends React.Component {
   handleClickValidate = () => {
@@ -62,22 +63,24 @@ export default class WorkExperienceTab extends React.Component {
             />
             <div className={css.twoColumn}>
               <Field
-                fullWidth
-                openToYearSelection
+                displayEmpty
+                // fullWidth
+                // openToYearSelection
                 name={`${experience}.workFrom`}
-                component={DatePicker}
-                floatingLabelText='From'
+                component={DatePickerField}
+                // floatingLabelText='From'
                 // eslint-disable-next-line react/jsx-no-bind
-                format={(value) => value === '' ? null : value}
+                // format={(value) => value === '' ? null : value}
               />
               <Field
-                fullWidth
-                openToYearSelection
+                displayEmpty
+                // fullWidth
+                // openToYearSelection
                 name={`${experience}.workTo`}
-                component={DatePicker}
-                floatingLabelText='To'
+                component={DatePickerField}
+                // floatingLabelText='To'
                 // eslint-disable-next-line react/jsx-no-bind
-                format={(value) => value === '' ? null : value}
+                // format={(value) => value === '' ? null : value}
               />
             </div>
           </div>

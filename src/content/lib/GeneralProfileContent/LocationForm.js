@@ -4,8 +4,9 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector } from "redux-form"
-import { TextField, SelectField } from 'redux-form-material-ui'
+import { TextField, Select } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText, RaisedButton, MenuItem, IconButton } from 'material-ui'
+import Grid from '@material-ui/core/Grid'
 import { List, ListItem } from 'material-ui/List'
 import ActionDeleteSvgIcon from '@material-ui/icons/Delete'
 import EditorInsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
@@ -111,24 +112,33 @@ class LocationForm extends React.Component {
           <div>
             <h3 className={css.cardTitle}>Home Address</h3>
             <div className={css.flexRow}>
-              <Field component={SelectField} name='country' hintText='Country' className={css.field}>
-                { countries.map(x => <MenuItem value={x.id} primaryText={x.name} />) }
+              <Field component={Select} name='country' className={css.field} displayEmpty>
+                <MenuItem value='' disabled>Country</MenuItem>
+                { countries.map(x => <MenuItem value={x.id}>{x.name}</MenuItem>) }
               </Field>
-              <Field component={SelectField} name='state' hintText='State' className={css.field} disabled={!this.props.country} >
-                { this.getStates().map(x => <MenuItem value={x.id} primaryText={x.name} />) }
+              <Field component={Select} name='state' className={css.field} disabled={!this.props.country} displayEmpty>
+                <MenuItem value='' disabled>State</MenuItem>
+                { this.getStates().map(x => <MenuItem value={x.id}>{x.name}</MenuItem>) }
               </Field>
             </div>
             <div className={css.flexRow}>
-              <Field component={SelectField} name='city' hintText='City' className={css.field} disabled={!this.props.state}>
-                { this.getCities().map(x => <MenuItem value={x.id} primaryText={x.name} />) }
+              <Field component={Select} name='city' className={css.field} disabled={!this.props.state} displayEmpty>
+                <MenuItem value='' disabled>City</MenuItem>
+                { this.getCities().map(x => <MenuItem value={x.id}>{x.name}</MenuItem>) }
               </Field>
-              <Field component={TextField} name='zip' hintText='Zip' className={css.field} />
+              <Field component={TextField} name='zip' placeholder='Zip' className={css.field} />
             </div>
-            <div className={css.flexRow}>
-              <Field component={TextField} name='building' hintText='Building #' className={classnames([css.field, css.fieldBuilding])} />
-              <Field component={TextField} name='suit' hintText='Suit' className={classnames([css.field, css.fieldSuit])} />
-              <Field component={TextField} name='street' hintText='Street' className={css.field} />
-            </div>
+            <Grid container>
+              <Grid item xs={3}>
+                <Field component={TextField} name='building' placeholder='Building #' className={classnames([css.field, css.fieldBuilding])} />
+              </Grid>
+              <Grid item xs={3}>
+                <Field component={TextField} name='suit' placeholder='Suit' className={classnames([css.field, css.fieldSuit])} />
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={TextField} name='street' placeholder='Street' className={css.field} />
+              </Grid>
+            </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>

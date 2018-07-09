@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, propTypes } from 'redux-form'
-import { Toggle, SelectField, DatePicker, TextField } from 'redux-form-material-ui'
+import TextField from 'redux-form-material-ui/lib/TextField'
+import Select from 'redux-form-material-ui/lib/Select'
+import Switch from 'redux-form-material-ui/lib/Switch'
 import { MuiThemeProvider, CircularProgress, MenuItem } from 'material-ui'
 import AutoComplete from 'material-ui/AutoComplete'
 import { Router } from 'src/routes'
@@ -11,6 +13,7 @@ import t from "typy"
 import validate from './validate'
 import css from './CreateJobForm.scss'
 import { WORKFLOW_FIXED_PRICE, WORKFLOW_TM } from "../../../models"
+import DatePickerField from "../../../components/DatePickerField"
 
 export const FORM_CREATE_JOB = 'form/createJob'
 
@@ -81,12 +84,12 @@ class CreateJobForm extends React.Component {
     return (
       <div>
         <Field
-          component={SelectField}
+          component={Select}
           name='flowType'
-          hintText={<Translate value='ui.createJob.flowType' />}
         >
-          <MenuItem value={1} primaryText='Hourly Based' />
-          <MenuItem value={2} primaryText='Fixed price' />
+          <MenuItem value='' disabled><Translate value='ui.createJob.flowType' /></MenuItem>
+          <MenuItem value={1}>Hourly Based</MenuItem>
+          <MenuItem value={2}>Fixed price</MenuItem>
         </Field>
         {this.props.flowType ? this.renderBudgetWidget() : null}
 
@@ -182,16 +185,16 @@ class CreateJobForm extends React.Component {
         <div>
           <Field
             name='since'
-            component={DatePicker}
-            placeholder='Starts at'
+            component={DatePickerField}
+            emptyLabel='Starts at'
           />
           <img className={css.calendar} src='/static/temp/calendar.png' alt='calendar' />
         </div>
         <div>
           <Field
             name='until'
-            component={DatePicker}
-            placeholder='Deadline'
+            component={DatePickerField}
+            emptyLabel='Deadline'
           />
           <img className={css.calendar} src='/static/temp/calendar.png' alt='calendar' />
         </div>
@@ -395,13 +398,13 @@ class CreateJobForm extends React.Component {
                 <div>
                   <div className={css.twoColumn}>
                     <Field
-                      component={SelectField}
+                      component={Select}
                       name='board'
-                      hintText={<Translate value='ui.createJob.jobBoard' />}
                       onChange={this.handleChangeBoard}
                     >
+                      <MenuItem value='' disabled><Translate value='ui.createJob.jobBoard' /></MenuItem>
                       {boards.map(board => (
-                        <MenuItem key={board.key} value={board.id} primaryText={board.ipfs.name} />
+                        <MenuItem key={board.key} value={board.id}>{board.ipfs.name}</MenuItem>
                       ))}
                     </Field>
                     <div className={css.postFee}>
@@ -418,18 +421,18 @@ class CreateJobForm extends React.Component {
                     </div>
                     <div className={css.hourlyRatingColumn}>
                       <Field
-                        component={SelectField}
-                        hintText='Force Worker Rating'
-                        hintStyle={{ fontStyle: 'italic' }}
+                        component={Select}
+                        // hintStyle={{ fontStyle: 'italic' }}
                         value={this.state.hourlyRatingValue}
                         onChange={this.handleChangeHourlyRating}
                         name='hourlyRating'
                       >
-                        <MenuItem value={1} primaryText='Force Worker Rating 1' />
-                        <MenuItem value={2} primaryText='Force Worker Rating 2' />
-                        <MenuItem value={3} primaryText='Force Worker Rating 3' />
-                        <MenuItem value={3} primaryText='Force Worker Rating 4' />
-                        <MenuItem value={3} primaryText='Force Worker Rating 5' />
+                        <MenuItem value='' disabled>Force Worker Rating</MenuItem>
+                        <MenuItem value={1}>Force Worker Rating 1</MenuItem>
+                        <MenuItem value={2}>Force Worker Rating 2</MenuItem>
+                        <MenuItem value={3}>Force Worker Rating 3</MenuItem>
+                        <MenuItem value={3}>Force Worker Rating 4</MenuItem>
+                        <MenuItem value={3}>Force Worker Rating 5</MenuItem>
                       </Field>
                       <div className={css.hourlyRating}>
                         <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
@@ -445,7 +448,7 @@ class CreateJobForm extends React.Component {
                   <h3><Translate value='ui.createJob.budget' /></h3>
                   <div>
                     <Field
-                      component={Toggle}
+                      component={Switch}
                       name='hasBudget'
                       parse={Boolean}
                     />
@@ -465,7 +468,7 @@ class CreateJobForm extends React.Component {
                   <h3><Translate value='ui.createJob.allowCustomOffers' /></h3>
                   <div>
                     <Field
-                      component={Toggle}
+                      component={Switch}
                       name='allowCustomOffers'
                       parse={Boolean}
                     />
@@ -482,7 +485,7 @@ class CreateJobForm extends React.Component {
                   <h3><Translate value='ui.createJob.startWorkAllowance' /></h3>
                   <div>
                     <Field
-                      component={Toggle}
+                      component={Switch}
                       name='startWorkAllowance'
                       parse={Boolean}
                     />
@@ -498,7 +501,7 @@ class CreateJobForm extends React.Component {
                   <h3><Translate value='ui.createJob.deadline' /></h3>
                   <div>
                     <Field
-                      component={Toggle}
+                      component={Switch}
                       name='hasPeriod'
                     />
                   </div>
@@ -515,7 +518,7 @@ class CreateJobForm extends React.Component {
                   <h3><Translate value='ui.createJob.address' /></h3>
                   <div>
                     <Field
-                      component={Toggle}
+                      component={Switch}
                       name='hasAddress'
                     />
                   </div>
