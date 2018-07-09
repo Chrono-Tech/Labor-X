@@ -1,26 +1,34 @@
-import { Translate } from 'components/common'
-import { Link } from 'src/routes'
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
+import cn from 'classnames'
+import { Translate } from 'components/common'
+import { Link, Router } from 'src/routes'
 import css from './Link.scss'
 
 export default class LinkControl extends React.Component {
   static propTypes = {
-    href: PropTypes.string.isRequired,
     className: PropTypes.string,
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node), PropTypes.string]),
+    href: PropTypes.string.isRequired,
+    activeClassName: PropTypes.string,
     invert: PropTypes.bool,
     label: PropTypes.string,
   }
 
   render () {
-    const { label, className, children } = this.props
-
-    const classNames = [ this.props.invert ? css.linkInvert : css.link ]
-    className && classNames.push(className)
+    const { label, className, children, activeClassName, href, invert } = this.props
 
     return (
-      <Link route={this.props.href}>
-        <a className={classNames.join(' ')} title={label}>
+      <Link route={href} href={href}>
+        <a
+          href={href}
+          title={label}
+          className={cn(
+            href === Router.route ? activeClassName : null,
+            invert ? css.linkInvert : css.link,
+            className
+          )}
+        >
           {label
             ? <Translate value={label} />
             : children
