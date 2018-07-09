@@ -28,9 +28,9 @@ function deepSortByKey (obj) {
 export const signin = (account, roles) : SigninResBodyModel => {
   const body = { purpose: 'laborx' }
   if (roles) body.roles = roles
-  const data = JSON.stringify(deepSortByKey({ url: '/api/v1/security/signin/signature', body }))
+  const data = JSON.stringify(deepSortByKey({ url: '/api/v1/security/signin/signature/laborx', body }))
   const { signature } = account.sign(data)
-  return http.post('/security/signin/signature', body, {
+  return http.post('/security/signin/signature/laborx', body, {
     headers: { Authorization: `Signature ${ signature }` },
   }).then(res => SigninResBodyModel.fromJson(res.data))
 }

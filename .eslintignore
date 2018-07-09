@@ -105,7 +105,7 @@ src/**/*.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
 !src/components/CompletedJobs/CompletedJobs.js
-!src/components/Login/LoginForm/LoginForn.js
+!src/components/Login/LoginForm/LoginForm.js
 !src/components/Login/LoginOptions/LoginOptions.js
 
 !src/content/index.js
