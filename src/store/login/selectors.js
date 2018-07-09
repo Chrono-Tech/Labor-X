@@ -6,6 +6,7 @@ import {web3Selector} from "../ethereum/selectors";
 import {FORM_PRIVATE_KEY} from "../../components/Login";
 
 export const getState = state => state.login
+export const getPrevStep = createSelector(getState, state => state.prevStep)
 export const getStep = createSelector(getState, state => state.step)
 export const getOpenAccount404Dialog = createSelector(getState, state => state.openAccount404Dialog)
 

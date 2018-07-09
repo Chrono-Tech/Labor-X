@@ -67,11 +67,18 @@ class LoginOptions extends React.Component {
     onSelectWallet: PropTypes.func,
     onChangeStep: PropTypes.func,
     navigateToLoginForm: PropTypes.func,
+    hideAccount404Dialog: PropTypes.func,
+    handleAccount404DialogYesClick: PropTypes.func,
+    onSubmitRecoveryAccountForm: PropTypes.func,
+    onConfirmRecoveryPassword: PropTypes.func,
+    navigateToRecoveryPassword: PropTypes.func,
     step: PropTypes.string,
+    prevStep: PropTypes.string,
     navigateToCreateWallet: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     selectedWalletRecoveryForm: PropTypes.instanceOf(WalletEntryModel),
+    openAccount404Dialog: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -80,20 +87,16 @@ class LoginOptions extends React.Component {
     onSelectWallet: null,
   }
 
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      isModalOpen: props.walletsList.length === 0,
-    }
-  }
-
   componentWillMount () {
     const { selectedWallet, onChangeStep, step } = this.props
 
     if (selectedWallet && !step) {
       onChangeStep(LoginSteps.Login)
     }
+  }
+
+  componentDidMount () {
+    window.onpopstate = this.onBackButtonEvent
   }
 
   handleAccount404DialogNoClick = () => {
@@ -106,8 +109,10 @@ class LoginOptions extends React.Component {
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
 
-  closeModal (){
-    this.setState({ isModalOpen: false })
+  onBackButtonEvent = (e) => {
+    const { prevStep, onChangeStep } = this.props
+    onChangeStep(prevStep)
+    e.preventDefault()
   }
 
   navigateToCreateAccount (){
@@ -233,14 +238,12 @@ class LoginOptions extends React.Component {
           actions={[
             <Button
               label='No'
-              // onClick={this.closeModal.bind(this)}
               onClick={this.handleAccount404DialogNoClick}
               buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
               type={Button.TYPES.SUBMIT}
             />,
             <Button
               label='YES'
-              // onClick={this.navigateToCreateAccount.bind(this)}
               onClick={this.handleAccount404DialogYesClick}
               buttonClassName={css.actionButton}
               type={Button.TYPES.SUBMIT}
@@ -275,6 +278,7 @@ export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
 
     render () {
       return (
+        // eslint-disable-next-line no-underscore-dangle
         <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store.__persistor}>
           <WrappedComponent {...this.props} />
         </PersistGate>
@@ -298,6 +302,7 @@ function mapStateToProps (state) {
     selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
     step: state.login.step,
+    prevStep: state.login.prevStep,
     walletsList: (state.wallet.walletsList || []).map((wallet) => new WalletEntryModel(wallet)),
     openAccount404Dialog: getOpenAccount404Dialog(state),
   }
