@@ -211,7 +211,7 @@ class JobBoards extends React.Component {
     return (
       <div className={css.main}>
         <div className={css.contentWrapper}>
-          <h2>Job Boards</h2>
+          <h1 className={css.titleText}>Job Boards</h1>
 
           <form className={css.flexRow} name={FORM_JOB_BOARDS} onSubmit={handleSubmit(onSubmit)}>
             <div className={css.contentBlock}>

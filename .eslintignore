@@ -83,6 +83,7 @@ src/**/*.js
 !src/store/opportunities/selectors.js
 
 
+!src/components/common/Link/
 !src/components/common/Icon/Icon.js
 !src/components/common/Chip/Chip.js
 !src/components/common/Select/WrapperSelect.js

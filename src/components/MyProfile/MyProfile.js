@@ -74,4 +74,4 @@ const mapDispatchToProps = (dispatch) => ({
   // reviewProfile: () => dispatch(reviewProfile()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GeneralProfile)
+export default connect(mapStateToProps, mapDispatchToProps)(MyProfile)
