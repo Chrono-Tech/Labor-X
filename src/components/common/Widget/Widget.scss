@@ -3,6 +3,7 @@
 
 .root {
   @include card;
+  box-shadow: $widgetBoxShadow;
 }
 
 .headerBlue {

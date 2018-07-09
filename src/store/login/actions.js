@@ -30,6 +30,8 @@ export const LoginSteps = {
 }
 
 export const LOGIN_SIGN_IN = 'login/signIn'
+export const START_FETCH_SIGN_IN = 'login/startFetchSignIn'
+export const END_FETCH_SIGN_IN = 'login/endFetchSignIn'
 export const LOGIN_SET_SIGN_IN_MODEL = 'login/signInModel'
 export const LOGIN_SIGN_OUT = 'login/signOut'
 export const LOGIN_CHANGE_STEP = 'login/changeStep'
@@ -44,18 +46,33 @@ export const setSignInModel = (signInModel) => (dispatch) => {
   dispatch({ type: LOGIN_SET_SIGN_IN_MODEL, signInModel })
 }
 
+export const startFetchSignIn = (dispatch) => {
+  dispatch({ type: START_FETCH_SIGN_IN })
+}
+
+export const endFetchSignIn = (dispatch) => {
+  dispatch({ type: END_FETCH_SIGN_IN })
+}
+
 export const signIn = ({ password }) => async (dispatch, getState) => {
-  const state = getState()
-  const { selectedWallet } = state.wallet
-  const walletModel = await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
-  const account = walletModel.wallet[0]
-  const { types } = selectedWallet
-  const roles = types
-    ? { isClient: types.client, isWorker: types.worker, isRecruiter: types.recruiter }
-    : null
-  const { token, profile, client, worker, recruiter } = await backendApi.signin(account, roles)
-  const accountTypes = { client: client.isRequested, worker: worker.isRequested, recruiter: recruiter.isRequested }
-  dispatch(userSave({ token, profile, accountTypes, client, worker, recruiter }))
+  try {
+    startFetchSignIn(dispatch)
+    const state = getState()
+    const { selectedWallet } = state.wallet
+    const walletModel = await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
+    const account = walletModel.wallet[0]
+    const { types } = selectedWallet
+    const roles = types
+      ? { isClient: types.client, isWorker: types.worker, isRecruiter: types.recruiter }
+      : null
+    const { token, profile, client, worker, recruiter } = await backendApi.signin(account, roles)
+    const accountTypes = { client: client.isRequested, worker: worker.isRequested, recruiter: recruiter.isRequested }
+    dispatch(userSave({ token, profile, accountTypes, client, worker, recruiter }))
+    endFetchSignIn(dispatch)
+  }
+  catch (e) {
+    endFetchSignIn(dispatch)
+  }
 }
 
 export const onSignInSuccess = () => (dispatch) => {
@@ -63,7 +80,7 @@ export const onSignInSuccess = () => (dispatch) => {
   Router.pushRoute('/dashboard')
 }
 
-export const onSignInFail = () =>  (dispatch) => {
+export const onSignInFail = () => (dispatch) => {
   dispatch(stopSubmit(FORM_LOGIN, { password: 'Password does not match' }))
 }
 
@@ -124,7 +141,7 @@ export const onSelectWallet = (wallet) => (dispatch, getState) => {
 
   const { isRecoveryPasswordMode } = state.login
 
-  if (isRecoveryPasswordMode){
+  if (isRecoveryPasswordMode) {
 
     dispatch(selectWalletRecoveryForm(wallet))
 
@@ -222,7 +239,7 @@ export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
     const person = await backendApi.getPerson(account.address)
     const accountTypes = await dispatch(getAccountTypes(account.address))
     if (person && accountTypes) {
-      const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY,  key: values.key,  address: account.address })
+      const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: values.key, address: account.address })
       dispatch(setSignInModel(signInModel))
       dispatch(navigateToCreateWallet())
     } else {
