@@ -24,7 +24,7 @@ export default class LinkControl extends React.Component {
           href={href}
           title={label}
           className={cn(
-            href === Router.route ? activeClassName : null,
+            Router && href === Router.route ? activeClassName : null,
             invert ? css.linkInvert : css.link,
             className
           )}
