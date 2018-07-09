@@ -99,6 +99,7 @@ src/**/*.js
 !src/components/common/RadioIcon/RadioIcon.js
 !src/components/common/OpportunityCard/OpportunityCard.js
 !src/components/common/VerificationLevelSelector/
+!src/components/common/ScheduleWidget/
 !src/components/common/CompletedJobCard/CompletedJobCard.js
 
 !src/components/layouts/MainLayout.js
