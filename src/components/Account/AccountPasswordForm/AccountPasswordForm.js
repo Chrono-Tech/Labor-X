@@ -31,7 +31,7 @@ class AccountPasswordForm extends React.Component {
   renderPasswordFieldset () {
     return (
       <div className={css.contentBlock}>
-        <h2>Create Account Password</h2>
+        <h2>Create Your Account Password</h2>
         <p>If you're new to block-chain create your Account password below.</p>
 
         <div className={css.passwordBlock}>

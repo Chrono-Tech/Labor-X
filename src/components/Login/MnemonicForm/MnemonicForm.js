@@ -37,7 +37,7 @@ class MnemonicForm extends React.Component {
           className={css.row}
           buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
-          label='Login'
+          label='Proceed to Login'
           primary
           disabled={pristine || invalid}
           error={error}
