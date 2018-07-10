@@ -72,13 +72,13 @@ class LoginOptions extends React.Component {
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     selectedWalletRecoveryForm: PropTypes.instanceOf(WalletEntryModel),
-    hideAccount404Dialog: PropTypes.bool,
+    hideAccount404Dialog: PropTypes.func,
     handleAccount404DialogYesClick: PropTypes.func,
     onSubmitRecoveryAccountForm: PropTypes.func,
     onConfirmRecoveryPassword: PropTypes.func,
     navigateToRecoveryPassword: PropTypes.func,
     fetchSignIn: PropTypes.bool,
-    openAccount404Dialog: PropTypes.func,
+    openAccount404Dialog: PropTypes.bool,
   }
 
   static defaultProps = {
