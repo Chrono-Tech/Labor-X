@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
 import { TextField } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText, RaisedButton } from 'material-ui'
-import CommunicationContactsSvgIcon from 'material-ui/svg-icons/communication/contacts'
-// import NavigationExpandLessSvgIcon from 'material-ui/svg-icons/navigation/expand-less'
-// import NavigationExpandMoreSvgIcon from 'material-ui/svg-icons/navigation/expand-more'
+import CommunicationContactsSvgIcon from '@material-ui/icons/Contacts'
+// import NavigationExpandLessSvgIcon from '@material-ui/icons/ExpandLess'
+// import NavigationExpandMoreSvgIcon from '@material-ui/icons/ExpandMore'
 
 import { Icon } from "../../../components/common/index"
 import css from './index.scss'
