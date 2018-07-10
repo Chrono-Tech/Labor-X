@@ -1,4 +1,5 @@
-@import "~styles/globals/variables";
+@import '~styles/globals/variables';
+@import '~styles/globals/mixins';
 
 .root {
   background-color: $color-white;
@@ -18,23 +19,31 @@
 }
 
 .icons {
-  display: flex;
-}
-
-.iconsItem {
-  margin-left: 3.5rem;
-
-  &:first-child {
-    margin-left: 0;
+  @include flex(row, flex-start, center);
+  .iconProfile {
+    @include flex(row, center, center);
+    width: 9.4rem;
+    .completed {
+      color: $color-black;
+      margin-left: 1rem;
+      font-weight: $font-weight-bold;
+      opacity: 0.5;
+    }
+  }
+  .iconsItem {
+    margin-left: 2.5rem;
+    border-radius: 2.1rem;
+    padding: 1rem;
+    background-color: $color-gray5;
+    &:hover {
+      background-color: $color-blue;
+    }
+    &:first-child {
+      margin-left: 0;
+    }
   }
 }
 
-.completed {
-  color: $color-red;
-  margin-left: 0.5rem;
-  font-weight: $font-weight-bold;
-  opacity: 0.5;
-}
 
 .link {
   display: block;
@@ -42,14 +51,12 @@
   font-size: $h4Size;
   font-weight: $font-weight-medium;
   text-transform: uppercase;
-
+  &.selected {
+    color: $color-blue;
+  }
   &:hover {
     color: $color-primary;
   }
-}
-
-.selected {
-  color: $color-blue;
 }
 
 .subLink {
@@ -60,7 +67,9 @@
   color: $color-gray50;
   line-height: 1;
   font-weight: normal;
-
+  &.selected {
+    color: $color-blue;
+  }
   &:hover {
     color: $color-primary;
   }

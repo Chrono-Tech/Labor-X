@@ -5,11 +5,19 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector } from "redux-form"
 import { TextField, SelectField } from 'redux-form-material-ui'
-import { Card, CardHeader, CardText, RaisedButton, MenuItem, IconButton } from 'material-ui'
-import { List, ListItem } from 'material-ui/List'
-import ActionDeleteSvgIcon from 'material-ui/svg-icons/action/delete'
-import EditorInsertDriveFileSvgIcon from 'material-ui/svg-icons/editor/insert-drive-file'
-import ActionHomeSvgIcon from 'material-ui/svg-icons/action/home'
+import { RaisedButton, MenuItem, IconButton } from 'material-ui'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import DeleteSvgIcon from '@material-ui/icons/Delete'
+import InsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
+import ActionHomeSvgIcon from '@material-ui/icons/Home'
 
 import ProfileModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileModel"
 import AttachmentModel from "../../../api/backend/model/AttachmentModel"
@@ -84,8 +92,16 @@ class LocationForm extends React.Component {
 
   renderAttachment = (attachment) => {
     return (
-      <ListItem leftIcon={<EditorInsertDriveFileSvgIcon />} rightIconButton={<IconButton><ActionDeleteSvgIcon /></IconButton>}>
-        { attachment.name }
+      <ListItem>
+        <ListItemIcon>
+          <InsertDriveFileSvgIcon />
+        </ListItemIcon>
+        <ListItemText primary={attachment.name} />
+        <ListItemSecondaryAction>
+          <IconButton>
+            <DeleteSvgIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
       </ListItem>
     )
   }
@@ -132,33 +148,28 @@ class LocationForm extends React.Component {
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>
-        <Card className={css.collapseWrapper}>
-          <CardHeader
-            title={
-              <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
-                <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
-                { this.renderTitle() }
-              </span>
-            }
-            closeIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-            openIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-            actAsExpander
-            showExpandableButton
-            className={css.collapseHeader}
-          />
-          <CardText className={css.collapseText} expandable>
-            { this.renderText() }
-            <br />
-            <br />
-            { this.renderAttachments() }
-            <br />
-            <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='reset' style={{ marginRight: '1rem' }} onClick={this.handleResetClick} />
-            <RaisedButton type='button' label='upload documents' containerElement='label'>
-              <input type='file' style={{ display:'none' }} onChange={this.handleCreateAttachmentChange} />
-            </RaisedButton>
-          </CardText>
-        </Card>
+        <ExpansionPanel style={{ width:'100%' }}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+              <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+              { this.renderTitle() }
+            </span>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div>
+              { this.renderText() }
+              <br />
+              <br />
+              { this.renderAttachments() }
+              <br />
+              <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
+              <RaisedButton type='button' label='reset' style={{ marginRight: '1rem' }} onClick={this.handleResetClick} />
+              <RaisedButton type='button' label='upload documents' containerElement='label'>
+                <input type='file' style={{ display:'none' }} onChange={this.handleCreateAttachmentChange} />
+              </RaisedButton>
+            </div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
       </form>
     )
   }

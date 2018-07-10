@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { Field } from 'redux-form'
-import { DatePicker, SelectField, TextField } from 'redux-form-material-ui'
+import { SelectField, TextField } from 'redux-form-material-ui'
 import { MenuItem } from 'material-ui'
 import Collapsible from 'react-collapsible'
 import { ValidatedCheckbox, Link, Icon, Button } from 'src/components/common'
 import { ProfileModel, CLIENT_TYPES_LIST, CLIENT_TYPES, ClientTypeModel } from 'src/models'
+import DatePickerField from 'src/components/DatePickerField'
 import css from './GeneralTab.scss'
 
 export default class GeneralTab extends React.Component {
@@ -53,8 +54,8 @@ export default class GeneralTab extends React.Component {
             fullWidth
             openToYearSelection
             name='registered'
-            component={DatePicker}
-            floatingLabelText='Registered In'
+            component={DatePickerField}
+            label='Registered In'
             // eslint-disable-next-line react/jsx-no-bind
             format={(value) => value === '' ? null : value}
           />
@@ -94,8 +95,8 @@ export default class GeneralTab extends React.Component {
             fullWidth
             openToYearSelection
             name='registered'
-            component={DatePicker}
-            floatingLabelText='Registered In'
+            component={DatePickerField}
+            label='Registered In'
             // eslint-disable-next-line react/jsx-no-bind
             format={(value) => value === '' ? null : value}
           />

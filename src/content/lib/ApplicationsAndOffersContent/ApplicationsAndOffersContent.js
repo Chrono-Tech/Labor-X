@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SwipeableViews from 'react-swipeable-views'
 import { connect } from 'react-redux'
-import { Tabs, Tab } from 'material-ui/Tabs'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import { Translate } from 'components/common'
 import { signerSelector, boardByIdSelector, jobByIdSelector, offersListByWorkerSelector } from 'src/store'
 import { JobModel, BoardModel } from 'src/models'
@@ -10,15 +11,6 @@ import OffersTabContent from './OffersTabContent/OffersTabContent'
 import ApplicationsTabContent from './ApplicationsTabContent/ApplicationsTabContent'
 import css from './ApplicationsAndOffersContent.scss'
 // import {reloadJobsOffers} from "../../../store";
-
-const style = {
-  backgroundColor: 'transparent',
-}
-
-const inkBarStyle = {
-  backgroundColor: '#fff',
-  height: '5px',
-}
 
 class ApplicationsAndOffersContent extends React.Component {
   static propTypes = {
@@ -62,11 +54,9 @@ class ApplicationsAndOffersContent extends React.Component {
     // this.props.getOffers()
   }
 
-  handleChange = (value) => {
-    this.setState({
-      slideIndex: value,
-    })
-  }
+  handleChangeIndex = (index) => this.setState({ slideIndex: index })
+
+  handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
   render () {
     const { applications, applicationsApproved, offers } = this.props
@@ -86,20 +76,17 @@ class ApplicationsAndOffersContent extends React.Component {
             </div>
           </div>
           <Tabs
-            className={css.tabs}
-            onChange={this.handleChange}
+            onChange={this.handleTabChange}
             value={this.state.slideIndex}
-            tabItemContainerStyle={style}
-            inkBarStyle={inkBarStyle}
           >
-            <Tab className={css.tab} label='APPLICATIONS' value={0} />
-            <Tab className={css.tab} label='OFFERS' value={1} />
+            <Tab label='APPLICATIONS' value={0} />
+            <Tab label='OFFERS' value={1} />
           </Tabs>
         </div>
         <div className={css.content}>
           <SwipeableViews
             index={this.state.slideIndex}
-            onChangeIndex={this.handleChange}
+            onChangeIndex={this.handleChangeIndex}
           >
             <ApplicationsTabContent applicationsApproved={applicationsApproved} applications={applications} />
             <OffersTabContent offers={offers} />

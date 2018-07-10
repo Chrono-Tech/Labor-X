@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import MenuItem from 'material-ui/MenuItem'
-import { MuiThemeProvider } from 'material-ui/styles'
 
 import WrapperSelect from './WrapperSelect'
 
@@ -35,11 +34,9 @@ export default class Select extends React.Component {
   render () {
 
     return (
-      <MuiThemeProvider>
-        <WrapperSelect {...this.props}>
-          { this.renderMenuItems() }
-        </WrapperSelect>
-      </MuiThemeProvider>
+      <WrapperSelect {...this.props}>
+        { this.renderMenuItems() }
+      </WrapperSelect>
     )
   }
 }

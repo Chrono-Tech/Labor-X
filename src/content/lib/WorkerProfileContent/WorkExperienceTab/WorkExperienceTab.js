@@ -1,9 +1,10 @@
 import React from 'react'
 import { Field, FieldArray } from 'redux-form'
-import { DatePicker, TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui'
 import Collapsible from 'react-collapsible'
 import { Icon, Button, Translate, Chip } from 'src/components/common'
 import { SKILLS_LIST } from 'src/models'
+import DatePickerField from 'src/components/DatePickerField'
 import css from './WorkExperienceTab.scss'
 
 export default class WorkExperienceTab extends React.Component {
@@ -65,8 +66,8 @@ export default class WorkExperienceTab extends React.Component {
                 fullWidth
                 openToYearSelection
                 name={`${experience}.workFrom`}
-                component={DatePicker}
-                floatingLabelText='From'
+                component={DatePickerField}
+                label='From'
                 // eslint-disable-next-line react/jsx-no-bind
                 format={(value) => value === '' ? null : value}
               />
@@ -74,8 +75,8 @@ export default class WorkExperienceTab extends React.Component {
                 fullWidth
                 openToYearSelection
                 name={`${experience}.workTo`}
-                component={DatePicker}
-                floatingLabelText='To'
+                component={DatePickerField}
+                label='To'
                 // eslint-disable-next-line react/jsx-no-bind
                 format={(value) => value === '' ? null : value}
               />

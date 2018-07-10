@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Card, CardHeader, CardText } from 'material-ui/Card'
-import { MuiThemeProvider } from 'material-ui/styles'
 import { formatMoney, formatNumber } from 'accounting'
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { Image } from 'components/common'
 import { PocketModel, BalanceModel, CurrencyModel } from 'src/models'
 import { signerSelector, ethPocketSelector, balanceByPocket, currencySelector } from 'src/store'
@@ -25,30 +26,26 @@ class BalanceCollapsible extends React.Component {
 
     return formatMoney(lhrCurrency, "$", 2, ",", ".")
   }
-  
+
   getBalance (){
     const { balance } = this.props
-    
+
     return formatNumber(balance.value)
   }
-  
+
   render (){
     const { pocket } = this.props
 
     return (
-      <MuiThemeProvider>
-        <Card className={css.collapseWrapper} style={{ boxShadow: 'none' }} initiallyExpanded>
-          <CardHeader
-            style={{ padding: '8px 9px 21px 21px', borderBottom: '1px solid #F0F0F0' }}
-            titleStyle={{ padding: 0 }}
-            actAsExpander
-          >
-            <div className={css.myFundsHeader}>
-              <span>My Funds</span>
-              <span className={css.myFundsSum}>≈ { this.getBalanceSum() }</span>
-            </div>
-          </CardHeader>
-          <CardText className={css.collapseText} style={{ padding: 0 }} expandable>
+      <ExpansionPanel style={{ width:'100%', marginTop:0 }}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <div className={css.myFundsHeader}>
+            <span>My Funds</span>
+            <span className={css.myFundsSum}>≈ { this.getBalanceSum() }</span>
+          </div>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <div>
             <div className={css.tokenBlock}>
               <div className={[css.flexRow, css.flexRowTokenName].join(' ')}>
                 <Image className={css.tokenImage} href={Image.TOKENS.LHR} />
@@ -59,9 +56,9 @@ class BalanceCollapsible extends React.Component {
                 <span className={css.myFundsSum}>{ this.getBalanceSum() }</span>
               </div>
             </div>
-          </CardText>
-        </Card>
-      </MuiThemeProvider>
+          </div>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
     )
   }
 }

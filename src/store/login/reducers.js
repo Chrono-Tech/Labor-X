@@ -2,6 +2,7 @@ import * as actions from './actions'
 
 const initialState = {
   openAccount404Dialog: false,
+  fetchSignIn: false,
   isSignIn: false,
   signIn: null,
   step: null,
@@ -17,6 +18,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSignIn: true,
+      }
+    case actions.START_FETCH_SIGN_IN:
+      return {
+        ...state,
+        fetchSignIn: true,
+      }
+    case actions.END_FETCH_SIGN_IN:
+      return {
+        ...state,
+        fetchSignIn: false,
       }
     case actions.LOGIN_SIGN_OUT:
       return {

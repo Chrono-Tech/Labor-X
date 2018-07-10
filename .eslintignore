@@ -83,6 +83,7 @@ src/**/*.js
 !src/store/opportunities/selectors.js
 
 
+!src/components/common/Link/
 !src/components/common/Icon/Icon.js
 !src/components/common/Chip/Chip.js
 !src/components/common/Select/WrapperSelect.js
@@ -99,12 +100,14 @@ src/**/*.js
 !src/components/common/RadioIcon/RadioIcon.js
 !src/components/common/OpportunityCard/OpportunityCard.js
 !src/components/common/VerificationLevelSelector/
+!src/components/common/ScheduleWidget/
 !src/components/common/CompletedJobCard/CompletedJobCard.js
 
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
 !src/components/CompletedJobs/CompletedJobs.js
+!src/components/Login/LoginForm/LoginForm.js
 !src/components/Login/LoginOptions/LoginOptions.js
 
 !src/content/index.js
@@ -198,3 +201,4 @@ src/**/*.js
 !src/store/ui/page/general-profile/index.js
 !src/store/ui/page/general-profile/personal.js
 !src/store/opportunities/selectors.js
+!src/store/login/actions.js

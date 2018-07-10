@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Router from 'src/routes'
-import Dialog from 'material-ui/Dialog'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 
 import {
   signIn,
@@ -78,6 +81,7 @@ class LoginOptions extends React.Component {
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     selectedWalletRecoveryForm: PropTypes.instanceOf(WalletEntryModel),
+    fetchSignIn: PropTypes.bool,
     openAccount404Dialog: PropTypes.bool,
   }
 
@@ -141,6 +145,7 @@ class LoginOptions extends React.Component {
       onConfirmRecoveryPassword,
       navigateToRecoveryPassword,
       selectedWalletRecoveryForm,
+      fetchSignIn,
     } = this.props
 
     let component
@@ -205,6 +210,7 @@ class LoginOptions extends React.Component {
             onSubmitSuccess={onSignInSuccess}
             onSubmitFail={onSignInFail}
             onClickForgotPassword={navigateToRecoveryPassword}
+            fetchSignIn={fetchSignIn}
           />)
         break
       default:
@@ -229,29 +235,28 @@ class LoginOptions extends React.Component {
           {this.renderComponent()}
         </ReactCSSTransitionGroup>
         <Dialog
-          contentClassName={css.dialog}
           open={this.props.openAccount404Dialog}
-          title={<h2>LaborX account is not found</h2>}
-          titleClassName={css.dialogTitle}
-          bodyClassName={css.dialogContent}
-          actionsContainerClassName={css.actionWrapper}
-          actions={[
+          onClose={this.handleAccount404DialogNoClick}
+        >
+          <DialogTitle><h2>LaborX account is not found</h2></DialogTitle>
+          <DialogContent>
+            LaborX account with the provided address is not found.
+            Would you like to Create a New Account?
+          </DialogContent>
+          <DialogActions>
             <Button
               label='No'
               onClick={this.handleAccount404DialogNoClick}
               buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
               type={Button.TYPES.SUBMIT}
-            />,
+            />
             <Button
               label='YES'
               onClick={this.handleAccount404DialogYesClick}
               buttonClassName={css.actionButton}
               type={Button.TYPES.SUBMIT}
-            />,
-          ]}
-        >
-          LaborX account with the provided address is not found.
-          Would you like to Create a New Account?
+            />
+          </DialogActions>
         </Dialog>
       </div>
     )
@@ -278,8 +283,7 @@ export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
 
     render () {
       return (
-        // eslint-disable-next-line no-underscore-dangle
-        <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store.__persistor}>
+        <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store["__persistor"]}>
           <WrappedComponent {...this.props} />
         </PersistGate>
       )
@@ -299,6 +303,7 @@ const LoginOptionsLoader = (
 function mapStateToProps (state) {
 
   return {
+    fetchSignIn: state.login.fetchSignIn ,
     selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
     step: state.login.step,

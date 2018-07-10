@@ -3,7 +3,6 @@ import React from 'react'
 import uniqid from 'uniqid'
 import cn from 'classnames'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
-import { MuiThemeProvider } from 'material-ui/styles'
 
 import css from './Radio.scss'
 
@@ -89,16 +88,14 @@ export default class Radio extends React.Component {
     const { label, name, input, onCheck, material, values, defaultSelected, ...custom } = this.props
 
     return material ? (
-      <MuiThemeProvider>
-        <RadioButtonGroup
-          {...custom}
-          defaultSelected={defaultSelected}
-          valueSelected={input.value}
-          onChange={this.handleOnChange}
-        >
-          {this.renderRadioButtons()}
-        </RadioButtonGroup>
-      </MuiThemeProvider>
+      <RadioButtonGroup
+        {...custom}
+        defaultSelected={defaultSelected}
+        valueSelected={input.value}
+        onChange={this.handleOnChange}
+      >
+        {this.renderRadioButtons()}
+      </RadioButtonGroup>
     ) : null
   }
 }
