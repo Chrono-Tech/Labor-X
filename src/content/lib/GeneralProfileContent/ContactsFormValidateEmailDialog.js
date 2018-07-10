@@ -35,7 +35,7 @@ class ContactsFormValidateEmailDialog extends React.Component {
       <Dialog title='Validate Email' open={this.props.open} contentStyle={{ width: '30rem' }} onRequestClose={this.handleRequestClose} >
         <Form onSubmit={this.props.handleSubmit} >
           <p>Enter the code from message we&#39;ve sent to the provided email address.</p>
-          <Field name='emailCode' component={TextField} hintText='Enter Email Code' />
+          <Field fullWidth name='emailCode' component={TextField} label='Email Code' />
           <br /><br />
           <RaisedButton label='OK' type='submit' style={{ marginRight: '1rem' }} />
           <RaisedButton label='RESEND' onClick={this.handleResendClick} />

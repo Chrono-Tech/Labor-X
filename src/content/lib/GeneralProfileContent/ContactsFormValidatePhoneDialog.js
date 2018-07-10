@@ -35,7 +35,7 @@ class ContactsFormValidatePhoneDialog extends React.Component {
       <Dialog title='Validate Phone' open={this.props.open} contentStyle={{ width: '30rem' }} onRequestClose={this.handleRequestClose} >
         <Form onSubmit={this.props.handleSubmit} >
           <p>Enter the code from the SMS message we&#39;ve sent to the provided phone number.</p>
-          <Field name='phoneCode' component={TextField} hintText='Enter SMS Code' />
+          <Field fullWidth name='phoneCode' component={TextField} label='SMS Code' />
           <br /><br />
           <RaisedButton label='OK' type='submit' style={{ marginRight: '1rem' }} />
           <RaisedButton label='RESEND' onClick={this.handleResendClick} />

@@ -4,10 +4,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
 import { TextField } from 'redux-form-material-ui'
-import { Card, CardHeader, CardText, RaisedButton } from 'material-ui'
-import CommunicationContactsSvgIcon from 'material-ui/svg-icons/communication/contacts'
-// import NavigationExpandLessSvgIcon from 'material-ui/svg-icons/navigation/expand-less'
-// import NavigationExpandMoreSvgIcon from 'material-ui/svg-icons/navigation/expand-more'
+import { Card, CardHeader, CardText } from 'material-ui'
+import CommunicationContactsSvgIcon from '@material-ui/icons/Contacts'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+// import NavigationExpandLessSvgIcon from '@material-ui/icons/navigation/expand-less'
+// import NavigationExpandMoreSvgIcon from '@material-ui/icons/navigation/expand-more'
 
 import { Icon } from "../../../components/common/index"
 import css from './index.scss'
@@ -74,10 +76,14 @@ class ContactsForm extends React.Component {
           </div>
           <div>
             <h3 className={css.cardTitle}>Email and Phone</h3>
-            <div className={css.flexRow}>
-              <Field component={TextField} name='email' hintText='Email' className={css.field} />
-              <Field component={TextField} name='phone' hintText='Phone' className={css.field} />
-            </div>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Field component={TextField} name='email' label='Email' className={css.field} />
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={TextField} name='phone' label='Phone' className={css.field} />
+              </Grid>
+            </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>
@@ -99,10 +105,10 @@ class ContactsForm extends React.Component {
             { this.renderText() }
             <br />
             <br />
-            <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='reset' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='validate email' onClick={this.handleValidateEmailClick} style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='validate phone' onClick={this.handleValidatePhoneClick} style={{ marginRight: '1rem' }} />
+            <Button variant='contained' type='submit' style={{ marginRight: '1rem' }}>save & validate</Button>
+            <Button variant='contained' type='button' onClick={this.handleResetClick} style={{ marginRight: '1rem' }}>reset</Button>
+            <Button variant='contained' type='button' onClick={this.handleValidateEmailClick} style={{ marginRight: '1rem' }}>validate email</Button>
+            <Button variant='contained' type='button' onClick={this.handleValidatePhoneClick} style={{ marginRight: '1rem' }}>validate phone</Button>
           </CardText>
         </Card>
         <ValidateEmailDialog />

@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'redux-form'
-import { TextField, SelectField } from 'redux-form-material-ui'
+import TextField from 'redux-form-material-ui/lib/TextField'
+import Select from 'redux-form-material-ui/lib/Select'
 import { MenuItem } from 'material-ui'
 import { Icon } from 'src/components/common'
 import { ProfileModel } from 'src/models'
@@ -40,7 +41,7 @@ export default class GeneralTab extends React.Component {
             fullWidth
             component={TextField}
             name='intro'
-            floatingLabelText='Intro'
+            label='Intro'
           />
         </div>
         <div className={css.block}>
@@ -50,13 +51,13 @@ export default class GeneralTab extends React.Component {
               fullWidth
               component={TextField}
               name='linkedin'
-              floatingLabelText='LinkedIn'
+              label='LinkedIn'
             />
             <Field
               fullWidth
               component={TextField}
               name='facebook'
-              floatingLabelText='Facebook'
+              label='Facebook'
             />
           </div>
           <div className={css.twoColumn}>
@@ -64,17 +65,17 @@ export default class GeneralTab extends React.Component {
               fullWidth
               component={TextField}
               name='twitter'
-              floatingLabelText='Twitter'
+              label='Twitter'
             />
             <Field
-              fullWidth
-              component={SelectField}
+              displayEmpty
+              component={Select}
               name='social'
-              floatingLabelText='Other'
             >
-              <MenuItem value={0} primaryText='Social 1' />
-              <MenuItem value={1} primaryText='Social 2' />
-              <MenuItem value={2} primaryText='Social 3' />
+              <MenuItem value='' disabled>Other</MenuItem>
+              <MenuItem value={0}>Social 1</MenuItem>
+              <MenuItem value={1}>Social 2</MenuItem>
+              <MenuItem value={2}>Social 3</MenuItem>
             </Field>
           </div>
         </div>

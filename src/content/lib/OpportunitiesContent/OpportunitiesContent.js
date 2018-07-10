@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { SignerModel, TagCategoryModel, TAG_CATEGORIES_LIST, FILTERS_LIST } from 'src/models'
 import { reduxForm, Field, getFormValues } from 'redux-form'
+import Select from 'redux-form-material-ui/lib/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import { signerSelector, opportunitiesFilteredListSelector } from 'src/store'
-import { Translate, OpportunityCard, Input, Image, Checkbox, Icon, Select, RadioIcon } from 'src/components/common'
+import { Translate, OpportunityCard, Input, Image, Checkbox, Icon, RadioIcon } from 'src/components/common'
 import css from './OpportunitiesContent.scss'
 
 const FORM_SEARCH_OPPORTUNITIES = 'form/opportunities'
@@ -67,14 +69,6 @@ export class OpportunitiesContent extends React.Component {
   }
 
   renderFilter () {
-    const selectThemeStyle = {
-      width: '180px',
-      marginLeft: '-5px',
-    }
-    const labelSelectFilter = {
-      color: 'white',
-    }
-
     return (
       <div className={[css.filterBlock, (this.state.isVisibleFilter ? "" : css.hideFilterBlock)].join(' ')}>
 
@@ -90,18 +84,14 @@ export class OpportunitiesContent extends React.Component {
         <div className={css.filterContent}>
 
           <Field
+            fullWidth
+            displayEmpty
             component={Select}
-            className={css.fieldSelect}
             name='sort_by'
-            type='select'
-            label=''
-            autoWidth
-            floatingLabelText='Sorting by ..'
-            floatingLabelStyle={{ color: '#7F7F7F' }}
-            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
-            placeholder=''
-            values={FILTERS_LIST.map(item => ({ value: item.index.toString(), name: item.name }))}
-          />
+          >
+            <MenuItem value='' disabled>Sorting by ..</MenuItem>
+            { FILTERS_LIST.map(item => <MenuItem value={item.index.toString()}>{item.name}</MenuItem>) }
+          </Field>
 
           <div className={css.hr} />
 
@@ -183,32 +173,24 @@ export class OpportunitiesContent extends React.Component {
           <label className={css.filterLabel}>Location</label>
 
           <Field
+            fullWidth
+            displayEmpty
             component={Select}
-            className={css.fieldSelect}
             name='location_country'
-            type='select'
-            autoWidth
-            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
-            floatingLabelText='Select country'
-            floatingLabelStyle={{ color: '#7F7F7F' }}
-            values={[
-              { value: 'Russia', name: 'Russia' },
-            ]}
-          />
+          >
+            <MenuItem value='' disabled>Select country</MenuItem>
+            { [ { value: 'Russia', name: 'Russia' } ].map(item => <MenuItem value={item.value}>{item.name}</MenuItem>) }
+          </Field>
 
           <Field
+            fullWidth
+            displayEmpty
             component={Select}
-            className={css.fieldSelect}
             name='location_city'
-            type='select'
-            autoWidth
-            floatingLabelText='Select city'
-            floatingLabelStyle={{ color: '#7F7F7F' }}
-            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
-            values={[
-              { value: 'Moscow', name: 'Moscow' },
-            ]}
-          />
+          >
+            <MenuItem value='' disabled>Select city</MenuItem>
+            { [ { value: 'Moscow', name: 'Moscow' } ].map(item => <MenuItem value={item.value}>{item.name}</MenuItem>) }
+          </Field>
 
           <div className={css.hr} />
 

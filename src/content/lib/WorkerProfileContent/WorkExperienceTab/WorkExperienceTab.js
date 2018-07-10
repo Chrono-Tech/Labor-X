@@ -1,10 +1,11 @@
 import React from 'react'
 import { Field, FieldArray } from 'redux-form'
-import { DatePicker, TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui'
 import Collapsible from 'react-collapsible'
 import { Icon, Button, Translate, Chip } from 'src/components/common'
 import { SKILLS_LIST } from 'src/models'
 import css from './WorkExperienceTab.scss'
+import DatePickerField from "../../../../components/DatePickerField"
 
 export default class WorkExperienceTab extends React.Component {
   handleClickValidate = () => {
@@ -51,33 +52,27 @@ export default class WorkExperienceTab extends React.Component {
             fullWidth
             component={TextField}
             name={`${experience}.position`}
-            floatingLabelText='Position'
+            label='Position'
           />
           <div className={css.twoColumn}>
             <Field
               fullWidth
               component={TextField}
               name={`${experience}.organisation`}
-              floatingLabelText='Organisation'
+              label='Organisation'
             />
             <div className={css.twoColumn}>
               <Field
-                fullWidth
                 openToYearSelection
                 name={`${experience}.workFrom`}
-                component={DatePicker}
-                floatingLabelText='From'
-                // eslint-disable-next-line react/jsx-no-bind
-                format={(value) => value === '' ? null : value}
+                component={DatePickerField}
+                label='From'
               />
               <Field
-                fullWidth
                 openToYearSelection
                 name={`${experience}.workTo`}
-                component={DatePicker}
-                floatingLabelText='To'
-                // eslint-disable-next-line react/jsx-no-bind
-                format={(value) => value === '' ? null : value}
+                component={DatePickerField}
+                label='To'
               />
             </div>
           </div>
@@ -85,8 +80,9 @@ export default class WorkExperienceTab extends React.Component {
             fullWidth
             component={TextField}
             name={`${experience}.responsibilities`}
-            hintText='List your responsibilities here'
+            helperText='List your responsibilities here'
             multiLine
+            label='Responsibilities'
             rows={2}
           />
         </div>
@@ -111,7 +107,7 @@ export default class WorkExperienceTab extends React.Component {
               className={css.find}
               component={TextField}
               name='searchSkill'
-              hintText={<Translate value='terms.find' />}
+              helperText={<Translate value='terms.find' />}
             />
             <Icon
               onClick={this.handleClickAddSkill}

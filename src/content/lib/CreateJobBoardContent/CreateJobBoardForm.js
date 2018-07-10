@@ -4,10 +4,15 @@ import uniqid from 'uniqid'
 import cn from 'classnames'
 import DonutChart from "react-svg-donut-chart"
 import AutoComplete from 'material-ui/AutoComplete'
-import { Field, reduxForm } from 'redux-form'
-import { CircularProgress } from 'material-ui'
-import { MenuItem } from 'material-ui/Menu'
-import { SelectField, TextField } from 'redux-form-material-ui'
+import Field from 'redux-form/lib/Field'
+import reduxForm from 'redux-form/lib/reduxForm'
+import CircularProgress from 'material-ui/CircularProgress'
+import MenuItem from 'material-ui/MenuItem'
+import TextField from 'redux-form-material-ui/lib/TextField'
+import Select from 'redux-form-material-ui/lib/Select'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Grid from '@material-ui/core/Grid'
 
 import { Image, Chip, Input, Button, Icon, Checkbox, RadioIcon, VerificationLevelSelector, Translate } from 'components/common'
 import {
@@ -371,76 +376,61 @@ class CreateJobBoardForm extends React.Component {
             />
           </div>
 
-          <div className={css.card}>
-            <div className={css.twoColumn}>
-              <div>
-                <h3 className={css.cardTitle}>Area</h3>
-                <div className={css.flexRow}>
+          <Card style={{ marginBottom:'4rem' }}>
+            <CardContent>
+              <Grid container spacing={24}>
+                <Grid item xs={6}>
+                  <h3>Area</h3>
                   <Field
-                    component={SelectField}
+                    fullWidth
+                    displayEmpty
+                    component={Select}
                     name='tagsArea'
-                    selectedMenuItemStyle={{ fontSize: 14 }}
-                    menuItemStyle={{ fontSize: 14 }}
-                    labelStyle={{ fontSize: 14 }}
-                    style={{ width: 300 }}
-                    hintText='Select area'
                   >
-                    {
-                      TAG_AREAS_LIST.map((item) => (
-                        <MenuItem key={uniqid()} value={item} primaryText={item.name} />
-                      ))
-                    }
+                    <MenuItem value='' disabled>Select area</MenuItem>
+                    { TAG_AREAS_LIST.map(item => <MenuItem key={uniqid()} value={item}>{item.name}</MenuItem>) }
                   </Field>
-                </div>
-              </div>
-
-              <div>
-                <h3 className={css.cardTitle}>Categories</h3>
-                <div className={css.flexRow}>
+                </Grid>
+                <Grid item xs={6}>
+                  <h3>Category</h3>
                   <Field
-                    component={SelectField}
+                    fullWidth
+                    displayEmpty
+                    component={Select}
                     name='tagsCategory'
-                    selectedMenuItemStyle={{ fontSize: 14 }}
-                    menuItemStyle={{ fontSize: 14 }}
-                    labelStyle={{ fontSize: 14 }}
-                    style={{ width: 300 }}
-                    hintText='Select category'
                   >
-                    {
-                      TAG_CATEGORIES_LIST.map((item) => (
-                        <MenuItem key={uniqid()} value={item} primaryText={item.name} />
-                      ))
-                    }
+                    <MenuItem value='' disabled>Select category</MenuItem>
+                    { TAG_CATEGORIES_LIST.map(item => <MenuItem key={uniqid()} value={item}>{item.name}</MenuItem>) }
                   </Field>
-                </div>
-              </div>
-            </div>
-            <h3 className={cn(css.cardTitle, css.skillsRow)}>Skills</h3>
-            <div className={css.flexRow}>
-              <Field
-                className={css.find}
-                style={{ marginRight: 10 }}
-                component={AutoComplete}
-                onNewRequest={this.handleAddTag}
-                filter={this.searchTagFilter}
-                dataSourceConfig={{
-                  text: 'name',
-                  value: 'name',
-                }}
-                errorText={formErrors.tags && submitFailed ? formErrors.tags : null}
-                dataSource={this.getTagsList()}
-                name='searchTags'
-                hintText='Find'
-              />
-              <Field
-                component='input'
-                type='hidden'
-                name='tags'
-                readOnly
-              />
-              { this.renderTags() }
-            </div>
-          </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <h3>Skills</h3>
+                  <Field
+                    className={css.find}
+                    style={{ marginRight: 10 }}
+                    component={AutoComplete}
+                    onNewRequest={this.handleAddTag}
+                    filter={this.searchTagFilter}
+                    dataSourceConfig={{
+                      text: 'name',
+                      value: 'name',
+                    }}
+                    errorText={formErrors.tags && submitFailed ? formErrors.tags : null}
+                    dataSource={this.getTagsList()}
+                    name='searchTags'
+                    hintText='Find'
+                  />
+                  <Field
+                    component='input'
+                    type='hidden'
+                    name='tags'
+                    readOnly
+                  />
+                  { this.renderTags() }
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
 
           <div className={cn([
             css.card,
@@ -452,21 +442,19 @@ class CreateJobBoardForm extends React.Component {
             <div className={css.subtitle}>
                 Specify which requirements should be met in order to join the board.
             </div>
-            <Field
-              component={SelectField}
-              className={css.requirementsSelect}
-              name='joinRequirement'
-              selectedMenuItemStyle={{ fontSize: 14 }}
-              menuItemStyle={{ fontSize: 14 }}
-              labelStyle={{ fontSize: 14 }}
-              style={{ width: 300 }}
-            >
-              {
-                BOARD_REQUIREMENTS_LIST.map((item) => (
-                  <MenuItem key={uniqid()} value={item.index} primaryText={item.label} />
-                ))
-              }
-            </Field>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Field
+                  fullWidth
+                  displayEmpty
+                  component={Select}
+                  name='joinRequirement'
+                >
+                  <MenuItem disabled value=''>Join Requirement</MenuItem>
+                  { BOARD_REQUIREMENTS_LIST.map(item => <MenuItem key={uniqid()} value={item.index}>{item.label}</MenuItem>) }
+                </Field>
+              </Grid>
+            </Grid>
 
             {
               joinRequirement === BOARD_REQUIREMENTS.SPECIFIC_LEVELS.index ? this.renderSpecificRequirementsContent() : null
@@ -497,20 +485,19 @@ class CreateJobBoardForm extends React.Component {
             <div className={css.cardContent}>
               <div className={css.feeInputs}>
                 <Field
-                  component={SelectField}
-                  hintText='Fixed Fee'
-                  hintStyle={{ fontStyle: 'italic' }}
+                  displayEmpty
+                  component={Select}
                   name='fee'
                 >
+                  <MenuItem value='' disabled>Fixed Fee</MenuItem>
                   {
-                    <MenuItem value={BOARD_POST_FEES.FIXED_FEE} primaryText={BOARD_POST_FEES.FIXED_FEE.label} />
+                    <MenuItem value={BOARD_POST_FEES.FIXED_FEE}>{BOARD_POST_FEES.FIXED_FEE.label}</MenuItem>
                   }
                 </Field>
                 <Field
-                  className={css.match}
                   component={TextField}
                   name='lhus'
-                  hintText={<Translate value='ui.createJobBoard.value' />}
+                  placeholder={<Translate value='ui.createJobBoard.value' />}
                 />
               </div>
             </div>
