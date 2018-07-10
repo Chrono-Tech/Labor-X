@@ -49,16 +49,13 @@ export default class GeneralTab extends React.Component {
             fullWidth
             component={TextField}
             name='name'
-            floatingLabelText='Name'
+            label='Name'
           />
           <Field
-            // fullWidth
-            // openToYearSelection
+            label='Registered In'
+            openToYearSelection
             name='registered'
             component={DatePickerField}
-            // floatingLabelText='Registered In'
-            // // eslint-disable-next-line react/jsx-no-bind
-            // format={(value) => value === '' ? null : value}
           />
         </div>
         <div className={css.twoColumn}>
@@ -66,20 +63,21 @@ export default class GeneralTab extends React.Component {
             fullWidth
             component={TextField}
             name='website'
-            floatingLabelText='Website'
+            label='Website'
           />
           <Field
             fullWidth
             component={TextField}
             name='email'
-            floatingLabelText='Contact Email'
+            label='Contact Email'
           />
         </div>
         <Field
           fullWidth
           component={TextField}
           name='description'
-          hintText='Write a few words about your organisation'
+          label='Description'
+          helperText='Write a few words about your organisation'
           multiLine
           rows={2}
         />
@@ -93,26 +91,24 @@ export default class GeneralTab extends React.Component {
         <h3>Info</h3>
         <div className={css.twoColumn}>
           <Field
-            // fullWidth
-            // openToYearSelection
+            openToYearSelection
             name='registered'
             component={DatePickerField}
-            // floatingLabelText='Registered In'
-            // // eslint-disable-next-line react/jsx-no-bind
-            // format={(value) => value === '' ? null : value}
+            label='Registered In'
           />
           <Field
             fullWidth
             component={TextField}
             name='website'
-            floatingLabelText='Website'
+            label='Website'
           />
         </div>
         <Field
           fullWidth
           component={TextField}
           name='description'
-          hintText='Write a few words about yourself'
+          helperText='Write a few words about yourself'
+          label='Description'
           multiLine
           rows={2}
         />

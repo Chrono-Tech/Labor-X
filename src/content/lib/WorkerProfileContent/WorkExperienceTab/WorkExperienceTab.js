@@ -52,35 +52,27 @@ export default class WorkExperienceTab extends React.Component {
             fullWidth
             component={TextField}
             name={`${experience}.position`}
-            floatingLabelText='Position'
+            label='Position'
           />
           <div className={css.twoColumn}>
             <Field
               fullWidth
               component={TextField}
               name={`${experience}.organisation`}
-              floatingLabelText='Organisation'
+              label='Organisation'
             />
             <div className={css.twoColumn}>
               <Field
-                displayEmpty
-                // fullWidth
-                // openToYearSelection
+                openToYearSelection
                 name={`${experience}.workFrom`}
                 component={DatePickerField}
-                // floatingLabelText='From'
-                // eslint-disable-next-line react/jsx-no-bind
-                // format={(value) => value === '' ? null : value}
+                label='From'
               />
               <Field
-                displayEmpty
-                // fullWidth
-                // openToYearSelection
+                openToYearSelection
                 name={`${experience}.workTo`}
                 component={DatePickerField}
-                // floatingLabelText='To'
-                // eslint-disable-next-line react/jsx-no-bind
-                // format={(value) => value === '' ? null : value}
+                label='To'
               />
             </div>
           </div>
@@ -88,8 +80,9 @@ export default class WorkExperienceTab extends React.Component {
             fullWidth
             component={TextField}
             name={`${experience}.responsibilities`}
-            hintText='List your responsibilities here'
+            helperText='List your responsibilities here'
             multiLine
+            label='Responsibilities'
             rows={2}
           />
         </div>
@@ -114,7 +107,7 @@ export default class WorkExperienceTab extends React.Component {
               className={css.find}
               component={TextField}
               name='searchSkill'
-              hintText={<Translate value='terms.find' />}
+              helperText={<Translate value='terms.find' />}
             />
             <Icon
               onClick={this.handleClickAddSkill}

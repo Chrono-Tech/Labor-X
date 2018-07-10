@@ -41,7 +41,7 @@ export default class GeneralTab extends React.Component {
             fullWidth
             component={TextField}
             name='intro'
-            floatingLabelText='Intro'
+            label='Intro'
           />
         </div>
         <div className={css.block}>
@@ -51,13 +51,13 @@ export default class GeneralTab extends React.Component {
               fullWidth
               component={TextField}
               name='linkedin'
-              floatingLabelText='LinkedIn'
+              label='LinkedIn'
             />
             <Field
               fullWidth
               component={TextField}
               name='facebook'
-              floatingLabelText='Facebook'
+              label='Facebook'
             />
           </div>
           <div className={css.twoColumn}>
@@ -65,7 +65,7 @@ export default class GeneralTab extends React.Component {
               fullWidth
               component={TextField}
               name='twitter'
-              floatingLabelText='Twitter'
+              label='Twitter'
             />
             <Field
               displayEmpty

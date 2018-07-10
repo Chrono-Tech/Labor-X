@@ -78,10 +78,10 @@ class ContactsForm extends React.Component {
             <h3 className={css.cardTitle}>Email and Phone</h3>
             <Grid container spacing={24}>
               <Grid item xs={6}>
-                <Field component={TextField} name='email' placeholder='Email' className={css.field} />
+                <Field component={TextField} name='email' label='Email' className={css.field} />
               </Grid>
               <Grid item xs={6}>
-                <Field component={TextField} name='phone' placeholder='Phone' className={css.field} />
+                <Field component={TextField} name='phone' label='Phone' className={css.field} />
               </Grid>
             </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>

@@ -97,10 +97,10 @@ class PassportForm extends React.Component {
             <h3 className={css.cardTitle}>Identity Card</h3>
             <Grid container spacing={24}>
               <Grid item xs={6}>
-                <Field component={TextField} name='passport' placeholder='Passport ID' className={css.field} />
+                <Field component={TextField} name='passport' label='Passport ID' className={css.field} />
               </Grid>
               <Grid item xs={6}>
-                <Field component={DatePickerField} name='expirationDate' emptyLabel='Expiration Date' />
+                <Field component={DatePickerField} name='expirationDate' label='Expiration Date' />
               </Grid>
             </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>

@@ -126,17 +126,17 @@ class LocationForm extends React.Component {
                 <MenuItem value='' disabled>City</MenuItem>
                 { this.getCities().map(x => <MenuItem value={x.id}>{x.name}</MenuItem>) }
               </Field>
-              <Field component={TextField} name='zip' placeholder='Zip' className={css.field} />
+              <Field component={TextField} name='zip' label='Zip' className={css.field} />
             </div>
             <Grid container>
               <Grid item xs={3}>
-                <Field component={TextField} name='building' placeholder='Building #' className={classnames([css.field, css.fieldBuilding])} />
+                <Field component={TextField} name='building' label='Building #' className={classnames([css.field, css.fieldBuilding])} />
               </Grid>
               <Grid item xs={3}>
-                <Field component={TextField} name='suit' placeholder='Suit' className={classnames([css.field, css.fieldSuit])} />
+                <Field component={TextField} name='suit' label='Suit' className={classnames([css.field, css.fieldSuit])} />
               </Grid>
               <Grid item xs={6}>
-                <Field component={TextField} name='street' placeholder='Street' className={css.field} />
+                <Field component={TextField} name='street' label='Street' className={css.field} />
               </Grid>
             </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>

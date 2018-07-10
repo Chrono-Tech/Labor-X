@@ -88,10 +88,10 @@ class PersonalForm extends React.Component {
             <h3 className={css.cardTitle}>Photo, Name and Date of birth</h3>
             <Grid container spacing={24}>
               <Grid item xs={6}>
-                <Field component={TextField} name='userName' placeholder='Name' className={css.field} />
+                <Field component={TextField} name='userName' label='Name' className={css.field} />
               </Grid>
               <Grid item xs={6}>
-                <Field component={DatePickerField} name='birthDate' emptyLabel='Date of Birth' />
+                <Field component={DatePickerField} name='birthDate' label='Date of Birth' />
               </Grid>
             </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { MuiThemeProvider } from 'material-ui/styles'
 import Checkbox from 'material-ui/Checkbox'
 
 import css from './RadioIcon.scss'
@@ -65,11 +64,9 @@ export default class RadioIcon extends React.Component {
     const { material } = this.props
 
     return material ? (
-      <MuiThemeProvider>
-        <div className={[css.buttonContainer]}>
-          {this.renderButtons()}
-        </div>
-      </MuiThemeProvider>
+      <div className={[css.buttonContainer]}>
+        {this.renderButtons()}
+      </div>
     ) : null
   }
 }
