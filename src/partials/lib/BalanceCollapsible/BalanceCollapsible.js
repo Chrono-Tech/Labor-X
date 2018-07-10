@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Card, CardHeader, CardText } from 'material-ui/Card'
 import { formatMoney, formatNumber } from 'accounting'
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { Image } from 'components/common'
 import { PocketModel, BalanceModel, CurrencyModel } from 'src/models'
 import { signerSelector, ethPocketSelector, balanceByPocket, currencySelector } from 'src/store'
@@ -35,30 +37,28 @@ class BalanceCollapsible extends React.Component {
     const { pocket } = this.props
 
     return (
-      <Card className={css.collapseWrapper} style={{ boxShadow: 'none' }} initiallyExpanded>
-        <CardHeader
-          style={{ padding: '8px 9px 21px 21px', borderBottom: '1px solid #F0F0F0' }}
-          titleStyle={{ padding: 0 }}
-          actAsExpander
-        >
+      <ExpansionPanel style={{ width:'100%', marginTop:0 }}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <div className={css.myFundsHeader}>
             <span>My Funds</span>
             <span className={css.myFundsSum}>≈ { this.getBalanceSum() }</span>
           </div>
-        </CardHeader>
-        <CardText className={css.collapseText} style={{ padding: 0 }} expandable>
-          <div className={css.tokenBlock}>
-            <div className={[css.flexRow, css.flexRowTokenName].join(' ')}>
-              <Image className={css.tokenImage} href={Image.TOKENS.LHR} />
-              <div className={css.tokenName}>{pocket.token.dao.token.name}</div>
-            </div>
-            <div className={[css.flexRow, css.flexRowTokenBalance].join(' ')}>
-              <div className={css.tokenBalance}>{ this.getBalance() }</div>
-              <span className={css.myFundsSum}>{ this.getBalanceSum() }</span>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <div>
+            <div className={css.tokenBlock}>
+              <div className={[css.flexRow, css.flexRowTokenName].join(' ')}>
+                <Image className={css.tokenImage} href={Image.TOKENS.LHR} />
+                <div className={css.tokenName}>{pocket.token.dao.token.name}</div>
+              </div>
+              <div className={[css.flexRow, css.flexRowTokenBalance].join(' ')}>
+                <div className={css.tokenBalance}>{ this.getBalance() }</div>
+                <span className={css.myFundsSum}>{ this.getBalanceSum() }</span>
+              </div>
             </div>
           </div>
-        </CardText>
-      </Card>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
     )
   }
 }
