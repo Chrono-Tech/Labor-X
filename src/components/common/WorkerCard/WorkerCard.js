@@ -18,6 +18,7 @@ class WorkerCard extends React.Component {
     job: PropTypes.instanceOf(JobModel),
     offerSent: PropTypes.bool,
     acceptOffer: PropTypes.func,
+    reviewOffer: PropTypes.func,
     jobId: PropTypes.number,
   }
 
@@ -36,9 +37,8 @@ class WorkerCard extends React.Component {
     console.log('WorkerCard-handleViewOffer')
   }
 
-  handleReviewOffer () {
-    // eslint-disable-next-line no-console
-    console.log('WorkerCard-handleReviewOffer')
+  handleReviewOffer = () => {
+    this.props.reviewOffer()
   }
 
   handleDismissOffer () {
