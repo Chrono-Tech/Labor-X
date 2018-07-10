@@ -3,8 +3,9 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
-import { DatePicker, TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText, RaisedButton } from 'material-ui'
+import DatePickerField from 'src/components/DatePickerField'
 
 import { Icon } from "../../../components/common/index"
 import css from './index.scss'
@@ -86,7 +87,7 @@ class PersonalForm extends React.Component {
             <h3 className={css.cardTitle}>Photo, Name and Date of birth</h3>
             <div className={css.flexRow}>
               <Field component={TextField} name='userName' hintText='Name' className={css.field} />
-              <Field component={DatePicker} name='birthDate' hintText='Date of Birth' className={css.field} />
+              <Field component={DatePickerField} name='birthDate' label='Date of Birth' className={css.field} />
             </div>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>

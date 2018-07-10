@@ -3,13 +3,13 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
-import { TextField, DatePicker } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText, RaisedButton, IconButton } from 'material-ui'
 import { List, ListItem } from 'material-ui/List'
-import DeleteSvgIcon from 'material-ui/svg-icons/action/delete'
-import InsertDriveFileSvgIcon from 'material-ui/svg-icons/editor/insert-drive-file'
-import LocationCitySvgIcon from 'material-ui/svg-icons/social/location-city'
-
+import DeleteSvgIcon from '@material-ui/icons/Delete'
+import InsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
+import LocationCitySvgIcon from '@material-ui/icons/LocationCity'
+import DatePickerField from 'src/components/DatePickerField'
 import ProfileModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileModel"
 import AttachmentModel from "../../../api/backend/model/AttachmentModel"
 import { VALIDATION_STATE_CLASS, VALIDATION_STATE_ICON } from "./index"
@@ -96,7 +96,7 @@ class PassportForm extends React.Component {
             <h3 className={css.cardTitle}>Identity Card</h3>
             <div className={css.flexRow}>
               <Field component={TextField} name='passport' hintText='Passport ID' className={css.field} />
-              <Field component={DatePicker} name='expirationDate' hintText='Expiration Date' className={css.field} />
+              <Field component={DatePickerField} name='expirationDate' label='Expiration Date' className={css.field} />
             </div>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
