@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field, Form } from "redux-form"
 import { TextField } from 'redux-form-material-ui'
-import { RaisedButton, Dialog } from 'material-ui'
+import { RaisedButton } from 'material-ui'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 
 import {
   getOpenValidateEmailDialog as getOpen,
@@ -32,14 +36,19 @@ class ContactsFormValidateEmailDialog extends React.Component {
 
   render () {
     return (
-      <Dialog title='Validate Email' open={this.props.open} contentStyle={{ width: '30rem' }} onRequestClose={this.handleRequestClose} >
-        <Form onSubmit={this.props.handleSubmit} >
-          <p>Enter the code from message we&#39;ve sent to the provided email address.</p>
-          <Field name='emailCode' component={TextField} hintText='Enter Email Code' />
-          <br /><br />
+      <Dialog open={this.props.open} onClose={this.handleRequestClose} >
+        <DialogTitle>Validate Email</DialogTitle>
+        <DialogContent>
+          <Form onSubmit={this.props.handleSubmit} >
+            <p>Enter the code from message we&#39;ve sent to the provided email address.</p>
+            <Field name='emailCode' component={TextField} hintText='Enter Email Code' />
+            <br /><br />
+          </Form>
+        </DialogContent>
+        <DialogActions>
           <RaisedButton label='OK' type='submit' style={{ marginRight: '1rem' }} />
           <RaisedButton label='RESEND' onClick={this.handleResendClick} />
-        </Form>
+        </DialogActions>
       </Dialog>
     )
   }
