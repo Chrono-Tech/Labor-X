@@ -78,7 +78,7 @@ class LoginOptions extends React.Component {
     onConfirmRecoveryPassword: PropTypes.func,
     navigateToRecoveryPassword: PropTypes.func,
     fetchSignIn: PropTypes.bool,
-    openAccount404Dialog: PropTypes.func,
+    openAccount404Dialog: PropTypes.bool,
   }
 
   static defaultProps = {
