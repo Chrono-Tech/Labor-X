@@ -7,9 +7,9 @@ import { reduxForm, Field, formValueSelector } from "redux-form"
 import { TextField, SelectField } from 'redux-form-material-ui'
 import { Card, CardHeader, CardText, RaisedButton, MenuItem, IconButton } from 'material-ui'
 import { List, ListItem } from 'material-ui/List'
-import ActionDeleteSvgIcon from 'material-ui/svg-icons/action/delete'
-import EditorInsertDriveFileSvgIcon from 'material-ui/svg-icons/editor/insert-drive-file'
-import ActionHomeSvgIcon from 'material-ui/svg-icons/action/home'
+import ActionDeleteSvgIcon from '@material-ui/icons/Delete'
+import EditorInsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
+import ActionHomeSvgIcon from '@material-ui/icons/Home'
 
 import ProfileModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileModel"
 import AttachmentModel from "../../../api/backend/model/AttachmentModel"
