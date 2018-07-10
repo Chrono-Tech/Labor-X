@@ -6,6 +6,8 @@ import { MuiThemeProvider } from 'material-ui/styles'
 import initStore from 'src/store'
 import { ModalStack } from 'src/partials'
 import 'styles/globals/globals.scss'
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider'
+import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
 export class MyApp extends App {
   static async getInitialProps ({ Component, ctx }) {
@@ -21,10 +23,12 @@ export class MyApp extends App {
       <Container>
         <Provider store={store}>
           <MuiThemeProvider>
-            <div>
-              <Component {...pageProps} />
-              <ModalStack />
-            </div>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <div>
+                <Component {...pageProps} />
+                <ModalStack />
+              </div>
+            </MuiPickersUtilsProvider>
           </MuiThemeProvider>
         </Provider>
       </Container>

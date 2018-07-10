@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, propTypes } from 'redux-form'
-import { Toggle, SelectField, DatePicker, TextField } from 'redux-form-material-ui'
+import { Toggle, SelectField, TextField } from 'redux-form-material-ui'
 import { MuiThemeProvider, CircularProgress, MenuItem } from 'material-ui'
 import AutoComplete from 'material-ui/AutoComplete'
 import { Router } from 'src/routes'
 import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
 import { SignerModel, BoardModel } from 'src/models'
 import t from "typy"
+import DatePickerField from 'src/components/DatePickerField'
 import validate from './validate'
 import css from './CreateJobForm.scss'
 import { WORKFLOW_FIXED_PRICE, WORKFLOW_TM } from "../../../models"
@@ -182,16 +183,16 @@ class CreateJobForm extends React.Component {
         <div>
           <Field
             name='since'
-            component={DatePicker}
-            placeholder='Starts at'
+            component={DatePickerField}
+            label='Starts at'
           />
           <img className={css.calendar} src='/static/temp/calendar.png' alt='calendar' />
         </div>
         <div>
           <Field
             name='until'
-            component={DatePicker}
-            placeholder='Deadline'
+            component={DatePickerField}
+            label='Deadline'
           />
           <img className={css.calendar} src='/static/temp/calendar.png' alt='calendar' />
         </div>
