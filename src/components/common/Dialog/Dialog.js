@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Dialog from 'material-ui/Dialog'
-import { MuiThemeProvider } from 'material-ui/styles'
 
 export default class DialogComponent extends React.Component {
   static propTypes = {
@@ -19,13 +18,11 @@ export default class DialogComponent extends React.Component {
     const { children, onClose, ...other } = this.props
 
     return (
-      <MuiThemeProvider>
-        <Dialog onClose={onClose} {...other}>
-          <div>
-            {children}
-          </div>
-        </Dialog>
-      </MuiThemeProvider>
+      <Dialog onClose={onClose} {...other}>
+        <div>
+          {children}
+        </div>
+      </Dialog>
     )
   }
 }
