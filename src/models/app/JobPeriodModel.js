@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
-import Chance from 'chance'
+import faker from 'faker'
 import AbstractModel from '../AbstractModel'
-
-const chance = new Chance()
 
 export const schemaFactory = () => ({
   isSpecified: PropTypes.bool,
@@ -21,7 +19,7 @@ function propsWithDefaults (props) {
   return Object.assign({}, {
     isSpecified: false,
   }, props, {
-    since: props.since ? new Date(props.since) : chance.date(),
-    until: props.until ? new Date(props.until) : chance.date(),
+    since: props.since ? new Date(props.since) : faker.date.future(),
+    until: props.until ? new Date(props.until) : faker.date.future(),
   })
 }
