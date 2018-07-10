@@ -4,7 +4,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
 import { TextField } from 'redux-form-material-ui'
-import { Card, CardHeader, CardText, RaisedButton } from 'material-ui'
+import { RaisedButton } from 'material-ui'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import CommunicationContactsSvgIcon from '@material-ui/icons/Contacts'
 // import NavigationExpandLessSvgIcon from '@material-ui/icons/ExpandLess'
 // import NavigationExpandMoreSvgIcon from '@material-ui/icons/ExpandMore'
@@ -81,30 +85,25 @@ class ContactsForm extends React.Component {
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>
-        <Card className={css.collapseWrapper}>
-          <CardHeader
-            title={
-              <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
-                <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
-                { this.renderTitle() }
-              </span>
-            }
-            closeIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-            openIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-            actAsExpander
-            showExpandableButton
-            className={css.collapseHeader}
-          />
-          <CardText className={css.collapseText} expandable>
-            { this.renderText() }
-            <br />
-            <br />
-            <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='reset' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='validate email' onClick={this.handleValidateEmailClick} style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='validate phone' onClick={this.handleValidatePhoneClick} style={{ marginRight: '1rem' }} />
-          </CardText>
-        </Card>
+        <ExpansionPanel>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+              <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+              { this.renderTitle() }
+            </span>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div>
+              { this.renderText() }
+              <br />
+              <br />
+              <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
+              <RaisedButton type='button' label='reset' onClick={this.handleResetClick} style={{ marginRight: '1rem' }}  />
+              <RaisedButton type='button' label='validate email' onClick={this.handleValidateEmailClick} style={{ marginRight: '1rem' }} />
+              <RaisedButton type='button' label='validate phone' onClick={this.handleValidatePhoneClick} style={{ marginRight: '1rem' }} />
+            </div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
         <ValidateEmailDialog />
         <ValidatePhoneDialog />
       </form>
