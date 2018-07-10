@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import CircularProgress from 'material-ui/CircularProgress'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { Field, reduxForm } from 'redux-form'
 import { Button, Input, UserRow } from 'components/common'
 import { WalletEntryModel } from 'src/models'
