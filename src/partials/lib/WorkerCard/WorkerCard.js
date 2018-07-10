@@ -5,7 +5,8 @@ import moment from 'moment'
 import cn from 'classnames'
 import { ProfileModel, JobOfferModel, JobModel, JOB_STATE_CREATED, WorkerModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield, WorkerState } from 'src/components/common'
-import { acceptOffer } from 'src/store'
+import { acceptOffer, modalsPush } from 'src/store'
+import { ReviewOfferDialog } from 'src/partials'
 import css from './WorkerCard.scss'
 
 const dateFormat = 'DD MMM YYYY h:mm A'
@@ -18,7 +19,7 @@ class WorkerCard extends React.Component {
     job: PropTypes.instanceOf(JobModel),
     offerSent: PropTypes.bool,
     acceptOffer: PropTypes.func,
-    reviewOffer: PropTypes.func,
+    pushModal: PropTypes.func,
     jobId: PropTypes.number,
   }
 
@@ -38,7 +39,12 @@ class WorkerCard extends React.Component {
   }
 
   handleReviewOffer = () => {
-    this.props.reviewOffer()
+    const { job, offer, worker } = this.props
+    const modal = {
+      component: ReviewOfferDialog,
+      props: { job, offer, worker },
+    }
+    this.props.pushModal(modal)
   }
 
   handleDismissOffer () {
@@ -147,6 +153,7 @@ const mapStateToProps = () => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   acceptOffer: () => dispatch(acceptOffer(ownProps.jobId, ownProps.worker.address)),
+  pushModal (modal) { dispatch(modalsPush(modal)) },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkerCard)
