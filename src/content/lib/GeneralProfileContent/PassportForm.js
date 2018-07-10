@@ -9,7 +9,11 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { List, ListItem } from 'material-ui/List'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import DeleteSvgIcon from '@material-ui/icons/Delete'
 import InsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
 import LocationCitySvgIcon from '@material-ui/icons/LocationCity'
@@ -72,8 +76,16 @@ class PassportForm extends React.Component {
 
   renderAttachment = (attachment) => {
     return (
-      <ListItem leftIcon={<InsertDriveFileSvgIcon />} rightIconButton={<IconButton><DeleteSvgIcon /></IconButton>}>
-        { attachment.name }
+      <ListItem>
+        <ListItemIcon>
+          <InsertDriveFileSvgIcon />
+        </ListItemIcon>
+        <ListItemText primary={attachment.name} />
+        <ListItemSecondaryAction>
+          <IconButton>
+            <DeleteSvgIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
       </ListItem>
     )
   }

@@ -15,8 +15,8 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ActionDeleteSvgIcon from '@material-ui/icons/Delete'
-import EditorInsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
+import DeleteSvgIcon from '@material-ui/icons/Delete'
+import InsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
 import ActionHomeSvgIcon from '@material-ui/icons/Home'
 
 import ProfileModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileModel"
@@ -94,12 +94,12 @@ class LocationForm extends React.Component {
     return (
       <ListItem>
         <ListItemIcon>
-          <EditorInsertDriveFileSvgIcon />
+          <InsertDriveFileSvgIcon />
         </ListItemIcon>
         <ListItemText primary={attachment.name} />
         <ListItemSecondaryAction>
           <IconButton>
-            <ActionDeleteSvgIcon />
+            <DeleteSvgIcon />
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
