@@ -1,4 +1,5 @@
 import React  from 'react'
+import PropTypes from 'prop-types'
 import { reduxForm, Field, SubmissionError } from 'redux-form'
 
 import { Link, Button, Input } from 'components/common'
@@ -27,12 +28,20 @@ const onSubmit = ({ password, recruiter, worker, client }) => {
 }
 
 class AccountPasswordForm extends React.Component {
+  static propTypes = {
+    existingAccount: PropTypes.bool,
+    handleSubmit: PropTypes.func,
+    error: PropTypes.string,
+    pristine: PropTypes.bool,
+    invalid: PropTypes.bool,
+    navigateToSelectMethod: PropTypes.func,
+  }
 
   renderPasswordFieldset () {
     return (
       <div className={css.contentBlock}>
         <h2>Create Your Account Password</h2>
-        <p>If you're new to block-chain create your Account password below.</p>
+        <p>If you&quot;re new to block-chain create your Account password below.</p>
 
         <div className={css.passwordBlock}>
           <Field
@@ -68,7 +77,7 @@ class AccountPasswordForm extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, touched, navigateNext, navigateBack, navigateToSelectMethod } = this.props
+    const { handleSubmit, error, pristine, invalid, navigateToSelectMethod } = this.props
 
     return (
       <form className={css.root} name={FORM_ACCOUNT_PASSWORD} onSubmit={handleSubmit}>
@@ -138,7 +147,7 @@ class AccountPasswordForm extends React.Component {
         />
 
         <div className={css.pageDescription}>
-          Have a Mnemonic key, Wallet File or HD solution?
+          Have a Mnemonic key, Wallet File or Hardware solution?
           <br />
           <button onClick={navigateToSelectMethod} className={css.descriptionLink}>
             Use another Authorization Method

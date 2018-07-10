@@ -1,4 +1,5 @@
 import React  from 'react'
+import PropTypes  from 'prop-types'
 import { reduxForm, Field, SubmissionError } from 'redux-form'
 import { connect } from 'react-redux'
 
@@ -17,6 +18,13 @@ const onSubmit = ({ confirm }) => {
 }
 
 class ShowMnemonic extends React.Component {
+  static propTypes = {
+    handleSubmit: PropTypes.func,
+    error: PropTypes.string,
+    pristine: PropTypes.bool,
+    invalid: PropTypes.bool,
+    mnemonic: PropTypes.string,
+  }
 
   render () {
     const { handleSubmit, error, pristine, invalid, mnemonic } = this.props
@@ -27,6 +35,8 @@ class ShowMnemonic extends React.Component {
 
         <p className={css.description}>
           You can use this phrase to login and access your wallet, even if you forgot your password.
+          <br />
+          Or you can use it to add account to another browser.
         </p>
 
         <div className={css.phraseBlock}>
@@ -86,20 +96,20 @@ class ShowMnemonic extends React.Component {
 
           <ol className={css.infoBlockList}>
             <li>
-              <b>1. Copy you Account Password (Mnemonic key) on Paper.</b> Don't
+              <b>1. Copy you Account Password (Mnemonic key) on Paper.</b> Don&quot;t
               save your password on a computer, copy it on a paper and store in a safe place.
             </li>
 
             <li>
-              <b>2. Don't share your wallet file with anyone you don't trust.</b> Even
+              <b>2. Don&quot;t share your wallet file with anyone you don&quot;t trust.</b> Even
               the wallet file is protected by password, the file still can be used against you and you may
               lose your funds. To avoid the situation do not share your file with anyone.
             </li>
 
-            <li><b>3. What if I've lost my Back-up phrase (Mnemonic Key)?</b> You may use you wallet file instead.</li>
+            <li><b>3. What if I&quot;ve lost my Back-up phrase (Mnemonic Key)?</b> You may use you wallet file instead.</li>
 
             <li>
-              <b>4. What if I don't have neither Wallet file nor Back-up phrase (Mnemonic Key)?</b> We
+              <b>4. What if I don&quot;t have neither Wallet file nor Back-up phrase (Mnemonic Key)?</b> We
               do not store this information and Your account will be lost together with all your funds and history.
             </li>
 
