@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
+import uniqid from 'uniqid'
 import { connect } from 'react-redux'
 import { Field, formValueSelector, reduxForm, SubmissionError } from 'redux-form'
 import FileModel from 'models/FileModel'
-import SignInModel from 'models/SignInModel'
+import { WalletEntryModel } from 'src/models'
 import { LoginSteps } from 'store'
 import { Button, FileUploader } from 'components/common'
 import css from './WalletFileForm.scss'
@@ -24,10 +25,10 @@ const onSubmit = ({ walletFile }) => {
   try {
     const wallet = JSON.parse(atob(walletFile.content.split(',')[1]))
 
-    return new SignInModel({
-      isHD: true,
-      address: wallet.address,
-      method: SignInModel.METHODS.WALLET,
+    return new WalletEntryModel({
+      key: uniqid(),
+      name: walletFile.name,
+      encrypted: [wallet],
     })
   } catch (e) {
     throw new SubmissionError({ _error: e.message })

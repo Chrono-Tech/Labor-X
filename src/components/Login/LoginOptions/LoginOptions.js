@@ -326,7 +326,7 @@ function mapDispatchToProps (dispatch) {
     onSubmitMnemonic: (values) => dispatch(onSubmitMnemonic(values)),
     onSubmitMnemonicSuccess: (values) => dispatch(onSubmitMnemonicSuccess(values)),
     onSubmitMnemonicFail: (values) => dispatch(onSubmitMnemonicFail(values)),
-    onSelectWallet: (signInModel) => dispatch(onSelectWallet(signInModel)),
+    onSelectWallet: (walletEntry) => dispatch(onSelectWallet(walletEntry)),
     onSubmitRecoveryAccountForm: (values) => dispatch(onSubmitRecoveryAccountForm(values)),
     onConfirmRecoveryPassword: (values) => dispatch(onConfirmRecoveryPassword(values)),
     navigateToRecoveryPassword: () => dispatch(navigateToRecoveryPassword()),
