@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field, Form } from "redux-form"
-import { TextField } from 'redux-form-material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -41,7 +41,7 @@ class ContactsFormValidatePhoneDialog extends React.Component {
         <DialogContent>
           <Form onSubmit={this.props.handleSubmit} >
             <p>Enter the code from the SMS message we&#39;ve sent to the provided phone number.</p>
-            <Field name='phoneCode' component={TextField} hintText='Enter SMS Code' />
+            <Field name='phoneCode' component={TextField} label='SMS Code' />
             <br /><br />
           </Form>
         </DialogContent>
