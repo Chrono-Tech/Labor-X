@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
 import { TextField } from 'redux-form-material-ui'
-import { RaisedButton } from 'material-ui'
+// import { Button } from 'material-ui'
+import Button from '@material-ui/core/Button'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
@@ -97,10 +98,10 @@ class ContactsForm extends React.Component {
               { this.renderText() }
               <br />
               <br />
-              <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-              <RaisedButton type='button' label='reset' onClick={this.handleResetClick} style={{ marginRight: '1rem' }}  />
-              <RaisedButton type='button' label='validate email' onClick={this.handleValidateEmailClick} style={{ marginRight: '1rem' }} />
-              <RaisedButton type='button' label='validate phone' onClick={this.handleValidatePhoneClick} style={{ marginRight: '1rem' }} />
+              <Button variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</Button>
+              <Button variant='contained' type='button' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} >reset</Button>
+              <Button variant='contained' type='button' onClick={this.handleValidateEmailClick} style={{ marginRight: '1rem' }} >validate email</Button>
+              <Button variant='contained' type='button' onClick={this.handleValidatePhoneClick} style={{ marginRight: '1rem' }} >validate phone</Button>
             </div>
           </ExpansionPanelDetails>
         </ExpansionPanel>

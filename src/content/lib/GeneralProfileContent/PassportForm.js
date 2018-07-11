@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
 import { TextField } from 'redux-form-material-ui'
-import { RaisedButton, IconButton } from 'material-ui'
+import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
@@ -76,7 +77,7 @@ class PassportForm extends React.Component {
 
   renderAttachment = (attachment) => {
     return (
-      <ListItem>
+      <ListItem key={attachment.id}>
         <ListItemIcon>
           <InsertDriveFileSvgIcon />
         </ListItemIcon>
@@ -131,11 +132,12 @@ class PassportForm extends React.Component {
               <br />
               { this.renderAttachments() }
               <br />
-              <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-              <RaisedButton type='button' label='reset' style={{ marginRight: '1rem' }} onClick={this.handleResetClick} />
-              <RaisedButton type='button' label='upload documents' containerElement='label'>
-                <input type='file' style={{ display:'none' }} onChange={this.handleCreateAttachmentChange} />
-              </RaisedButton>
+              <Button variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</Button>
+              <Button variant='contained' type='button' style={{ marginRight: '1rem' }} onClick={this.handleResetClick} >reset</Button>
+              <label htmlFor='passport-form-attachment-file-input'>
+                <Button variant='contained' component='span'>upload documents</Button>
+              </label>
+              <input type='file' style={{ display:'none' }} onChange={this.handleCreateAttachmentChange} id='passport-form-attachment-file-input' />
             </div>
           </ExpansionPanelDetails>
         </ExpansionPanel>

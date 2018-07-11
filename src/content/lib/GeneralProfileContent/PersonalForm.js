@@ -8,7 +8,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { RaisedButton } from 'material-ui'
+import Button from '@material-ui/core/Button'
 import DatePickerField from 'src/components/DatePickerField'
 
 import { Icon } from "../../../components/common/index"
@@ -108,8 +108,8 @@ class PersonalForm extends React.Component {
               { this.renderText() }
               <br />
               <br />
-              <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-              <RaisedButton type='button' label='reset' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} />
+              <Button variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</Button>
+              <Button variant='contained' type='button' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} >reset</Button>
             </div>
           </ExpansionPanelDetails>
         </ExpansionPanel>
