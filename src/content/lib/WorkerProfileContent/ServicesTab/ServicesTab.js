@@ -19,6 +19,7 @@ const checkboxStyle = {
 export default class ServicesTab extends React.Component {
   static propTypes = {
     workerProfile: PropTypes.instanceOf(WorkerModel),
+    handleUploadServiceAgreement: PropTypes.func
   }
 
   handleClickRemoveBlock = () => {
@@ -34,12 +35,13 @@ export default class ServicesTab extends React.Component {
   renderServices = ({ fields }) => {
     return (
       <div>
-        { fields.map(service => this.renderServiceCard(service)) }
+        {fields.map(service => this.renderServiceCard(service))}
       </div>
     )
   }
 
   renderServiceCard = (service) => {
+    const { handleUploadServiceAgreement } = this.props;
     return (
       <div className={css.serviceBlock} key={service}>
         <div className={css.serviceBlockContent}>
@@ -95,12 +97,15 @@ export default class ServicesTab extends React.Component {
           </div>
         </div>
         <div className={css.documentEntry}>
-          <Icon
-            icon={Icon.ICONS.UPLOAD}
-            color={Icon.COLORS.BLUE}
-            size={28}
-          />
-          <p>Upload service agreement</p>
+          <label className={css.fileLoaderBlock}>
+          <input type='file' style={{ display: 'none' }} onChange={handleUploadServiceAgreement} multiple={false} />
+            <Icon
+              icon={Icon.ICONS.UPLOAD}
+              color={Icon.COLORS.BLUE}
+              size={28}
+            />
+            <p>Upload service agreement 2s</p>
+          </label>
         </div>
         <div className={css.removeBlock} onClick={this.handleClickRemoveBlock}>
           <Icon
@@ -113,7 +118,7 @@ export default class ServicesTab extends React.Component {
     )
   }
 
-  render () {
+  render() {
     return (
       <div className={css.content}>
         <div className={css.block}>

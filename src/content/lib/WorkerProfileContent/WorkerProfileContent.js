@@ -3,16 +3,26 @@ import PropTypes from 'prop-types'
 import SwipeableViews from 'react-swipeable-views'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import { connect } from 'react-redux'
-import { reduxForm, propTypes } from 'redux-form'
+import { reduxForm, propTypes, change, formValueSelector } from 'redux-form'
 import { Router } from 'src/routes'
 import { ProfileModel, WorkerModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
+import { createServiceAttachment } from './../../../store/worker-profile'
+import {
+  resetPersonal as reset,
+  createAvatar,
+  submitPersonal as submit,
+  getAvatar,
+  FORM_PERSONAL as FORM,
+  getPersonalInitialValues as getInitialValues,
+} from './../../../store/general-profile'
 import GeneralTab from './GeneralTab/GeneralTab'
 import WorkExperienceTab from './WorkExperienceTab/WorkExperienceTab'
 import ServicesTab from './ServicesTab/ServicesTab'
 import css from './WorkerProfileContent.scss'
 
 const FORM_WORKER_PROFILE = 'form/workerProfile'
+const DEFAULT_AVATAR = { url: '/static/images/profile-photo.jpg' }
 
 const style = {
   backgroundColor: 'transparent',
@@ -30,6 +40,7 @@ class WorkerProfileContent extends React.Component {
       general: PropTypes.instanceOf(ProfileModel),
       worker: PropTypes.instanceOf(WorkerModel),
     }),
+    avatarUrl: PropTypes.string
   }
 
   constructor (props) {
@@ -56,11 +67,22 @@ class WorkerProfileContent extends React.Component {
 
   handleClickAddWorker = () => {
     // eslint-disable-next-line no-console
-    console.log('---WorkerProfileContent handleClickAddWorker')
+    if (this.state.slideIndex === 1)
+    this.props.addEmptyWorkerExperience();
+    if (this.state.slideIndex === 2)
+    this.props.addEmptyWorkerService();
+  }
+
+  handleUploadServiceAgreement = (e) => {
+    const file = e.currentTarget.files[0]
+    if (file) {
+      this.props.createServiceAttachment(file)
+      e.currentTarget.value = ''
+    }
   }
 
   render () {
-    const { profile, handleSubmit } = this.props
+    const { profile, handleSubmit, avatarUrl } = this.props
 
     return (
       <form className={css.main} onSubmit={handleSubmit}>
@@ -121,9 +143,9 @@ class WorkerProfileContent extends React.Component {
               index={this.state.slideIndex}
               onChangeIndex={this.handleChange}
             >
-              <GeneralTab generalProfile={profile.general} />
+              <GeneralTab avatarUrl={avatarUrl} generalProfile={profile.general} />
               <WorkExperienceTab />
-              <ServicesTab workerProfile={profile.worker} />
+              <ServicesTab handleUploadServiceAgreement={this.handleUploadServiceAgreement} workerProfile={profile.worker} />
             </SwipeableViews>
           </div>
         </div>
@@ -137,29 +159,45 @@ const workerProfileContentForm = reduxForm({
 })(WorkerProfileContent)
 
 function mapStateToProps (state, op) {
+  const selector = formValueSelector(FORM_WORKER_PROFILE)
+  const avatar = getAvatar(state);
+  console.log(avatar);
   return {
     initialValues: {
-      experiences: [{}].concat(
-        op.profile.worker.ipfs.experience.map(exp => ({
-          position: exp.position,
-          organisation: exp.organisation,
-          responsibilities: exp.responsibilities,
-          workFrom: exp.workFrom,
-          workTo: exp.workTo,
-        })),
-      ),
-      services: [{}],
+      experiences: [{}],
+      services: [{}]
     },
+    services: selector(state, "services"),
+    experiences: selector(state, "experiences"),
+    avatarUrl: (getAvatar(state) || DEFAULT_AVATAR).url,
   }
 }
 
-function mapDispatchToProps () {
+function mapDispatchToProps (dispatch) {
   return {
     onSubmit: async (values) => {
       // eslint-disable-next-line no-console
       console.log('---WorkerProfileContent handleSubmit, values', values)
     },
+    createServiceAttachment: (file) =>  {
+      dispatch(createServiceAttachment(file))
+    },
+    dispatch,
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(workerProfileContentForm)
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  return {
+    ...stateProps,  // optional
+    ...dispatchProps,  // optional
+    ...ownProps,
+    addEmptyWorkerExperience: () => {
+      dispatchProps.dispatch(change(FORM_WORKER_PROFILE, "experiences",  [...stateProps.experiences, {}]))
+    },
+    addEmptyWorkerService: () => {
+      dispatchProps.dispatch(change(FORM_WORKER_PROFILE, "services", [...stateProps.experiences, {}]))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(workerProfileContentForm)

@@ -58,8 +58,8 @@ export const uploadImage = (file: FileModel, token: string) : ImageModel => {
 
 export const uploadAttachment = (file: FileModel, token: string) : AttachmentModel => {
   const formData = new FormData()
-  formData.append('image', file)
-  return http.post(`${ API_URL }/media/image/upload`, formData, {
+  formData.append('file', file)
+  return http.post(`${ API_URL }/media/file/upload`, formData, {
     headers: { Authorization: `Bearer ${ token }` },
   }).then(res => new AttachmentModel(res.data))
 }
@@ -93,7 +93,6 @@ export const confirmProfileContacts = (form, token: string): { profile: ProfileM
   form,
   { headers: { Authorization: `Bearer ${ token }` } }
 ).then(res => ({ profile: ProfileModel.fromJson(res.data.profile) }))
-
 
 export const reviewWorkerProfile = (token: string): ProfileWorkerModel => {
   return http.get(`${ API_URL }/me/profile/worker`, {

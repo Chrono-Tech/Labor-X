@@ -7,12 +7,12 @@ import ProfileWorkerEmploymentModel from './ProfileWorkerEmploymentModel'
 const schemaFactory = () => ({
   regular: PropTypes.shape({
     currencies: PropTypes.arrayOf(PropTypes.string),
-    hourlyCharge: PropTypes.string
+    hourlyCharge: PropTypes.string,
   }),
   verifiable: PropTypes.shape({
     intro:  PropTypes.string,
     pageBackground:  PropTypes.string,
-    attachments: PropTypes.arrayOf(PropTypes.string)
+    attachments: PropTypes.arrayOf(PropTypes.string),
   }),
   custom: PropTypes.any,
   socials: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerSocialModel)),

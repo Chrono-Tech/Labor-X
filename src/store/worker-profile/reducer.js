@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import ProfileWorkerModel from "../../api/backend/model/ProfileWorkerModel"
 import AttachmentModel from "../../api/backend/model/AttachmentModel"
+import ImageModel from "../../api/backend/model/ImageModel"
+
 import {
 
   WORKER_PROFILE_REVIEW_REQUEST,

@@ -18,19 +18,19 @@ export default class GeneralTab extends React.Component {
   }
 
   render () {
-    const { generalProfile } = this.props
+    const { generalProfile, avatarUrl } = this.props
     return (
       <div className={css.content}>
         <div className={css.logoContainer} onClick={this.handleClickLogo}>
           <div className={css.logo}>
-            <img src={generalProfile.ipfs.logo} alt='Logo' />
+            <img src={avatarUrl} alt='Logo' />
             <div className={css.overlay}>
-              <Icon
+              {/* <Icon
                 icon={Icon.ICONS.UPLOAD}
                 color={Icon.COLORS.WHITE}
                 size={24}
               />
-              <p>UPLOAD PHOTO</p>
+              <p>UPLOAD PHOTO</p> */}
             </div>
           </div>
         </div>

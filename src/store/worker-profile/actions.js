@@ -1,9 +1,8 @@
-import { reset, change, initialize, formValueSelector } from 'redux-form'
+import { change, formValueSelector } from 'redux-form'
 
 import * as backendApi from "../../api/backend"
 import { userTokenSelector } from "../user/selectors"
-import { FORM_CONTACTS, FORM_LOCATION, FORM_PASSPORT, FORM_PERSONAL } from "./reducer"
-import { getContactsInitialValues, getLocationInitialValues, getPassportInitialValues, getPersonalInitialValues } from "./selectors"
+import { WORKER_PROFILE_FORM } from "./reducer"
 import FileModel from "../../models/FileModel"
 
 export const WORKER_PROFILE_REVIEW_REQUEST = 'WORKER_PROFILE/PROFILE_REVIEW/REQUEST'
@@ -38,9 +37,12 @@ export const createServiceAttachment = (file: FileModel) => async (dispatch, get
     dispatch(createServiceAttachmentRequest({ file }))
     const state = getState()
     const token = userTokenSelector()(state)
+    console.log(file);
+    console.log(token);
     const attachment = await backendApi.uploadAttachment(file, token)
-    const attachments = formValueSelector(FORM_PASSPORT)(state, 'attachments')
-    dispatch(change(FORM_PASSPORT, 'attachments', [ ...attachments, attachment.id ]))
+    console.log(attachment);
+    const attachments = formValueSelector(WORKER_PROFILE_FORM)(state, 'attachments')
+    //dispatch(change(WORKER_PROFILE_FORM, 'attachments', [ ...attachments, attachment.id ]))
     dispatch(createServiceAttachmentSuccess({ attachment, file }))
   } catch (err) {
     dispatch(createServiceAttachmentFailure(err))

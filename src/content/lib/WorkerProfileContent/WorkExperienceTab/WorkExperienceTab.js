@@ -4,9 +4,22 @@ import { DatePicker, TextField } from 'redux-form-material-ui'
 import Collapsible from 'react-collapsible'
 import { Icon, Button, Translate, Chip } from 'src/components/common'
 import { SKILLS_LIST } from 'src/models'
+import AutoComplete from 'material-ui/AutoComplete'
 import css from './WorkExperienceTab.scss'
 
 export default class WorkExperienceTab extends React.Component {
+  state = {
+    selectedSkills: [],
+  }
+
+  handleAddSkill = (skill) => {
+    if (this.state.selectedSkills.findIndex((item) => item.index === skill.index) === -1) { this.setState({ selectedSkills: [...this.state.selectedSkills, skill] }) }
+  }
+
+  handleRemoveSkill = (skill) => {
+    this.setState({ selectedSkills: this.state.selectedSkills.filter((item) => item.index !== skill) })
+  }
+
   handleClickValidate = () => {
     // eslint-disable-next-line no-console
     console.log('---WorkerProfileContent-WorkExperienceTab handleClickValidate')
@@ -22,7 +35,12 @@ export default class WorkExperienceTab extends React.Component {
     console.log('---WorkerProfileContent-WorkExperienceTab handleClickAddSkill')
   }
 
-  renderUpgardeTitle () {
+  searchTagFilter = (searchText, key) => {
+    return searchText !== '' &&
+      String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
+  }
+
+  renderUpgardeTitle() {
     return (
       <div className={css.upgradeTitle}>
         <Icon
@@ -38,12 +56,12 @@ export default class WorkExperienceTab extends React.Component {
   renderExperiences = ({ fields }) => {
     return (
       <div>
-        { fields.map(experience => this.renderExperienceCard(experience)) }
+        {fields.map(experience => this.renderExperienceCard(experience, fields))}
       </div>
     )
   }
 
-  renderExperienceCard = (experience) => {
+  renderExperienceCard = (experience, fields) => {
     return (
       <div className={css.experienceBlock} key={experience}>
         <div className={css.experienceBlockContent}>
@@ -101,7 +119,7 @@ export default class WorkExperienceTab extends React.Component {
     )
   }
 
-  render () {
+  render() {
     return (
       <div className={css.content}>
         <FieldArray name='experiences' component={this.renderExperiences} />
@@ -109,21 +127,24 @@ export default class WorkExperienceTab extends React.Component {
           <div className={css.tagsRow}>
             <Field
               className={css.find}
-              component={TextField}
-              name='searchSkill'
-              hintText={<Translate value='terms.find' />}
-            />
-            <Icon
-              onClick={this.handleClickAddSkill}
-              icon={Icon.ICONS.ADD_CIRCLE}
-              color={Icon.COLORS.BLUE}
-              size={28}
+              style={{ marginRight: 10 }}
+              component={AutoComplete}
+              onNewRequest={this.handleAddSkill}
+              filter={this.searchTagFilter}
+              dataSourceConfig={{
+                text: 'name',
+                value: 'index',
+              }}
+              dataSource={SKILLS_LIST}
+              name='searchTags'
+              hintText='Select skills'
             />
             <div className={css.tags}>
-              {SKILLS_LIST.map(e => (
-                <Chip value={e.name} key={e.index} />
+              {this.state.selectedSkills.map(e => (
+                <Chip value={e.name} key={e.index} index={e.index} onRemove={this.handleRemoveSkill} />
               ))}
             </div>
+
           </div>
         </div>
         <Collapsible classParentString={css.upgradeBlock} trigger={this.renderUpgardeTitle()} >

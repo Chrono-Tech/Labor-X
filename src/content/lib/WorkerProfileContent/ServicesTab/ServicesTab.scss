@@ -38,7 +38,7 @@
       padding: 2rem 3rem;
     }
     .documentEntry {
-      @include flex(row, flex-start, center);
+      // @include flex(row, flex-start, center);
       padding: 1.5rem 3rem;
       border-top: 1px solid $color-gray3;
       > p {
@@ -89,3 +89,16 @@
   margin-top: auto;
   align-self: center;
 }
+
+
+.fileLoaderBlock {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  cursor: pointer;
+}
+
+.fileLoaderBlock > p {
+  margin-left: 1.5rem;
+}
+
