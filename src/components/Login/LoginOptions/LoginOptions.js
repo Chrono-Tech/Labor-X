@@ -161,7 +161,7 @@ class LoginOptions extends React.Component {
           />)
         break
       case LoginSteps.WalletFile:
-        component = (<WalletFileForm onChangeStep={onChangeStep} onSubmitSuccess={signIn} />)
+        component = (<WalletFileForm onChangeStep={onChangeStep} onSubmitSuccess={onSelectWallet} />)
         break
       case LoginSteps.PrivateKey:
         component = (

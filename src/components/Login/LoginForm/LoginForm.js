@@ -56,7 +56,7 @@ class LoginForm extends React.Component {
         {
           !fetchSignIn ? (
             <Button
-              className={css.row}
+              className={css.loginButton}
               buttonClassName={css.submitButton}
               type={Button.TYPES.SUBMIT}
               label='Login'

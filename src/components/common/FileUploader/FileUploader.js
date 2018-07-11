@@ -162,6 +162,7 @@ export default class FileUploader extends React.Component {
           {(isUploaded || !!error) && (
             <Image
               icon={Image.ICONS.UPLOAD_FILE_REMOVE}
+              color={Image.COLORS.WHITE}
               onClick={this.handleRemoveFile}
             />
           )}

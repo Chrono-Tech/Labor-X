@@ -1,83 +1,82 @@
-import { Button, FileUploader, Input } from 'components/common'
-import FileModel from 'models/FileModel'
-import SignInModel from 'models/SignInModel'
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
+import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Field, formValueSelector, reduxForm, SubmissionError } from 'redux-form'
-import Accounts from 'web3-eth-accounts'
-import validate from './validate'
+import FileModel from 'models/FileModel'
+import SignInModel from 'models/SignInModel'
+import { LoginSteps } from 'store'
+import { Button, FileUploader } from 'components/common'
 import css from './WalletFileForm.scss'
+import validate from './validate'
 
 const FORM_WALLET_FILE = 'form/walletFile'
 const FIELD_WALLET_FILE = 'walletFile'
-const FIELD_WALLET_PASSWORD = 'walletPassword'
 
 function mapStateToProps (state) {
   const selector = formValueSelector(FORM_WALLET_FILE)
   return {
     walletFile: selector(state, FIELD_WALLET_FILE),
-    password: selector(state, FIELD_WALLET_PASSWORD),
   }
 }
 
-const onSubmit = ({ walletFile, walletPassword }) => {
+const onSubmit = ({ walletFile }) => {
   try {
-    const accounts = new Accounts()
-    const encryptedWallet = accounts.wallet.decrypt([ walletFile.content ], walletPassword)[ 0 ]
+    const wallet = JSON.parse(atob(walletFile.content.split(',')[1]))
 
     return new SignInModel({
       isHD: true,
-      address: encryptedWallet.address,
+      address: wallet.address,
       method: SignInModel.METHODS.WALLET,
     })
   } catch (e) {
     throw new SubmissionError({ _error: e.message })
   }
-
 }
 
 class WalletFileForm extends React.Component {
   static propTypes = {
     onChangeStep: PropTypes.func.isRequired,
     wallet: PropTypes.instanceOf(FileModel),
-    password: PropTypes.string,
+    handleSubmit: PropTypes.func,
+    invalid: PropTypes.bool,
+    pristine: PropTypes.bool,
+    error: PropTypes.bool,
   }
 
   static STEP = 'step/LoginWithWallet'
 
+  handleBack = () => this.props.onChangeStep(LoginSteps.SelectLoginMethod)
+
   render () {
     const prefix = this.constructor.name
-    const { handleSubmit, invalid, pristine, walletFile, error } = this.props
-    const isWallet = walletFile && !!walletFile.content
+    const { handleSubmit, invalid, pristine, error } = this.props
 
     return (
       <form className={css.root} name={FORM_WALLET_FILE} onSubmit={handleSubmit}>
+        <h3>Upload a Wallet File</h3>
+        <p>Upload a wallet file to add the login information to your browser. We provide the file <br />on New Account Creation.</p>
         <Field
-          className={css.row}
+          className={cn(css.row, css.uploadField)}
           name={FIELD_WALLET_FILE}
           component={FileUploader}
           label={`${prefix}.uploadWallet`}
           invert
         />
-        <Field
-          className={css.row}
-          name={FIELD_WALLET_PASSWORD}
-          component={Input}
-          type={Input.TYPES.PASSWORD}
-          placeholder={`${prefix}.enterWalletPassword`}
-          mods={Input.MODS.INVERT}
-          disabled={!isWallet}
-        />
         <Button
-          className={css.row}
+          className={cn(css.row, css.loginButton)}
           label={`${prefix}.login`}
           type={Button.TYPES.SUBMIT}
           disabled={pristine || invalid}
           error={error}
+          errorClassName={css.error}
           color={Button.COLORS.PRIMARY}
           mods={Button.MODS.INVERT}
         />
+        <div className={css.otherActions}>
+          or
+          <button className={css.backButton} onClick={this.handleBack}>Back</button>
+        </div>
       </form>
     )
   }
