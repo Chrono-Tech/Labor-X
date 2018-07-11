@@ -24,7 +24,6 @@ export { default as FeedbackCard } from './FeedbackCard/FeedbackCard'
 export { default as OpportunityCard } from './OpportunityCard/OpportunityCard'
 export { default as TodoCard } from './TodoCard/TodoCard'
 export { default as ActiveJobCard } from './ActiveJobCard/ActiveJobCard'
-export { default as WorkerCard } from './WorkerCard/WorkerCard'
 export { default as ScheduleWidget } from './ScheduleWidget/ScheduleWidget'
 
 //elements

@@ -7,3 +7,5 @@ export { default as PaidInvoiceDialog } from './lib/PaidInvoiceDialog/PaidInvoic
 export { default as DeclineInvoiceDialog } from './lib/DeclineInvoiceDialog/DeclineInvoiceDialog'
 export { default as SendInvoiceDialog } from './lib/SendInvoiceDialog/SendInvoiceDialog'
 export { default as MakeOfferDialog } from './lib/MakeOfferDialog/MakeOfferDialog'
+export { default as ReviewOfferDialog } from './lib/ReviewOfferDialog/ReviewOfferDialog'
+export { default as WorkerCard } from './lib/WorkerCard/WorkerCard'

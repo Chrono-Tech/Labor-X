@@ -1,0 +1,90 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+@mixin button($color, $bgColor) {
+  height: 4rem;
+  width: 12rem;
+  border-radius: 21px;
+  font-size: $pSize;
+  font-weight: $font-weight-bold;
+  color: $color;
+  background-color: $bgColor;
+}
+
+.root {
+  @include flex(column, flex-start, stretch);
+  width: 62rem;
+  min-height: 46rem;
+  background: $color-white;
+  border-radius: 5px;
+  padding: 3rem;
+  border-top: 1rem solid $color-azure;
+  .header {
+    margin-bottom: 2rem;
+    font-size: $pSize;
+    .headerInfo {
+      color: $color-gray50;
+      font-weight: $font-weight-light;
+      .link {
+        color: $color-azure;
+      }
+    }
+  }
+  .body {
+    @include flex(column, flex-start, stretch);
+    padding: 1rem 0;
+    > * {
+      margin-bottom: 1rem;
+    }
+    .workerRow {
+      @include flex(row, flex-start, center);
+      height: 8rem;
+      border-top: solid 1px $color-gray10;
+      border-bottom: solid 1px $color-gray10;
+      .workerName {
+        @include flex(row, flex-start, center);
+        flex-grow: 1;
+        p {
+          color: $color-gray50;
+          font-weight: $font-weight-light;
+        }
+      }
+      .workerImage {
+        margin-right: 1rem;
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    .messageRow {
+      padding: 2rem 0;
+    }
+    .infoRow {
+      margin-top: auto
+    }
+    .twoColumn {
+      @include flex(row, space-between, flex-start);
+      > * {
+        margin-bottom: .5rem;
+        flex-basis: calc(50% - 1rem)
+      }
+    }
+  }
+  .actions {
+    @include flex(row, flex-end, stretch);
+    margin-top: auto;
+    > * {
+      margin-left: 2rem;
+    }
+    .buttonCancel {
+      @include button($color-azure, transparent);
+    }
+    .buttonDecline {
+      @include button($color-white, $color-red);
+    }
+    .buttonAccept {
+      @include button($color-white, $color-azure);
+    }
+  }
+}
