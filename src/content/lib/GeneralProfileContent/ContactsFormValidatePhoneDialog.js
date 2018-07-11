@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field, Form } from "redux-form"
 import { TextField } from 'redux-form-material-ui'
-import { RaisedButton } from 'material-ui'
+import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -46,8 +46,8 @@ class ContactsFormValidatePhoneDialog extends React.Component {
           </Form>
         </DialogContent>
         <DialogActions>
-          <RaisedButton label='OK' type='submit' style={{ marginRight: '1rem' }} />
-          <RaisedButton label='RESEND' onClick={this.handleResendClick} />
+          <Button variant='contained' type='submit' style={{ marginRight: '1rem' }} >OK</Button>
+          <Button variant='contained' onClick={this.handleResendClick} >RESEND</Button>
         </DialogActions>
       </Dialog>
     )

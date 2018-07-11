@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import pluralize from 'pluralize'
-import { RaisedButton, FlatButton } from 'material-ui'
+import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
-import { Popover, Icon, Button } from 'src/components/common'
+import { Popover, Icon } from 'src/components/common'
 import { BoardModel } from 'src/models'
 import { joinBoard, terminateBoard } from 'src/store'
 import css from './JobBoardItem.scss'
@@ -369,19 +369,16 @@ export class JobBoardItem extends React.Component {
         <DialogTitle>Are you absolutely sure?</DialogTitle>
         <DialogContent>This action cannot be undone. This will permanently terminate this job board</DialogContent>
         <DialogActions>
-          <FlatButton
+          <Button
             disabled={this.state.isTerminateProgress}
-            label='NO'
             onClick={this.handleTerminateRejectClick}
-            type={Button.TYPES.SUBMIT}
-          />
-          <RaisedButton
-            primary
+          >NO</Button>
+          <Button
+            variant="contained"
+            color="primary"
             disabled={this.state.isTerminateProgress}
-            label={this.state.isTerminateProgress ? 'Loading' : 'YES'}
             onClick={this.handleTerminateApproveClick}
-            type={Button.TYPES.SUBMIT}
-          />
+          >{this.state.isTerminateProgress ? 'Loading' : 'YES'}</Button>
         </DialogActions>
       </Dialog>
     )
