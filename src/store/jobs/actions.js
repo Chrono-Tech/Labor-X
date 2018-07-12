@@ -1,3 +1,4 @@
+// @flow
 import { storeIntoIPFS } from 'src/utils'
 import {
   JobModel,

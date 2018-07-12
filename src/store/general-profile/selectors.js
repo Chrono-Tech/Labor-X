@@ -1,3 +1,4 @@
+// @flow
 import { createSelector } from "reselect"
 import ProfileContactsModel from "../../api/backend/model/ProfileContactsModel"
 import ProfilePersonalModel from "../../api/backend/model/ProfilePersonalModel"

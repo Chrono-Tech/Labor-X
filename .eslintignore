@@ -62,6 +62,7 @@ src/**/*.js
 !src/models/app/BoardRequirementModel.js
 !src/models/app/BoardPostFeeModel.js
 !src/models/form/JobBoardFormModel.js
+!src/models/notifications/
 
 !src/store/index.js
 !src/store/jobs/
