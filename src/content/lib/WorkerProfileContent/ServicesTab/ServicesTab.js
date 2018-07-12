@@ -104,7 +104,7 @@ export default class ServicesTab extends React.Component {
               color={Icon.COLORS.BLUE}
               size={28}
             />
-            <p>Upload service agreement 2s</p>
+            <p>Upload service agreement 2s3</p>
           </label>
         </div>
         <div className={css.removeBlock} onClick={this.handleClickRemoveBlock}>

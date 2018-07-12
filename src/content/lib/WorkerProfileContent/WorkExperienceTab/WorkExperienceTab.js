@@ -147,57 +147,59 @@ export default class WorkExperienceTab extends React.Component {
 
           </div>
         </div>
-        <Collapsible classParentString={css.upgradeBlock} trigger={this.renderUpgardeTitle()} >
-          <div className={css.description}>
-            <p>Upload any documents which can prove that the entered information is valid. Note that changing and saving information will require validation re-submit.</p>
-          </div>
-          <div className={css.documents}>
-            <div className={css.documentEntry}>
-              <Icon
-                icon={Icon.ICONS.FILE}
-                color={Icon.COLORS.BLACK}
-                size={28}
-              />
-              <p>Work Permit.pdf</p>
-              <Icon
-                icon={Icon.ICONS.DELETE}
-                color={Icon.COLORS.GREY30}
-                size={28}
-              />
+        {false && (
+          <Collapsible classParentString={css.upgradeBlock} trigger={this.renderUpgardeTitle()} >
+            <div className={css.description}>
+              <p>Upload any documents which can prove that the entered information is valid. Note that changing and saving information will require validation re-submit.</p>
             </div>
-            <div className={css.documentEntry}>
-              <Icon
-                icon={Icon.ICONS.UPLOAD}
-                color={Icon.COLORS.BLUE}
-                size={28}
-              />
-              <p>Upload Insurance</p>
+            <div className={css.documents}>
+              <div className={css.documentEntry}>
+                <Icon
+                  icon={Icon.ICONS.FILE}
+                  color={Icon.COLORS.BLACK}
+                  size={28}
+                />
+                <p>Work Permit.pdf</p>
+                <Icon
+                  icon={Icon.ICONS.DELETE}
+                  color={Icon.COLORS.GREY30}
+                  size={28}
+                />
+              </div>
+              <div className={css.documentEntry}>
+                <Icon
+                  icon={Icon.ICONS.UPLOAD}
+                  color={Icon.COLORS.BLUE}
+                  size={28}
+                />
+                <p>Upload Insurance</p>
+              </div>
+              <div className={css.documentEntry}>
+                <Icon
+                  icon={Icon.ICONS.UPLOAD}
+                  color={Icon.COLORS.BLUE}
+                  size={28}
+                />
+                <p>Upload Certificate(s)</p>
+              </div>
+              <div className={css.documentEntry}>
+                <Icon
+                  icon={Icon.ICONS.UPLOAD}
+                  color={Icon.COLORS.BLUE}
+                  size={28}
+                />
+                <p>Upload Recommendations(s)</p>
+              </div>
             </div>
-            <div className={css.documentEntry}>
-              <Icon
-                icon={Icon.ICONS.UPLOAD}
-                color={Icon.COLORS.BLUE}
-                size={28}
-              />
-              <p>Upload Certificate(s)</p>
-            </div>
-            <div className={css.documentEntry}>
-              <Icon
-                icon={Icon.ICONS.UPLOAD}
-                color={Icon.COLORS.BLUE}
-                size={28}
-              />
-              <p>Upload Recommendations(s)</p>
-            </div>
-          </div>
-          <Button
-            className={css.validateButton}
-            primary
-            color={Button.COLORS.PRIMARY}
-            label='Validate'
-            onClick={this.handleClickValidate}
-          />
-        </Collapsible>
+            <Button
+              className={css.validateButton}
+              primary
+              color={Button.COLORS.PRIMARY}
+              label='Validate'
+              onClick={this.handleClickValidate}
+            />
+          </Collapsible>
+        )}
       </div>
     )
   }

@@ -3,16 +3,18 @@ import AbstractModel from './../../../models/AbstractModel'
 import ProfileWorkerSocialModel from './ProfileWorkerSocialModel'
 import ProfileWorkerServiceModel from './ProfileWorkerServiceModel'
 import ProfileWorkerEmploymentModel from './ProfileWorkerEmploymentModel'
+import CurrencyModel from './CurrencyModel'
+import AttachmentModel from './AttachmentModel'
 
 const schemaFactory = () => ({
   regular: PropTypes.shape({
-    currencies: PropTypes.arrayOf(PropTypes.string),
+    currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
     hourlyCharge: PropTypes.string,
   }),
   verifiable: PropTypes.shape({
     intro:  PropTypes.string,
     pageBackground:  PropTypes.string,
-    attachments: PropTypes.arrayOf(PropTypes.string),
+    attachments: PropTypes.arrayOf(PropTypes.instanceOf(AttachmentModel)),
   }),
   custom: PropTypes.any,
   socials: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerSocialModel)),

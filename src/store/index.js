@@ -41,7 +41,7 @@ export default (initialState = {}) => {
     user: user(),
     offers,
     generalProfile,
-    workerProfile
+    workerProfile,
   })
 
   // Here you can recover state sent from the backend

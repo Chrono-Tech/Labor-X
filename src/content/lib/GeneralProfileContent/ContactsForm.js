@@ -110,7 +110,6 @@ class ContactsForm extends React.Component {
       </form>
     )
   }
-
 }
 
 ContactsForm = reduxForm({ form: FORM })(ContactsForm)

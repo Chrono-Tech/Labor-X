@@ -94,8 +94,8 @@ export const confirmProfileContacts = (form, token: string): { profile: ProfileM
   { headers: { Authorization: `Bearer ${ token }` } }
 ).then(res => ({ profile: ProfileModel.fromJson(res.data.profile) }))
 
-export const reviewWorkerProfile = (token: string): ProfileWorkerModel => {
-  return http.get(`${ API_URL }/me/profile/worker`, {
-    headers: { Authorization: `Bearer ${ token }` },
-  }).then(res => ProfileWorkerModel.fromJson(res.data))
-}
+export const submitWorkerProfile = (form, token: string): { profile: ProfileWorkerModel } => http.post(
+  `${ API_URL }/me/profile/worker`,
+  form,
+  { headers: { Authorization: `Bearer ${ token }` } }
+).then(res => ({ profile: ProfileWorkerModel.fromJson(res.data.profile) }))

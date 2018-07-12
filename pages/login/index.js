@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { MuiThemeProvider } from 'material-ui/styles'
 import Head from 'next/head'
-
 import { LoginActions } from 'src/components/layouts'
 import { LoginOptions } from 'src/components/Login'
 

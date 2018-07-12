@@ -8,14 +8,8 @@ import { Router } from 'src/routes'
 import { ProfileModel, WorkerModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
 import { createServiceAttachment } from './../../../store/worker-profile'
-import {
-  resetPersonal as reset,
-  createAvatar,
-  submitPersonal as submit,
-  getAvatar,
-  FORM_PERSONAL as FORM,
-  getPersonalInitialValues as getInitialValues,
-} from './../../../store/general-profile'
+import { getAvatar } from './../../../store/general-profile'
+import { reviewWorkerProfile } from './../../../store/worker-profile'
 import GeneralTab from './GeneralTab/GeneralTab'
 import WorkExperienceTab from './WorkExperienceTab/WorkExperienceTab'
 import ServicesTab from './ServicesTab/ServicesTab'
@@ -161,7 +155,6 @@ const workerProfileContentForm = reduxForm({
 function mapStateToProps (state, op) {
   const selector = formValueSelector(FORM_WORKER_PROFILE)
   const avatar = getAvatar(state);
-  console.log(avatar);
   return {
     initialValues: {
       experiences: [{}],
@@ -176,8 +169,7 @@ function mapStateToProps (state, op) {
 function mapDispatchToProps (dispatch) {
   return {
     onSubmit: async (values) => {
-      // eslint-disable-next-line no-console
-      console.log('---WorkerProfileContent handleSubmit, values', values)
+      dispatch(reviewWorkerProfile(values))
     },
     createServiceAttachment: (file) =>  {
       dispatch(createServiceAttachment(file))
