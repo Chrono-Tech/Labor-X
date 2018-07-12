@@ -4,8 +4,14 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field, formValueSelector } from "redux-form"
-import { TextField, SelectField } from 'redux-form-material-ui'
-import { RaisedButton, MenuItem, IconButton } from 'material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
+import Select from 'redux-form-material-ui-next/lib/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import IconButton from '@material-ui/core/IconButton'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
@@ -92,7 +98,7 @@ class LocationForm extends React.Component {
 
   renderAttachment = (attachment) => {
     return (
-      <ListItem>
+      <ListItem key={attachment.id}>
         <ListItemIcon>
           <InsertDriveFileSvgIcon />
         </ListItemIcon>
@@ -126,25 +132,49 @@ class LocationForm extends React.Component {
           </div>
           <div>
             <h3 className={css.cardTitle}>Home Address</h3>
-            <div className={css.flexRow}>
-              <Field component={SelectField} name='country' hintText='Country' className={css.field}>
-                { countries.map(x => <MenuItem value={x.id} primaryText={x.name} />) }
-              </Field>
-              <Field component={SelectField} name='state' hintText='State' className={css.field} disabled={!this.props.country} >
-                { this.getStates().map(x => <MenuItem value={x.id} primaryText={x.name} />) }
-              </Field>
-            </div>
-            <div className={css.flexRow}>
-              <Field component={SelectField} name='city' hintText='City' className={css.field} disabled={!this.props.state}>
-                { this.getCities().map(x => <MenuItem value={x.id} primaryText={x.name} />) }
-              </Field>
-              <Field component={TextField} name='zip' hintText='Zip' className={css.field} />
-            </div>
-            <div className={css.flexRow}>
-              <Field component={TextField} name='building' hintText='Building #' className={classnames([css.field, css.fieldBuilding])} />
-              <Field component={TextField} name='suit' hintText='Suit' className={classnames([css.field, css.fieldSuit])} />
-              <Field component={TextField} name='street' hintText='Street' className={css.field} />
-            </div>
+
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel>Country</InputLabel>
+                  <Field component={Select} name='country' className={css.field}>
+                    { countries.map(x => <MenuItem key={x.id} value={x.id}>{x.name}</MenuItem>) }
+                  </Field>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel>State</InputLabel>
+                  <Field component={Select} name='state' className={css.field} disabled={!this.props.country} >
+                    { this.getStates().map(x => <MenuItem key={x.id} value={x.id}>{x.name}</MenuItem>) }
+                  </Field>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel>City</InputLabel>
+                  <Field component={Select} name='city' className={css.field} disabled={!this.props.state}>
+                    { this.getCities().map(x => <MenuItem key={x.id} value={x.id}>{x.name}</MenuItem>) }
+                  </Field>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={TextField} name='zip' label='Zip' className={css.field} />
+              </Grid>
+            </Grid>
+            <Grid container spacing={24}>
+              <Grid item xs={3}>
+                <Field component={TextField} name='building' label='Building #' className={classnames([css.field, css.fieldBuilding])} />
+              </Grid>
+              <Grid item xs={3}>
+                <Field component={TextField} name='suit' label='Suit' className={classnames([css.field, css.fieldSuit])} />
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={TextField} name='street' label='Street' className={css.field} />
+              </Grid>
+            </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>
@@ -162,11 +192,12 @@ class LocationForm extends React.Component {
               <br />
               { this.renderAttachments() }
               <br />
-              <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-              <RaisedButton type='button' label='reset' style={{ marginRight: '1rem' }} onClick={this.handleResetClick} />
-              <RaisedButton type='button' label='upload documents' containerElement='label'>
-                <input type='file' style={{ display:'none' }} onChange={this.handleCreateAttachmentChange} />
-              </RaisedButton>
+              <Button variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</Button>
+              <Button variant='contained' type='button' style={{ marginRight: '1rem' }} onClick={this.handleResetClick} >reset</Button>
+              <label htmlFor='location-form-attachment-file-input'>
+                <Button variant='contained' component='span'>upload documents</Button>
+              </label>
+              <input type='file' style={{ display:'none' }} onChange={this.handleCreateAttachmentChange} id='location-form-attachment-file-input' />
             </div>
           </ExpansionPanelDetails>
         </ExpansionPanel>
