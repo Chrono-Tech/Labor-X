@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SwipeableViews from 'react-swipeable-views'
-import { Tabs, Tab } from 'material-ui/Tabs'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import { connect } from 'react-redux'
 import { reduxForm, propTypes, change, formValueSelector } from 'redux-form'
 import { Router } from 'src/routes'
 import { ProfileModel, WorkerModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
-import { createServiceAttachment } from './../../../store/worker-profile'
+import { createServiceAttachment, reviewWorkerProfile } from './../../../store/worker-profile'
 import { getAvatar } from './../../../store/general-profile'
-import { reviewWorkerProfile } from './../../../store/worker-profile'
 import GeneralTab from './GeneralTab/GeneralTab'
 import WorkExperienceTab from './WorkExperienceTab/WorkExperienceTab'
 import ServicesTab from './ServicesTab/ServicesTab'
@@ -18,15 +18,6 @@ import css from './WorkerProfileContent.scss'
 const FORM_WORKER_PROFILE = 'form/workerProfile'
 const DEFAULT_AVATAR = { url: '/static/images/profile-photo.jpg' }
 
-const style = {
-  backgroundColor: 'transparent',
-}
-
-const inkBarStyle = {
-  backgroundColor: '#00A0D2',
-  height: '5px',
-}
-
 class WorkerProfileContent extends React.Component {
   static propTypes = {
     ...propTypes,
@@ -34,7 +25,7 @@ class WorkerProfileContent extends React.Component {
       general: PropTypes.instanceOf(ProfileModel),
       worker: PropTypes.instanceOf(WorkerModel),
     }),
-    avatarUrl: PropTypes.string
+    avatarUrl: PropTypes.string,
   }
 
   constructor (props) {
@@ -44,11 +35,9 @@ class WorkerProfileContent extends React.Component {
     }
   }
 
-  handleChange = (value) => {
-    this.setState({
-      slideIndex: value,
-    })
-  }
+  handleChangeIndex = (index) => this.setState({ slideIndex: index })
+
+  handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
   handleBack () {
     Router.pushRoute('/my-profile')
@@ -62,9 +51,9 @@ class WorkerProfileContent extends React.Component {
   handleClickAddWorker = () => {
     // eslint-disable-next-line no-console
     if (this.state.slideIndex === 1)
-    this.props.addEmptyWorkerExperience();
+    {this.props.addEmptyWorkerExperience()}
     if (this.state.slideIndex === 2)
-    this.props.addEmptyWorkerService();
+    {this.props.addEmptyWorkerService()}
   }
 
   handleUploadServiceAgreement = (e) => {
@@ -112,15 +101,12 @@ class WorkerProfileContent extends React.Component {
           <div className={css.header}>
             <h2>Worker Profile</h2>
             <Tabs
-              className={css.tabs}
-              onChange={this.handleChange}
+              onChange={this.handleTabChange}
               value={this.state.slideIndex}
-              tabItemContainerStyle={style}
-              inkBarStyle={inkBarStyle}
             >
-              <Tab className={css.tab} label='GENERAL' value={0} />
-              <Tab className={css.tab} label='WORK EXPERIENCE' value={1} />
-              <Tab className={css.tab} label='SERVICES' value={2} />
+              <Tab label='GENERAL' value={0} />
+              <Tab label='WORK EXPERIENCE' value={1} />
+              <Tab label='SERVICES' value={2} />
             </Tabs>
             { this.state.slideIndex > 0 ? (
               <Icon
@@ -135,11 +121,11 @@ class WorkerProfileContent extends React.Component {
           <div className={css.tabContent}>
             <SwipeableViews
               index={this.state.slideIndex}
-              onChangeIndex={this.handleChange}
+              onChangeIndex={this.handleChangeIndex}
             >
               <GeneralTab avatarUrl={avatarUrl} generalProfile={profile.general} />
               <WorkExperienceTab />
-              <ServicesTab handleUploadServiceAgreement={this.handleUploadServiceAgreement} workerProfile={profile.worker} />
+              <ServicesTab onHandleUploadServiceAgreement={this.handleUploadServiceAgreement} workerProfile={profile.worker} />
             </SwipeableViews>
           </div>
         </div>
@@ -152,13 +138,12 @@ const workerProfileContentForm = reduxForm({
   form: FORM_WORKER_PROFILE,
 })(WorkerProfileContent)
 
-function mapStateToProps (state, op) {
+function mapStateToProps (state) {
   const selector = formValueSelector(FORM_WORKER_PROFILE)
-  const avatar = getAvatar(state);
   return {
     initialValues: {
       experiences: [{}],
-      services: [{}]
+      services: [{}],
     },
     services: selector(state, "services"),
     experiences: selector(state, "experiences"),
@@ -188,7 +173,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     },
     addEmptyWorkerService: () => {
       dispatchProps.dispatch(change(FORM_WORKER_PROFILE, "services", [...stateProps.experiences, {}]))
-    }
+    },
   }
 }
 

@@ -3,8 +3,14 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
-import { DatePicker, TextField } from 'redux-form-material-ui'
-import { Card, CardHeader, CardText, RaisedButton } from 'material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
+import Grid from '@material-ui/core/Grid'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Button from '@material-ui/core/Button'
+import DatePickerField from 'src/components/DatePickerField'
 
 import { Icon } from "../../../components/common/index"
 import css from './index.scss'
@@ -84,35 +90,34 @@ class PersonalForm extends React.Component {
           </div>
           <div>
             <h3 className={css.cardTitle}>Photo, Name and Date of birth</h3>
-            <div className={css.flexRow}>
-              <Field component={TextField} name='userName' hintText='Name' className={css.field} />
-              <Field component={DatePicker} name='birthDate' hintText='Date of Birth' className={css.field} />
-            </div>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Field component={TextField} name='userName' label='Name' className={css.field} />
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={DatePickerField} name='birthDate' label='Date of Birth' className={css.field} />
+              </Grid>
+            </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>
-        <Card className={css.collapseWrapper}>
-          <CardHeader
-            title={
-              <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
-                <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
-                { this.renderTitle() }
-              </span>
-            }
-            closeIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-            openIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-            actAsExpander
-            showExpandableButton
-            className={css.collapseHeader}
-          />
-          <CardText className={css.collapseText} expandable>
-            { this.renderText() }
-            <br />
-            <br />
-            <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='reset' onClick={this.handleResetClick} />
-          </CardText>
-        </Card>
+        <ExpansionPanel style={{ width:'100%' }}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+              <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+              { this.renderTitle() }
+            </span>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div>
+              { this.renderText() }
+              <br />
+              <br />
+              <Button variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</Button>
+              <Button variant='contained' type='button' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} >reset</Button>
+            </div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
       </form>
     )
   }

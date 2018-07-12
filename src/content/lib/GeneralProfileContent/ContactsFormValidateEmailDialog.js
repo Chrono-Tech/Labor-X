@@ -2,8 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field, Form } from "redux-form"
-import { TextField } from 'redux-form-material-ui'
-import { RaisedButton, Dialog } from 'material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 
 import {
   getOpenValidateEmailDialog as getOpen,
@@ -32,14 +36,19 @@ class ContactsFormValidateEmailDialog extends React.Component {
 
   render () {
     return (
-      <Dialog title='Validate Email' open={this.props.open} contentStyle={{ width: '30rem' }} onRequestClose={this.handleRequestClose} >
-        <Form onSubmit={this.props.handleSubmit} >
-          <p>Enter the code from message we&#39;ve sent to the provided email address.</p>
-          <Field name='emailCode' component={TextField} hintText='Enter Email Code' />
-          <br /><br />
-          <RaisedButton label='OK' type='submit' style={{ marginRight: '1rem' }} />
-          <RaisedButton label='RESEND' onClick={this.handleResendClick} />
-        </Form>
+      <Dialog open={this.props.open} onClose={this.handleRequestClose} >
+        <DialogTitle>Validate Email</DialogTitle>
+        <DialogContent>
+          <Form onSubmit={this.props.handleSubmit} >
+            <p>Enter the code from message we&#39;ve sent to the provided email address.</p>
+            <Field name='emailCode' component={TextField} label='Email Code' />
+            <br /><br />
+          </Form>
+        </DialogContent>
+        <DialogActions>
+          <Button variant='contained' type='submit' style={{ marginRight: '1rem' }} >OK</Button>
+          <Button variant='contained' onClick={this.handleResendClick} >RESEND</Button>
+        </DialogActions>
       </Dialog>
     )
   }

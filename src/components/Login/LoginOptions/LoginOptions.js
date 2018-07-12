@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Router from 'src/routes'
-import Dialog from 'material-ui/Dialog'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 
 import {
   signIn,
@@ -78,7 +81,7 @@ class LoginOptions extends React.Component {
     onConfirmRecoveryPassword: PropTypes.func,
     navigateToRecoveryPassword: PropTypes.func,
     fetchSignIn: PropTypes.bool,
-    openAccount404Dialog: PropTypes.func,
+    openAccount404Dialog: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -227,31 +230,28 @@ class LoginOptions extends React.Component {
           {this.renderComponent()}
         </ReactCSSTransitionGroup>
         <Dialog
-          contentClassName={css.dialog}
           open={this.props.openAccount404Dialog}
-          title={<h2>LaborX account is not found</h2>}
-          titleClassName={css.dialogTitle}
-          bodyClassName={css.dialogContent}
-          actionsContainerClassName={css.actionWrapper}
-          actions={[
+          onClose={this.handleAccount404DialogNoClick}
+        >
+          <DialogTitle><h2>LaborX account is not found</h2></DialogTitle>
+          <DialogContent>
+            LaborX account with the provided address is not found.
+            Would you like to Create a New Account?
+          </DialogContent>
+          <DialogActions>
             <Button
               label='No'
-              // onClick={this.closeModal.bind(this)}
               onClick={this.handleAccount404DialogNoClick}
               buttonClassName={[css.actionButton, css.actionButtonLeft].join(' ')}
               type={Button.TYPES.SUBMIT}
-            />,
+            />
             <Button
               label='YES'
-              // onClick={this.navigateToCreateAccount.bind(this)}
               onClick={this.handleAccount404DialogYesClick}
               buttonClassName={css.actionButton}
               type={Button.TYPES.SUBMIT}
-            />,
-          ]}
-        >
-          LaborX account with the provided address is not found.
-          Would you like to Create a New Account?
+            />
+          </DialogActions>
         </Dialog>
       </div>
     )

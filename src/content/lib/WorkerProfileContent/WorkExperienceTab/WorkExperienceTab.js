@@ -1,9 +1,10 @@
 import React from 'react'
 import { Field, FieldArray } from 'redux-form'
-import { DatePicker, TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui'
 import Collapsible from 'react-collapsible'
-import { Icon, Button, Translate, Chip } from 'src/components/common'
+import { Icon, Button, Chip } from 'src/components/common'
 import { SKILLS_LIST } from 'src/models'
+import DatePickerField from 'src/components/DatePickerField'
 import AutoComplete from 'material-ui/AutoComplete'
 import css from './WorkExperienceTab.scss'
 
@@ -40,7 +41,7 @@ export default class WorkExperienceTab extends React.Component {
       String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
   }
 
-  renderUpgardeTitle() {
+  renderUpgardeTitle () {
     return (
       <div className={css.upgradeTitle}>
         <Icon
@@ -61,7 +62,7 @@ export default class WorkExperienceTab extends React.Component {
     )
   }
 
-  renderExperienceCard = (experience, fields) => {
+  renderExperienceCard = (experience) => {
     return (
       <div className={css.experienceBlock} key={experience}>
         <div className={css.experienceBlockContent}>
@@ -83,8 +84,8 @@ export default class WorkExperienceTab extends React.Component {
                 fullWidth
                 openToYearSelection
                 name={`${experience}.workFrom`}
-                component={DatePicker}
-                floatingLabelText='From'
+                component={DatePickerField}
+                label='From'
                 // eslint-disable-next-line react/jsx-no-bind
                 format={(value) => value === '' ? null : value}
               />
@@ -92,8 +93,8 @@ export default class WorkExperienceTab extends React.Component {
                 fullWidth
                 openToYearSelection
                 name={`${experience}.workTo`}
-                component={DatePicker}
-                floatingLabelText='To'
+                component={DatePickerField}
+                label='To'
                 // eslint-disable-next-line react/jsx-no-bind
                 format={(value) => value === '' ? null : value}
               />
@@ -119,7 +120,7 @@ export default class WorkExperienceTab extends React.Component {
     )
   }
 
-  render() {
+  render () {
     return (
       <div className={css.content}>
         <FieldArray name='experiences' component={this.renderExperiences} />

@@ -5,7 +5,7 @@ import cn from 'classnames'
 import DonutChart from "react-svg-donut-chart"
 import AutoComplete from 'material-ui/AutoComplete'
 import { Field, reduxForm } from 'redux-form'
-import { CircularProgress } from 'material-ui'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { MenuItem } from 'material-ui/Menu'
 import { SelectField, TextField } from 'redux-form-material-ui'
 

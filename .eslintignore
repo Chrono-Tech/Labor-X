@@ -91,7 +91,6 @@ src/**/*.js
 !src/components/common/ActiveJobCard/ActiveJobCard.js
 !src/components/common/JobCard/JobCard.js
 !src/components/common/WorkerJobCard/WorkerJobCard.js
-!src/components/common/WorkerCard/WorkerCard.js
 !src/components/common/WorkerState/WorkerState.js
 !src/components/common/TodoCard/TodoCard.js
 !src/components/common/Rating/Rating.js
@@ -138,9 +137,6 @@ src/**/*.js
 !src/content/lib/CreateJobBoardContent/
 
 !src/partials/
-!src/partials/lib/MakeOfferDialog/MakeOfferDialog.js
-!src/partials/lib/MakeOfferDialog/validate.js
-
 
 !pages/general-profile.js
 !src/api/backend/index.js

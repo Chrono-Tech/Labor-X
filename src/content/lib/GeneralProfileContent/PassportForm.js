@@ -3,13 +3,23 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from "redux-form"
-import { TextField, DatePicker } from 'redux-form-material-ui'
-import { Card, CardHeader, CardText, RaisedButton, IconButton } from 'material-ui'
-import { List, ListItem } from 'material-ui/List'
-import DeleteSvgIcon from 'material-ui/svg-icons/action/delete'
-import InsertDriveFileSvgIcon from 'material-ui/svg-icons/editor/insert-drive-file'
-import LocationCitySvgIcon from 'material-ui/svg-icons/social/location-city'
-
+import TextField from 'redux-form-material-ui-next/lib/TextField'
+import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import DeleteSvgIcon from '@material-ui/icons/Delete'
+import InsertDriveFileSvgIcon from '@material-ui/icons/InsertDriveFile'
+import LocationCitySvgIcon from '@material-ui/icons/LocationCity'
+import DatePickerField from 'src/components/DatePickerField'
 import ProfileModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileModel"
 import AttachmentModel from "../../../api/backend/model/AttachmentModel"
 import { VALIDATION_STATE_CLASS, VALIDATION_STATE_ICON } from "./index"
@@ -68,8 +78,16 @@ class PassportForm extends React.Component {
 
   renderAttachment = (attachment) => {
     return (
-      <ListItem leftIcon={<InsertDriveFileSvgIcon />} rightIconButton={<IconButton><DeleteSvgIcon /></IconButton>}>
-        { attachment.name }
+      <ListItem key={attachment.id}>
+        <ListItemIcon>
+          <InsertDriveFileSvgIcon />
+        </ListItemIcon>
+        <ListItemText primary={attachment.name} />
+        <ListItemSecondaryAction>
+          <IconButton>
+            <DeleteSvgIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
       </ListItem>
     )
   }
@@ -94,40 +112,40 @@ class PassportForm extends React.Component {
           </div>
           <div>
             <h3 className={css.cardTitle}>Identity Card</h3>
-            <div className={css.flexRow}>
-              <Field component={TextField} name='passport' hintText='Passport ID' className={css.field} />
-              <Field component={DatePicker} name='expirationDate' hintText='Expiration Date' className={css.field} />
-            </div>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Field component={TextField} name='passport' label='Passport ID' className={css.field} />
+              </Grid>
+              <Grid item xs={6}>
+                <Field component={DatePickerField} name='expirationDate' label='Expiration Date' className={css.field} />
+              </Grid>
+            </Grid>
             <div className={css.validationComment}>{ this.props.validationComment }</div>
           </div>
         </div>
-        <Card className={css.collapseWrapper}>
-          <CardHeader
-            title={
-              <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
-                <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
-                { this.renderTitle() }
-              </span>
-            }
-            closeIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-            openIcon={<Icon className={css.openIcon} icon={Icon.ICONS.DROP_1} color={Icon.COLORS.GREY30} />}
-            actAsExpander
-            showExpandableButton
-            className={css.collapseHeader}
-          />
-          <CardText className={css.collapseText} expandable>
-            { this.renderText() }
-            <br />
-            <br />
-            { this.renderAttachments() }
-            <br />
-            <RaisedButton type='submit' label='save & validate' style={{ marginRight: '1rem' }} />
-            <RaisedButton type='button' label='reset' style={{ marginRight: '1rem' }} onClick={this.handleResetClick} />
-            <RaisedButton type='button' label='upload documents' containerElement='label'>
-              <input type='file' style={{ display:'none' }} onChange={this.handleCreateAttachmentChange} />
-            </RaisedButton>
-          </CardText>
-        </Card>
+        <ExpansionPanel style={{ width:'100%' }}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+              <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+              { this.renderTitle() }
+            </span>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div>
+              { this.renderText() }
+              <br />
+              <br />
+              { this.renderAttachments() }
+              <br />
+              <Button variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</Button>
+              <Button variant='contained' type='button' style={{ marginRight: '1rem' }} onClick={this.handleResetClick} >reset</Button>
+              <label htmlFor='passport-form-attachment-file-input'>
+                <Button variant='contained' component='span'>upload documents</Button>
+              </label>
+              <input type='file' style={{ display:'none' }} onChange={this.handleCreateAttachmentChange} id='passport-form-attachment-file-input' />
+            </div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
       </form>
     )
   }

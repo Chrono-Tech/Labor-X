@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { Field } from 'redux-form'
 import { TextField, SelectField } from 'redux-form-material-ui'
 import { MenuItem } from 'material-ui'
-import { Icon } from 'src/components/common'
 import { ProfileModel } from 'src/models'
 import css from './GeneralTab.scss'
 
 export default class GeneralTab extends React.Component {
   static propTypes = {
     generalProfile: PropTypes.instanceOf(ProfileModel),
+    avatarUrl: PropTypes.string,
   }
 
   handleClickLogo = () => {
@@ -18,7 +18,7 @@ export default class GeneralTab extends React.Component {
   }
 
   render () {
-    const { generalProfile, avatarUrl } = this.props
+    const { avatarUrl } = this.props
     return (
       <div className={css.content}>
         <div className={css.logoContainer} onClick={this.handleClickLogo}>

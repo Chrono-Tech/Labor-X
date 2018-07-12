@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, propTypes } from 'redux-form'
-import { Toggle, SelectField, DatePicker, TextField } from 'redux-form-material-ui'
-import { MuiThemeProvider, CircularProgress, MenuItem } from 'material-ui'
+import { Toggle, SelectField, TextField } from 'redux-form-material-ui'
+import { MenuItem } from 'material-ui'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import AutoComplete from 'material-ui/AutoComplete'
 import { Router } from 'src/routes'
 import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
 import { SignerModel, BoardModel } from 'src/models'
 import t from "typy"
+import DatePickerField from 'src/components/DatePickerField'
 import validate from './validate'
 import css from './CreateJobForm.scss'
 import { WORKFLOW_FIXED_PRICE, WORKFLOW_TM } from "../../../models"
@@ -182,16 +184,16 @@ class CreateJobForm extends React.Component {
         <div>
           <Field
             name='since'
-            component={DatePicker}
-            placeholder='Starts at'
+            component={DatePickerField}
+            label='Starts at'
           />
           <img className={css.calendar} src='/static/temp/calendar.png' alt='calendar' />
         </div>
         <div>
           <Field
             name='until'
-            component={DatePicker}
-            placeholder='Deadline'
+            component={DatePickerField}
+            label='Deadline'
           />
           <img className={css.calendar} src='/static/temp/calendar.png' alt='calendar' />
         </div>
@@ -302,288 +304,286 @@ class CreateJobForm extends React.Component {
     const { isLoading, boards, hasBudget, hasPeriod, hasAddress, selectedBoard } = this.props
 
     return (
-      <MuiThemeProvider>
-        <div className={css.main}>
-          <form
-            className={css.content}
-            onSubmit={this.props.handleSubmit(this.handleSubmitForm)}
-          >
+      <div className={css.main}>
+        <form
+          className={css.content}
+          onSubmit={this.props.handleSubmit(this.handleSubmitForm)}
+        >
 
-            <div className={css.title}>
-              <div className={css.titleBar}>
+          <div className={css.title}>
+            <div className={css.titleBar}>
+              <Button
+                className={css.cancelButton}
+                icon={Image.SETS.ARROW_BACK}
+                type={Button.TYPES.SUBMIT}
+                mods={Button.MODS.FLAT}
+                onClick={this.handleBack}
+              />
+              <div className={css.titleBarRight}>
                 <Button
-                  className={css.cancelButton}
-                  icon={Image.SETS.ARROW_BACK}
+                  className={css.helpButton}
+                  icon={Image.SETS.HELP_INVERT}
+                  mods={Button.MODS.FLAT}
+                />
+                {this.renderLoader(isLoading)}
+                <Button
+                  className={css.doneButton}
+                  label='terms.done'
                   type={Button.TYPES.SUBMIT}
                   mods={Button.MODS.FLAT}
-                  onClick={this.handleBack}
+                  disabled={isLoading}
                 />
-                <div className={css.titleBarRight}>
-                  <Button
-                    className={css.helpButton}
-                    icon={Image.SETS.HELP_INVERT}
-                    mods={Button.MODS.FLAT}
-                  />
-                  {this.renderLoader(isLoading)}
-                  <Button
-                    className={css.doneButton}
-                    label='terms.done'
-                    type={Button.TYPES.SUBMIT}
-                    mods={Button.MODS.FLAT}
-                    disabled={isLoading}
-                  />
-                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={css.formContentWrapper}>
+
+            <div className={css.headline}>
+              <Field
+                className={css.boardHeadline}
+                component={Input}
+                placeholder='ui.createJob.jobHeadlinePlaceholder'
+                mods={[Input.MODS.INVERT, Input.MODS.HUGE]}
+                name='name'
+              />
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.general' /></h3>
+              </div>
+              <div>
+                <Field
+                  className={css.inputSection}
+                  component={TextField}
+                  name='intro'
+                  fullWidth
+                  floatingLabelText={<Translate value='ui.createJob.intro' />}
+                  hintText={<Translate value='ui.createJob.introPlaceholder' />}
+                />
+                <Field
+                  className={css.inputSection}
+                  component={TextField}
+                  name='responsibilities'
+                  fullWidth
+                  floatingLabelText={<Translate value='ui.createJob.responsibilities' />}
+                  hintText={<Translate value='ui.createJob.responsibilitiesPlaceholder' />}
+                />
+                <Field
+                  className={css.inputSection}
+                  component={TextField}
+                  name='requirements'
+                  fullWidth
+                  floatingLabelText={<Translate value='ui.createJob.requirements' />}
+                  hintText={<Translate value='ui.createJob.requirementsPlaceholder' />}
+                />
+                <Field
+                  className={css.inputSection}
+                  component={TextField}
+                  name='conclusion'
+                  fullWidth
+                  floatingLabelText={<Translate value='ui.createJob.conclusion' />}
+                  hintText={<Translate value='ui.createJob.conclusionPlaceholder' />}
+                />
               </div>
             </div>
 
-            <div className={css.formContentWrapper}>
-
-              <div className={css.headline}>
-                <Field
-                  className={css.boardHeadline}
-                  component={Input}
-                  placeholder='ui.createJob.jobHeadlinePlaceholder'
-                  mods={[Input.MODS.INVERT, Input.MODS.HUGE]}
-                  name='name'
-                />
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.jobBoard' /></h3>
               </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.general' /></h3>
+              <div>
+                <div className={css.twoColumn}>
+                  <Field
+                    component={SelectField}
+                    name='board'
+                    hintText={<Translate value='ui.createJob.jobBoard' />}
+                    onChange={this.handleChangeBoard}
+                  >
+                    {boards.map(board => (
+                      <MenuItem key={board.key} value={board.id} primaryText={board.ipfs.name} />
+                    ))}
+                  </Field>
+                  <div className={css.postFee}>
+                    Post Fee (no-refund): LHUS 1.00 (USD 30.00)
+                  </div>
                 </div>
                 <div>
-                  <Field
-                    className={css.inputSection}
-                    component={TextField}
-                    name='intro'
-                    fullWidth
-                    floatingLabelText={<Translate value='ui.createJob.intro' />}
-                    hintText={<Translate value='ui.createJob.introPlaceholder' />}
-                  />
-                  <Field
-                    className={css.inputSection}
-                    component={TextField}
-                    name='responsibilities'
-                    fullWidth
-                    floatingLabelText={<Translate value='ui.createJob.responsibilities' />}
-                    hintText={<Translate value='ui.createJob.responsibilitiesPlaceholder' />}
-                  />
-                  <Field
-                    className={css.inputSection}
-                    component={TextField}
-                    name='requirements'
-                    fullWidth
-                    floatingLabelText={<Translate value='ui.createJob.requirements' />}
-                    hintText={<Translate value='ui.createJob.requirementsPlaceholder' />}
-                  />
-                  <Field
-                    className={css.inputSection}
-                    component={TextField}
-                    name='conclusion'
-                    fullWidth
-                    floatingLabelText={<Translate value='ui.createJob.conclusion' />}
-                    hintText={<Translate value='ui.createJob.conclusionPlaceholder' />}
-                  />
-                </div>
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.jobBoard' /></h3>
-                </div>
-                <div>
-                  <div className={css.twoColumn}>
+                  <div className={css.badgesContainer}>
+                    <h4><Translate value='ui.createJob.badgesTitle' />f</h4>
+                    <p><Translate value='ui.createJob.badgesSubtitle' /></p>
+                    <div className={css.badges}>
+                      {this.renderJoinRequirementBlock(this.props)}
+                    </div>
+                  </div>
+                  <div className={css.hourlyRatingColumn}>
                     <Field
                       component={SelectField}
-                      name='board'
-                      hintText={<Translate value='ui.createJob.jobBoard' />}
-                      onChange={this.handleChangeBoard}
+                      hintText='Force Worker Rating'
+                      hintStyle={{ fontStyle: 'italic' }}
+                      value={this.state.hourlyRatingValue}
+                      onChange={this.handleChangeHourlyRating}
+                      name='hourlyRating'
                     >
-                      {boards.map(board => (
-                        <MenuItem key={board.key} value={board.id} primaryText={board.ipfs.name} />
-                      ))}
+                      <MenuItem value={1} primaryText='Force Worker Rating 1' />
+                      <MenuItem value={2} primaryText='Force Worker Rating 2' />
+                      <MenuItem value={3} primaryText='Force Worker Rating 3' />
+                      <MenuItem value={3} primaryText='Force Worker Rating 4' />
+                      <MenuItem value={3} primaryText='Force Worker Rating 5' />
                     </Field>
-                    <div className={css.postFee}>
-                      Post Fee (no-refund): LHUS 1.00 (USD 30.00)
-                    </div>
-                  </div>
-                  <div>
-                    <div className={css.badgesContainer}>
-                      <h4><Translate value='ui.createJob.badgesTitle' />f</h4>
-                      <p><Translate value='ui.createJob.badgesSubtitle' /></p>
-                      <div className={css.badges}>
-                        {this.renderJoinRequirementBlock(this.props)}
-                      </div>
-                    </div>
-                    <div className={css.hourlyRatingColumn}>
-                      <Field
-                        component={SelectField}
-                        hintText='Force Worker Rating'
-                        hintStyle={{ fontStyle: 'italic' }}
-                        value={this.state.hourlyRatingValue}
-                        onChange={this.handleChangeHourlyRating}
-                        name='hourlyRating'
-                      >
-                        <MenuItem value={1} primaryText='Force Worker Rating 1' />
-                        <MenuItem value={2} primaryText='Force Worker Rating 2' />
-                        <MenuItem value={3} primaryText='Force Worker Rating 3' />
-                        <MenuItem value={3} primaryText='Force Worker Rating 4' />
-                        <MenuItem value={3} primaryText='Force Worker Rating 5' />
-                      </Field>
-                      <div className={css.hourlyRating}>
-                        <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
-                        <img className={css.hourlyRatingGraph} src='/static/temp/avearage_rate.png' alt='avearage_rate' />
-                      </div>
+                    <div className={css.hourlyRating}>
+                      <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
+                      <img className={css.hourlyRatingGraph} src='/static/temp/avearage_rate.png' alt='avearage_rate' />
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.budget' /></h3>
-                  <div>
-                    <Field
-                      component={Toggle}
-                      name='hasBudget'
-                      parse={Boolean}
-                    />
-                  </div>
-                </div>
-                <div className={css.description}>
-                  If you&apos;re not sure about the job budget yet you may set the module OFF.
-                  You may also select an hourly-based or fixed budget. In addition you may specify if the given budget is approximate.
-                  You&apos;ll be able to enter the budget before sending an offer to a worker or the offer is declined.
-                  If you&apos;d like to select a worker service please use <Link href='/hire-worker'>Hire a Worker</Link>.
-                </div>
-                {this.renderBudgetBlock(hasBudget)}
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.allowCustomOffers' /></h3>
-                  <div>
-                    <Field
-                      component={Toggle}
-                      name='allowCustomOffers'
-                      parse={Boolean}
-                    />
-                  </div>
-                </div>
-                <div className={css.description}>
-                  If you&apos;d like to receive custom offers from Workers enable this section and
-                  you&apos;ll be able to review these offers along with all other Job Applicants.
-                </div>
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.startWorkAllowance' /></h3>
-                  <div>
-                    <Field
-                      component={Toggle}
-                      name='startWorkAllowance'
-                      parse={Boolean}
-                    />
-                  </div>
-                </div>
-                <div className={css.description}>
-                  Set this option ON if you&apos;d like to confirm the start of the work. Note that without your confirmation the Worker will not be able to track time.
-                </div>
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.deadline' /></h3>
-                  <div>
-                    <Field
-                      component={Toggle}
-                      name='hasPeriod'
-                    />
-                  </div>
-                </div>
-                <div className={css.description}>
-                  If disabled selected Worker will able to set start and end dates.
-                  Time the job can be started will be set by the Worker in both cases.
-                </div>
-                {this.renderDeadlineBlock(hasPeriod)}
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.address' /></h3>
-                  <div>
-                    <Field
-                      component={Toggle}
-                      name='hasAddress'
-                    />
-                  </div>
-                </div>
-                {this.renderAddressBlock(hasAddress)}
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.area' /></h3>
-                </div>
-                <div className={css.tagsRow}>
-                  <div className={css.tags}>
-                    {this.renderSelectedTagsArea(selectedBoard)}
-                  </div>
-                </div>
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.category' /></h3>
-                </div>
-                <div className={css.tagsRow}>
-                  <div className={css.tags}>
-                    {this.renderTagsCategoryLabels(selectedBoard)}
-                  </div>
-                </div>
-              </div>
-
-              <div className={css.card}>
-                <div className={css.cardHeading}>
-                  <h3><Translate value='ui.createJob.skills' /></h3>
-                </div>
-                <div className={css.tagsRow}>
-                  <Field
-                    className={css.find}
-                    style={{ marginRight: 10 }}
-                    component={AutoComplete}
-                    onNewRequest={this.handleAddSkill}
-                    filter={this.searchTagFilter}
-                    dataSourceConfig={{
-                      text: 'name',
-                      value: 'index',
-                    }}
-                    dataSource={this.getTagsFromBoard(selectedBoard)}
-                    name='searchTags'
-                    hintText='Find'
-                  />
-                  <div className={css.tags}>
-                    {this.state.selectedSkills.map(e => (
-                      <Chip value={e.name} key={e.index} index={e.index} onRemove={this.handleRemoveSkill} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className={css.card}>
-                <Field
-                  component={ValidatedCheckbox}
-                  name='legal'
-                  label={<Translate value='ui.createJob.legalAgreeLabel' />}
-                />
-              </div>
-
             </div>
-          </form>
-        </div>
-      </MuiThemeProvider>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.budget' /></h3>
+                <div>
+                  <Field
+                    component={Toggle}
+                    name='hasBudget'
+                    parse={Boolean}
+                  />
+                </div>
+              </div>
+              <div className={css.description}>
+                If you&apos;re not sure about the job budget yet you may set the module OFF.
+                You may also select an hourly-based or fixed budget. In addition you may specify if the given budget is approximate.
+                You&apos;ll be able to enter the budget before sending an offer to a worker or the offer is declined.
+                If you&apos;d like to select a worker service please use <Link href='/hire-worker'>Hire a Worker</Link>.
+              </div>
+              {this.renderBudgetBlock(hasBudget)}
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.allowCustomOffers' /></h3>
+                <div>
+                  <Field
+                    component={Toggle}
+                    name='allowCustomOffers'
+                    parse={Boolean}
+                  />
+                </div>
+              </div>
+              <div className={css.description}>
+                If you&apos;d like to receive custom offers from Workers enable this section and
+                you&apos;ll be able to review these offers along with all other Job Applicants.
+              </div>
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.startWorkAllowance' /></h3>
+                <div>
+                  <Field
+                    component={Toggle}
+                    name='startWorkAllowance'
+                    parse={Boolean}
+                  />
+                </div>
+              </div>
+              <div className={css.description}>
+                Set this option ON if you&apos;d like to confirm the start of the work. Note that without your confirmation the Worker will not be able to track time.
+              </div>
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.deadline' /></h3>
+                <div>
+                  <Field
+                    component={Toggle}
+                    name='hasPeriod'
+                  />
+                </div>
+              </div>
+              <div className={css.description}>
+                If disabled selected Worker will able to set start and end dates.
+                Time the job can be started will be set by the Worker in both cases.
+              </div>
+              {this.renderDeadlineBlock(hasPeriod)}
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.address' /></h3>
+                <div>
+                  <Field
+                    component={Toggle}
+                    name='hasAddress'
+                  />
+                </div>
+              </div>
+              {this.renderAddressBlock(hasAddress)}
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.area' /></h3>
+              </div>
+              <div className={css.tagsRow}>
+                <div className={css.tags}>
+                  {this.renderSelectedTagsArea(selectedBoard)}
+                </div>
+              </div>
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.category' /></h3>
+              </div>
+              <div className={css.tagsRow}>
+                <div className={css.tags}>
+                  {this.renderTagsCategoryLabels(selectedBoard)}
+                </div>
+              </div>
+            </div>
+
+            <div className={css.card}>
+              <div className={css.cardHeading}>
+                <h3><Translate value='ui.createJob.skills' /></h3>
+              </div>
+              <div className={css.tagsRow}>
+                <Field
+                  className={css.find}
+                  style={{ marginRight: 10 }}
+                  component={AutoComplete}
+                  onNewRequest={this.handleAddSkill}
+                  filter={this.searchTagFilter}
+                  dataSourceConfig={{
+                    text: 'name',
+                    value: 'index',
+                  }}
+                  dataSource={this.getTagsFromBoard(selectedBoard)}
+                  name='searchTags'
+                  hintText='Find'
+                />
+                <div className={css.tags}>
+                  {this.state.selectedSkills.map(e => (
+                    <Chip value={e.name} key={e.index} index={e.index} onRemove={this.handleRemoveSkill} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className={css.card}>
+              <Field
+                component={ValidatedCheckbox}
+                name='legal'
+                label={<Translate value='ui.createJob.legalAgreeLabel' />}
+              />
+            </div>
+
+          </div>
+        </form>
+      </div>
     )
   }
 }
