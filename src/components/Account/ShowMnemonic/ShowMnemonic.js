@@ -1,5 +1,6 @@
 import React  from 'react'
 import PropTypes  from 'prop-types'
+import { Checkbox } from 'redux-form-material-ui'
 import { reduxForm, Field, SubmissionError } from 'redux-form'
 import { connect } from 'react-redux'
 
@@ -119,12 +120,12 @@ class ShowMnemonic extends React.Component {
           </ol>
         </div>
 
-        <div className={css.checkboxBlock}>
-          <Field id='confirm' className={css.checkbox} component='input' type='checkbox' name='confirm' />
-          <label htmlFor='confirm' className={css.checkboxLabel}>
-            I have read QA and will follow security guidelines given on this page
-          </label>
-        </div>
+        <Field
+          className={css.checkbox}
+          name='confirm'
+          component={Checkbox}
+          label='I have read QA and will follow security guidelines given on this page'
+        />
 
         <div>
           <Button

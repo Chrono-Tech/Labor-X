@@ -76,7 +76,6 @@ class LoginOptions extends React.Component {
     onConfirmRecoveryPassword: PropTypes.func,
     navigateToRecoveryPassword: PropTypes.func,
     step: PropTypes.string,
-    prevStep: PropTypes.string,
     navigateToCreateWallet: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
@@ -99,10 +98,6 @@ class LoginOptions extends React.Component {
     }
   }
 
-  componentDidMount () {
-    window.onpopstate = this.onBackButtonEvent
-  }
-
   handleAccount404DialogNoClick = () => {
     this.props.hideAccount404Dialog()
   }
@@ -112,12 +107,6 @@ class LoginOptions extends React.Component {
   }
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
-
-  onBackButtonEvent = (e) => {
-    const { prevStep, onChangeStep } = this.props
-    onChangeStep(prevStep)
-    e.preventDefault()
-  }
 
   navigateToCreateAccount (){
     Router.pushRoute('/create-account')
@@ -307,7 +296,6 @@ function mapStateToProps (state) {
     selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
     step: state.login.step,
-    prevStep: state.login.prevStep,
     walletsList: (state.wallet.walletsList || []).map((wallet) => new WalletEntryModel(wallet)),
     openAccount404Dialog: getOpenAccount404Dialog(state),
   }

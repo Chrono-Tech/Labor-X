@@ -6,7 +6,6 @@ const initialState = {
   isSignIn: false,
   signIn: null,
   step: null,
-  prevStep: null,
   selectedWalletRecoveryForm: null,
   isRecoveryPasswordMode: false,
   recoveryFormMnemonic: '',
@@ -44,7 +43,6 @@ export default (state = initialState, action) => {
     case actions.LOGIN_CHANGE_STEP:
       return {
         ...state,
-        prevStep: state.step,
         step: action.step,
       }
     case actions.LOGIN_SELECT_WALLET_RECOVERY_FORM:
