@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import { connect } from 'react-redux'
+import { Link as Link2 } from 'src/routes'
 import { Image, Link, Icon } from 'src/components/common'
 import { userSelector } from 'src/store/user/selectors'
 import { schemaFactory as accountTypesSchemaFactory } from 'src/models/app/UserAccountTypesModel'
@@ -17,12 +18,16 @@ class SecondMenu extends React.Component {
       <nav className={css.root}>
         <div className={css.section}>
           <div className={css.icons}>
-            <Image
-              className={css.iconsItem}
-              icon={Image.ICONS.WALLET}
-              color={Image.COLORS.BLACK}
-              faded
-            />
+            <Link2 route='/my-wallet'>
+              <a>
+                <Image
+                  className={css.iconsItem}
+                  icon={Image.ICONS.WALLET}
+                  color={Image.COLORS.BLACK}
+                  faded
+                />
+              </a>
+            </Link2>
             <div className={cn(css.iconsItem, css.iconProfile)}>
               <Icon
                 size={24}

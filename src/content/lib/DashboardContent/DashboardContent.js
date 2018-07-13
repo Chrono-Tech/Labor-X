@@ -9,21 +9,79 @@ import React from 'react'
 import css from './DashboardContent.scss'
 import {userSelector} from "../../../store/user/selectors";
 
+import { reviewBalance } from "../../../store/dashboard/actions";
+import { getBalance } from "../../../store/dashboard/selectors";
+import {currentAddressSelector} from "../../../store";
+
+
+import withStyles from '@material-ui/core/styles/withStyles'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
+
+const styles = {
+  cardRoot: {
+    marginBottom: '4rem',
+  },
+  cardHeaderRoot: {
+    backgroundColor: '#009de2',
+    padding: '3rem',
+    color: 'white',
+  },
+  cardHeaderTitle: {
+    color: 'white',
+    fontSize: '2rem',
+    fontWeight: 500,
+  },
+  cardHeaderSubheader: {
+    color: '#b4e8ff',
+    fontWeight: 500,
+  },
+  cardContentRoot: {
+    padding: '3rem !important',
+  },
+}
+
+
 export class DashboardContent extends React.Component {
   static propTypes = {
     signer: PropTypes.instanceOf(SignerModel),
   }
 
+  componentDidMount () {
+    this.props.reviewBalance()
+  }
+
   render () {
-    const { signer } = this.props
-    return signer == null ? null : (
+
+    if (
+      this.props.signer == null ||
+      this.props.balance == null
+    ) return <CircularProgress />
+
+    return (
       <div className={css.main}>
         <div className={css.title}>
           <div className={css.titleText}><Translate value='nav.dashboard' /></div>
         </div>
         <div className={css.content}>
           <div className={css.block}>
-            <MyFundsWidget />
+
+            <Card className={this.props.classes.cardRoot}>
+              <CardHeader
+                title="My Funds"
+                subheader="Account"
+                classes={{
+                  root: this.props.classes.cardHeaderRoot,
+                  title: this.props.classes.cardHeaderTitle,
+                  subheader: this.props.classes.cardHeaderSubheader,
+                }}
+              />
+              <CardContent className={this.props.classes.cardContentRoot}>{this.props.address} ETH {this.props.balance}</CardContent>
+            </Card>
+
           </div>
           <div className={css.block}>
             <Widget
@@ -293,14 +351,17 @@ function mapStateToProps (state) {
   const signer = signerSelector()(state)
   return {
     signer,
-    user: userSelector()(state)
+    user: userSelector()(state),
+    balance: getBalance(state),
+    address: currentAddressSelector()(state),
   }
 }
 
-function mapDispatchToProps (/*dispatch*/) {
+function mapDispatchToProps (dispatch) {
   return {
     // stack: state.modals.stack,
+    reviewBalance: () => dispatch(reviewBalance())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContent)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(DashboardContent))

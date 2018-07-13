@@ -114,7 +114,6 @@ function mapDispatchToProps (dispatch) {
 
       // eslint-disable-next-line no-console
       const skills = SkillModel.arrayValueOfMask(values.selectedSkills.map(x => x.index).reduce((mask, index) => (mask | Math.pow(2, index)), 0))
-      debugger
       const data = new JobFormModel({
         boardId: values.board,
         flowType: values.flowType,

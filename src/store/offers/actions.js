@@ -13,7 +13,6 @@ export const reloadJobsOffers = (id) => async (dispatch, getState) => {
   const state = getState()
   const jobDataProviderDAO = daoByType('JobsDataProvider')(state)
   const offers = await jobDataProviderDAO.getJobOffers(id)
-  // debugger
   dispatch({ type: OFFERS_SAVE, jobId: id, offers })
   // if (state.jobs && state.jobs.list) {
   //   for (let job of state.jobs.list) {

@@ -87,7 +87,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     async handleSubmit (values) {
-      debugger
       await dispatch(boardCreate(
         new JobBoardFormModel({
           name: values.name,
