@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Field, FieldArray } from 'redux-form'
 import { TextField } from 'redux-form-material-ui'
 import Collapsible from 'react-collapsible'
@@ -9,6 +10,10 @@ import AutoComplete from 'material-ui/AutoComplete'
 import css from './WorkExperienceTab.scss'
 
 export default class WorkExperienceTab extends React.Component {
+  static propTypes = {
+    onDeleteItem: PropTypes.func,
+  }
+
   state = {
     selectedSkills: [],
   }
@@ -22,13 +27,10 @@ export default class WorkExperienceTab extends React.Component {
   }
 
   handleClickValidate = () => {
-    // eslint-disable-next-line no-console
-    console.log('---WorkerProfileContent-WorkExperienceTab handleClickValidate')
   }
 
-  handleClickRemoveBlock = () => {
-    // eslint-disable-next-line no-console
-    console.log('---WorkerProfileContent-WorkExperienceTab handleClickRemoveBlock')
+  handleClickRemoveBlock = (index) => {
+    this.props.onDeleteItem(index)
   }
 
   handleClickAddSkill = () => {
@@ -57,12 +59,12 @@ export default class WorkExperienceTab extends React.Component {
   renderExperiences = ({ fields }) => {
     return (
       <div>
-        {fields.map(experience => this.renderExperienceCard(experience, fields))}
+        {fields.map((experience, index) => this.renderExperienceCard({ experience, index, fields }))}
       </div>
     )
   }
 
-  renderExperienceCard = (experience) => {
+  renderExperienceCard = ({ experience, index }) => {
     return (
       <div className={css.experienceBlock} key={experience}>
         <div className={css.experienceBlockContent}>
@@ -109,7 +111,7 @@ export default class WorkExperienceTab extends React.Component {
             rows={2}
           />
         </div>
-        <div className={css.removeBlock} onClick={this.handleClickRemoveBlock}>
+        <div className={css.removeBlock} onClick={() => this.handleClickRemoveBlock(index)}>
           <Icon
             icon={Icon.ICONS.DELETE}
             color={Icon.COLORS.GREY30}

@@ -5,13 +5,12 @@ import AttachmentModel from "./AttachmentModel"
 import ServiceCategoryModel from "./ServiceCategoryModel"
 
 const schemaFactory = () => ({
-    id: PropTypes.string,
     name: PropTypes.string,
-    category: PropTypes.instanceOf(ServiceCategoryModel),
+    category: PropTypes.number.isRequired,
     description: PropTypes.string,
     fee: PropTypes.string,
     minFee: PropTypes.string,
-    attachments: PropTypes.arrayOf(PropTypes.instanceOf(AttachmentModel))
+    attachments: PropTypes.arrayOf(PropTypes.string)
 })
 
 export default class ProfileWorkerServiceModel extends AbstractModel {

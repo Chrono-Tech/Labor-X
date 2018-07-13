@@ -16,7 +16,7 @@ class LinkControl extends React.Component {
       route: PropTypes.string,
     }),
     children: PropTypes.string,
-    activeClassName: PropTypes.string
+    activeClassName: PropTypes.string,
   }
 
   render () {

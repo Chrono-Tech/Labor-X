@@ -38,7 +38,7 @@ export class DashboardContent extends React.Component {
                   secondIcon: Image.SETS.MESSAGE_ERROR,
                 },
                 ...(this.props.user.accountTypes.client ? [ { href: '/client-profile', label: 'nav.clientProfile', isLink: true, } ] : []),
-                ...(this.props.user.accountTypes.worker ? [ { href: '/worker-profile', label: 'nav.workerProfile', isLink: true, } ] : []),
+                ...( /*this.props.user.accountTypes.worker */ true ? [ { href: '/worker-profile', label: 'nav.workerProfile', isLink: true, } ] : []),
                 ...(this.props.user.accountTypes.recruiter ? [ { href: '/recruiter-profile', label: 'nav.recruiterProfile', isLink: true, } ] : []),
               ]}
             >

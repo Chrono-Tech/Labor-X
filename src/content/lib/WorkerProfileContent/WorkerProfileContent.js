@@ -124,8 +124,8 @@ class WorkerProfileContent extends React.Component {
               onChangeIndex={this.handleChangeIndex}
             >
               <GeneralTab avatarUrl={avatarUrl} generalProfile={profile.general} />
-              <WorkExperienceTab />
-              <ServicesTab onHandleUploadServiceAgreement={this.handleUploadServiceAgreement} workerProfile={profile.worker} />
+              <WorkExperienceTab onDeleteItem={this.props.handleDeleteWorkerExperience} />
+              <ServicesTab onDeleteItem={this.props.handleDeleteWorkerService} onHandleUploadServiceAgreement={this.handleUploadServiceAgreement} workerProfile={profile.worker} />
             </SwipeableViews>
           </div>
         </div>
@@ -172,7 +172,17 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       dispatchProps.dispatch(change(FORM_WORKER_PROFILE, "experiences",  [...stateProps.experiences, {}]))
     },
     addEmptyWorkerService: () => {
-      dispatchProps.dispatch(change(FORM_WORKER_PROFILE, "services", [...stateProps.experiences, {}]))
+      dispatchProps.dispatch(change(FORM_WORKER_PROFILE, "services", [...stateProps.services, {}]))
+    },
+    handleDeleteWorkerExperience: (index) => {
+      let experiences = [...stateProps.experiences]
+      experiences.splice(index, 1)
+      dispatchProps.dispatch(change(FORM_WORKER_PROFILE, "experiences",  experiences))
+    },
+    handleDeleteWorkerService: (index) => {
+      let services = [...stateProps.services]
+      services.splice(index, 1)
+      dispatchProps.dispatch(change(FORM_WORKER_PROFILE, "services", services))
     },
   }
 }

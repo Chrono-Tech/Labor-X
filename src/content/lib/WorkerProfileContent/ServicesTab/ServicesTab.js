@@ -20,11 +20,11 @@ export default class ServicesTab extends React.Component {
   static propTypes = {
     workerProfile: PropTypes.instanceOf(WorkerModel),
     onHandleUploadServiceAgreement: PropTypes.func,
+    onDeleteItem: PropTypes.func,
   }
 
-  handleClickRemoveBlock = () => {
-    // eslint-disable-next-line no-console
-    console.log('---WorkerProfileContent-ServicesTab handleClickRemoveBlock')
+  handleClickRemoveBlock = (index) => {
+    this.props.onDeleteItem(index)
   }
 
   handleClickClose = () => {
@@ -35,12 +35,12 @@ export default class ServicesTab extends React.Component {
   renderServices = ({ fields }) => {
     return (
       <div>
-        {fields.map(service => this.renderServiceCard(service))}
+        {fields.map((service, index) => this.renderServiceCard({ service, index }))}
       </div>
     )
   }
 
-  renderServiceCard = (service) => {
+  renderServiceCard = ({ service, index }) => {
     const { onHandleUploadServiceAgreement } = this.props
     return (
       <div className={css.serviceBlock} key={service}>
@@ -104,10 +104,10 @@ export default class ServicesTab extends React.Component {
               color={Icon.COLORS.BLUE}
               size={28}
             />
-            <p>Upload service agreement 2s3</p>
+            <p>Upload service agreement</p>
           </label>
         </div>
-        <div className={css.removeBlock} onClick={this.handleClickRemoveBlock}>
+        <div className={css.removeBlock} onClick={() => this.handleClickRemoveBlock(index)}>
           <Icon
             icon={Icon.ICONS.DELETE}
             color={Icon.COLORS.GREY30}

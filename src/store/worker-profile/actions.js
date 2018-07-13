@@ -15,11 +15,11 @@ import FileModel from "../../models/FileModel"
 const getCurrenciesArrayModel = (data) => {
   let currencies = [];
   if (data.currencyBitcoin)
-    currencies.push(new CurrencyModel({ id: "0", symbol: "BTC", title: "Bitcoin" }));
+    currencies.push(/*new CurrencyModel({ id: "0" symbol:*/ "BTC" /*, title: "Bitcoin" })*/);
   if (data.currencyLhus)
-    currencies.push(new CurrencyModel({ id: "1", symbol: "LHUS", title: "Lhus" }));
+    currencies.push(/* new CurrencyModel({id: "1"  symbol:*/ "LHUS"/*, title: "Lhus" })*/);
   if (data.currencyAnother)
-    currencies.push(new CurrencyModel({ id: "2", symbol: "ANY", title: "Another" }));
+    currencies.push(/* new CurrencyModel({ id: "2"  symbol: */"ANY"/*, title: "Another" })*/);
   return currencies;
 }
 
@@ -31,11 +31,11 @@ const getAttachmentsArrayModel = (data) => {
 const getSocialsArrayModel = (data) => {
   let attachments = [];
   if (data.facebook)
-    attachments.push(new ProfileWorkerSocialModel({ id: "0", name: "Facebook", url: data.facebook }));
+    attachments.push(new ProfileWorkerSocialModel({  name: "Facebook", url: data.facebook }));
   if (data.linkedin)
-    attachments.push(new ProfileWorkerSocialModel({ id: "1", name: "Linkedin", url: data.linkedin }));
+    attachments.push(new ProfileWorkerSocialModel({ name: "Linkedin", url: data.linkedin }));
   if (data.twitter)
-    attachments.push(new ProfileWorkerSocialModel({ id: "2", name: "Twitter", url: data.twitter }));
+    attachments.push(new ProfileWorkerSocialModel({  name: "Twitter", url: data.twitter }));
   return attachments;
 }
 
@@ -45,15 +45,14 @@ const getServicesArrayModel = (data) => {
   if (data.services)
     data.services.forEach((element) => {
       i++;
-      services.push({
-        id: i.toString(),
+      services.push(new ProfileWorkerServiceModel({
         name: element.name,
-        category: new ServiceCategoryModel({ id: element.category.toString(), name: "", code: element.category.toString() }),
-        description: "",
-        fee: element.fee.toString(),
-        minFee: element.feeFrom.toString(),
+        category: 1,//new ServiceCategoryModel({ id: String(element.category), name: "", code: String(element.category) }),
+        description: "23",
+        fee: String(element.fee),
+        minFee: String(element.feeFrom),
         attachments: []
-      })
+      }))
     })
   return services;
 }
@@ -63,7 +62,6 @@ const getEmploymentsArrayModel = (data) => {
   if (data.experiences)
     data.experiences.forEach((element) => {
       experiences.push(new ProfileWorkerEmploymentModel({
-        id: "",
         organization: element.organisation,
         since: element.workFrom,
         until: element.workTo,
@@ -80,7 +78,7 @@ const workerProfileModelFromForm = (data) => {
   const socials = getSocialsArrayModel(data);
   const services = getServicesArrayModel(data);
   const employments = getEmploymentsArrayModel(data);
-  return {
+  return new ProfileWorkerModel({
     regular: {
       currencies: currencies,
       hourlyCharge: data.hourlyCharge
@@ -94,7 +92,7 @@ const workerProfileModelFromForm = (data) => {
   socials: socials,
   services: services,
   employments: employments
-  }
+  })
 }
 
 export const WORKER_PROFILE_REVIEW_REQUEST = 'WORKER_PROFILE/PROFILE_REVIEW/REQUEST'
@@ -104,17 +102,17 @@ export const reviewWorkerProfileRequest = (req) => ({ type: WORKER_PROFILE_REVIE
 export const reviewWorkerProfileSuccess = (res) => ({ type: WORKER_PROFILE_REVIEW_SUCCESS, payload: res })
 export const reviewWorkerProfileFailure = (err) => ({ type: WORKER_PROFILE_REVIEW_FAILURE, payload: err })
 export const reviewWorkerProfile = (data) => async (dispatch, getState) => {
-  // const workerProfile = workerProfileModelFromForm(data);
-  // console.log(workerProfile);
-  // try {
-  //   dispatch(reviewWorkerProfileRequest())
-  //   const state = getState()
-  //   const token = userTokenSelector()(state)
-  //   const profile = await backendApi.submitWorkerProfile(data, token)
-  //   dispatch(reviewWorkerProfileSuccess(profile))
-  // } catch (err) {
-  //   dispatch(reviewWorkerProfileFailure(err))
-  // }
+  const workerProfile = workerProfileModelFromForm(data);
+  try {
+    dispatch(reviewWorkerProfileRequest())
+    const state = getState()
+    const token = userTokenSelector()(state)
+    const profile = await backendApi.submitWorkerProfile(workerProfile, token)
+    console.log(profile);
+    dispatch(reviewWorkerProfileSuccess(profile))
+  } catch (err) {
+    dispatch(reviewWorkerProfileFailure(err))
+  }
 }
 
 
@@ -131,10 +129,7 @@ export const createServiceAttachment = (file: FileModel) => async (dispatch, get
     dispatch(createServiceAttachmentRequest({ file }))
     const state = getState()
     const token = userTokenSelector()(state)
-    console.log(file);
-    console.log(token);
     const attachment = await backendApi.uploadAttachment(file, token)
-    console.log(attachment);
     const attachments = formValueSelector(WORKER_PROFILE_FORM)(state, 'attachments')
     //dispatch(change(WORKER_PROFILE_FORM, 'attachments', [ ...attachments, attachment.id ]))
     dispatch(createServiceAttachmentSuccess({ attachment, file }))

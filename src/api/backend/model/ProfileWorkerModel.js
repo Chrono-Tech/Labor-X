@@ -3,12 +3,11 @@ import AbstractModel from './../../../models/AbstractModel'
 import ProfileWorkerSocialModel from './ProfileWorkerSocialModel'
 import ProfileWorkerServiceModel from './ProfileWorkerServiceModel'
 import ProfileWorkerEmploymentModel from './ProfileWorkerEmploymentModel'
-import CurrencyModel from './CurrencyModel'
 import AttachmentModel from './AttachmentModel'
 
 const schemaFactory = () => ({
   regular: PropTypes.shape({
-    currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
+    currencies: PropTypes.arrayOf(PropTypes.string),
     hourlyCharge: PropTypes.string,
   }),
   verifiable: PropTypes.shape({
@@ -28,3 +27,4 @@ export default class ProfileWorkerModel extends AbstractModel {
     Object.freeze(this)
   }
 }
+
