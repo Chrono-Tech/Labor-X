@@ -24,6 +24,7 @@ export const setPassword = (password) => (dispatch) => {
 }
 
 export const setAccountTypes = (types) => (dispatch) => {
+  console.log('setAccountTypes', types)
   dispatch({ type: CREATE_ACCOUNT_SET_ACCOUNT_TYPES, types })
 }
 

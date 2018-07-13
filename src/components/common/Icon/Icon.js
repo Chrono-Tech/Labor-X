@@ -36,6 +36,7 @@ export default class Icon extends React.PureComponent {
     BACK: 'back',
     EDIT: 'edit',
     PROFILE: 'profile',
+    NOTIFICATIONS: 'notifications',
   }
 
   static COLORS = {

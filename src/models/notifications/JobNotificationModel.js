@@ -1,4 +1,5 @@
 // @flow
+import PropTypes from 'prop-types'
 import NotificationModel from './NotificationModel'
 
 const JOB_NOTIFICATION_EVENT = {
@@ -21,14 +22,18 @@ const JOB_NOTIFICATION_EVENT = {
 
 type Event = $Keys<typeof JOB_NOTIFICATION_EVENT>
 
+const schemaFactory = () => ({
+  jobId: PropTypes.number,
+  event: PropTypes.oneOf(Object.keys(JOB_NOTIFICATION_EVENT)),
+})
+
 export default class JobNotificationModel extends NotificationModel {
 
-  id: number;
+  jobId: number;
   event: Event
 
-  constructor (jobNotification: JobNotificationModel) {
-    super(jobNotification)
-    Object.assign(this, jobNotification)
+  constructor (jobNotification: JobNotificationModel){
+    super(jobNotification, schemaFactory())
+    Object.freeze(this)
   }
-
 }

@@ -5,17 +5,19 @@
   @include flex(row, space-between, stretch);
   flex-grow: 1;
   color: $color-white;
+  .headerLeft {
+    @include flex(row, flex-start, stretch);
+    margin-left: 3rem;
+  }
+  .headerRight {
+    @include flex(row, flex-end, center);
+    margin-right: 3rem;
+    .notifications {
+      margin-left: 2rem
+    }
+  }
 }
 
-.headerLeft {
-  @include flex(row, flex-start, stretch);
-  margin-left: 3rem;
-}
-
-.headerRight {
-  @include flex(row, flex-end, center);
-  margin-right: 3rem;
-}
 
 .logo {
   display: flex;

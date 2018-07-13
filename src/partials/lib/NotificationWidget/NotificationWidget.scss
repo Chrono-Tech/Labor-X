@@ -1,0 +1,8 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.root {
+  @include flex(column, center, center);
+  width: 5rem;
+  height: 5rem;
+}
