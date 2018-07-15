@@ -1,4 +1,4 @@
-import { change, formValueSelector } from 'redux-form'
+import { initialize, change, formValueSelector } from 'redux-form'
 import * as backendApi from "../../api/backend"
 import { userTokenSelector } from "../user/selectors"
 import { WORKER_PROFILE_FORM } from "./reducer"
@@ -18,8 +18,8 @@ const getCurrenciesArrayModel = (data) => {
     currencies.push(/*new CurrencyModel({ id: "0" symbol:*/ "BTC" /*, title: "Bitcoin" })*/);
   if (data.currencyLhus)
     currencies.push(/* new CurrencyModel({id: "1"  symbol:*/ "LHUS"/*, title: "Lhus" })*/);
-  if (data.currencyAnother)
-    currencies.push(/* new CurrencyModel({ id: "2"  symbol: */"ANY"/*, title: "Another" })*/);
+  // if (data.currencyAnother)
+  //   currencies.push(/* new CurrencyModel({ id: "2"  symbol: */"ANY"/*, title: "Another" })*/);
   return currencies;
 }
 
@@ -107,11 +107,30 @@ export const reviewWorkerProfile = (data) => async (dispatch, getState) => {
     dispatch(reviewWorkerProfileRequest())
     const state = getState()
     const token = userTokenSelector()(state)
-    const profile = await backendApi.submitWorkerProfile(workerProfile, token)
-    console.log(profile);
+    const profile = await backendApi.submitWorkerProfile(data, token)
     dispatch(reviewWorkerProfileSuccess(profile))
   } catch (err) {
     dispatch(reviewWorkerProfileFailure(err))
+  }
+}
+
+
+export const GET_WORKER_PROFILE_REQUEST = 'WORKER_PROFILE/GET/REQUEST'
+export const GET_WORKER_PROFILE_SUCCESS = 'WORKER_PROFILE/GET/SUCCESS'
+export const GET_WORKER_PROFILE_FAILURE = 'WORKER_PROFILE/GET/FAILURE'
+export const getWorkerProfileRequest = (req) => ({ type: GET_WORKER_PROFILE_REQUEST, payload: req })
+export const getWorkerProfileSuccess = (res) => ({ type: GET_WORKER_PROFILE_SUCCESS, payload: res })
+export const getWorkerProfileFailure = (err) => ({ type: GET_WORKER_PROFILE_FAILURE, payload: err })
+export const getWorkerProfile = () => async (dispatch, getState) => {
+  try {
+    dispatch(getWorkerProfileRequest())
+    const state = getState()
+    const token = userTokenSelector()(state)
+    const profile = await backendApi.getWorkerProfile(token)
+    dispatch(initialize(WORKER_PROFILE_FORM, getWorkerProfileInitialValues(profile)))
+    dispatch(getWorkerProfileSuccess(profile))
+  } catch (err) {
+    dispatch(getWorkerProfileFailure(err))
   }
 }
 
@@ -124,15 +143,13 @@ export const SERVICE_ATTACHMENT_CREATE_FAILURE = 'WORKER_PROFILE/SERVICE_ATTACHM
 export const createServiceAttachmentRequest = (req) => ({ type: SERVICE_ATTACHMENT_CREATE_REQUEST, payload: req })
 export const createServiceAttachmentSuccess = (res) => ({ type: SERVICE_ATTACHMENT_CREATE_SUCCESS, payload: res })
 export const createServiceAttachmentFailure = (err) => ({ type: SERVICE_ATTACHMENT_CREATE_FAILURE, payload: err })
-export const createServiceAttachment = (file: FileModel) => async (dispatch, getState) => {
+export const createServiceAttachment = (file: FileModel, serviceIndex: Number) => async (dispatch, getState) => {
   try {
     dispatch(createServiceAttachmentRequest({ file }))
     const state = getState()
     const token = userTokenSelector()(state)
     const attachment = await backendApi.uploadAttachment(file, token)
-    const attachments = formValueSelector(WORKER_PROFILE_FORM)(state, 'attachments')
-    //dispatch(change(WORKER_PROFILE_FORM, 'attachments', [ ...attachments, attachment.id ]))
-    dispatch(createServiceAttachmentSuccess({ attachment, file }))
+    dispatch(createServiceAttachmentSuccess({ attachment, file, serviceIndex }))
   } catch (err) {
     dispatch(createServiceAttachmentFailure(err))
   }

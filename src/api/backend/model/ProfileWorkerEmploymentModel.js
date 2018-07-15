@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import AbstractModel from './../../../models/AbstractModel'
 
 const schemaFactory = () => ({
+    id: PropTypes.string,
     organization: PropTypes.string,
     since: PropTypes.instanceOf(Date),
     until: PropTypes.instanceOf(Date),

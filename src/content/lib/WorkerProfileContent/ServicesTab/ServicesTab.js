@@ -98,7 +98,7 @@ export default class ServicesTab extends React.Component {
         </div>
         <div className={css.documentEntry}>
           <label className={css.fileLoaderBlock}>
-            <input type='file' style={{ display: 'none' }} onChange={onHandleUploadServiceAgreement} multiple={false} />
+            <input type='file' style={{ display: 'none' }} onChange={(e) => onHandleUploadServiceAgreement(e, index)} multiple={false} />
             <Icon
               icon={Icon.ICONS.UPLOAD}
               color={Icon.COLORS.BLUE}
@@ -132,10 +132,10 @@ export default class ServicesTab extends React.Component {
           />
         </div>
         <FieldArray name='services' component={this.renderServices} />
-        <div className={css.twoColumn}>
+        <div className={""}>
           <div className={css.block}>
             <h3>Hourly Charge</h3>
-            <div className={css.twoColumn}>
+            {/* <div className={css.twoColumn}> */}
               <Field
                 fullWidth
                 component={TextField}
@@ -145,7 +145,7 @@ export default class ServicesTab extends React.Component {
                 floatingLabelText='empty'
                 floatingLabelFixed
               />
-              <Field
+              {/* <Field
                 fullWidth
                 component={TextField}
                 name='hourlyChargeUsd'
@@ -153,11 +153,11 @@ export default class ServicesTab extends React.Component {
                 floatingLabelStyle={floatStyle}
                 floatingLabelText='empty'
                 floatingLabelFixed
-              />
-            </div>
+              /> */}
+            {/* </div> */}
             <Link className={cn(css.link, css.linkRates)} href='/rates'>View Rates</Link>
           </div>
-          <div className={css.block}>
+          {/* <div className={css.block}>
             <h3>Schedule</h3>
             <div className={css.scheduleRow}>
               <Field
@@ -205,8 +205,8 @@ export default class ServicesTab extends React.Component {
                 iconStyle={checkboxStyle}
               />
             </div>
-          </div>
-        </div>
+          </div> */}
+        </div> 
         <div className={css.block}>
           <h3>Accepting Currencies</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>
@@ -220,11 +220,11 @@ export default class ServicesTab extends React.Component {
             name='currencyBitcoin'
             label='Bitcoin'
           />
-          <Field
+          {/* <Field
             component={ValidatedCheckbox}
             name='currencyAnother'
             label='Another Currency'
-          />
+          /> */}
         </div>
       </div>
     )

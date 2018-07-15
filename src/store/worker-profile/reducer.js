@@ -49,6 +49,7 @@ export const STATE = {
 
 /*eslint complexity: ["error", 44]*/
 export default (state = STATE, { type, payload }) => {
+  console.log(payload)
   switch (type) {
 
     case WORKER_PROFILE_REVIEW_REQUEST: return ({
@@ -74,7 +75,7 @@ export default (state = STATE, { type, payload }) => {
     case SERVICE_ATTACHMENT_CREATE_SUCCESS: return ({
       ...state,
       createServiceAttachmentLoading: false,
-      serviceAttachments: [ ...state.serviceAttachments, { ...payload.attachment, name: payload.file.name } ],
+      serviceAttachments: [ ...state.serviceAttachments, { ...payload.attachment, name: payload.file.name, serviceIndex: payload.serviceIndex } ],
     })
     case SERVICE_ATTACHMENT_CREATE_FAILURE: return ({
       ...state,

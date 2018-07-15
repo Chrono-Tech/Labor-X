@@ -4,6 +4,7 @@ import AbstractModel from './../../../models/AbstractModel'
 
 
 const schemaFactory = () => ({
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 })

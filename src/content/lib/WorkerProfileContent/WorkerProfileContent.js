@@ -8,7 +8,7 @@ import { reduxForm, propTypes, change, formValueSelector } from 'redux-form'
 import { Router } from 'src/routes'
 import { ProfileModel, WorkerModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
-import { createServiceAttachment, reviewWorkerProfile } from './../../../store/worker-profile'
+import { createServiceAttachment, reviewWorkerProfile, getWorkerProfile } from './../../../store/worker-profile'
 import { getAvatar } from './../../../store/general-profile'
 import GeneralTab from './GeneralTab/GeneralTab'
 import WorkExperienceTab from './WorkExperienceTab/WorkExperienceTab'
@@ -35,6 +35,10 @@ class WorkerProfileContent extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.getWorkerProfile()
+  }
+
   handleChangeIndex = (index) => this.setState({ slideIndex: index })
 
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
@@ -56,10 +60,10 @@ class WorkerProfileContent extends React.Component {
     {this.props.addEmptyWorkerService()}
   }
 
-  handleUploadServiceAgreement = (e) => {
+  handleUploadServiceAgreement = (e, serviceIndex) => {
     const file = e.currentTarget.files[0]
     if (file) {
-      this.props.createServiceAttachment(file)
+      this.props.createServiceAttachment(file, serviceIndex)
       e.currentTarget.value = ''
     }
   }
@@ -136,6 +140,7 @@ class WorkerProfileContent extends React.Component {
 
 const workerProfileContentForm = reduxForm({
   form: FORM_WORKER_PROFILE,
+  enableReinitialize: true
 })(WorkerProfileContent)
 
 function mapStateToProps (state) {
@@ -156,9 +161,10 @@ function mapDispatchToProps (dispatch) {
     onSubmit: async (values) => {
       dispatch(reviewWorkerProfile(values))
     },
-    createServiceAttachment: (file) =>  {
-      dispatch(createServiceAttachment(file))
+    createServiceAttachment: (file, serviceIndex) =>  {
+      dispatch(createServiceAttachment(file, serviceIndex))
     },
+    getWorkerProfile: () => dispatch(getWorkerProfile()),
     dispatch,
   }
 }
