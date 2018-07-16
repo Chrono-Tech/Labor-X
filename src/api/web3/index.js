@@ -1,11 +1,17 @@
+import type Block from "../../models/web3/Block";
+import type {Transaction} from "../../models/web3/Transaction";
+import type {TransactionReceipt} from "../../models/web3/TransactionReceipt";
+
 export const searchTransaction = async ( // last 100 blocks
   web3,
   address: string,
   page = 1,
-): Promise<Object> => {
+): Promise<Array<{ transaction: Transaction, transactionReceipt: TransactionReceipt }>> => {
+
   const blockNumber = await web3.eth.getBlockNumber()
   const blocks = await Promise.all([...Array(100 * page)].map((x, i) => web3.eth.getBlock(blockNumber - i, true)))
-  const transactions = blocks.reduce((x, block) => x.concat(block ? block.transactions : []), [])
-  const userTransactions = transactions.filter(x => x.from && x.from.toLowerCase() === address.toLowerCase() || x.to && x.to.toLowerCase() === address.toLowerCase())
-  return userTransactions
+  const transactions = blocks.reduce((x, block: Block) => x.concat(block ? block.transactions : []), [])
+  // const userTransactions = transactions.filter(x => x.from && x.from.toLowerCase() === address.toLowerCase() || x.to && x.to.toLowerCase() === address.toLowerCase())
+  const transactionsReceipts = await Promise.all(transactions.map(x => web3.eth.getTransactionReceipt(x.hash)))
+  return transactions.map((x, i) => ({ transaction: x, transactionReceipt: transactionsReceipts[i] }))
 }

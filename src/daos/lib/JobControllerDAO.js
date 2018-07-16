@@ -178,7 +178,8 @@ export default class JobControllerDAO extends AbstractContractDAO {
     }
   }
 
-  releasePayment (from, id) {
+  createReleasePaymentTx (from, id) {
+    debugger
     const data = this.contract.methods.releasePayment(id).encodeABI()
     return {
       from,

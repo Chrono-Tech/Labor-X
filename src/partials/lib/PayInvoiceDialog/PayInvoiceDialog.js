@@ -6,7 +6,7 @@ import { Button, Link } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
 
 import css from './PayInvoiceDialog.scss'
-import { pay } from "../../../store"
+import { confirmEndWork } from "../../../store/jobs/actions"
 
 const dateFormat = 'DD.MM.YYYY'
 
@@ -14,12 +14,12 @@ class PayInvoiceDialog extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel),
     worker: PropTypes.instanceOf(ProfileModel),
-    pay: PropTypes.func.isRequired,
+    confirmEndWork: PropTypes.func.isRequired,
     cancelJob: PropTypes.func.isRequired,
   }
 
   handlePay = () => {
-    this.props.pay()
+    this.props.confirmEndWork()
   }
 
   handleDecline = () => {
@@ -92,7 +92,7 @@ class PayInvoiceDialog extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  pay: () => dispatch(pay(ownProps.job.id)),
+  confirmEndWork: () => dispatch(confirmEndWork(ownProps.job.id)),
   // decline: () => dispatch(confirmEndWork(ownProps.jobId)),
 })
 

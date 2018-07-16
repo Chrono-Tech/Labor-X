@@ -321,6 +321,8 @@ function mapStateToProps (state) {
   const formValues = getFormValues(FORM_SEARCH_OPPORTUNITIES)(state)
   const cards = opportunitiesFilteredListSelector(formValues)(state)
 
+  debugger
+
   const defaultCategoriesValues = {}
   TAG_CATEGORIES_LIST.map((tag) => {
     defaultCategoriesValues[tag.name] = false

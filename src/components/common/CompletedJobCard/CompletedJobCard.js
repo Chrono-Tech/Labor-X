@@ -1,21 +1,30 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import t from "typy"
 import moment from 'moment'
 import { JOB_STATE_PENDING_FINISH, JOB_STATE_FINISHED, JOB_STATE_FINALIZED, JobModel } from 'src/models'
 import { Link } from 'src/components/common'
+import Button from '@material-ui/core/Button'
 import css from './CompletedJobCard.scss'
+
+import { releasePaymentAndWithdraw } from "../../../store/completedJobs/actions"
 
 const dateFormat = 'DD MMM YYYY'
 const courseUsdLhus = 18
 
-export default class CompletedJobCard extends React.Component {
+export class CompletedJobCard extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
+    releasePaymentAndWithdraw: PropTypes.func,
   }
 
   constructor (...args) {
     super(...args)
+  }
+
+  handleReleasePaymentAndWithdraw = () => {
+    this.props.releasePaymentAndWithdraw()
   }
 
   getWorkedHourse = (job) => {
@@ -74,6 +83,8 @@ export default class CompletedJobCard extends React.Component {
     return (
       <div className={css.cardFooter}>
         {this.renderStateLabel(job.state)}
+        {/*{ job.state === JOB_STATE_FINISHED ? <Button onClick={this.handleReleasePaymentAndWithdraw}>Release payment & withdraw</Button> : null }*/}
+        <Button onClick={this.handleReleasePaymentAndWithdraw}>Release payment & withdraw</Button>
         <img width='24' height='24' alt='' title='Message' src='/static/images/svg/message-blue.svg' />
       </div>
     )
@@ -94,7 +105,7 @@ export default class CompletedJobCard extends React.Component {
     if (fixedPrice)
     {return " "}
     else
-    {return this.getWorkedHourse(job) + " / " + this.renderTotalHours(job)}
+    {return this.getWorkedHourse(job) + " / " + this.getTotalHours(job)}
   }
 
   render () {
@@ -124,3 +135,9 @@ export default class CompletedJobCard extends React.Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  releasePaymentAndWithdraw: () => dispatch(releasePaymentAndWithdraw(ownProps.job.id)),
+})
+
+export default connect(null, mapDispatchToProps)(CompletedJobCard)

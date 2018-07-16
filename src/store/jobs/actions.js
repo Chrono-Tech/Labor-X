@@ -347,29 +347,27 @@ export const endWork = (id) => async (dispatch, getState) => {
   }
 }
 
-export const PAY_REQUEST = 'PAY_REQUEST'
-export const PAY_SUCCESS = 'PAY_SUCCESS'
-export const PAY_FAILURE = 'PAY_FAILURE'
-
-const payRequest = (req) => ({ type: PAY_REQUEST, req })
-const paySuccess = (res) => ({ type: PAY_SUCCESS, res })
-const payFailure = (err) => ({ type: PAY_FAILURE, err })
-
-export const pay = (id) => async (dispatch, getState) => {
+export const CONFIRM_END_WORK_REQUEST = 'CONFIRM_END_WORK_REQUEST'
+export const CONFIRM_END_WORK_SUCCESS = 'CONFIRM_END_WORK_SUCCESS'
+export const CONFIRM_END_WORK_FAILURE = 'CONFIRM_END_WORK_FAILURE'
+const confirmEndWorkRequest = (req) => ({ type: CONFIRM_END_WORK_REQUEST, req })
+const confirmEndWorkSuccess = (res) => ({ type: CONFIRM_END_WORK_SUCCESS, res })
+const confirmEndWorkFailure = (err) => ({ type: CONFIRM_END_WORK_FAILURE, err })
+export const confirmEndWork = (id) => async (dispatch, getState) => {
   try {
-    dispatch(payRequest({ id }))
+    dispatch(confirmEndWorkRequest({ id }))
     const state = getState()
     const JobController = daoByType('JobController')(state)
     const signer = signerSelector()(state)
     const web3 = web3Selector()(state)
     const confirmEndWorkTx = JobController.confirmEndWork(signer.address, id)
-    const confirmEndWorkRes = await dispatch(executeTransaction({ tx: confirmEndWorkTx, web3, signer }))
-    const releasePaymentTx = JobController.releasePayment(signer.address, id)
-    const releasePaymentRes = await dispatch(executeTransaction({ tx: releasePaymentTx, web3, signer }))
-    dispatch(paySuccess({ confirmEndWorkRes, releasePaymentRes }))
+    const res = await dispatch(executeTransaction({ tx: confirmEndWorkTx, web3, signer }))
+    // const releasePaymentTx = JobController.releasePayment(signer.address, id)
+    // const releasePaymentRes = await dispatch(executeTransaction({ tx: releasePaymentTx, web3, signer }))
+    dispatch(confirmEndWorkSuccess(res))
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err)
-    dispatch(payFailure(err))
+    dispatch(confirmEndWorkFailure(err))
   }
 }

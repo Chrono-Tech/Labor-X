@@ -19,7 +19,7 @@ class SecondMenu extends React.Component {
         <div className={css.section}>
           <div className={css.icons}>
             <Link2 route='/my-wallet'>
-              <a>
+              <a href='/my-wallet'>
                 <Image
                   className={css.iconsItem}
                   icon={Image.ICONS.WALLET}
