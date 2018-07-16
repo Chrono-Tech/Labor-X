@@ -19,8 +19,10 @@ const checkboxStyle = {
 export default class ServicesTab extends React.Component {
   static propTypes = {
     workerProfile: PropTypes.instanceOf(WorkerModel),
-    onHandleUploadServiceAgreement: PropTypes.func,
+    onUploadServiceAgreement: PropTypes.func,
     onDeleteItem: PropTypes.func,
+    onDeleteServiceAttachment: PropTypes.func,
+    attachments: PropTypes.arrayOf(PropTypes.instanceOf())
   }
 
   handleClickRemoveBlock = (index) => {
@@ -40,8 +42,19 @@ export default class ServicesTab extends React.Component {
     )
   }
 
+  getAttachmentsByServiceIndex = (attachmentsAll, serviceIndex) => {
+    let attachments = [];
+    attachmentsAll.forEach((element) => {
+      if (element.serviceIndex === serviceIndex) {
+        attachments.push(element);
+      }
+    })
+    return attachments;
+  }
+
   renderServiceCard = ({ service, index }) => {
-    const { onHandleUploadServiceAgreement } = this.props
+
+    const { onUploadServiceAgreement, attachments, onDeleteServiceAttachment } = this.props
     return (
       <div className={css.serviceBlock} key={service}>
         <div className={css.serviceBlockContent}>
@@ -57,10 +70,10 @@ export default class ServicesTab extends React.Component {
               component={SelectField}
               name={`${service}.category`}
               floatingLabelText='Categoty'
+              value={service.category}
             >
-              <MenuItem value={0} primaryText='Category 1' />
-              <MenuItem value={1} primaryText='Category 2' />
-              <MenuItem value={2} primaryText='Category 3' />
+              <MenuItem value={1} primaryText='Category 1' />
+              <MenuItem value={2} primaryText='Category 2' />
             </Field>
             <div />
           </div>
@@ -68,7 +81,7 @@ export default class ServicesTab extends React.Component {
             <Field
               fullWidth
               component={SelectField}
-              name={`${service}.fee`}
+              name={`${service}.fee2`}
               floatingLabelText='Fee'
             >
               <MenuItem value={0} primaryText='Specific fee' />
@@ -78,8 +91,8 @@ export default class ServicesTab extends React.Component {
               <Field
                 fullWidth
                 component={TextField}
-                name={`${service}.feeFrom`}
-                hintText='Fee from, LHUS'
+                name={`${service}.minFee`}
+                hintText='Min fee, LHUS'
                 floatingLabelStyle={floatStyle}
                 floatingLabelText='empty'
                 floatingLabelFixed
@@ -87,8 +100,8 @@ export default class ServicesTab extends React.Component {
               <Field
                 fullWidth
                 component={TextField}
-                name={`${service}.feeFromUsd`}
-                hintText='$0.00'
+                name={`${service}.fee`}
+                hintText='Fee, LHUS'
                 floatingLabelStyle={floatStyle}
                 floatingLabelText='empty'
                 floatingLabelFixed
@@ -96,9 +109,27 @@ export default class ServicesTab extends React.Component {
             </div>
           </div>
         </div>
+        {
+          this.getAttachmentsByServiceIndex(attachments, index).map((item) => {
+            return (
+              <div key={item.id} className={css.attachment}>
+                <div className={css.wrapAttachmentName}>
+                  {item.name}
+                </div>
+                <div className={css.wrapDeleteAttachmentBtn} onClick={() => onDeleteServiceAttachment(item.id)}>
+                  <Icon
+                    icon={Icon.ICONS.DELETE}
+                    color={Icon.COLORS.GREY30}
+                    size={20}
+                  />
+                </div>
+              </div>
+            )
+          })
+        }
         <div className={css.documentEntry}>
           <label className={css.fileLoaderBlock}>
-            <input type='file' style={{ display: 'none' }} onChange={(e) => onHandleUploadServiceAgreement(e, index)} multiple={false} />
+            <input type='file' style={{ display: 'none' }} onChange={(e) => onUploadServiceAgreement(e, index)} multiple={false} />
             <Icon
               icon={Icon.ICONS.UPLOAD}
               color={Icon.COLORS.BLUE}
@@ -118,7 +149,7 @@ export default class ServicesTab extends React.Component {
     )
   }
 
-  render () {
+  render() {
     return (
       <div className={css.content}>
         <div className={css.block}>
@@ -136,77 +167,18 @@ export default class ServicesTab extends React.Component {
           <div className={css.block}>
             <h3>Hourly Charge</h3>
             {/* <div className={css.twoColumn}> */}
-              <Field
-                fullWidth
-                component={TextField}
-                name='hourlyCharge'
-                hintText='LHUS 1'
-                floatingLabelStyle={floatStyle}
-                floatingLabelText='empty'
-                floatingLabelFixed
-              />
-              {/* <Field
-                fullWidth
-                component={TextField}
-                name='hourlyChargeUsd'
-                hintText='$0.00'
-                floatingLabelStyle={floatStyle}
-                floatingLabelText='empty'
-                floatingLabelFixed
-              /> */}
-            {/* </div> */}
+            <Field
+              fullWidth
+              component={TextField}
+              name='hourlyCharge'
+              hintText='LHUS 1'
+              floatingLabelStyle={floatStyle}
+              floatingLabelText='empty'
+              floatingLabelFixed
+            />
             <Link className={cn(css.link, css.linkRates)} href='/rates'>View Rates</Link>
           </div>
-          {/* <div className={css.block}>
-            <h3>Schedule</h3>
-            <div className={css.scheduleRow}>
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleSun'
-                label='Sun'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleMon'
-                label='Mon'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleTue'
-                label='Tue'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleWed'
-                label='Wed'
-                iconStyle={checkboxStyle}
-              />
-            </div>
-            <div className={css.scheduleRow}>
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleThu'
-                label='Thu'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleFri'
-                label='Fri'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleSat'
-                label='Sat'
-                iconStyle={checkboxStyle}
-              />
-            </div>
-          </div> */}
-        </div> 
+        </div>
         <div className={css.block}>
           <h3>Accepting Currencies</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>

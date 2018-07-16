@@ -13,6 +13,12 @@ import {
   SERVICE_ATTACHMENT_CREATE_SUCCESS,
   SERVICE_ATTACHMENT_CREATE_FAILURE,
 
+  GET_WORKER_PROFILE_REQUEST,
+  GET_WORKER_PROFILE_SUCCESS,
+  GET_WORKER_PROFILE_FAILURE,
+
+  SERVICE_ATTACHMENT_DELETE
+
 } from "./actions"
 
 export const WORKER_PROFILE_FORM = 'WORKER_PROFILE/FORM'
@@ -22,6 +28,9 @@ export const TYPES = {
   workerProfile: PropTypes.instanceOf(ProfileWorkerModel),
   reviewWorkerProfileLoading: PropTypes.bool,
   reviewWorkerProfileFailure: PropTypes.instanceOf(Error),
+
+  getWorkerProfileLoading: PropTypes.bool,
+  getWorkerProfileFailure: PropTypes.instanceOf(Error),
 
   avatar: PropTypes.instanceOf(ImageModel),
   createAvatarLoading: PropTypes.bool,
@@ -38,6 +47,9 @@ export const STATE = {
   reviewWorkerProfileLoading: true,
   reviewWorkerProfileFailure: null,
 
+  getWorkerProfileLoading: true,
+  getWorkerProfileFailure: true,
+
   avatar: null,
   createAvatarLoading: false,
   createAvatarFailure: null,
@@ -49,7 +61,6 @@ export const STATE = {
 
 /*eslint complexity: ["error", 44]*/
 export default (state = STATE, { type, payload }) => {
-  console.log(payload)
   switch (type) {
 
     case WORKER_PROFILE_REVIEW_REQUEST: return ({
@@ -68,6 +79,23 @@ export default (state = STATE, { type, payload }) => {
     })
 
 
+
+    case GET_WORKER_PROFILE_REQUEST: return ({
+      ...state,
+      getWorkerProfileLoading: true,
+    })
+    case GET_WORKER_PROFILE_SUCCESS: return ({
+      ...state,
+      getWorkerProfileLoading: false,
+      workerProfile: payload,
+    })
+    case GET_WORKER_PROFILE_FAILURE: return ({
+      ...state,
+      getWorkerProfileLoading: false,
+      getWorkerProfileFailure: payload,
+    })
+
+
     case SERVICE_ATTACHMENT_CREATE_REQUEST: return ({
       ...state,
       createServiceAttachmentLoading: true,
@@ -82,6 +110,14 @@ export default (state = STATE, { type, payload }) => {
       createServiceAttachmentLoading: false,
       createServiceAttachmentFailure: payload,
     })
+
+    case SERVICE_ATTACHMENT_DELETE: 
+    const findedIndex = state.serviceAttachments.findIndex(item => item.id === payload);
+    return ({
+      ...state,
+      serviceAttachments: findedIndex !==-1 ? [...state.serviceAttachments.slice(0, findedIndex), ...state.serviceAttachments.slice(findedIndex+1, state.serviceAttachments.length)] : state.serviceAttachments ,
+    })
+
     default: return ({
       ...state,
     })

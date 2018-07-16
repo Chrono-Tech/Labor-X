@@ -102,3 +102,19 @@
   margin-left: 1.5rem;
 }
 
+.attachment {
+  padding: 1.5rem 3rem;
+  border-top: 1px solid $color-gray3;
+  display: flex;
+  align-items: center;
+}
+
+.wrapDeleteAttachmentBtn {
+  cursor: pointer;
+  margin-left: 2rem;
+  display: inline-block;
+}
+
+.wrapAttachmentName {
+  display: inline-block;
+}

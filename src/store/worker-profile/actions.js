@@ -1,57 +1,59 @@
 import { initialize, change, formValueSelector } from 'redux-form'
 import * as backendApi from "../../api/backend"
 import { userTokenSelector } from "../user/selectors"
+import { getWorkerProfileInitialValues } from "./selectors"
 import { WORKER_PROFILE_FORM } from "./reducer"
-import CurrencyModel from "../../api/backend/model/CurrencyModel"
-import ImageModel from "../../api/backend/model/ImageModel"
-import AttachmentModel from "../../api/backend/model/AttachmentModel"
-import ProfileWorkerModel from "../../api/backend/model/ProfileWorkerModel"
-import ProfileWorkerSocialModel from "../../api/backend/model/ProfileWorkerSocialModel"
-import ProfileWorkerServiceModel from "../../api/backend/model/ProfileWorkerServiceModel"
-import ProfileWorkerEmploymentModel from "../../api/backend/model/ProfileWorkerEmploymentModel"
-import ServiceCategoryModel from "../../api/backend/model/ServiceCategoryModel"
+import VerificationRequestWorkerModel, { VerificationRequestWorkerSocialModel, VerificationRequestWorkerServiceModel, VerificationRequestWorkerEmploymentModel} from "../../api/backend/model/VerificationRequestWorkerModel";
 import FileModel from "../../models/FileModel"
+
+const getAttachmentsByServiceIndex = (attachmentsAll, serviceIndex) => {
+  let attachments = [];
+  attachmentsAll.forEach((element) => {
+    if (element.serviceIndex === serviceIndex) {
+      attachments.push(element.id);
+    }
+  })
+  return attachments;
+}
 
 const getCurrenciesArrayModel = (data) => {
   let currencies = [];
   if (data.currencyBitcoin)
-    currencies.push(/*new CurrencyModel({ id: "0" symbol:*/ "BTC" /*, title: "Bitcoin" })*/);
+    currencies.push("BTC");
   if (data.currencyLhus)
-    currencies.push(/* new CurrencyModel({id: "1"  symbol:*/ "LHUS"/*, title: "Lhus" })*/);
-  // if (data.currencyAnother)
-  //   currencies.push(/* new CurrencyModel({ id: "2"  symbol: */"ANY"/*, title: "Another" })*/);
+    currencies.push("LHUS");
   return currencies;
 }
 
 const getAttachmentsArrayModel = (data) => {
-  let attachments = [];
+  let attachments = ["5b48d9b5dc95100958724ed9"];
   return attachments;
 }
 
 const getSocialsArrayModel = (data) => {
   let attachments = [];
   if (data.facebook)
-    attachments.push(new ProfileWorkerSocialModel({  name: "Facebook", url: data.facebook }));
+    attachments.push(new VerificationRequestWorkerSocialModel({  name: "Facebook", url: data.facebook }));
   if (data.linkedin)
-    attachments.push(new ProfileWorkerSocialModel({ name: "Linkedin", url: data.linkedin }));
+    attachments.push(new VerificationRequestWorkerSocialModel({ name: "Linkedin", url: data.linkedin }));
   if (data.twitter)
-    attachments.push(new ProfileWorkerSocialModel({  name: "Twitter", url: data.twitter }));
+    attachments.push(new VerificationRequestWorkerSocialModel({  name: "Twitter", url: data.twitter }));
   return attachments;
 }
 
-const getServicesArrayModel = (data) => {
+const getServicesArrayModel = (data, serviceAttachments) => {
   let services = [];
   let i = 0;
   if (data.services)
-    data.services.forEach((element) => {
+    data.services.forEach((element, index) => {
       i++;
-      services.push(new ProfileWorkerServiceModel({
+      services.push(new VerificationRequestWorkerServiceModel({
         name: element.name,
         category: 1,//new ServiceCategoryModel({ id: String(element.category), name: "", code: String(element.category) }),
         description: "23",
         fee: String(element.fee),
-        minFee: String(element.feeFrom),
-        attachments: []
+        minFee: element.minFee,
+        attachments: null //getAttachmentsByServiceIndex(serviceAttachments, index)
       }))
     })
   return services;
@@ -61,24 +63,25 @@ const getEmploymentsArrayModel = (data) => {
   let experiences = [];
   if (data.experiences)
     data.experiences.forEach((element) => {
-      experiences.push(new ProfileWorkerEmploymentModel({
-        organization: element.organisation,
-        since: element.workFrom,
-        until: element.workTo,
+      experiences.push(new VerificationRequestWorkerEmploymentModel({
+        organization: element.organization,
+        since: element.since,
+        until: element.until,
         responsibilities: element.responsibilities
       }))
     });
   return experiences;
 }
 
-const workerProfileModelFromForm = (data) => {
+const workerProfileModelFromForm = (data, serviceAttachments) => {
+  console.log(data);
   const currencies = getCurrenciesArrayModel(data);
   const pageBackground = null;
   const attachments = getAttachmentsArrayModel(data);
   const socials = getSocialsArrayModel(data);
-  const services = getServicesArrayModel(data);
+  const services = getServicesArrayModel(data, serviceAttachments);
   const employments = getEmploymentsArrayModel(data);
-  return new ProfileWorkerModel({
+  return new VerificationRequestWorkerModel({
     regular: {
       currencies: currencies,
       hourlyCharge: data.hourlyCharge
@@ -101,14 +104,16 @@ export const WORKER_PROFILE_REVIEW_FAILURE = 'WORKER_PROFILE/PROFILE_REVIEW/FAIL
 export const reviewWorkerProfileRequest = (req) => ({ type: WORKER_PROFILE_REVIEW_REQUEST, payload: req })
 export const reviewWorkerProfileSuccess = (res) => ({ type: WORKER_PROFILE_REVIEW_SUCCESS, payload: res })
 export const reviewWorkerProfileFailure = (err) => ({ type: WORKER_PROFILE_REVIEW_FAILURE, payload: err })
-export const reviewWorkerProfile = (data) => async (dispatch, getState) => {
-  const workerProfile = workerProfileModelFromForm(data);
+export const reviewWorkerProfile = (data, serviceAttachments) => async (dispatch, getState) => {
+  const workerProfile = workerProfileModelFromForm(data, serviceAttachments);
   try {
     dispatch(reviewWorkerProfileRequest())
     const state = getState()
     const token = userTokenSelector()(state)
-    const profile = await backendApi.submitWorkerProfile(data, token)
-    dispatch(reviewWorkerProfileSuccess(profile))
+    const res = await backendApi.submitWorkerProfile(workerProfile, token)
+    const initialValues = getWorkerProfileInitialValues(res.profile)
+    dispatch(initialize(WORKER_PROFILE_FORM, initialValues))
+    dispatch(reviewWorkerProfileSuccess(res.profile))
   } catch (err) {
     dispatch(reviewWorkerProfileFailure(err))
   }
@@ -126,9 +131,10 @@ export const getWorkerProfile = () => async (dispatch, getState) => {
     dispatch(getWorkerProfileRequest())
     const state = getState()
     const token = userTokenSelector()(state)
-    const profile = await backendApi.getWorkerProfile(token)
-    dispatch(initialize(WORKER_PROFILE_FORM, getWorkerProfileInitialValues(profile)))
-    dispatch(getWorkerProfileSuccess(profile))
+    const res = await backendApi.getWorkerProfile(token)
+    const initialValues = getWorkerProfileInitialValues(res.profile)
+    dispatch(initialize(WORKER_PROFILE_FORM, initialValues))
+    dispatch(getWorkerProfileSuccess(res.profile))
   } catch (err) {
     dispatch(getWorkerProfileFailure(err))
   }
@@ -153,4 +159,11 @@ export const createServiceAttachment = (file: FileModel, serviceIndex: Number) =
   } catch (err) {
     dispatch(createServiceAttachmentFailure(err))
   }
+}
+
+
+
+export const SERVICE_ATTACHMENT_DELETE = 'WORKER_PROFILE/SERVICE_ATTACHMENT_DELETE'
+export const deleteServiceAttachment = (id) => async (dispatch, getState) => {
+  dispatch({ type: SERVICE_ATTACHMENT_DELETE, payload: id });
 }

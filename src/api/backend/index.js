@@ -7,10 +7,9 @@ import ImageModel from "./model/ImageModel"
 import AttachmentModel from "./model/AttachmentModel"
 import PersonModel from "./model/PersonModel"
 import ProfileWorkerModel from "./model/ProfileWorkerModel"
-import VerificationRequestWorkerModel from "./model/VerificationRequestWorkerModel"
 
-//const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
-const API_URL = 'http://localhost:3000/api/v1'
+const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+// const API_URL = 'http://localhost:3000/api/v1'
 
 const http = axios.create({ baseURL: API_URL })
 
@@ -95,11 +94,11 @@ export const confirmProfileContacts = (form, token: string): { profile: ProfileM
   { headers: { Authorization: `Bearer ${ token }` } }
 ).then(res => ({ profile: ProfileModel.fromJson(res.data.profile) }))
 
-export const submitWorkerProfile = (form, token: string): { profile: ProfileWorkerModel } => http.post(
+export const submitWorkerProfile = (workerProfile, token: string): { profile: ProfileWorkerModel } => http.post(
   `${ API_URL }/security/me/profile/worker`,
-  VerificationRequestWorkerModel.fromJson(form),
+  workerProfile,
   { headers: { Authorization: `Bearer ${ token }` } }
-).then(res => ({ profile: ProfileWorkerModel.fromJson(res.data.profile) }))
+).then(res => ({ profile: ProfileWorkerModel.fromJson(res.data) }))
 
 export const getWorkerProfile = (token: string): { profile: ProfileWorkerModel } => http.get(
   `${ API_URL }/security/me/profile/worker`,

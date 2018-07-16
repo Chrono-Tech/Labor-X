@@ -97,6 +97,8 @@
 
 .twoColumn {
   @include flex(row, flex-start, stretch);
+  display: flex;
+  align-items: flex-end;
   > * {
     &:first-child {
       margin-right: 2.5%;

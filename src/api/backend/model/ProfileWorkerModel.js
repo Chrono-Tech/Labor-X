@@ -32,28 +32,38 @@ export default class ProfileWorkerModel extends AbstractModel {
   }
 
   static fromJson (data) {
-    return new ProfileWorkerModel({
+    let nameField
+    if (data.approved)
+    {nameField = "approved"}
+    if (data.submitted)
+    {nameField = "submitted"}
+    if (nameField)
+    {return new ProfileWorkerModel({
+      approved: nameField === "approved" ? true : false,
+      submitted: nameField === "submitted" ? true : false,
       regular: {
-        currencies: data.submitted.regular.currencies.map(item => new CurrencyModel(item)),
-        hourlyCharge: data.submitted.regular.hourlyCharge,
+        currencies: data[nameField].regular.currencies.map(item => new CurrencyModel(item)),
+        hourlyCharge: data[nameField].regular.hourlyCharge,
       },
       verifiable: {
-        intro: data.submitted.verifiable.intro,
-        pageBackground: data.submitted.verifiable.pageBackground,
-        attachments: data.submitted.verifiable.attachments.map(item => new AttachmentModel(item)),
+        intro: data[nameField].verifiable.intro,
+        pageBackground: data[nameField].verifiable.pageBackground,
+        attachments: data[nameField].verifiable.attachments.map(item => new AttachmentModel(item)),
       },
-      custom: data.submitted.custom,
-      socials: data.submitted.socials.map(item => new ProfileWorkerSocialModel(item)),
-      services: data.submitted.services.map(item => new ProfileWorkerServiceModel({
+      custom: data[nameField].custom,
+      socials: data[nameField].socials.map(item => new ProfileWorkerSocialModel(item)),
+      services: data[nameField].services.map(item => new ProfileWorkerServiceModel({
         name: item.name,
         category: 0,
         description: item.description,
         fee: item.fee,
         minFee: item.minFee,
-        attachments: item.attachments.map(item => new AttachmentModel(item)),
+        attachments: item.attachments ? item.attachments.map(item => new AttachmentModel(item)) : [],
       })),
-      employments: data.submitted.employments.map(item => new ProfileWorkerEmploymentModel(item)),
-    })
+      employments: data[nameField].employments.map(item => new ProfileWorkerEmploymentModel(item)),
+    })}
+    else
+    {return new ProfileWorkerModel({})}
   }
 }
 

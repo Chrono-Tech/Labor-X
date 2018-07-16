@@ -68,24 +68,18 @@ export default class WorkExperienceTab extends React.Component {
     return (
       <div className={css.experienceBlock} key={experience}>
         <div className={css.experienceBlockContent}>
-          <Field
-            fullWidth
-            component={TextField}
-            name={`${experience}.position`}
-            floatingLabelText='Position'
-          />
           <div className={css.twoColumn}>
             <Field
               fullWidth
               component={TextField}
-              name={`${experience}.organisation`}
+              name={`${experience}.organization`}
               floatingLabelText='Organisation'
             />
             <div className={css.twoColumn}>
               <Field
                 fullWidth
                 openToYearSelection
-                name={`${experience}.workFrom`}
+                name={`${experience}.since`}
                 component={DatePickerField}
                 label='From'
                 // eslint-disable-next-line react/jsx-no-bind
@@ -94,7 +88,7 @@ export default class WorkExperienceTab extends React.Component {
               <Field
                 fullWidth
                 openToYearSelection
-                name={`${experience}.workTo`}
+                name={`${experience}.until`}
                 component={DatePickerField}
                 label='To'
                 // eslint-disable-next-line react/jsx-no-bind
@@ -126,7 +120,7 @@ export default class WorkExperienceTab extends React.Component {
     return (
       <div className={css.content}>
         <FieldArray name='experiences' component={this.renderExperiences} />
-        <div className={css.block}>
+        {/* <div className={css.block}>
           <div className={css.tagsRow}>
             <Field
               className={css.find}
@@ -149,7 +143,7 @@ export default class WorkExperienceTab extends React.Component {
             </div>
 
           </div>
-        </div>
+        </div> */}
         {false && (
           <Collapsible classParentString={css.upgradeBlock} trigger={this.renderUpgardeTitle()} >
             <div className={css.description}>
