@@ -1,5 +1,5 @@
-export default (values) => {
-  
+export default () => {
+
   return {
   }
 }

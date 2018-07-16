@@ -70,16 +70,16 @@ class LoginOptions extends React.Component {
     onSelectWallet: PropTypes.func,
     onChangeStep: PropTypes.func,
     navigateToLoginForm: PropTypes.func,
-    step: PropTypes.string,
-    navigateToCreateWallet: PropTypes.func,
-    walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
-    selectedWallet: PropTypes.instanceOf(WalletEntryModel),
-    selectedWalletRecoveryForm: PropTypes.instanceOf(WalletEntryModel),
     hideAccount404Dialog: PropTypes.func,
     handleAccount404DialogYesClick: PropTypes.func,
     onSubmitRecoveryAccountForm: PropTypes.func,
     onConfirmRecoveryPassword: PropTypes.func,
     navigateToRecoveryPassword: PropTypes.func,
+    step: PropTypes.string,
+    navigateToCreateWallet: PropTypes.func,
+    walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
+    selectedWallet: PropTypes.instanceOf(WalletEntryModel),
+    selectedWalletRecoveryForm: PropTypes.instanceOf(WalletEntryModel),
     fetchSignIn: PropTypes.bool,
     openAccount404Dialog: PropTypes.bool,
   }
@@ -88,12 +88,6 @@ class LoginOptions extends React.Component {
     onChangeStep: () => {},
     step: null,
     onSelectWallet: null,
-  }
-
-  constructor (props) {
-    super(props)
-
-    this.state = {}
   }
 
   componentWillMount () {
@@ -156,7 +150,7 @@ class LoginOptions extends React.Component {
           />)
         break
       case LoginSteps.WalletFile:
-        component = (<WalletFileForm onChangeStep={onChangeStep} onSubmitSuccess={signIn} />)
+        component = (<WalletFileForm onChangeStep={onChangeStep} onSubmitSuccess={onSelectWallet} />)
         break
       case LoginSteps.PrivateKey:
         component = (
@@ -320,7 +314,7 @@ function mapDispatchToProps (dispatch) {
     onSubmitMnemonic: (values) => dispatch(onSubmitMnemonic(values)),
     onSubmitMnemonicSuccess: (values) => dispatch(onSubmitMnemonicSuccess(values)),
     onSubmitMnemonicFail: (values) => dispatch(onSubmitMnemonicFail(values)),
-    onSelectWallet: (signInModel) => dispatch(onSelectWallet(signInModel)),
+    onSelectWallet: (walletEntry) => dispatch(onSelectWallet(walletEntry)),
     onSubmitRecoveryAccountForm: (values) => dispatch(onSubmitRecoveryAccountForm(values)),
     onConfirmRecoveryPassword: (values) => dispatch(onConfirmRecoveryPassword(values)),
     navigateToRecoveryPassword: () => dispatch(navigateToRecoveryPassword()),

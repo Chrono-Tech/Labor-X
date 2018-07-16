@@ -5,6 +5,10 @@
     padding-left: 30px;
     padding-right: 30px;
   }
+  .checkbox {
+    max-width: 56rem;
+    margin-bottom: 4rem;
+  }
 }
 
 .description {
@@ -83,35 +87,10 @@ b {
 .link {
   color: #00A0D2;
   font-weight: 400 !important;
-  
+
   &:hover {
     text-decoration: underline;
   }
-}
-
-.checkboxBlock {
-  text-align: left;
-  margin-bottom: 35px;
-}
-
-.checkbox {
-  display: none;
-
-  & + .checkboxLabel {
-    background:url(/static/images/svg/checkbox-unchecked.svg) no-repeat;
-    background-size: 20px 20px;
-    padding-left: 30px;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-    line-height: 20px;
-    display: inline-block;
-  }
-
-  &:checked + .checkboxLabel {
-    background:url(/static/images/svg/checkbox.svg) no-repeat;
-    background-size: 20px 20px;
-  }
-
 }
 
 .submitButton {

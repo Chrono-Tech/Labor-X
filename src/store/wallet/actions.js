@@ -6,7 +6,6 @@ import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
 import { changeStep as loginChangeStep } from './../login/actions'
-import { setUserAccountTypes } from "../user/actions"
 
 export const WALLETS_ADD = 'wallets/add'
 export const WALLETS_SELECT = 'wallets/select'
@@ -124,9 +123,9 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
     encrypted: wallet.encrypt(password),
   })
 
-  if (types) {
-    await dispatch(setUserAccountTypes(`0x${walletEntry.encrypted[0].address}`, types, account))
-  }
+  // if (types) {
+  //   await dispatch(setUserAccountTypes(`0x${walletEntry.encrypted[0].address}`, types, account))
+  // }
 
   return walletEntry
 }

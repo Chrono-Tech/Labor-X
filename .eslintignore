@@ -101,13 +101,16 @@ src/**/*.js
 !src/components/common/VerificationLevelSelector/
 !src/components/common/ScheduleWidget/
 !src/components/common/CompletedJobCard/CompletedJobCard.js
+!src/components/Account/AccountPasswordForm/
+!src/components/Account/ShowMnemonic/
 
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
 !src/components/CompletedJobs/CompletedJobs.js
 !src/components/Login/LoginForm/LoginForm.js
-!src/components/Login/LoginOptions/LoginOptions.js
+!src/components/Login/LoginOptions/
+!src/components/Login/WalletFileForm/
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/
