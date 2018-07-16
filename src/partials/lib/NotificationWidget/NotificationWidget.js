@@ -78,13 +78,20 @@ class NotificationWidget extends React.Component {
       onClick={this.handleClickEntry}
     >
       <ListItemIcon className={css.entryIcon}>
-        {
-          notification.state === NOTIFICATION_STATE.SUCCESS
-            ? <Icon className={css.icon} size={40} icon={Icon.ICONS.CHECK_CIRCLE} color={Icon.COLORS.GREEN} />
-            : notification.state === NOTIFICATION_STATE.FAILURE
-              ? <Icon className={css.icon} size={40} icon={Icon.ICONS.CANCEL} color={Icon.COLORS.RED} />
-              : <img className={css.icon} src={notification.icon ? notification.icon : '/static/images/default_logo.png'} alt='logo' />
-        }
+        <div className={css.iconContainer}>
+          {
+            notification.state === NOTIFICATION_STATE.SUCCESS
+              ? <Icon className={css.icon} size={40} icon={Icon.ICONS.CHECK_CIRCLE} color={Icon.COLORS.GREEN} />
+              : notification.state === NOTIFICATION_STATE.FAILURE
+                ? <Icon className={css.icon} size={40} icon={Icon.ICONS.CANCEL} color={Icon.COLORS.RED} />
+                : (
+                  <div className={css.iconWithProgress}>
+                    <img className={css.icon} src={notification.icon ? notification.icon : '/static/images/default_logo.png'} alt='logo' />
+                    <CircularProgress className={css.entryProgress} style={{ color: '#e6e6e6' }} size={40} />
+                  </div>
+                )
+          }
+        </div>
       </ListItemIcon>
       <ListItemText css={css.entryText}>
         <p className={css.title}>{notification.title}</p>
@@ -98,6 +105,14 @@ class NotificationWidget extends React.Component {
     return (
       <div className={cn(css.root, className)}>
         <div className={css.menu}>
+          { notifications.find(n => n.state === NOTIFICATION_STATE.REQUEST)
+            ? (<CircularProgress
+              className={css.progress}
+              style={{ color: 'white' }}
+              size={50}
+            />)
+            : null
+          }
           <Icon
             className={css.bellIcon}
             size={30}
@@ -105,14 +120,6 @@ class NotificationWidget extends React.Component {
             color={Icon.COLORS.WHITE}
             onClick={this.handleClickBell}
           />
-          { notifications.find(n => n.state === NOTIFICATION_STATE.SUCCESS)
-            ? (<CircularProgress
-              className={css.progress}
-              style={{ color: 'white', zIndex: '1' }}
-              size={50}
-            />)
-            : null
-          }
         </div>
         { this.renderDropdown(notifications) }
       </div>

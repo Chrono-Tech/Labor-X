@@ -75,13 +75,12 @@ src/**/*.js
 !src/store/applicants/
 !src/store/createAccount/actions.js
 !src/store/login/actions.js
-!src/store/user/actions.js
-!src/store/user/reducer.js
 !src/store/bootstrap.js
 !src/store/boards/selectors.js
 !src/store/jobs/actions.js
 !src/store/jobs/selectors.js
 !src/store/opportunities/selectors.js
+!src/store/user/
 
 
 !src/components/common/Link/

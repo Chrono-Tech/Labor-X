@@ -16,7 +16,6 @@
       width: 4rem;
       height: 4rem;
       border-radius: 50%;
-      z-index: 2;
       &:hover {
         background-color: $color-azure;
       }
@@ -29,6 +28,7 @@
 
 .icon {
   @include flex(column, center, center);
+  position: absolute;
   width: 3rem;
   height: 3rem;
   object-fit: cover;
@@ -45,4 +45,22 @@
 
 .closeButton {
   @include flex(column, center, center);
+}
+
+.iconContainer {
+  @include flex(column, center, center);
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+}
+
+.entryProgress {
+  position: absolute;
+}
+
+.iconWithProgress {
+  @include flex(column, center, center);
+  position: relative;
+  width: 4rem;
+  height: 4rem;
 }
