@@ -2,7 +2,47 @@
 @import "~styles/globals/mixins";
 
 .root {
-  @include flex(column, center, center);
   width: 5rem;
   height: 5rem;
+  .menu {
+    @include flex(column, center, center);
+    position: relative;
+    width: 5rem;
+    height: 5rem;
+    .bellIcon {
+      @include flex(column, center, center);
+      position: absolute;
+      cursor: pointer;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      z-index: 2;
+      &:hover {
+        background-color: $color-azure;
+      }
+    }
+    .progress {
+      position: absolute;
+    }
+  }
+}
+
+.icon {
+  @include flex(column, center, center);
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.title {
+  font-size: $pMediumSize;
+  font-weight: $font-weight-medium;
+}
+.descr {
+  font-size: $pMediumSize;
+  color: $color-gray50;
+}
+
+.closeButton {
+  @include flex(column, center, center);
 }

@@ -25,43 +25,43 @@
 }
 
 .red {
-  color: $color-red;
+  color: $color-red !important;
 }
 
 .blue {
-  color: $color-blue;
+  color: $color-blue !important;
 }
 
 .green {
-  color: $color-green;
+  color: $color-green !important;
 }
 
 .gold {
-  color: $color-gold;
+  color: $color-gold !important;
 }
 
 .grey {
-  color: $color-gray10;
+  color: $color-gray10 !important;
 }
 
 .grey30 {
-  color: $color-gray30;
+  color: $color-gray30 !important;
 }
 
 .black {
-  color: $color-black;
+  color: $color-black !important;
 }
 
 .white {
-  color: $color-white;
+  color: $color-white !important;
 }
 
 .error {
-  color: $color-error;
+  color: $color-error !important;
 }
 
 .warn {
-  color: $color-warn;
+  color: $color-warn !important;
 }
 
 .icon-rating:before {
@@ -174,4 +174,12 @@
 
 .icon-notifications:before {
   content: '\F075';
+}
+
+.icon-check-circle:before {
+  content: '\F057';
+}
+
+.icon-cancel:before {
+  content: '\F056';
 }

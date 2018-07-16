@@ -36,7 +36,6 @@ export class Header extends React.Component {
 
   render () {
     const prefix = this.constructor.name
-    console.log('renderaccountTypes', this.props.accountTypes)
     return (
       <div className={css.root}>
         <div className={css.headerLeft}>
@@ -80,15 +79,9 @@ export class Header extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  const user = userSelector()(state)
-  console.log('!!!user', user)
-  const accountTypes = userSelector()(state).accountTypes
-  console.log('!!!accountTypes', accountTypes)
-  return {
-    accountTypes,
-  }
-}
+const mapStateToProps = state => ({
+  accountTypes: userSelector()(state).accountTypes,
+})
 
 function mapDispatchToProps (dispatch) {
   return {
