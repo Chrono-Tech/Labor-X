@@ -21,7 +21,6 @@ export default (state = initialState, action) => {
         password: action.password,
       }
     case actions.CREATE_ACCOUNT_SET_ACCOUNT_TYPES:
-      console.log('CREATE_ACCOUNT_SET_ACCOUNT_TYPES', action.types)
       return {
         ...state,
         accountTypes: action.types,

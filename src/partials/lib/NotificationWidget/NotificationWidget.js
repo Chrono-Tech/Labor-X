@@ -2,7 +2,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
-import uniqid from 'uniqid'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -73,7 +72,7 @@ class NotificationWidget extends React.Component {
 
   renderMenuEntry = (notification: NotificationModel) => (
     <MenuItem
-      key={uniqid()}
+      key={notification.id}
       className={css.menuEntry}
       onClick={this.handleClickEntry}
     >
