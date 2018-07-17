@@ -4,7 +4,7 @@ import moment from 'moment'
 import cn from 'classnames'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
-import { modalsPop } from 'src/store'
+import { acceptOffer, modalsPop } from 'src/store'
 import { JobModel, JobOfferModel, ProfileModel } from 'src/models'
 import { Link } from 'src/components/common'
 import css from './ReviewOfferDialog.scss'
@@ -30,7 +30,7 @@ class ReviewOfferDialog extends React.Component {
   }
 
   handleAccept = () => {
-    this.props.closeModal()
+    this.props.acceptOffer()
   }
 
   render () {
@@ -92,11 +92,10 @@ class ReviewOfferDialog extends React.Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (dispatch, ownProps) {
   return {
-    closeModal () {
-      dispatch(modalsPop())
-    },
+    acceptOffer: () => dispatch(acceptOffer(ownProps.job.id, ownProps.worker.address)),
+    closeModal: () => dispatch(modalsPop()),
   }
 }
 

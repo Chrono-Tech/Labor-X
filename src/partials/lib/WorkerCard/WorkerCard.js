@@ -5,7 +5,7 @@ import moment from 'moment'
 import cn from 'classnames'
 import { ProfileModel, JobOfferModel, JobModel, JOB_STATE_CREATED, WorkerModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield, WorkerState } from 'src/components/common'
-import { acceptOffer, modalsPush } from 'src/store'
+import { modalsPush } from 'src/store'
 import { ReviewOfferDialog } from 'src/partials'
 import css from './WorkerCard.scss'
 
@@ -25,12 +25,6 @@ class WorkerCard extends React.Component {
 
   static defaultProps = {
     offerSent: false,
-  }
-
-  handleAcceptOffer = () => {
-    // eslint-disable-next-line no-console
-    console.log('WorkerCard-handleAcceptOffer')
-    this.props.acceptOffer()
   }
 
   handleViewOffer () {
@@ -151,8 +145,7 @@ const mapStateToProps = () => ({
   workerProfile: new WorkerModel({}),
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  acceptOffer: () => dispatch(acceptOffer(ownProps.jobId, ownProps.worker.address)),
+const mapDispatchToProps = (dispatch) => ({
   pushModal (modal) { dispatch(modalsPush(modal)) },
 })
 
