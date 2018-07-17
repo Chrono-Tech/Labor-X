@@ -23,25 +23,8 @@ export const searchTransaction = () => async (dispatch, getState) => {
     //   results = await web3Api.searchTransaction(web3, userAddress, page)
     //   page++;
     // }
-    //
-    // var results2 = [], page = 1;
-    // while (!results2.length && page < 10) {
-    //   results2 = await web3Api.searchTransaction(web3, PaymentGatewayJonInterface.networks['88'].address, page)
-    //   page++;
-    // }
 
-    var results3 = [], page = 1;
-    while (!results3.length && page < 20) {
-      results3 = await web3Api.searchTransaction(web3, '0xc52a768b279b8a612d179edf6974adc37ddd5d97', page)
-      page++;
-    }
-
-    debugger
-
-    dispatch(searchTransactionSuccess(
-      // results.concat(results2).concat(results3))
-      results3
-    ))
+    dispatch(searchTransactionSuccess([]))
   } catch (err) {
     dispatch(searchTransactionFailure(err))
   }

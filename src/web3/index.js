@@ -5,6 +5,7 @@ import { ethDAO } from 'src/daos'
 const config = {
   blockchain: {
     websocket: 'wss://parity.tp.ntr1x.com:8546',
+    // websocket: 'wss://localhost:8545',
   },
 }
 
