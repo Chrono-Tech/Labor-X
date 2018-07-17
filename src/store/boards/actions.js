@@ -1,3 +1,4 @@
+// @flow
 import { BoardModel, BoardExtraModel, BoardCreatedEvent, BoardClosedEvent, UserBindedEvent } from 'src/models'
 import { storeIntoIPFS } from 'src/utils'
 import { daoByType } from '../daos/selectors'

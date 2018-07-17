@@ -9,3 +9,4 @@ export { default as SendInvoiceDialog } from './lib/SendInvoiceDialog/SendInvoic
 export { default as MakeOfferDialog } from './lib/MakeOfferDialog/MakeOfferDialog'
 export { default as ReviewOfferDialog } from './lib/ReviewOfferDialog/ReviewOfferDialog'
 export { default as WorkerCard } from './lib/WorkerCard/WorkerCard'
+export { default as NotificationWidget } from './lib/NotificationWidget/NotificationWidget'

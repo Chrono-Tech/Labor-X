@@ -1,6 +1,11 @@
 module.exports = {
-  'extends': [
-    'plugin:chronobank-react/recommended'
+  'parser': 'babel-eslint',
+  plugins: [
+    'flowtype'
+  ],
+  extends: [
+    'plugin:chronobank-react/recommended',
+    'plugin:flowtype/recommended'
   ],
   settings: {
     'import/resolver': {

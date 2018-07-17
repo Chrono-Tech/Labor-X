@@ -2,7 +2,7 @@ import bip39 from 'bip39'
 import { stopSubmit } from 'redux-form'
 
 import { Router } from 'src/routes'
-import { WalletEntryModel, SignInModel } from 'src/models'
+import { WalletEntryModel, SignInModel, UserAccountTypesModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
 
 import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
@@ -66,7 +66,7 @@ export const signIn = ({ password }) => async (dispatch, getState) => {
       ? { isClient: types.client, isWorker: types.worker, isRecruiter: types.recruiter }
       : null
     const { token, profile, client, worker, recruiter } = await backendApi.signin(account, roles)
-    const accountTypes = { client: client.isRequested, worker: worker.isRequested, recruiter: recruiter.isRequested }
+    const accountTypes = new UserAccountTypesModel({ client: client.isRequested, worker: worker.isRequested, recruiter: recruiter.isRequested })
     dispatch(userSave({ token, profile, accountTypes, client, worker, recruiter }))
     endFetchSignIn(dispatch)
   }

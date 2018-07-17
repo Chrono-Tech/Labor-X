@@ -81,6 +81,7 @@
     "eslint": "^4.18.1",
     "eslint-plugin-chronobank": "github:ChronoBank/eslint-plugin-chronobank",
     "eslint-plugin-chronobank-react": "github:ChronoBank/eslint-plugin-chronobank-react",
+    "eslint-plugin-flowtype": "^2.50.0",
     "flow-bin": "^0.69.0",
     "ganache-cli": "^6.0.3",
     "mocha": "^5.2.0",
