@@ -1,21 +1,23 @@
 import PropTypes from "prop-types"
 import AbstractModel from './../../../models/AbstractModel'
+import ServiceCategoryModel from './ServiceCategoryModel'
+import AttachmentModel from './AttachmentModel'
 
 const fragmentSchemaFactory = () => ({
   verifiable: {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     intro: PropTypes.string,
-    pageBackground: PropTypes.instanceOf({}), // Joi.object().type(ImageModel).allow(null),
+    pageBackground: PropTypes.instanceOf({}),
     website: PropTypes.string,
     email: PropTypes.string,
-    attachments: PropTypes.arrayOf(PropTypes.instanceOf({})),  //Joi.array().items(Joi.object().type(AttachmentModel)).allow(null)
+    attachments: PropTypes.arrayOf(PropTypes.instanceOf(AttachmentModel)), 
   },
   regular: {
-    specializations: PropTypes.arrayOf(PropTypes.instanceOf({})),  //Joi.array().items(Joi.object().type(ServiceCategoryModel)).allow(null)
+    specializations: PropTypes.arrayOf(PropTypes.instanceOf(ServiceCategoryModel)), 
   },
   custom: PropTypes.any,
-  collaborators:PropTypes.arrayOf(PropTypes.instanceOf({})),  // Joi.array().items(Joi.object().type(ClientCollaboratorModel)).allow(null)
+  collaborators:PropTypes.arrayOf(PropTypes.instanceOf(ClientCollaboratorModel)),  
 })
 
 const schemaFactory = () => ({
@@ -37,7 +39,7 @@ export default class ProfileClientModel extends AbstractModel {
   }
 }
 
-export class CollaboratorModel extends AbstractModel {
+export class ClientCollaboratorModel extends AbstractModel {
   constructor (props) {
     super(props, {
       position: PropTypes.string.isRequired,
