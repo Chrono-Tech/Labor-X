@@ -24,58 +24,6 @@ export default class VerificationRequestWorkerModel extends AbstractModel {
   }
 
   static fromJson(form) {
-    // console.log(form)
-    // return new VerificationRequestWorkerModel({
-    //   regular: {
-    //     currencies: [
-    //       ...(form.currencyLhus ? ["LHUS"] : []),
-    //       ...(form.currencyBitcoin ? ["BTC"] : [])
-    //     ], // symbols, not ids
-    //     hourlyCharge: form.hourlyCharge,
-    //   },
-    //   verifiable: {
-    //     intro: form.intro,
-    //     pageBackground: "5b48d9b5dc95100958724ed9",
-    //     attachments: ["5b48d9b5dc95100958724ed9"],
-    //   },
-    //   custom: {
-    //     "schedule": {
-    //       "thu": true,
-    //       "wed": true,
-    //       "tue": true,
-    //       "mon": true
-    //     }
-    //   },
-    //   socials: [
-    //     new VerificationRequestWorkerSocialModel({
-    //       name: "Linkedin",
-    //       url: form.linkedin ? form.linkedin : ""
-    //     }),
-    //     new VerificationRequestWorkerSocialModel({
-    //       name: "Facebook",
-    //       url: form.facebook ? form.facebook : ""
-    //     }),
-    //     new VerificationRequestWorkerSocialModel({
-    //       name: "Twitter",
-    //       url: form.twitter ? form.twitter : ""
-    //     }),
-    //   ],
-    //   services: form.services.map(item => new VerificationRequestWorkerServiceModel({
-    //     name: item.name,
-    //     category: 1, // category code
-    //     description: "empty",
-    //     fee: String(item.fee),
-    //     minFee: item.feeFrom,
-    //     attachments: null
-    //   })
-    //   ),
-    //   employments: form.experiences.map(item => new VerificationRequestWorkerEmploymentModel({
-    //     organization: item.organisation,
-    //     since: item.workFrom,
-    //     until: item.workTo,
-    //     responsibilities: item.responsibilities
-    //   }))
-    // });
   }
 }
 

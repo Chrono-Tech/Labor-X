@@ -106,3 +106,15 @@ export const getWorkerProfile = (token: string): { profile: ProfileWorkerModel }
 ).then(res => {
   return ({ profile: ProfileWorkerModel.fromJson(res.data) })
 })
+
+export const getServiceCategories = () => http.get(
+  `${ API_URL }/security/worker/serviceCategories`,
+).then(res => {
+  return (res.data)
+})
+
+export const getCurrencies = () => http.get(
+  `${ API_URL }/security/worker/currencies`,
+).then(res => {
+  return (res.data)
+})

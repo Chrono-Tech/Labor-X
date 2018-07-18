@@ -24,5 +24,6 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/label-has-for': 'off',
     'no-class-assign': 'off',
+    'react/jsx-no-bind': 'off'
   }
 }

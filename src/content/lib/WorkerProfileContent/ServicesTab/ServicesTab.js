@@ -5,33 +5,28 @@ import { Field, FieldArray } from 'redux-form'
 import { SelectField, TextField } from 'redux-form-material-ui'
 import { MenuItem } from 'material-ui'
 import { ValidatedCheckbox, Link, Icon } from 'src/components/common'
-import { WorkerModel } from 'src/models'
+import CurrencyModel from '../../../../api/backend/model/CurrencyModel'
+import ServiceCategoryModel from '../../../../api/backend/model/ServiceCategoryModel'
 import css from './ServicesTab.scss'
 
 const floatStyle = {
   visibility: 'hidden',
 }
 
-const checkboxStyle = {
-  marginRight: '.2rem',
-}
-
 export default class ServicesTab extends React.Component {
   static propTypes = {
-    workerProfile: PropTypes.instanceOf(WorkerModel),
-    onUploadServiceAgreement: PropTypes.func,
-    onDeleteItem: PropTypes.func,
-    onDeleteServiceAttachment: PropTypes.func,
-    attachments: PropTypes.arrayOf(PropTypes.instanceOf())
-  }
-
-  handleClickRemoveBlock = (index) => {
-    this.props.onDeleteItem(index)
+    onRemoveService: PropTypes.func,
+    serviceCategories: PropTypes.arrayOf(PropTypes.instanceOf(ServiceCategoryModel)),
+    currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
   }
 
   handleClickClose = () => {
     // eslint-disable-next-line no-console
     console.log('---WorkerProfileContent-ServicesTab handleClickClose')
+  }
+
+  handleRemoveService = (index) => {
+    this.props.onRemoveService(index)
   }
 
   renderServices = ({ fields }) => {
@@ -42,21 +37,15 @@ export default class ServicesTab extends React.Component {
     )
   }
 
-  getAttachmentsByServiceIndex = (attachmentsAll, serviceIndex) => {
-    let attachments = [];
-    attachmentsAll.forEach((element) => {
-      if (element.serviceIndex === serviceIndex) {
-        attachments.push(element);
-      }
-    })
-    return attachments;
+  renderAttachmentsByServiceIndex = () => {
+    return []
   }
 
   renderServiceCard = ({ service, index }) => {
 
-    const { onUploadServiceAgreement, attachments, onDeleteServiceAttachment } = this.props
+    const { serviceCategories } = this.props
     return (
-      <div className={css.serviceBlock} key={service}>
+      <div key={index} className={css.serviceBlock}>
         <div className={css.serviceBlockContent}>
           <Field
             fullWidth
@@ -72,8 +61,11 @@ export default class ServicesTab extends React.Component {
               floatingLabelText='Categoty'
               value={service.category}
             >
-              <MenuItem value={1} primaryText='Category 1' />
-              <MenuItem value={2} primaryText='Category 2' />
+              {
+                serviceCategories.map((item) => (
+                  <MenuItem key={item.code} value={item.code} primaryText={item.name} />
+                ))
+              }
             </Field>
             <div />
           </div>
@@ -81,11 +73,11 @@ export default class ServicesTab extends React.Component {
             <Field
               fullWidth
               component={SelectField}
-              name={`${service}.fee2`}
+              name={`${service}.fee`}
               floatingLabelText='Fee'
             >
-              <MenuItem value={0} primaryText='Specific fee' />
-              <MenuItem value={1} primaryText='Specific fee' />
+              <MenuItem value='0' primaryText='Specific fee 1' />
+              <MenuItem value='1' primaryText='Specific fee 2' />
             </Field>
             <div className={css.twoColumn}>
               <Field
@@ -97,39 +89,12 @@ export default class ServicesTab extends React.Component {
                 floatingLabelText='empty'
                 floatingLabelFixed
               />
-              <Field
-                fullWidth
-                component={TextField}
-                name={`${service}.fee`}
-                hintText='Fee, LHUS'
-                floatingLabelStyle={floatStyle}
-                floatingLabelText='empty'
-                floatingLabelFixed
-              />
             </div>
           </div>
         </div>
-        {
-          this.getAttachmentsByServiceIndex(attachments, index).map((item) => {
-            return (
-              <div key={item.id} className={css.attachment}>
-                <div className={css.wrapAttachmentName}>
-                  {item.name}
-                </div>
-                <div className={css.wrapDeleteAttachmentBtn} onClick={() => onDeleteServiceAttachment(item.id)}>
-                  <Icon
-                    icon={Icon.ICONS.DELETE}
-                    color={Icon.COLORS.GREY30}
-                    size={20}
-                  />
-                </div>
-              </div>
-            )
-          })
-        }
         <div className={css.documentEntry}>
           <label className={css.fileLoaderBlock}>
-            <input type='file' style={{ display: 'none' }} onChange={(e) => onUploadServiceAgreement(e, index)} multiple={false} />
+            <input type='file' style={{ display: 'none' }} multiple={false} />
             <Icon
               icon={Icon.ICONS.UPLOAD}
               color={Icon.COLORS.BLUE}
@@ -138,7 +103,7 @@ export default class ServicesTab extends React.Component {
             <p>Upload service agreement</p>
           </label>
         </div>
-        <div className={css.removeBlock} onClick={() => this.handleClickRemoveBlock(index)}>
+        <div className={css.removeBlock} onClick={() => this.handleRemoveService(index)}>
           <Icon
             icon={Icon.ICONS.DELETE}
             color={Icon.COLORS.GREY30}
@@ -149,7 +114,8 @@ export default class ServicesTab extends React.Component {
     )
   }
 
-  render() {
+  render () {
+    const { currencies } = this.props
     return (
       <div className={css.content}>
         <div className={css.block}>
@@ -163,14 +129,13 @@ export default class ServicesTab extends React.Component {
           />
         </div>
         <FieldArray name='services' component={this.renderServices} />
-        <div className={""}>
+        <div className=''>
           <div className={css.block}>
             <h3>Hourly Charge</h3>
-            {/* <div className={css.twoColumn}> */}
             <Field
               fullWidth
               component={TextField}
-              name='hourlyCharge'
+              name='regular.hourlyCharge'
               hintText='LHUS 1'
               floatingLabelStyle={floatStyle}
               floatingLabelText='empty'
@@ -182,21 +147,16 @@ export default class ServicesTab extends React.Component {
         <div className={css.block}>
           <h3>Accepting Currencies</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>
-          <Field
-            component={ValidatedCheckbox}
-            name='currencyLhus'
-            label='LHUS'
-          />
-          <Field
-            component={ValidatedCheckbox}
-            name='currencyBitcoin'
-            label='Bitcoin'
-          />
-          {/* <Field
-            component={ValidatedCheckbox}
-            name='currencyAnother'
-            label='Another Currency'
-          /> */}
+          {
+            currencies.map(({ title, symbol }) => {
+              return (<Field
+                key={symbol}
+                component={ValidatedCheckbox}
+                name={`regular.currenciesKeys.${symbol}`}
+                label={title}
+              />)
+            })
+          }
         </div>
       </div>
     )

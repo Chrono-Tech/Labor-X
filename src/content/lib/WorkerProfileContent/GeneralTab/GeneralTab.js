@@ -1,24 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'redux-form'
-import { TextField, SelectField } from 'redux-form-material-ui'
-import { MenuItem } from 'material-ui'
+import { TextField } from 'redux-form-material-ui'
 import { ProfileModel } from 'src/models'
+import ProfileWorkerSocialModel from '../../../../api/backend/model/ProfileWorkerSocialModel'
 import css from './GeneralTab.scss'
 
 export default class GeneralTab extends React.Component {
   static propTypes = {
     generalProfile: PropTypes.instanceOf(ProfileModel),
     avatarUrl: PropTypes.string,
+    socials: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerSocialModel)),
   }
 
-  handleClickLogo = () => {
-    // eslint-disable-next-line no-console
-    console.log('---WorkerProfileContent-GeneralTab handleClickLogo')
+  renderSocials = (socials) => {
+    return (
+      socials && socials.map((item, index) => (
+        <Field
+          key={item.name}
+          fullWidth
+          component={TextField}
+          name={`socials[${index}].url`}
+          floatingLabelText={item.name}
+        />
+      ))
+    )
   }
 
   render () {
-    const { avatarUrl } = this.props
+    const { avatarUrl, socials } = this.props
     return (
       <div className={css.content}>
         <div className={css.logoContainer} onClick={this.handleClickLogo}>
@@ -39,44 +49,13 @@ export default class GeneralTab extends React.Component {
           <Field
             fullWidth
             component={TextField}
-            name='intro'
+            name='verifiable.intro'
             floatingLabelText='Intro'
           />
         </div>
         <div className={css.block}>
           <h3>Social Networks Profiles</h3>
-          <div className={css.twoColumn}>
-            <Field
-              fullWidth
-              component={TextField}
-              name='linkedin'
-              floatingLabelText='LinkedIn'
-            />
-            <Field
-              fullWidth
-              component={TextField}
-              name='facebook'
-              floatingLabelText='Facebook'
-            />
-          </div>
-          <div className={css.twoColumn}>
-            <Field
-              fullWidth
-              component={TextField}
-              name='twitter'
-              floatingLabelText='Twitter'
-            />
-            <Field
-              fullWidth
-              component={SelectField}
-              name='social'
-              floatingLabelText='Other'
-            >
-              <MenuItem value={0} primaryText='Social 1' />
-              <MenuItem value={1} primaryText='Social 2' />
-              <MenuItem value={2} primaryText='Social 3' />
-            </Field>
-          </div>
+          {this.renderSocials(socials)}
         </div>
         <div className={css.block}>
           <h3>Page Background</h3>

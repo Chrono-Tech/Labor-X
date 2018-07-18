@@ -133,6 +133,7 @@ src/**/*.js
 !src/content/lib/OpportunitiesContent/OpportunitiesContent.js
 !src/content/lib/ApplicationsAndOffersContent/
 !src/content/lib/ClientProfileContent/
+!src/content/lib/WorkerProfileContent/
 !src/content/lib/CreateJobBoardContent/
 
 !src/partials/

@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import ProfileWorkerModel from "../../api/backend/model/ProfileWorkerModel"
 import AttachmentModel from "../../api/backend/model/AttachmentModel"
 import ImageModel from "../../api/backend/model/ImageModel"
+import CurrencyModel from "../../api/backend/model/CurrencyModel"
+import ServiceCategoryModel from "../../api/backend/model/ServiceCategoryModel"
 
 import {
 
@@ -16,6 +18,10 @@ import {
   GET_WORKER_PROFILE_REQUEST,
   GET_WORKER_PROFILE_SUCCESS,
   GET_WORKER_PROFILE_FAILURE,
+
+  WORKER_PAGE_DATA_REQUEST,
+  WORKER_PAGE_DATA_SUCCESS,
+  WORKER_PAGE_DATA_FAILURE,
 
   SERVICE_ATTACHMENT_DELETE
 
@@ -39,6 +45,11 @@ export const TYPES = {
   serviceAttachments: PropTypes.arrayOf(PropTypes.instanceOf(AttachmentModel)),
   createServiceAttachmentLoading: PropTypes.bool,
   createServiceAttachmentFailure: PropTypes.instanceOf(Error),
+
+  serviceCategories:  PropTypes.arrayOf(PropTypes.instanceOf(ServiceCategoryModel)),
+  currencies:  PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
+  workerPageDataLoading:  PropTypes.bool,
+  workerPageDataFailure: PropTypes.instanceOf(Error),
 }
 
 export const STATE = {
@@ -57,11 +68,32 @@ export const STATE = {
   serviceAttachments: [],
   createServiceAttachmentLoading: false,
   createServiceAttachmentFailure: null,
+
+  serviceCategories: [],
+  currencies: [],
+  workerPageDataLoading: true,
+  workerPageDataFailure: null,
 }
 
 /*eslint complexity: ["error", 44]*/
 export default (state = STATE, { type, payload }) => {
   switch (type) {
+    case WORKER_PAGE_DATA_REQUEST: return ({
+      ...state,
+      workerPageDataLoading: true,
+    })
+    case WORKER_PAGE_DATA_SUCCESS: return ({
+      ...state,
+      workerPageDataLoading: false,
+      serviceCategories: payload.serviceCategories,
+      currencies: payload.currencies
+    })
+    case WORKER_PAGE_DATA_FAILURE: return ({
+      ...state,
+      workerPageDataLoading: false,
+      workerPageDataFailure: payload,
+    })
+
 
     case WORKER_PROFILE_REVIEW_REQUEST: return ({
       ...state,

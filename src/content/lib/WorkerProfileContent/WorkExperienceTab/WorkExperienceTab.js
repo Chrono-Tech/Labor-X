@@ -3,44 +3,28 @@ import PropTypes from 'prop-types'
 import { Field, FieldArray } from 'redux-form'
 import { TextField } from 'redux-form-material-ui'
 import Collapsible from 'react-collapsible'
-import { Icon, Button, Chip } from 'src/components/common'
-import { SKILLS_LIST } from 'src/models'
+import { Icon, Button } from 'src/components/common'
 import DatePickerField from 'src/components/DatePickerField'
-import AutoComplete from 'material-ui/AutoComplete'
 import css from './WorkExperienceTab.scss'
 
 export default class WorkExperienceTab extends React.Component {
   static propTypes = {
-    onDeleteItem: PropTypes.func,
+    onRemoveExperience: PropTypes.func,
   }
 
   state = {
-    selectedSkills: [],
   }
 
-  handleAddSkill = (skill) => {
-    if (this.state.selectedSkills.findIndex((item) => item.index === skill.index) === -1) { this.setState({ selectedSkills: [...this.state.selectedSkills, skill] }) }
+  handlRemoveExperience = (index) => {
+    this.props.onRemoveExperience(index)
   }
 
-  handleRemoveSkill = (skill) => {
-    this.setState({ selectedSkills: this.state.selectedSkills.filter((item) => item.index !== skill) })
-  }
-
-  handleClickValidate = () => {
-  }
-
-  handleClickRemoveBlock = (index) => {
-    this.props.onDeleteItem(index)
-  }
-
-  handleClickAddSkill = () => {
-    // eslint-disable-next-line no-console
-    console.log('---WorkerProfileContent-WorkExperienceTab handleClickAddSkill')
-  }
-
-  searchTagFilter = (searchText, key) => {
-    return searchText !== '' &&
-      String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
+  renderExperiences = ({ fields }) => {
+    return (
+      <div>
+        {fields.map((experience, index) => this.renderExperienceCard({ experience, index, fields }))}
+      </div>
+    )
   }
 
   renderUpgardeTitle () {
@@ -52,14 +36,6 @@ export default class WorkExperienceTab extends React.Component {
           size={36}
         />
         <h3>Upgrade validation level</h3>
-      </div>
-    )
-  }
-
-  renderExperiences = ({ fields }) => {
-    return (
-      <div>
-        {fields.map((experience, index) => this.renderExperienceCard({ experience, index, fields }))}
       </div>
     )
   }
@@ -105,7 +81,7 @@ export default class WorkExperienceTab extends React.Component {
             rows={2}
           />
         </div>
-        <div className={css.removeBlock} onClick={() => this.handleClickRemoveBlock(index)}>
+        <div className={css.removeBlock} onClick={() => this.handlRemoveExperience(index)}>
           <Icon
             icon={Icon.ICONS.DELETE}
             color={Icon.COLORS.GREY30}
@@ -119,31 +95,7 @@ export default class WorkExperienceTab extends React.Component {
   render () {
     return (
       <div className={css.content}>
-        <FieldArray name='experiences' component={this.renderExperiences} />
-        {/* <div className={css.block}>
-          <div className={css.tagsRow}>
-            <Field
-              className={css.find}
-              style={{ marginRight: 10 }}
-              component={AutoComplete}
-              onNewRequest={this.handleAddSkill}
-              filter={this.searchTagFilter}
-              dataSourceConfig={{
-                text: 'name',
-                value: 'index',
-              }}
-              dataSource={SKILLS_LIST}
-              name='searchTags'
-              hintText='Select skills'
-            />
-            <div className={css.tags}>
-              {this.state.selectedSkills.map(e => (
-                <Chip value={e.name} key={e.index} index={e.index} onRemove={this.handleRemoveSkill} />
-              ))}
-            </div>
-
-          </div>
-        </div> */}
+        <FieldArray name='employments' component={this.renderExperiences} />
         {false && (
           <Collapsible classParentString={css.upgradeBlock} trigger={this.renderUpgardeTitle()} >
             <div className={css.description}>
@@ -193,7 +145,6 @@ export default class WorkExperienceTab extends React.Component {
               primary
               color={Button.COLORS.PRIMARY}
               label='Validate'
-              onClick={this.handleClickValidate}
             />
           </Collapsible>
         )}

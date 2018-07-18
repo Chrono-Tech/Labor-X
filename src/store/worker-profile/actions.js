@@ -1,121 +1,29 @@
 import { initialize, change, formValueSelector } from 'redux-form'
 import * as backendApi from "../../api/backend"
 import { userTokenSelector } from "../user/selectors"
-import { getWorkerProfileInitialValues } from "./selectors"
+import { getWorkerProfileInitialValues, workerProfileModelFromForm} from "./selectors"
 import { WORKER_PROFILE_FORM } from "./reducer"
-import VerificationRequestWorkerModel, { VerificationRequestWorkerSocialModel, VerificationRequestWorkerServiceModel, VerificationRequestWorkerEmploymentModel} from "../../api/backend/model/VerificationRequestWorkerModel";
 import FileModel from "../../models/FileModel"
 
-const getAttachmentsByServiceIndex = (attachmentsAll, serviceIndex) => {
-  let attachments = [];
-  attachmentsAll.forEach((element) => {
-    if (element.serviceIndex === serviceIndex) {
-      attachments.push(element.id);
-    }
-  })
-  return attachments;
-}
-
-const getCurrenciesArrayModel = (data) => {
-  let currencies = [];
-  if (data.currencyBitcoin)
-    currencies.push("BTC");
-  if (data.currencyLhus)
-    currencies.push("LHUS");
-  return currencies;
-}
-
-const getAttachmentsArrayModel = (data) => {
-  let attachments = ["5b48d9b5dc95100958724ed9"];
-  return attachments;
-}
-
-const getSocialsArrayModel = (data) => {
-  let attachments = [];
-  if (data.facebook)
-    attachments.push(new VerificationRequestWorkerSocialModel({  name: "Facebook", url: data.facebook }));
-  if (data.linkedin)
-    attachments.push(new VerificationRequestWorkerSocialModel({ name: "Linkedin", url: data.linkedin }));
-  if (data.twitter)
-    attachments.push(new VerificationRequestWorkerSocialModel({  name: "Twitter", url: data.twitter }));
-  return attachments;
-}
-
-const getServicesArrayModel = (data, serviceAttachments) => {
-  let services = [];
-  let i = 0;
-  if (data.services)
-    data.services.forEach((element, index) => {
-      i++;
-      services.push(new VerificationRequestWorkerServiceModel({
-        name: element.name,
-        category: 1,//new ServiceCategoryModel({ id: String(element.category), name: "", code: String(element.category) }),
-        description: "23",
-        fee: String(element.fee),
-        minFee: element.minFee,
-        attachments: null //getAttachmentsByServiceIndex(serviceAttachments, index)
-      }))
-    })
-  return services;
-}
-
-const getEmploymentsArrayModel = (data) => {
-  let experiences = [];
-  if (data.experiences)
-    data.experiences.forEach((element) => {
-      experiences.push(new VerificationRequestWorkerEmploymentModel({
-        organization: element.organization,
-        since: element.since,
-        until: element.until,
-        responsibilities: element.responsibilities
-      }))
-    });
-  return experiences;
-}
-
-const workerProfileModelFromForm = (data, serviceAttachments) => {
-  console.log(data);
-  const currencies = getCurrenciesArrayModel(data);
-  const pageBackground = null;
-  const attachments = getAttachmentsArrayModel(data);
-  const socials = getSocialsArrayModel(data);
-  const services = getServicesArrayModel(data, serviceAttachments);
-  const employments = getEmploymentsArrayModel(data);
-  return new VerificationRequestWorkerModel({
-    regular: {
-      currencies: currencies,
-      hourlyCharge: data.hourlyCharge
-  },
-  verifiable: {
-      intro: data.intro,
-      pageBackground: pageBackground,
-      attachments: attachments
-  },
-  custom: null,
-  socials: socials,
-  services: services,
-  employments: employments
-  })
-}
 
 export const WORKER_PROFILE_REVIEW_REQUEST = 'WORKER_PROFILE/PROFILE_REVIEW/REQUEST'
 export const WORKER_PROFILE_REVIEW_SUCCESS = 'WORKER_PROFILE/PROFILE_REVIEW/SUCCESS'
 export const WORKER_PROFILE_REVIEW_FAILURE = 'WORKER_PROFILE/PROFILE_REVIEW/FAILURE'
-export const reviewWorkerProfileRequest = (req) => ({ type: WORKER_PROFILE_REVIEW_REQUEST, payload: req })
-export const reviewWorkerProfileSuccess = (res) => ({ type: WORKER_PROFILE_REVIEW_SUCCESS, payload: res })
-export const reviewWorkerProfileFailure = (err) => ({ type: WORKER_PROFILE_REVIEW_FAILURE, payload: err })
-export const reviewWorkerProfile = (data, serviceAttachments) => async (dispatch, getState) => {
-  const workerProfile = workerProfileModelFromForm(data, serviceAttachments);
+export const submitWorkerProfileRequest = (req) => ({ type: WORKER_PROFILE_REVIEW_REQUEST, payload: req })
+export const submitWorkerProfileSuccess = (res) => ({ type: WORKER_PROFILE_REVIEW_SUCCESS, payload: res })
+export const submitWorkerProfileFailure = (err) => ({ type: WORKER_PROFILE_REVIEW_FAILURE, payload: err })
+export const submitWorkerProfile = (data, serviceAttachments) => async (dispatch, getState) => {
   try {
-    dispatch(reviewWorkerProfileRequest())
+    const workerProfile = workerProfileModelFromForm(data);
+    dispatch(submitWorkerProfileRequest())
     const state = getState()
     const token = userTokenSelector()(state)
     const res = await backendApi.submitWorkerProfile(workerProfile, token)
     const initialValues = getWorkerProfileInitialValues(res.profile)
     dispatch(initialize(WORKER_PROFILE_FORM, initialValues))
-    dispatch(reviewWorkerProfileSuccess(res.profile))
+    dispatch(submitWorkerProfileSuccess(res.profile))
   } catch (err) {
-    dispatch(reviewWorkerProfileFailure(err))
+    dispatch(submitWorkerProfileFailure(err))
   }
 }
 
@@ -132,12 +40,62 @@ export const getWorkerProfile = () => async (dispatch, getState) => {
     const state = getState()
     const token = userTokenSelector()(state)
     const res = await backendApi.getWorkerProfile(token)
-    const initialValues = getWorkerProfileInitialValues(res.profile)
+    const initialValues = getWorkerProfileInitialValues(res.profile);
     dispatch(initialize(WORKER_PROFILE_FORM, initialValues))
     dispatch(getWorkerProfileSuccess(res.profile))
   } catch (err) {
     dispatch(getWorkerProfileFailure(err))
   }
+}
+
+
+
+export const WORKER_PAGE_DATA_REQUEST = 'WORKER_PAGE_DATA/REQUEST'
+export const WORKER_PAGE_DATA_SUCCESS = 'WORKER_PAGE_DATA/SUCCESS'
+export const WORKER_PAGE_DATA_FAILURE = 'WORKER_PAGE_DATA/FAILURE'
+export const initWorkerPageDataRequest = () => ({ type: WORKER_PAGE_DATA_REQUEST })
+export const initWorkerPageDataSuccess = ({ serviceCategories, currencies }) => ({ type: WORKER_PAGE_DATA_SUCCESS, payload: { serviceCategories, currencies } })
+export const initWorkerPageDataFailure = (err) => ({ type: WORKER_PAGE_DATA_FAILURE, payload: err })
+export const initWorkerPageData = () => async (dispatch) => {
+  try {
+    dispatch(initWorkerPageDataRequest())
+    const serviceCategories = await backendApi.getServiceCategories()
+    const currencies = await backendApi.getCurrencies()
+    dispatch(initWorkerPageDataSuccess({ serviceCategories, currencies }))
+  } catch (err) {
+    dispatch(initWorkerPageDataFailure(err))
+  }
+}
+
+
+
+
+export const createExperience = () => async (dispatch, getState) => {
+   const state = getState();
+   const experiences = formValueSelector(WORKER_PROFILE_FORM)(state, 'employments')
+   dispatch(change(WORKER_PROFILE_FORM, "employments",  [...experiences, {}]))
+}
+
+
+export const createService = () => async (dispatch, getState) => {
+  const state = getState();
+  const services = formValueSelector(WORKER_PROFILE_FORM)(state, 'services')
+  dispatch(change(WORKER_PROFILE_FORM, "services",  [...services, {}]))
+}
+
+export const removeExperience = (index) => async (dispatch, getState) => {
+  const state = getState();
+  const experiences = formValueSelector(WORKER_PROFILE_FORM)(state, 'employments')
+  experiences.splice(index, 1)
+  dispatch(change(WORKER_PROFILE_FORM, "employments",  experiences))
+}
+
+
+export const removeService = (index) => async (dispatch, getState) => {
+ const state = getState();
+ let services = formValueSelector(WORKER_PROFILE_FORM)(state, 'services')
+ services.splice(index, 1)
+ dispatch(change(WORKER_PROFILE_FORM, "services",  services))
 }
 
 

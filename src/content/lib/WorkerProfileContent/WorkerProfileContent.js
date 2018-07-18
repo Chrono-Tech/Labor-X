@@ -1,23 +1,52 @@
 import React from 'react'
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { reduxForm, propTypes } from 'redux-form'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import { WORKER_PROFILE_FORM } from "../../../store/worker-profile/reducer"
-import { connect } from 'react-redux'
-import { reduxForm, propTypes, change, formValueSelector } from 'redux-form'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { Router } from 'src/routes'
 import { ProfileModel, WorkerModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
-import { selectWorkerProfile, createServiceAttachment, reviewWorkerProfile, getWorkerProfile, getServiceAttachments, deleteServiceAttachment } from './../../../store/worker-profile'
-import { getAvatar } from './../../../store/general-profile'
+import { WORKER_PROFILE_FORM } from "../../../store/worker-profile/reducer"
 import GeneralTab from './GeneralTab/GeneralTab'
 import WorkExperienceTab from './WorkExperienceTab/WorkExperienceTab'
 import ServicesTab from './ServicesTab/ServicesTab'
+import {
+  getCurrencies,
+  getServiceCategories,
+  submitWorkerProfile,
+  getWorkerProfile,
+  createExperience,
+  createService,
+  removeExperience,
+  removeService,
+  getSocials,
+  getState,
+} from './../../../store/worker-profile'
+import { getAvatar } from './../../../store/general-profile'
+import ProfileWorkerModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileWorkerModel"
+
 import css from './WorkerProfileContent.scss'
 
 const DEFAULT_AVATAR = { url: '/static/images/profile-photo.jpg' }
 
+const VALIDATION_STATE_ICON = {
+  [VALIDATION_STATE.INITIAL]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.WAITING]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.WARNING]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.SUCCESS]: Icon.SETS.SECURITY_CHECK,
+}
+const VALIDATION_STATE_CLASS = {
+  [VALIDATION_STATE.INITIAL]: css.cardActionTitle,
+  [VALIDATION_STATE.WAITING]: css.cardActionTitleWarning,
+  [VALIDATION_STATE.WARNING]: css.cardActionTitleError,
+  [VALIDATION_STATE.SUCCESS]: css.cardActionTitleSuccess,
+}
 
 class WorkerProfileContent extends React.Component {
   static propTypes = {
@@ -36,7 +65,7 @@ class WorkerProfileContent extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getWorkerProfile()
   }
 
@@ -55,78 +84,16 @@ class WorkerProfileContent extends React.Component {
 
   handleClickAddWorker = () => {
     // eslint-disable-next-line no-console
-    if (this.state.slideIndex === 1)
-    {this.props.addEmptyWorkerExperience()}
-    if (this.state.slideIndex === 2)
-    {this.props.addEmptyWorkerService()}
+    if (this.state.slideIndex === 1) { this.props.addExperience() }
+    if (this.state.slideIndex === 2) { this.props.addService() }
   }
 
-  handleUploadServiceAgreement = (e, serviceIndex) => {
-    const file = e.currentTarget.files[0]
-    if (file) {
-      this.props.createServiceAttachment(file, serviceIndex)
-      e.currentTarget.value = ''
-    }
+  renderTitle () {
+    return VALIDATION_STATE_TITLE[this.props.validationState]
   }
-
-  handleDeleteSertviceAttachment = (id) => {
-    this.props.deleteServiceAttachment(id);
-  }
-
-  getAttachmentsByServiceIndex = (attachmentsAll, serviceIndex) => {
-    let attachments = [];
-    attachmentsAll.forEach((element) => {
-      if (element.serviceIndex === serviceIndex) {
-        attachments.push(element);
-      }
-    })
-    return attachments;
-  }
-
-  renderValidationBlock = (submitted, approved) => {
-    if (submitted) 
-    return (
-      <div className={css.validationBlock}>
-        <Icon
-          icon={Icon.ICONS.SECURITY_UPGRADE}
-          color={Icon.COLORS.GOLD}
-          size={25}
-        />
-        <div className={css.validationText}>
-        Sent to validate
-        </div>
-      </div>
-    )
-    if (approved) 
-    return (
-      <div className={css.validationBlock}>
-        <Icon
-          icon={Icon.ICONS.SECURITY_UPGRADE}
-          color={Icon.COLORS.GREEN}
-          size={25}
-        />
-        <div className={css.validationText}>
-        Validated
-        </div>
-      </div>
-    )
-    return (
-      <div className={css.validationBlock}>
-        <Icon
-          icon={Icon.ICONS.SECURITY_UPGRADE}
-          color={Icon.COLORS.RED}
-          size={25}
-        />
-        <div className={css.validationText}>
-        Upgrade validation level
-        </div>
-      </div>
-    )
-  }
-
 
   render () {
-    const { profile, handleSubmit, avatarUrl, serviceAttachments, approved, submitted } = this.props
+    const { profile, handleSubmit, avatarUrl, removeService, removeExperience, serviceCategories, currencies, socials } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
@@ -159,8 +126,7 @@ class WorkerProfileContent extends React.Component {
         </div>
         <div className={css.content}>
           <div className={css.header}>
-            <h2>Worker Profile {this.renderValidationBlock(submitted, approved)}</h2>
-            
+            <h2> Worker Profile </h2>
             <Tabs
               onChange={this.handleTabChange}
               value={this.state.slideIndex}
@@ -169,7 +135,8 @@ class WorkerProfileContent extends React.Component {
               <Tab label='WORK EXPERIENCE' value={1} />
               <Tab label='SERVICES' value={2} />
             </Tabs>
-            { this.state.slideIndex > 0 ? (
+
+            {this.state.slideIndex > 0 ? (
               <Icon
                 className={css.addWorker}
                 color={Icon.COLORS.WHITE}
@@ -177,18 +144,27 @@ class WorkerProfileContent extends React.Component {
                 size={24}
                 onClick={this.handleClickAddWorker}
               />
-            ) : null }
+            ) : null}
           </div>
           <div className={css.tabContent}>
-          {/* {JSON.stringify(this.props.serviceAttachments)} */}
             <SwipeableViews
               index={this.state.slideIndex}
               onChangeIndex={this.handleChangeIndex}
             >
-              <GeneralTab avatarUrl={avatarUrl} generalProfile={profile.general} />
-              <WorkExperienceTab onDeleteItem={this.props.handleDeleteWorkerExperience} />
-              <ServicesTab onDeleteServiceAttachment={this.handleDeleteSertviceAttachment} attachments={serviceAttachments} onDeleteItem={this.props.handleDeleteWorkerService} onUploadServiceAgreement={this.handleUploadServiceAgreement} workerProfile={profile.worker} />
+              <GeneralTab socials={socials} avatarUrl={avatarUrl} generalProfile={profile.general} />
+              <WorkExperienceTab onRemoveExperience={removeExperience} />
+              <ServicesTab onRemoveService={removeService} currencies={currencies} serviceCategories={serviceCategories} />
             </SwipeableViews>
+
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+                  <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+                  {this.renderTitle()}
+                  <p>{this.props.validationComment}</p>
+                </span>
+              </ExpansionPanelSummary>
+            </ExpansionPanel>
           </div>
         </div>
       </form>
@@ -198,65 +174,46 @@ class WorkerProfileContent extends React.Component {
 
 const workerProfileContentForm = reduxForm({
   form: WORKER_PROFILE_FORM,
-  enableReinitialize: true
 })(WorkerProfileContent)
 
 function mapStateToProps (state) {
-  const selector = formValueSelector(WORKER_PROFILE_FORM)
-  const workerProfile = selectWorkerProfile(state).workerProfile;
-  const serviceAttachments = getServiceAttachments(state);
+  const workerProfile = getState(state).workerProfile
   return {
     initialValues: {
-      experiences: [{}],
+      employments: [{}],
       services: [{}],
+      socials: [],
     },
-    services: selector(state, "services"),
-    experiences: selector(state, "experiences"),
+    currencies: getCurrencies(state),
+    serviceCategories: getServiceCategories(state),
+    socials: getSocials(state),
+    validationState: ProfileWorkerModel.getValidationState(workerProfile),
+    validationComment: ProfileWorkerModel.getValidationComment(workerProfile),
     avatarUrl: (getAvatar(state) || DEFAULT_AVATAR).url,
-    serviceAttachments,
-    approved: workerProfile  ? workerProfile.approved : false,
-    submitted: workerProfile  ? workerProfile.submitted : false,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    createServiceAttachment: (file, serviceIndex) =>  {
-      dispatch(createServiceAttachment(file, serviceIndex))
+    getWorkerProfile: () => {
+      dispatch(getWorkerProfile())
     },
-    deleteServiceAttachment: (id) => {
-      dispatch(deleteServiceAttachment(id))
+    addExperience: () => {
+      dispatch(createExperience())
     },
-    getWorkerProfile: () => dispatch(getWorkerProfile()),
-    dispatch,
-  }
-}
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  return {
-    ...stateProps,  // optional
-    ...dispatchProps,  // optional
-    ...ownProps,
-    addEmptyWorkerExperience: () => {
-      dispatchProps.dispatch(change(WORKER_PROFILE_FORM, "experiences",  [...stateProps.experiences, {}]))
+    addService: () => {
+      dispatch(createService())
     },
-    addEmptyWorkerService: () => {
-      dispatchProps.dispatch(change(WORKER_PROFILE_FORM, "services", [...stateProps.services, {}]))
+    removeExperience: (index) => {
+      dispatch(removeExperience(index))
     },
-    handleDeleteWorkerExperience: (index) => {
-      let experiences = [...stateProps.experiences]
-      experiences.splice(index, 1)
-      dispatchProps.dispatch(change(WORKER_PROFILE_FORM, "experiences",  experiences))
-    },
-    handleDeleteWorkerService: (index) => {
-      let services = [...stateProps.services]
-      services.splice(index, 1)
-      dispatchProps.dispatch(change(WORKER_PROFILE_FORM, "services", services))
+    removeService: (index) => {
+      dispatch(removeService(index))
     },
     onSubmit: async (values) => {
-      dispatchProps.dispatch(reviewWorkerProfile(values, stateProps.serviceAttachments))
+      dispatch(submitWorkerProfile(values))
     },
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(workerProfileContentForm)
+export default connect(mapStateToProps, mapDispatchToProps)(workerProfileContentForm)

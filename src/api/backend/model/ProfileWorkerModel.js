@@ -6,85 +6,82 @@ import ProfileWorkerEmploymentModel from './ProfileWorkerEmploymentModel'
 import CurrencyModel from './CurrencyModel'
 import AttachmentModel from './AttachmentModel'
 
+export const VALIDATION_STATE = {
+  INITIAL: 'INITIAL',
+  WAITING: 'WAITING',
+  WARNING: 'WARNING',
+  SUCCESS: 'SUCCESS',
+}
+export const VALIDATION_STATE_TITLE = {
+  [VALIDATION_STATE.INITIAL]: 'Validate',
+  [VALIDATION_STATE.WAITING]: 'Validation is on review',
+  [VALIDATION_STATE.WARNING]: 'Validation issue',
+  [VALIDATION_STATE.SUCCESS]: 'Validated',
+}
+
 const schemaFactory = () => ({
-  id: PropTypes.string,
-  approved: PropTypes.bool,
-  isRequested: PropTypes.bool,
-  regular: PropTypes.shape({
-    currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
-    hourlyCharge: PropTypes.string,
+  submitted: PropTypes.shape({
+    regular: PropTypes.shape({
+      currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
+      hourlyCharge: PropTypes.string,
+    }),
+    verifiable: PropTypes.shape({
+      intro: PropTypes.string,
+      pageBackground: PropTypes.string,
+      attachments: PropTypes.arrayOf(PropTypes.instanceOf(AttachmentModel)),
+    }),
+    custom: PropTypes.any,
+    socials: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerSocialModel)),
+    services: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerServiceModel)),
+    employments: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerEmploymentModel)),
+    validationComment: PropTypes.string,
   }),
-  verifiable: PropTypes.shape({
-    intro: PropTypes.string,
-    pageBackground: PropTypes.string,
-    attachments: PropTypes.arrayOf(PropTypes.instanceOf(AttachmentModel)),
+  approved: PropTypes.shape({
+    regular: PropTypes.shape({
+      currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
+      hourlyCharge: PropTypes.string,
+    }),
+    verifiable: PropTypes.shape({
+      intro: PropTypes.string,
+      pageBackground: PropTypes.string,
+      attachments: PropTypes.arrayOf(PropTypes.instanceOf(AttachmentModel)),
+    }),
+    custom: PropTypes.any,
+    socials: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerSocialModel)),
+    services: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerServiceModel)),
+    employments: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerEmploymentModel)),
   }),
-  custom: PropTypes.any,
-  socials: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerSocialModel)),
-  services: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerServiceModel)),
-  employments: PropTypes.arrayOf(PropTypes.instanceOf(ProfileWorkerEmploymentModel)),
 })
 
 export default class ProfileWorkerModel extends AbstractModel {
   constructor (props) {
-    super(propsWithDefaults(props), schemaFactory())
+    super(props, schemaFactory())
     Object.freeze(this)
   }
 
   static fromJson (data) {
-    let nameField
-    if (data.approved)
-    {nameField = "approved"}
-    if (data.submitted)
-    {nameField = "submitted"}
-    if (nameField)
-    {return new ProfileWorkerModel({
-      approved: nameField === "approved" ? true : false,
-      submitted: nameField === "submitted" ? true : false,
-      regular: {
-        currencies: data[nameField].regular.currencies.map(item => new CurrencyModel(item)),
-        hourlyCharge: data[nameField].regular.hourlyCharge,
-      },
-      verifiable: {
-        intro: data[nameField].verifiable.intro,
-        pageBackground: data[nameField].verifiable.pageBackground,
-        attachments: data[nameField].verifiable.attachments.map(item => new AttachmentModel(item)),
-      },
-      custom: data[nameField].custom,
-      socials: data[nameField].socials.map(item => new ProfileWorkerSocialModel(item)),
-      services: data[nameField].services.map(item => new ProfileWorkerServiceModel({
-        name: item.name,
-        category: 0,
-        description: item.description,
-        fee: item.fee,
-        minFee: item.minFee,
-        attachments: item.attachments ? item.attachments.map(item => new AttachmentModel(item)) : [],
-      })),
-      employments: data[nameField].employments.map(item => new ProfileWorkerEmploymentModel(item)),
-    })}
-    else
-    {return new ProfileWorkerModel({})}
+    const profile = new ProfileWorkerModel(data)
+    return profile
   }
-}
 
-function propsWithDefaults (props) {
-  return Object.assign({}, {
-    id: "",
-    approved: false,
-    isRequested: false,
-    regular: {
-      currencies: [],
-      hourlyCharge: "",
-    },
-    verifiable: {
-      intro: "",
-      pageBackground: "",
-      attachments: [],
-    },
-    custom: null,
-    socials: [],
-    services: [],
-    employments: [],
-  }, props)
+  static getValidationState (profile) {
+    if (profile) {
+      const { submitted, approved } = profile
+      if (!submitted && !approved) return VALIDATION_STATE.INITIAL
+      if (submitted && !submitted.validationComment) return VALIDATION_STATE.WAITING
+      if (submitted && submitted.validationComment) return VALIDATION_STATE.WARNING
+      if (!submitted && approved) return VALIDATION_STATE.SUCCESS
+    }
+    else {
+      return VALIDATION_STATE.INITIAL
+    }
+  }
+
+  static getValidationComment (profile) {
+    if (profile)
+    {return profile.submitted && profile.submitted.validationComment}
+    else
+    {return ""}
+  }
 }
 
