@@ -8,8 +8,8 @@ import ImageModel from "./model/ImageModel"
 import AttachmentModel from "./model/AttachmentModel"
 import PersonModel from "./model/PersonModel"
 
-const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
-// const API_URL = 'http://localhost:3000/api/v1'
+// const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+const API_URL = 'http://localhost:3000/api/v1'
 
 const http = axios.create({ baseURL: API_URL })
 
