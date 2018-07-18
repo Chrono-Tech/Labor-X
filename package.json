@@ -27,6 +27,7 @@
     "faker": "^4.1.0",
     "ipfs-api": "^22.0.0",
     "joi": "^13.1.2",
+    "lodash": "^4.17.10",
     "material-ui": "0.20.0",
     "material-ui-pickers": "^1.0.0-rc.11",
     "moment": "^2.22.1",
@@ -93,10 +94,10 @@
     "styled-jsx-plugin-postcss": "^0.1.2"
   },
   "scripts": {
-    "dev": "node --max_old_space_size=8000 server.js",
+    "dev": "npm run build:sc-config && node --max_old_space_size=8000 server.js",
     "start:wo-router": "next start",
     "start": "cross-env NODE_ENV=production node server.js",
-    "build": "next build",
+    "build": "npm run build:sc-config && next build",
     "lint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx --fix src pages specs",
     "testrpc": "testrpc --mnemonic \"video visa alcohol fault earth naive army senior major inherit convince electric\" --trace_request true | grep -Ev \"FilterSubprovider|eth_getFilterChanges\"",
     "docker:build": "/bin/bash ./bin/docker-build.sh",
@@ -107,7 +108,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --opts .mocharc",
-    "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/nyc yarn test"
+    "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/nyc yarn test",
+    "build:sc-config": "node ./bin/sc-config-create.js"
   },
   "pre-commit": [
     "lint",
