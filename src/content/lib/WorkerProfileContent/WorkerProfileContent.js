@@ -84,10 +84,12 @@ class WorkerProfileContent extends React.Component {
 
   handleClickAddWorker = () => {
     // eslint-disable-next-line no-console
-    if (this.state.slideIndex === 1)
+    if (this.state.slideIndex === 1) {
       this.props.addExperience()
-    if (this.state.slideIndex === 2)
+    }
+    if (this.state.slideIndex === 2) {
       this.props.addService()
+    }
   }
 
   renderTitle() {
