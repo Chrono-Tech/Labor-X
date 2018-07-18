@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import cn from 'classnames'
-import { ProfileModel, JobOfferModel, JobModel, JOB_STATE_CREATED, WorkerModel } from 'src/models'
+import { ProfileModel, JobOfferModel, JobModel, WorkerModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield, WorkerState } from 'src/components/common'
 import { modalsPush } from 'src/store'
 import { ReviewOfferDialog } from 'src/partials'
@@ -18,7 +18,6 @@ class WorkerCard extends React.Component {
     workerProfile: PropTypes.instanceOf(WorkerModel).isRequired,
     job: PropTypes.instanceOf(JobModel),
     offerSent: PropTypes.bool,
-    acceptOffer: PropTypes.func,
     pushModal: PropTypes.func,
     jobId: PropTypes.number,
   }
@@ -82,16 +81,6 @@ class WorkerCard extends React.Component {
         { offerAmount != null && <p className={css.offer}>Offer: LHUS {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
         <p className={css.date}>Applied on {moment(offer.ipfs.appliedDate).format(dateFormat)}</p>
         <div className={css.actions}>
-          {
-            this.props.job.state === JOB_STATE_CREATED ? (
-              <Button
-                label='ACCEPT OFFER'
-                className={css.buttonBlue}
-                mods={Button.MODS.FLAT}
-                onClick={this.handleAcceptOffer}
-              />
-            ) : null
-          }
           { offerAmount != null
             ? <Button
               label='REVIEW&nbsp;THE&nbsp;OFFER'

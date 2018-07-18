@@ -5,7 +5,7 @@ import cn from 'classnames'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import { acceptOffer, modalsPop } from 'src/store'
-import { JobModel, JobOfferModel, ProfileModel } from 'src/models'
+import { JobModel, JobOfferModel, ProfileModel, JOB_STATE_CREATED } from 'src/models'
 import { Link } from 'src/components/common'
 import css from './ReviewOfferDialog.scss'
 
@@ -19,6 +19,7 @@ class ReviewOfferDialog extends React.Component {
     offer: PropTypes.instanceOf(JobOfferModel).isRequired,
     worker: PropTypes.instanceOf(ProfileModel).isRequired,
     closeModal: PropTypes.func.isRequired,
+    acceptOffer: PropTypes.func,
   }
 
   handleCancel = () => {
@@ -85,7 +86,11 @@ class ReviewOfferDialog extends React.Component {
         <div className={css.actions}>
           <Button className={css.buttonCancel} onClick={this.handleCancel}>CANCEL</Button>
           <Button className={css.buttonDecline} onClick={this.handleDecline} variant='contained'>DECLINE</Button>
-          <Button className={css.buttonAccept} onClick={this.handleAccept} variant='contained'>ACCEPT</Button>
+          {
+            job.state === JOB_STATE_CREATED
+              ? <Button className={css.buttonAccept} onClick={this.handleAccept}>ACCEPT</Button>
+              : null
+          }
         </div>
       </div>
     )
