@@ -58,14 +58,14 @@ class WorkerProfileContent extends React.Component {
     avatarUrl: PropTypes.string,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       slideIndex: 0,
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getWorkerProfile()
   }
 
@@ -73,7 +73,7 @@ class WorkerProfileContent extends React.Component {
 
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
-  handleBack () {
+  handleBack() {
     Router.pushRoute('/my-profile')
   }
 
@@ -84,15 +84,17 @@ class WorkerProfileContent extends React.Component {
 
   handleClickAddWorker = () => {
     // eslint-disable-next-line no-console
-    if (this.state.slideIndex === 1) { this.props.addExperience() }
-    if (this.state.slideIndex === 2) { this.props.addService() }
+    if (this.state.slideIndex === 1)
+      this.props.addExperience()
+    if (this.state.slideIndex === 2)
+      this.props.addService()
   }
 
-  renderTitle () {
+  renderTitle() {
     return VALIDATION_STATE_TITLE[this.props.validationState]
   }
 
-  render () {
+  render() {
     const { profile, handleSubmit, avatarUrl, removeService, removeExperience, serviceCategories, currencies, socials } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
@@ -176,7 +178,7 @@ const workerProfileContentForm = reduxForm({
   form: WORKER_PROFILE_FORM,
 })(WorkerProfileContent)
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   const workerProfile = getState(state).workerProfile
   return {
     initialValues: {
@@ -193,7 +195,7 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     getWorkerProfile: () => {
       dispatch(getWorkerProfile())
