@@ -1,0 +1,1944 @@
+{
+	"BalanceHolder": {
+		"name": "BalanceHolder",
+		"addr": "0xc52a768b279b8a612d179edf6974adc37ddd5d97",
+		"events": {
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			}
+		}
+	},
+	"0xc52a768b279b8a612d179edf6974adc37ddd5d97": {
+		"name": "BalanceHolder",
+		"addr": "0xc52a768b279b8a612d179edf6974adc37ddd5d97",
+		"events": {
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			}
+		}
+	},
+	"BoardController": {
+		"name": "BoardController",
+		"addr": "0xde4b2735a59243e6fec16a0458dbb0c1b2df2889",
+		"events": {
+			"BoardCreated": {
+				"name": "BoardCreated",
+				"sign": "BoardCreated(address,uint256,address,uint256,uint256,uint256,bytes32,bool)",
+				"hash": "0x6d8832dbab0e20cb68b282a7823d527b4fa6c776574a29acb36d50ce70cd52e0"
+			},
+			"0x6d8832dbab0e20cb68b282a7823d527b4fa6c776574a29acb36d50ce70cd52e0": {
+				"name": "BoardCreated",
+				"sign": "BoardCreated(address,uint256,address,uint256,uint256,uint256,bytes32,bool)",
+				"hash": "0x6d8832dbab0e20cb68b282a7823d527b4fa6c776574a29acb36d50ce70cd52e0"
+			},
+			"JobBinded": {
+				"name": "JobBinded",
+				"sign": "JobBinded(address,uint256,uint256,bool)",
+				"hash": "0x0d7a6068901e5d084e217c5d1cb95a043d68ba086fb08b63cf78a444ad53c3c0"
+			},
+			"0x0d7a6068901e5d084e217c5d1cb95a043d68ba086fb08b63cf78a444ad53c3c0": {
+				"name": "JobBinded",
+				"sign": "JobBinded(address,uint256,uint256,bool)",
+				"hash": "0x0d7a6068901e5d084e217c5d1cb95a043d68ba086fb08b63cf78a444ad53c3c0"
+			},
+			"UserBinded": {
+				"name": "UserBinded",
+				"sign": "UserBinded(address,uint256,address,bool)",
+				"hash": "0x59607a2b26de9cec195f2d07833fd103d142795d3d3b8eff92a531e1094e76a3"
+			},
+			"0x59607a2b26de9cec195f2d07833fd103d142795d3d3b8eff92a531e1094e76a3": {
+				"name": "UserBinded",
+				"sign": "UserBinded(address,uint256,address,bool)",
+				"hash": "0x59607a2b26de9cec195f2d07833fd103d142795d3d3b8eff92a531e1094e76a3"
+			},
+			"BoardClosed": {
+				"name": "BoardClosed",
+				"sign": "BoardClosed(address,uint256,bool)",
+				"hash": "0xd446dbede0f6a2859d1fee85f220959b0d3421ac2a84baf4f8ae9f3ad43369b6"
+			},
+			"0xd446dbede0f6a2859d1fee85f220959b0d3421ac2a84baf4f8ae9f3ad43369b6": {
+				"name": "BoardClosed",
+				"sign": "BoardClosed(address,uint256,bool)",
+				"hash": "0xd446dbede0f6a2859d1fee85f220959b0d3421ac2a84baf4f8ae9f3ad43369b6"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0xde4b2735a59243e6fec16a0458dbb0c1b2df2889": {
+		"name": "BoardController",
+		"addr": "0xde4b2735a59243e6fec16a0458dbb0c1b2df2889",
+		"events": {
+			"BoardCreated": {
+				"name": "BoardCreated",
+				"sign": "BoardCreated(address,uint256,address,uint256,uint256,uint256,bytes32,bool)",
+				"hash": "0x6d8832dbab0e20cb68b282a7823d527b4fa6c776574a29acb36d50ce70cd52e0"
+			},
+			"0x6d8832dbab0e20cb68b282a7823d527b4fa6c776574a29acb36d50ce70cd52e0": {
+				"name": "BoardCreated",
+				"sign": "BoardCreated(address,uint256,address,uint256,uint256,uint256,bytes32,bool)",
+				"hash": "0x6d8832dbab0e20cb68b282a7823d527b4fa6c776574a29acb36d50ce70cd52e0"
+			},
+			"JobBinded": {
+				"name": "JobBinded",
+				"sign": "JobBinded(address,uint256,uint256,bool)",
+				"hash": "0x0d7a6068901e5d084e217c5d1cb95a043d68ba086fb08b63cf78a444ad53c3c0"
+			},
+			"0x0d7a6068901e5d084e217c5d1cb95a043d68ba086fb08b63cf78a444ad53c3c0": {
+				"name": "JobBinded",
+				"sign": "JobBinded(address,uint256,uint256,bool)",
+				"hash": "0x0d7a6068901e5d084e217c5d1cb95a043d68ba086fb08b63cf78a444ad53c3c0"
+			},
+			"UserBinded": {
+				"name": "UserBinded",
+				"sign": "UserBinded(address,uint256,address,bool)",
+				"hash": "0x59607a2b26de9cec195f2d07833fd103d142795d3d3b8eff92a531e1094e76a3"
+			},
+			"0x59607a2b26de9cec195f2d07833fd103d142795d3d3b8eff92a531e1094e76a3": {
+				"name": "UserBinded",
+				"sign": "UserBinded(address,uint256,address,bool)",
+				"hash": "0x59607a2b26de9cec195f2d07833fd103d142795d3d3b8eff92a531e1094e76a3"
+			},
+			"BoardClosed": {
+				"name": "BoardClosed",
+				"sign": "BoardClosed(address,uint256,bool)",
+				"hash": "0xd446dbede0f6a2859d1fee85f220959b0d3421ac2a84baf4f8ae9f3ad43369b6"
+			},
+			"0xd446dbede0f6a2859d1fee85f220959b0d3421ac2a84baf4f8ae9f3ad43369b6": {
+				"name": "BoardClosed",
+				"sign": "BoardClosed(address,uint256,bool)",
+				"hash": "0xd446dbede0f6a2859d1fee85f220959b0d3421ac2a84baf4f8ae9f3ad43369b6"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"ContractsManager": {
+		"name": "ContractsManager",
+		"addr": "0x712d1e9277e1f6fcf9db2a052033efd6061fe70d",
+		"events": {
+			"ContractsManagerAddContract": {
+				"name": "ContractsManagerAddContract",
+				"sign": "ContractsManagerAddContract(address,bytes32)",
+				"hash": "0xf42ffc9f05349eb942072e43a552548d1e4eb637b572f7dca6b587b765cde0cf"
+			},
+			"0xf42ffc9f05349eb942072e43a552548d1e4eb637b572f7dca6b587b765cde0cf": {
+				"name": "ContractsManagerAddContract",
+				"sign": "ContractsManagerAddContract(address,bytes32)",
+				"hash": "0xf42ffc9f05349eb942072e43a552548d1e4eb637b572f7dca6b587b765cde0cf"
+			},
+			"ContractsManagerRemoveContract": {
+				"name": "ContractsManagerRemoveContract",
+				"sign": "ContractsManagerRemoveContract(address)",
+				"hash": "0x68a27b527d37d02ca3b29959f3a3adf9e3aa95c2b8670455f61c953c5ae722b3"
+			},
+			"0x68a27b527d37d02ca3b29959f3a3adf9e3aa95c2b8670455f61c953c5ae722b3": {
+				"name": "ContractsManagerRemoveContract",
+				"sign": "ContractsManagerRemoveContract(address)",
+				"hash": "0x68a27b527d37d02ca3b29959f3a3adf9e3aa95c2b8670455f61c953c5ae722b3"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,uint256)",
+				"hash": "0x9cf38cf2dbf9139f5c32639950507b10775fbbe0421f3e168bc2d1bb1ae3208c"
+			},
+			"0x9cf38cf2dbf9139f5c32639950507b10775fbbe0421f3e168bc2d1bb1ae3208c": {
+				"name": "Error",
+				"sign": "Error(address,uint256)",
+				"hash": "0x9cf38cf2dbf9139f5c32639950507b10775fbbe0421f3e168bc2d1bb1ae3208c"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"OwnershipTransferred": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			}
+		}
+	},
+	"0x712d1e9277e1f6fcf9db2a052033efd6061fe70d": {
+		"name": "ContractsManager",
+		"addr": "0x712d1e9277e1f6fcf9db2a052033efd6061fe70d",
+		"events": {
+			"ContractsManagerAddContract": {
+				"name": "ContractsManagerAddContract",
+				"sign": "ContractsManagerAddContract(address,bytes32)",
+				"hash": "0xf42ffc9f05349eb942072e43a552548d1e4eb637b572f7dca6b587b765cde0cf"
+			},
+			"0xf42ffc9f05349eb942072e43a552548d1e4eb637b572f7dca6b587b765cde0cf": {
+				"name": "ContractsManagerAddContract",
+				"sign": "ContractsManagerAddContract(address,bytes32)",
+				"hash": "0xf42ffc9f05349eb942072e43a552548d1e4eb637b572f7dca6b587b765cde0cf"
+			},
+			"ContractsManagerRemoveContract": {
+				"name": "ContractsManagerRemoveContract",
+				"sign": "ContractsManagerRemoveContract(address)",
+				"hash": "0x68a27b527d37d02ca3b29959f3a3adf9e3aa95c2b8670455f61c953c5ae722b3"
+			},
+			"0x68a27b527d37d02ca3b29959f3a3adf9e3aa95c2b8670455f61c953c5ae722b3": {
+				"name": "ContractsManagerRemoveContract",
+				"sign": "ContractsManagerRemoveContract(address)",
+				"hash": "0x68a27b527d37d02ca3b29959f3a3adf9e3aa95c2b8670455f61c953c5ae722b3"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,uint256)",
+				"hash": "0x9cf38cf2dbf9139f5c32639950507b10775fbbe0421f3e168bc2d1bb1ae3208c"
+			},
+			"0x9cf38cf2dbf9139f5c32639950507b10775fbbe0421f3e168bc2d1bb1ae3208c": {
+				"name": "Error",
+				"sign": "Error(address,uint256)",
+				"hash": "0x9cf38cf2dbf9139f5c32639950507b10775fbbe0421f3e168bc2d1bb1ae3208c"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"OwnershipTransferred": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			}
+		}
+	},
+	"IPFSLibrary": {
+		"name": "IPFSLibrary",
+		"addr": "0xbc31538094ff31e0f65872c66bad74b597b44b1a",
+		"events": {
+			"HashSet": {
+				"name": "HashSet",
+				"sign": "HashSet(address,address,bytes32,bytes32)",
+				"hash": "0x34935cf0eba24872804820d07214042d03d4807a8ad7fda0736f9084524e2d19"
+			},
+			"0x34935cf0eba24872804820d07214042d03d4807a8ad7fda0736f9084524e2d19": {
+				"name": "HashSet",
+				"sign": "HashSet(address,address,bytes32,bytes32)",
+				"hash": "0x34935cf0eba24872804820d07214042d03d4807a8ad7fda0736f9084524e2d19"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0xbc31538094ff31e0f65872c66bad74b597b44b1a": {
+		"name": "IPFSLibrary",
+		"addr": "0xbc31538094ff31e0f65872c66bad74b597b44b1a",
+		"events": {
+			"HashSet": {
+				"name": "HashSet",
+				"sign": "HashSet(address,address,bytes32,bytes32)",
+				"hash": "0x34935cf0eba24872804820d07214042d03d4807a8ad7fda0736f9084524e2d19"
+			},
+			"0x34935cf0eba24872804820d07214042d03d4807a8ad7fda0736f9084524e2d19": {
+				"name": "HashSet",
+				"sign": "HashSet(address,address,bytes32,bytes32)",
+				"hash": "0x34935cf0eba24872804820d07214042d03d4807a8ad7fda0736f9084524e2d19"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"JobController": {
+		"name": "JobController",
+		"addr": "0x7c077c091ab873f43969b93121c286da0b3c5562",
+		"events": {
+			"JobPosted": {
+				"name": "JobPosted",
+				"sign": "JobPosted(address,uint256,bytes32,address,uint256,uint256,uint256,uint256,bytes32,bool)",
+				"hash": "0x00be90d46e792dd8139c7fa5fc3c5094a4617b29079275876030fafdfd99790a"
+			},
+			"0x00be90d46e792dd8139c7fa5fc3c5094a4617b29079275876030fafdfd99790a": {
+				"name": "JobPosted",
+				"sign": "JobPosted(address,uint256,bytes32,address,uint256,uint256,uint256,uint256,bytes32,bool)",
+				"hash": "0x00be90d46e792dd8139c7fa5fc3c5094a4617b29079275876030fafdfd99790a"
+			},
+			"JobOfferPosted": {
+				"name": "JobOfferPosted",
+				"sign": "JobOfferPosted(address,uint256,address,uint256)",
+				"hash": "0x271fcf1e587075053a24de13909c1c666d6b58fae99f299cfbc3fb1696bc2c1a"
+			},
+			"0xa3bc0f53ddeedcb11a232f5b24300a8fe43af2c2dcc30b46dbc64476e762a186": {
+				"name": "JobOfferPosted",
+				"sign": "JobOfferPosted(address,uint256,address,uint256,uint256,uint256)",
+				"hash": "0xa3bc0f53ddeedcb11a232f5b24300a8fe43af2c2dcc30b46dbc64476e762a186"
+			},
+			"0x271fcf1e587075053a24de13909c1c666d6b58fae99f299cfbc3fb1696bc2c1a": {
+				"name": "JobOfferPosted",
+				"sign": "JobOfferPosted(address,uint256,address,uint256)",
+				"hash": "0x271fcf1e587075053a24de13909c1c666d6b58fae99f299cfbc3fb1696bc2c1a"
+			},
+			"JobOfferAccepted": {
+				"name": "JobOfferAccepted",
+				"sign": "JobOfferAccepted(address,uint256,address)",
+				"hash": "0xcd1a96dff5c14af15cc6cc02bc309e3abef75468ceced0d0435f20bef5a9db3a"
+			},
+			"0xcd1a96dff5c14af15cc6cc02bc309e3abef75468ceced0d0435f20bef5a9db3a": {
+				"name": "JobOfferAccepted",
+				"sign": "JobOfferAccepted(address,uint256,address)",
+				"hash": "0xcd1a96dff5c14af15cc6cc02bc309e3abef75468ceced0d0435f20bef5a9db3a"
+			},
+			"WorkStarted": {
+				"name": "WorkStarted",
+				"sign": "WorkStarted(address,uint256,uint256)",
+				"hash": "0x63efc44d4747c4669c8be4f317453622684e7daab7cf5772795e6413a40c26dd"
+			},
+			"0x63efc44d4747c4669c8be4f317453622684e7daab7cf5772795e6413a40c26dd": {
+				"name": "WorkStarted",
+				"sign": "WorkStarted(address,uint256,uint256)",
+				"hash": "0x63efc44d4747c4669c8be4f317453622684e7daab7cf5772795e6413a40c26dd"
+			},
+			"TimeAdded": {
+				"name": "TimeAdded",
+				"sign": "TimeAdded(address,uint256,uint256)",
+				"hash": "0xd4a20f0b641ef272f167d4b357afcf41234f55e836b7f4c2fe2df4714ac52608"
+			},
+			"0xd4a20f0b641ef272f167d4b357afcf41234f55e836b7f4c2fe2df4714ac52608": {
+				"name": "TimeAdded",
+				"sign": "TimeAdded(address,uint256,uint256)",
+				"hash": "0xd4a20f0b641ef272f167d4b357afcf41234f55e836b7f4c2fe2df4714ac52608"
+			},
+			"WorkPaused": {
+				"name": "WorkPaused",
+				"sign": "WorkPaused(address,uint256,uint256)",
+				"hash": "0x8cd445c80d0841aae8f229eddbed0de5befd5ff6fc2ca0510ee0621f5d6d5bef"
+			},
+			"0x8cd445c80d0841aae8f229eddbed0de5befd5ff6fc2ca0510ee0621f5d6d5bef": {
+				"name": "WorkPaused",
+				"sign": "WorkPaused(address,uint256,uint256)",
+				"hash": "0x8cd445c80d0841aae8f229eddbed0de5befd5ff6fc2ca0510ee0621f5d6d5bef"
+			},
+			"WorkResumed": {
+				"name": "WorkResumed",
+				"sign": "WorkResumed(address,uint256,uint256)",
+				"hash": "0x799a32325be3cd39f977d4cc026272cc3dd97d9dd46c5751c7c9900d9f1ffcdf"
+			},
+			"0x799a32325be3cd39f977d4cc026272cc3dd97d9dd46c5751c7c9900d9f1ffcdf": {
+				"name": "WorkResumed",
+				"sign": "WorkResumed(address,uint256,uint256)",
+				"hash": "0x799a32325be3cd39f977d4cc026272cc3dd97d9dd46c5751c7c9900d9f1ffcdf"
+			},
+			"WorkFinished": {
+				"name": "WorkFinished",
+				"sign": "WorkFinished(address,uint256,uint256)",
+				"hash": "0xca4a8dc0f20a95e32a83e0e73d9c75cbbdd5d691b99484161abb77f788d2f8d9"
+			},
+			"0xca4a8dc0f20a95e32a83e0e73d9c75cbbdd5d691b99484161abb77f788d2f8d9": {
+				"name": "WorkFinished",
+				"sign": "WorkFinished(address,uint256,uint256)",
+				"hash": "0xca4a8dc0f20a95e32a83e0e73d9c75cbbdd5d691b99484161abb77f788d2f8d9"
+			},
+			"WorkAccepted": {
+				"name": "WorkAccepted",
+				"sign": "WorkAccepted(address,uint256,uint256)",
+				"hash": "0xe5358c187d063c360e67321606a0a2dd8d7fe426d9aa68bb9e853fcf2851d938"
+			},
+			"0xe5358c187d063c360e67321606a0a2dd8d7fe426d9aa68bb9e853fcf2851d938": {
+				"name": "WorkAccepted",
+				"sign": "WorkAccepted(address,uint256,uint256)",
+				"hash": "0xe5358c187d063c360e67321606a0a2dd8d7fe426d9aa68bb9e853fcf2851d938"
+			},
+			"WorkRejected": {
+				"name": "WorkRejected",
+				"sign": "WorkRejected(address,uint256,uint256)",
+				"hash": "0xd3395eea11df9ed3451acb381c8e8220231eaa3b2ebc7c2cd1e1ab6302f3314f"
+			},
+			"0xd3395eea11df9ed3451acb381c8e8220231eaa3b2ebc7c2cd1e1ab6302f3314f": {
+				"name": "WorkRejected",
+				"sign": "WorkRejected(address,uint256,uint256)",
+				"hash": "0xd3395eea11df9ed3451acb381c8e8220231eaa3b2ebc7c2cd1e1ab6302f3314f"
+			},
+			"WorkDisputeResolved": {
+				"name": "WorkDisputeResolved",
+				"sign": "WorkDisputeResolved(address,uint256,uint256)",
+				"hash": "0x572dddcf2d7a6a168606d76d97cac3799945fdd877c6710aa9f283fcd8a42866"
+			},
+			"0x572dddcf2d7a6a168606d76d97cac3799945fdd877c6710aa9f283fcd8a42866": {
+				"name": "WorkDisputeResolved",
+				"sign": "WorkDisputeResolved(address,uint256,uint256)",
+				"hash": "0x572dddcf2d7a6a168606d76d97cac3799945fdd877c6710aa9f283fcd8a42866"
+			},
+			"PaymentReleased": {
+				"name": "PaymentReleased",
+				"sign": "PaymentReleased(address,uint256)",
+				"hash": "0xdf20fd1e76bc69d672e4814fafb2c449bba3a5369d8359adf9e05e6fde87b056"
+			},
+			"0xdf20fd1e76bc69d672e4814fafb2c449bba3a5369d8359adf9e05e6fde87b056": {
+				"name": "PaymentReleased",
+				"sign": "PaymentReleased(address,uint256)",
+				"hash": "0xdf20fd1e76bc69d672e4814fafb2c449bba3a5369d8359adf9e05e6fde87b056"
+			},
+			"JobCanceled": {
+				"name": "JobCanceled",
+				"sign": "JobCanceled(address,uint256)",
+				"hash": "0xc81a87bb9e1f6f23054c21dd9959f8aa3b2f86077a49ccac452fadff6731304c"
+			},
+			"0xc81a87bb9e1f6f23054c21dd9959f8aa3b2f86077a49ccac452fadff6731304c": {
+				"name": "JobCanceled",
+				"sign": "JobCanceled(address,uint256)",
+				"hash": "0xc81a87bb9e1f6f23054c21dd9959f8aa3b2f86077a49ccac452fadff6731304c"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0x7c077c091ab873f43969b93121c286da0b3c5562": {
+		"name": "JobController",
+		"addr": "0x7c077c091ab873f43969b93121c286da0b3c5562",
+		"events": {
+			"JobPosted": {
+				"name": "JobPosted",
+				"sign": "JobPosted(address,uint256,bytes32,address,uint256,uint256,uint256,uint256,bytes32,bool)",
+				"hash": "0x00be90d46e792dd8139c7fa5fc3c5094a4617b29079275876030fafdfd99790a"
+			},
+			"0x00be90d46e792dd8139c7fa5fc3c5094a4617b29079275876030fafdfd99790a": {
+				"name": "JobPosted",
+				"sign": "JobPosted(address,uint256,bytes32,address,uint256,uint256,uint256,uint256,bytes32,bool)",
+				"hash": "0x00be90d46e792dd8139c7fa5fc3c5094a4617b29079275876030fafdfd99790a"
+			},
+			"JobOfferPosted": {
+				"name": "JobOfferPosted",
+				"sign": "JobOfferPosted(address,uint256,address,uint256)",
+				"hash": "0x271fcf1e587075053a24de13909c1c666d6b58fae99f299cfbc3fb1696bc2c1a"
+			},
+			"0xa3bc0f53ddeedcb11a232f5b24300a8fe43af2c2dcc30b46dbc64476e762a186": {
+				"name": "JobOfferPosted",
+				"sign": "JobOfferPosted(address,uint256,address,uint256,uint256,uint256)",
+				"hash": "0xa3bc0f53ddeedcb11a232f5b24300a8fe43af2c2dcc30b46dbc64476e762a186"
+			},
+			"0x271fcf1e587075053a24de13909c1c666d6b58fae99f299cfbc3fb1696bc2c1a": {
+				"name": "JobOfferPosted",
+				"sign": "JobOfferPosted(address,uint256,address,uint256)",
+				"hash": "0x271fcf1e587075053a24de13909c1c666d6b58fae99f299cfbc3fb1696bc2c1a"
+			},
+			"JobOfferAccepted": {
+				"name": "JobOfferAccepted",
+				"sign": "JobOfferAccepted(address,uint256,address)",
+				"hash": "0xcd1a96dff5c14af15cc6cc02bc309e3abef75468ceced0d0435f20bef5a9db3a"
+			},
+			"0xcd1a96dff5c14af15cc6cc02bc309e3abef75468ceced0d0435f20bef5a9db3a": {
+				"name": "JobOfferAccepted",
+				"sign": "JobOfferAccepted(address,uint256,address)",
+				"hash": "0xcd1a96dff5c14af15cc6cc02bc309e3abef75468ceced0d0435f20bef5a9db3a"
+			},
+			"WorkStarted": {
+				"name": "WorkStarted",
+				"sign": "WorkStarted(address,uint256,uint256)",
+				"hash": "0x63efc44d4747c4669c8be4f317453622684e7daab7cf5772795e6413a40c26dd"
+			},
+			"0x63efc44d4747c4669c8be4f317453622684e7daab7cf5772795e6413a40c26dd": {
+				"name": "WorkStarted",
+				"sign": "WorkStarted(address,uint256,uint256)",
+				"hash": "0x63efc44d4747c4669c8be4f317453622684e7daab7cf5772795e6413a40c26dd"
+			},
+			"TimeAdded": {
+				"name": "TimeAdded",
+				"sign": "TimeAdded(address,uint256,uint256)",
+				"hash": "0xd4a20f0b641ef272f167d4b357afcf41234f55e836b7f4c2fe2df4714ac52608"
+			},
+			"0xd4a20f0b641ef272f167d4b357afcf41234f55e836b7f4c2fe2df4714ac52608": {
+				"name": "TimeAdded",
+				"sign": "TimeAdded(address,uint256,uint256)",
+				"hash": "0xd4a20f0b641ef272f167d4b357afcf41234f55e836b7f4c2fe2df4714ac52608"
+			},
+			"WorkPaused": {
+				"name": "WorkPaused",
+				"sign": "WorkPaused(address,uint256,uint256)",
+				"hash": "0x8cd445c80d0841aae8f229eddbed0de5befd5ff6fc2ca0510ee0621f5d6d5bef"
+			},
+			"0x8cd445c80d0841aae8f229eddbed0de5befd5ff6fc2ca0510ee0621f5d6d5bef": {
+				"name": "WorkPaused",
+				"sign": "WorkPaused(address,uint256,uint256)",
+				"hash": "0x8cd445c80d0841aae8f229eddbed0de5befd5ff6fc2ca0510ee0621f5d6d5bef"
+			},
+			"WorkResumed": {
+				"name": "WorkResumed",
+				"sign": "WorkResumed(address,uint256,uint256)",
+				"hash": "0x799a32325be3cd39f977d4cc026272cc3dd97d9dd46c5751c7c9900d9f1ffcdf"
+			},
+			"0x799a32325be3cd39f977d4cc026272cc3dd97d9dd46c5751c7c9900d9f1ffcdf": {
+				"name": "WorkResumed",
+				"sign": "WorkResumed(address,uint256,uint256)",
+				"hash": "0x799a32325be3cd39f977d4cc026272cc3dd97d9dd46c5751c7c9900d9f1ffcdf"
+			},
+			"WorkFinished": {
+				"name": "WorkFinished",
+				"sign": "WorkFinished(address,uint256,uint256)",
+				"hash": "0xca4a8dc0f20a95e32a83e0e73d9c75cbbdd5d691b99484161abb77f788d2f8d9"
+			},
+			"0xca4a8dc0f20a95e32a83e0e73d9c75cbbdd5d691b99484161abb77f788d2f8d9": {
+				"name": "WorkFinished",
+				"sign": "WorkFinished(address,uint256,uint256)",
+				"hash": "0xca4a8dc0f20a95e32a83e0e73d9c75cbbdd5d691b99484161abb77f788d2f8d9"
+			},
+			"WorkAccepted": {
+				"name": "WorkAccepted",
+				"sign": "WorkAccepted(address,uint256,uint256)",
+				"hash": "0xe5358c187d063c360e67321606a0a2dd8d7fe426d9aa68bb9e853fcf2851d938"
+			},
+			"0xe5358c187d063c360e67321606a0a2dd8d7fe426d9aa68bb9e853fcf2851d938": {
+				"name": "WorkAccepted",
+				"sign": "WorkAccepted(address,uint256,uint256)",
+				"hash": "0xe5358c187d063c360e67321606a0a2dd8d7fe426d9aa68bb9e853fcf2851d938"
+			},
+			"WorkRejected": {
+				"name": "WorkRejected",
+				"sign": "WorkRejected(address,uint256,uint256)",
+				"hash": "0xd3395eea11df9ed3451acb381c8e8220231eaa3b2ebc7c2cd1e1ab6302f3314f"
+			},
+			"0xd3395eea11df9ed3451acb381c8e8220231eaa3b2ebc7c2cd1e1ab6302f3314f": {
+				"name": "WorkRejected",
+				"sign": "WorkRejected(address,uint256,uint256)",
+				"hash": "0xd3395eea11df9ed3451acb381c8e8220231eaa3b2ebc7c2cd1e1ab6302f3314f"
+			},
+			"WorkDisputeResolved": {
+				"name": "WorkDisputeResolved",
+				"sign": "WorkDisputeResolved(address,uint256,uint256)",
+				"hash": "0x572dddcf2d7a6a168606d76d97cac3799945fdd877c6710aa9f283fcd8a42866"
+			},
+			"0x572dddcf2d7a6a168606d76d97cac3799945fdd877c6710aa9f283fcd8a42866": {
+				"name": "WorkDisputeResolved",
+				"sign": "WorkDisputeResolved(address,uint256,uint256)",
+				"hash": "0x572dddcf2d7a6a168606d76d97cac3799945fdd877c6710aa9f283fcd8a42866"
+			},
+			"PaymentReleased": {
+				"name": "PaymentReleased",
+				"sign": "PaymentReleased(address,uint256)",
+				"hash": "0xdf20fd1e76bc69d672e4814fafb2c449bba3a5369d8359adf9e05e6fde87b056"
+			},
+			"0xdf20fd1e76bc69d672e4814fafb2c449bba3a5369d8359adf9e05e6fde87b056": {
+				"name": "PaymentReleased",
+				"sign": "PaymentReleased(address,uint256)",
+				"hash": "0xdf20fd1e76bc69d672e4814fafb2c449bba3a5369d8359adf9e05e6fde87b056"
+			},
+			"JobCanceled": {
+				"name": "JobCanceled",
+				"sign": "JobCanceled(address,uint256)",
+				"hash": "0xc81a87bb9e1f6f23054c21dd9959f8aa3b2f86077a49ccac452fadff6731304c"
+			},
+			"0xc81a87bb9e1f6f23054c21dd9959f8aa3b2f86077a49ccac452fadff6731304c": {
+				"name": "JobCanceled",
+				"sign": "JobCanceled(address,uint256)",
+				"hash": "0xc81a87bb9e1f6f23054c21dd9959f8aa3b2f86077a49ccac452fadff6731304c"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"JobsDataProvider": {
+		"name": "JobsDataProvider",
+		"addr": "0x557490cc321bbe285b2db0038f29bdc6df666872",
+		"events": {}
+	},
+	"0x557490cc321bbe285b2db0038f29bdc6df666872": {
+		"name": "JobsDataProvider",
+		"addr": "0x557490cc321bbe285b2db0038f29bdc6df666872",
+		"events": {}
+	},
+	"Migrations": {
+		"name": "Migrations",
+		"addr": "0x7bd1584f5af076e69517f032a8c2337430996f24",
+		"events": {}
+	},
+	"0x7bd1584f5af076e69517f032a8c2337430996f24": {
+		"name": "Migrations",
+		"addr": "0x7bd1584f5af076e69517f032a8c2337430996f24",
+		"events": {}
+	},
+	"MultiEventsHistory": {
+		"name": "MultiEventsHistory",
+		"addr": "0x1e3a4baa84d7f7382d319e814eeba80d0614b41b",
+		"events": {
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			}
+		}
+	},
+	"0x1e3a4baa84d7f7382d319e814eeba80d0614b41b": {
+		"name": "MultiEventsHistory",
+		"addr": "0x1e3a4baa84d7f7382d319e814eeba80d0614b41b",
+		"events": {
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			}
+		}
+	},
+	"PaymentGateway": {
+		"name": "PaymentGateway",
+		"addr": "0x00854c0c4a899321c41dd81da96f59e8c1feba52",
+		"events": {
+			"FeeSet": {
+				"name": "FeeSet",
+				"sign": "FeeSet(address,uint256)",
+				"hash": "0x92e6908704698649c7a3742faeecb2d2cdef5264a5bf9bebbaa5e4b06d367316"
+			},
+			"0x92e6908704698649c7a3742faeecb2d2cdef5264a5bf9bebbaa5e4b06d367316": {
+				"name": "FeeSet",
+				"sign": "FeeSet(address,uint256)",
+				"hash": "0x92e6908704698649c7a3742faeecb2d2cdef5264a5bf9bebbaa5e4b06d367316"
+			},
+			"Deposited": {
+				"name": "Deposited",
+				"sign": "Deposited(address,address,uint256)",
+				"hash": "0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7"
+			},
+			"0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7": {
+				"name": "Deposited",
+				"sign": "Deposited(address,address,uint256)",
+				"hash": "0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7"
+			},
+			"Withdrawn": {
+				"name": "Withdrawn",
+				"sign": "Withdrawn(address,address,uint256)",
+				"hash": "0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb"
+			},
+			"0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb": {
+				"name": "Withdrawn",
+				"sign": "Withdrawn(address,address,uint256)",
+				"hash": "0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb"
+			},
+			"Transferred": {
+				"name": "Transferred",
+				"sign": "Transferred(address,address,address,uint256)",
+				"hash": "0x769254a71d2f67d8ac6cb44f2803c0d05cfbcf9effadb6a984f10ff9de3df6c3"
+			},
+			"0x769254a71d2f67d8ac6cb44f2803c0d05cfbcf9effadb6a984f10ff9de3df6c3": {
+				"name": "Transferred",
+				"sign": "Transferred(address,address,address,uint256)",
+				"hash": "0x769254a71d2f67d8ac6cb44f2803c0d05cfbcf9effadb6a984f10ff9de3df6c3"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0x00854c0c4a899321c41dd81da96f59e8c1feba52": {
+		"name": "PaymentGateway",
+		"addr": "0x00854c0c4a899321c41dd81da96f59e8c1feba52",
+		"events": {
+			"FeeSet": {
+				"name": "FeeSet",
+				"sign": "FeeSet(address,uint256)",
+				"hash": "0x92e6908704698649c7a3742faeecb2d2cdef5264a5bf9bebbaa5e4b06d367316"
+			},
+			"0x92e6908704698649c7a3742faeecb2d2cdef5264a5bf9bebbaa5e4b06d367316": {
+				"name": "FeeSet",
+				"sign": "FeeSet(address,uint256)",
+				"hash": "0x92e6908704698649c7a3742faeecb2d2cdef5264a5bf9bebbaa5e4b06d367316"
+			},
+			"Deposited": {
+				"name": "Deposited",
+				"sign": "Deposited(address,address,uint256)",
+				"hash": "0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7"
+			},
+			"0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7": {
+				"name": "Deposited",
+				"sign": "Deposited(address,address,uint256)",
+				"hash": "0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7"
+			},
+			"Withdrawn": {
+				"name": "Withdrawn",
+				"sign": "Withdrawn(address,address,uint256)",
+				"hash": "0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb"
+			},
+			"0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb": {
+				"name": "Withdrawn",
+				"sign": "Withdrawn(address,address,uint256)",
+				"hash": "0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb"
+			},
+			"Transferred": {
+				"name": "Transferred",
+				"sign": "Transferred(address,address,address,uint256)",
+				"hash": "0x769254a71d2f67d8ac6cb44f2803c0d05cfbcf9effadb6a984f10ff9de3df6c3"
+			},
+			"0x769254a71d2f67d8ac6cb44f2803c0d05cfbcf9effadb6a984f10ff9de3df6c3": {
+				"name": "Transferred",
+				"sign": "Transferred(address,address,address,uint256)",
+				"hash": "0x769254a71d2f67d8ac6cb44f2803c0d05cfbcf9effadb6a984f10ff9de3df6c3"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"PaymentProcessor": {
+		"name": "PaymentProcessor",
+		"addr": "0x21d2dc66c6fe6e2c45a69edc8bdf61a958159048",
+		"events": {
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			}
+		}
+	},
+	"0x21d2dc66c6fe6e2c45a69edc8bdf61a958159048": {
+		"name": "PaymentProcessor",
+		"addr": "0x21d2dc66c6fe6e2c45a69edc8bdf61a958159048",
+		"events": {
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			}
+		}
+	},
+	"RatingsAndReputationLibrary": {
+		"name": "RatingsAndReputationLibrary",
+		"addr": "0xa905bc80c0bd450eab692932f9317f56627f4d55",
+		"events": {
+			"UserRatingGiven": {
+				"name": "UserRatingGiven",
+				"sign": "UserRatingGiven(address,address,address,uint256)",
+				"hash": "0xff1c228d64e91b399a42c8f76b90f5dc58f36a57b4573dbb2286473cc6ee55f1"
+			},
+			"0xff1c228d64e91b399a42c8f76b90f5dc58f36a57b4573dbb2286473cc6ee55f1": {
+				"name": "UserRatingGiven",
+				"sign": "UserRatingGiven(address,address,address,uint256)",
+				"hash": "0xff1c228d64e91b399a42c8f76b90f5dc58f36a57b4573dbb2286473cc6ee55f1"
+			},
+			"JobRatingGiven": {
+				"name": "JobRatingGiven",
+				"sign": "JobRatingGiven(address,address,address,uint8,uint256)",
+				"hash": "0xb9cb995df645ae33c29e1a4ea2028a803a69503bab3aeee57474e01195a349c2"
+			},
+			"0xb9cb995df645ae33c29e1a4ea2028a803a69503bab3aeee57474e01195a349c2": {
+				"name": "JobRatingGiven",
+				"sign": "JobRatingGiven(address,address,address,uint8,uint256)",
+				"hash": "0xb9cb995df645ae33c29e1a4ea2028a803a69503bab3aeee57474e01195a349c2"
+			},
+			"SkillRatingGiven": {
+				"name": "SkillRatingGiven",
+				"sign": "SkillRatingGiven(address,address,address,uint8,uint256,uint256,uint256,uint256)",
+				"hash": "0x17354fa937310e5745112a01a3d6120621914be7978d99f716e0773e71c2c972"
+			},
+			"0x17354fa937310e5745112a01a3d6120621914be7978d99f716e0773e71c2c972": {
+				"name": "SkillRatingGiven",
+				"sign": "SkillRatingGiven(address,address,address,uint8,uint256,uint256,uint256,uint256)",
+				"hash": "0x17354fa937310e5745112a01a3d6120621914be7978d99f716e0773e71c2c972"
+			},
+			"AreaEvaluated": {
+				"name": "AreaEvaluated",
+				"sign": "AreaEvaluated(address,address,address,uint8,uint256)",
+				"hash": "0xe558093f7ccdc05ca735600d7d93ce24b49ca4fc2c47f61f27ec3e7571f7cf0f"
+			},
+			"0xe558093f7ccdc05ca735600d7d93ce24b49ca4fc2c47f61f27ec3e7571f7cf0f": {
+				"name": "AreaEvaluated",
+				"sign": "AreaEvaluated(address,address,address,uint8,uint256)",
+				"hash": "0xe558093f7ccdc05ca735600d7d93ce24b49ca4fc2c47f61f27ec3e7571f7cf0f"
+			},
+			"CategoryEvaluated": {
+				"name": "CategoryEvaluated",
+				"sign": "CategoryEvaluated(address,address,address,uint8,uint256,uint256)",
+				"hash": "0x0a1e6d95c7d27b6e607cacab49cf8b88390c894e73eca23a0394065118b6bb34"
+			},
+			"0x0a1e6d95c7d27b6e607cacab49cf8b88390c894e73eca23a0394065118b6bb34": {
+				"name": "CategoryEvaluated",
+				"sign": "CategoryEvaluated(address,address,address,uint8,uint256,uint256)",
+				"hash": "0x0a1e6d95c7d27b6e607cacab49cf8b88390c894e73eca23a0394065118b6bb34"
+			},
+			"SkillEvaluated": {
+				"name": "SkillEvaluated",
+				"sign": "SkillEvaluated(address,address,address,uint8,uint256,uint256,uint256)",
+				"hash": "0x95fd9fa6549f6243e16de78a31a7c9df65178f3674ffc3e7bd944fc3e9a66813"
+			},
+			"0x95fd9fa6549f6243e16de78a31a7c9df65178f3674ffc3e7bd944fc3e9a66813": {
+				"name": "SkillEvaluated",
+				"sign": "SkillEvaluated(address,address,address,uint8,uint256,uint256,uint256)",
+				"hash": "0x95fd9fa6549f6243e16de78a31a7c9df65178f3674ffc3e7bd944fc3e9a66813"
+			},
+			"BoardRatingGiven": {
+				"name": "BoardRatingGiven",
+				"sign": "BoardRatingGiven(address,address,uint256,uint8)",
+				"hash": "0x4eb70eef4c57ff55a2bbcae67042a7525745a37453dda83a08b3d844c75bc004"
+			},
+			"0x4eb70eef4c57ff55a2bbcae67042a7525745a37453dda83a08b3d844c75bc004": {
+				"name": "BoardRatingGiven",
+				"sign": "BoardRatingGiven(address,address,uint256,uint8)",
+				"hash": "0x4eb70eef4c57ff55a2bbcae67042a7525745a37453dda83a08b3d844c75bc004"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0xa905bc80c0bd450eab692932f9317f56627f4d55": {
+		"name": "RatingsAndReputationLibrary",
+		"addr": "0xa905bc80c0bd450eab692932f9317f56627f4d55",
+		"events": {
+			"UserRatingGiven": {
+				"name": "UserRatingGiven",
+				"sign": "UserRatingGiven(address,address,address,uint256)",
+				"hash": "0xff1c228d64e91b399a42c8f76b90f5dc58f36a57b4573dbb2286473cc6ee55f1"
+			},
+			"0xff1c228d64e91b399a42c8f76b90f5dc58f36a57b4573dbb2286473cc6ee55f1": {
+				"name": "UserRatingGiven",
+				"sign": "UserRatingGiven(address,address,address,uint256)",
+				"hash": "0xff1c228d64e91b399a42c8f76b90f5dc58f36a57b4573dbb2286473cc6ee55f1"
+			},
+			"JobRatingGiven": {
+				"name": "JobRatingGiven",
+				"sign": "JobRatingGiven(address,address,address,uint8,uint256)",
+				"hash": "0xb9cb995df645ae33c29e1a4ea2028a803a69503bab3aeee57474e01195a349c2"
+			},
+			"0xb9cb995df645ae33c29e1a4ea2028a803a69503bab3aeee57474e01195a349c2": {
+				"name": "JobRatingGiven",
+				"sign": "JobRatingGiven(address,address,address,uint8,uint256)",
+				"hash": "0xb9cb995df645ae33c29e1a4ea2028a803a69503bab3aeee57474e01195a349c2"
+			},
+			"SkillRatingGiven": {
+				"name": "SkillRatingGiven",
+				"sign": "SkillRatingGiven(address,address,address,uint8,uint256,uint256,uint256,uint256)",
+				"hash": "0x17354fa937310e5745112a01a3d6120621914be7978d99f716e0773e71c2c972"
+			},
+			"0x17354fa937310e5745112a01a3d6120621914be7978d99f716e0773e71c2c972": {
+				"name": "SkillRatingGiven",
+				"sign": "SkillRatingGiven(address,address,address,uint8,uint256,uint256,uint256,uint256)",
+				"hash": "0x17354fa937310e5745112a01a3d6120621914be7978d99f716e0773e71c2c972"
+			},
+			"AreaEvaluated": {
+				"name": "AreaEvaluated",
+				"sign": "AreaEvaluated(address,address,address,uint8,uint256)",
+				"hash": "0xe558093f7ccdc05ca735600d7d93ce24b49ca4fc2c47f61f27ec3e7571f7cf0f"
+			},
+			"0xe558093f7ccdc05ca735600d7d93ce24b49ca4fc2c47f61f27ec3e7571f7cf0f": {
+				"name": "AreaEvaluated",
+				"sign": "AreaEvaluated(address,address,address,uint8,uint256)",
+				"hash": "0xe558093f7ccdc05ca735600d7d93ce24b49ca4fc2c47f61f27ec3e7571f7cf0f"
+			},
+			"CategoryEvaluated": {
+				"name": "CategoryEvaluated",
+				"sign": "CategoryEvaluated(address,address,address,uint8,uint256,uint256)",
+				"hash": "0x0a1e6d95c7d27b6e607cacab49cf8b88390c894e73eca23a0394065118b6bb34"
+			},
+			"0x0a1e6d95c7d27b6e607cacab49cf8b88390c894e73eca23a0394065118b6bb34": {
+				"name": "CategoryEvaluated",
+				"sign": "CategoryEvaluated(address,address,address,uint8,uint256,uint256)",
+				"hash": "0x0a1e6d95c7d27b6e607cacab49cf8b88390c894e73eca23a0394065118b6bb34"
+			},
+			"SkillEvaluated": {
+				"name": "SkillEvaluated",
+				"sign": "SkillEvaluated(address,address,address,uint8,uint256,uint256,uint256)",
+				"hash": "0x95fd9fa6549f6243e16de78a31a7c9df65178f3674ffc3e7bd944fc3e9a66813"
+			},
+			"0x95fd9fa6549f6243e16de78a31a7c9df65178f3674ffc3e7bd944fc3e9a66813": {
+				"name": "SkillEvaluated",
+				"sign": "SkillEvaluated(address,address,address,uint8,uint256,uint256,uint256)",
+				"hash": "0x95fd9fa6549f6243e16de78a31a7c9df65178f3674ffc3e7bd944fc3e9a66813"
+			},
+			"BoardRatingGiven": {
+				"name": "BoardRatingGiven",
+				"sign": "BoardRatingGiven(address,address,uint256,uint8)",
+				"hash": "0x4eb70eef4c57ff55a2bbcae67042a7525745a37453dda83a08b3d844c75bc004"
+			},
+			"0x4eb70eef4c57ff55a2bbcae67042a7525745a37453dda83a08b3d844c75bc004": {
+				"name": "BoardRatingGiven",
+				"sign": "BoardRatingGiven(address,address,uint256,uint8)",
+				"hash": "0x4eb70eef4c57ff55a2bbcae67042a7525745a37453dda83a08b3d844c75bc004"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"Recovery": {
+		"name": "Recovery",
+		"addr": "0xbd5397b0b161af0e5a9e8a9b7ac3a8f882f3ca82",
+		"events": {
+			"UserRecovered": {
+				"name": "UserRecovered",
+				"sign": "UserRecovered(address,address,address)",
+				"hash": "0x1bc347db794ec96af040fff840bc12e98879673178c6772929e57cc5abc6a571"
+			},
+			"0x1bc347db794ec96af040fff840bc12e98879673178c6772929e57cc5abc6a571": {
+				"name": "UserRecovered",
+				"sign": "UserRecovered(address,address,address)",
+				"hash": "0x1bc347db794ec96af040fff840bc12e98879673178c6772929e57cc5abc6a571"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			}
+		}
+	},
+	"0xbd5397b0b161af0e5a9e8a9b7ac3a8f882f3ca82": {
+		"name": "Recovery",
+		"addr": "0xbd5397b0b161af0e5a9e8a9b7ac3a8f882f3ca82",
+		"events": {
+			"UserRecovered": {
+				"name": "UserRecovered",
+				"sign": "UserRecovered(address,address,address)",
+				"hash": "0x1bc347db794ec96af040fff840bc12e98879673178c6772929e57cc5abc6a571"
+			},
+			"0x1bc347db794ec96af040fff840bc12e98879673178c6772929e57cc5abc6a571": {
+				"name": "UserRecovered",
+				"sign": "UserRecovered(address,address,address)",
+				"hash": "0x1bc347db794ec96af040fff840bc12e98879673178c6772929e57cc5abc6a571"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			}
+		}
+	},
+	"Roles2Library": {
+		"name": "Roles2Library",
+		"addr": "0xd326746b223a5d81eaafd071659cf6889d526fa2",
+		"events": {
+			"RoleAdded": {
+				"name": "RoleAdded",
+				"sign": "RoleAdded(address,address,uint8)",
+				"hash": "0xaefc6303247f6e535a84463aeb8ae70719e1d40a8d6800dc8efa455b1e1fb33f"
+			},
+			"0xaefc6303247f6e535a84463aeb8ae70719e1d40a8d6800dc8efa455b1e1fb33f": {
+				"name": "RoleAdded",
+				"sign": "RoleAdded(address,address,uint8)",
+				"hash": "0xaefc6303247f6e535a84463aeb8ae70719e1d40a8d6800dc8efa455b1e1fb33f"
+			},
+			"RoleRemoved": {
+				"name": "RoleRemoved",
+				"sign": "RoleRemoved(address,address,uint8)",
+				"hash": "0x7577662ae5b32920f85a4b61fb99f5f5b9fd3f8e937ac15fe8b8a0a19e90fa0f"
+			},
+			"0x7577662ae5b32920f85a4b61fb99f5f5b9fd3f8e937ac15fe8b8a0a19e90fa0f": {
+				"name": "RoleRemoved",
+				"sign": "RoleRemoved(address,address,uint8)",
+				"hash": "0x7577662ae5b32920f85a4b61fb99f5f5b9fd3f8e937ac15fe8b8a0a19e90fa0f"
+			},
+			"CapabilityAdded": {
+				"name": "CapabilityAdded",
+				"sign": "CapabilityAdded(address,address,bytes4,uint8)",
+				"hash": "0xacf87e9240a04c36449fb09028711a68d4e3a4df32931c5df0dfc54acae52023"
+			},
+			"0xacf87e9240a04c36449fb09028711a68d4e3a4df32931c5df0dfc54acae52023": {
+				"name": "CapabilityAdded",
+				"sign": "CapabilityAdded(address,address,bytes4,uint8)",
+				"hash": "0xacf87e9240a04c36449fb09028711a68d4e3a4df32931c5df0dfc54acae52023"
+			},
+			"CapabilityRemoved": {
+				"name": "CapabilityRemoved",
+				"sign": "CapabilityRemoved(address,address,bytes4,uint8)",
+				"hash": "0xf820011dd31265ef4cfb8740f75367415191173d0f08b32fb5401d2a0dc1847b"
+			},
+			"0xf820011dd31265ef4cfb8740f75367415191173d0f08b32fb5401d2a0dc1847b": {
+				"name": "CapabilityRemoved",
+				"sign": "CapabilityRemoved(address,address,bytes4,uint8)",
+				"hash": "0xf820011dd31265ef4cfb8740f75367415191173d0f08b32fb5401d2a0dc1847b"
+			},
+			"PublicCapabilityAdded": {
+				"name": "PublicCapabilityAdded",
+				"sign": "PublicCapabilityAdded(address,address,bytes4)",
+				"hash": "0x67813b7923deedd38ecb1624185361da00646f2a5066850b99e5fddcec1708b4"
+			},
+			"0x67813b7923deedd38ecb1624185361da00646f2a5066850b99e5fddcec1708b4": {
+				"name": "PublicCapabilityAdded",
+				"sign": "PublicCapabilityAdded(address,address,bytes4)",
+				"hash": "0x67813b7923deedd38ecb1624185361da00646f2a5066850b99e5fddcec1708b4"
+			},
+			"PublicCapabilityRemoved": {
+				"name": "PublicCapabilityRemoved",
+				"sign": "PublicCapabilityRemoved(address,address,bytes4)",
+				"hash": "0xe74cc03efe60f26af9bb6b27883577bbbd981555b1a070b15aace44960d0ef1f"
+			},
+			"0xe74cc03efe60f26af9bb6b27883577bbbd981555b1a070b15aace44960d0ef1f": {
+				"name": "PublicCapabilityRemoved",
+				"sign": "PublicCapabilityRemoved(address,address,bytes4)",
+				"hash": "0xe74cc03efe60f26af9bb6b27883577bbbd981555b1a070b15aace44960d0ef1f"
+			},
+			"OwnershipTransferred": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0xd326746b223a5d81eaafd071659cf6889d526fa2": {
+		"name": "Roles2Library",
+		"addr": "0xd326746b223a5d81eaafd071659cf6889d526fa2",
+		"events": {
+			"RoleAdded": {
+				"name": "RoleAdded",
+				"sign": "RoleAdded(address,address,uint8)",
+				"hash": "0xaefc6303247f6e535a84463aeb8ae70719e1d40a8d6800dc8efa455b1e1fb33f"
+			},
+			"0xaefc6303247f6e535a84463aeb8ae70719e1d40a8d6800dc8efa455b1e1fb33f": {
+				"name": "RoleAdded",
+				"sign": "RoleAdded(address,address,uint8)",
+				"hash": "0xaefc6303247f6e535a84463aeb8ae70719e1d40a8d6800dc8efa455b1e1fb33f"
+			},
+			"RoleRemoved": {
+				"name": "RoleRemoved",
+				"sign": "RoleRemoved(address,address,uint8)",
+				"hash": "0x7577662ae5b32920f85a4b61fb99f5f5b9fd3f8e937ac15fe8b8a0a19e90fa0f"
+			},
+			"0x7577662ae5b32920f85a4b61fb99f5f5b9fd3f8e937ac15fe8b8a0a19e90fa0f": {
+				"name": "RoleRemoved",
+				"sign": "RoleRemoved(address,address,uint8)",
+				"hash": "0x7577662ae5b32920f85a4b61fb99f5f5b9fd3f8e937ac15fe8b8a0a19e90fa0f"
+			},
+			"CapabilityAdded": {
+				"name": "CapabilityAdded",
+				"sign": "CapabilityAdded(address,address,bytes4,uint8)",
+				"hash": "0xacf87e9240a04c36449fb09028711a68d4e3a4df32931c5df0dfc54acae52023"
+			},
+			"0xacf87e9240a04c36449fb09028711a68d4e3a4df32931c5df0dfc54acae52023": {
+				"name": "CapabilityAdded",
+				"sign": "CapabilityAdded(address,address,bytes4,uint8)",
+				"hash": "0xacf87e9240a04c36449fb09028711a68d4e3a4df32931c5df0dfc54acae52023"
+			},
+			"CapabilityRemoved": {
+				"name": "CapabilityRemoved",
+				"sign": "CapabilityRemoved(address,address,bytes4,uint8)",
+				"hash": "0xf820011dd31265ef4cfb8740f75367415191173d0f08b32fb5401d2a0dc1847b"
+			},
+			"0xf820011dd31265ef4cfb8740f75367415191173d0f08b32fb5401d2a0dc1847b": {
+				"name": "CapabilityRemoved",
+				"sign": "CapabilityRemoved(address,address,bytes4,uint8)",
+				"hash": "0xf820011dd31265ef4cfb8740f75367415191173d0f08b32fb5401d2a0dc1847b"
+			},
+			"PublicCapabilityAdded": {
+				"name": "PublicCapabilityAdded",
+				"sign": "PublicCapabilityAdded(address,address,bytes4)",
+				"hash": "0x67813b7923deedd38ecb1624185361da00646f2a5066850b99e5fddcec1708b4"
+			},
+			"0x67813b7923deedd38ecb1624185361da00646f2a5066850b99e5fddcec1708b4": {
+				"name": "PublicCapabilityAdded",
+				"sign": "PublicCapabilityAdded(address,address,bytes4)",
+				"hash": "0x67813b7923deedd38ecb1624185361da00646f2a5066850b99e5fddcec1708b4"
+			},
+			"PublicCapabilityRemoved": {
+				"name": "PublicCapabilityRemoved",
+				"sign": "PublicCapabilityRemoved(address,address,bytes4)",
+				"hash": "0xe74cc03efe60f26af9bb6b27883577bbbd981555b1a070b15aace44960d0ef1f"
+			},
+			"0xe74cc03efe60f26af9bb6b27883577bbbd981555b1a070b15aace44960d0ef1f": {
+				"name": "PublicCapabilityRemoved",
+				"sign": "PublicCapabilityRemoved(address,address,bytes4)",
+				"hash": "0xe74cc03efe60f26af9bb6b27883577bbbd981555b1a070b15aace44960d0ef1f"
+			},
+			"OwnershipTransferred": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"SafeMath": {
+		"name": "SafeMath",
+		"addr": "0xf103c20db46a367b061d2923ccb01de8ab11bf39",
+		"events": {}
+	},
+	"0xf103c20db46a367b061d2923ccb01de8ab11bf39": {
+		"name": "SafeMath",
+		"addr": "0xf103c20db46a367b061d2923ccb01de8ab11bf39",
+		"events": {}
+	},
+	"SkillsLibrary": {
+		"name": "SkillsLibrary",
+		"addr": "0x84d3d9eca952619dca02b99d3c78945d33d70bc8",
+		"events": {
+			"AreaSet": {
+				"name": "AreaSet",
+				"sign": "AreaSet(address,uint256,bytes32)",
+				"hash": "0xce1cc03b6e739f74f7c06a7ac12dbf08574eab3fb1bc508443ee1a4bad33786d"
+			},
+			"0xce1cc03b6e739f74f7c06a7ac12dbf08574eab3fb1bc508443ee1a4bad33786d": {
+				"name": "AreaSet",
+				"sign": "AreaSet(address,uint256,bytes32)",
+				"hash": "0xce1cc03b6e739f74f7c06a7ac12dbf08574eab3fb1bc508443ee1a4bad33786d"
+			},
+			"CategorySet": {
+				"name": "CategorySet",
+				"sign": "CategorySet(address,uint256,uint256,bytes32)",
+				"hash": "0x9eb59e2935f280c5f30d330456d2e82be62e268a556e296d791dc67e29dc365e"
+			},
+			"0x9eb59e2935f280c5f30d330456d2e82be62e268a556e296d791dc67e29dc365e": {
+				"name": "CategorySet",
+				"sign": "CategorySet(address,uint256,uint256,bytes32)",
+				"hash": "0x9eb59e2935f280c5f30d330456d2e82be62e268a556e296d791dc67e29dc365e"
+			},
+			"SkillSet": {
+				"name": "SkillSet",
+				"sign": "SkillSet(address,uint256,uint256,uint256,bytes32)",
+				"hash": "0x8d6567d268644c7590b30dca31486ea28c286fd5c52a9d7d013e43237ace582a"
+			},
+			"0x8d6567d268644c7590b30dca31486ea28c286fd5c52a9d7d013e43237ace582a": {
+				"name": "SkillSet",
+				"sign": "SkillSet(address,uint256,uint256,uint256,bytes32)",
+				"hash": "0x8d6567d268644c7590b30dca31486ea28c286fd5c52a9d7d013e43237ace582a"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0x84d3d9eca952619dca02b99d3c78945d33d70bc8": {
+		"name": "SkillsLibrary",
+		"addr": "0x84d3d9eca952619dca02b99d3c78945d33d70bc8",
+		"events": {
+			"AreaSet": {
+				"name": "AreaSet",
+				"sign": "AreaSet(address,uint256,bytes32)",
+				"hash": "0xce1cc03b6e739f74f7c06a7ac12dbf08574eab3fb1bc508443ee1a4bad33786d"
+			},
+			"0xce1cc03b6e739f74f7c06a7ac12dbf08574eab3fb1bc508443ee1a4bad33786d": {
+				"name": "AreaSet",
+				"sign": "AreaSet(address,uint256,bytes32)",
+				"hash": "0xce1cc03b6e739f74f7c06a7ac12dbf08574eab3fb1bc508443ee1a4bad33786d"
+			},
+			"CategorySet": {
+				"name": "CategorySet",
+				"sign": "CategorySet(address,uint256,uint256,bytes32)",
+				"hash": "0x9eb59e2935f280c5f30d330456d2e82be62e268a556e296d791dc67e29dc365e"
+			},
+			"0x9eb59e2935f280c5f30d330456d2e82be62e268a556e296d791dc67e29dc365e": {
+				"name": "CategorySet",
+				"sign": "CategorySet(address,uint256,uint256,bytes32)",
+				"hash": "0x9eb59e2935f280c5f30d330456d2e82be62e268a556e296d791dc67e29dc365e"
+			},
+			"SkillSet": {
+				"name": "SkillSet",
+				"sign": "SkillSet(address,uint256,uint256,uint256,bytes32)",
+				"hash": "0x8d6567d268644c7590b30dca31486ea28c286fd5c52a9d7d013e43237ace582a"
+			},
+			"0x8d6567d268644c7590b30dca31486ea28c286fd5c52a9d7d013e43237ace582a": {
+				"name": "SkillSet",
+				"sign": "SkillSet(address,uint256,uint256,uint256,bytes32)",
+				"hash": "0x8d6567d268644c7590b30dca31486ea28c286fd5c52a9d7d013e43237ace582a"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"Storage": {
+		"name": "Storage",
+		"addr": "0x3b5638763d30c8f79d447ca834ec9accccf7d033",
+		"events": {
+			"OwnershipTransferred": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			}
+		}
+	},
+	"0x3b5638763d30c8f79d447ca834ec9accccf7d033": {
+		"name": "Storage",
+		"addr": "0x3b5638763d30c8f79d447ca834ec9accccf7d033",
+		"events": {
+			"OwnershipTransferred": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			}
+		}
+	},
+	"StorageInterface": {
+		"name": "StorageInterface",
+		"addr": "0x21e335d7de7991909b75f78aed0f16866833f5e4",
+		"events": {}
+	},
+	"0x21e335d7de7991909b75f78aed0f16866833f5e4": {
+		"name": "StorageInterface",
+		"addr": "0x21e335d7de7991909b75f78aed0f16866833f5e4",
+		"events": {}
+	},
+	"StorageManager": {
+		"name": "StorageManager",
+		"addr": "0xc5042d2c994a3386d1581777efe5b46565e2a662",
+		"events": {
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"AccessGiven": {
+				"name": "AccessGiven",
+				"sign": "AccessGiven(address,address,bytes32)",
+				"hash": "0xb6798040b2ff718946767eb5764382753f7d49017204678c8905ccbd393f48bc"
+			},
+			"0xb6798040b2ff718946767eb5764382753f7d49017204678c8905ccbd393f48bc": {
+				"name": "AccessGiven",
+				"sign": "AccessGiven(address,address,bytes32)",
+				"hash": "0xb6798040b2ff718946767eb5764382753f7d49017204678c8905ccbd393f48bc"
+			},
+			"AccessBlocked": {
+				"name": "AccessBlocked",
+				"sign": "AccessBlocked(address,address,bytes32)",
+				"hash": "0xd21adfcaa3724e99864abea371528f9aa867d0b433e7d29dd972bf8d839ce467"
+			},
+			"0xd21adfcaa3724e99864abea371528f9aa867d0b433e7d29dd972bf8d839ce467": {
+				"name": "AccessBlocked",
+				"sign": "AccessBlocked(address,address,bytes32)",
+				"hash": "0xd21adfcaa3724e99864abea371528f9aa867d0b433e7d29dd972bf8d839ce467"
+			},
+			"OwnershipTransferred": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			}
+		}
+	},
+	"0xc5042d2c994a3386d1581777efe5b46565e2a662": {
+		"name": "StorageManager",
+		"addr": "0xc5042d2c994a3386d1581777efe5b46565e2a662",
+		"events": {
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"AccessGiven": {
+				"name": "AccessGiven",
+				"sign": "AccessGiven(address,address,bytes32)",
+				"hash": "0xb6798040b2ff718946767eb5764382753f7d49017204678c8905ccbd393f48bc"
+			},
+			"0xb6798040b2ff718946767eb5764382753f7d49017204678c8905ccbd393f48bc": {
+				"name": "AccessGiven",
+				"sign": "AccessGiven(address,address,bytes32)",
+				"hash": "0xb6798040b2ff718946767eb5764382753f7d49017204678c8905ccbd393f48bc"
+			},
+			"AccessBlocked": {
+				"name": "AccessBlocked",
+				"sign": "AccessBlocked(address,address,bytes32)",
+				"hash": "0xd21adfcaa3724e99864abea371528f9aa867d0b433e7d29dd972bf8d839ce467"
+			},
+			"0xd21adfcaa3724e99864abea371528f9aa867d0b433e7d29dd972bf8d839ce467": {
+				"name": "AccessBlocked",
+				"sign": "AccessBlocked(address,address,bytes32)",
+				"hash": "0xd21adfcaa3724e99864abea371528f9aa867d0b433e7d29dd972bf8d839ce467"
+			},
+			"OwnershipTransferred": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			},
+			"0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+				"name": "OwnershipTransferred",
+				"sign": "OwnershipTransferred(address,address)",
+				"hash": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+			}
+		}
+	},
+	"UserFactory": {
+		"name": "UserFactory",
+		"addr": "0x64283d39e2ae8d97ba005d7fa0d3506b515a63c5",
+		"events": {
+			"UserCreated": {
+				"name": "UserCreated",
+				"sign": "UserCreated(address,address,address,address,address,uint8[])",
+				"hash": "0x4dd26d089fbf1567cacdeb0c5027bdd9071a9bcb00cdb27c1b7e3c5fc9b7d5ce"
+			},
+			"0x4dd26d089fbf1567cacdeb0c5027bdd9071a9bcb00cdb27c1b7e3c5fc9b7d5ce": {
+				"name": "UserCreated",
+				"sign": "UserCreated(address,address,address,address,address,uint8[])",
+				"hash": "0x4dd26d089fbf1567cacdeb0c5027bdd9071a9bcb00cdb27c1b7e3c5fc9b7d5ce"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0x64283d39e2ae8d97ba005d7fa0d3506b515a63c5": {
+		"name": "UserFactory",
+		"addr": "0x64283d39e2ae8d97ba005d7fa0d3506b515a63c5",
+		"events": {
+			"UserCreated": {
+				"name": "UserCreated",
+				"sign": "UserCreated(address,address,address,address,address,uint8[])",
+				"hash": "0x4dd26d089fbf1567cacdeb0c5027bdd9071a9bcb00cdb27c1b7e3c5fc9b7d5ce"
+			},
+			"0x4dd26d089fbf1567cacdeb0c5027bdd9071a9bcb00cdb27c1b7e3c5fc9b7d5ce": {
+				"name": "UserCreated",
+				"sign": "UserCreated(address,address,address,address,address,uint8[])",
+				"hash": "0x4dd26d089fbf1567cacdeb0c5027bdd9071a9bcb00cdb27c1b7e3c5fc9b7d5ce"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"UserLibrary": {
+		"name": "UserLibrary",
+		"addr": "0xe4a2928093758b321abdbbb61cc30bf48640d18e",
+		"events": {
+			"SkillAreasSet": {
+				"name": "SkillAreasSet",
+				"sign": "SkillAreasSet(address,address,uint256)",
+				"hash": "0x47580e361e39c7552c5d1dfe41faf492bf326a9bdbc08095b79cde9418c08371"
+			},
+			"0x47580e361e39c7552c5d1dfe41faf492bf326a9bdbc08095b79cde9418c08371": {
+				"name": "SkillAreasSet",
+				"sign": "SkillAreasSet(address,address,uint256)",
+				"hash": "0x47580e361e39c7552c5d1dfe41faf492bf326a9bdbc08095b79cde9418c08371"
+			},
+			"SkillCategoriesSet": {
+				"name": "SkillCategoriesSet",
+				"sign": "SkillCategoriesSet(address,address,uint256,uint256)",
+				"hash": "0xf5bc4555dd344fe149ad54c8a3e1822c64a81f6943c4ca71b8eb64ff9fa58207"
+			},
+			"0xf5bc4555dd344fe149ad54c8a3e1822c64a81f6943c4ca71b8eb64ff9fa58207": {
+				"name": "SkillCategoriesSet",
+				"sign": "SkillCategoriesSet(address,address,uint256,uint256)",
+				"hash": "0xf5bc4555dd344fe149ad54c8a3e1822c64a81f6943c4ca71b8eb64ff9fa58207"
+			},
+			"SkillsSet": {
+				"name": "SkillsSet",
+				"sign": "SkillsSet(address,address,uint256,uint256,uint256)",
+				"hash": "0x62a9bbdf1ffb3a1f0c2b91bd41b4a8aae08756e1db8528adb7ca9cdca58e8bd5"
+			},
+			"0x62a9bbdf1ffb3a1f0c2b91bd41b4a8aae08756e1db8528adb7ca9cdca58e8bd5": {
+				"name": "SkillsSet",
+				"sign": "SkillsSet(address,address,uint256,uint256,uint256)",
+				"hash": "0x62a9bbdf1ffb3a1f0c2b91bd41b4a8aae08756e1db8528adb7ca9cdca58e8bd5"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	},
+	"0xe4a2928093758b321abdbbb61cc30bf48640d18e": {
+		"name": "UserLibrary",
+		"addr": "0xe4a2928093758b321abdbbb61cc30bf48640d18e",
+		"events": {
+			"SkillAreasSet": {
+				"name": "SkillAreasSet",
+				"sign": "SkillAreasSet(address,address,uint256)",
+				"hash": "0x47580e361e39c7552c5d1dfe41faf492bf326a9bdbc08095b79cde9418c08371"
+			},
+			"0x47580e361e39c7552c5d1dfe41faf492bf326a9bdbc08095b79cde9418c08371": {
+				"name": "SkillAreasSet",
+				"sign": "SkillAreasSet(address,address,uint256)",
+				"hash": "0x47580e361e39c7552c5d1dfe41faf492bf326a9bdbc08095b79cde9418c08371"
+			},
+			"SkillCategoriesSet": {
+				"name": "SkillCategoriesSet",
+				"sign": "SkillCategoriesSet(address,address,uint256,uint256)",
+				"hash": "0xf5bc4555dd344fe149ad54c8a3e1822c64a81f6943c4ca71b8eb64ff9fa58207"
+			},
+			"0xf5bc4555dd344fe149ad54c8a3e1822c64a81f6943c4ca71b8eb64ff9fa58207": {
+				"name": "SkillCategoriesSet",
+				"sign": "SkillCategoriesSet(address,address,uint256,uint256)",
+				"hash": "0xf5bc4555dd344fe149ad54c8a3e1822c64a81f6943c4ca71b8eb64ff9fa58207"
+			},
+			"SkillsSet": {
+				"name": "SkillsSet",
+				"sign": "SkillsSet(address,address,uint256,uint256,uint256)",
+				"hash": "0x62a9bbdf1ffb3a1f0c2b91bd41b4a8aae08756e1db8528adb7ca9cdca58e8bd5"
+			},
+			"0x62a9bbdf1ffb3a1f0c2b91bd41b4a8aae08756e1db8528adb7ca9cdca58e8bd5": {
+				"name": "SkillsSet",
+				"sign": "SkillsSet(address,address,uint256,uint256,uint256)",
+				"hash": "0x62a9bbdf1ffb3a1f0c2b91bd41b4a8aae08756e1db8528adb7ca9cdca58e8bd5"
+			},
+			"AuthFailedError": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0": {
+				"name": "AuthFailedError",
+				"sign": "AuthFailedError(address,address,bytes4)",
+				"hash": "0x5133a133185f1023427a2e90f18506b27db994977ce0c0faafd514a7dd109ae0"
+			},
+			"Error": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415": {
+				"name": "Error",
+				"sign": "Error(address,bytes32)",
+				"hash": "0xbb8f0c1d8804cd86e7873ec11cb00af945c8c0ebd061a68b2861703480346415"
+			},
+			"ErrorCode": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			},
+			"0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221": {
+				"name": "ErrorCode",
+				"sign": "ErrorCode(address,uint256)",
+				"hash": "0x09e0713b45664e161c202b19bb4574ee83dfa056f9bfdee56847b3971d968221"
+			}
+		}
+	}
+}

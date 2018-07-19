@@ -4,14 +4,13 @@ import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { connect } from 'react-redux'
-import { reduxForm, formValueSelector, propTypes } from 'redux-form'
+import { reduxForm, propTypes } from 'redux-form'
 import { Router } from 'src/routes'
 import { ProfileModel, ClientModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
 import GeneralTab from './GeneralTab/GeneralTab'
 import StuffTab from './StuffTab/StuffTab'
 import {
-  submitClientProfile,
   reviewClientProfile,
   getState,
 } from './../../../store/client-profile'
@@ -37,7 +36,7 @@ class ClientProfileContent extends React.Component {
   }
 
   componentDidMount = () => {
-    this.props.reviewClientProfile();
+    this.props.reviewClientProfile()
   }
 
   handleChangeIndex = (index) => this.setState({ slideIndex: index })
@@ -130,8 +129,8 @@ const ClientProfileContentForm = reduxForm({
   form: FORM_CLIENT_PROFILE,
 })(ClientProfileContent)
 
-function mapStateToProps (state, op) {
-  const clientProfileState = getState(state);
+function mapStateToProps (state) {
+  const clientProfileState = getState(state)
   return {
     reviewClientProfileLoading: clientProfileState.reviewClientProfileLoading,
     clientProfile: clientProfileState.profile,
@@ -141,7 +140,7 @@ function mapStateToProps (state, op) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    onSubmit: async (values) => {
+    onSubmit: async () => {
     },
     reviewClientProfile: () => {
       dispatch(reviewClientProfile())
