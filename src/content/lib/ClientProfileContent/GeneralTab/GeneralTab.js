@@ -31,6 +31,7 @@ export default class GeneralTab extends React.Component {
     clientType: PropTypes.instanceOf(ClientTypeModel),
     validationState: PropTypes.string,
     validationComment: PropTypes.string,
+    organizationType: PropTypes.string
   }
 
   handleClickValidate = () => {
@@ -43,23 +44,23 @@ export default class GeneralTab extends React.Component {
     console.log('---ClientProfileContent-GeneralTab handleClickLogo')
   }
 
-  renderTitle () {
+  renderTitle() {
     return VALIDATION_STATE_TITLE[this.props.validationState]
   }
 
-  renderUpgardeTitle () {
+  renderUpgardeTitle() {
     return (
       <div className={css.upgradeTitle}>
         <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
           <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
-          { this.renderTitle() }
-          <div className={css.validationComment}>hanik vse budet good{ this.props.validationComment }</div>
+          {this.renderTitle()}
+          <div className={css.validationComment}>hanik vse budet good{this.props.validationComment}</div>
         </span>
       </div>
     )
   }
 
-  renderOrganisationInfo () {
+  renderOrganisationInfo() {
     return (
       <div className={css.block}>
         <h3>Organisation Info</h3>
@@ -67,13 +68,13 @@ export default class GeneralTab extends React.Component {
           <Field
             fullWidth
             component={TextField}
-            name='name'
+            name='verifiable.name'
             floatingLabelText='Name'
           />
           <Field
             fullWidth
             openToYearSelection
-            name='registered'
+            name='custom.registered'
             component={DatePickerField}
             label='Registered In'
             // eslint-disable-next-line react/jsx-no-bind
@@ -84,20 +85,20 @@ export default class GeneralTab extends React.Component {
           <Field
             fullWidth
             component={TextField}
-            name='website'
+            name='verifiable.website'
             floatingLabelText='Website'
           />
           <Field
             fullWidth
             component={TextField}
-            name='email'
+            name='verifiable.email'
             floatingLabelText='Contact Email'
           />
         </div>
         <Field
           fullWidth
           component={TextField}
-          name='description'
+          name='verifiable.intro'
           hintText='Write a few words about your organisation'
           multiLine
           rows={2}
@@ -106,7 +107,7 @@ export default class GeneralTab extends React.Component {
     )
   }
 
-  renderInfo () {
+  renderInfo() {
     return (
       <div className={css.block}>
         <h3>Info</h3>
@@ -114,23 +115,22 @@ export default class GeneralTab extends React.Component {
           <Field
             fullWidth
             openToYearSelection
-            name='registered'
+            name='custom.registered'
             component={DatePickerField}
             label='Registered In'
-            // eslint-disable-next-line react/jsx-no-bind
             format={(value) => value === '' ? null : value}
           />
           <Field
             fullWidth
             component={TextField}
-            name='website'
+            name='verifiable.website'
             floatingLabelText='Website'
           />
         </div>
         <Field
           fullWidth
           component={TextField}
-          name='description'
+          name='verifiable.intro'
           hintText='Write a few words about yourself'
           multiLine
           rows={2}
@@ -139,8 +139,20 @@ export default class GeneralTab extends React.Component {
     )
   }
 
-  render () {
-    const { generalProfile, clientType } = this.props
+  renderCurrencies(currencies) {
+    return currencies.map(({ title, symbol }) => {
+      return (<Field
+        key={symbol}
+        component={ValidatedCheckbox}
+        name={`regular.currencies.${symbol}`}
+        label={title}
+      />)
+    })
+  }
+
+  render() {
+    const { generalProfile, clientType, currencies, organizationType } = this.props
+    console.log(this.props);
     return (
       <div className={css.content}>
         <div className={css.logoContainer} onClick={this.handleClickLogo}>
@@ -162,36 +174,24 @@ export default class GeneralTab extends React.Component {
             <Field
               fullWidth
               component={SelectField}
-              name='clientType'
+              name='verifiable.type'
               hintText='Organisation Type'
             >
-              {CLIENT_TYPES_LIST.map(type => (
-                <MenuItem key={uniqid()} value={type} primaryText={type.label} />
-              ))}
+              {
+                CLIENT_TYPES_LIST.map(type => (
+                  <MenuItem key={uniqid()} value={type.name} primaryText={type.label} />
+                ))
+              }
             </Field>
             <div />
           </div>
         </div>
-        { clientType === CLIENT_TYPES.ENTREPRENEUR ? this.renderInfo() : null }
-        { clientType === CLIENT_TYPES.ORGANISATION ? this.renderOrganisationInfo() : null }
+        {organizationType === CLIENT_TYPES.ENTREPRENEUR.name ? this.renderInfo() : null}
+        {organizationType === CLIENT_TYPES.ORGANISATION.name ? this.renderOrganisationInfo() : null}
         <div className={css.block}>
           <h3>Currency</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>
-          <Field
-            component={ValidatedCheckbox}
-            name='currencyLhus'
-            label='LHUS'
-          />
-          <Field
-            component={ValidatedCheckbox}
-            name='currencyBitcoin'
-            label='Bitcoin'
-          />
-          <Field
-            component={ValidatedCheckbox}
-            name='currencyAnother'
-            label='Another Currency'
-          />
+          {this.renderCurrencies(currencies)}
         </div>
         <Collapsible triggerDisabled classParentString={css.upgradeBlock} trigger={this.renderUpgardeTitle()} >
           <div className={css.description}>

@@ -4,17 +4,19 @@ import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { connect } from 'react-redux'
-import { reduxForm, propTypes } from 'redux-form'
+import { reduxForm, propTypes, formValueSelector } from 'redux-form'
 import { Router } from 'src/routes'
 import ProfileModel from 'src/api/backend/model/ProfileModel'
 import ProfileClientModel from 'src/api/backend/model/ProfileClientModel'
 import { Icon, Image, Button } from 'src/components/common'
+import { CLIENT_TYPES, CLIENT_TYPE_ORGANISATION } from 'src/models'
 import GeneralTab from './GeneralTab/GeneralTab'
 import StuffTab from './StuffTab/StuffTab'
 import {
   reviewClientProfile,
   getState,
 } from './../../../store/client-profile'
+import { getCurrencies } from './../../../store/worker-profile'
 import css from './ClientProfileContent.scss'
 
 const FORM_CLIENT_PROFILE = 'form/clientProfile'
@@ -29,7 +31,7 @@ class ClientProfileContent extends React.Component {
     stuff: PropTypes.arrayOf(PropTypes.instanceOf(ProfileModel)),
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       slideIndex: 0,
@@ -44,7 +46,7 @@ class ClientProfileContent extends React.Component {
 
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
-  handleBack () {
+  handleBack() {
     Router.pushRoute('/my-profile')
   }
 
@@ -58,8 +60,8 @@ class ClientProfileContent extends React.Component {
     console.log('---ClientProfileContent handleClickAddWorker')
   }
 
-  render () {
-    const { validationState, validationComment, profile, stuff, handleSubmit, clientType } = this.props
+  render() {
+    const { validationState, validationComment, profile, stuff, handleSubmit, clientType, currencies, organizationType } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
@@ -100,7 +102,7 @@ class ClientProfileContent extends React.Component {
               <Tab label='GENERAL' value={0} />
               <Tab label='STUFF' value={1} />
             </Tabs>
-            { this.state.slideIndex === 1 ? (
+            {this.state.slideIndex === 1 ? (
               <Icon
                 className={css.addWorker}
                 color={Icon.COLORS.WHITE}
@@ -108,14 +110,21 @@ class ClientProfileContent extends React.Component {
                 size={24}
                 onClick={this.handleClickAddWorker}
               />
-            ) : null }
+            ) : null}
           </div>
           <div className={css.tabContent}>
             <SwipeableViews
               index={this.state.slideIndex}
               onChangeIndex={this.handleChangeIndex}
             >
-              <GeneralTab validationState={validationState} validationComment={validationComment} generalProfile={profile.general} clientType={clientType} />
+              <GeneralTab
+                currencies={currencies}
+                validationState={validationState}
+                validationComment={validationComment}
+                generalProfile={profile.general}
+                clientType={clientType}
+                organizationType={organizationType}
+              />
               <StuffTab stuff={stuff} />
             </SwipeableViews>
           </div>
@@ -129,19 +138,26 @@ const ClientProfileContentForm = reduxForm({
   form: FORM_CLIENT_PROFILE,
 })(ClientProfileContent)
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   const clientProfileState = getState(state)
   const clientProfile = clientProfileState.profile
   return {
+    initialValues: {
+      verifiable: {
+        type: CLIENT_TYPE_ORGANISATION.name
+      }
+    },
     reviewClientProfileLoading: clientProfileState.reviewClientProfileLoading,
     clientProfile: clientProfileState.profile,
     reviewClientProfileFailure: clientProfileState.reviewClientProfileFailure,
     validationState: ProfileModel.getValidationState(clientProfile ? clientProfile : {}),
     validationComment: ProfileModel.getValidationComment(clientProfile ? clientProfile : {}),
+    currencies: getCurrencies(state),
+    organizationType: formValueSelector(FORM_CLIENT_PROFILE)(state, 'verifiable.type')
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     onSubmit: async () => {
     },
