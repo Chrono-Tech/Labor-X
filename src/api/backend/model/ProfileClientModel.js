@@ -3,6 +3,19 @@ import AbstractModel from './../../../models/AbstractModel'
 import ServiceCategoryModel from './ServiceCategoryModel'
 import AttachmentModel from './AttachmentModel'
 
+export const VALIDATION_STATE = {
+  INITIAL: 'INITIAL',
+  WAITING: 'WAITING',
+  WARNING: 'WARNING',
+  SUCCESS: 'SUCCESS',
+}
+export const VALIDATION_STATE_TITLE = {
+  [VALIDATION_STATE.INITIAL]: 'Validate',
+  [VALIDATION_STATE.WAITING]: 'Validation is on review',
+  [VALIDATION_STATE.WARNING]: 'Validation issue',
+  [VALIDATION_STATE.SUCCESS]: 'Validated',
+}
+
 const fragmentSchemaFactory = () => ({
   verifiable: {
     name: PropTypes.string.isRequired,
@@ -36,6 +49,24 @@ export default class ProfileClientModel extends AbstractModel {
   constructor (props) {
     super(props, schemaFactory())
     Object.freeze(this)
+  }
+
+  static fromJson (data) {
+    return new ProfileClientModel({
+      ...data,
+    })
+  }
+
+  static getValidationState (profile) {
+    const { submitted, approved } = profile
+    if (!submitted && !approved) return VALIDATION_STATE.INITIAL
+    if (submitted && !submitted.validationComment) return VALIDATION_STATE.WAITING
+    if (submitted && submitted.validationComment) return VALIDATION_STATE.WARNING
+    if (!submitted && approved) return VALIDATION_STATE.SUCCESS
+  }
+
+  static getValidationComment (profile) {
+    return profile.submitted && profile.submitted.validationComment
   }
 }
 

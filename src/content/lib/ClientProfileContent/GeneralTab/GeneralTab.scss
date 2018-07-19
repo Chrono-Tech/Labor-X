@@ -125,3 +125,36 @@
   color: $color-azure;
   font-weight: $font-weight-regular;
 }
+
+.icon {
+  font-size: 36px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.cardActionTitle {
+  //font-size: 16px;
+  //font-weight: 500;
+  display: inline-block;
+}
+
+.cardActionTitleSuccess {
+  color: $color-green;
+}
+
+.cardActionTitleError {
+  color: $color-red;
+}
+
+.cardActionTitleWarning {
+  color: $color-warn;
+}
+
+.validationComment {
+  position: relative;
+  padding-top:2rem;
+  bottom: 2px;
+  font-size: 12px;
+  line-height: 12px;
+  color: rgb(244, 67, 54);
+}

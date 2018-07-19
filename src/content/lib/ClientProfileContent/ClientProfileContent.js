@@ -6,7 +6,8 @@ import Tab from '@material-ui/core/Tab'
 import { connect } from 'react-redux'
 import { reduxForm, propTypes } from 'redux-form'
 import { Router } from 'src/routes'
-import { ProfileModel, ClientModel } from 'src/models'
+import ProfileModel from 'src/api/backend/model/ProfileModel'
+import ProfileClientModel from 'src/api/backend/model/ProfileClientModel'
 import { Icon, Image, Button } from 'src/components/common'
 import GeneralTab from './GeneralTab/GeneralTab'
 import StuffTab from './StuffTab/StuffTab'
@@ -23,7 +24,7 @@ class ClientProfileContent extends React.Component {
     ...propTypes,
     profile: PropTypes.shape({
       general: PropTypes.instanceOf(ProfileModel),
-      client: PropTypes.instanceOf(ClientModel),
+      client: PropTypes.instanceOf(ProfileClientModel),
     }),
     stuff: PropTypes.arrayOf(PropTypes.instanceOf(ProfileModel)),
   }
@@ -58,8 +59,7 @@ class ClientProfileContent extends React.Component {
   }
 
   render () {
-    const { profile, stuff, handleSubmit, clientType } = this.props
-
+    const { validationState, validationComment, profile, stuff, handleSubmit, clientType } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
@@ -115,7 +115,7 @@ class ClientProfileContent extends React.Component {
               index={this.state.slideIndex}
               onChangeIndex={this.handleChangeIndex}
             >
-              <GeneralTab generalProfile={profile.general} clientType={clientType} />
+              <GeneralTab validationState={validationState} validationComment={validationComment} generalProfile={profile.general} clientType={clientType} />
               <StuffTab stuff={stuff} />
             </SwipeableViews>
           </div>
@@ -131,10 +131,13 @@ const ClientProfileContentForm = reduxForm({
 
 function mapStateToProps (state) {
   const clientProfileState = getState(state)
+  const clientProfile = clientProfileState.profile
   return {
     reviewClientProfileLoading: clientProfileState.reviewClientProfileLoading,
     clientProfile: clientProfileState.profile,
     reviewClientProfileFailure: clientProfileState.reviewClientProfileFailure,
+    validationState: ProfileModel.getValidationState(clientProfile ? clientProfile : {}),
+    validationComment: ProfileModel.getValidationComment(clientProfile ? clientProfile : {}),
   }
 }
 
