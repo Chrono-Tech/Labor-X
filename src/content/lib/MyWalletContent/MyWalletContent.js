@@ -2,14 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
+import withStyles from '@material-ui/core/styles/withStyles'
 
 import css from './index.scss'
 import {
@@ -22,6 +26,26 @@ import {
 } from "../../../store/my-wallet";
 import type {Transaction} from "../../../api/web3/model/Transaction";
 import {JobModel} from "../../../models";
+
+const styles = () => ({
+  balanceCardRoot: {
+    position
+  },
+  balanceListItem: {
+    padding: '40px 30px'
+  },
+  balanceListItemAvatar: {
+    height: '50px',
+    width: '50px',
+  },
+  balanceListItemTextPrimary: {
+    fontSize: '35px',
+    lineHeight: '42px',
+    fontWeight: 500,
+    color: '#333333',
+  }
+})
+
 
 export class MyWalletContent extends React.Component {
 
@@ -81,6 +105,26 @@ export class MyWalletContent extends React.Component {
           <div className={css.titleText}>My Funds</div>
         </div>
         <div className={css.content}>
+          <Card className={this.props.classes.balanceCardRoot}>
+            <CardHeader
+              avatar={ <Avatar src='/static/images/lht-icon.png' className={this.props.classes.balanceListItemAvatar} /> }
+              action={ <div><Button>Deposit</Button><Button>Withdraw</Button></div>}
+              title="Shrimp and Chorizo Paella"
+              subheader="September 14, 2016"
+            />
+            <ListItem className={this.props.classes.balanceListItem} component='div'>
+              <Avatar src='/static/images/lht-icon.png' className={this.props.classes.balanceListItemAvatar} />
+              <ListItemText primary='162.00' secondary='$4,860.00' classes={{ primary: this.props.classes.balanceListItemTextPrimary }} />
+              <ListItemSecondaryAction>
+                <Button>Deposit</Button>
+                <Button>Withdraw</Button>
+              </ListItemSecondaryAction>
+            </ListItem>
+            <Divider/>
+            <CardActions>
+              <Button component='a' href='https://chronobank.io/' target='_blank'>Manage funds in ChronoWallet</Button>
+            </CardActions>
+          </Card>
           <br/>
           <br/>
           { this.props.selectInitialPropsLoading ? <CircularProgress /> : this.renderContent() }
@@ -90,6 +134,8 @@ export class MyWalletContent extends React.Component {
   }
 
 }
+
+MyWalletContent = withStyles(styles)(MyWalletContent)
 
 const mapStateToProps = state => ({
   selectInitialPropsLoading: getSelectInitialPropsLoading(state),
@@ -103,4 +149,6 @@ const mapDispatchToProps = dispatch => ({
   selectMoreTransactions: () => dispatch(selectMoreTransactions()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyWalletContent)
+MyWalletContent = connect(mapStateToProps, mapDispatchToProps)(MyWalletContent)
+
+export default MyWalletContent
