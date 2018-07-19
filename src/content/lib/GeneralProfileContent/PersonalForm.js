@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
@@ -126,7 +127,7 @@ class PersonalForm extends React.Component {
 
 PersonalForm = reduxForm({ form: FORM })(PersonalForm)
 
-const mapStateToProps = (state, { profile } : { profile: ProfilePersonalModel }) => ({
+const mapStateToProps = (state, { profile }: { profile: ProfilePersonalModel }) => ({
   initialValues: getInitialValues(profile),
   avatarUrl: (getAvatar(state) || profile.getSubmittedAvatar() || profile.getApprovedAvatar() || DEFAULT_AVATAR).url,
   validationState: ProfileModel.getValidationState(profile),

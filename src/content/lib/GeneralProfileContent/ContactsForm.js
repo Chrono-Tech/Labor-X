@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
@@ -116,7 +117,7 @@ class ContactsForm extends React.Component {
 
 ContactsForm = reduxForm({ form: FORM })(ContactsForm)
 
-const mapStateToProps = (state, { profile } : { profile: ProfileContactsModel }) => ({
+const mapStateToProps = (state, { profile }: { profile: ProfileContactsModel }) => ({
   initialValues: getInitialValues(profile),
   validationState: ProfileModel.getValidationState(profile),
   validationComment: ProfileModel.getValidationComment(profile),

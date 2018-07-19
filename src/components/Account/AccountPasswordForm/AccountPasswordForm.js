@@ -1,4 +1,7 @@
 import React  from 'react'
+import PropTypes from 'prop-types'
+import { Checkbox } from 'redux-form-material-ui'
+
 import { reduxForm, Field, SubmissionError } from 'redux-form'
 
 import { Link, Button, Input } from 'components/common'
@@ -27,12 +30,20 @@ const onSubmit = ({ password, recruiter, worker, client }) => {
 }
 
 class AccountPasswordForm extends React.Component {
+  static propTypes = {
+    existingAccount: PropTypes.bool,
+    handleSubmit: PropTypes.func,
+    error: PropTypes.string,
+    pristine: PropTypes.bool,
+    invalid: PropTypes.bool,
+    navigateToSelectMethod: PropTypes.func,
+  }
 
   renderPasswordFieldset () {
     return (
       <div className={css.contentBlock}>
-        <h2>Create Account Password</h2>
-        <p>If you're new to block-chain create your Account password below.</p>
+        <h2>Create Your Account Password</h2>
+        <p>If you&quot;re new to block-chain create your Account password below.</p>
 
         <div className={css.passwordBlock}>
           <Field
@@ -68,7 +79,7 @@ class AccountPasswordForm extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, touched, navigateNext, navigateBack, navigateToSelectMethod } = this.props
+    const { handleSubmit, error, pristine, invalid, navigateToSelectMethod } = this.props
 
     return (
       <form className={css.root} name={FORM_ACCOUNT_PASSWORD} onSubmit={handleSubmit}>
@@ -78,48 +89,26 @@ class AccountPasswordForm extends React.Component {
           <p className={css.description}>You may also add account types any time in the future. Please select at least one now.</p>
 
           <div className={css.checkboxBlock}>
-            <div className={css.row}>
+            <Field
+              className={css.checkbox}
+              name='recruiter'
+              component={Checkbox}
+              label={<div className={css.checkboxLabel}><p><strong>Recruiter</strong></p><p>Create and manage Job Boards</p></div>}
+            />
+            <div className={css.checkbox}>
               <Field
-                id='recruiter'
-                className={css.checkbox}
-                component='input'
-                type='checkbox'
-                name='recruiter'
-              />
-              <label htmlFor='recruiter' className={css.checkboxLabel}>
-                <strong>Recruiter</strong>
-                Create and manage Job Boards
-              </label>
-            </div>
-
-            <div className={css.row}>
-              <Field
-                id='worker'
-                className={css.checkbox}
-                component='input'
-                type='checkbox'
                 name='worker'
+                component={Checkbox}
+                label={<div className={css.checkboxLabel}><p><strong>Worker</strong></p><p>Join Job Boards and start your job search</p></div>}
               />
-              <label htmlFor='worker' className={css.checkboxLabel}>
-                <strong>Worker</strong>
-                Join Job Boards and start your job search
-              </label>
             </div>
-
-            <div className={css.row}>
+            <div className={css.checkbox}>
               <Field
-                id='client'
-                className={css.checkbox}
-                component='input'
-                type='checkbox'
                 name='client'
+                component={Checkbox}
+                label={<div className={css.checkboxLabel}><p><strong>Client</strong></p><p>Join Job Boards and post your jobs</p></div>}
               />
-              <label htmlFor='client' className={css.checkboxLabel}>
-                <strong>Client</strong>
-                Join Job Boards and post your jobs
-              </label>
             </div>
-
           </div>
         </div>
 
@@ -138,7 +127,7 @@ class AccountPasswordForm extends React.Component {
         />
 
         <div className={css.pageDescription}>
-          Have a Mnemonic key, Wallet File or HD solution?
+          Have a Mnemonic key, Wallet File or Hardware solution?
           <br />
           <button onClick={navigateToSelectMethod} className={css.descriptionLink}>
             Use another Authorization Method

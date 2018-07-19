@@ -23,6 +23,11 @@
   margin-bottom: 30px;
 }
 
+.loginButton {
+  min-width: 19rem;
+  margin-bottom: 30px;
+}
+
 .forgotPasswordLink {
   color: #fff;
   font-weight: normal !important;
@@ -127,8 +132,8 @@
 }
 
 .submitButton {
+  min-width: 19rem;
   justify-content: center;
-  text-transform: uppercase;
   font-weight: bold;
   background-color: #fff !important;
   padding: 12px 0;

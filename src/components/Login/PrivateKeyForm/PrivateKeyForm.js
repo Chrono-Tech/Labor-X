@@ -34,7 +34,7 @@ class PrivateKeyForm extends React.Component {
           mods={css.keyField}
         />
         <Button
-          label='Login'
+          label='Proceed to Login'
           buttonClassName={css.submitButton}
           type={Button.TYPES.SUBMIT}
           disabled={pristine || invalid}

@@ -1,8 +1,43 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
 
 .root {
-  text-align: center;
-}
-
-.row {
-  margin-top: 2rem;
+  @include flex(column, flex-start, center);
+  padding: 4rem 0;
+  > h3 {
+    margin-bottom: 2rem;
+    color: $color-white;
+  }
+  > p {
+    margin-bottom: 4rem;
+    font-weight: $font-weight-medium;
+    color: $color-white;
+  }
+  .uploadField {
+    width: 38rem;
+  }
+  .loginButton {
+    margin-top: 3rem;
+    width: 19rem;
+  }
+  .error {
+    color: #ffe44c !important;
+  }
+  .otherActions {
+    margin-top: 3rem;
+    color: #BFE7F4;
+    font-size: 16px;
+    font-weight: 300;
+    .backButton {
+      margin-left: 5px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 300;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }

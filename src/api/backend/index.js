@@ -1,3 +1,4 @@
+// @flow
 import axios from 'axios'
 
 import FileModel from "./../../models/FileModel"
@@ -26,7 +27,7 @@ function deepSortByKey (obj) {
   }, {})
 }
 
-export const signin = (account, roles) : SigninResBodyModel => {
+export const signin = (account, roles): SigninResBodyModel => {
   const body = { purpose: 'laborx' }
   if (roles) body.roles = roles
   const data = JSON.stringify(deepSortByKey({ url: '/api/v1/security/signin/signature/laborx', body }))
@@ -48,7 +49,7 @@ export const reviewProfile = (token: string): ProfileModel => {
   }).then(res => ProfileModel.fromJson(res.data))
 }
 
-export const uploadImage = (file: FileModel, token: string) : ImageModel => {
+export const uploadImage = (file: FileModel, token: string): ImageModel => {
   const formData = new FormData()
   formData.append('image', file)
   return http.post(`${ API_URL }/media/image/upload`, formData, {
@@ -56,7 +57,7 @@ export const uploadImage = (file: FileModel, token: string) : ImageModel => {
   }).then(res => new ImageModel(res.data))
 }
 
-export const uploadAttachment = (file: FileModel, token: string) : AttachmentModel => {
+export const uploadAttachment = (file: FileModel, token: string): AttachmentModel => {
   const formData = new FormData()
   formData.append('file', file)
   return http.post(`${ API_URL }/media/file/upload`, formData, {

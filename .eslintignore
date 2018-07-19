@@ -62,6 +62,7 @@ src/**/*.js
 !src/models/app/BoardRequirementModel.js
 !src/models/app/BoardPostFeeModel.js
 !src/models/form/JobBoardFormModel.js
+!src/models/notifications/
 
 !src/store/index.js
 !src/store/jobs/
@@ -74,13 +75,12 @@ src/**/*.js
 !src/store/applicants/
 !src/store/createAccount/actions.js
 !src/store/login/actions.js
-!src/store/user/actions.js
-!src/store/user/reducer.js
 !src/store/bootstrap.js
 !src/store/boards/selectors.js
 !src/store/jobs/actions.js
 !src/store/jobs/selectors.js
 !src/store/opportunities/selectors.js
+!src/store/user/
 
 
 !src/components/common/Link/
@@ -101,13 +101,16 @@ src/**/*.js
 !src/components/common/VerificationLevelSelector/
 !src/components/common/ScheduleWidget/
 !src/components/common/CompletedJobCard/CompletedJobCard.js
+!src/components/Account/AccountPasswordForm/
+!src/components/Account/ShowMnemonic/
 
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
 !src/components/CompletedJobs/CompletedJobs.js
 !src/components/Login/LoginForm/LoginForm.js
-!src/components/Login/LoginOptions/LoginOptions.js
+!src/components/Login/LoginOptions/
+!src/components/Login/WalletFileForm/
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/

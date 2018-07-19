@@ -1,3 +1,4 @@
+// @flow
 import EventEmitter from 'events'
 
 export default class ContractsManagerDAO extends EventEmitter {
