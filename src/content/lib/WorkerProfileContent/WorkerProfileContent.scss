@@ -43,6 +43,9 @@ $maxWidth: 77rem;
       }
     }
   }
+  .validationBlock {
+    max-width: calc(#{$maxWidth} - 7rem);
+  }
   .content {
     margin-left: 4rem;
     max-width: calc(#{$maxWidth} - 4rem);

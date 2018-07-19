@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, FieldArray } from 'redux-form'
-import { TextField } from 'redux-form-material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
 import Collapsible from 'react-collapsible'
+import Grid from '@material-ui/core/Grid'
 import { Icon, Button } from 'src/components/common'
 import DatePickerField from 'src/components/DatePickerField'
 import css from './WorkExperienceTab.scss'
@@ -44,16 +45,17 @@ export default class WorkExperienceTab extends React.Component {
     return (
       <div className={css.experienceBlock} key={experience}>
         <div className={css.experienceBlockContent}>
-          <div className={css.twoColumn}>
-            <Field
-              fullWidth
-              component={TextField}
-              name={`${experience}.organization`}
-              floatingLabelText='Organisation'
-            />
-            <div className={css.twoColumn}>
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
               <Field
                 fullWidth
+                component={TextField}
+                name={`${experience}.organization`}
+                label='Organisation'
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Field
                 openToYearSelection
                 name={`${experience}.since`}
                 component={DatePickerField}
@@ -61,8 +63,9 @@ export default class WorkExperienceTab extends React.Component {
                 // eslint-disable-next-line react/jsx-no-bind
                 format={(value) => value === '' ? null : value}
               />
+            </Grid>
+            <Grid item xs={3}>
               <Field
-                fullWidth
                 openToYearSelection
                 name={`${experience}.until`}
                 component={DatePickerField}
@@ -70,16 +73,20 @@ export default class WorkExperienceTab extends React.Component {
                 // eslint-disable-next-line react/jsx-no-bind
                 format={(value) => value === '' ? null : value}
               />
-            </div>
-          </div>
-          <Field
-            fullWidth
-            component={TextField}
-            name={`${experience}.responsibilities`}
-            hintText='List your responsibilities here'
-            multiLine
-            rows={2}
-          />
+            </Grid>
+          </Grid>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <Field
+                fullWidth
+                component={TextField}
+                name={`${experience}.responsibilities`}
+                label='List your responsibilities here'
+                multiLine
+                rows={2}
+              />
+            </Grid>
+          </Grid>
         </div>
         <div className={css.removeBlock} onClick={() => this.handlRemoveExperience(index)}>
           <Icon

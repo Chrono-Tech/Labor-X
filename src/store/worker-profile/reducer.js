@@ -7,9 +7,9 @@ import ServiceCategoryModel from "../../api/backend/model/ServiceCategoryModel"
 
 import {
 
-  WORKER_PROFILE_REVIEW_REQUEST,
-  WORKER_PROFILE_REVIEW_SUCCESS,
-  WORKER_PROFILE_REVIEW_FAILURE,
+  WORKER_PROFILE_SUMBIT_REQUEST,
+  WORKER_PROFILE_SUMBIT_SUCCESS,
+  WORKER_PROFILE_SUMBIT_FAILURE,
 
   SERVICE_ATTACHMENT_CREATE_REQUEST,
   SERVICE_ATTACHMENT_CREATE_SUCCESS,
@@ -95,16 +95,16 @@ export default (state = STATE, { type, payload }) => {
     })
 
 
-    case WORKER_PROFILE_REVIEW_REQUEST: return ({
+    case WORKER_PROFILE_SUMBIT_REQUEST: return ({
       ...state,
       reviewWorkerProfileLoading: true,
     })
-    case WORKER_PROFILE_REVIEW_SUCCESS: return ({
+    case WORKER_PROFILE_SUMBIT_SUCCESS: return ({
       ...state,
       reviewWorkerProfileLoading: false,
       workerProfile: payload,
     })
-    case WORKER_PROFILE_REVIEW_FAILURE: return ({
+    case WORKER_PROFILE_SUMBIT_FAILURE: return ({
       ...state,
       reviewWorkerProfileLoading: false,
       reviewWorkerProfileFailure: payload,

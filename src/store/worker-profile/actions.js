@@ -6,12 +6,12 @@ import { WORKER_PROFILE_FORM } from "./reducer"
 import FileModel from "../../models/FileModel"
 
 
-export const WORKER_PROFILE_REVIEW_REQUEST = 'WORKER_PROFILE/PROFILE_REVIEW/REQUEST'
-export const WORKER_PROFILE_REVIEW_SUCCESS = 'WORKER_PROFILE/PROFILE_REVIEW/SUCCESS'
-export const WORKER_PROFILE_REVIEW_FAILURE = 'WORKER_PROFILE/PROFILE_REVIEW/FAILURE'
-export const submitWorkerProfileRequest = (req) => ({ type: WORKER_PROFILE_REVIEW_REQUEST, payload: req })
-export const submitWorkerProfileSuccess = (res) => ({ type: WORKER_PROFILE_REVIEW_SUCCESS, payload: res })
-export const submitWorkerProfileFailure = (err) => ({ type: WORKER_PROFILE_REVIEW_FAILURE, payload: err })
+export const WORKER_PROFILE_SUMBIT_REQUEST = 'WORKER_PROFILE/PROFILE_SUMBIT/REQUEST'
+export const WORKER_PROFILE_SUMBIT_SUCCESS = 'WORKER_PROFILE/PROFILE_SUMBIT/SUCCESS'
+export const WORKER_PROFILE_SUMBIT_FAILURE = 'WORKER_PROFILE/PROFILE_REVIEW/FAILURE'
+export const submitWorkerProfileRequest = (req) => ({ type: WORKER_PROFILE_SUMBIT_REQUEST, payload: req })
+export const submitWorkerProfileSuccess = (res) => ({ type: WORKER_PROFILE_SUMBIT_SUCCESS, payload: res })
+export const submitWorkerProfileFailure = (err) => ({ type: WORKER_PROFILE_SUMBIT_FAILURE, payload: err })
 export const submitWorkerProfile = (data, serviceAttachments) => async (dispatch, getState) => {
   try {
     const workerProfile = workerProfileModelFromForm(data);

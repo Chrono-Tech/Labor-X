@@ -58,14 +58,14 @@ class WorkerProfileContent extends React.Component {
     avatarUrl: PropTypes.string,
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       slideIndex: 0,
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getWorkerProfile()
   }
 
@@ -73,7 +73,7 @@ class WorkerProfileContent extends React.Component {
 
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
-  handleBack() {
+  handleBack () {
     Router.pushRoute('/my-profile')
   }
 
@@ -92,11 +92,11 @@ class WorkerProfileContent extends React.Component {
     }
   }
 
-  renderTitle() {
+  renderTitle () {
     return VALIDATION_STATE_TITLE[this.props.validationState]
   }
 
-  render() {
+  render () {
     const { profile, handleSubmit, avatarUrl, removeService, removeExperience, serviceCategories, currencies, socials } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
@@ -160,15 +160,18 @@ class WorkerProfileContent extends React.Component {
               <ServicesTab onRemoveService={removeService} currencies={currencies} serviceCategories={serviceCategories} />
             </SwipeableViews>
 
-            <ExpansionPanel>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
-                  <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
-                  {this.renderTitle()}
-                  <p>{this.props.validationComment}</p>
-                </span>
-              </ExpansionPanelSummary>
-            </ExpansionPanel>
+            <div className={css.validationBlock}>
+              <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+                    <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+                    {this.renderTitle()}
+                    <p>{this.props.validationComment}</p>
+                  </span>
+                </ExpansionPanelSummary>
+              </ExpansionPanel>
+            </div>
+
           </div>
         </div>
       </form>
@@ -180,7 +183,7 @@ const workerProfileContentForm = reduxForm({
   form: WORKER_PROFILE_FORM,
 })(WorkerProfileContent)
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   const workerProfile = getState(state).workerProfile
   return {
     initialValues: {
@@ -197,7 +200,7 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     getWorkerProfile: () => {
       dispatch(getWorkerProfile())

@@ -2,16 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import { Field, FieldArray } from 'redux-form'
-import { SelectField, TextField } from 'redux-form-material-ui'
-import { MenuItem } from 'material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
+import SelectField from 'redux-form-material-ui-next/lib/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
 import { ValidatedCheckbox, Link, Icon } from 'src/components/common'
 import CurrencyModel from '../../../../api/backend/model/CurrencyModel'
 import ServiceCategoryModel from '../../../../api/backend/model/ServiceCategoryModel'
 import css from './ServicesTab.scss'
 
-const floatStyle = {
-  visibility: 'hidden',
-}
 
 export default class ServicesTab extends React.Component {
   static propTypes = {
@@ -47,50 +48,61 @@ export default class ServicesTab extends React.Component {
     return (
       <div key={index} className={css.serviceBlock}>
         <div className={css.serviceBlockContent}>
-          <Field
-            fullWidth
-            component={TextField}
-            name={`${service}.name`}
-            floatingLabelText='Service Name'
-          />
-          <div className={css.twoColumn}>
-            <Field
-              fullWidth
-              component={SelectField}
-              name={`${service}.category`}
-              floatingLabelText='Categoty'
-              value={service.category}
-            >
-              {
-                serviceCategories.map((item) => (
-                  <MenuItem key={item.code} value={item.code} primaryText={item.name} />
-                ))
-              }
-            </Field>
-            <div />
-          </div>
-          <div className={css.twoColumn}>
-            <Field
-              fullWidth
-              component={SelectField}
-              name={`${service}.fee`}
-              floatingLabelText='Fee'
-            >
-              <MenuItem value='0' primaryText='Specific fee 1' />
-              <MenuItem value='1' primaryText='Specific fee 2' />
-            </Field>
-            <div className={css.twoColumn}>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <Field
+                fullWidth
+                component={TextField}
+                name={`${service}.name`}
+                label='Service Name'
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <FormControl className={css.field}>
+                <InputLabel>Category</InputLabel>
+                <Field
+                  component={SelectField}
+                  name={`${service}.category`}
+                  placeholder='Categoty'
+                  label='Category'
+                  value={service.category}
+                >
+                  {
+                    serviceCategories.map((item) => (
+                      <MenuItem key={item.code} value={item.code}> {item.name} </MenuItem>
+                    ))
+                  }
+                </Field>
+              </FormControl>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <FormControl className={css.field}>
+                <InputLabel>Fee</InputLabel>
+                <Field
+                  component={SelectField}
+                  name={`${service}.fee`}
+                  label='Fee'
+                >
+                  <MenuItem value='0'> Specific fee 1 </MenuItem>
+                  <MenuItem value='1'> Specific fee 2 </MenuItem>
+                </Field>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
               <Field
                 fullWidth
                 component={TextField}
                 name={`${service}.minFee`}
-                hintText='Min fee, LHUS'
-                floatingLabelStyle={floatStyle}
-                floatingLabelText='empty'
-                floatingLabelFixed
+                label='Min fee, LHUS'
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </div>
         <div className={css.documentEntry}>
           <label className={css.fileLoaderBlock}>
@@ -110,7 +122,7 @@ export default class ServicesTab extends React.Component {
             size={28}
           />
         </div>
-      </div>
+      </div >
     )
   }
 
@@ -129,17 +141,14 @@ export default class ServicesTab extends React.Component {
           />
         </div>
         <FieldArray name='services' component={this.renderServices} />
-        <div className=''>
+        <div>
           <div className={css.block}>
             <h3>Hourly Charge</h3>
             <Field
               fullWidth
               component={TextField}
               name='regular.hourlyCharge'
-              hintText='LHUS 1'
-              floatingLabelStyle={floatStyle}
-              floatingLabelText='empty'
-              floatingLabelFixed
+              label='LHUS 1'
             />
             <Link className={cn(css.link, css.linkRates)} href='/rates'>View Rates</Link>
           </div>

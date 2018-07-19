@@ -78,10 +78,11 @@ export default class ProfileWorkerModel extends AbstractModel {
   }
 
   static getValidationComment (profile) {
-    if (profile)
-    {return profile.submitted && profile.submitted.validationComment}
-    else
-    {return ""}
+    if (profile) {
+      return profile.submitted && profile.submitted.validationComment
+    }
+    else {
+      return ""
+    }
   }
 }
-

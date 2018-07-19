@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'redux-form'
-import { TextField } from 'redux-form-material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
 import { ProfileModel } from 'src/models'
 import ProfileWorkerSocialModel from '../../../../api/backend/model/ProfileWorkerSocialModel'
 import css from './GeneralTab.scss'
@@ -21,7 +21,7 @@ export default class GeneralTab extends React.Component {
           fullWidth
           component={TextField}
           name={`socials[${index}].url`}
-          floatingLabelText={item.name}
+          label={item.name}
         />
       ))
     )
@@ -34,14 +34,7 @@ export default class GeneralTab extends React.Component {
         <div className={css.logoContainer} onClick={this.handleClickLogo}>
           <div className={css.logo}>
             <img src={avatarUrl} alt='Logo' />
-            <div className={css.overlay}>
-              {/* <Icon
-                icon={Icon.ICONS.UPLOAD}
-                color={Icon.COLORS.WHITE}
-                size={24}
-              />
-              <p>UPLOAD PHOTO</p> */}
-            </div>
+            <div className={css.overlay} />
           </div>
         </div>
         <div className={css.block}>
@@ -50,7 +43,7 @@ export default class GeneralTab extends React.Component {
             fullWidth
             component={TextField}
             name='verifiable.intro'
-            floatingLabelText='Intro'
+            label='Intro'
           />
         </div>
         <div className={css.block}>
