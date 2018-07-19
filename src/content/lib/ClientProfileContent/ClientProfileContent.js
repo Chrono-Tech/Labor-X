@@ -10,6 +10,11 @@ import { ProfileModel, ClientModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
 import GeneralTab from './GeneralTab/GeneralTab'
 import StuffTab from './StuffTab/StuffTab'
+import {
+  submitClientProfile,
+  reviewClientProfile,
+  getState,
+} from './../../../store/client-profile'
 import css from './ClientProfileContent.scss'
 
 const FORM_CLIENT_PROFILE = 'form/clientProfile'
@@ -29,6 +34,10 @@ class ClientProfileContent extends React.Component {
     this.state = {
       slideIndex: 0,
     }
+  }
+
+  componentDidMount = () => {
+    this.props.reviewClientProfile();
   }
 
   handleChangeIndex = (index) => this.setState({ slideIndex: index })
@@ -122,26 +131,20 @@ const ClientProfileContentForm = reduxForm({
 })(ClientProfileContent)
 
 function mapStateToProps (state, op) {
-  const formSelector = formValueSelector(FORM_CLIENT_PROFILE)
-
+  const clientProfileState = getState(state);
   return {
-    clientType: formSelector(state, 'clientType'),
-    initialValues: {
-      name: op.profile.general.ipfs.name,
-      registered: op.profile.client.ipfs.registered,
-      website: op.profile.client.ipfs.website,
-      email: op.profile.client.ipfs.email,
-      description: op.profile.client.ipfs.description,
-      clientType: op.profile.client.ipfs.type,
-    },
+    reviewClientProfileLoading: clientProfileState.reviewClientProfileLoading,
+    clientProfile: clientProfileState.profile,
+    reviewClientProfileFailure: clientProfileState.reviewClientProfileFailure,
   }
 }
 
-function mapDispatchToProps () {
+function mapDispatchToProps (dispatch) {
   return {
     onSubmit: async (values) => {
-      // eslint-disable-next-line no-console
-      console.log('---ClientProfileContent handleSubmit, values', values)
+    },
+    reviewClientProfile: () => {
+      dispatch(reviewClientProfile())
     },
   }
 }
