@@ -1,3 +1,4 @@
+// @flow
 import { reset, change, initialize, formValueSelector } from 'redux-form'
 
 import * as backendApi from "../../api/backend"

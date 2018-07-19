@@ -26,6 +26,8 @@ export default class Icon extends React.PureComponent {
     MESSAGE: 'message',
     CLOSE: 'close',
     CHECK: 'check',
+    CHECK_CIRCLE: 'check-circle',
+    CANCEL: 'cancel',
     STAR: 'star',
     RATING: 'rating',
     MORE: 'more',
@@ -36,6 +38,7 @@ export default class Icon extends React.PureComponent {
     BACK: 'back',
     EDIT: 'edit',
     PROFILE: 'profile',
+    NOTIFICATIONS: 'notifications',
   }
 
   static COLORS = {

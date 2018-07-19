@@ -5,6 +5,5 @@ export default (values) => {
 
   return {
     walletFile: required(wallet),
-    walletPassword: required(values.walletPassword),
   }
 }

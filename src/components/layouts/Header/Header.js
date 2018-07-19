@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, Tip } from 'components/common'
-import { RightPanel } from 'src/components/layouts'
 import { connect } from 'react-redux'
-import { logout } from 'src/store'
+import { Link, Tip } from 'src/components/common'
+import { RightPanel } from 'src/components/layouts'
+import { userSelector, logout } from "src/store"
+import { UserAccountTypesModel } from "src/models"
+import { NotificationWidget } from "src/partials"
 import FirstMenu from '../FirstMenu/FirstMenu'
 import css from './Header.scss'
-import { userSelector } from "../../../store/user/selectors"
-import { schemaFactory as accountTypesSchemaFactory } from "../../../models/app/UserAccountTypesModel"
 
 export class Header extends React.Component {
 
   static propTypes = {
     handleLogout: PropTypes.func.isRequired,
-    accountTypes: PropTypes.shape(accountTypesSchemaFactory()),
+    accountTypes: PropTypes.instanceOf(UserAccountTypesModel),
   }
 
   constructor (){
@@ -36,7 +36,6 @@ export class Header extends React.Component {
 
   render () {
     const prefix = this.constructor.name
-
     return (
       <div className={css.root}>
         <div className={css.headerLeft}>
@@ -60,6 +59,10 @@ export class Header extends React.Component {
             </Tip>
             <span className={css.pointsValue}>70</span>
           </div>
+
+          <NotificationWidget
+            className={css.notifications}
+          />
 
           <div className={css.profile}>
             <div className={css.profileWrapper} onClick={this.handleOpenPanel}>
