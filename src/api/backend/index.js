@@ -8,6 +8,7 @@ import ImageModel from "./model/ImageModel"
 import AttachmentModel from "./model/AttachmentModel"
 import PersonModel from "./model/PersonModel"
 import ProfileClientModel from "./model/ProfileClientModel"
+import ProfileWorkerModel from "./model/ProfileWorkerModel"
 
 // const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
 const API_URL = 'http://localhost:3000/api/v1'
@@ -59,8 +60,8 @@ export const uploadImage = (file: FileModel, token: string): ImageModel => {
 
 export const uploadAttachment = (file: FileModel, token: string): AttachmentModel => {
   const formData = new FormData()
-  formData.append('image', file)
-  return http.post(`${ API_URL }/media/image/upload`, formData, {
+  formData.append('file', file)
+  return http.post(`${ API_URL }/media/file/upload`, formData, {
     headers: { Authorization: `Bearer ${ token }` },
   }).then(res => new AttachmentModel(res.data))
 }
@@ -106,3 +107,28 @@ export const reviewClientProfile = (token: string): ProfileClientModel => {
     headers: { Authorization: `Bearer ${ token }` },
   }).then(res => ProfileClientModel.fromJson(res.data))
 }
+
+export const submitWorkerProfile = (workerProfile, token: string): { profile: ProfileWorkerModel } => http.post(
+  `${ API_URL }/security/me/profile/worker`,
+  workerProfile,
+  { headers: { Authorization: `Bearer ${ token }` } }
+).then(res => ({ profile: ProfileWorkerModel.fromJson(res.data) }))
+
+export const getWorkerProfile = (token: string): { profile: ProfileWorkerModel } => http.get(
+  `${ API_URL }/security/me/profile/worker`,
+  { headers: { Authorization: `Bearer ${ token }` } }
+).then(res => {
+  return ({ profile: ProfileWorkerModel.fromJson(res.data) })
+})
+
+export const getServiceCategories = () => http.get(
+  `${ API_URL }/security/worker/serviceCategories`,
+).then(res => {
+  return (res.data)
+})
+
+export const getCurrencies = () => http.get(
+  `${ API_URL }/security/worker/currencies`,
+).then(res => {
+  return (res.data)
+})

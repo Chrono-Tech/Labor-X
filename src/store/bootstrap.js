@@ -6,6 +6,7 @@ import { initDAOs } from './daos/actions'
 import { initBoards } from './boards/actions'
 import { initJobs } from './jobs/actions'
 import { initJobOffers } from './offers/actions'
+import { initWorkerPageData } from './worker-profile/actions'
 import { signerSelector } from './wallet/selectors'
 
 const startI18n = () => (dispatch, getState) => {
@@ -35,6 +36,7 @@ export const initFrontend = (store) => ({ web3 }) => async (dispatch) => {
       console.log('Signer changed to ', currentAddress)
       previousAddress = currentAddress
       store.dispatch(initBoards())
+      store.dispatch(initWorkerPageData())
       await dispatch(initJobs())
       dispatch(initJobOffers())
     }

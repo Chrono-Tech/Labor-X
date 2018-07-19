@@ -18,7 +18,7 @@
     .tagsRow {
       @include flex(row, flex-start, center);
       .find {
-        max-width: 8rem;
+        max-width: 20rem;
         color: $color-gray30;
       }
       .tags {
@@ -97,6 +97,8 @@
 
 .twoColumn {
   @include flex(row, flex-start, stretch);
+  display: flex;
+  align-items: flex-end;
   > * {
     &:first-child {
       margin-right: 2.5%;
