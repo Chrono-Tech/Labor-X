@@ -10,8 +10,8 @@ import PersonModel from "./model/PersonModel"
 import ProfileClientModel from "./model/ProfileClientModel"
 import ProfileWorkerModel from "./model/ProfileWorkerModel"
 
-// const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
-const API_URL = 'http://localhost:3000/api/v1'
+const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+// const API_URL = 'http://localhost:3000/api/v1'
 
 const http = axios.create({ baseURL: API_URL })
 
