@@ -20,7 +20,7 @@ export const TYPES = {
   reviewClientProfileLoading: PropTypes.bool,
   reviewClientProfileFailure: PropTypes.instanceOf(Error),
 
-  submitClienttProfileLoading: PropTypes.bool,
+  submitClientProfileLoading: PropTypes.bool,
   submitClientProfileFailure: PropTypes.instanceOf(Error),
 
 }
@@ -56,6 +56,7 @@ export default (state = STATE, { type, payload }) => {
 
     case CLIENT_PROFILE_SUBMIT_REQUEST: return ({
       ...state,
+      submitClientProfileFailure: null,
       submitClientProfileLoading: true,
     })
     case CLIENT_PROFILE_SUBMIT_SUCCESS: return ({

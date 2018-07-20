@@ -17,11 +17,12 @@ import {
   reviewClientProfile,
   getState,
   submitClientProfile,
+  FORM_CLIENT_PROFILE,
+  addSpecializationClientProfileForm,
+  removeSpecializationClientProfileForm,
 } from './../../../store/client-profile'
-import { getCurrencies } from './../../../store/worker-profile'
+import { getCurrencies, getServiceCategories } from './../../../store/worker-profile'
 import css from './ClientProfileContent.scss'
-
-const FORM_CLIENT_PROFILE = 'form/clientProfile'
 
 class ClientProfileContent extends React.Component {
   static propTypes = {
@@ -63,7 +64,22 @@ class ClientProfileContent extends React.Component {
   }
 
   render () {
-    const { validationState, validationComment, profile, stuff, handleSubmit, clientType, currencies, organizationType, submitWorkerProfileLoading } = this.props
+    const {
+      validationState,
+      validationComment,
+      profile,
+      stuff,
+      handleSubmit,
+      clientType,
+      currencies,
+      organizationType,
+      submitClientProfileLoading,
+      submitClientProfileFailure,
+      addSpecialization,
+      removeSpecialization,
+      selectedSpecializations,
+      serviceCategories,
+    } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
@@ -79,6 +95,7 @@ class ClientProfileContent extends React.Component {
               onClick={this.handleBack}
             />
             <div className={css.buttonsRow}>
+              <div className={css.submitError}>{submitClientProfileFailure && submitClientProfileFailure.message}</div>
               <Icon
                 className={css.helpButton}
                 size={28}
@@ -86,15 +103,15 @@ class ClientProfileContent extends React.Component {
                 onClick={this.handleHelp}
               />
               {
-                submitWorkerProfileLoading && (
+                submitClientProfileLoading && (
                   <div className={css.progressBlock}>
-                    <CircularProgress color='white' size={30} thickness={7} />
+                    <CircularProgress color='primary' size={30} thickness={7} />
                   </div>
                 )
               }
 
               {
-                !submitWorkerProfileLoading && (
+                !submitClientProfileLoading && (
                   <Button
                     className={css.doneButton}
                     label='terms.done'
@@ -103,9 +120,9 @@ class ClientProfileContent extends React.Component {
                   />
                 )
               }
-
             </div>
           </div>
+
         </div>
         <div className={css.content}>
           <div className={css.header}>
@@ -139,6 +156,10 @@ class ClientProfileContent extends React.Component {
                 generalProfile={profile.general}
                 clientType={clientType}
                 organizationType={organizationType}
+                serviceCategories={serviceCategories}
+                selectedSpecializations={selectedSpecializations}
+                onAddSpecialization={addSpecialization}
+                onRemoveSpecialization={removeSpecialization}
               />
               <StuffTab stuff={stuff} />
             </SwipeableViews>
@@ -161,15 +182,20 @@ function mapStateToProps (state) {
       verifiable: {
         type: CLIENT_TYPE_ORGANISATION.name,
       },
+      regular: {
+        specializations:[],
+      },
     },
-    submitWorkerProfileFailure: clientProfileState.submitWorkerProfileFailure,
-    submitWorkerProfileLoading: clientProfileState.submitWorkerProfileLoading,
+    submitClientProfileFailure: clientProfileState.submitClientProfileFailure,
+    submitClientProfileLoading: clientProfileState.submitClientProfileLoading,
     clientProfile: clientProfileState.profile,
     reviewClientProfileFailure: clientProfileState.reviewClientProfileFailure,
     validationState: ProfileModel.getValidationState(clientProfile ? clientProfile : {}),
     validationComment: ProfileModel.getValidationComment(clientProfile ? clientProfile : {}),
     currencies: getCurrencies(state),
     organizationType: formValueSelector(FORM_CLIENT_PROFILE)(state, 'verifiable.type'),
+    serviceCategories: getServiceCategories(state),
+    selectedSpecializations: formValueSelector(FORM_CLIENT_PROFILE)(state, 'regular.specializations'),
   }
 }
 
@@ -180,6 +206,12 @@ function mapDispatchToProps (dispatch) {
     },
     reviewClientProfile: () => {
       dispatch(reviewClientProfile())
+    },
+    addSpecialization: (specialization) => {
+      dispatch(addSpecializationClientProfileForm(specialization))
+    },
+    removeSpecialization: (specialization) => {
+      dispatch(removeSpecializationClientProfileForm(specialization))
     },
   }
 }

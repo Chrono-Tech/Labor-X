@@ -89,3 +89,11 @@ $maxWidth: 77rem;
   align-items: center;
   justify-content: center;
 }
+
+.submitError {
+  color: $color-red;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-right: 1rem;
+}

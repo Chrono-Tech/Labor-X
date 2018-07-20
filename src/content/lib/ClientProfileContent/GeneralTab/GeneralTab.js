@@ -8,10 +8,12 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
+import AutoComplete from 'material-ui/AutoComplete'
 import Collapsible from 'react-collapsible'
 import { VALIDATION_STATE, VALIDATION_STATE_TITLE } from 'src/api/backend/model/ProfileClientModel'
 import CurrencyModel from 'src/api/backend/model/CurrencyModel'
-import { ValidatedCheckbox, Link, Icon, Button } from 'src/components/common'
+import ServiceCategoryModel from 'src/api/backend/model/ServiceCategoryModel'
+import { ValidatedCheckbox, Link, Icon, Button, Chip } from 'src/components/common'
 import { ProfileModel, CLIENT_TYPES_LIST, ClientTypeModel, CLIENT_TYPE_ORGANISATION, CLIENT_TYPE_ENTREPRENEUR } from 'src/models'
 import DatePickerField from 'src/components/DatePickerField'
 import css from './GeneralTab.scss'
@@ -37,6 +39,10 @@ export default class GeneralTab extends React.Component {
     validationComment: PropTypes.string,
     organizationType: PropTypes.string,
     currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
+    serviceCategories: PropTypes.arrayOf(PropTypes.instanceOf(ServiceCategoryModel)),
+    onAddSpecialization: PropTypes.func,
+    onRemoveSpecialization: PropTypes.func,
+    selectedSpecializations: PropTypes.arrayOf(PropTypes.instanceOf(ServiceCategoryModel)),
   }
 
   handleClickValidate = () => {
@@ -49,6 +55,19 @@ export default class GeneralTab extends React.Component {
     console.log('---ClientProfileContent-GeneralTab handleClickLogo')
   }
 
+  handleAddSpecialization = (specialization) => {
+    this.props.onAddSpecialization(specialization)
+  }
+
+  handleRemoveSpecialization = (specialization) => {
+    this.props.onRemoveSpecialization(specialization)
+  }
+
+  searchTagFilter = (searchText, key) => {
+    return searchText !== '' &&
+      String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
+  }
+
   renderTitle () {
     return VALIDATION_STATE_TITLE[this.props.validationState]
   }
@@ -59,7 +78,7 @@ export default class GeneralTab extends React.Component {
         <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
           <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
           {this.renderTitle()}
-          <div className={css.validationComment}>hanik vse budet good{this.props.validationComment}</div>
+          <div className={css.validationComment}>{this.props.validationComment}</div>
         </span>
       </div>
     )
@@ -177,14 +196,14 @@ export default class GeneralTab extends React.Component {
       return (<Field
         key={symbol}
         component={ValidatedCheckbox}
-        name={`regular.currencies.${symbol}`}
+        name={`custom.currenciesKeys.${symbol}`}
         label={title}
       />)
     })
   }
 
   render () {
-    const { generalProfile, currencies, organizationType } = this.props
+    const { generalProfile, currencies, organizationType, serviceCategories, selectedSpecializations } = this.props
     return (
       <div className={css.content}>
         <div className={css.logoContainer} onClick={this.handleClickLogo}>
@@ -225,13 +244,45 @@ export default class GeneralTab extends React.Component {
             </Grid>
           </Grid>
         </div>
-        {organizationType === CLIENT_TYPE_ORGANISATION.name ? this.renderInfo() : null}
-        {organizationType === CLIENT_TYPE_ENTREPRENEUR.name ? this.renderOrganisationInfo() : null}
+        {organizationType === CLIENT_TYPE_ORGANISATION.name ? this.renderOrganisationInfo() : null}
+        {organizationType === CLIENT_TYPE_ENTREPRENEUR.name ? this.renderInfo() : null}
         <div className={css.block}>
           <h3>Currency</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>
           {this.renderCurrencies(currencies)}
         </div>
+
+        <div className={css.block}>
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              Specialisations
+            </Grid>
+          </Grid>
+          <Grid container spacing={24}>
+            <Grid item xs={3}>
+              <Field
+                className={css.find}
+                style={{ marginRight: 10 }}
+                component={AutoComplete}
+                onNewRequest={this.handleAddSpecialization}
+                filter={this.searchTagFilter}
+                dataSourceConfig={{
+                  text: 'name',
+                  value: 'code',
+                }}
+                dataSource={serviceCategories}
+                name='searchTags'
+                hintText='Find'
+              />
+            </Grid>
+            <Grid item xs={9}>
+              {selectedSpecializations && selectedSpecializations.map(item => (
+                <Chip value={item.name} key={item.name} index={item.code} onRemove={this.handleRemoveSpecialization} showRemoveButton />
+              ))}
+            </Grid>
+          </Grid>
+        </div>
+
         <Collapsible triggerDisabled classParentString={css.upgradeBlock} trigger={this.renderUpgardeTitle()} >
           <div className={css.description}>
             <p>Upload any documents which can prove that the entered information is valid. Note that changing and saving information will require validation re-submit.</p>
