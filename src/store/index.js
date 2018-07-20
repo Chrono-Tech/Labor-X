@@ -23,7 +23,9 @@ import {
   offers,
   generalProfile,
   myWallet,
+  workerProfile,
 } from './reducers'
+
 
 export * from './actions'
 
@@ -57,6 +59,7 @@ export default (initialState = {}) => {
     user: user(),
     offers,
     generalProfile,
+    workerProfile,
     myWallet,
   })
 

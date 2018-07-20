@@ -11,13 +11,13 @@ import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
 export class MyApp extends App {
   static async getInitialProps ({ Component, ctx }) {
-    // console.log('MyApp Component.getInitialProps', Component.getInitialProps, Component)
     return {
       pageProps: (!Component.getInitialProps ? {} : await Component.getInitialProps(ctx)),
     }
   }
 
   render () {
+
     const { Component, pageProps, store } = this.props
     return (
       <Container>

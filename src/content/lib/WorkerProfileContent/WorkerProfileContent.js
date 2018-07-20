@@ -1,19 +1,52 @@
 import React from 'react'
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { reduxForm, propTypes } from 'redux-form'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import { connect } from 'react-redux'
-import { reduxForm, propTypes } from 'redux-form'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { Router } from 'src/routes'
 import { ProfileModel, WorkerModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
+import { WORKER_PROFILE_FORM } from "../../../store/worker-profile/reducer"
 import GeneralTab from './GeneralTab/GeneralTab'
 import WorkExperienceTab from './WorkExperienceTab/WorkExperienceTab'
 import ServicesTab from './ServicesTab/ServicesTab'
+import {
+  getCurrencies,
+  getServiceCategories,
+  submitWorkerProfile,
+  getWorkerProfile,
+  createExperience,
+  createService,
+  removeExperience,
+  removeService,
+  getSocials,
+  getState,
+} from './../../../store/worker-profile'
+import { getAvatar } from './../../../store/general-profile'
+import ProfileWorkerModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileWorkerModel"
+
 import css from './WorkerProfileContent.scss'
 
-const FORM_WORKER_PROFILE = 'form/workerProfile'
+const DEFAULT_AVATAR = { url: '/static/images/profile-photo.jpg' }
+
+const VALIDATION_STATE_ICON = {
+  [VALIDATION_STATE.INITIAL]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.WAITING]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.WARNING]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.SUCCESS]: Icon.SETS.SECURITY_CHECK,
+}
+const VALIDATION_STATE_CLASS = {
+  [VALIDATION_STATE.INITIAL]: css.cardActionTitle,
+  [VALIDATION_STATE.WAITING]: css.cardActionTitleWarning,
+  [VALIDATION_STATE.WARNING]: css.cardActionTitleError,
+  [VALIDATION_STATE.SUCCESS]: css.cardActionTitleSuccess,
+}
 
 class WorkerProfileContent extends React.Component {
   static propTypes = {
@@ -22,6 +55,7 @@ class WorkerProfileContent extends React.Component {
       general: PropTypes.instanceOf(ProfileModel),
       worker: PropTypes.instanceOf(WorkerModel),
     }),
+    avatarUrl: PropTypes.string,
   }
 
   constructor (props) {
@@ -29,6 +63,10 @@ class WorkerProfileContent extends React.Component {
     this.state = {
       slideIndex: 0,
     }
+  }
+
+  componentDidMount () {
+    this.props.getWorkerProfile()
   }
 
   handleChangeIndex = (index) => this.setState({ slideIndex: index })
@@ -46,12 +84,20 @@ class WorkerProfileContent extends React.Component {
 
   handleClickAddWorker = () => {
     // eslint-disable-next-line no-console
-    console.log('---WorkerProfileContent handleClickAddWorker')
+    if (this.state.slideIndex === 1) {
+      this.props.addExperience()
+    }
+    if (this.state.slideIndex === 2) {
+      this.props.addService()
+    }
+  }
+
+  renderTitle () {
+    return VALIDATION_STATE_TITLE[this.props.validationState]
   }
 
   render () {
-    const { profile, handleSubmit } = this.props
-
+    const { profile, handleSubmit, avatarUrl, removeService, removeExperience, serviceCategories, currencies, socials } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
@@ -84,7 +130,7 @@ class WorkerProfileContent extends React.Component {
         </div>
         <div className={css.content}>
           <div className={css.header}>
-            <h2>Worker Profile</h2>
+            <h2> Worker Profile </h2>
             <Tabs
               onChange={this.handleTabChange}
               value={this.state.slideIndex}
@@ -93,7 +139,8 @@ class WorkerProfileContent extends React.Component {
               <Tab label='WORK EXPERIENCE' value={1} />
               <Tab label='SERVICES' value={2} />
             </Tabs>
-            { this.state.slideIndex > 0 ? (
+
+            {this.state.slideIndex > 0 ? (
               <Icon
                 className={css.addWorker}
                 color={Icon.COLORS.WHITE}
@@ -101,17 +148,30 @@ class WorkerProfileContent extends React.Component {
                 size={24}
                 onClick={this.handleClickAddWorker}
               />
-            ) : null }
+            ) : null}
           </div>
           <div className={css.tabContent}>
             <SwipeableViews
               index={this.state.slideIndex}
               onChangeIndex={this.handleChangeIndex}
             >
-              <GeneralTab generalProfile={profile.general} />
-              <WorkExperienceTab />
-              <ServicesTab workerProfile={profile.worker} />
+              <GeneralTab socials={socials} avatarUrl={avatarUrl} generalProfile={profile.general} />
+              <WorkExperienceTab onRemoveExperience={removeExperience} />
+              <ServicesTab onRemoveService={removeService} currencies={currencies} serviceCategories={serviceCategories} />
             </SwipeableViews>
+
+            <div className={css.validationBlock}>
+              <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+                    <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+                    {this.renderTitle()}
+                    <p>{this.props.validationComment}</p>
+                  </span>
+                </ExpansionPanelSummary>
+              </ExpansionPanel>
+            </div>
+
           </div>
         </div>
       </form>
@@ -120,31 +180,45 @@ class WorkerProfileContent extends React.Component {
 }
 
 const workerProfileContentForm = reduxForm({
-  form: FORM_WORKER_PROFILE,
+  form: WORKER_PROFILE_FORM,
 })(WorkerProfileContent)
 
-function mapStateToProps (state, op) {
+function mapStateToProps (state) {
+  const workerProfile = getState(state).workerProfile
   return {
     initialValues: {
-      experiences: [{}].concat(
-        op.profile.worker.ipfs.experience.map(exp => ({
-          position: exp.position,
-          organisation: exp.organisation,
-          responsibilities: exp.responsibilities,
-          workFrom: exp.workFrom,
-          workTo: exp.workTo,
-        })),
-      ),
+      employments: [{}],
       services: [{}],
+      socials: [],
     },
+    currencies: getCurrencies(state),
+    serviceCategories: getServiceCategories(state),
+    socials: getSocials(state),
+    validationState: ProfileWorkerModel.getValidationState(workerProfile),
+    validationComment: ProfileWorkerModel.getValidationComment(workerProfile),
+    avatarUrl: (getAvatar(state) || DEFAULT_AVATAR).url,
   }
 }
 
-function mapDispatchToProps () {
+function mapDispatchToProps (dispatch) {
   return {
+    getWorkerProfile: () => {
+      dispatch(getWorkerProfile())
+    },
+    addExperience: () => {
+      dispatch(createExperience())
+    },
+    addService: () => {
+      dispatch(createService())
+    },
+    removeExperience: (index) => {
+      dispatch(removeExperience(index))
+    },
+    removeService: (index) => {
+      dispatch(removeService(index))
+    },
     onSubmit: async (values) => {
-      // eslint-disable-next-line no-console
-      console.log('---WorkerProfileContent handleSubmit, values', values)
+      dispatch(submitWorkerProfile(values))
     },
   }
 }

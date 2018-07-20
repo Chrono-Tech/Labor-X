@@ -8,19 +8,20 @@ import css from './Link.scss'
 
 class LinkControl extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node), PropTypes.string]),
     href: PropTypes.string.isRequired,
-    activeClassName: PropTypes.string,
+    className: PropTypes.string,
     invert: PropTypes.bool,
     label: PropTypes.string,
     router: PropTypes.shape({
       route: PropTypes.string,
     }),
+    children: PropTypes.string,
+    activeClassName: PropTypes.string,
   }
 
   render () {
-    const { label, className, children, activeClassName, href, invert, router } = this.props
+
+    const { label, className, children, href, invert, router, activeClassName } = this.props
     return (
       <Link route={href} href={href}>
         <a
