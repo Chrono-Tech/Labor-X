@@ -81,3 +81,11 @@ $maxWidth: 77rem;
     }
   }
 }
+
+.progressBlock {
+  height: 5rem;
+  width: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

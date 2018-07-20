@@ -18,8 +18,8 @@ export default class ClientTypeModel extends AbstractModel {
   }
 }
 
-export const CLIENT_TYPE_ORGANISATION  = new ClientTypeModel({ index: 0, name: 'ORGANISATION', label: 'Organisation' })
-export const CLIENT_TYPE_ENTREPRENEUR = new ClientTypeModel({ index: 1, name: 'ENTREPRENEUR', label: 'Entrepreneur' })
+export const CLIENT_TYPE_ORGANISATION  = new ClientTypeModel({ index: 0, name: 'organization', label: 'Organisation' })
+export const CLIENT_TYPE_ENTREPRENEUR = new ClientTypeModel({ index: 1, name: 'entrepreneur', label: 'Entrepreneur' })
 
 export const CLIENT_TYPES_LIST = [
   CLIENT_TYPE_ORGANISATION,

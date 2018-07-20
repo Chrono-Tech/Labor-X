@@ -5,16 +5,18 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { connect } from 'react-redux'
 import { reduxForm, propTypes, formValueSelector } from 'redux-form'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { Router } from 'src/routes'
 import ProfileModel from 'src/api/backend/model/ProfileModel'
 import ProfileClientModel from 'src/api/backend/model/ProfileClientModel'
 import { Icon, Image, Button } from 'src/components/common'
-import { CLIENT_TYPES, CLIENT_TYPE_ORGANISATION } from 'src/models'
+import { CLIENT_TYPE_ORGANISATION } from 'src/models'
 import GeneralTab from './GeneralTab/GeneralTab'
 import StuffTab from './StuffTab/StuffTab'
 import {
   reviewClientProfile,
   getState,
+  submitClientProfile,
 } from './../../../store/client-profile'
 import { getCurrencies } from './../../../store/worker-profile'
 import css from './ClientProfileContent.scss'
@@ -31,7 +33,7 @@ class ClientProfileContent extends React.Component {
     stuff: PropTypes.arrayOf(PropTypes.instanceOf(ProfileModel)),
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       slideIndex: 0,
@@ -46,7 +48,7 @@ class ClientProfileContent extends React.Component {
 
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
-  handleBack() {
+  handleBack () {
     Router.pushRoute('/my-profile')
   }
 
@@ -60,8 +62,8 @@ class ClientProfileContent extends React.Component {
     console.log('---ClientProfileContent handleClickAddWorker')
   }
 
-  render() {
-    const { validationState, validationComment, profile, stuff, handleSubmit, clientType, currencies, organizationType } = this.props
+  render () {
+    const { validationState, validationComment, profile, stuff, handleSubmit, clientType, currencies, organizationType, submitWorkerProfileLoading } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
@@ -83,12 +85,25 @@ class ClientProfileContent extends React.Component {
                 {...Icon.SETS.HELP_INVERT}
                 onClick={this.handleHelp}
               />
-              <Button
-                className={css.doneButton}
-                label='terms.done'
-                mods={Button.MODS.FLAT}
-                type={Button.TYPES.SUBMIT}
-              />
+              {
+                submitWorkerProfileLoading && (
+                  <div className={css.progressBlock}>
+                    <CircularProgress color='white' size={30} thickness={7} />
+                  </div>
+                )
+              }
+
+              {
+                !submitWorkerProfileLoading && (
+                  <Button
+                    className={css.doneButton}
+                    label='terms.done'
+                    mods={Button.MODS.FLAT}
+                    type={Button.TYPES.SUBMIT}
+                  />
+                )
+              }
+
             </div>
           </div>
         </div>
@@ -138,28 +153,30 @@ const ClientProfileContentForm = reduxForm({
   form: FORM_CLIENT_PROFILE,
 })(ClientProfileContent)
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   const clientProfileState = getState(state)
   const clientProfile = clientProfileState.profile
   return {
     initialValues: {
       verifiable: {
-        type: CLIENT_TYPE_ORGANISATION.name
-      }
+        type: CLIENT_TYPE_ORGANISATION.name,
+      },
     },
-    reviewClientProfileLoading: clientProfileState.reviewClientProfileLoading,
+    submitWorkerProfileFailure: clientProfileState.submitWorkerProfileFailure,
+    submitWorkerProfileLoading: clientProfileState.submitWorkerProfileLoading,
     clientProfile: clientProfileState.profile,
     reviewClientProfileFailure: clientProfileState.reviewClientProfileFailure,
     validationState: ProfileModel.getValidationState(clientProfile ? clientProfile : {}),
     validationComment: ProfileModel.getValidationComment(clientProfile ? clientProfile : {}),
     currencies: getCurrencies(state),
-    organizationType: formValueSelector(FORM_CLIENT_PROFILE)(state, 'verifiable.type')
+    organizationType: formValueSelector(FORM_CLIENT_PROFILE)(state, 'verifiable.type'),
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
-    onSubmit: async () => {
+    onSubmit: async (values) => {
+      dispatch(submitClientProfile(values))
     },
     reviewClientProfile: () => {
       dispatch(reviewClientProfile())

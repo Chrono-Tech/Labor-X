@@ -14,7 +14,7 @@ const schemaFactory = () => ({
     email: PropTypes.string,
     attachments: PropTypes.arrayOf(PropTypes.string)
   }),
-  custom: PropTypes.any(),
+  custom: PropTypes.any,
   collaborators: PropTypes.arrayOf(PropTypes.instanceOf(CollaboratorModel))
 })
 
@@ -25,7 +25,7 @@ export default class ProfileClientModel extends AbstractModel {
   }
 }
 
-export default class CollaboratorModel extends AbstractModel {
+export class CollaboratorModel extends AbstractModel {
   constructor (props) {
     super(props, {
       position: PropTypes.string.isRequired,

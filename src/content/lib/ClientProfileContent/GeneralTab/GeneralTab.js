@@ -1,14 +1,18 @@
 import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import uniqid from 'uniqid'
 import { Field } from 'redux-form'
-import { SelectField, TextField } from 'redux-form-material-ui'
-import { MenuItem } from 'material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
+import SelectField from 'redux-form-material-ui-next/lib/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
 import Collapsible from 'react-collapsible'
 import { VALIDATION_STATE, VALIDATION_STATE_TITLE } from 'src/api/backend/model/ProfileClientModel'
+import CurrencyModel from 'src/api/backend/model/CurrencyModel'
 import { ValidatedCheckbox, Link, Icon, Button } from 'src/components/common'
-import { ProfileModel, CLIENT_TYPES_LIST, CLIENT_TYPES, ClientTypeModel } from 'src/models'
+import { ProfileModel, CLIENT_TYPES_LIST, ClientTypeModel, CLIENT_TYPE_ORGANISATION, CLIENT_TYPE_ENTREPRENEUR } from 'src/models'
 import DatePickerField from 'src/components/DatePickerField'
 import css from './GeneralTab.scss'
 
@@ -31,7 +35,8 @@ export default class GeneralTab extends React.Component {
     clientType: PropTypes.instanceOf(ClientTypeModel),
     validationState: PropTypes.string,
     validationComment: PropTypes.string,
-    organizationType: PropTypes.string
+    organizationType: PropTypes.string,
+    currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
   }
 
   handleClickValidate = () => {
@@ -44,11 +49,11 @@ export default class GeneralTab extends React.Component {
     console.log('---ClientProfileContent-GeneralTab handleClickLogo')
   }
 
-  renderTitle() {
+  renderTitle () {
     return VALIDATION_STATE_TITLE[this.props.validationState]
   }
 
-  renderUpgardeTitle() {
+  renderUpgardeTitle () {
     return (
       <div className={css.upgradeTitle}>
         <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
@@ -60,86 +65,114 @@ export default class GeneralTab extends React.Component {
     )
   }
 
-  renderOrganisationInfo() {
+  renderOrganisationInfo () {
     return (
       <div className={css.block}>
-        <h3>Organisation Info</h3>
-        <div className={css.twoColumn}>
-          <Field
-            fullWidth
-            component={TextField}
-            name='verifiable.name'
-            floatingLabelText='Name'
-          />
-          <Field
-            fullWidth
-            openToYearSelection
-            name='custom.registered'
-            component={DatePickerField}
-            label='Registered In'
-            // eslint-disable-next-line react/jsx-no-bind
-            format={(value) => value === '' ? null : value}
-          />
-        </div>
-        <div className={css.twoColumn}>
-          <Field
-            fullWidth
-            component={TextField}
-            name='verifiable.website'
-            floatingLabelText='Website'
-          />
-          <Field
-            fullWidth
-            component={TextField}
-            name='verifiable.email'
-            floatingLabelText='Contact Email'
-          />
-        </div>
-        <Field
-          fullWidth
-          component={TextField}
-          name='verifiable.intro'
-          hintText='Write a few words about your organisation'
-          multiLine
-          rows={2}
-        />
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <h3>Organisation Info</h3>
+          </Grid>
+        </Grid>
+        <Grid container spacing={24}>
+          <Grid item xs={6}>
+            <Field
+              fullWidth
+              component={TextField}
+              name='verifiable.name'
+              label='Name'
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Field
+              fullWidth
+              openToYearSelection
+              name='custom.registered'
+              component={DatePickerField}
+              label='Registered In'
+              // eslint-disable-next-line react/jsx-no-bind
+              format={(value) => value === '' ? null : value}
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={24}>
+          <Grid item xs={6}>
+            <Field
+              fullWidth
+              component={TextField}
+              name='verifiable.website'
+              label='Website'
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Field
+              fullWidth
+              component={TextField}
+              name='verifiable.email'
+              label='Contact Email'
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Field
+              fullWidth
+              component={TextField}
+              name='verifiable.intro'
+              label='Write a few words about your organisation'
+              multiLine
+              rows={2}
+            />
+          </Grid>
+        </Grid>
       </div>
     )
   }
 
-  renderInfo() {
+  renderInfo () {
     return (
       <div className={css.block}>
-        <h3>Info</h3>
-        <div className={css.twoColumn}>
-          <Field
-            fullWidth
-            openToYearSelection
-            name='custom.registered'
-            component={DatePickerField}
-            label='Registered In'
-            format={(value) => value === '' ? null : value}
-          />
-          <Field
-            fullWidth
-            component={TextField}
-            name='verifiable.website'
-            floatingLabelText='Website'
-          />
-        </div>
-        <Field
-          fullWidth
-          component={TextField}
-          name='verifiable.intro'
-          hintText='Write a few words about yourself'
-          multiLine
-          rows={2}
-        />
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <h3>Info</h3>
+          </Grid>
+        </Grid>
+        <Grid container spacing={24}>
+          <Grid item xs={6}>
+            <Field
+              fullWidth
+              openToYearSelection
+              name='custom.registered'
+              component={DatePickerField}
+              label='Registered In'
+              format={(value) => value === '' ? null : value}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Field
+              fullWidth
+              component={TextField}
+              name='verifiable.website'
+              label='Website'
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Field
+              fullWidth
+              component={TextField}
+              name='verifiable.intro'
+              label='Write a few words about yourself'
+              multiLine
+              rows={2}
+            />
+          </Grid>
+        </Grid>
       </div>
     )
   }
 
-  renderCurrencies(currencies) {
+  renderCurrencies (currencies) {
     return currencies.map(({ title, symbol }) => {
       return (<Field
         key={symbol}
@@ -150,9 +183,8 @@ export default class GeneralTab extends React.Component {
     })
   }
 
-  render() {
-    const { generalProfile, clientType, currencies, organizationType } = this.props
-    console.log(this.props);
+  render () {
+    const { generalProfile, currencies, organizationType } = this.props
     return (
       <div className={css.content}>
         <div className={css.logoContainer} onClick={this.handleClickLogo}>
@@ -169,25 +201,32 @@ export default class GeneralTab extends React.Component {
           </div>
         </div>
         <div className={css.block}>
-          <h3>Organisation Type</h3>
-          <div className={css.twoColumn}>
-            <Field
-              fullWidth
-              component={SelectField}
-              name='verifiable.type'
-              hintText='Organisation Type'
-            >
-              {
-                CLIENT_TYPES_LIST.map(type => (
-                  <MenuItem key={uniqid()} value={type.name} primaryText={type.label} />
-                ))
-              }
-            </Field>
-            <div />
-          </div>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <h3>Organisation Type</h3>
+            </Grid>
+          </Grid>
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <FormControl className={css.field}>
+                <InputLabel>Organisation Type</InputLabel>
+                <Field
+                  fullWidth
+                  component={SelectField}
+                  name='verifiable.type'
+                >
+                  {
+                    CLIENT_TYPES_LIST.map(type => {
+                      return <MenuItem key={type.name} value={type.name} > {type.label} </MenuItem>
+                    })
+                  }
+                </Field>
+              </FormControl>
+            </Grid>
+          </Grid>
         </div>
-        {organizationType === CLIENT_TYPES.ENTREPRENEUR.name ? this.renderInfo() : null}
-        {organizationType === CLIENT_TYPES.ORGANISATION.name ? this.renderOrganisationInfo() : null}
+        {organizationType === CLIENT_TYPE_ORGANISATION.name ? this.renderInfo() : null}
+        {organizationType === CLIENT_TYPE_ENTREPRENEUR.name ? this.renderOrganisationInfo() : null}
         <div className={css.block}>
           <h3>Currency</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>
@@ -236,7 +275,7 @@ export default class GeneralTab extends React.Component {
             onClick={this.handleClickValidate}
           />
         </Collapsible>
-      </div>
+      </div >
     )
   }
 }

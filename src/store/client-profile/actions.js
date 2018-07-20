@@ -4,7 +4,7 @@ import { reset, change, initialize, formValueSelector } from 'redux-form'
 import * as backendApi from "../../api/backend"
 import { userTokenSelector } from "../user/selectors"
 import { FORM_CLIENT_PROFILE } from "./reducer"
-import { getClientProfileInitialValues } from "./selectors"
+import { getClientProfileInitialValues, clientProfileModelFromForm } from "./selectors"
 
 
 export const CLIENT_PROFILE_REVIEW_REQUEST = 'CLIENT_PROFILE/PROFILE_REVIEW/REQUEST'
@@ -19,10 +19,9 @@ export const reviewClientProfile = () => async (dispatch, getState) => {
     const state = getState()
     const token = userTokenSelector()(state)
     const profile = await backendApi.reviewClientProfile(token)
-    console.log(profile)
+    dispatch(initialize(FORM_CLIENT_PROFILE, getClientProfileInitialValues(profile.personal)))
     dispatch(reviewClientProfileSuccess(profile))
   } catch (err) {
-    console.log(err);
     dispatch(reviewClientProfileFailure(err))
   }
 }
@@ -35,15 +34,17 @@ export const submitClientProfileRequest = (req) => ({ type: CLIENT_PROFILE_SUBMI
 export const submitClientProfileSuccess = (res) => ({ type: CLIENT_PROFILE_SUBMIT_SUCCESS, payload: res })
 export const submitClientProfileFailure = (err) => ({ type: CLIENT_PROFILE_SUBMIT_FAILURE, payload: err })
 export const submitClientProfile = (data) => async (dispatch, getState) => {
-  try {
+  // try {
+    console.log(data);
+    const clientProfile = clientProfileModelFromForm(data);
     dispatch(submitClientProfileRequest({ data }))
     const state = getState()
     const token = userTokenSelector()(state)
-    const profile = await backendApi.submitClientProfile(data, token)
-    dispatch(initialize(FORM_CLIENT_PROFILE, getClientProfileInitialValues(profile.personal)))
+    const profile = await backendApi.submitClientProfile(clientProfile, token)
+    console.log(profile);
+    dispatch(initialize(FORM_CLIENT_PROFILE, getClientProfileInitialValues(profile.profile)))
     dispatch(submitClientProfileSuccess(profile))
-  } catch (err) {
-    console.log(err);
-    dispatch(submitClientProfile(err))
-  }
+  // } catch (err) {
+  //   dispatch(submitClientProfile(err))
+  // }
 }
