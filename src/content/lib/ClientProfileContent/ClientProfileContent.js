@@ -22,7 +22,10 @@ import {
   removeSpecializationClientProfileForm,
 } from './../../../store/client-profile'
 import { getCurrencies, getServiceCategories } from './../../../store/worker-profile'
+import { getAvatar } from './../../../store/general-profile'
 import css from './ClientProfileContent.scss'
+
+const DEFAULT_AVATAR = { url: '/static/images/profile-photo.jpg' }
 
 class ClientProfileContent extends React.Component {
   static propTypes = {
@@ -79,6 +82,7 @@ class ClientProfileContent extends React.Component {
       removeSpecialization,
       selectedSpecializations,
       serviceCategories,
+      avatarUrl,
     } = this.props
     return (
       <form className={css.main} onSubmit={handleSubmit}>
@@ -160,6 +164,7 @@ class ClientProfileContent extends React.Component {
                 selectedSpecializations={selectedSpecializations}
                 onAddSpecialization={addSpecialization}
                 onRemoveSpecialization={removeSpecialization}
+                avatarUrl={avatarUrl}
               />
               <StuffTab stuff={stuff} />
             </SwipeableViews>
@@ -196,6 +201,7 @@ function mapStateToProps (state) {
     organizationType: formValueSelector(FORM_CLIENT_PROFILE)(state, 'verifiable.type'),
     serviceCategories: getServiceCategories(state),
     selectedSpecializations: formValueSelector(FORM_CLIENT_PROFILE)(state, 'regular.specializations'),
+    avatarUrl: (getAvatar(state) || DEFAULT_AVATAR).url,
   }
 }
 

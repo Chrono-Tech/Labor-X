@@ -53,7 +53,7 @@ export default (state = STATE, { type, payload }) => {
       reviewClientProfileFailure: payload,
     })
 
-
+    
     case CLIENT_PROFILE_SUBMIT_REQUEST: return ({
       ...state,
       submitClientProfileFailure: null,

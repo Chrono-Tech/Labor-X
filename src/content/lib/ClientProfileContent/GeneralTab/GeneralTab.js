@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
-import AutoComplete from 'material-ui/AutoComplete'
+import AutoComplete from 'src/components/SpecializationsAutoComplete/SpecializationsAutoComplete'
 import Collapsible from 'react-collapsible'
 import { VALIDATION_STATE, VALIDATION_STATE_TITLE } from 'src/api/backend/model/ProfileClientModel'
 import CurrencyModel from 'src/api/backend/model/CurrencyModel'
@@ -43,6 +43,7 @@ export default class GeneralTab extends React.Component {
     onAddSpecialization: PropTypes.func,
     onRemoveSpecialization: PropTypes.func,
     selectedSpecializations: PropTypes.arrayOf(PropTypes.instanceOf(ServiceCategoryModel)),
+    avatarUrl: PropTypes.string,
   }
 
   handleClickValidate = () => {
@@ -203,20 +204,12 @@ export default class GeneralTab extends React.Component {
   }
 
   render () {
-    const { generalProfile, currencies, organizationType, serviceCategories, selectedSpecializations } = this.props
+    const { currencies, organizationType, serviceCategories, selectedSpecializations, avatarUrl } = this.props
     return (
       <div className={css.content}>
         <div className={css.logoContainer} onClick={this.handleClickLogo}>
           <div className={css.logo}>
-            <img src={generalProfile.ipfs.logo} alt='Logo' />
-            <div className={css.overlay}>
-              <Icon
-                icon={Icon.ICONS.UPLOAD}
-                color={Icon.COLORS.WHITE}
-                size={24}
-              />
-              <p>UPLOAD PHOTO</p>
-            </div>
+            <img src={avatarUrl} alt='Logo' />
           </div>
         </div>
         <div className={css.block}>
@@ -260,19 +253,10 @@ export default class GeneralTab extends React.Component {
           </Grid>
           <Grid container spacing={24}>
             <Grid item xs={3}>
-              <Field
-                className={css.find}
-                style={{ marginRight: 10 }}
-                component={AutoComplete}
-                onNewRequest={this.handleAddSpecialization}
-                filter={this.searchTagFilter}
-                dataSourceConfig={{
-                  text: 'name',
-                  value: 'code',
-                }}
-                dataSource={serviceCategories}
-                name='searchTags'
-                hintText='Find'
+              <AutoComplete
+                dataSource={serviceCategories || []}
+                onChange={this.handleAddSpecialization}
+                placeholder='Select specializations'
               />
             </Grid>
             <Grid item xs={9}>

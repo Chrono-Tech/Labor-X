@@ -1,11 +1,10 @@
 // @flow
-import { reset, change, initialize, formValueSelector } from 'redux-form'
+import { change, initialize, formValueSelector } from 'redux-form'
 
 import * as backendApi from "../../api/backend"
 import { userTokenSelector } from "../user/selectors"
 import { FORM_CLIENT_PROFILE } from "./reducer"
 import { getClientProfileInitialValues, clientProfileModelFromForm } from "./selectors"
-
 
 export const CLIENT_PROFILE_REVIEW_REQUEST = 'CLIENT_PROFILE/PROFILE_REVIEW/REQUEST'
 export const CLIENT_PROFILE_REVIEW_SUCCESS = 'CLIENT_PROFILE/PROFILE_REVIEW/SUCCESS'
@@ -26,7 +25,6 @@ export const reviewClientProfile = () => async (dispatch, getState) => {
   }
 }
 
-
 export const CLIENT_PROFILE_SUBMIT_REQUEST = 'CLIENT_PROFILE/SUBMIT/REQUEST'
 export const CLIENT_PROFILE_SUBMIT_SUCCESS = 'CLIENT_PROFILE/SUBMIT/SUCCESS'
 export const CLIENT_PROFILE_SUBMIT_FAILURE = 'CLIENT_PROFILE/SUBMIT/FAILURE'
@@ -35,7 +33,7 @@ export const submitClientProfileSuccess = (res) => ({ type: CLIENT_PROFILE_SUBMI
 export const submitClientProfileFailure = (err) => ({ type: CLIENT_PROFILE_SUBMIT_FAILURE, payload: err })
 export const submitClientProfile = (data) => async (dispatch, getState) => {
   try {
-    const clientProfile = clientProfileModelFromForm(data);
+    const clientProfile = clientProfileModelFromForm(data)
     dispatch(submitClientProfileRequest({ data }))
     const state = getState()
     const token = userTokenSelector()(state)
@@ -47,17 +45,16 @@ export const submitClientProfile = (data) => async (dispatch, getState) => {
   }
 }
 
-
-
 export const addSpecializationClientProfileForm = (specialization) => async (dispatch, getState) => {
-  const state = getState();
-  const specializations = formValueSelector(FORM_CLIENT_PROFILE)(state, 'specializations')
-  dispatch(change(FORM_CLIENT_PROFILE, "specialization",  [...specializations, specialization]))
+  const state = getState()
+  const specializations = formValueSelector(FORM_CLIENT_PROFILE)(state, 'regular.specializations') || []
+  dispatch(change(FORM_CLIENT_PROFILE, "regular.specializations",  [...specializations, specialization]))
 }
 
-export const removeSpecializationClientProfileForm = (specialization) => async (dispatch, getState) => {
-  const state = getState();
-  const specializations = formValueSelector(FORM_CLIENT_PROFILE)(state, 'specializations')
-  specializations.splice(specializations.findIndex(item => item.code === specialization.code), 1)
-  dispatch(change(FORM_CLIENT_PROFILE, "specializations",  specializations))
+export const removeSpecializationClientProfileForm = (specializationCode) => async (dispatch, getState) => {
+  const state = getState()
+  const specializations = formValueSelector(FORM_CLIENT_PROFILE)(state, 'regular.specializations')
+  const removedIndex = specializations.findIndex(item => item.code === specializationCode)
+  specializations.splice(removedIndex, 1)
+  dispatch(change(FORM_CLIENT_PROFILE, "regular.specializations",  specializations))
 }

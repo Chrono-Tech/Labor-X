@@ -27,26 +27,26 @@ export const initTokens = ({ web3 }) => async (dispatch, getState) => {
     model: ethTokenDAOModel,
   })
 
-  const contracts = await erc20LibrayDAO.getContracts()
+  // const contracts = await erc20LibrayDAO.getContracts()
 
-  const models = await Promise.all(
-    contracts.map(
-      async address => {
-        const token = new TokenModel({
-          key: uniqid(),
-          address,
-        })
-        const tokenDAOModel = TokenDAOModel.fromTokenModel(token, context)
-        tokenDAOModel.dao.connect(web3)
-        return tokenDAOModel
-      }
-    )
-  )
+  // const models = await Promise.all(
+  //   contracts.map(
+  //     async address => {
+  //       const token = new TokenModel({
+  //         key: uniqid(),
+  //         address,
+  //       })
+  //       const tokenDAOModel = TokenDAOModel.fromTokenModel(token, context)
+  //       tokenDAOModel.dao.connect(web3)
+  //       return tokenDAOModel
+  //     }
+  //   )
+  // )
 
-  for (const model of models) {
-    dispatch({
-      type: TOKENS_REGISTER,
-      model,
-    })
-  }
+  // for (const model of models) {
+  //   dispatch({
+  //     type: TOKENS_REGISTER,
+  //     model,
+  //   })
+  // }
 }
