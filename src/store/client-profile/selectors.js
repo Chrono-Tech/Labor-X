@@ -3,7 +3,6 @@ import t from "typy"
 import { CLIENT_TYPE_ORGANISATION } from 'src/models'
 import VerificationRequestClientModel from "../../api/backend/model/VerificationRequestClientModel"
 
-
 export const getState = state => state.clientProfile
 
 export const getClientProfileInitialValues = (profile: ProfileClientModel) => {

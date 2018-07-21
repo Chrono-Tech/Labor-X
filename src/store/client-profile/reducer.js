@@ -52,7 +52,6 @@ export default (state = STATE, { type, payload }) => {
       reviewClientProfileLoading: false,
       reviewClientProfileFailure: payload,
     })
-
     
     case CLIENT_PROFILE_SUBMIT_REQUEST: return ({
       ...state,
