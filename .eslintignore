@@ -111,6 +111,7 @@ src/**/*.js
 !src/components/Login/LoginForm/LoginForm.js
 !src/components/Login/LoginOptions/
 !src/components/Login/WalletFileForm/
+!src/components/SpecializationsAutoComplete/SpecializationsAutoComplete.js
 
 !src/content/index.js
 !src/content/lib/CreateJobContent/
@@ -134,6 +135,8 @@ src/**/*.js
 !src/content/lib/OpportunityViewContent/DescriptionTab/DescriptionTab.js
 !src/content/lib/OpportunityViewContent/OpportunityViewContent.js
 !src/content/lib/OpportunitiesContent/OpportunitiesContent.js
+!src/content/lib/ClientProfileContent/ClientProfileContent.js
+!src/content/lib/ClientProfileContent/GeneralTab/GeneralTab.js
 !src/content/lib/ApplicationsAndOffersContent/
 !src/content/lib/ClientProfileContent/
 !src/content/lib/WorkerProfileContent/
@@ -192,6 +195,10 @@ src/**/*.js
 !src/store/general-profile/index.js
 !src/store/general-profile/reducer.js
 !src/store/general-profile/selectors.js
+!src/store/client-profile/actions.js
+!src/store/client-profile/index.js
+!src/store/client-profile/reducer.js
+!src/store/client-profile/selectors.js
 !src/store/helper.js
 !src/store/index.js
 !src/store/reducers.js

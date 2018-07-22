@@ -44,7 +44,6 @@ export const getWorkerProfileInitialValues = (data: ProfileWorkerModel) => {
 }
 
 export const workerProfileModelFromForm = (data) => {
-    console.log(data);
    return new VerificationRequestWorkerModel({
     regular: {
 		currencies: data.regular.currenciesKeys ? Object.keys(data.regular.currenciesKeys).filter((key) => data.regular.currenciesKeys[key]) : [],
