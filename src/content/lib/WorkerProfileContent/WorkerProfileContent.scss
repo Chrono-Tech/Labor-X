@@ -43,6 +43,9 @@ $maxWidth: 77rem;
       }
     }
   }
+  .validationBlock {
+    max-width: calc(#{$maxWidth} - 7rem);
+  }
   .content {
     margin-left: 4rem;
     max-width: calc(#{$maxWidth} - 4rem);
@@ -79,4 +82,50 @@ $maxWidth: 77rem;
       min-height: 80rem;
     }
   }
+}
+
+.cardActionTitleSuccess {
+  color: $color-green;
+}
+
+.cardActionTitleError {
+  color: $color-red;
+}
+
+.cardActionTitleWarning {
+  color: $color-warn;
+}
+
+.icon {
+  font-size: 36px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.cardActionTitle {
+  //font-size: 16px;
+  //font-weight: 500;
+  display: inline-block;
+}
+
+.cardActionTitleSuccess {
+  color: $color-green;
+}
+
+.cardActionTitleError {
+  color: $color-red;
+}
+
+.cardActionTitleWarning {
+  color: $color-warn;
+}
+
+.validationBlock {
+  font-size: 2rem;
+}
+
+
+.validationText {
+  display: inline-block;
+  margin-left: 1rem;
 }
