@@ -36,6 +36,7 @@ const onSubmit = ({ walletFile }) => {
 }
 
 class WalletFileForm extends React.Component {
+  static STEP = 'step/LoginWithWallet'
   static propTypes = {
     onChangeStep: PropTypes.func.isRequired,
     wallet: PropTypes.instanceOf(FileModel),
@@ -44,8 +45,6 @@ class WalletFileForm extends React.Component {
     pristine: PropTypes.bool,
     error: PropTypes.bool,
   }
-
-  static STEP = 'step/LoginWithWallet'
 
   handleBack = () => this.props.onChangeStep(LoginSteps.SelectLoginMethod)
 

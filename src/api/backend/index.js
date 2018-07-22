@@ -7,6 +7,7 @@ import ProfileModel from "./model/ProfileModel"
 import ImageModel from "./model/ImageModel"
 import AttachmentModel from "./model/AttachmentModel"
 import PersonModel from "./model/PersonModel"
+import ProfileClientModel from "./model/ProfileClientModel"
 import ProfileWorkerModel from "./model/ProfileWorkerModel"
 
 const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
@@ -94,6 +95,18 @@ export const confirmProfileContacts = (form, token: string): { profile: ProfileM
   form,
   { headers: { Authorization: `Bearer ${ token }` } }
 ).then(res => ({ profile: ProfileModel.fromJson(res.data.profile) }))
+
+export const submitClientProfile = (form, token: string): ProfileClientModel => {
+  return http.post(`${ API_URL }/security/me/profile/client`, form, {
+    headers: { Authorization: `Bearer ${ token }` },
+  }).then(res => ProfileClientModel.fromJson(res.data))
+}
+
+export const reviewClientProfile = (token: string): ProfileClientModel => {
+  return http.get(`${ API_URL }/security/me/profile/client`, {
+    headers: { Authorization: `Bearer ${ token }` },
+  }).then(res => ProfileClientModel.fromJson(res.data))
+}
 
 export const submitWorkerProfile = (workerProfile, token: string): { profile: ProfileWorkerModel } => http.post(
   `${ API_URL }/security/me/profile/worker`,
