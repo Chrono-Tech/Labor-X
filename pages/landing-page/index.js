@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import ReactDOM from 'react-dom'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
+import Link from 'react-router-dom/Link'
 
-import { Link, Carousel, ParallaxBox } from 'src/components/common'
+import { Carousel, ParallaxBox } from 'src/components/common'
 import { Footer } from 'src/components/layouts'
 import { hideCookiesNotice, getCookiesNoticeValue } from 'src/store'
 
@@ -47,7 +48,7 @@ class LandingPage extends React.Component {
     return (
       <div className={[css.cookiesNotice].join(' ')}>
         <img className={css.cookiesNoticeImg} src='/static/images/laborx-promo-info.svg' alt='' />
-        We use cookies to improve our user&#39;s experience. Read our <Link href='#'>cookies policies</Link> to learn more or change settings.
+        We use cookies to improve our user&#39;s experience. Read our <Link to='/#'>cookies policies</Link> to learn more or change settings.
         <button className={css.noticeClose} onClick={this.props.hideCookiesNotice.bind(this)}>X</button>
       </div>
     )
@@ -82,12 +83,12 @@ class LandingPage extends React.Component {
           { this.getCookiesNoticeWidget() }
           <div className={css.navigationPanel}>
             <div className={css.createButtonWrapper} >
-              <Link href='/create-account' className={css.createButton}>
+              <Link to='/create-account' className={css.createButton}>
                 New account
               </Link>
             </div>
             <div className={css.loginButtonWrapper}>
-              <Link href='/login' className={css.loginButton}>
+              <Link to='/login' className={css.loginButton}>
                 Login
               </Link>
             </div>
@@ -95,7 +96,7 @@ class LandingPage extends React.Component {
         </div>
         <div className={css.sliderContainer}>
           <div className={css.logo}>
-            <Link className={css.topLink} href='/'>
+            <Link className={css.topLink} to='/'>
               <img src='/static/images/laborx-promo-head.jpg' className={css.logoImg} alt='' />
             </Link>
           </div>
@@ -305,7 +306,7 @@ class LandingPage extends React.Component {
         <div className={[css.navigationBottom, this.state.isVisibleNavBottom ? '' : css.navigationBottomHide].join(' ')}>
           <div className={css.bottomButtonBackground} />
           <div className={css.bottomButtonWrapper}>
-            <Link href='#' className={css.bottomButton}>Learn More</Link>
+            <Link to='/#' className={css.bottomButton}>Learn More</Link>
           </div>
           <div className={css.bottomLine} />
         </div>

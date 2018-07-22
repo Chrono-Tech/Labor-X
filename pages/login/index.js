@@ -6,7 +6,7 @@ import { LoginOptions } from 'src/components/Login'
 
 import css from './index.scss'
 
-class LoginPage extends React.Component {
+export default class LoginPage extends React.Component {
   render () {
     return (
       <div className={css.root}>
@@ -23,4 +23,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default connect()(LoginPage)
+// export default connect()(LoginPage)

@@ -30,17 +30,20 @@ class CreateAccount extends React.Component {
     }
   }
 
-  static async getInitialProps ({ store }) {
-    const mnemonic = bip39.generateMnemonic()
+  // static async getInitialProps ({ store }) {
+  //   const mnemonic = bip39.generateMnemonic()
+  //
+  //   store.dispatch(setMnemonic(mnemonic))
+  //   return { mnemonic }
+  // }
 
-    store.dispatch(setMnemonic(mnemonic))
-    return { mnemonic }
-  }
-
-  componentWillMount (){
-    const { setMnemonic, mnemonic } = this.props
-
-    setMnemonic(mnemonic)
+  // componentWillMount (){
+  //   const { setMnemonic, mnemonic } = this.props
+  //
+  //   setMnemonic(mnemonic)
+  // }
+  componentDidMount () {
+    this.props.setMnemonic(bip39.generateMnemonic())
   }
 
   handleAccountPasswordFormSubmitSuccess = (values) => {

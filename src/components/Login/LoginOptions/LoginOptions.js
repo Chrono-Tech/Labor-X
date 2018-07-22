@@ -253,41 +253,41 @@ class LoginOptions extends React.Component {
 
 }
 
-export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
+// export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
+//
+//   class WithPersistGate extends React.Component {
+//
+//     static displayName = `withPersistGate(${WrappedComponent.displayName
+//     || WrappedComponent.name
+//     || 'Component'})`;
+//
+//     static contextTypes = {
+//       store: PropTypes.object.isRequired,
+//     }
+//
+//     constructor (props, context) {
+//       super(props, context)
+//       this.store = context.store
+//     }
+//
+//     render () {
+//       return (
+//         <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store["__persistor"]}>
+//           <WrappedComponent {...this.props} />
+//         </PersistGate>
+//       )
+//     }
+//
+//   }
+//
+// )
 
-  class WithPersistGate extends React.Component {
-
-    static displayName = `withPersistGate(${WrappedComponent.displayName
-    || WrappedComponent.name
-    || 'Component'})`;
-
-    static contextTypes = {
-      store: PropTypes.object.isRequired,
-    }
-
-    constructor (props, context) {
-      super(props, context)
-      this.store = context.store
-    }
-
-    render () {
-      return (
-        <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store["__persistor"]}>
-          <WrappedComponent {...this.props} />
-        </PersistGate>
-      )
-    }
-
-  }
-
-)
-
-const LoginOptionsLoader = (
-  <div className={css.loadingMessage}>
-    <div className={css.loadingMessageHeader}>Log In</div>
-    <img src='/static/images/gif/spinningwheel-1.gif' width='24' height='24' alt='' />
-  </div>
-)
+// const LoginOptionsLoader = (
+//   <div className={css.loadingMessage}>
+//     <div className={css.loadingMessageHeader}>Log In</div>
+//     <img src='/static/images/gif/spinningwheel-1.gif' width='24' height='24' alt='' />
+//   </div>
+// )
 
 function mapStateToProps (state) {
 
@@ -324,4 +324,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersistWrapper()(LoginOptions))
+export default connect(mapStateToProps, mapDispatchToProps)(LoginOptions)
