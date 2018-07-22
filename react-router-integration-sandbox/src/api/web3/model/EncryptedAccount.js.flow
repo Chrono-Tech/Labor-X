@@ -1,0 +1,23 @@
+interface EncryptedAccount {
+    id: string;
+    version: number;
+    address: string;
+    crypto: {
+        cipher: string;
+        ciphertext: string;
+        cipherparams: {
+            iv: string;
+        }
+        kdf: string
+        kdfparams: {
+            dklen: number;
+            n: number;
+            p: number;
+            r: number;
+            salt: string;
+        }
+        mac: string;
+    }
+}
+
+export default EncryptedAccount

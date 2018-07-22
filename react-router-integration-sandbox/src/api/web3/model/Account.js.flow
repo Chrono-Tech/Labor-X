@@ -1,0 +1,7 @@
+interface Account {
+    address: string;
+    privateKey: string;
+    sign: () => {}
+}
+
+export default Account
