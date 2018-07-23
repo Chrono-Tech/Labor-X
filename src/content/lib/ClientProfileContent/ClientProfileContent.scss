@@ -81,3 +81,19 @@ $maxWidth: 77rem;
     }
   }
 }
+
+.progressBlock {
+  height: 5rem;
+  width: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submitError {
+  color: $color-red;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-right: 1rem;
+}

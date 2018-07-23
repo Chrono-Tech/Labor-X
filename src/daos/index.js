@@ -1,7 +1,7 @@
 import { ContractModel } from 'src/models'
 
 import CONTRACTS_MANAGER_ABI from '@laborx/sc-abi/build/contracts/ContractsManager.json'
-import ERC20_LIBRARY_ABI from '@laborx/sc-abi/build/contracts/ERC20Library.json'
+// import ERC20_LIBRARY_ABI from '@laborx/sc-abi/build/contracts/ERC20Library.json'
 import ERC20_INTERFACE_ABI from '@laborx/sc-abi/build/contracts/ERC20Interface.json'
 import MULTI_EVENTS_HISTORY_ABI from '@laborx/sc-abi/build/contracts/MultiEventsHistory.json'
 import JOB_CONTROLLER_ABI from '@laborx/sc-abi/build/contracts/JobController.json'
@@ -11,7 +11,7 @@ import IPFS_LIBRARY_ABI from '@laborx/sc-abi/build/contracts/IPFSLibrary.json'
 import USER_LIBRARY_ABI from '@laborx/sc-abi/build/contracts/UserLibrary.json'
 
 import ContractsManagerDAO from './lib/ContractsManagerDAO'
-import ERC20LibraryDAO from './lib/ERC20LibraryDAO'
+// import ERC20LibraryDAO from './lib/ERC20LibraryDAO'
 import JobControllerDAO from './lib/JobControllerDAO'
 import BoardControllerDAO from './lib/BoardControllerDAO'
 import ERC20TokenDAO from './lib/ERC20TokenDAO'
@@ -38,11 +38,11 @@ export const CONTRACTS_MANAGER = new ContractModel({
   DAOClass: ContractsManagerDAO,
 })
 
-export const ERC20_LIBRARY = new ContractModel({
-  type: "ERC20Library",
-  abi: ERC20_LIBRARY_ABI,
-  DAOClass: ERC20LibraryDAO,
-})
+// export const ERC20_LIBRARY = new ContractModel({
+//   type: "ERC20Library",
+//   abi: ERC20_LIBRARY_ABI,
+//   DAOClass: ERC20LibraryDAO,
+// })
 
 export const JOB_CONTROLLER = new ContractModel({
   type: "JobController",
