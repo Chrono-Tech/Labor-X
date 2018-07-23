@@ -1,0 +1,32 @@
+{
+  "name": "test_web3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@material-ui/core": "^1.4.0",
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "bip39": "^2.5.0",
+    "connected-react-router": "^4.3.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-form": "^7.4.2",
+    "redux-form-material-ui": "^5.0.0-beta.3",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1",
+    "spa-http-server": "^0.9.0",
+    "web3": "^1.0.0-beta.34",
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.1.0"
+  }
+}

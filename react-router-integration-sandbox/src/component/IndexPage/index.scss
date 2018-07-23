@@ -1,0 +1,524 @@
+$cookiesNoticeHeight: 66px;
+
+.root {
+  transition: margin-top 0.3s linear;
+  position: relative;
+  &.rootCookiesNoticeVisible {
+    margin-top: $cookiesNoticeHeight;
+    @media only screen and (max-width: 1120px) {
+      margin-top: 0;
+    }
+    .cookiesNotice {
+      margin-top: 0;
+    }
+
+  }
+}
+
+
+.cookiesNotice {
+  background: rgb(0, 108, 119);
+  padding: 0 50px 0 30px;
+  font-weight: 400;
+  color: #fff;
+  line-height: $cookiesNoticeHeight;
+  position: relative;
+  height: $cookiesNoticeHeight;
+  width: 100%;;
+  margin-top: -66px;
+  transition: margin 0.3s linear;
+  @media only screen and (max-width: 1120px) {
+    display: none;
+  }
+
+  .cookiesNoticeImg {
+    width: 24px;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .noticeClose {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 50px;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+
+.sliderContainer {
+  position: relative;
+  min-height: 153px;
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  @media only screen and (max-width: 480px){
+    position: relative;
+  }
+  .topLink {
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
+    @media only screen and (max-width: 1120px) {
+      //width: 419px;
+      height: 135px;
+    }
+    @media only screen and (max-width: 480px){
+      height: auto;
+      border-radius: 0;
+    }
+    .logoImg {
+      display: block;
+      @media only screen and (max-width: 1120px) {
+        height: 100%;
+      }
+      @media only screen and (max-width: 480px) {
+        margin: 0;
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+}
+
+
+.fixedPanel {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  top: 0;
+  right: 0;
+  margin-top: 0;
+  z-index: 999;
+  transition: margin-top 0.3s linear;
+  .navigationPanel {
+    display: flex;
+    justify-content: flex-end;
+    margin: 28px 30px 0 0;
+
+    @media (max-width: 1024px){
+      margin: 0;
+      padding: 6px 0;
+    }
+  }
+  @media (max-width: 1024px){
+    display: flex;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    padding: 15px 20px;
+  }
+}
+
+@mixin navButton() {
+  border-style: solid;
+  border-radius: 21px;
+  text-align: center;
+  text-transform: uppercase;
+  border-width: 0px 0px 2px;
+  color: #fff;
+  font-family: roboto, sans-serif;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 13px 26px 11px;
+}
+
+.navButtonWrapperReset {
+  min-width: auto;
+  color: transparent;
+}
+
+.navButtonTextWrapperReset {
+  margin: 0;
+}
+
+.createButtonWrapper {
+  margin-right: 10px;
+
+  @media (max-width: 1024px) {
+    flex: 1;
+  }
+
+
+  .createButton {
+    @include navButton();
+    background-color: #FFB14A !important;
+    border-color: #C69C6D;
+    &:hover {
+      background-color: #F4A23D !important;
+    }
+
+    @media (max-width: 1024px) {
+      width: auto;
+    }
+  }
+}
+
+.loginButton {
+  @include navButton();
+  background-color: #00A0D2 !important;
+  border-color: #0088C3;
+  padding: 12px 20px;
+  &:hover {
+    background-color: #0088C3 !important;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 12px 40px;
+  }
+}
+
+.benefitsBlock {
+  background-color: #00A0D2;
+  color: #fff;
+  text-align: center;
+  padding: 50px 20px;
+  .benefitsHeader {
+    margin-top:0;
+    margin-bottom: 30px;
+    line-height: 60px;
+    font-family: roboto, sans-serif;
+    font-size: 50px;
+    font-weight: 200;
+    letter-spacing: -1px;
+    @media (max-width: 1024px){
+      font-size: 40px;
+      line-height: 48px;
+    }
+  }
+
+  .benefitsText {
+    font-size: 20px;
+    line-height: 32px;
+    width: 40%;
+    max-width: 800px;
+    margin: 0 auto;
+    @media (max-width: 1024px){
+      font-size: 16px;
+      line-height: 26px;
+      width: auto;
+    }
+  }
+
+}
+
+.womanImage {
+  width: 1620px;
+  top: 0;
+  bottom: 300px;
+  margin: auto;
+}
+.womanParallaxBox {
+  max-height: 770px;
+}
+.advantageBlockWrapper {
+  position: relative;
+  color: #fff;
+  border-bottom: 30px solid #00A0D2;
+
+  .advantageBlockInner {
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    &.advantageBlockInnerWoman {
+      margin-bottom: 160px;
+
+      @media (max-width: 1024px) {
+        margin-bottom: 0;
+      }
+    }
+
+    &.advantageBlockInnerHero {
+      margin-bottom: 145px;
+
+      @media (max-width: 1024px){
+        margin-bottom: 0;
+      }
+    }
+
+    &.advantageBlockInnerClient {
+      margin-bottom: 130px;
+
+      @media (max-width: 1024px){
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  :global(.ParallaxBox){
+    @media (max-width: 1024px){
+      height: auto;
+    }
+  }
+  :global(.animation-fired) {
+    .advantageCountsWoman {
+      opacity: 1;
+      visibility: visible;
+      left: 5%;
+    }
+    .advantageContentWoman {
+      opacity: 1;
+      visibility: visible;
+      right: 21%;
+    }
+    .advantageCountsWorkers {
+      opacity: 1;
+      visibility: visible;
+      right: 5%;
+    }
+    .advantageContentWorkers {
+      opacity: 1;
+      visibility: visible;
+      left: 8%;
+    }
+    .advantageCountsClients {
+      left: 5%;
+      opacity: 1;
+      visibility: visible;
+    }
+    .advantageContentClients {
+      right: 21% !important;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &.advantageBlockWrapperLast{
+    border: none;
+  }
+  .advantageTextWrapper {
+
+  }
+  .advantageBlockImage {
+    width: 100%;
+    z-index: 1;
+    display: block;
+  }
+  .advantageCountsWoman {
+    left: -100px;
+  }
+  .advantageCountsWorkers {
+    right: -100px;
+    text-align: right;
+  }
+  .advantageCountsClients {
+    left: -100px;
+  }
+  .advantageCounts {
+    z-index: 2;
+    height: 100%;
+    font-size: 14px;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+    transition: all 0.2s ease-in;
+    opacity: 0;
+    visibility: hidden;
+
+    position: relative;
+    //left: 0;
+    display: flex;
+    align-items: flex-end;
+
+    @media (max-width: 1024px) {
+      display: none;
+    }
+    .advantageCountsInner {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .advantageCountBlock {
+      margin-bottom: 22px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .advantageCountBlockHeader {
+        font-size: 30px;
+        font-family: roboto, sans-serif;
+        font-weight: 500;
+        line-height: 36px;
+      }
+    }
+  }
+  .advantageContentWoman {
+    right: -100px;
+    width: 450px;
+  }
+  .advantageContentWorkers {
+    left: -100px;
+    width: 442px;
+  }
+  .advantageContentClients {
+    right: -100px;
+    width: 455px;
+  }
+  .advantageContent {
+    height: 100%;
+    top: 0;
+    transition: all 0.2s ease-in;
+    opacity: 0;
+    visibility: hidden;
+
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+
+    @media (max-width: 1024px) {
+      position: relative;
+      right: 0 !important;
+      left: 0 !important;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      padding: 55px 20px;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .advantageContentInner {
+
+      @media (max-width: 1024px) {
+        vertical-align: top;
+      }
+    }
+    .advantageTitle {
+      font-size: 90px;
+      line-height: 126px;
+      color: #00A0D2;
+      letter-spacing: -1px;
+      font-weight: 700;
+      margin-bottom: 8px;
+
+      @media (max-width: 1024px) {
+        font-size: 50px;
+        line-height: 36px;
+        margin-bottom: 28px;
+      }
+      .advantageTitleFirstWord{
+        font-size: 30px;
+        text-align: right;
+        letter-spacing: -1px;
+        line-height: 36px;
+        margin-right: 25px;
+        margin-left: -60px;
+
+        @media (max-width: 1024px) {
+          margin: 0 0 5px 0;
+          font-size: 20px;
+          text-align: left;
+          letter-spacing: 0px;
+          line-height: 24px;
+          display: block;
+        }
+      }
+    }
+    .advantageContentBlockTitle {
+      color: #00A0D2;
+      line-height: 42px;
+      font-size: 30px;
+      font-weight: 500;
+      margin-bottom: 5px;
+
+      @media (max-width: 1024px) {
+        font-weight: 400;
+        margin-bottom: 3px;
+      }
+    }
+    .advantageContentBlockText {
+      line-height: 22px;
+      font-size: 16px;
+      margin-bottom: 30px;
+      font-weight: 400;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+    }
+
+  }
+
+}
+
+
+
+
+
+.navigationBottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  @media (max-width: 1024px){
+    display: none;
+  }
+  &.navigationBottomHide {
+    display: none;
+  }
+  .bottomButtonBackground {
+    margin: 0 auto;
+    width: 316px;
+    height: 60px;
+    background: url(/static/images/laborx-promo-pad.svg);
+    opacity: 0.6;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+  .bottomButtonWrapper {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+
+    .bottomButton {
+      font-family: roboto, sans-serif;
+      font-weight: bold;
+      color: #fff;
+      padding: 5px 20px;
+      box-shadow: none;
+      border-width: 0;
+      border-style: solid;
+      border-bottom-width: 2px;
+      border-color: #006E9E;
+      background-color: #00A0D2;
+      border-radius: 24px;
+      text-align: center;
+      line-height: 36px;
+      width: 255px;
+
+      &:hover {
+        background-color: #0088C3;
+      }
+    }
+  }
+  .bottomLine {
+    background-color: #000000;
+    opacity: 0.6;
+    height: 10px;
+  }
+}
+
+.footer {
+  margin-top: 0;
+}
