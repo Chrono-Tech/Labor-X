@@ -51,8 +51,5 @@ module.exports = {
       'normalize.css': path.join(__dirname, 'node_modules/normalize.css/normalize.css'),
     }
   },
-  optimization: {
-    minimize: false
-  },
   devtool: 'eval-source-map'
 };
