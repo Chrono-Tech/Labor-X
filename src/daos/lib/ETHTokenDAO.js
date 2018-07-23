@@ -4,6 +4,11 @@ import AbstractTokenDAO from './AbstractTokenDAO'
 import ethDAO from './ETHDAO'
 
 export default class ETHTokenDAO extends AbstractTokenDAO {
+
+  constructor(){
+    super(...arguments)
+  }
+
   connect (web3) {
     if (this.isConnected) {
       this.disconnect()

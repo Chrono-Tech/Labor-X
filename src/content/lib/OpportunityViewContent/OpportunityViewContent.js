@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
-import { Router } from 'src/routes'
 import { JobModel, BoardModel, JobOfferFormModel, ClientModel, WORKFLOW_TM } from 'src/models'
 import { createJobOffer, createJobOfferWithPrice, signerSelector, boardByIdSelector, modalsPush } from 'src/store'
 import { Image, Button, Tab, ScheduleWidget } from 'src/components/common'
@@ -21,6 +21,7 @@ export class OpportunityViewContent extends React.Component {
     onPostOffer: PropTypes.func.isRequired,
     pushModal: PropTypes.func.isRequired,
     onPostOfferWithPrice: PropTypes.func,
+    push: PropTypes.func,
   }
 
   state = {
@@ -29,8 +30,8 @@ export class OpportunityViewContent extends React.Component {
     isScheduleVisible: false,
   }
 
-  handleBack () {
-    Router.pushRoute('/opportunities')
+  handleBack = () => {
+    this.props.push('/opportunities')
   }
 
   handleClickCalendar = (e) => {
@@ -89,7 +90,7 @@ export class OpportunityViewContent extends React.Component {
       this.setState({
         isOfferPosting: false,
       }, () => {
-        Router.pushRoute('/applications-and-offers')
+        this.props.push('/applications-and-offers')
       })
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -127,7 +128,7 @@ export class OpportunityViewContent extends React.Component {
       this.setState({
         isOfferPosting: false,
       }, () => {
-        Router.pushRoute('/applications-and-offers')
+        this.props.push('/applications-and-offers')
       })
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -246,6 +247,7 @@ function mapDispatchToProps (dispatch) {
     onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form)),
     onPostOfferWithPrice: async (form: JobOfferFormModel) => dispatch(createJobOfferWithPrice(form)),
     pushModal (modal) { dispatch(modalsPush(modal)) },
+    push: (url) => dispatch(push(url)),
   }
 }
 

@@ -1,9 +1,9 @@
 import React from 'react'
+import { push } from 'connected-react-router'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
-import { Router } from 'src/routes'
 import { JobModel, ProfileModel, JobOfferModel } from 'src/models'
 import { reloadJobsOffers, jobsOffersSelector, profileSelector } from 'src/store'
 import { Button, Input, Image, Icon } from 'src/components/common'
@@ -21,6 +21,7 @@ export class ReviewApplicantsContent extends React.Component {
       worker: PropTypes.instanceOf(ProfileModel),
     })),
     worker: PropTypes.instanceOf(ProfileModel),
+    push: PropTypes.func,
   }
 
   constructor (props) {
@@ -31,8 +32,8 @@ export class ReviewApplicantsContent extends React.Component {
     this.props.reloadJobsOffers()
   }
 
-  handleBack () {
-    Router.pushRoute('/posted-jobs')
+  handleBack = () => {
+    this.props.push('/posted-jobs')
   }
 
   renderEmptyListMessage (){
@@ -139,6 +140,7 @@ function mapStateToProps (state, op) {
 
 function mapDispatchToProps (dispatch, op) {
   return {
+    push: (url) => dispatch(push(url)),
     reloadJobsOffers: () => dispatch(reloadJobsOffers(op.job.id)),
   }
 }

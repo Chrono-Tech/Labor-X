@@ -1,7 +1,6 @@
 import React  from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Head from 'next/head'
 import bip39 from 'bip39'
 
 import { AccountLayout } from 'src/components/layouts'

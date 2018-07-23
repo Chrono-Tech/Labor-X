@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ReactDOM from 'react-dom'
-import Head from 'next/head'
 import PropTypes from 'prop-types'
 import Link from 'react-router-dom/Link'
 
@@ -74,11 +73,6 @@ class LandingPage extends React.Component {
   render () {
     return (
       <div className={[css.root, this.props.isHideCookiesNotice ? '' : css.rootCookiesNoticeVisible].join(' ')}>
-        <Head>
-          <title>LaborX</title>
-          <link rel='shortcut icon' type='image/x-icon' href='/static/favicon.ico' />
-          <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
-        </Head>
         <div className={css.fixedPanel}>
           { this.getCookiesNoticeWidget() }
           <div className={css.navigationPanel}>

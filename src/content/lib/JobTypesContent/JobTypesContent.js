@@ -1,16 +1,11 @@
-import { Button, Image } from 'components/common'
 import React from 'react'
-import { Router } from 'src/routes'
+import Link from 'react-router-dom/Link'
+
+import { Button, Image } from 'components/common'
+
 import css from './JobTypesContent.scss'
 
 export default class JobTypesContent extends React.Component {
-  handlePostJob () {
-    Router.pushRoute('/create-job')
-  }
-
-  handleHireWorker () {
-    Router.pushRoute('/hire-worker')
-  }
 
   render () {
     return (
@@ -29,12 +24,13 @@ export default class JobTypesContent extends React.Component {
             <div className={css.card}>
               <h3>Post a competitive job</h3>
               <p>If your job is complex or you would like to select worker from many applicants use an option below.</p>
-              <Button
-                className={css.button}
-                label='terms.postJob'
-                color={Button.COLORS.PRIMARY}
-                onClick={this.handlePostJob}
-              />
+              <Link to='/create-job'>
+                <Button
+                  className={css.button}
+                  label='terms.postJob'
+                  color={Button.COLORS.PRIMARY}
+                />
+              </Link>
               <Image
                 className={css.helpIcon}
                 icon='help_outline'
@@ -44,12 +40,13 @@ export default class JobTypesContent extends React.Component {
             <div className={css.card}>
               <h3>Hire a worker</h3>
               <p>Use the option if you have an emergency task or want to send an offer to selected worker straight away.</p>
-              <Button
-                className={css.button}
-                label='terms.hireWorker'
-                color={Button.COLORS.PRIMARY}
-                onClick={this.handleHireWorker}
-              />
+              <Link to='/hire-worker'>
+                <Button
+                  className={css.button}
+                  label='terms.hireWorker'
+                  color={Button.COLORS.PRIMARY}
+                />
+              </Link>
               <Image
                 className={css.helpIcon}
                 icon='help_outline'
