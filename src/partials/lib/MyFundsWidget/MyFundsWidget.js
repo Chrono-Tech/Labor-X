@@ -18,11 +18,12 @@ export class MyFundsWidget extends React.Component {
     return signer && (
       <Widget
         title='My Funds'
-        subtitle='Account'
+        subtitle='General'
       >
         <div className={css.main}>
-          <span>{signer.address}</span>&nbsp;
-          <b>{pocket.token.dao.token.symbol} <BalanceMicro pocket={pocket} /></b>
+          <p>{signer.address}</p>
+          <h3><BalanceMicro pocket={pocket} /></h3>
+          <b>{pocket.token.dao.token.symbol}</b>
         </div>
       </Widget>
     )
@@ -38,10 +39,4 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (/*dispatch*/) {
-  return {
-    // stack: state.modals.stack,
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyFundsWidget)
+export default connect(mapStateToProps, null)(MyFundsWidget)
