@@ -117,7 +117,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
   }
 
   async getJobsByIds (boardControllerDAO, ids: Number[]) {
-    const JOBS_RESULT_OFFSET = 21
+    const JOBS_RESULT_OFFSET = 22
     const data = await this.contract.methods.getJobsByIds(ids).call()
     const parsed = []
     for (let i = 0; i < data.length; i += JOBS_RESULT_OFFSET) {
@@ -143,6 +143,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         pendingFinishAtBytes,
         finishTimeBytes,
         finalizedAtBytes,
+        requestedAdditionalTimeBytes,
       ] = data.slice(i, i + JOBS_RESULT_OFFSET)
       parsed.push({
         id: bytes32ToNumber(idBytes),
@@ -166,6 +167,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         pendingFinishAt: bytes32ToDate(pendingFinishAtBytes, true),
         finishTime: bytes32ToDate(finishTimeBytes, true),
         finalizedAt: bytes32ToDate(finalizedAtBytes, true),
+        requestedAdditionalTime: bytes32ToNumber(requestedAdditionalTimeBytes),
       })
     }
     const promises = parsed.map(async ({
@@ -190,6 +192,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
       pausedAt,
       pausedFor,
       flowType,
+      requestedAdditionalTime,
     }) => {
       const ipfsValue = await loadFromIPFS(ipfsHash)
       const ipfs = new JobIPFSModel({
@@ -211,6 +214,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         defaultPay,
         pausedAt,
         pausedFor,
+        requestedAdditionalTime,
         extra: new JobExtraModel({
           // TODO Fetch counts
           createdAt,
