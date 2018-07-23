@@ -13,7 +13,6 @@ import CurrencyModel from '../../../../api/backend/model/CurrencyModel'
 import ServiceCategoryModel from '../../../../api/backend/model/ServiceCategoryModel'
 import css from './ServicesTab.scss'
 
-
 export default class ServicesTab extends React.Component {
   static propTypes = {
     onRemoveService: PropTypes.func,

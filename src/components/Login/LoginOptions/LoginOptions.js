@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Router from 'src/routes'
 import Dialog from '@material-ui/core/Dialog'
