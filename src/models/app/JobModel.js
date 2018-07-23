@@ -26,6 +26,7 @@ export const schemaFactory = () => ({
   defaultPay: PropTypes.number,
   pausedAt: PropTypes.instanceOf(Date),
   pausedFor: PropTypes.number,
+  requestedAdditionalTime: PropTypes.number,
 })
 
 export default class JobModel extends AbstractModel {
