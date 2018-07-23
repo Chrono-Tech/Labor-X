@@ -132,3 +132,8 @@ export const getCurrencies = () => http.get(
 ).then(res => {
   return (res.data)
 })
+
+export const getClient = (address: string): Promise<ProfileClientModel> => http.get(
+  '/security/client', { params: { address } })
+  .then(res => ProfileClientModel.fromJson(res.data)
+  )

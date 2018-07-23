@@ -10,7 +10,6 @@ import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox,
 import { SignerModel, BoardModel } from 'src/models'
 import t from "typy"
 import DatePickerField from 'src/components/DatePickerField'
-import validate from './validate'
 import css from './CreateJobForm.scss'
 import { WORKFLOW_FIXED_PRICE, WORKFLOW_TM } from "../../../models"
 
@@ -590,5 +589,4 @@ class CreateJobForm extends React.Component {
 
 export default reduxForm({
   form: FORM_CREATE_JOB,
-  validate,
 })(CreateJobForm)

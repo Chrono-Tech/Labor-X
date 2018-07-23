@@ -25,6 +25,7 @@ import {
   myWallet,
   clientProfile,
   workerProfile,
+  opportunityView,
 } from './reducers'
 
 export * from './actions'
@@ -62,6 +63,7 @@ export default (initialState = {}) => {
     clientProfile,
     workerProfile,
     myWallet,
+    opportunityView,
   })
 
   // Here you can recover state sent from the backend
