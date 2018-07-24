@@ -1,4 +1,5 @@
 import React from 'react'
+import { push } from 'connected-react-router'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -9,7 +10,6 @@ import Tab from '@material-ui/core/Tab'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { Router } from 'src/routes'
 import { ProfileModel, WorkerModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
 import { WORKER_PROFILE_FORM } from "../../../store/worker-profile/reducer"
@@ -56,6 +56,7 @@ class WorkerProfileContent extends React.Component {
       worker: PropTypes.instanceOf(WorkerModel),
     }),
     avatarUrl: PropTypes.string,
+    push: PropTypes.func,
   }
 
   constructor (props) {
@@ -73,8 +74,8 @@ class WorkerProfileContent extends React.Component {
 
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
-  handleBack () {
-    Router.pushRoute('/my-profile')
+  handleBack = () => {
+    this.props.push('/my-profile')
   }
 
   handleHelp = () => {
@@ -202,6 +203,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
+    push: (url) => dispatch(push(url)),
     getWorkerProfile: () => {
       dispatch(getWorkerProfile())
     },

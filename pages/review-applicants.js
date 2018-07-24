@@ -43,7 +43,7 @@ class ReviewApplicants extends React.Component {
 }
 
 function mapStateToProps (state, op) {
-  const job = jobByIdSelector(op.jobId)(state)
+  const job = jobByIdSelector(op.match.params.id)(state)
   const isInitialized = isFrontendInitialized()(state)
   return {
     job,

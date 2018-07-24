@@ -1,4 +1,5 @@
 import React from 'react'
+import { push } from 'connected-react-router'
 import PropTypes from 'prop-types'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
@@ -6,7 +7,6 @@ import Tab from '@material-ui/core/Tab'
 import { connect } from 'react-redux'
 import { reduxForm, propTypes, formValueSelector } from 'redux-form'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Router } from 'src/routes'
 import ProfileModel from 'src/api/backend/model/ProfileModel'
 import ProfileClientModel from 'src/api/backend/model/ProfileClientModel'
 import { Icon, Image, Button } from 'src/components/common'
@@ -35,6 +35,7 @@ class ClientProfileContent extends React.Component {
       client: PropTypes.instanceOf(ProfileClientModel),
     }),
     stuff: PropTypes.arrayOf(PropTypes.instanceOf(ProfileModel)),
+    push: PropTypes.func,
   }
 
   constructor (props) {
@@ -52,8 +53,8 @@ class ClientProfileContent extends React.Component {
 
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
-  handleBack () {
-    Router.pushRoute('/my-profile')
+  handleBack = () => {
+    this.props.push('/my-profile')
   }
 
   handleHelp = () => {
@@ -219,6 +220,7 @@ function mapDispatchToProps (dispatch) {
     removeSpecialization: (specialization) => {
       dispatch(removeSpecializationClientProfileForm(specialization))
     },
+    push: (url) => dispatch(push(url)),
   }
 }
 

@@ -1,7 +1,7 @@
 import bip39 from 'bip39'
 import { stopSubmit } from 'redux-form'
 
-import { Router } from 'src/routes'
+import { push } from 'connected-react-router'
 import { WalletEntryModel, SignInModel, UserAccountTypesModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
 
@@ -77,7 +77,7 @@ export const signIn = ({ password }) => async (dispatch, getState) => {
 
 export const onSignInSuccess = () => (dispatch) => {
   dispatch({ type: LOGIN_SIGN_IN })
-  Router.pushRoute('/dashboard')
+  dispatch(push('/dashboard'))
 }
 
 export const onSignInFail = () => (dispatch) => {
@@ -103,7 +103,7 @@ export const createAccount = (walletName, password) => async (dispatch, getState
 
     dispatch(changeStep(LoginSteps.SelectWallet))
   } else {
-    Router.pushRoute('/account-password')
+    dispatch(push('/account-password'))
   }
 }
 
@@ -206,7 +206,7 @@ export const onConfirmRecoveryPassword = ({ password }) => (dispatch, getState) 
 
   dispatch({ type: LOGIN_RESET_RECOVERY_PASSWORD_MODE })
 
-  Router.pushRoute('/dashboard')
+  dispatch(push('/dashboard'))
 }
 
 export const changeStep = (step) => (dispatch) => {
@@ -255,5 +255,5 @@ export const handleAccount404DialogYesClick = () => (dispatch, getState) => {
   const account = getAccount(state)
   dispatch(setExistingAccount(account))
   dispatch(hideAccount404Dialog())
-  Router.pushRoute('/create-account')
+  dispatch(push('/create-account'))
 }
