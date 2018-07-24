@@ -6,6 +6,7 @@ import { RightPanel } from 'src/components/layouts'
 import { userSelector, logout } from "src/store"
 import { UserAccountTypesModel } from "src/models"
 import { NotificationWidget } from "src/partials"
+import ProfileModel from 'src/api/backend/model/ProfileModel'
 import FirstMenu from '../FirstMenu/FirstMenu'
 import css from './Header.scss'
 
@@ -14,6 +15,10 @@ export class Header extends React.Component {
   static propTypes = {
     handleLogout: PropTypes.func.isRequired,
     accountTypes: PropTypes.instanceOf(UserAccountTypesModel),
+    avatar: PropTypes.shape({
+      url: PropTypes.string
+    }),
+    validationLevel: PropTypes.number,
   }
 
   constructor (){
@@ -36,6 +41,7 @@ export class Header extends React.Component {
 
   render () {
     const prefix = this.constructor.name
+    const { avatar, validationLevel } = this.props
     return (
       <div className={css.root}>
         <div className={css.headerLeft}>
@@ -66,22 +72,28 @@ export class Header extends React.Component {
 
           <div className={css.profile}>
             <div className={css.profileWrapper} onClick={this.handleOpenPanel}>
-              <img alt='profile-icon' src='/static/temp/icon-profile.jpg' className={css.profileIcon} />
+              <img alt='profile-icon' src={(avatar && avatar.url) || '/static/temp/icon-profile.jpg'} className={css.profileIcon} />
               <div className={css.profileCounter}>99</div>
             </div>
           </div>
         </div>
 
-        <RightPanel open={this.state.isVisibleRightPanel} onClose={this.handleClosePanel} />
+        <RightPanel open={this.state.isVisibleRightPanel} onClose={this.handleClosePanel} validationLevel={validationLevel} />
 
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  accountTypes: userSelector()(state).accountTypes,
-})
+const mapStateToProps = state => {
+  const user = userSelector()(state)
+  const profile = ProfileModel.fromJson(user.profile)
+  return {
+    accountTypes: user.accountTypes,
+    avatar: profile.level1.getApprovedAvatar(),
+    validationLevel: profile.getValidationLevel(),
+  }
+}
 
 function mapDispatchToProps (dispatch) {
   return {
