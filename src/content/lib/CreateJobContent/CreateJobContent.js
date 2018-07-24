@@ -1,4 +1,5 @@
 import React from 'react'
+import { push } from 'connected-react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
@@ -6,7 +7,6 @@ import { SignerModel, BoardModel, JobFormModel, JobIPFSModel,
   JobAddressModel, JobBudgetModel, JobPeriodModel,
   SkillModel }
   from 'src/models'
-import { Router } from 'src/routes'
 import { signerSelector, boardsListSelector, createJob, boardByIdSelector } from 'src/store'
 import CreateJobForm, { FORM_CREATE_JOB } from './CreateJobForm'
 
@@ -25,6 +25,7 @@ export class CreateJobContent extends React.Component {
     startWorkAllowance: PropTypes.bool,
     flowType: PropTypes.number,
     selectedBoard: PropTypes.instanceOf(BoardModel),
+    push: PropTypes.func,
   }
 
   state = {
@@ -37,7 +38,7 @@ export class CreateJobContent extends React.Component {
     })
     try {
       await this.props.handleSubmit(values)
-      Router.pushRoute('/posted-jobs')
+      this.props.push('/posted-jobs')
     } finally {
       this.setState({
         isLoading: false,
@@ -110,11 +111,10 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
+    push: (url) => dispatch(push(url)),
     async handleSubmit (values) {
-
       // eslint-disable-next-line no-console
       const skills = SkillModel.arrayValueOfMask(values.selectedSkills.map(x => x.index).reduce((mask, index) => (mask | Math.pow(2, index)), 0))
-      debugger
       const data = new JobFormModel({
         boardId: values.board,
         flowType: values.flowType,

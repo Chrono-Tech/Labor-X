@@ -1,4 +1,5 @@
 import React from 'react'
+import { push } from 'connected-react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { formValueSelector, getFormSyncErrors } from 'redux-form'
@@ -8,7 +9,6 @@ import {
   BoardRequirementModel,
 } from 'src/models'
 import { boardCreate } from 'src/store'
-import { Router } from 'src/routes'
 import CreateJobBoard from './CreateJobBoardForm'
 
 const FORM_CREATE_JOB_BOARD = 'form/createJobBoard'
@@ -26,6 +26,7 @@ class CreateJobBoardContent extends React.Component {
     handleSubmit: PropTypes.func,
     logo: PropTypes.string,
     background: PropTypes.string,
+    push: PropTypes.func,
   }
 
   constructor (){
@@ -43,7 +44,7 @@ class CreateJobBoardContent extends React.Component {
 
     try {
       await this.props.handleSubmit(values)
-      Router.pushRoute('/my-jobs-boards')
+      this.props.push('/my-jobs-boards')
     } finally {
       this.setState({
         isLoading: false,
@@ -86,8 +87,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    push: (url) => dispatch(push(url)),
     async handleSubmit (values) {
-      debugger
       await dispatch(boardCreate(
         new JobBoardFormModel({
           name: values.name,

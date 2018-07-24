@@ -1,7 +1,7 @@
 import React from 'react'
+import { push } from 'connected-react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Router } from 'src/routes'
 import { Translate, JobCard } from 'src/components/common'
 import { jobsListSelector, boardByIdSelector, offersCountForJobSelector/* , newJobNoticeSelector, signerSelector */ } from 'src/store'
 import css from './PostedJobsContent.scss'
@@ -9,10 +9,11 @@ import css from './PostedJobsContent.scss'
 class PostedJobsContent extends React.Component {
   static propTypes = {
     cards: PropTypes.arrayOf(PropTypes.shape(JobCard.propTypes)).isRequired,
+    push: PropTypes.func,
   }
 
-  handleOnClickReview (jobId) {
-    Router.pushRoute(`/review-applicants/${jobId}`)
+  handleOnClickReview = (jobId) => {
+    this.props.push(`/review-applicants/${jobId}`)
   }
 
   render () {
@@ -43,4 +44,8 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(PostedJobsContent)
+const mapDispatchToProps = (dispatch) => ({
+  push: (url) => dispatch(push(url)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostedJobsContent)

@@ -1,6 +1,11 @@
 import EventEmitter from 'events'
 
 export class ETHDAO extends EventEmitter {
+
+  constructor(){
+    super(...arguments)
+  }
+
   connect (web3) {
     if (this.isConnected) {
       this.disconnect()

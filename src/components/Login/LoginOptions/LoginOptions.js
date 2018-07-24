@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Router from 'src/routes'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
+import { push } from 'connected-react-router'
 
 import {
   signIn,
@@ -82,6 +81,7 @@ class LoginOptions extends React.Component {
     selectedWalletRecoveryForm: PropTypes.instanceOf(WalletEntryModel),
     fetchSignIn: PropTypes.bool,
     openAccount404Dialog: PropTypes.bool,
+    push: PropTypes.func,
   }
 
   static defaultProps = {
@@ -108,8 +108,8 @@ class LoginOptions extends React.Component {
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
 
-  navigateToCreateAccount (){
-    Router.pushRoute('/create-account')
+  navigateToCreateAccount = () => {
+    this.props.push('/create-account')
   }
 
   renderComponent () {
@@ -253,42 +253,6 @@ class LoginOptions extends React.Component {
 
 }
 
-export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
-
-  class WithPersistGate extends React.Component {
-
-    static displayName = `withPersistGate(${WrappedComponent.displayName
-    || WrappedComponent.name
-    || 'Component'})`;
-
-    static contextTypes = {
-      store: PropTypes.object.isRequired,
-    }
-
-    constructor (props, context) {
-      super(props, context)
-      this.store = context.store
-    }
-
-    render () {
-      return (
-        <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store["__persistor"]}>
-          <WrappedComponent {...this.props} />
-        </PersistGate>
-      )
-    }
-
-  }
-
-)
-
-const LoginOptionsLoader = (
-  <div className={css.loadingMessage}>
-    <div className={css.loadingMessageHeader}>Log In</div>
-    <img src='/static/images/gif/spinningwheel-1.gif' width='24' height='24' alt='' />
-  </div>
-)
-
 function mapStateToProps (state) {
 
   return {
@@ -321,7 +285,8 @@ function mapDispatchToProps (dispatch) {
     navigateToLoginForm: () => dispatch(navigateToLoginForm()),
     hideAccount404Dialog: () => dispatch(hideAccount404Dialog()),
     handleAccount404DialogYesClick: () => dispatch(handleAccount404DialogYesClick()),
+    push: (url) => dispatch(push(url)),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersistWrapper()(LoginOptions))
+export default connect(mapStateToProps, mapDispatchToProps)(LoginOptions)

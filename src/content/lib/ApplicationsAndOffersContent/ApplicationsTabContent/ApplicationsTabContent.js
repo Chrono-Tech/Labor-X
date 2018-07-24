@@ -1,12 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { JobModel, BoardModel } from 'src/models'
 import { WorkerJobCard } from 'components/common'
-import { Router } from 'src/routes'
 import css from './ApplicationsTabContent.scss'
 
-export default class ApplicationsTabContent extends React.Component {
+class ApplicationsTabContent extends React.Component {
   static propTypes = {
     applications: PropTypes.arrayOf(PropTypes.shape({
       job: PropTypes.instanceOf(JobModel),
@@ -26,10 +27,11 @@ export default class ApplicationsTabContent extends React.Component {
         date: PropTypes.instanceOf(Date),
       }),
     })),
+    push: PropTypes.func,
   }
 
   handleClickReviewOffer = (jobId) => {
-    Router.pushRoute(`/client-job-view/${jobId}`)
+    this.props.push(`/client-job-view/${jobId}`)
     // eslint-disable-next-line no-console
     console.log('---ApplicationsTabContent handleClickReviewOffer')
   }
@@ -48,3 +50,9 @@ export default class ApplicationsTabContent extends React.Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  push: (url) => dispatch(push(url)),
+})
+
+export default connect(null, mapDispatchToProps)(ApplicationsTabContent)
