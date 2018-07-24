@@ -21,12 +21,6 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          // { // https://webpack.js.org/guides/build-performance/#sass
-          //   loader: "thread-loader",
-          //   options: {
-          //     workerParallelJobs: 2,
-          //   }
-          // },
           "style-loader",
           {
             loader: "css-loader",

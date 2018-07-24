@@ -319,7 +319,7 @@ export class OpportunitiesContent extends React.Component {
 function mapStateToProps (state) {
   const signer = signerSelector()(state)
   const formValues = getFormValues(FORM_SEARCH_OPPORTUNITIES)(state)
-  const cards = opportunitiesFilteredListSelector()(state)
+  const cards = opportunitiesFilteredListSelector(formValues)(state)
 
   const defaultCategoriesValues = {}
   TAG_CATEGORIES_LIST.map((tag) => {

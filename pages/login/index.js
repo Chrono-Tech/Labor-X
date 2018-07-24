@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { LoginActions } from 'src/components/layouts'
 import { LoginOptions } from 'src/components/Login'
 
@@ -16,5 +15,3 @@ export default class LoginPage extends React.Component {
     )
   }
 }
-
-// export default connect()(LoginPage)
