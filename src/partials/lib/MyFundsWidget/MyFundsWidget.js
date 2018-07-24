@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import { Widget } from 'src/components/common'
 import { BalanceMicro } from 'src/micros'
@@ -18,11 +19,16 @@ export class MyFundsWidget extends React.Component {
     return signer && (
       <Widget
         title='My Funds'
-        subtitle='Account'
+        subtitle='General'
       >
         <div className={css.main}>
-          <span>{signer.address}</span>&nbsp;
-          <b>{pocket.token.dao.token.symbol} <BalanceMicro pocket={pocket} /></b>
+          <p className={css.address}>{signer.address}</p>
+          <h2>{pocket.token.dao.token.symbol} <BalanceMicro pocket={pocket} /></h2>
+          <div className={css.balanceUsd}>$<BalanceMicro toUsd pocket={pocket} /></div>
+          <div className={css.actions}>
+            <Button className={css.depositAction}>Deposit</Button>
+            <Button className={css.withdrawAction}>Withdraw</Button>
+          </div>
         </div>
       </Widget>
     )
@@ -38,10 +44,4 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (/*dispatch*/) {
-  return {
-    // stack: state.modals.stack,
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyFundsWidget)
+export default connect(mapStateToProps, null)(MyFundsWidget)

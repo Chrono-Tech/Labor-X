@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Link, Tip } from 'src/components/common'
+import { Link } from 'src/components/common'
 import { RightPanel } from 'src/components/layouts'
 import { userSelector, logout } from "src/store"
 import { UserAccountTypesModel } from "src/models"
@@ -35,7 +35,6 @@ export class Header extends React.Component {
   }
 
   render () {
-    const prefix = this.constructor.name
     return (
       <div className={css.root}>
         <div className={css.headerLeft}>
@@ -50,15 +49,6 @@ export class Header extends React.Component {
             { this.props.accountTypes.client ? <Link href='/create-job-board' className={css.actionItem} label='nav.newBoard' /> : null }
             <button className={css.actionItem} onClick={this.props.handleLogout}>Log out</button>
           </nav>
-          <div className={css.points}>
-            <Tip
-              title={`${prefix}.actionPoints`}
-              tip={`${prefix}.actionPointsDescription`}
-            >
-              <img alt='active-points-icon' src='/static/images/icon-active-points.svg' className={css.pointsIcon} />
-            </Tip>
-            <span className={css.pointsValue}>70</span>
-          </div>
 
           <NotificationWidget
             className={css.notifications}

@@ -141,6 +141,7 @@ src/**/*.js
 !src/content/lib/ClientProfileContent/
 !src/content/lib/WorkerProfileContent/
 !src/content/lib/CreateJobBoardContent/
+!src/content/lib/DashboardContent/
 
 !src/partials/
 
