@@ -58,23 +58,6 @@ button.actionItem {
   cursor: pointer;
 }
 
-.points {
-  display: flex;
-  align-items: center;
-  margin-left: 3rem;
-}
-
-.pointsIcon {
-  width: 3rem;
-  height: 3rem;
-}
-
-.pointsValue {
-  margin-left: 1rem;
-  color: $color-white;
-  font-weight: $font-weight-bold;
-}
-
 .profile {
   display: flex;
   align-items: center;

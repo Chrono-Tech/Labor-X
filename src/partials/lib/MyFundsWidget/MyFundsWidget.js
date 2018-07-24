@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import { Widget } from 'src/components/common'
 import { BalanceMicro } from 'src/micros'
@@ -21,9 +22,13 @@ export class MyFundsWidget extends React.Component {
         subtitle='General'
       >
         <div className={css.main}>
-          <p>{signer.address}</p>
-          <h3><BalanceMicro pocket={pocket} /></h3>
-          <b>{pocket.token.dao.token.symbol}</b>
+          <p className={css.address}>{signer.address}</p>
+          <h2>{pocket.token.dao.token.symbol} <BalanceMicro pocket={pocket} /></h2>
+          <div className={css.balanceUsd}>$<BalanceMicro toUsd pocket={pocket} /></div>
+          <div className={css.actions}>
+            <Button className={css.depositAction}>Deposit</Button>
+            <Button className={css.withdrawAction}>Withdraw</Button>
+          </div>
         </div>
       </Widget>
     )

@@ -11,18 +11,20 @@ export class BalanceMicro extends React.Component {
     pocket: PropTypes.instanceOf(PocketModel).isRequired,
     balance: PropTypes.instanceOf(BalanceModel),
     children: PropTypes.func,
+    toUsd: PropTypes.bool,
   }
 
   render () {
-    const { pocket, balance, children } = this.props
+    const { pocket, balance, children, toUsd } = this.props
     return pocket && (
       <div className={css.main}>
         {balance && balance.isLoaded
           ? (
             children != null
               ? children(balance)
-              : formatNumber(balance.amount, 18)
-              // : balance.amount
+              : toUsd
+                ? formatNumber(balance.amount.times(30), 2)
+                : formatNumber(balance.amount, 2)
           )
           : null
         }
