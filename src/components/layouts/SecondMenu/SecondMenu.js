@@ -17,12 +17,14 @@ class SecondMenu extends React.Component {
       <nav className={css.root}>
         <div className={css.section}>
           <div className={css.icons}>
-            <Image
-              className={css.iconsItem}
-              icon={Image.ICONS.WALLET}
-              color={Image.COLORS.BLACK}
-              faded
-            />
+            <Link href='/my-wallet'>
+              <Image
+                className={css.iconsItem}
+                icon={Image.ICONS.WALLET}
+                color={Image.COLORS.BLACK}
+                faded
+              />
+            </Link>
             <div className={cn(css.iconsItem, css.iconProfile)}>
               <Icon
                 size={24}

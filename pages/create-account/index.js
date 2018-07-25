@@ -1,7 +1,6 @@
 import React  from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Head from 'next/head'
 import bip39 from 'bip39'
 
 import { AccountLayout } from 'src/components/layouts'
@@ -30,17 +29,8 @@ class CreateAccount extends React.Component {
     }
   }
 
-  static async getInitialProps ({ store }) {
-    const mnemonic = bip39.generateMnemonic()
-
-    store.dispatch(setMnemonic(mnemonic))
-    return { mnemonic }
-  }
-
-  componentWillMount (){
-    const { setMnemonic, mnemonic } = this.props
-
-    setMnemonic(mnemonic)
+  componentDidMount () {
+    this.props.setMnemonic(bip39.generateMnemonic())
   }
 
   handleAccountPasswordFormSubmitSuccess = (values) => {

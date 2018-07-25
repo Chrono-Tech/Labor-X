@@ -1,4 +1,4 @@
-import { Router } from 'src/routes'
+import { push } from 'connected-react-router'
 
 import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'src/store'
 import { setSignInModel } from "src/store/login/actions"
@@ -66,7 +66,7 @@ export const downloadWallet = () => (dispatch, getState) => {
 }
 
 export const navigateToSelectWalletPage = () => (dispatch) => {
-  Router.pushRoute('/login')
+  dispatch(push('/login'))
   dispatch(navigateToSelectWallet())
 }
 
@@ -74,11 +74,11 @@ export const onFinishCreateAccount = () => (dispatch, getState) => {
   const state = getState()
   const { currentWallet } = state.createAccount
   dispatch(walletAdd(currentWallet))
-  Router.pushRoute('/login')
+  dispatch(push('/login'))
 }
 
 export const navigateToSelectMethod = () => (dispatch) => {
-  Router.pushRoute('/login')
+  dispatch(push('/login'))
   dispatch(navigateToSelectLoginMethod())
 }
 
@@ -95,7 +95,7 @@ export const handleAccountPasswordFormSubmitSuccess = ({ password, types }) => a
     const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: existingAccount.privateKey, address: existingAccount.address })
     dispatch(setSignInModel(signInModel))
     dispatch(navigateToCreateWallet())
-    Router.pushRoute('/login')
+    dispatch(push('/login'))
   } else {
     dispatch(setPassword(password))
     dispatch(setAccountTypes(types))

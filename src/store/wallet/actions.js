@@ -1,4 +1,4 @@
-import { Router } from 'src/routes'
+import { push } from 'connected-react-router'
 import uniqid from 'uniqid'
 import bip39 from 'bip39'
 import { WalletModel, WalletEntryModel } from 'src/models'
@@ -134,5 +134,5 @@ export const logout = () => (dispatch) => {
   dispatch(walletSelect(null))
   dispatch(walletLoad(null))
   dispatch(loginChangeStep(null))
-  Router.pushRoute('/')
+  dispatch(push('/'))
 }

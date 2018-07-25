@@ -30,7 +30,7 @@ class OpportunityViewPage extends React.Component {
 }
 
 function mapStateToProps (state, op) {
-  const job = jobByIdSelector(op.jobId)(state)
+  const job = jobByIdSelector(op.match.params.id)(state)
   return {
     job,
   }
