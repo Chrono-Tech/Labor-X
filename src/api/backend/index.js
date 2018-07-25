@@ -121,6 +121,13 @@ export const getMeWorkerProfile = (token: string): { profile: ProfileWorkerModel
   return ({ profile: ProfileWorkerModel.fromJson(res.data) })
 })
 
+export const getProfile = (address: string): { profile: ProfileModel } => http.get(
+  `${ API_URL }/security/profile`,
+  { params: { address } }
+).then(res => {
+  return (ProfileModel.fromJson(res.data))
+})
+
 export const getServiceCategories = () => http.get(
   `${ API_URL }/security/worker/serviceCategories`,
 ).then(res => {

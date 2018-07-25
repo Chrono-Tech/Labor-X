@@ -19,14 +19,6 @@
   .userBlockInner {
     display: flex;
 
-    .userBlockAvatar {
-      .userAvatar {
-        width: 40px;
-        border-radius: 20px;
-        margin-right: 20px;
-      }
-    }
-
     .userBlockInfo {
       display: flex;
       flex-direction: column;
@@ -77,3 +69,15 @@
   }
 
 }
+
+.userBlockAvatar {
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 2rem;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+}
+
