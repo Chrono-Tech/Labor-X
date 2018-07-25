@@ -114,7 +114,7 @@ export const submitWorkerProfile = (workerProfile, token: string): { profile: Pr
   { headers: { Authorization: `Bearer ${ token }` } }
 ).then(res => ({ profile: ProfileWorkerModel.fromJson(res.data) }))
 
-export const getWorkerProfile = (token: string): { profile: ProfileWorkerModel } => http.get(
+export const getMeWorkerProfile = (token: string): { profile: ProfileWorkerModel } => http.get(
   `${ API_URL }/security/me/profile/worker`,
   { headers: { Authorization: `Bearer ${ token }` } }
 ).then(res => {

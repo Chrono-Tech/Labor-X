@@ -39,7 +39,7 @@ export const getWorkerProfile = () => async (dispatch, getState) => {
     dispatch(getWorkerProfileRequest())
     const state = getState()
     const token = userTokenSelector()(state)
-    const res = await backendApi.getWorkerProfile(token)
+    const res = await backendApi.getMeWorkerProfile(token)
     const initialValues = getWorkerProfileInitialValues(res.profile);
     dispatch(initialize(WORKER_PROFILE_FORM, initialValues))
     dispatch(getWorkerProfileSuccess(res.profile))
