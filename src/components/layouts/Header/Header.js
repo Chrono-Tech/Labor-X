@@ -72,8 +72,14 @@ export class Header extends React.Component {
 
           <div className={css.profile}>
             <div className={css.profileWrapper} onClick={this.handleOpenPanel}>
-              <img alt='profile-icon' src={(avatar && avatar.url) || '/static/temp/icon-profile.jpg'} className={css.profileIcon} />
-              <div className={css.profileCounter}>99</div>
+              <div className={css.userBlockAvatar}>
+                <div
+                  className={css.userAvatar}
+                  style={{ "background": `url(${(avatar && avatar.url) || '/static/temp/icon-profile.jpg'}) no-repeat center/cover` }}
+                >
+                  <div className={css.profileCounter}>99</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
