@@ -10,8 +10,8 @@ import PersonModel from "./model/PersonModel"
 import ProfileClientModel from "./model/ProfileClientModel"
 import ProfileWorkerModel from "./model/ProfileWorkerModel"
 
-const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
-// const API_URL = 'http://localhost:3000/api/v1'
+// const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
+const API_URL = 'http://localhost:3000/api/v1'
 
 const http = axios.create({ baseURL: API_URL })
 
@@ -120,6 +120,11 @@ export const getWorkerProfile = (token: string): { profile: ProfileWorkerModel }
 ).then(res => {
   return ({ profile: ProfileWorkerModel.fromJson(res.data) })
 })
+
+export const getWorker = (address: string): Promise<ProfileWorkerModel> => http.get(
+  '/security/worker', 
+  { params: { address } }
+).then(res => ProfileWorkerModel.fromJson(res.data)) 
 
 export const getServiceCategories = () => http.get(
   `${ API_URL }/security/worker/serviceCategories`,

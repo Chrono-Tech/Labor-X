@@ -65,7 +65,9 @@ import {
   tokens,
   user,
   wallet,
-  workerProfile
+  workerProfile,
+  clientProfile,
+  reviewApplicants,
 } from "src/store/reducers";
 import {reducer as formReducer} from "redux-form";
 import { i18nReducer, syncTranslationWithStore, loadTranslations, setLocale } from "react-redux-i18n";
@@ -111,6 +113,8 @@ const reducer = combineReducers({
   generalProfile,
   workerProfile,
   myWallet,
+  clientProfile,
+  reviewApplicants,
 })
 
 const store = createStore(

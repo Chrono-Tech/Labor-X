@@ -1,5 +1,5 @@
 import { daoByType } from '../daos/selectors'
-// import { JOB_STATE_CREATED } from "./../../models/app/JobStateModel"
+import { workerProfile } from '../review-applicants/actions'
 
 export const OFFERS_CLEAR = 'offers/clear'
 export const OFFERS_SAVE = 'offers/save'
@@ -13,8 +13,12 @@ export const reloadJobsOffers = (id) => async (dispatch, getState) => {
   const state = getState()
   const jobDataProviderDAO = daoByType('JobsDataProvider')(state)
   const offers = await jobDataProviderDAO.getJobOffers(id)
-  // debugger
+  const applicantsAdresses = offers
+    ? offers.map(item => item.wallet)
+    : []
+  applicantsAdresses.forEach((addrees) => dispatch(workerProfile(addrees)))
   dispatch({ type: OFFERS_SAVE, jobId: id, offers })
+
   // if (state.jobs && state.jobs.list) {
   //   for (let job of state.jobs.list) {
   //     if (job.state === JOB_STATE_CREATED)
