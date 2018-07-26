@@ -118,7 +118,7 @@ const store = createStore(
   {},
   compose(
       applyMiddleware(routerMiddleware(history), thunk, loggerMiddleware),
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 )
 

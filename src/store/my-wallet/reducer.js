@@ -10,10 +10,14 @@ import {
   SELECT_MORE_TRANSACTIONS_REQUEST,
   SELECT_MORE_TRANSACTIONS_SUCCESS,
   SELECT_MORE_TRANSACTIONS_FAILURE,
+  SHOW_DEPOSIT_WARNING_DIALOG,
+  HIDE_DEPOSIT_WARNING_DIALOG,
   SHOW_DEPOSIT_DIALOG,
   HIDE_DEPOSIT_DIALOG,
   SHOW_WITHDRAW_DIALOG,
   HIDE_WITHDRAW_DIALOG,
+  SHOW_WITHDRAW_CONFIRM_DIALOG,
+  HIDE_WITHDRAW_CONFIRM_DIALOG,
   ESTIMATE_GAS_REQUEST,
   ESTIMATE_GAS_SUCCESS,
   ESTIMATE_GAS_FAILURE,
@@ -25,6 +29,8 @@ function customizer(objValue, srcValue) {
   }
 }
 
+
+
 export const WITHDRAW_FORM = 'MY_WALLET/WITHDRAW_FORM'
 
 interface State {
@@ -34,12 +40,17 @@ interface State {
   selectMoreTransactionsLoading: boolean;
   selectMoreTransactionsFailure: Error;
   lastBlockNumber: number;
+  openDepositWarningDialog: boolean;
   openDepositDialog: boolean;
   openWithdrawDialog: boolean;
+  openWithdrawConfirmDialog: boolean;
   estimateGasLoading: boolean;
   estimatedGas: number;
   estimateGasFailure: Error;
   gasLimit: number;
+  balance: string;
+  gasPrice: string;
+  lhtUsdPrice: number;
 }
 
 export const STATE: State = {
@@ -49,11 +60,17 @@ export const STATE: State = {
   selectMoreTransactionsLoading: false,
   selectMoreTransactionsFailure: null,
   lastBlockNumber: 0,
+  openDepositWarningDialog: false,
+  openDepositDialog: false,
   openWithdrawDialog: false,
+  openWithdrawConfirmDialog: false,
   estimateGasLoading: false,
   estimatedGas: 0,
   estimateGasFailure: null,
-  gasLimit: null,
+  gasLimit: 0,
+  balance: 0,
+  gasPrice: null,
+  lhtUsdPrice: 0,
 }
 
 export default (state: State = STATE, action) => {
@@ -67,9 +84,12 @@ export default (state: State = STATE, action) => {
     case SELECT_INITIAL_PROPS_SUCCESS: return ({
       ...state,
       selectInitialPropsLoading: false,
-      transactionLogs: [ ...action.payload.transactionLogs ],
+      transactionLogs: action.payload.transactionLogs,
       lastBlockNumber: action.payload.lastBlockNumber,
       gasLimit: action.payload.gasLimit,
+      balance: action.payload.balance,
+      gasPrice: action.payload.gasPrice,
+      lhtUsdPrice: action.payload.lhtUsdPrice,
     })
     case SELECT_INITIAL_PROPS_FAILURE: return ({
       ...state,
@@ -93,23 +113,17 @@ export default (state: State = STATE, action) => {
       selectMoreTransactionsFailure: action.payload,
     })
 
-    case SHOW_DEPOSIT_DIALOG: return ({
-      ...state,
-      openDepositDialog: true,
-    })
-    case HIDE_DEPOSIT_DIALOG: return ({
-      ...state,
-      openDepositDialog: false,
-    })
+    case SHOW_DEPOSIT_WARNING_DIALOG: return ({ ...state,  openDepositWarningDialog: true })
+    case HIDE_DEPOSIT_WARNING_DIALOG: return ({ ...state,  openDepositWarningDialog: false })
 
-    case SHOW_WITHDRAW_DIALOG: return ({
-      ...state,
-      openWithdrawDialog: true,
-    })
-    case HIDE_WITHDRAW_DIALOG: return ({
-      ...state,
-      openWithdrawDialog: false,
-    })
+    case SHOW_DEPOSIT_DIALOG: return ({ ...state,  openDepositDialog: true })
+    case HIDE_DEPOSIT_DIALOG: return ({ ...state,  openDepositDialog: false })
+
+    case SHOW_WITHDRAW_DIALOG: return ({ ...state,  openWithdrawDialog: true })
+    case HIDE_WITHDRAW_DIALOG: return ({ ...state,  openWithdrawDialog: false })
+
+    case SHOW_WITHDRAW_CONFIRM_DIALOG: return ({ ...state,  openWithdrawConfirmDialog: true })
+    case HIDE_WITHDRAW_CONFIRM_DIALOG: return ({ ...state, openWithdrawConfirmDialog: false })
 
     case ESTIMATE_GAS_REQUEST: return ({
       ...state,

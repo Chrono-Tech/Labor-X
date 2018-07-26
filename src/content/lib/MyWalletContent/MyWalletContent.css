@@ -48,3 +48,56 @@
   color: #7F7F7F;
   font-weight: 300;
 }
+
+
+
+.dialogPaper {
+  width: 340px;
+}
+
+.dialogTitle {
+  background-color: #0088C3;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 30px;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
+
+.depositWarningDialogContent {}
+
+.depositWarningDialogContentParagraph {
+  padding-top: 20px;
+  color: #333333;
+  line-height: 21px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.depositWarningDialogContentParagraphLht {
+  color: #C25451;
+  line-height: 21px;
+  font-family: roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+.depositWarningDialogContentImportantTitle {
+  color: #C25451;
+  font-family: roboto, sans-serif;
+  font-weight: 700;
+  line-height: 26px;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin-top: 25px;
+}
+
+.withdrawConfirmDialogValue {
+  color: #00A0D2;
+  line-height: 24px;
+  font-family: roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+.withdrawConfirmDialogUsdValue {
+  text-align: right;
+}

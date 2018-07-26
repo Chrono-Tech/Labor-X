@@ -19,6 +19,7 @@
     "bs58": "^4.0.1",
     "chance": "^1.0.16",
     "classnames": "^2.2.5",
+    "clipboard": "^2.0.1",
     "connected-react-router": "^4.3.0",
     "country-state-city": "^0.0.5",
     "es6-promisify": "^6.0.0",
