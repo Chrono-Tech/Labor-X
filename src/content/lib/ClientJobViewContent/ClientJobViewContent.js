@@ -1,8 +1,8 @@
 import React from 'react'
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
-import { Router } from 'src/routes'
 import { JobModel, BoardModel, ClientModel, JobStateModel } from 'src/models'
 import { signerSelector, boardByIdSelector } from 'src/store'
 import { Image, Button, Tab, Icon } from 'src/components/common'
@@ -17,6 +17,7 @@ export class ClientJobViewContent extends React.Component {
     job: PropTypes.instanceOf(JobModel).isRequired,
     board: PropTypes.instanceOf(BoardModel),
     client: PropTypes.instanceOf(ClientModel),
+    push: PropTypes.func,
   }
 
   state = {
@@ -24,7 +25,7 @@ export class ClientJobViewContent extends React.Component {
   }
 
   handleBack () {
-    Router.pushRoute('/posted-jobs')
+    this.props.push('/posted-jobs')
   }
 
   handleTabClick = (index) => {
@@ -146,4 +147,8 @@ function mapStateToProps (state, op) {
   }
 }
 
-export default connect(mapStateToProps)(ClientJobViewContent)
+const mapDispatchToProps = (dispatch) => ({
+  push: (url) => dispatch(push(url)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientJobViewContent)

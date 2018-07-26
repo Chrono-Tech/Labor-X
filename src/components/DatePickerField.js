@@ -6,5 +6,5 @@ export default ({ input: { value, onChange }, ...props }) => <DatePicker
   {...props}
   value={value ? moment(value) : null}
   onChange={d => onChange(d.toDate())}
-  style={{width: '230px'}}
+  style={{width: '100%'}}
 />

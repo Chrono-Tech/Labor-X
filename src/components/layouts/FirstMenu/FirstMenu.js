@@ -8,11 +8,11 @@ const menuItems = [
     label: 'nav.home',
   },
   {
-    href: '/',
+    href: '/job-boards',
     label: 'nav.jobBoards',
   },
   {
-    href: '/',
+    href: '/people',
     label: 'nav.people',
   },
 ]

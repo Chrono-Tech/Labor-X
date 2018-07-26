@@ -2,28 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import { Field, FieldArray } from 'redux-form'
-import { SelectField, TextField } from 'redux-form-material-ui'
-import { MenuItem } from 'material-ui'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
+import SelectField from 'redux-form-material-ui-next/lib/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
 import { ValidatedCheckbox, Link, Icon } from 'src/components/common'
-import { WorkerModel } from 'src/models'
+import CurrencyModel from '../../../../api/backend/model/CurrencyModel'
+import ServiceCategoryModel from '../../../../api/backend/model/ServiceCategoryModel'
 import css from './ServicesTab.scss'
-
-const floatStyle = {
-  visibility: 'hidden',
-}
-
-const checkboxStyle = {
-  marginRight: '.2rem',
-}
 
 export default class ServicesTab extends React.Component {
   static propTypes = {
-    workerProfile: PropTypes.instanceOf(WorkerModel),
-  }
-
-  handleClickRemoveBlock = () => {
-    // eslint-disable-next-line no-console
-    console.log('---WorkerProfileContent-ServicesTab handleClickRemoveBlock')
+    onRemoveService: PropTypes.func,
+    serviceCategories: PropTypes.arrayOf(PropTypes.instanceOf(ServiceCategoryModel)),
+    currencies: PropTypes.arrayOf(PropTypes.instanceOf(CurrencyModel)),
   }
 
   handleClickClose = () => {
@@ -31,89 +25,108 @@ export default class ServicesTab extends React.Component {
     console.log('---WorkerProfileContent-ServicesTab handleClickClose')
   }
 
+  handleRemoveService = (index) => {
+    this.props.onRemoveService(index)
+  }
+
   renderServices = ({ fields }) => {
     return (
       <div>
-        { fields.map(service => this.renderServiceCard(service)) }
+        {fields.map((service, index) => this.renderServiceCard({ service, index }))}
       </div>
     )
   }
 
-  renderServiceCard = (service) => {
+  renderAttachmentsByServiceIndex = () => {
+    return []
+  }
+
+  renderServiceCard = ({ service, index }) => {
+
+    const { serviceCategories } = this.props
     return (
-      <div className={css.serviceBlock} key={service}>
+      <div key={index} className={css.serviceBlock}>
         <div className={css.serviceBlockContent}>
-          <Field
-            fullWidth
-            component={TextField}
-            name={`${service}.name`}
-            floatingLabelText='Service Name'
-          />
-          <div className={css.twoColumn}>
-            <Field
-              fullWidth
-              component={SelectField}
-              name={`${service}.category`}
-              floatingLabelText='Categoty'
-            >
-              <MenuItem value={0} primaryText='Category 1' />
-              <MenuItem value={1} primaryText='Category 2' />
-              <MenuItem value={2} primaryText='Category 3' />
-            </Field>
-            <div />
-          </div>
-          <div className={css.twoColumn}>
-            <Field
-              fullWidth
-              component={SelectField}
-              name={`${service}.fee`}
-              floatingLabelText='Fee'
-            >
-              <MenuItem value={0} primaryText='Specific fee' />
-              <MenuItem value={1} primaryText='Specific fee' />
-            </Field>
-            <div className={css.twoColumn}>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
               <Field
                 fullWidth
                 component={TextField}
-                name={`${service}.feeFrom`}
-                hintText='Fee from, LHUS'
-                floatingLabelStyle={floatStyle}
-                floatingLabelText='empty'
-                floatingLabelFixed
+                name={`${service}.name`}
+                label='Service Name'
               />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <FormControl className={css.field}>
+                <InputLabel>Category</InputLabel>
+                <Field
+                  component={SelectField}
+                  name={`${service}.category`}
+                  placeholder='Categoty'
+                  label='Category'
+                  value={service.category}
+                >
+                  {
+                    serviceCategories.map((item) => (
+                      <MenuItem key={item.code} value={item.code}> {item.name} </MenuItem>
+                    ))
+                  }
+                </Field>
+              </FormControl>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <FormControl className={css.field}>
+                <InputLabel>Fee</InputLabel>
+                <Field
+                  component={SelectField}
+                  name={`${service}.fee`}
+                  label='Fee'
+                >
+                  <MenuItem value='0'> Specific fee 1 </MenuItem>
+                  <MenuItem value='1'> Specific fee 2 </MenuItem>
+                </Field>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
               <Field
                 fullWidth
                 component={TextField}
-                name={`${service}.feeFromUsd`}
-                hintText='$0.00'
-                floatingLabelStyle={floatStyle}
-                floatingLabelText='empty'
-                floatingLabelFixed
+                name={`${service}.minFee`}
+                label='Min fee, LHUS'
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </div>
         <div className={css.documentEntry}>
-          <Icon
-            icon={Icon.ICONS.UPLOAD}
-            color={Icon.COLORS.BLUE}
-            size={28}
-          />
-          <p>Upload service agreement</p>
+          <label className={css.fileLoaderBlock}>
+            <input type='file' style={{ display: 'none' }} multiple={false} />
+            <Icon
+              icon={Icon.ICONS.UPLOAD}
+              color={Icon.COLORS.BLUE}
+              size={28}
+            />
+            <p>Upload service agreement</p>
+          </label>
         </div>
-        <div className={css.removeBlock} onClick={this.handleClickRemoveBlock}>
+        <div className={css.removeBlock} onClick={() => this.handleRemoveService(index)}>
           <Icon
             icon={Icon.ICONS.DELETE}
             color={Icon.COLORS.GREY30}
             size={28}
           />
         </div>
-      </div>
+      </div >
     )
   }
 
   render () {
+    const { currencies } = this.props
     return (
       <div className={css.content}>
         <div className={css.block}>
@@ -127,99 +140,31 @@ export default class ServicesTab extends React.Component {
           />
         </div>
         <FieldArray name='services' component={this.renderServices} />
-        <div className={css.twoColumn}>
+        <div>
           <div className={css.block}>
             <h3>Hourly Charge</h3>
-            <div className={css.twoColumn}>
-              <Field
-                fullWidth
-                component={TextField}
-                name='hourlyCharge'
-                hintText='LHUS 1'
-                floatingLabelStyle={floatStyle}
-                floatingLabelText='empty'
-                floatingLabelFixed
-              />
-              <Field
-                fullWidth
-                component={TextField}
-                name='hourlyChargeUsd'
-                hintText='$0.00'
-                floatingLabelStyle={floatStyle}
-                floatingLabelText='empty'
-                floatingLabelFixed
-              />
-            </div>
+            <Field
+              fullWidth
+              component={TextField}
+              name='regular.hourlyCharge'
+              label='LHUS 1'
+            />
             <Link className={cn(css.link, css.linkRates)} href='/rates'>View Rates</Link>
-          </div>
-          <div className={css.block}>
-            <h3>Schedule</h3>
-            <div className={css.scheduleRow}>
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleSun'
-                label='Sun'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleMon'
-                label='Mon'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleTue'
-                label='Tue'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleWed'
-                label='Wed'
-                iconStyle={checkboxStyle}
-              />
-            </div>
-            <div className={css.scheduleRow}>
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleThu'
-                label='Thu'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleFri'
-                label='Fri'
-                iconStyle={checkboxStyle}
-              />
-              <Field
-                component={ValidatedCheckbox}
-                name='scheduleSat'
-                label='Sat'
-                iconStyle={checkboxStyle}
-              />
-            </div>
           </div>
         </div>
         <div className={css.block}>
           <h3>Accepting Currencies</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>
-          <Field
-            component={ValidatedCheckbox}
-            name='currencyLhus'
-            label='LHUS'
-          />
-          <Field
-            component={ValidatedCheckbox}
-            name='currencyBitcoin'
-            label='Bitcoin'
-          />
-          <Field
-            component={ValidatedCheckbox}
-            name='currencyAnother'
-            label='Another Currency'
-          />
+          {
+            currencies.map(({ title, symbol }) => {
+              return (<Field
+                key={symbol}
+                component={ValidatedCheckbox}
+                name={`regular.currenciesKeys.${symbol}`}
+                label={title}
+              />)
+            })
+          }
         </div>
       </div>
     )

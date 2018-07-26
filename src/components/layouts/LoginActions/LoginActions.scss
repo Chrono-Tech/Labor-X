@@ -34,7 +34,7 @@
   width: 640px;
   text-align: center;
   flex: 1;
-  display: flex;
+  display: block;
   flex-direction: column;
   justify-content: stretch;
 
@@ -69,6 +69,6 @@
 }
 
 .learnMoreBlockWrapper {
-  display: flex;
+  display: block;
   flex: 1;
 }

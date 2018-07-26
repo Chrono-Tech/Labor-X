@@ -77,8 +77,5 @@ module.exports = {
     splitChunks: {
       chunks: 'all'
     }
-  },
-  // watchOptions: {
-  //   poll: 1000
-  // }
+  }
 };

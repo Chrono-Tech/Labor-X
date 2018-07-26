@@ -4,10 +4,10 @@ import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
   position: PropTypes.string,
-  organisation: PropTypes.string,
+  organization: PropTypes.string,
   responsibilities: PropTypes.string,
-  workFrom: PropTypes.instanceOf(Date),
-  workTo: PropTypes.instanceOf(Date),
+  since: PropTypes.instanceOf(Date),
+  until: PropTypes.instanceOf(Date),
 })
 
 export default class WorkerExperienceModel extends AbstractModel {
@@ -21,9 +21,9 @@ export default class WorkerExperienceModel extends AbstractModel {
 function propsWithDefaults (props) {
   return Object.assign({}, {
     position: faker.name.jobTitle(),
-    organisation: faker.company.companyName(),
+    organization: faker.company.companyName(),
     responsibilities: faker.lorem.sentence(),
-    workFrom: props.workFrom ? new Date(props.workFrom) : new Date(faker.date.past()),
-    workTo: props.workTo ? new Date(props.workTo) : new Date(faker.date.past()),
+    since: props.since ? new Date(props.since) : new Date(faker.date.past()),
+    until: props.until ? new Date(props.until) : new Date(faker.date.past()),
   }, props)
 }

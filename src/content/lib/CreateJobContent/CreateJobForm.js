@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
+import { push } from 'connected-react-router'
+import { connect } from "react-redux"
 import PropTypes from 'prop-types'
 import { Field, reduxForm, propTypes } from 'redux-form'
 import { Toggle, SelectField, TextField } from 'redux-form-material-ui'
 import { MenuItem } from 'material-ui'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import AutoComplete from 'material-ui/AutoComplete'
-import { Router } from 'src/routes'
 import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
 import { SignerModel, BoardModel } from 'src/models'
 import t from "typy"
@@ -31,6 +32,7 @@ class CreateJobForm extends React.Component {
       PropTypes.instanceOf(BoardModel)
     ),
     selectedBoard: PropTypes.instanceOf(BoardModel),
+    push: PropTypes.func,
   }
 
   state = {
@@ -43,8 +45,8 @@ class CreateJobForm extends React.Component {
   handleChangeHourlyRating = (event, index, value) => this.setState({ hourlyRatingValue: value })
   // handleChangeState = (event, index, value) => this.setState({ stateValue: value })
 
-  handleBack () {
-    Router.pushRoute('/job-types')
+  handleBack = () => {
+    this.props.push('/job-types')
   }
 
   handleAddSkill = (skill) => {
@@ -588,7 +590,13 @@ class CreateJobForm extends React.Component {
   }
 }
 
-export default reduxForm({
+CreateJobForm =  reduxForm({
   form: FORM_CREATE_JOB,
   validate,
 })(CreateJobForm)
+
+const mapDispatchToProps = (dispatch) => ({
+  push: (url) => dispatch(push(url)),
+})
+
+export default connect(null, mapDispatchToProps)(CreateJobForm)
