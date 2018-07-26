@@ -12,7 +12,7 @@ $minWidth: 102.4rem;
   @include flex(row, flex-start, stretch);
   width: 100%;
   margin: 0;
-  min-height: 9rem;
+  min-height: 90px;
 }
 
 .page {

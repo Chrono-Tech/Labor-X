@@ -1,11 +1,11 @@
-import moment from "moment"
-import {getBlockNumber} from "./selectors";
-import {currentAddressSelector, daoByType} from "src/store";
-
-import scConfig from 'config/sc-config.json'
-import {web3Selector} from "../ethereum/selectors";
-
-export const SELECT_BLOCKS_TAKE_DEFAULT = 1000
+import { currentAddressSelector } from "src/store"
+import { web3Selector } from "src/store/ethereum/selectors"
+import { signerSelector } from "src/store/wallet/selectors"
+import * as web3Api from 'src/api/web3'
+import * as lhtApi from 'src/api/lht'
+import copyToClipboard from 'src/utils/copy-to-clipboard'
+import { DIALOG_TRANSITION_DURATION } from './constants'
+import { getLastBlockNumber, getWithdrawValues } from "./selectors"
 
 export const SELECT_INITIAL_PROPS_REQUEST = 'MY_WALLET/SELECT_INITIAL_PROPS/REQUEST'
 export const SELECT_INITIAL_PROPS_SUCCESS = 'MY_WALLET/SELECT_INITIAL_PROPS/SUCCESS'
@@ -18,27 +18,15 @@ export const selectInitialProps = () => async (dispatch, getState) => {
     dispatch(selectInitialPropsRequest())
     const state = getState()
     const web3 = web3Selector()(state)
-    const JobsDataProviderDAO = daoByType('JobsDataProvider')(state)
+    const lastBlockNumber = await web3.eth.getBlockNumber()
     const userAddress = currentAddressSelector()(state)
-    const blockNumber = await web3.eth.getBlockNumber()
-    const blocks = await Promise.all([ ...Array(SELECT_BLOCKS_TAKE_DEFAULT) ].map((x, i) => web3.eth.getBlock(blockNumber - i, true)))
-    const blocksHashMap = blocks.reduce((x, block) => ({ ...x, [ block.hash ]: block }), {})
-    debugger
-    const transactions = blocks
-      .reduce((x, block) => x.concat(block.transactions), [])
-      .filter((x) => x.from.toLowerCase() === userAddress.toLowerCase())
-      .filter((x) => !!parseInt(x.value))
-    const transactionReceipts = await Promise.all(transactions.map((transaction) => web3.eth.getTransactionReceipt(transaction.hash)))
-    const jobIds = transactionReceipts
-      .map((x) => ({ ...x, logs: x.logs.filter((x) => x.topics[0] === scConfig.JobController.events.JobOfferAccepted.hash) }))
-      .map((x) => web3.utils.hexToNumber(x.logs[0].topics[2]))
-    const jobs = await JobsDataProviderDAO.getJobsByIds(null, jobIds)
-    const transactionHistory = transactions
-      .map((transaction, i) => ({ transaction, day: moment(blocksHashMap[transaction.blockHash].timestamp * 1000).startOf('day').toISOString(), job: jobs[i] }))
-      .reduce((x, { transaction, day, job }) => ({ ...x, [ day ]: [ ...(x[ day ] || []), { transaction, job } ] }), {})
-    dispatch(selectInitialPropsSuccess({ transactionHistory, blockNumber }))
+    const selectTransactionLogsResults = await web3Api.selectTransactionLogs(web3, userAddress, lastBlockNumber)
+    const gasLimit = (await web3.eth.getBlock('latest')).gasLimit
+    const balance = await web3.eth.getBalance(userAddress)
+    const gasPrice = await web3.eth.getGasPrice()
+    const lhtUsdPrice = await lhtApi.getUsdPrice()
+    dispatch(selectInitialPropsSuccess({ ...selectTransactionLogsResults, gasLimit, balance, gasPrice, lhtUsdPrice }))
   } catch (err) {
-    console.error(err)
     dispatch(selectInitialPropsFailure(err))
   }
 }
@@ -54,25 +42,90 @@ export const selectMoreTransactions = () => async (dispatch, getState) => {
     dispatch(selectMoreTransactionsRequest())
     const state = getState()
     const web3 = web3Selector()(state)
-    const JobsDataProviderDAO = daoByType('JobsDataProvider')(state)
+    const lastBlockNumber = getLastBlockNumber(state)
     const userAddress = currentAddressSelector()(state)
-    const blockNumber = getBlockNumber(state) - SELECT_BLOCKS_TAKE_DEFAULT
-    const blocks = await Promise.all([ ...Array(SELECT_BLOCKS_TAKE_DEFAULT) ].map((x, i) => web3.eth.getBlock(blockNumber - SELECT_BLOCKS_TAKE_DEFAULT - i, true)))
-    const blocksHashMap = blocks.reduce((x, block) => ({ ...x, [ block.hash ]: block }), {})
-    const transactions = blocks
-      .reduce((x, block) => x.concat(block.transactions), [])
-      .filter((x) => x.from.toLowerCase() === userAddress.toLowerCase())
-      .filter((x) => !!parseInt(x.value))
-    const transactionReceipts = await Promise.all(transactions.map((transaction) => web3.eth.getTransactionReceipt(transaction.hash)))
-    const jobIds = transactionReceipts
-      .map((x) => ({ ...x, logs: x.logs.filter((x) => x.topics[0] === scConfig.JobController.events.JobOfferAccepted.hash) }))
-      .map((x) => web3.utils.hexToNumber(x.logs[0].topics[2]))
-    const jobs = await JobsDataProviderDAO.getJobsByIds(null, jobIds)
-    const transactionHistory = transactions
-      .map((transaction, i) => ({ transaction, day: moment(blocksHashMap[transaction.blockHash].timestamp * 1000).startOf('day').toISOString(), job: jobs[i] }))
-      .reduce((x, { transaction, day, job }) => ({ ...x, [ day ]: [ ...(x[ day ] || []), { transaction, job } ] }), {})
-    dispatch(selectMoreTransactionsSuccess({ transactionHistory, blockNumber }))
+    const selectTransactionLogsResults = await web3Api.selectTransactionLogs(web3, userAddress, lastBlockNumber)
+    dispatch(selectMoreTransactionsSuccess(selectTransactionLogsResults))
   } catch (err) {
     dispatch(selectMoreTransactionsFailure(err))
+  }
+}
+
+export const SHOW_DEPOSIT_WARNING_DIALOG = 'MY_WALLET/SHOW_DEPOSIT_WARNING_DIALOG'
+export const HIDE_DEPOSIT_WARNING_DIALOG = 'MY_WALLET/HIDE_DEPOSIT_WARNING_DIALOG'
+export const showDepositWarningDialog = () => ({ type: SHOW_DEPOSIT_WARNING_DIALOG })
+export const hideDepositWarningDialog = () => ({ type: HIDE_DEPOSIT_WARNING_DIALOG })
+
+export const SHOW_DEPOSIT_DIALOG = 'MY_WALLET/SHOW_DEPOSIT_DIALOG'
+export const HIDE_DEPOSIT_DIALOG = 'MY_WALLET/HIDE_DEPOSIT_DIALOG'
+export const showDepositDialog = () => ({ type: SHOW_DEPOSIT_DIALOG })
+export const hideDepositDialog = () => ({ type: HIDE_DEPOSIT_DIALOG })
+
+export const SHOW_WITHDRAW_DIALOG = 'MY_WALLET/SHOW_WITHDRAW_DIALOG'
+export const HIDE_WITHDRAW_DIALOG = 'MY_WALLET/HIDE_WITHDRAW_DIALOG'
+export const showWithdrawDialog = () => ({ type: SHOW_WITHDRAW_DIALOG })
+export const hideWithdrawDialog = () => ({ type: HIDE_WITHDRAW_DIALOG })
+
+export const SHOW_WITHDRAW_CONFIRM_DIALOG = 'MY_WALLET/SHOW_WITHDRAW_CONFIRM_DIALOG'
+export const HIDE_WITHDRAW_CONFIRM_DIALOG = 'MY_WALLET/HIDE_WITHDRAW_CONFIRM_DIALOG'
+export const showWithdrawConfirmDialog = () => ({ type: SHOW_WITHDRAW_CONFIRM_DIALOG })
+export const hideWithdrawConfirmDialog = () => ({ type: HIDE_WITHDRAW_CONFIRM_DIALOG })
+
+export const ESTIMATE_GAS_REQUEST = 'MY_WALLET/ESTIMATE_GAS_REQUEST'
+export const ESTIMATE_GAS_SUCCESS = 'MY_WALLET/ESTIMATE_GAS_SUCCESS'
+export const ESTIMATE_GAS_FAILURE = 'MY_WALLET/ESTIMATE_GAS_FAILURE'
+export const estimateGasRequest = (req) => ({ type: ESTIMATE_GAS_REQUEST, payload: req })
+export const estimateGasSuccess = (res) => ({ type: ESTIMATE_GAS_SUCCESS, payload: res })
+export const estimateGasFailure = (err) => ({ type: ESTIMATE_GAS_FAILURE, payload: err })
+export const estimateGas = () => async (dispatch, getState) => {
+  try {
+    dispatch(estimateGasRequest())
+    const state = getState()
+    const web3 = web3Selector()(state)
+    const userAddress = currentAddressSelector()(state)
+    const { to, value, gas } = getWithdrawValues(state)
+    const estimatedGas = await web3.eth.estimateGas({ from: userAddress, to, value, gas })
+    dispatch(estimateGasSuccess(estimatedGas))
+  } catch (err) {
+    dispatch(estimateGasFailure(err))
+  }
+}
+
+export const depositWarningDialogSubmit = () => async (dispatch) => {
+  dispatch(hideDepositWarningDialog())
+  await new Promise((resolve) => setTimeout(resolve, DIALOG_TRANSITION_DURATION))
+  dispatch(showDepositDialog())
+}
+
+export const depositDialogCopyAddress = () => (dispatch, getState) => {
+  const state = getState()
+  const userAddress = currentAddressSelector()(state)
+  copyToClipboard(userAddress)
+}
+
+export const withdrawDialogSubmit = () => (dispatch) => {
+  dispatch(hideWithdrawDialog())
+  dispatch(showWithdrawConfirmDialog())
+}
+
+export const WITHDRAW_CONFIRM_DIALOG_SUBMIT_REQUEST = 'MY_WALLET/WITHDRAW_CONFIRM_DIALOG_SUBMIT_REQUEST'
+export const WITHDRAW_CONFIRM_DIALOG_SUBMIT_SUCCESS = 'MY_WALLET/WITHDRAW_CONFIRM_DIALOG_SUBMIT_SUCCESS'
+export const WITHDRAW_CONFIRM_DIALOG_SUBMIT_FAILURE = 'MY_WALLET/WITHDRAW_CONFIRM_DIALOG_SUBMIT_FAILURE'
+export const withdrawConfirmDialogSubmitRequest = (req) => ({ type: WITHDRAW_CONFIRM_DIALOG_SUBMIT_REQUEST, payload: req })
+export const withdrawConfirmDialogSubmitSuccess = (res) => ({ type: WITHDRAW_CONFIRM_DIALOG_SUBMIT_SUCCESS, payload: res })
+export const withdrawConfirmDialogSubmitFailure = (err) => ({ type: WITHDRAW_CONFIRM_DIALOG_SUBMIT_FAILURE, payload: err })
+export const withdrawConfirmDialogSubmit = () => async (dispatch, getState) => {
+  try {
+    dispatch(withdrawConfirmDialogSubmitRequest())
+    const state = getState()
+    const web3 = web3Selector()(state)
+    const signer = signerSelector()(state)
+    const { to, value, gas } = getWithdrawValues(state)
+    const signedTransaction = await signer.signTransaction({ to, value: web3.utils.toWei(value), gas })
+    await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
+    dispatch(hideWithdrawConfirmDialog())
+    dispatch(withdrawConfirmDialogSubmitSuccess())
+  } catch (err) {
+    dispatch(withdrawConfirmDialogSubmitFailure(err))
   }
 }

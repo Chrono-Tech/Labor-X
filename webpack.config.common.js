@@ -26,7 +26,7 @@ module.exports = {
             loader: "css-loader",
             options: {
               modules: true,
-              importLoaders: 1,
+              importLoaders: 2,
               localIdentName: '[name]__[local]___[hash:base64:5]',
             }
           },
@@ -37,6 +37,19 @@ module.exports = {
               includePaths: ["src/styles/globals"],
             }
           }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+            }
+          },
         ]
       }
     ]

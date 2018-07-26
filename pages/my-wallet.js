@@ -1,21 +1,39 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
 import MyWalletContent from 'src/content/lib/MyWalletContent/MyWalletContent'
 import { MainLayout } from 'src/components/layouts'
-import {currentAddressSelector} from "../src/store";
+import { selectInitialProps } from "src/store/my-wallet/actions"
+import { getSelectInitialPropsLoading } from "src/store/my-wallet/selectors"
 
-class MyWalletPage extends React.Component {
+export class MyWalletPage extends React.Component {
+
+  static propTypes = {
+    selectInitialProps: PropTypes.func.isRequired,
+    selectInitialPropsLoading: PropTypes.bool.isRequired,
+  }
+
+  componentDidMount () {
+    this.props.selectInitialProps()
+  }
+
   render () {
     return (
       <MainLayout title='nav.myProfile'>
-        { this.props.user ? <MyWalletContent /> : null }
+        { this.props.selectInitialPropsLoading ? <CircularProgress /> : <MyWalletContent /> }
       </MainLayout>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  user: currentAddressSelector()(state),
+const mapStateToProps = (state) => ({
+  selectInitialPropsLoading: getSelectInitialPropsLoading(state),
 })
 
-export default connect(mapStateToProps)(MyWalletPage)
+const mapDispatchToProps = (dispatch) => ({
+  selectInitialProps: () => dispatch(selectInitialProps()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyWalletPage)
