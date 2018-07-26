@@ -39,6 +39,10 @@ export default class Icon extends React.PureComponent {
     EDIT: 'edit',
     PROFILE: 'profile',
     NOTIFICATIONS: 'notifications',
+    LHT_BOLD: 'lht-bold',
+    LHT_LIGHT: 'lht-light',
+    LHT_MEDIUM_1: 'lht-medium-1',
+    LHT_MEDIUM_2: 'lht-medium-2',
   }
 
   static COLORS = {

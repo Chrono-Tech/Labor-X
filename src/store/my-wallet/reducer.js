@@ -1,6 +1,8 @@
 import mergeWith from 'lodash/mergeWith'
 import isArray from 'lodash/isArray'
 
+import { TransactionLogs } from "../../api/web3";
+
 import {
   SELECT_INITIAL_PROPS_REQUEST,
   SELECT_INITIAL_PROPS_SUCCESS,
@@ -11,36 +13,28 @@ import {
   SELECT_MORE_TRANSACTIONS_FAILURE,
 } from "./actions"
 
-import type { Transaction } from "../../api/web3/model/Transaction";
-import {JobModel} from "../../models";
-
 function customizer(objValue, srcValue) {
   if (isArray(objValue)) {
     return objValue.concat(srcValue);
   }
 }
 
-
-export interface TransactionHistory {
-  [ day: string ]: Array<{ transaction: Transaction, job: JobModel }>
-}
-
 interface State {
   selectInitialPropsLoading: boolean;
-  transactionHistory: TransactionHistory;
+  transactionLogs: TransactionLogs;
   selectInitialPropsFailure: Error;
   selectMoreTransactionsLoading: boolean;
   selectMoreTransactionsFailure: Error;
-  blockNumber: number;
+  lastBlockNumber: number;
 }
 
 export const STATE: State = {
   selectInitialPropsLoading: true,
-  transactionHistory: {},
+  transactionLogs: {},
   selectInitialPropsFailure: null,
   selectMoreTransactionsLoading: false,
   selectMoreTransactionsFailure: null,
-  blockNumber: 0,
+  lastBlockNumber: 0,
 }
 
 export default (state: State = STATE, action) => {
@@ -54,8 +48,8 @@ export default (state: State = STATE, action) => {
     case SELECT_INITIAL_PROPS_SUCCESS: return ({
       ...state,
       selectInitialPropsLoading: false,
-      transactionHistory: { ...state.transactionHistory, ...action.payload.transactionHistory },
-      blockNumber: action.payload.blockNumber,
+      transactionLogs: [ ...action.payload.transactionLogs ],
+      lastBlockNumber: action.payload.lastBlockNumber,
     })
     case SELECT_INITIAL_PROPS_FAILURE: return ({
       ...state,
@@ -70,8 +64,8 @@ export default (state: State = STATE, action) => {
     case SELECT_MORE_TRANSACTIONS_SUCCESS: return ({
       ...state,
       selectMoreTransactionsLoading: false,
-      transactionHistory: mergeWith(state.transactionHistory, action.payload.transactionHistory, customizer),
-      blockNumber: action.payload.blockNumber,
+      transactionLogs: mergeWith(state.transactionLogs, action.payload.transactionLogs, customizer),
+      lastBlockNumber: action.payload.lastBlockNumber,
     })
     case SELECT_MORE_TRANSACTIONS_FAILURE: return ({
       ...state,

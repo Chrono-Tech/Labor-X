@@ -29,5 +29,7 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/label-has-for': 'off',
     'no-class-assign': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
   }
 }

@@ -1,0 +1,50 @@
+.title {
+  line-height: 60px;
+  font-family: roboto, sans-serif;
+  font-size: 50px;
+  font-weight: 200;
+  letter-spacing: -1px;
+  margin-top: 0;
+}
+
+.headerInner {
+  width: 700px;
+}
+
+.headerMoneyHeader {
+  font-size: 35px;
+  color: #FFFFFF;
+  line-height: 42px;
+  font-weight: 100;
+}
+.headerMoneySubheader {
+  text-transform: none;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 100;
+}
+.headerMoneyHeaderBold {
+  font-weight: 500;
+}
+.headerMoneySubheaderBold {
+  font-weight: 500;
+}
+
+.balanceCardHeader {
+  padding: 40px 30px !important;
+}
+.balanceCardHeaderAvatar img {
+  height: 50px;
+  width: 50px;
+}
+.balanceCardHeaderTitle {
+  font-size: 35px;
+  line-height: 42px;
+  font-weight: 500;
+  color: #333333;
+  letter-spacing: -1px;
+}
+.balanceCardHeaderSubheader {
+  color: #7F7F7F;
+  font-weight: 300;
+}
