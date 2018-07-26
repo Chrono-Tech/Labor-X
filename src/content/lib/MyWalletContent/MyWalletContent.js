@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -13,8 +14,20 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import withStyles from '@material-ui/core/styles/withStyles'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import BigNumber from 'bignumber.js'
+import Form from 'redux-form/lib/Form'
+import Field from 'redux-form/lib/Field'
+import reduxForm from 'redux-form/lib/reduxForm'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
+import SliderField from './../../../components/SliderField'
+
+
 import web3 from 'web3'
+var QRCode = require('qrcode.react');
 
 import css from './index.scss'
 
@@ -27,6 +40,16 @@ import {
   getTransactionLogs,
   getSelectMoreTransactionsLoading,
   getLastBlockNumber,
+  showDepositDialog,
+  hideDepositDialog,
+  showWithdrawDialog,
+  hideWithdrawDialog,
+  getOpenDepositDialog,
+  getOpenWithdrawDialog,
+  WITHDRAW_FORM,
+  getEstimatedGas,
+  estimateGas,
+  getGasLimit,
 } from "../../../store/my-wallet";
 import Transaction, { DIRECTION } from "../../../api/web3/model/Transaction";
 import {Icon} from "../../../components/common";
@@ -87,6 +110,24 @@ const styles = {
   transactionGasUsed: {
     color: '#c25451',
     textAlign: 'right',
+  },
+  withdrawDialogPaper: {
+    width: '340px',
+  },
+  withdrawDialogTitle: {
+    backgroundColor: '#0088C3',
+    color: 'white',
+    fontWeight: 700,
+    fontSize: '16px',
+    lineHeight: '30px',
+    paddingTop: '15px',
+    paddingBottom: '15px',
+  },
+  withdrawDialogTitleImg: {
+    width: '30px',
+    verticalAlign: 'middle',
+    position: 'relative',
+    top: '-2px',
   }
 }
 
@@ -167,8 +208,12 @@ export class MyWalletContent extends React.Component {
             avatar={ <Avatar src='/static/images/lht-icon.png' className={this.props.classes.balanceCardHeaderAvatar} /> }
             action={
               <div>
-                <Button variant="outlined" color="primary" className={this.props.classes.balanceCardButton}>Deposit</Button>
-                <Button variant="contained" color="primary" className={classNames(this.props.classes.balanceCardButton, this.props.classes.balanceCardButtonWithdraw)}>Withdraw</Button>
+                <Button variant="outlined" color="primary" className={this.props.classes.balanceCardButton} onClick={this.props.showDepositDialog}>Deposit</Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classNames(this.props.classes.balanceCardButton, this.props.classes.balanceCardButtonWithdraw)}
+                  onClick={this.props.showWithdrawDialog}>Withdraw</Button>
               </div>
             }
             title='162.00'
@@ -197,6 +242,67 @@ export class MyWalletContent extends React.Component {
     )
   }
 
+  renderDepositDialog () {
+    return (
+      <Dialog open={this.props.openDepositDialog}>
+        <DialogTitle id="simple-dialog-title">Deposit LHT</DialogTitle>
+        <DialogContent>
+          <p>IMPORTANT!</p>
+          <p>You should deposit only LHT to the address on next screen.</p>
+          <p>Depositing any other currency will make your deposit loss.</p>
+          <p>Click Proceed to get address for funds deposit and give the address to your sender.</p>
+          <QRCode value={this.props.userAddress} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.props.hideDepositDialog} color="primary">Cancel</Button>
+          <Button onClick={this.handleClose} color="primary">Proceed</Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
+  renderWithdrawDialog () {
+    return (
+      <Dialog open={this.props.openWithdrawDialog} classes={{ paper: this.props.classes.withdrawDialogPaper }}>
+        <DialogTitle className={this.props.classes.withdrawDialogTitle} disableTypography>
+          <img src='/static/images/lht-icon.png' className={this.props.classes.withdrawDialogTitleImg} />
+          &nbsp;
+          &nbsp;
+          Withdraw LHT
+        </DialogTitle>
+        <DialogContent>
+          <Form>
+            <br/>
+            <Field name='to' component={TextField} label='Recipient Address' />
+            <br/>
+            <br/>
+            <Field name='value' component={TextField} label='Amount' />
+            <br/>
+            <br/>
+            <Field name='comment' component={TextField} label='Comment (optional)' />
+            <br/>
+            <br/>
+            <br/>
+            <Grid container>
+              <Grid item xs='6'>Lower Fee</Grid>
+              <Grid item xs='6' style={{ textAlign: 'right' }}>Faster Transfer</Grid>
+            </Grid>
+            <Field name='gas' component={SliderField} min={21000} max={this.props.gasLimit} />
+            <br/>
+            <br/>
+            <p>Fee: LHT {this.props.estimatedGas}</p>
+            <br/>
+          </Form>
+        </DialogContent>
+        <Divider/>
+        <DialogActions>
+          <Button onClick={this.props.hideWithdrawDialog} color="primary">Cancel</Button>
+          <Button onClick={this.handleClose} color="primary">Proceed</Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
   render () {
     return (
       <div className={css.main}>
@@ -220,9 +326,10 @@ export class MyWalletContent extends React.Component {
           </div>
         </div>
         <div className={css.content}>
-
           { this.props.selectInitialPropsLoading ? <CircularProgress /> : this.renderContent() }
         </div>
+        {this.renderDepositDialog()}
+        {this.renderWithdrawDialog()}
       </div>
     )
   }
@@ -231,17 +338,31 @@ export class MyWalletContent extends React.Component {
 
 MyWalletContent = withStyles(styles)(MyWalletContent)
 
+MyWalletContent = reduxForm({
+  form: WITHDRAW_FORM,
+  onChange: (values, dispatch, props) => props.estimateGas(),
+})(MyWalletContent)
+
 const mapStateToProps = state => ({
   userAddress: currentAddressSelector()(state),
   selectInitialPropsLoading: getSelectInitialPropsLoading(state),
   transactionLogs: getTransactionLogs(state),
   lastBlockNumber: getLastBlockNumber(state),
   selectMoreTransactionsLoading: getSelectMoreTransactionsLoading(state),
+  openDepositDialog: getOpenDepositDialog(state),
+  openWithdrawDialog: getOpenWithdrawDialog(state),
+  estimatedGas: getEstimatedGas(state),
+  gasLimit: getGasLimit(state),
 })
 
 const mapDispatchToProps = dispatch => ({
   selectInitialProps: () => dispatch(selectInitialProps()),
   selectMoreTransactions: () => dispatch(selectMoreTransactions()),
+  showDepositDialog: () => dispatch(showDepositDialog()),
+  hideDepositDialog: () => dispatch(hideDepositDialog()),
+  showWithdrawDialog: () => dispatch(showWithdrawDialog()),
+  hideWithdrawDialog: () => dispatch(hideWithdrawDialog()),
+  estimateGas: () => dispatch(estimateGas())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyWalletContent)
