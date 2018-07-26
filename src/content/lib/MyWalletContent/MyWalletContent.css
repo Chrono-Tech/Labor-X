@@ -33,10 +33,10 @@
 .balanceCardHeader {
   padding: 40px 30px !important;
 }
-.balanceCardHeaderAvatar img {
-  height: 50px;
-  width: 50px;
-}
+/*.balanceCardHeaderAvatar img {*/
+  /*height: 50px;*/
+  /*width: 50px;*/
+/*}*/
 .balanceCardHeaderTitle {
   font-size: 35px;
   line-height: 42px;
@@ -100,4 +100,76 @@
 }
 .withdrawConfirmDialogUsdValue {
   text-align: right;
+}
+
+
+
+
+
+.balanceCard {
+  position: relative;
+  top: -30px;
+}
+.balanceCardHeader {
+  padding: 40px 30px;
+}
+.balanceCardHeaderAvatar {
+  height: 50px;
+  width: 50px;
+}
+.balanceCardHeaderTitle {
+  font-size: 35px;
+  line-height: 42px;
+  font-weight: 500;
+  color: #333333;
+}
+.balanceCardAction {
+  align-self: center;
+  margin: 0;
+}
+.balanceCardHeaderSubheader {
+  color: #7F7F7F;
+  font-weight: 300;
+}
+.balanceCardButton {
+  border-radius: 18px;
+}
+.balanceCardButtonWithdraw {
+  margin-left: 20px;
+}
+.transactionsCardHeaderTitle {
+  line-height: 24px;
+  color: #333333;
+  font-size: 20px;
+  font-weight: 500;
+}
+.transactionValue {
+  color: #333;
+  font-weight: 700;
+  text-align: right;
+}
+.transactionValueTo {
+  color: #68cc8e;
+}
+.transactionValueFrom {
+  color: #c25451;
+}
+.transactionGasUsed {
+  color: #c25451;
+  text-align: right;
+}
+.dialogPaper {
+  width: 340px;
+}
+.dialogTitle {
+  background-color: #0088C3;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.withdrawDialogTextField {
+  width: 100%;
 }

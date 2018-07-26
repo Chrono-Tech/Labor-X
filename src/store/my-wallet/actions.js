@@ -1,14 +1,11 @@
-import {getLastBlockNumber, getWithdrawFormValues} from "./selectors";
-import {currentAddressSelector, } from "src/store";
-
-import {web3Selector} from "../ethereum/selectors";
-import {signerSelector} from "../wallet/selectors";
-import * as web3Api from './../../api/web3'
-import * as lhtApi from './../../api/lht'
-
-import copyToClipboard from './../../utils/copy-to-clipboard'
-
-export const DIALOG_TRANSITION_DURATION = 200
+import { currentAddressSelector } from "src/store"
+import { web3Selector } from "src/store/ethereum/selectors"
+import { signerSelector } from "src/store/wallet/selectors"
+import * as web3Api from 'src/api/web3'
+import * as lhtApi from 'src/api/lht'
+import copyToClipboard from 'src/utils/copy-to-clipboard'
+import { DIALOG_TRANSITION_DURATION } from './constants'
+import { getLastBlockNumber, getWithdrawValues } from "./selectors"
 
 export const SELECT_INITIAL_PROPS_REQUEST = 'MY_WALLET/SELECT_INITIAL_PROPS/REQUEST'
 export const SELECT_INITIAL_PROPS_SUCCESS = 'MY_WALLET/SELECT_INITIAL_PROPS/SUCCESS'
@@ -21,7 +18,6 @@ export const selectInitialProps = () => async (dispatch, getState) => {
     dispatch(selectInitialPropsRequest())
     const state = getState()
     const web3 = web3Selector()(state)
-    // const lastBlockNumber = 2068
     const lastBlockNumber = await web3.eth.getBlockNumber()
     const userAddress = currentAddressSelector()(state)
     const selectTransactionLogsResults = await web3Api.selectTransactionLogs(web3, userAddress, lastBlockNumber)
@@ -31,7 +27,6 @@ export const selectInitialProps = () => async (dispatch, getState) => {
     const lhtUsdPrice = await lhtApi.getUsdPrice()
     dispatch(selectInitialPropsSuccess({ ...selectTransactionLogsResults, gasLimit, balance, gasPrice, lhtUsdPrice }))
   } catch (err) {
-    console.error(err)
     dispatch(selectInitialPropsFailure(err))
   }
 }
@@ -76,7 +71,6 @@ export const HIDE_WITHDRAW_CONFIRM_DIALOG = 'MY_WALLET/HIDE_WITHDRAW_CONFIRM_DIA
 export const showWithdrawConfirmDialog = () => ({ type: SHOW_WITHDRAW_CONFIRM_DIALOG })
 export const hideWithdrawConfirmDialog = () => ({ type: HIDE_WITHDRAW_CONFIRM_DIALOG })
 
-
 export const ESTIMATE_GAS_REQUEST = 'MY_WALLET/ESTIMATE_GAS_REQUEST'
 export const ESTIMATE_GAS_SUCCESS = 'MY_WALLET/ESTIMATE_GAS_SUCCESS'
 export const ESTIMATE_GAS_FAILURE = 'MY_WALLET/ESTIMATE_GAS_FAILURE'
@@ -89,8 +83,7 @@ export const estimateGas = () => async (dispatch, getState) => {
     const state = getState()
     const web3 = web3Selector()(state)
     const userAddress = currentAddressSelector()(state)
-    const { to, value, gas } = getWithdrawFormValues(state)
-    console.log({ to, value, gas })
+    const { to, value, gas } = getWithdrawValues(state)
     const estimatedGas = await web3.eth.estimateGas({ from: userAddress, to, value, gas })
     dispatch(estimateGasSuccess(estimatedGas))
   } catch (err) {
@@ -107,7 +100,6 @@ export const depositWarningDialogSubmit = () => async (dispatch) => {
 export const depositDialogCopyAddress = () => (dispatch, getState) => {
   const state = getState()
   const userAddress = currentAddressSelector()(state)
-  // window.copy(userAddress)
   copyToClipboard(userAddress)
 }
 
@@ -128,11 +120,10 @@ export const withdrawConfirmDialogSubmit = () => async (dispatch, getState) => {
     const state = getState()
     const web3 = web3Selector()(state)
     const signer = signerSelector()(state)
-    const { to, value, gas } = getWithdrawFormValues(state)
+    const { to, value, gas } = getWithdrawValues(state)
     const signedTransaction = await signer.signTransaction({ to, value: web3.utils.toWei(value), gas })
-    const transactionReceipt = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
+    await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
     dispatch(hideWithdrawConfirmDialog())
-    dispatch(select)
     dispatch(withdrawConfirmDialogSubmitSuccess())
   } catch (err) {
     dispatch(withdrawConfirmDialogSubmitFailure(err))

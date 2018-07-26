@@ -33,5 +33,8 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
+    'react/jsx-handler-names': 'off',
+    'import/no-named-as-default': 'off',
+    'complexity': 'off',
   }
 }

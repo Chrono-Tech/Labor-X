@@ -1,7 +1,9 @@
+// @flow
+
 import mergeWith from 'lodash/mergeWith'
 import isArray from 'lodash/isArray'
 
-import { TransactionLogs } from "../../api/web3";
+import { TransactionLogs } from "../../api/web3"
 
 import {
   SELECT_INITIAL_PROPS_REQUEST,
@@ -23,15 +25,11 @@ import {
   ESTIMATE_GAS_FAILURE,
 } from "./actions"
 
-function customizer(objValue, srcValue) {
+function customizer (objValue, srcValue) {
   if (isArray(objValue)) {
-    return objValue.concat(srcValue);
+    return objValue.concat(srcValue)
   }
 }
-
-
-
-export const WITHDRAW_FORM = 'MY_WALLET/WITHDRAW_FORM'
 
 interface State {
   selectInitialPropsLoading: boolean;
