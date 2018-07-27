@@ -11,6 +11,7 @@ import { getSelectInitialPropsLoading } from "src/store/my-wallet/selectors"
 export class MyWalletPage extends React.Component {
 
   static propTypes = {
+    reset: PropTypes.func.isRequired,
     selectInitialProps: PropTypes.func.isRequired,
     selectInitialPropsLoading: PropTypes.bool.isRequired,
   }
