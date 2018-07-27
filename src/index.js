@@ -77,6 +77,7 @@ import {
   wallet,
   workerProfile,
   postedJobs,
+  clientProfile,
 } from "src/store/reducers"
 import translations from './i18n'
 
@@ -117,6 +118,7 @@ const reducer = combineReducers({
   workerProfile,
   myWallet,
   postedJobs,
+  clientProfile,
 })
 
 const store = createStore(
