@@ -32,7 +32,7 @@ module.exports = {
           },
           "postcss-loader",
           {
-            loader: 'fast-sass-loader',
+            loader: 'sass-loader',
             options: {
               includePaths: ["src/styles/globals"],
             }
