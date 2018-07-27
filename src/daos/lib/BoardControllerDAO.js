@@ -14,6 +14,7 @@ import {
 } from 'src/models'
 import { loadFromIPFS, bytes32ToIPFSHash, ipfsHashToBytes32  } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
+import {TAGS_LIST} from "../../models";
 
 export default class BoardControllerDAO extends AbstractContractDAO {
   constructor ({ address, history, abi }) {
@@ -96,17 +97,20 @@ export default class BoardControllerDAO extends AbstractContractDAO {
       _tagsCategories,
       _status,
     } = response
+    const ipfsList = await Promise.all(ids.map((id, i) => loadFromIPFS(bytes32ToIPFSHash(_ipfs[i])) || {}))
     for (let i = 0; i < ids.length; i++) {
       const ipfsHash = bytes32ToIPFSHash(_ipfs[i])
       const id = Number(_gotIds[i])
       const isSignerJoined = await this.getUserStatus(signer, id)
-      const ipfs = await loadFromIPFS(ipfsHash) || {}
+      // const ipfs = await loadFromIPFS(ipfsHash) || {}
+      const ipfs = ipfsList[i]
 
       boards.push(new BoardModel({
         id,
         creator: _creators[i],
         isActive: _status[i],
-        tags: TagModel.arrayValueOfMask(_tags[i]),
+        // tags: TagModel.arrayValueOfMask(parseInt(_tags[i])),
+        tags: [TAGS_LIST[3]],
         tagsArea: TagAreaModel.valueOfCode(_tagsAreas[i]),
         tagsCategory: TagCategoryModel.arrayValueOfMask(_tagsCategories[i]),
         ipfs: new BoardIPFSModel({

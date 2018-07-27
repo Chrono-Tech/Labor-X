@@ -232,7 +232,7 @@ class LoginOptions extends React.Component {
             LaborX account with the provided address is not found.
             Would you like to Create a New Account?
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{ height: '40px' }}>
             <Button
               label='No'
               onClick={this.handleAccount404DialogNoClick}

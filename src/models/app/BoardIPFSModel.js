@@ -28,13 +28,13 @@ export default class BoardIPFSModel extends AbstractModel {
 
 function propsWithDefaults (props) {
   return Object.assign({}, {
-    name: faker.company.companyName(),
-    description: faker.lorem.sentence(10),
-    background: faker.image.image(64, 64),
-    fee: faker.random.number({ min: 5, max: 40 }),
-    lhus: 0,
-    endorsingSkills: false,
-    joinRequirement: null,
-    logo: faker.internet.avatar(),
+    // name: faker.company.companyName(),
+    // description: faker.lorem.sentence(10),
+    // // background: faker.image.image(64, 64),
+    // // fee: faker.random.number({ min: 5, max: 40 }),
+    // lhus: 0,
+    // endorsingSkills: false,
+    // joinRequirement: null,
+    // logo: faker.internet.avatar(),
   }, props)
 }

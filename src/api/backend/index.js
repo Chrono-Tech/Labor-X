@@ -44,6 +44,10 @@ export const getPerson = (address: string): Promise<PersonModel> => new Promise(
   .catch(res => res.response.status === 404 ? resolve(null) : reject(res))
 )
 
+export const getPersons = (addresses: Array<string>): Promise<Array<PersonModel>> => http
+  .post('/security/persons/query', addresses)
+  .then(res => res.data.map((x) => new PersonModel(x)))
+
 export const reviewProfile = (token: string): ProfileModel => {
   return http.get(`${ API_URL }/security/me`, {
     headers: { Authorization: `Bearer ${ token }` },

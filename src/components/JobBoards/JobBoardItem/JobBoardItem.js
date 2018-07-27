@@ -352,12 +352,16 @@ export class JobBoardItem extends React.Component {
 
   renderLogo () {
     const { jobBoard } = this.props
-
-    return jobBoard.ipfs.logo ? (
+    return (
       <button className={css.logoLink}>
-        <img src={jobBoard.ipfs.logo} alt='' />
+        <img src={jobBoard.ipfs.logo || '/static/images/board-logo-placeholder.png'} alt='' style={{width:'128px'}} />
       </button>
-    ) : null
+    )
+    // return jobBoard.ipfs.logo ? (
+    //   <button className={css.logoLink}>
+    //     <img src={jobBoard.ipfs.logo || '/static/images/board-logo-placeholder.png'} alt='' style={{width:'128px'}} />
+    //   </button>
+    // ) : null
   }
 
   renderTerminateDialog () {
