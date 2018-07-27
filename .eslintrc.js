@@ -36,5 +36,6 @@ module.exports = {
     'react/jsx-handler-names': 'off',
     'import/no-named-as-default': 'off',
     'complexity': 'off',
+    'jsx-a11y/alt-text': 'off',
   }
 }

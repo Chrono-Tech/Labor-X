@@ -4,54 +4,23 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { groupBy } from 'lodash'
-import { SignerModel, JobModel, ProfileModel, JOB_STATE_FINALIZED, JOB_STATE_FINISHED } from 'src/models'
-import {
-  cancelJob,
-  signerSelector,
-  jobsListSelector,
-  boardByIdSelector,
-  newJobNoticeSelector,
-  profileSelector,
-  modalsPush,
-} from 'src/store'
-import { PayInvoiceDialog, PaidInvoiceDialog, DeclineInvoiceDialog } from 'src/partials'
+import { cancelJob, modalsPush } from 'src/store'
+import { PayInvoiceDialog } from 'src/partials'
 import { Translate, ActiveJobCard } from 'src/components/common'
-
+import { getToPayCards, getOtherCards } from "src/store/activeJobs"
 import css from './ActiveJobsContent.scss'
-import {
-  JOB_STATE_OFFER_ACCEPTED, JOB_STATE_PENDING_FINISH, JOB_STATE_PENDING_START,
-  JOB_STATE_STARTED,
-} from "../../../models"
-import { schemaFactory as jobSchemaFactory } from "../../../models/app/JobModel"
 
 const dateFormat = 'DD MMMM YYYY, ddd'
 
 class ActiveJobsContent extends React.Component {
   static propTypes = {
-    signer: PropTypes.instanceOf(SignerModel),
-    totalCount: PropTypes.number.isRequired,
-    toPayCount: PropTypes.number.isRequired,
-    inProgressCount: PropTypes.number.isRequired,
-    groups: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        cards: PropTypes.arrayOf(PropTypes.shape(ActiveJobCard.propTypes)),
-      })
-    ),
     pushModal: PropTypes.func.isRequired,
     cancelJob: PropTypes.func.isRequired,
-    toPayJobs: PropTypes.arrayOf(PropTypes.shape(jobSchemaFactory())),
+    toPayCards: PropTypes.arrayOf(PropTypes.shape({})),
+    otherCardsGroupedByCreatedAt: PropTypes.shape({}),
   }
 
-  constructor (...args) {
-    super(...args)
-    this.handleOnClickReview = this.handleOnClickReview.bind(this)
-    this.handlePaidInvoice = this.handlePaidInvoice.bind(this)
-    this.handleDeclineInvoice = this.handleDeclineInvoice.bind(this)
-  }
-
-  handleOnClickReview (job, worker) {
+  handleOnClickReview = (job, worker) => {
     const { cancelJob } = this.props
     const modal = {
       component: PayInvoiceDialog,
@@ -60,155 +29,47 @@ class ActiveJobsContent extends React.Component {
     this.props.pushModal(modal)
   }
 
-  handlePaidInvoice () {
-    // TODO aevalyakin pickin any suitable card, need to be placed on appropriate card
-    const card = this.props.groups[0].cards.filter(({ job, worker }) => job && worker )[0]
-    card.recruiter = new ProfileModel({})
-
-    const modal = {
-      component: PaidInvoiceDialog,
-      props: { ...card },
-    }
-    this.props.pushModal(modal)
-  }
-  handleDeclineInvoice () {
-    // TODO aevalyakin pickin any suitable card, need to be placed on appropriate card
-    const card = this.props.groups[0].cards.filter(({ job, worker }) => job && worker )[0]
-    card.recruiter = new ProfileModel({})
-
-    const modal = {
-      component: DeclineInvoiceDialog,
-      props: { ...card },
-    }
-    this.props.pushModal(modal)
-  }
-
-  renderHead ({ toPayCount, inProgressCount, totalCount }) {
-    return (
-      <div className={css.title}>
-        <div className={css.titleText}><Translate value='nav.activeJobs' /></div>
-        <div className={css.titleStats}>
-          <div>
-            <h2 className={css.titleStatsCounter}>{toPayCount}</h2>
-            <div className={css.medium}>To Pay</div>
-          </div>
-          <div>
-            <h2 className={css.titleStatsCounter}>{inProgressCount}</h2>
-            <div>In Progress</div>
-          </div>
-          <div>
-            <h2 className={css.titleStatsCounter}>{totalCount}</h2>
-            <div>Active</div>
-          </div>
-        </div>
+  renderOtherCards () {
+    return Object.entries(this.props.otherCardsGroupedByCreatedAt).map(([ date, cards ]) => (
+      <div key={date}>
+        <h3 className={css.cardsHeader}>{moment(date).format(dateFormat)}</h3>
+        {cards.map((card) => (
+          <ActiveJobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.key} />
+        ))}
       </div>
-    )
+    ))
+  }
+
+  renderToPayCards () {
+    return this.props.toPayCards.map((card) => <ActiveJobCard {...card} key={card.job.id} />)
   }
 
   render () {
-    const { groups, totalCount, inProgressCount } = this.props
-
-    return groups == null ? null : (
+    return (
       <div className={css.main}>
-        {!groups.length ? null : this.renderHead({ totalCount, toPayCount: this.props.toPayJobs.length, inProgressCount })}
+        <div className={css.title}>
+          <div className={css.titleText}><Translate value='nav.activeJobs' /></div>
+        </div>
         <div className={css.content}>
-          {
-            this.props.toPayJobs.length ? (
-              <div className={css.section}>
-                <h3>Review & Pay</h3>
-                { this.props.toPayJobs.map(job => <ActiveJobCard job={job} key={job.id} />) }
-              </div>
-            ) : null
-          }
-          {groups.map(({ key, date, cards }) => (
-            <div className={css.section} key={key}>
-              <h3>{moment(date).format(dateFormat)}</h3>
-              {cards.map((card) => (
-                <ActiveJobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.key} />
-              ))}
-            </div>
-          ))}
-          <div
-            onClick={this.handlePaidInvoice}
-            onKeyPress={this.handlePaidInvoice}
-            role='button'
-            tabIndex={0}
-          >
-            CASE: PAID INVOICE
+          <div>
+            <h3 className={css.cardsHeader}>Review & Pay</h3>
+            { this.props.toPayCards.length ? this.renderToPayCards() : <div>No Jobs to Review & Pay</div> }
           </div>
-          <div
-            onClick={this.handleDeclineInvoice}
-            onKeyPress={this.handleDeclineInvoice}
-            role='button'
-            tabIndex={0}
-          >
-            CASE: DECLINE INVOICE
-          </div>
+          {this.renderOtherCards()}
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps (state) {
+const mapStateToProps = (state) => ({
+  toPayCards: getToPayCards(state),
+  otherCardsGroupedByCreatedAt: groupBy(getOtherCards(state), (card) => moment(card.job.extra.createdAt).format('YYYY-MM-DD')),
+})
 
-  const signer = signerSelector()(state)
-  const jobs = jobsListSelector()(state)
-  const inActiveJobStates = [ JOB_STATE_FINALIZED, JOB_STATE_FINISHED ]
-
-  const clientJobs = jobs.filter(x => x.client === signer.address)
-
-  const clientActiveJobs = clientJobs.filter(x =>
-    x.state === JOB_STATE_OFFER_ACCEPTED ||
-    x.state === JOB_STATE_PENDING_START ||
-    x.state === JOB_STATE_STARTED ||
-    x.state === JOB_STATE_PENDING_FINISH
-  )
-
-  const toPayJobs = clientActiveJobs.filter(x => x.state === JOB_STATE_PENDING_FINISH)
-
-  const cards = jobs
-    .filter((job) => !inActiveJobStates.includes(job.state))
-    .filter(job => job instanceof JobModel )
-    .map(job => ({
-      job,
-      board: boardByIdSelector(job.boardId)(state),
-      notice: newJobNoticeSelector(signer.address, job.id)(state),
-      worker: profileSelector(job.worker)(state),
-      recruiter: profileSelector(job.recruiter)(state),
-    }))
-
-  const inProgressCount = cards
-    .filter(card => card.worker != null)
-    .length
-
-  const groups = groupBy(cards, card => moment(card.job.extra.createdAt).format('YYYY-MM-DD'))
-
-  return {
-    signer,
-    totalCount: cards.length,
-    toPayCount: cards.length - inProgressCount,
-    toPayJobs,
-    inProgressCount,
-    groups: Object.entries(groups)
-      .map(([key, cards]) => ({
-        key,
-        date: cards[0].job.extra.createdAt,
-        cards,
-      }))
-      .sort((a, b) => -moment(a.date).diff(moment(b.date))),
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    pushModal (modal) {
-      dispatch(modalsPush(modal))
-    },
-    cancelJob (jobId: Number) {
-      dispatch(cancelJob(jobId))
-    },
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  pushModal: (modal) => dispatch(modalsPush(modal)),
+  cancelJob: (jobId: Number) => dispatch(cancelJob(jobId)),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveJobsContent)

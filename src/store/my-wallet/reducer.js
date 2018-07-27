@@ -23,6 +23,7 @@ import {
   ESTIMATE_GAS_REQUEST,
   ESTIMATE_GAS_SUCCESS,
   ESTIMATE_GAS_FAILURE,
+  RESET,
 } from "./actions"
 
 function customizer (objValue, srcValue) {
@@ -136,6 +137,10 @@ export default (state: State = STATE, action) => {
       ...state,
       estimateGasLoading: false,
       estimateGasFailure: action.payload,
+    })
+
+    case RESET: return ({
+      ...STATE,
     })
 
     default: return ({
