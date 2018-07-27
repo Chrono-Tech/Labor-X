@@ -208,3 +208,15 @@ src/**/*.js
 !src/store/ui/page/general-profile/personal.js
 !src/store/opportunities/selectors.js
 !src/store/login/actions.js
+
+!pages/my-wallet.js
+!src/api/lht/index.js
+!src/content/lib/MyWalletContent/MyWalletContent.css
+!src/content/lib/MyWalletContent/MyWalletContent.js
+!src/index.js
+!src/store/my-wallet/actions.js
+!src/store/my-wallet/reducer.js
+!src/store/my-wallet/selectors.js
+!src/utils/copy-to-clipboard.js
+
+
