@@ -108,6 +108,17 @@ button.actionItem {
   height: $size + $border*2;
   border-radius: $size + $border*2;
   border: $border solid $color-blue;
-  right: -$border;
+  right: 1.5rem;
   bottom: -$border;
+}
+
+.userBlockAvatar {
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 2rem;
+}
+
+.userAvatar {
+  width: 5rem;
+  height: 5rem;
 }

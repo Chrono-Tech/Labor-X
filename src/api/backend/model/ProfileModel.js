@@ -88,6 +88,14 @@ export default class ProfileModel extends AbstractModel {
   get passport () { return this.level3 }
   get location () { return this.level4 }
 
+  getValidationLevel () {
+    if (this.level4.approved) return 4
+    if (this.level3.approved) return 3
+    if (this.level2.approved) return 2
+    if (this.level1.approved) return 1
+    return 0
+  }
+
   static getValidationState (profile) {
     const { submitted, approved } = profile
     if (!submitted && !approved) return VALIDATION_STATE.INITIAL
