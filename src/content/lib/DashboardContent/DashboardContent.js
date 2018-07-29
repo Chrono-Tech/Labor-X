@@ -25,44 +25,38 @@ export class DashboardContent extends React.Component {
         </div>
         <div className={css.content}>
           <div className={css.block}>
-            <MyFundsWidget />
-          </div>
-          <div className={css.block}>
-            <CompleteProfileWidget accountTypes={user.accountTypes} />
+            <div className={css.widgetRow}>
+              <CompleteProfileWidget accountTypes={user.accountTypes} className={css.longWidget} />
+              <MyFundsWidget />
+            </div>
           </div>
           <div className={css.block}>
             <h2 className={css.blockTitle}>For Recruiters</h2>
-            <div className={css.highlightsRow}>
+            <div className={css.widgetRow}>
               <CreateJobBoardWidget />
               <MyJobBoardsWidget />
-            </div>
-            <div className={css.highlightsRow}>
               <HrReviewWidget />
             </div>
           </div>
           <div className={css.block}>
             <h2 className={css.blockTitle}>For Workers</h2>
-            <div className={css.highlightsRow}>
+            <div className={css.widgetRow}>
               <StartJobSearchWidget />
               <ToDoWidget />
-            </div>
-            <div className={css.highlightsRow}>
               <OpportunitiesWidget />
             </div>
           </div>
           <div className={css.block}>
             <h2 className={css.blockTitle}>For Clients</h2>
-            <div className={css.highlightsRow}>
+            <div className={css.widgetRow}>
               <PostJobWidget />
               <MyPostedJobsWidget />
-            </div>
-            <div className={css.highlightsRow}>
               <JobsProgressWidget />
             </div>
           </div>
           <div className={css.block}>
             <h2 className={css.blockTitle}>Validation Service</h2>
-            <div className={css.highlightsRow}>
+            <div className={css.widgetRow}>
               <ValidationRequestsWidget />
               <ReportsAndClaimsWidget />
             </div>

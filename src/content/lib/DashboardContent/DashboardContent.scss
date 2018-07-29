@@ -1,55 +1,46 @@
 @import "~styles/globals/variables";
 @import "~styles/globals/mixins";
 
-$gutter: 4rem;
-$maxWidth: 74rem;
-
-.block {
-  margin-top: 4rem;
-}
-
-.highlightsRow {
-  @include flex(row, flex-start, stretch);
-  > * {
-    margin-right: 4rem;
-    flex-basis: 50%;
-    &:last-child {
-      margin-right: 0rem;
-    }
-    &:only-child {
-      flex-basis: calc(50% - 2rem);
-    }
-  }
-  &:not(:first-child) {
-    margin-top: 4rem;
-  }
-}
-
-.blockTitle {
-  margin-bottom: 4rem;
-}
+$maxWidth: 111rem;
 
 .main {
   margin-bottom: 16rem;
   flex-grow: 1;
-}
-
-.title {
-  margin: 0;
-  padding: 5rem 0 5rem 4rem;
-  color: $color-white;
-  background-image: $gradientBlueToGreen;
-}
-
-.titleText {
-  font-size: $h1Size;
-  font-weight: $font-weight-thin;
-  letter-spacing: -0.1rem;
-  line-height: 1;
-}
-
-.content {
-  @include flex(column, flex-start, stretch);
-  padding-left: 4rem;
-  max-width: $maxWidth;
+  .title {
+    margin: 0;
+    padding: 5rem 0 5rem 4rem;
+    color: $color-white;
+    background-image: $gradientBlueToGreen;
+    .titleText {
+      font-size: $h1Size;
+      font-weight: $font-weight-thin;
+      letter-spacing: -0.1rem;
+      line-height: 1;
+    }
+  }
+  .content {
+    @include flex(column, flex-start, stretch);
+    padding-left: 4rem;
+    max-width: $maxWidth;
+    .block {
+      margin-top: 4rem;
+      .blockTitle {
+        margin-bottom: 3rem;
+        font-size: 3rem;
+      }
+      .widgetRow {
+        @include flex(row, flex-start, stretch);
+        > * {
+          margin-right: 4rem;
+          width: 33rem;
+          &:last-child {
+            margin-right: 0rem;
+          }
+          &.longWidget {
+            flex: 1 0 auto;
+          }
+        }
+      }
+    }
+  }
 }

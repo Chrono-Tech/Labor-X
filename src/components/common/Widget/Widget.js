@@ -1,6 +1,7 @@
-import { Action, Translate } from 'components/common'
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
+import cn from 'classnames'
+import { Action, Translate } from 'components/common'
 import css from './Widget.scss'
 
 const BLUE = 'Blue'
@@ -43,10 +44,10 @@ export default class Widget extends React.Component {
   renderActions = () => (item, index) => <Action key={index} item={item} />
 
   render () {
-    const { actions, children, href } = this.props
+    const { actions, children, href, className } = this.props
 
     return (
-      <div className={css.root}>
+      <div className={cn(css.root, className)}>
         { href ? <a href={href}>{this.header()}</a> : this.header() }
         {children && <div className={css.content}>{children}</div>}
         {actions && actions.map(this.renderActions())}

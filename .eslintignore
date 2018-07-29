@@ -101,6 +101,7 @@ src/**/*.js
 !src/components/common/VerificationLevelSelector/
 !src/components/common/ScheduleWidget/
 !src/components/common/CompletedJobCard/CompletedJobCard.js
+!src/components/common/Widget/
 !src/components/Account/AccountPasswordForm/
 !src/components/Account/ShowMnemonic/
 

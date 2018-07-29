@@ -1,17 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cn from 'classnames'
 import { Widget, Image } from 'src/components/common'
 import { UserAccountTypesModel } from 'src/models'
 
 export default class CompleteProfileWidget extends React.Component {
   static propTypes = {
     accountTypes: PropTypes.instanceOf(UserAccountTypesModel),
+    className: PropTypes.string,
   }
 
   render () {
-    const { accountTypes } = this.props
+    const { accountTypes, className } = this.props
     return (
       <Widget
+        className={cn(className)}
         href='/my-profile'
         title='ui.dashboard.general.completeYourProfile'
         subtitle='ui.dashboard.general.general'

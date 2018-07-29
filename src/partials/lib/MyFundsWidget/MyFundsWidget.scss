@@ -1,3 +1,43 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+@mixin button($color, $bgColor) {
+  height: 4rem;
+  width: 10rem;
+  border-radius: 21px;
+  font-size: $pSize;
+  text-transform: none;
+  color: $color;
+  background-color: $bgColor;
+  border: 1px solid $color-azure;
+}
+
 .main {
   background: transparent;
+  .address {
+    margin-bottom: 2rem;
+    font-size: $pSize;
+    color: $color-gray50;
+    word-break: break-all;
+  }
+  .balance {
+    margin-bottom: .5rem;
+    font-size: $h2Size;
+    font-weight: $font-weight-medium;
+  }
+  .balanceUsd {
+    margin-bottom: 3rem;
+    color: $color-gray50;
+    font-size: $pSize;
+  }
+  .actions {
+    @include flex(row, flex-start, stretch);
+    .actionDeposit {
+      @include button($color-azure, transparent);
+      margin-right: 2rem;
+    }
+    .actionWithdraw {
+      @include button($color-white, $color-azure);
+    }
+  }
 }
