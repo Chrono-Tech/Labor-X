@@ -58,7 +58,7 @@ import ForgotPasswordPage from "pages/forgot-password"
 import { initFrontend } from "src/store/bootstrap"
 import web3Factory from "src/web3"
 import { ModalStack } from 'src/partials'
-import 'styles/globals/globals.scss'
+import translations from './i18n'
 import {
   balances,
   boards,
@@ -76,11 +76,13 @@ import {
   user,
   wallet,
   workerProfile,
+  opportunityView
   postedJobs,
   clientProfile,
   activeJobs,
 } from "src/store/reducers"
-import translations from './i18n'
+
+import 'styles/globals/globals.scss'
 
 const generateClassName = createGenerateClassName()
 const jss = create(jssPreset())
@@ -118,6 +120,7 @@ const reducer = combineReducers({
   generalProfile,
   workerProfile,
   myWallet,
+  opportunityView,
   postedJobs,
   clientProfile,
   activeJobs,
