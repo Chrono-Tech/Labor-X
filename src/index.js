@@ -80,7 +80,11 @@ import {
   postedJobs,
   clientProfile,
   activeJobs,
-} from "src/store/reducers"
+  profiles,
+} from "src/store/reducers";
+import {reducer as formReducer} from "redux-form";
+import { i18nReducer, syncTranslationWithStore, loadTranslations, setLocale } from "react-redux-i18n";
+import {initFrontend} from "src/store/bootstrap";
 
 import 'styles/globals/globals.scss'
 
@@ -118,8 +122,10 @@ const reducer = combineReducers({
   user: user(),
   offers,
   generalProfile,
+  clientProfile,
   workerProfile,
   myWallet,
+  profiles
   opportunityView,
   postedJobs,
   clientProfile,

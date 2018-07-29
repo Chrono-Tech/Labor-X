@@ -11,6 +11,8 @@ export default class UserRow extends React.Component {
     hideActionIcon: PropTypes.bool,
     actionIcon: PropTypes.string,
     actionIconClass: PropTypes.string,
+    subtitle: PropTypes.string,
+    title: PropTypes.string,
   }
 
   static defaultProps = {
@@ -25,10 +27,6 @@ export default class UserRow extends React.Component {
 
   render () {
     const {
-      handleSubmit,
-      error,
-      pristine,
-      invalid,
       avatar,
       actionIcon,
       actionIconClass,
@@ -43,7 +41,10 @@ export default class UserRow extends React.Component {
       <div className={[css.userBlock, onClick ? '' : css.userBlockSingle ].join(' ')} onClick={onClick ? onClick : () => {}}>
         <div className={css.userBlockInner}>
           <div className={css.userBlockAvatar}>
-            <img className={css.userAvatar} src={avatar} alt='' />
+            <div
+              className={css.userAvatar}
+              style={{ "background": `url(${avatar}) no-repeat center/cover` }}
+            />
           </div>
           <div className={css.userBlockInfo}>
             { title ? (
