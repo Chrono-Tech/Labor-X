@@ -77,10 +77,6 @@ class ActiveJobCard extends React.Component {
           ) : null }
         </div>
         <div>
-          {/*<div className={css.iconAndName}>*/}
-          {/*<img className={css.icon} src={this.props.workerPerson.avatar} alt={worker.ipfs.name} />*/}
-          {/*<Link className={css.link} href='/worker-profile'><p>{this.props.workerPerson.userName} (Worker)</p></Link>*/}
-          {/*</div>*/}
           {!workerPerson ? null : (
             <div className={css.iconAndName}>
               <img className={css.icon} src={workerPerson.avatar} />

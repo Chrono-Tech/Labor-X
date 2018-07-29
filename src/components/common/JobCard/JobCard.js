@@ -1,4 +1,4 @@
-import React from 'react'
+  import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
@@ -77,22 +77,6 @@ export default class JobCard extends React.Component {
           <img className={css.icon} src={board.ipfs.logo || '/static/temp/get-started.png'} alt='' />
           <p>{board.ipfs.name}</p>
         </div>
-        {/*{board*/}
-        {/*? (*/}
-        {/*<div>*/}
-        {/*{!board.ipfs.logo ? null : (*/}
-        {/*<img className={css.icon} src={board.ipfs.logo} alt={board.ipfs.name} />*/}
-        {/*)}*/}
-        {/*<p>{board.ipfs.name}</p>*/}
-        {/*</div>*/}
-        {/*)*/}
-        {/*: (*/}
-        {/*<div>*/}
-        {/*<img className={css.icon} src='/static/temp/get-started.png' alt='' />*/}
-        {/*<p>No Board</p>*/}
-        {/*</div>*/}
-        {/*)*/}
-        {/*}*/}
         <div className={css.jobInfo}>
           <Link className={css.jobName} href={`/client-job-view/${job.id}`}>
             <h4>{job.ipfs.name}</h4>

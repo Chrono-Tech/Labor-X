@@ -142,11 +142,6 @@ export class GeneralTab extends React.Component {
   render () {
     return (
       <div className={css.content}>
-        {/*<div className={css.logoContainer} onClick={this.handleClickLogo}>*/}
-        {/*<div className={css.logo}>*/}
-        {/*<img src={avatarUrl} alt='Logo' />*/}
-        {/*</div>*/}
-        {/*</div>*/}
         <div className={css.block}>
           <Grid container spacing={24}>
             <Grid item xs={12}>

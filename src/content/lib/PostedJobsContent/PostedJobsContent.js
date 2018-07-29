@@ -34,19 +34,6 @@ const mapStateToProps = (state) => ({
   cards: getCards(state),
 })
 
-// function mapStateToProps (state) {
-//   const jobs = jobsListSelector()(state)
-//
-//   return {
-//     cards: jobs.map(job => ({
-//       job,
-//       board: boardByIdSelector(job.boardId)(state),
-//       applicantsCount: offersCountForJobSelector(job.id)(state),
-//       // notice: newJobNoticeSelector(signer.address, job.id)(state),
-//     })),
-//   }
-// }
-
 const mapDispatchToProps = (dispatch) => ({
   push: (url) => dispatch(push(url)),
 })

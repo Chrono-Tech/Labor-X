@@ -180,8 +180,6 @@ class WorkerProfileContent extends React.Component {
                   <br />
                   <MuiButton variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</MuiButton>
                   <MuiButton variant='contained' type='button' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} >reset</MuiButton>
-                  {/*<MuiButton variant='contained' type='button' onClick={this.handleValidateEmailClick} style={{ marginRight: '1rem' }} >validate email</MuiButton>*/}
-                  {/*<MuiButton variant='contained' type='button' onClick={this.handleValidatePhoneClick} style={{ marginRight: '1rem' }} >validate phone</MuiButton>*/}
                 </div>
               </ExpansionPanelDetails>
             </ExpansionPanel>
