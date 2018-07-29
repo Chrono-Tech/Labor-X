@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import faker from 'faker'
 
 import { BoardPostFeeModel, BoardRequirementModel } from 'src/models'
 import AbstractModel from '../AbstractModel'
@@ -20,21 +19,8 @@ const schemaFactory = () => ({
 
 export default class BoardIPFSModel extends AbstractModel {
   constructor (props) {
-    super(propsWithDefaults(props), schemaFactory())
-    Object.assign(this, propsWithDefaults(props))
+    super(props, schemaFactory())
+    Object.assign(this, props)
     Object.freeze(this)
   }
-}
-
-function propsWithDefaults (props) {
-  return Object.assign({}, {
-    name: faker.company.companyName(),
-    description: faker.lorem.sentence(10),
-    background: faker.image.image(64, 64),
-    fee: faker.random.number({ min: 5, max: 40 }),
-    lhus: 0,
-    endorsingSkills: false,
-    joinRequirement: null,
-    logo: faker.internet.avatar(),
-  }, props)
 }

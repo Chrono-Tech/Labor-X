@@ -14,7 +14,8 @@ $maxWidth: 77rem;
     background-image: $gradientBlueToGreen;
     .titleBar {
       @include flex(row, flex-start, stretch);
-      max-width: 70rem;
+      //max-width: 70rem;
+      max-width: 700px;
       height: 5rem;
       border-top-left-radius: .5rem;
       border-top-right-radius: .5rem;
@@ -45,12 +46,13 @@ $maxWidth: 77rem;
   }
   .content {
     margin-left: 4rem;
-    max-width: calc(#{$maxWidth} - 4rem);
+    //max-width: calc(#{$maxWidth} - 4rem);
+    max-width: 700px;
     .header {
       @include flex(column, flex-start, flex-start);
       @include card;
       position: relative;
-      margin-right: 3rem;
+      //margin-right: 3rem;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
       > h2 {
@@ -73,7 +75,8 @@ $maxWidth: 77rem;
         border-radius: 50%;
         width: 4rem;
         height: 4rem;
-        bottom: 5.5rem;
+        //bottom: 5.5rem;
+        bottom: 3rem;
       }
     }
     .tabContent {
@@ -96,4 +99,37 @@ $maxWidth: 77rem;
   justify-content: right;
   align-items: center;
   margin-right: 1rem;
+}
+
+
+.cardActionTitle {
+  //font-size: 16px;
+  //font-weight: 500;
+  display: inline-block;
+}
+
+.cardActionTitleSuccess {
+  color: $color-green;
+}
+
+.cardActionTitleError {
+  color: $color-red;
+}
+
+.cardActionTitleWarning {
+  color: $color-warn;
+}
+
+.icon {
+  font-size: 36px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.validationComment {
+  position: relative;
+  bottom: 2px;
+  font-size: 12px;
+  line-height: 12px;
+  color: rgb(244, 67, 54);
 }

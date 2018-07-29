@@ -51,5 +51,5 @@ $maxWidth: 74rem;
 .content {
   @include flex(column, flex-start, stretch);
   padding-left: 4rem;
-  max-width: $maxWidth;
+  max-width: 700px;
 }
