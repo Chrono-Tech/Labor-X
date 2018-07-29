@@ -1,31 +1,49 @@
 import React from 'react'
-import { push } from 'connected-react-router'
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { connect } from 'react-redux'
-import { reduxForm, propTypes, formValueSelector } from 'redux-form'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import ProfileModel from 'src/api/backend/model/ProfileModel'
+import { reduxForm, propTypes } from 'redux-form'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import MuiButton from '@material-ui/core/Button'
+
 import ProfileClientModel from 'src/api/backend/model/ProfileClientModel'
 import { Icon, Image, Button } from 'src/components/common'
-import { CLIENT_TYPE_ORGANISATION } from 'src/models'
+import {
+  submit,
+  FORM,
+  getValidationState,
+  getProfile,
+  getValidationComment,
+  getInitialValues,
+} from 'src/store/client-profile'
+import ProfileModel, {
+  VALIDATION_STATE,
+  VALIDATION_STATE_TITLE,
+  VALIDATION_STATE_CLASS,
+  VALIDATION_STATE_ICON,
+} from "src/api/backend/model/ProfileModel"
+
 import GeneralTab from './GeneralTab/GeneralTab'
 import StuffTab from './StuffTab/StuffTab'
-import {
-  reviewClientProfile,
-  getState,
-  submitClientProfile,
-  FORM_CLIENT_PROFILE,
-  addSpecializationClientProfileForm,
-  removeSpecializationClientProfileForm,
-} from './../../../store/client-profile'
-import { getCurrencies, getServiceCategories } from './../../../store/worker-profile'
-import { getAvatar } from './../../../store/general-profile'
+
 import css from './ClientProfileContent.scss'
 
-const DEFAULT_AVATAR = { url: '/static/images/profile-photo.jpg' }
+const setupText = 'Check your inbox or phone to complete validation. Don\'t forget to check junk mail too. Note that changing and saving information will require validation re-submit.'
+const finalText = 'Great Job! You have successfully passed validation. Note that changing and saving information will require validation re-submit.'
+
+const TAB = {
+  GENERAL: 'GENERAL',
+  STUFF: 'STUFF',
+}
+
+const getSubmitValues = (values) => ({
+  ...values,
+})
 
 class ClientProfileContent extends React.Component {
   static propTypes = {
@@ -41,21 +59,11 @@ class ClientProfileContent extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      slideIndex: 0,
+      slideIndex: TAB.GENERAL,
     }
   }
 
-  componentDidMount = () => {
-    this.props.reviewClientProfile()
-  }
-
-  handleChangeIndex = (index) => this.setState({ slideIndex: index })
-
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
-
-  handleBack = () => {
-    this.props.push('/my-profile')
-  }
 
   handleHelp = () => {
     // eslint-disable-next-line no-console
@@ -67,26 +75,24 @@ class ClientProfileContent extends React.Component {
     console.log('---ClientProfileContent handleClickAddWorker')
   }
 
+  renderTitle () {
+    return this.props.dirty ? VALIDATION_STATE_TITLE.INITIAL : VALIDATION_STATE_TITLE[this.props.validationState]
+  }
+
+  renderText () {
+    return this.props.validationState === VALIDATION_STATE.SUCCESS && !this.props.dirty ? finalText : setupText
+  }
+
+  renderTab (){
+    switch (this.state.slideIndex){
+      case TAB.GENERAL: return <GeneralTab />
+      case TAB.STUFF: return <StuffTab />
+    }
+  }
+
   render () {
-    const {
-      validationState,
-      validationComment,
-      profile,
-      stuff,
-      handleSubmit,
-      clientType,
-      currencies,
-      organizationType,
-      submitClientProfileLoading,
-      submitClientProfileFailure,
-      addSpecialization,
-      removeSpecialization,
-      selectedSpecializations,
-      serviceCategories,
-      avatarUrl,
-    } = this.props
     return (
-      <form className={css.main} onSubmit={handleSubmit}>
+      <form className={css.main} onSubmit={this.props.handleSubmit}>
         <div className={css.title}>
           <div className={css.titleBar}>
             <Button
@@ -100,31 +106,12 @@ class ClientProfileContent extends React.Component {
               onClick={this.handleBack}
             />
             <div className={css.buttonsRow}>
-              <div className={css.submitError}>{submitClientProfileFailure && submitClientProfileFailure.message}</div>
               <Icon
                 className={css.helpButton}
                 size={28}
                 {...Icon.SETS.HELP_INVERT}
                 onClick={this.handleHelp}
               />
-              {
-                submitClientProfileLoading && (
-                  <div className={css.progressBlock}>
-                    <CircularProgress color='primary' size={30} thickness={7} />
-                  </div>
-                )
-              }
-
-              {
-                !submitClientProfileLoading && (
-                  <Button
-                    className={css.doneButton}
-                    label='terms.done'
-                    mods={Button.MODS.FLAT}
-                    type={Button.TYPES.SUBMIT}
-                  />
-                )
-              }
             </div>
           </div>
 
@@ -132,14 +119,11 @@ class ClientProfileContent extends React.Component {
         <div className={css.content}>
           <div className={css.header}>
             <h2>Client Profile</h2>
-            <Tabs
-              onChange={this.handleTabChange}
-              value={this.state.slideIndex}
-            >
-              <Tab label='GENERAL' value={0} />
-              <Tab label='STUFF' value={1} />
+            <Tabs onChange={this.handleTabChange} value={this.state.slideIndex} >
+              <Tab label='GENERAL' value={TAB.GENERAL} />
+              <Tab label='STUFF' value={TAB.STUFF} />
             </Tabs>
-            {this.state.slideIndex === 1 ? (
+            {this.state.slideIndex === TAB.STUFF ? (
               <Icon
                 className={css.addWorker}
                 color={Icon.COLORS.WHITE}
@@ -150,25 +134,26 @@ class ClientProfileContent extends React.Component {
             ) : null}
           </div>
           <div className={css.tabContent}>
-            <SwipeableViews
-              index={this.state.slideIndex}
-              onChangeIndex={this.handleChangeIndex}
-            >
-              <GeneralTab
-                currencies={currencies}
-                validationState={validationState}
-                validationComment={validationComment}
-                generalProfile={profile.general}
-                clientType={clientType}
-                organizationType={organizationType}
-                serviceCategories={serviceCategories}
-                selectedSpecializations={selectedSpecializations}
-                onAddSpecialization={addSpecialization}
-                onRemoveSpecialization={removeSpecialization}
-                avatarUrl={avatarUrl}
-              />
-              <StuffTab stuff={stuff} />
-            </SwipeableViews>
+            {this.renderTab()}
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+                  <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+                  { this.renderTitle() }
+                </span>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <div>
+                  { this.renderText() }
+                  <br />
+                  <br />
+                  <div className={css.validationComment}>{ this.props.validationComment }</div>
+                  <br />
+                  <MuiButton variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</MuiButton>
+                  <MuiButton variant='contained' type='button' onClick={this.props.reset} style={{ marginRight: '1rem' }} >reset</MuiButton>
+                </div>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           </div>
         </div>
       </form>
@@ -177,51 +162,17 @@ class ClientProfileContent extends React.Component {
 }
 
 const ClientProfileContentForm = reduxForm({
-  form: FORM_CLIENT_PROFILE,
+  form: FORM,
 })(ClientProfileContent)
 
-function mapStateToProps (state) {
-  const clientProfileState = getState(state)
-  const clientProfile = clientProfileState.profile
-  return {
-    initialValues: {
-      verifiable: {
-        type: CLIENT_TYPE_ORGANISATION.name,
-      },
-      regular: {
-        specializations:[],
-      },
-    },
-    submitClientProfileFailure: clientProfileState.submitClientProfileFailure,
-    submitClientProfileLoading: clientProfileState.submitClientProfileLoading,
-    clientProfile: clientProfileState.profile,
-    reviewClientProfileFailure: clientProfileState.reviewClientProfileFailure,
-    validationState: ProfileModel.getValidationState(clientProfile ? clientProfile : {}),
-    validationComment: ProfileModel.getValidationComment(clientProfile ? clientProfile : {}),
-    currencies: getCurrencies(state),
-    organizationType: formValueSelector(FORM_CLIENT_PROFILE)(state, 'verifiable.type'),
-    serviceCategories: getServiceCategories(state),
-    selectedSpecializations: formValueSelector(FORM_CLIENT_PROFILE)(state, 'regular.specializations'),
-    avatarUrl: (getAvatar(state) || DEFAULT_AVATAR).url,
-  }
-}
+const mapStateToProps = (state) => ({
+  validationState: getValidationState(state),
+  validationComment: getValidationComment(state),
+  initialValues: getInitialValues(getProfile(state)),
+})
 
-function mapDispatchToProps (dispatch) {
-  return {
-    onSubmit: async (values) => {
-      dispatch(submitClientProfile(values))
-    },
-    reviewClientProfile: () => {
-      dispatch(reviewClientProfile())
-    },
-    addSpecialization: (specialization) => {
-      dispatch(addSpecializationClientProfileForm(specialization))
-    },
-    removeSpecialization: (specialization) => {
-      dispatch(removeSpecializationClientProfileForm(specialization))
-    },
-    push: (url) => dispatch(push(url)),
-  }
-}
+const mapDispatchToProps = (dispatch) =>  ({
+  onSubmit: (values) => dispatch(submit(getSubmitValues(values))),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClientProfileContentForm)

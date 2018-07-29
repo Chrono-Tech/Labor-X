@@ -71,8 +71,7 @@ export default class ProfileWorkerModel extends AbstractModel {
       if (submitted && !submitted.validationComment) return VALIDATION_STATE.WAITING
       if (submitted && submitted.validationComment) return VALIDATION_STATE.WARNING
       if (!submitted && approved) return VALIDATION_STATE.SUCCESS
-    }
-    else {
+    } else {
       return VALIDATION_STATE.INITIAL
     }
   }

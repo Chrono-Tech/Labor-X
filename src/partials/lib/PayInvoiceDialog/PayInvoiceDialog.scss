@@ -72,6 +72,7 @@
       background-color: $color-green !important;
       padding: 12px 0;
       color: $color-white;
+      height: 40px;
       &:hover {
         background-color: darken($color-green, 5) !important;
       }
@@ -82,6 +83,7 @@
       background-color: $color-red !important;
       padding: 1.2rem 0;
       color: $color-white;
+      height: 40px;
       &:hover {
         background-color: darken($color-red, 5) !important;
       }

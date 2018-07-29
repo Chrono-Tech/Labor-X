@@ -1,72 +1,56 @@
-import PropTypes from 'prop-types'
-import ProfileClientModel from "../../api/backend/model/ProfileClientModel"
 import {
-
-  CLIENT_PROFILE_REVIEW_REQUEST,
-  CLIENT_PROFILE_REVIEW_SUCCESS,
-  CLIENT_PROFILE_REVIEW_FAILURE,
-
-  CLIENT_PROFILE_SUBMIT_REQUEST,
-  CLIENT_PROFILE_SUBMIT_SUCCESS,
-  CLIENT_PROFILE_SUBMIT_FAILURE,
-
+  SELECT_INITIAL_PROPS_REQUEST,
+  SELECT_INITIAL_PROPS_SUCCESS,
+  SELECT_INITIAL_PROPS_FAILURE,
+  SUBMIT_REQUEST,
+  SUBMIT_SUCCESS,
+  SUBMIT_FAILURE,
 } from "./actions"
 
-export const FORM_CLIENT_PROFILE = 'CLIENT_PROFILE/FORM'
-
-export const TYPES = {
-
-  profile: PropTypes.instanceOf(ProfileClientModel),
-  reviewClientProfileLoading: PropTypes.bool,
-  reviewClientProfileFailure: PropTypes.instanceOf(Error),
-
-  submitClientProfileLoading: PropTypes.bool,
-  submitClientProfileFailure: PropTypes.instanceOf(Error),
-
-}
-
 export const STATE = {
-  profile: null,
-  reviewClientProfileLoading: true,
-  reviewClientProfileFailure: null,
 
-  submitClientProfileLoading: false,
-  submitClientProfileFailure: null,
+  selectInitialPropsLoading: true,
+  profile: null,
+  currencies: null,
+  selectInitialPropsFailure: true,
+
+  submitLoading: false,
+  submitFailure: null,
 }
 
-/*eslint complexity: ["error", 44]*/
 export default (state = STATE, { type, payload }) => {
   switch (type) {
 
-    case CLIENT_PROFILE_REVIEW_REQUEST: return ({
+    case SELECT_INITIAL_PROPS_REQUEST: return ({
       ...state,
-      reviewClientProfileLoading: true,
+      selectInitialPropsLoading: true,
     })
-    case CLIENT_PROFILE_REVIEW_SUCCESS: return ({
+    case SELECT_INITIAL_PROPS_SUCCESS: return ({
       ...state,
-      reviewClientProfileLoading: false,
+      selectInitialPropsLoading: false,
+      profile: payload.profile,
+      currencies: payload.currencies,
+    })
+    case SELECT_INITIAL_PROPS_FAILURE: return ({
+      ...state,
+      selectInitialPropsLoading: false,
+      selectInitialPropsFailure: payload,
+    })
+
+    case SUBMIT_REQUEST: return ({
+      ...state,
+      submitFailure: null,
+      submitLoading: true,
+    })
+    case SUBMIT_SUCCESS: return ({
+      ...state,
+      submitLoading: false,
       profile: payload,
     })
-    case CLIENT_PROFILE_REVIEW_FAILURE: return ({
+    case SUBMIT_FAILURE: return ({
       ...state,
-      reviewClientProfileLoading: false,
-      reviewClientProfileFailure: payload,
-    })
-    
-    case CLIENT_PROFILE_SUBMIT_REQUEST: return ({
-      ...state,
-      submitClientProfileFailure: null,
-      submitClientProfileLoading: true,
-    })
-    case CLIENT_PROFILE_SUBMIT_SUCCESS: return ({
-      ...state,
-      submitClientProfileLoading: false,
-      profile: payload,
-    })
-    case CLIENT_PROFILE_SUBMIT_FAILURE: return ({
-      ...state,
-      submitClientProfileLoading: false,
-      submitClientProfileFailure: payload,
+      submitLoading: false,
+      submitFailure: payload,
     })
 
     default: return ({
