@@ -290,18 +290,6 @@ export class JobBoardItem extends React.Component {
         }
       </div>
     )
-    // switch (jobBoard.status) {
-    //   case BoardModel.STATUS.UNASSIGNED:
-    //     return this.renderDefaultActionButton()
-    //   case BoardModel.STATUS.NEED_VERIFY:
-    //     return this.renderNeedVerifyButton()
-    //   case BoardModel.STATUS.JOINED:
-    //     return this.renderJoinedActions()
-    //   case BoardModel.STATUS.ON_APPROVAL:
-    //     return this.renderApprovalActions()
-    //   default:
-    //     return this.renderDefaultActionButton()
-    // }
   }
 
   renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }) {
@@ -352,12 +340,11 @@ export class JobBoardItem extends React.Component {
 
   renderLogo () {
     const { jobBoard } = this.props
-
-    return jobBoard.ipfs.logo ? (
+    return (
       <button className={css.logoLink}>
-        <img src={jobBoard.ipfs.logo} alt='' />
+        <img src={jobBoard.ipfs.logo || '/static/images/board-logo-placeholder.png'} alt='' style={{width:'128px'}} />
       </button>
-    ) : null
+    )
   }
 
   renderTerminateDialog () {

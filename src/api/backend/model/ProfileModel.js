@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types'
-import AbstractModel from './../../../models/AbstractModel'
+
+import AbstractModel from 'src/models/AbstractModel'
+import Icon from "src/components/common/Icon/Icon"
+import css from 'src/content/lib/GeneralProfileContent/index.scss'
 import ProfilePersonalModel from "./ProfilePersonalModel"
 import ProfileContactsModel from "./ProfileContactsModel"
 import ProfilePassportModel from "./ProfilePassportModel"
@@ -17,6 +20,18 @@ export const VALIDATION_STATE_TITLE = {
   [VALIDATION_STATE.WAITING]: 'Validation is on review',
   [VALIDATION_STATE.WARNING]: 'Validation issue',
   [VALIDATION_STATE.SUCCESS]: 'Validated',
+}
+export const VALIDATION_STATE_ICON = {
+  [VALIDATION_STATE.INITIAL]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.WAITING]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.WARNING]: Icon.SETS.SECURITY_SHIELD,
+  [VALIDATION_STATE.SUCCESS]: Icon.SETS.SECURITY_CHECK,
+}
+export const VALIDATION_STATE_CLASS = {
+  [VALIDATION_STATE.INITIAL]: css.cardActionTitle,
+  [VALIDATION_STATE.WAITING]: css.cardActionTitleWarning,
+  [VALIDATION_STATE.WARNING]: css.cardActionTitleError,
+  [VALIDATION_STATE.SUCCESS]: css.cardActionTitleSuccess,
 }
 
 export const schemaFactory = () => ({
@@ -72,6 +87,14 @@ export default class ProfileModel extends AbstractModel {
   get contacts () { return this.level2 }
   get passport () { return this.level3 }
   get location () { return this.level4 }
+
+  getValidationLevel () {
+    if (this.level4.approved) return 4
+    if (this.level3.approved) return 3
+    if (this.level2.approved) return 2
+    if (this.level1.approved) return 1
+    return 0
+  }
 
   static getValidationState (profile) {
     const { submitted, approved } = profile

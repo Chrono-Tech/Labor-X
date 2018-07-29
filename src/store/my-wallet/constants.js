@@ -1,0 +1,3 @@
+export const WITHDRAW_FORM = 'MY_WALLET/WITHDRAW_FORM'
+export const DECIMALS = Math.pow(10, 18)
+export const DIALOG_TRANSITION_DURATION = 200

@@ -10,6 +10,7 @@ import css from './ActiveJobCard.scss'
 import { confirmStartWork, modalsPush } from "../../../store"
 import { JOB_STATE_PENDING_FINISH } from "../../../models"
 import PayInvoiceDialog from "../../../partials/lib/PayInvoiceDialog/PayInvoiceDialog"
+import PersonModel from "../../../api/backend/model/PersonModel"
 
 const dateFormat = 'h:mm A'
 
@@ -18,7 +19,7 @@ class ActiveJobCard extends React.Component {
     job: PropTypes.instanceOf(JobModel).isRequired,
     board: PropTypes.instanceOf(BoardModel),
     notice: PropTypes.instanceOf(JobNoticeModel),
-    worker: PropTypes.instanceOf(ProfileModel),
+    workerPerson: PropTypes.instanceOf(PersonModel),
     recruiter: PropTypes.instanceOf(ProfileModel),
     onClickReview: PropTypes.func,
     confirmStartWork: PropTypes.func,
@@ -31,7 +32,7 @@ class ActiveJobCard extends React.Component {
   }
 
   handleReview () {
-    this.props.onClickReview(this.props.job, this.props.worker)
+    this.props.onClickReview(this.props.job, this.props.workerPerson.address)
   }
 
   handleMessage () {
@@ -48,8 +49,7 @@ class ActiveJobCard extends React.Component {
   }
 
   render () {
-    const { job, worker, recruiter/*, board*/ } = this.props
-
+    const { job, workerPerson } = this.props
     return (
       <div
         className={cn(css.root, {
@@ -77,18 +77,18 @@ class ActiveJobCard extends React.Component {
           ) : null }
         </div>
         <div>
-          {!worker ? null : (
+          {!workerPerson ? null : (
             <div className={css.iconAndName}>
-              <img className={css.icon} src={worker.ipfs.logo} alt={worker.ipfs.name} />
-              <Link className={css.link} href='/worker-profile'><p>{worker.ipfs.name} (Worker)</p></Link>
+              <img className={css.icon} src={workerPerson.avatar} />
+              <Link className={css.link} href='/worker-profile'><p>{workerPerson.userName} (Worker)</p></Link>
             </div>
           )}
-          {!recruiter ? null : (
-            <div className={css.iconAndName}>
-              <img className={css.icon} src={recruiter.ipfs.logo} alt={recruiter.ipfs.name} />
-              <Link className={css.link} href='/recruiter-profile'><p>{recruiter.ipfs.name} (Recruiter)</p></Link>
-            </div>
-          )}
+          {/*{!recruiter ? null : (*/}
+          {/*<div className={css.iconAndName}>*/}
+          {/*<img className={css.icon} src={recruiter.ipfs.logo} alt={recruiter.ipfs.name} />*/}
+          {/*<Link className={css.link} href='/recruiter-profile'><p>{recruiter.ipfs.name} (Recruiter)</p></Link>*/}
+          {/*</div>*/}
+          {/*)}*/}
           {job.state === JOB_STATE_PENDING_FINISH && <Button
             label='REVIEW INVOICE'
             className={css.review}

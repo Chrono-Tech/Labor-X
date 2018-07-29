@@ -5,7 +5,6 @@ import { getWorkerProfileInitialValues, workerProfileModelFromForm} from "./sele
 import { WORKER_PROFILE_FORM } from "./reducer"
 import FileModel from "../../models/FileModel"
 
-
 export const WORKER_PROFILE_SUMBIT_REQUEST = 'WORKER_PROFILE/PROFILE_SUMBIT/REQUEST'
 export const WORKER_PROFILE_SUMBIT_SUCCESS = 'WORKER_PROFILE/PROFILE_SUMBIT/SUCCESS'
 export const WORKER_PROFILE_SUMBIT_FAILURE = 'WORKER_PROFILE/PROFILE_REVIEW/FAILURE'
@@ -27,7 +26,6 @@ export const submitWorkerProfile = (data, serviceAttachments) => async (dispatch
   }
 }
 
-
 export const GET_WORKER_PROFILE_REQUEST = 'WORKER_PROFILE/GET/REQUEST'
 export const GET_WORKER_PROFILE_SUCCESS = 'WORKER_PROFILE/GET/SUCCESS'
 export const GET_WORKER_PROFILE_FAILURE = 'WORKER_PROFILE/GET/FAILURE'
@@ -48,8 +46,6 @@ export const getWorkerProfile = () => async (dispatch, getState) => {
   }
 }
 
-
-
 export const WORKER_PAGE_DATA_REQUEST = 'WORKER_PAGE_DATA/REQUEST'
 export const WORKER_PAGE_DATA_SUCCESS = 'WORKER_PAGE_DATA/SUCCESS'
 export const WORKER_PAGE_DATA_FAILURE = 'WORKER_PAGE_DATA/FAILURE'
@@ -67,15 +63,11 @@ export const initWorkerPageData = () => async (dispatch) => {
   }
 }
 
-
-
-
 export const createExperience = () => async (dispatch, getState) => {
    const state = getState();
    const experiences = formValueSelector(WORKER_PROFILE_FORM)(state, 'employments')
    dispatch(change(WORKER_PROFILE_FORM, "employments",  [...experiences, {}]))
 }
-
 
 export const createService = () => async (dispatch, getState) => {
   const state = getState();

@@ -26,7 +26,7 @@ module.exports = {
             loader: "css-loader",
             options: {
               modules: true,
-              importLoaders: 1,
+              importLoaders: 2,
               localIdentName: '[name]__[local]___[hash:base64:5]',
             }
           },
@@ -38,6 +38,19 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+            }
+          },
+        ]
       }
     ]
   },
@@ -48,6 +61,7 @@ module.exports = {
   resolve: {
     alias: {
       'src': path.resolve(__dirname, 'src'),
+      'pages': path.resolve(__dirname, 'pages'),
       'styles': path.resolve(__dirname, 'src/styles'),
       'store': path.resolve(__dirname, 'src/store'),
       'models': path.resolve(__dirname, 'src/models'),
