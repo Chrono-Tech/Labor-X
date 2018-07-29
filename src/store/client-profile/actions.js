@@ -1,60 +1,45 @@
 // @flow
-import { change, initialize, formValueSelector } from 'redux-form'
+import { initialize  } from 'redux-form'
 
-import * as backendApi from "../../api/backend"
-import { userTokenSelector } from "../user/selectors"
-import { FORM_CLIENT_PROFILE } from "./reducer"
-import { getClientProfileInitialValues, clientProfileModelFromForm } from "./selectors"
+import * as backendApi from "src/api/backend"
+import { userTokenSelector } from "src/store/user/selectors"
+import { FORM } from "./constants"
+import { getInitialValues } from "./selectors"
 
-export const CLIENT_PROFILE_REVIEW_REQUEST = 'CLIENT_PROFILE/PROFILE_REVIEW/REQUEST'
-export const CLIENT_PROFILE_REVIEW_SUCCESS = 'CLIENT_PROFILE/PROFILE_REVIEW/SUCCESS'
-export const CLIENT_PROFILE_REVIEW_FAILURE = 'CLIENT_PROFILE/PROFILE_REVIEW/FAILURE'
-export const reviewClientProfileRequest = (req) => ({ type: CLIENT_PROFILE_REVIEW_REQUEST, payload: req })
-export const reviewClientProfileSuccess = (res) => ({ type: CLIENT_PROFILE_REVIEW_SUCCESS, payload: res })
-export const reviewClientProfileFailure = (err) => ({ type: CLIENT_PROFILE_REVIEW_FAILURE, payload: err })
-export const reviewClientProfile = () => async (dispatch, getState) => {
+export const SELECT_INITIAL_PROPS_REQUEST = 'CLIENT_PROFILE/SELECT_INITIAL_PROPS_REQUEST'
+export const SELECT_INITIAL_PROPS_SUCCESS = 'CLIENT_PROFILE/SELECT_INITIAL_PROPS_SUCCESS'
+export const SELECT_INITIAL_PROPS_FAILURE = 'CLIENT_PROFILE/SELECT_INITIAL_PROPS_FAILURE'
+export const selectInitialPropsRequest = (req) => ({ type: SELECT_INITIAL_PROPS_REQUEST, payload: req })
+export const selectInitialPropsSuccess = (res) => ({ type: SELECT_INITIAL_PROPS_SUCCESS, payload: res })
+export const selectInitialPropsFailure = (err) => ({ type: SELECT_INITIAL_PROPS_FAILURE, payload: err })
+export const selectInitialProps = () => async (dispatch, getState) => {
   try {
-    dispatch(reviewClientProfileRequest())
+    dispatch(selectInitialPropsRequest())
     const state = getState()
     const token = userTokenSelector()(state)
     const profile = await backendApi.reviewClientProfile(token)
-    dispatch(initialize(FORM_CLIENT_PROFILE, getClientProfileInitialValues(profile)))
-    dispatch(reviewClientProfileSuccess(profile))
+    const currencies = await backendApi.getCurrencies()
+    dispatch(selectInitialPropsSuccess({ profile, currencies }))
   } catch (err) {
-    dispatch(reviewClientProfileFailure(err))
+    dispatch(selectInitialPropsFailure(err))
   }
 }
 
-export const CLIENT_PROFILE_SUBMIT_REQUEST = 'CLIENT_PROFILE/SUBMIT/REQUEST'
-export const CLIENT_PROFILE_SUBMIT_SUCCESS = 'CLIENT_PROFILE/SUBMIT/SUCCESS'
-export const CLIENT_PROFILE_SUBMIT_FAILURE = 'CLIENT_PROFILE/SUBMIT/FAILURE'
-export const submitClientProfileRequest = (req) => ({ type: CLIENT_PROFILE_SUBMIT_REQUEST, payload: req })
-export const submitClientProfileSuccess = (res) => ({ type: CLIENT_PROFILE_SUBMIT_SUCCESS, payload: res })
-export const submitClientProfileFailure = (err) => ({ type: CLIENT_PROFILE_SUBMIT_FAILURE, payload: err })
-export const submitClientProfile = (data) => async (dispatch, getState) => {
+export const SUBMIT_REQUEST = 'CLIENT_PROFILE/SUBMIT_REQUEST'
+export const SUBMIT_SUCCESS = 'CLIENT_PROFILE/SUBMIT_SUCCESS'
+export const SUBMIT_FAILURE = 'CLIENT_PROFILE/SUBMIT_FAILURE'
+export const submitRequest = (req) => ({ type: SUBMIT_REQUEST, payload: req })
+export const submitSuccess = (res) => ({ type: SUBMIT_SUCCESS, payload: res })
+export const submitFailure = (err) => ({ type: SUBMIT_FAILURE, payload: err })
+export const submit = (values) => async (dispatch, getState) => {
   try {
-    const clientProfile = clientProfileModelFromForm(data)
-    dispatch(submitClientProfileRequest({ data }))
+    dispatch(submitRequest())
     const state = getState()
     const token = userTokenSelector()(state)
-    const profile = await backendApi.submitClientProfile(clientProfile, token)
-    dispatch(initialize(FORM_CLIENT_PROFILE, getClientProfileInitialValues(profile)))
-    dispatch(submitClientProfileSuccess(profile))
+    const profile = await backendApi.submitClientProfile(values, token)
+    dispatch(initialize(FORM, getInitialValues(profile)))
+    dispatch(submitSuccess(profile))
   } catch (err) {
-    dispatch(submitClientProfileFailure(err))
+    dispatch(submitFailure(err))
   }
-}
-
-export const addSpecializationClientProfileForm = (specialization) => async (dispatch, getState) => {
-  const state = getState()
-  const specializations = formValueSelector(FORM_CLIENT_PROFILE)(state, 'regular.specializations') || []
-  dispatch(change(FORM_CLIENT_PROFILE, "regular.specializations",  [...specializations, specialization]))
-}
-
-export const removeSpecializationClientProfileForm = (specializationCode) => async (dispatch, getState) => {
-  const state = getState()
-  const specializations = formValueSelector(FORM_CLIENT_PROFILE)(state, 'regular.specializations')
-  const removedIndex = specializations.findIndex(item => item.code === specializationCode)
-  specializations.splice(removedIndex, 1)
-  dispatch(change(FORM_CLIENT_PROFILE, "regular.specializations",  specializations))
 }

@@ -10,6 +10,8 @@ import Tab from '@material-ui/core/Tab'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import MuiButton from '@material-ui/core/Button'
 import { ProfileModel, WorkerModel } from 'src/models'
 import { Icon, Image, Button } from 'src/components/common'
 import { WORKER_PROFILE_FORM } from "../../../store/worker-profile/reducer"
@@ -32,6 +34,9 @@ import { getAvatar } from './../../../store/general-profile'
 import ProfileWorkerModel, { VALIDATION_STATE, VALIDATION_STATE_TITLE } from "../../../api/backend/model/ProfileWorkerModel"
 
 import css from './WorkerProfileContent.scss'
+
+const setupText = 'Check your inbox or phone to complete validation. Don\'t forget to check junk mail too. Note that changing and saving information will require validation re-submit.'
+const finalText = 'Great Job! You have successfully passed validation. Note that changing and saving information will require validation re-submit.'
 
 const DEFAULT_AVATAR = { url: '/static/images/profile-photo.jpg' }
 
@@ -97,6 +102,10 @@ class WorkerProfileContent extends React.Component {
     return VALIDATION_STATE_TITLE[this.props.validationState]
   }
 
+  renderText () {
+    return this.props.validationState === VALIDATION_STATE.SUCCESS && !this.props.dirty ? finalText : setupText
+  }
+
   render () {
     const { profile, handleSubmit, avatarUrl, removeService, removeExperience, serviceCategories, currencies, socials } = this.props
     return (
@@ -151,6 +160,31 @@ class WorkerProfileContent extends React.Component {
               />
             ) : null}
           </div>
+
+          <br />
+          <br />
+
+          <div className={css.validationBlock}>
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
+                  <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
+                  {this.renderTitle()}
+                  <p>{this.props.validationComment}</p>
+                </span>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <div>
+                  { this.renderText() }
+                  <br />
+                  <br />
+                  <MuiButton variant='contained' type='submit' style={{ marginRight: '1rem' }} >save & validate</MuiButton>
+                  <MuiButton variant='contained' type='button' onClick={this.handleResetClick} style={{ marginRight: '1rem' }} >reset</MuiButton>
+                </div>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </div>
+
           <div className={css.tabContent}>
             <SwipeableViews
               index={this.state.slideIndex}
@@ -160,18 +194,6 @@ class WorkerProfileContent extends React.Component {
               <WorkExperienceTab onRemoveExperience={removeExperience} />
               <ServicesTab onRemoveService={removeService} currencies={currencies} serviceCategories={serviceCategories} />
             </SwipeableViews>
-
-            <div className={css.validationBlock}>
-              <ExpansionPanel>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <span className={classnames([css.cardActionTitle, VALIDATION_STATE_CLASS[this.props.validationState]])}>
-                    <Icon className={classnames([css.icon, VALIDATION_STATE_CLASS[this.props.validationState]])} {...VALIDATION_STATE_ICON[this.props.validationState]} />
-                    {this.renderTitle()}
-                    <p>{this.props.validationComment}</p>
-                  </span>
-                </ExpansionPanelSummary>
-              </ExpansionPanel>
-            </div>
 
           </div>
         </div>

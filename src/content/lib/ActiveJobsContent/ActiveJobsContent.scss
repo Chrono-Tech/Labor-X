@@ -46,12 +46,16 @@ $maxWidth: 74rem;
 
 .section {
   margin-top: 4rem;
+  margin-bottom: 4rem;
   > * {
-    margin-bottom: 4rem;
     &:last-child {
       margin-bottom: 0;
     }
   }
+}
+
+.cardsHeader {
+  margin: 4rem 0 2rem;
 }
 
 .medium {
