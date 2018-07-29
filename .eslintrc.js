@@ -29,6 +29,13 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/label-has-for': 'off',
     'no-class-assign': 'off',
-    'react/jsx-no-bind': 'off'
+    'react/jsx-no-bind': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
+    'react/jsx-handler-names': 'off',
+    'import/no-named-as-default': 'off',
+    'complexity': 'off',
+    'jsx-a11y/alt-text': 'off',
   }
 }

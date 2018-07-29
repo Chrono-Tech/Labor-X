@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Router from 'src/routes'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
+import { push } from 'connected-react-router'
 
 import {
   signIn,
@@ -28,6 +27,11 @@ import {
   onSignInFail,
   navigateToLoginForm,
 } from 'src/store'
+
+import {
+  getState,
+  loadProfileByAddress,
+} from 'src/store/profiles'
 
 import { Button } from 'components/common'
 
@@ -82,6 +86,9 @@ class LoginOptions extends React.Component {
     selectedWalletRecoveryForm: PropTypes.instanceOf(WalletEntryModel),
     fetchSignIn: PropTypes.bool,
     openAccount404Dialog: PropTypes.bool,
+    push: PropTypes.func,
+    profilesByAddressKey: PropTypes.shape({}),
+    loadProfileByAddress: PropTypes.func,
   }
 
   static defaultProps = {
@@ -98,6 +105,13 @@ class LoginOptions extends React.Component {
     }
   }
 
+  componentDidMount () {
+    const { walletsList, loadProfileByAddress } = this.props
+    walletsList.forEach((wallet) => {
+      loadProfileByAddress(`0x${wallet.encrypted[0].address}`)
+    })
+  }
+
   handleAccount404DialogNoClick = () => {
     this.props.hideAccount404Dialog()
   }
@@ -108,8 +122,8 @@ class LoginOptions extends React.Component {
 
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
 
-  navigateToCreateAccount (){
-    Router.pushRoute('/create-account')
+  navigateToCreateAccount = () => {
+    this.props.push('/create-account')
   }
 
   renderComponent () {
@@ -135,6 +149,7 @@ class LoginOptions extends React.Component {
       navigateToRecoveryPassword,
       selectedWalletRecoveryForm,
       fetchSignIn,
+      profilesByAddressKey,
     } = this.props
 
     let component
@@ -168,7 +183,7 @@ class LoginOptions extends React.Component {
         component = (<SelectOption onChangeStep={onChangeStep} />)
         break
       case LoginSteps.SelectWallet:
-        component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
+        component = (<SelectWallet profilesByAddressKey={profilesByAddressKey} onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
         break
       case LoginSteps.RecoveryPassword:
         component = (
@@ -200,10 +215,11 @@ class LoginOptions extends React.Component {
             onSubmitFail={onSignInFail}
             onClickForgotPassword={navigateToRecoveryPassword}
             fetchSignIn={fetchSignIn}
+            profilesByAddressKey={profilesByAddressKey}
           />)
         break
       default:
-        component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
+        component = (<SelectWallet profilesByAddressKey={profilesByAddressKey} onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
     }
 
     return [<div key={step} className={css.componentWrapper}>{component}</div>]
@@ -232,7 +248,7 @@ class LoginOptions extends React.Component {
             LaborX account with the provided address is not found.
             Would you like to Create a New Account?
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{ height: '40px' }}>
             <Button
               label='No'
               onClick={this.handleAccount404DialogNoClick}
@@ -253,45 +269,9 @@ class LoginOptions extends React.Component {
 
 }
 
-export const PersistWrapper = (gateProps = {}) => (WrappedComponent) => (
-
-  class WithPersistGate extends React.Component {
-
-    static displayName = `withPersistGate(${WrappedComponent.displayName
-    || WrappedComponent.name
-    || 'Component'})`;
-
-    static contextTypes = {
-      store: PropTypes.object.isRequired,
-    }
-
-    constructor (props, context) {
-      super(props, context)
-      this.store = context.store
-    }
-
-    render () {
-      return (
-        <PersistGate {...gateProps} loading={LoginOptionsLoader} persistor={this.store["__persistor"]}>
-          <WrappedComponent {...this.props} />
-        </PersistGate>
-      )
-    }
-
-  }
-
-)
-
-const LoginOptionsLoader = (
-  <div className={css.loadingMessage}>
-    <div className={css.loadingMessageHeader}>Log In</div>
-    <img src='/static/images/gif/spinningwheel-1.gif' width='24' height='24' alt='' />
-  </div>
-)
-
 function mapStateToProps (state) {
-
   return {
+    profilesByAddressKey: getState(state).byAddressKey,
     fetchSignIn: state.login.fetchSignIn ,
     selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
@@ -321,7 +301,9 @@ function mapDispatchToProps (dispatch) {
     navigateToLoginForm: () => dispatch(navigateToLoginForm()),
     hideAccount404Dialog: () => dispatch(hideAccount404Dialog()),
     handleAccount404DialogYesClick: () => dispatch(handleAccount404DialogYesClick()),
+    push: (url) => dispatch(push(url)),
+    loadProfileByAddress: (address) => dispatch(loadProfileByAddress(address)),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersistWrapper()(LoginOptions))
+export default connect(mapStateToProps, mapDispatchToProps)(LoginOptions)

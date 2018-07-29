@@ -1,14 +1,15 @@
 // @flow
 import React from 'react'
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
-import { Router } from 'src/routes'
 import { JobModel, BoardModel, JobOfferFormModel, ClientModel, WORKFLOW_TM } from 'src/models'
-import { createJobOffer, createJobOfferWithPrice, signerSelector, boardByIdSelector, modalsPush } from 'src/store'
+import { createJobOffer, createJobOfferWithPrice, signerSelector, boardByIdSelector, modalsPush, companyInfo } from 'src/store'
 import { Image, Button, Tab, ScheduleWidget } from 'src/components/common'
 import { MakeOfferDialog } from 'src/partials'
+import { getClientProfile, getState } from './../../../store/opportunity-view'
 import DescriptionTab from './DescriptionTab/DescriptionTab'
 import CompanyTab from './CompanyTab/CompanyTab'
 import css from './OpportunityViewContent.scss'
@@ -21,6 +22,8 @@ export class OpportunityViewContent extends React.Component {
     onPostOffer: PropTypes.func.isRequired,
     pushModal: PropTypes.func.isRequired,
     onPostOfferWithPrice: PropTypes.func,
+    push: PropTypes.func,
+    getCompanyInfo: PropTypes.func,
   }
 
   state = {
@@ -29,8 +32,13 @@ export class OpportunityViewContent extends React.Component {
     isScheduleVisible: false,
   }
 
-  handleBack () {
-    Router.pushRoute('/opportunities')
+  componentDidMount () {
+    let { job, getCompanyInfo } = this.props
+    getCompanyInfo(job.client)
+  }
+
+  handleBack = () => {
+    this.props.push('/opportunities')
   }
 
   handleClickCalendar = (e) => {
@@ -89,7 +97,7 @@ export class OpportunityViewContent extends React.Component {
       this.setState({
         isOfferPosting: false,
       }, () => {
-        Router.pushRoute('/applications-and-offers')
+        this.props.push('/applications-and-offers')
       })
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -127,7 +135,7 @@ export class OpportunityViewContent extends React.Component {
       this.setState({
         isOfferPosting: false,
       }, () => {
-        Router.pushRoute('/applications-and-offers')
+        this.props.push('/applications-and-offers')
       })
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -147,7 +155,7 @@ export class OpportunityViewContent extends React.Component {
       key: 'info',
       title: 'Company info',
       content: (props) => (
-        <CompanyTab {...props.company} board={props.board} client={props.client} />
+        <CompanyTab {...props.company} board={props.board} client={props.client} companyInfo={props.companyInfo} companyInfoLoading={props.companyInfoLoading} companyInfoFailure={props.companyInfoFailure} />
       ),
     },
   ]
@@ -232,20 +240,27 @@ export class OpportunityViewContent extends React.Component {
 function mapStateToProps (state, op) {
   const signer = signerSelector()(state)
   const board = boardByIdSelector(op.job.boardId)(state)
+  const opportunityViewState = getState(state)
+  const companyInfo = getClientProfile(opportunityViewState.companyInfo)
   // TODO aevalyakin recieve client data from blockchain
   const client = new ClientModel({})
   return {
     signer,
     board,
     client,
+    companyInfo,
+    companyInfoLoading: companyInfo.companyInfoLoading,
+    companyInfoFailure: companyInfo.companyInfoFailure,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
+    getCompanyInfo: (address) => dispatch(companyInfo(address)),
     onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form)),
     onPostOfferWithPrice: async (form: JobOfferFormModel) => dispatch(createJobOfferWithPrice(form)),
     pushModal (modal) { dispatch(modalsPush(modal)) },
+    push: (url) => dispatch(push(url)),
   }
 }
 

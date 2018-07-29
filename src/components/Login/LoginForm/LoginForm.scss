@@ -1,6 +1,6 @@
 .root {
   text-align: center;
-  padding: 40px 130px;
+  padding: 40px 130px 100px;
 
   @media (max-width: 640px) {
     padding: 40px 20px;
@@ -26,6 +26,7 @@
 .loginButton {
   min-width: 19rem;
   margin-bottom: 30px;
+  height: 40px;
 }
 
 .forgotPasswordLink {

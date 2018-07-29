@@ -29,6 +29,7 @@
   @include card;
   border-left-width: 1rem;
   border-left-style: solid;
+  margin-bottom: 2rem;
   > div {
     @include flex(row, flex-start, center);
     height: 6rem;

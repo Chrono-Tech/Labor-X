@@ -38,12 +38,13 @@ export default class RightPanel extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
     open: PropTypes.bool,
+    validationLevel: PropTypes.number,
   }
 
   renderActions = () => (item, index) => <Action key={index} item={item} />
 
   render () {
-    const { onClose, open } = this.props
+    const { onClose, open, validationLevel } = this.props
 
     return open ? (
       <div className={css.root}>
@@ -59,7 +60,7 @@ export default class RightPanel extends React.Component {
 
           <div className={css.stats}>
             <div className={css.mainStat}>
-              <div className={css.shield}>4</div>
+              <div className={css.shield}>{validationLevel}</div>
               <div className={css.stars}>
                 <Image className={css.star} {...Image.SETS.STAR} clickable={false} />
                 <Image className={css.star} {...Image.SETS.STAR} clickable={false} />

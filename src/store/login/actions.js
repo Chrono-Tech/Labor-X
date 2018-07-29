@@ -1,13 +1,13 @@
 import bip39 from 'bip39'
 import { stopSubmit } from 'redux-form'
 
-import { Router } from 'src/routes'
+import { push } from 'connected-react-router'
 import { WalletEntryModel, SignInModel, UserAccountTypesModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
 
 import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
 import { web3Selector } from "src/store/ethereum/selectors"
-import { getAccountTypes, userSave } from "src/store/user/actions"
+import { userSave } from "src/store/user/actions"
 import { setExistingAccount } from "src/store/createAccount/actions"
 import { getAccount } from "./selectors"
 
@@ -77,7 +77,7 @@ export const signIn = ({ password }) => async (dispatch, getState) => {
 
 export const onSignInSuccess = () => (dispatch) => {
   dispatch({ type: LOGIN_SIGN_IN })
-  Router.pushRoute('/dashboard')
+  dispatch(push('/dashboard'))
 }
 
 export const onSignInFail = () => (dispatch) => {
@@ -103,7 +103,7 @@ export const createAccount = (walletName, password) => async (dispatch, getState
 
     dispatch(changeStep(LoginSteps.SelectWallet))
   } else {
-    Router.pushRoute('/account-password')
+    dispatch(push('/account-password'))
   }
 }
 
@@ -206,7 +206,7 @@ export const onConfirmRecoveryPassword = ({ password }) => (dispatch, getState) 
 
   dispatch({ type: LOGIN_RESET_RECOVERY_PASSWORD_MODE })
 
-  Router.pushRoute('/dashboard')
+  dispatch(push('/dashboard'))
 }
 
 export const changeStep = (step) => (dispatch) => {
@@ -237,8 +237,7 @@ export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
     web3.eth.accounts.wallet.clear()
     const account = web3.eth.accounts.privateKeyToAccount(`0x${values.key}`)
     const person = await backendApi.getPerson(account.address)
-    const accountTypes = await dispatch(getAccountTypes(account.address))
-    if (person && accountTypes) {
+    if (person) {
       const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: values.key, address: account.address })
       dispatch(setSignInModel(signInModel))
       dispatch(navigateToCreateWallet())
@@ -255,5 +254,5 @@ export const handleAccount404DialogYesClick = () => (dispatch, getState) => {
   const account = getAccount(state)
   dispatch(setExistingAccount(account))
   dispatch(hideAccount404Dialog())
-  Router.pushRoute('/create-account')
+  dispatch(push('/create-account'))
 }
