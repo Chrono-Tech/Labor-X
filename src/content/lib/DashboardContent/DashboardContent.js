@@ -1,22 +1,31 @@
+import React from 'react'
 import PropTypes from 'prop-types'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { connect } from 'react-redux'
 import { Image, Widget, Translate } from 'src/components/common'
 import { MyFundsWidget } from 'src/partials'
-import { SignerModel } from 'src/models'
+import { SignerModel, UserModel } from 'src/models'
 import { signerSelector } from 'src/store'
 
-import React from 'react'
+import { getPageData, pageDataLoadingSelector, pageDataFailureSelector } from 'src/store/dashboard'
+import { userSelector } from 'src/store/user/selectors'
 import css from './DashboardContent.scss'
-import {userSelector} from "../../../store/user/selectors";
 
 export class DashboardContent extends React.Component {
   static propTypes = {
+    getPageData: PropTypes.func.isRequired,
+    pageDataLoading: PropTypes.bool.isRequired,
+    pageDataFailure: PropTypes.instanceOf(Error),
     signer: PropTypes.instanceOf(SignerModel),
+    user: PropTypes.instanceOf(UserModel),
   }
 
-  render () {
-    const { signer } = this.props
-    return signer == null ? null : (
+  componentDidMount () {
+    this.props.getPageData()
+  }
+
+  renderContent = () => {
+    return (
       <div className={css.main}>
         <div className={css.title}>
           <div className={css.titleText}><Translate value='nav.dashboard' /></div>
@@ -38,9 +47,9 @@ export class DashboardContent extends React.Component {
                   secondIcon: Image.SETS.MESSAGE_ERROR,
                 },
 
-                ...(this.props.user.accountTypes.client ? [ { href: '/client-profile', label: 'nav.clientProfile', isLink: true, } ] : []),
-                ...(this.props.user.accountTypes.worker  ? [ { href: '/worker-profile', label: 'nav.workerProfile', isLink: true, } ] : []),
-                ...(this.props.user.accountTypes.recruiter ? [ { href: '/recruiter-profile', label: 'nav.recruiterProfile', isLink: true, } ] : []),
+                ...(this.props.user.accountTypes.client ? [ { href: '/client-profile', label: 'nav.clientProfile', isLink: true } ] : []),
+                ...(this.props.user.accountTypes.worker  ? [ { href: '/worker-profile', label: 'nav.workerProfile', isLink: true } ] : []),
+                ...(this.props.user.accountTypes.recruiter ? [ { href: '/recruiter-profile', label: 'nav.recruiterProfile', isLink: true } ] : []),
               ]}
             >
               If you&apos;d like you may continue to use LaborX network anonymous.
@@ -288,20 +297,30 @@ export class DashboardContent extends React.Component {
       </div>
     )
   }
+
+  render () {
+    const { signer, pageDataFailure, pageDataLoading } = this.props
+    return signer == null || pageDataLoading
+      ? <CircularProgress />
+      : pageDataFailure
+        ? <div>{pageDataFailure}</div>
+        : this.renderContent()
+
+  }
 }
 
-function mapStateToProps (state) {
+const mapStateToProps = (state) => {
   const signer = signerSelector()(state)
   return {
     signer,
-    user: userSelector()(state)
+    user: userSelector()(state),
+    pageDataLoading: pageDataLoadingSelector()(state),
+    pageDataFailure: pageDataFailureSelector()(state),
   }
 }
 
-function mapDispatchToProps (/*dispatch*/) {
-  return {
-    // stack: state.modals.stack,
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  getPageData: () => dispatch(getPageData()),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardContent)

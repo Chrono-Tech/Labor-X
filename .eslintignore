@@ -144,6 +144,7 @@ src/**/*.js
 !src/content/lib/ClientProfileContent/
 !src/content/lib/WorkerProfileContent/
 !src/content/lib/CreateJobBoardContent/
+!src/content/lib/DashboardContent/
 
 !src/partials/
 
@@ -161,9 +162,6 @@ src/**/*.js
 !src/content/lib/GeneralProfileContent/GeneralProfileContent.scss
 !src/content/lib/GeneralProfileContent/PersonalForm.js
 !src/models/form/ProfilePersonalFormModel.js
-!src/store/index.js
-!src/store/ui/general-profile-page.js
-!src/store/ui/index.js
 
 !src/api/backend/index.js
 !src/api/backend/model/ProfileContactsConfirmationRequestModel.js
@@ -174,7 +172,6 @@ src/**/*.js
 !src/content/lib/GeneralProfileContent/GeneralProfileContent.js
 !src/content/lib/GeneralProfileContent/GeneralProfileContent.scss
 !src/models/form/ProfileContactsFormModel.js
-!src/store/ui/general-profile-page.js
 !src/utils/validator.js
 
 !pages/general-profile.js
@@ -194,10 +191,6 @@ src/**/*.js
 !src/content/lib/GeneralProfileContent/PersonalForm.js
 !src/content/lib/GeneralProfileContent/index.js
 !src/content/lib/GeneralProfileContent/index.scss
-!src/store/general-profile/actions.js
-!src/store/general-profile/index.js
-!src/store/general-profile/reducer.js
-!src/store/general-profile/selectors.js
 !src/store/client-profile/actions.js
 !src/store/client-profile/index.js
 !src/store/client-profile/reducer.js
@@ -205,13 +198,12 @@ src/**/*.js
 !src/store/helper.js
 !src/store/index.js
 !src/store/reducers.js
-!src/store/ui/general-profile-page.js
-!src/store/ui/index.js
-!src/store/ui/page/general-profile/index.js
-!src/store/ui/page/general-profile/personal.js
 !src/store/opportunities/selectors.js
 !src/store/login/actions.js
 !src/store/profiles/actions.js
+!src/store/index.js
+!src/store/general-profile/
+!src/store/dashboard/
 !pages/my-wallet.js
 !src/api/lht/index.js
 !src/content/lib/MyWalletContent/MyWalletContent.css

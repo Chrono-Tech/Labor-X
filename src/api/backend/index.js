@@ -145,6 +145,12 @@ export const getCurrencies = () => http.get(
 })
 
 export const getClient = (address: string): Promise<ProfileClientModel> => http.get(
-  '/security/client', 
+  '/security/client',
   { params: { address } }
 ).then(res => ProfileClientModel.fromJson(res.data))
+
+export const getDashboardData = (token: string) => {
+  return http.get(`${ API_URL }/me/full`, {
+    headers: { Authorization: `Bearer ${ token }` },
+  }).then(res => res.data)
+}
