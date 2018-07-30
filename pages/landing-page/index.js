@@ -77,12 +77,12 @@ class LandingPage extends React.Component {
           { this.getCookiesNoticeWidget() }
           <div className={css.navigationPanel}>
             <div className={css.createButtonWrapper} >
-              <Link to='/create-account' className={css.createButton}>
+              <Link to='/crypto-education' className={css.createButton}>
                 New account
               </Link>
             </div>
             <div className={css.loginButtonWrapper}>
-              <Link to='/login' className={css.loginButton}>
+              <Link to='/my-accounts' className={css.loginButton}>
                 Login
               </Link>
             </div>

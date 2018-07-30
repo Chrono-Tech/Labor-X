@@ -54,6 +54,12 @@ import ValidationRequestsPage from "pages/validation-requests"
 import WorkerResumePage from "pages/worker-resume"
 import AuthorizationMethodsPage from "pages/authorization-methods"
 import ForgotPasswordPage from "pages/forgot-password"
+import CryptoEducationPage from "pages/crypto-education"
+import OurNetworkPage from "pages/our-network"
+import YourAccountPage from "pages/your-account"
+import CryptoCurrenciesPage from "pages/crypto-currencies"
+import LaborhourPage from "pages/laborhour"
+import MyAccountsPage from "pages/my-accounts"
 
 import { initFrontend } from "src/store/bootstrap"
 import web3Factory from "src/web3"
@@ -81,6 +87,7 @@ import {
   clientProfile,
   activeJobs,
   profiles,
+  myAccounts,
 } from "src/store/reducers";
 
 import 'styles/globals/globals.scss'
@@ -126,6 +133,7 @@ const reducer = combineReducers({
   postedJobs,
   clientProfile,
   activeJobs,
+  myAccounts,
 })
 
 const store = createStore(
@@ -188,6 +196,12 @@ const persistor = persistStore(store, null, async () => {
                       <Route exact path='/worker-resume' component={WorkerResumePage} />
                       <Route exact path='/authorization-methods' component={AuthorizationMethodsPage} />
                       <Route exact path='/forgot-password' component={ForgotPasswordPage} />
+                      <Route exact path='/crypto-education' component={CryptoEducationPage} />
+                      <Route exact path='/our-network' component={OurNetworkPage} />
+                      <Route exact path='/your-account' component={YourAccountPage} />
+                      <Route exact path='/crypto-currencies' component={CryptoCurrenciesPage} />
+                      <Route exact path='/laborhour' component={LaborhourPage} />
+                      <Route exact path='/my-accounts' component={MyAccountsPage} />
                     </Switch>
                     <ModalStack />
                   </div>

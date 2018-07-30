@@ -1,0 +1,203 @@
+.root {
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
+  //justify-content: space-between;
+  min-height: 100%;
+  background: #f7f7f7;
+}
+.contentWrapper {
+  .header {
+    height: 90px;
+    width: 100%;
+    background: #0088C3;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    @media (max-width: 1024px){
+      display: none;
+    }
+    .headerInner {
+      max-width: 950px;
+      text-align: left;
+      width: 950px;
+      margin: 0 auto;
+      img {
+        width: 90px;
+      }
+    }
+  }
+  .topSection {
+    height: 230px;
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+    background: transparent url(/static/images/city-5.jpg) no-repeat center top;
+    background-size: cover;
+    @media (max-width: 1024px){
+      height: 50px;
+    }
+    .background {
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+      margin: auto;
+      z-index: 1;
+      @media (max-width: 1024px){
+        display: none;
+      }
+    }
+    .topSectionBlock {
+      background: #00A0D2;
+      max-width: 1000px;
+      margin: auto;
+      padding: 60px;
+      text-align: center;
+      z-index: 2;
+      position: relative;
+      margin-top: 60px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      @media (max-width: 1024px){
+        margin: 0;
+        padding: 0;
+        height: 50px;
+        background: #0088C3;
+      }
+      .backLink {
+        position: absolute;
+        top: 22px;
+        left: 20px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        @media (max-width: 1024px){
+          top: 13px;
+        }
+        img {
+          width: 24px;
+          display: block;
+        }
+      }
+      .helpLink {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        @media (max-width: 1024px){
+          top: 14px;
+          right: 20px;
+        }
+        img {
+          width: 24px;
+        }
+      }
+      h1 {
+        color: #FFFFFF;
+        font-size: 50px;
+        font-weight: 200;
+        letter-spacing: -1px;
+        margin: 0;
+        @media (max-width: 1024px){
+          font-size: 14px;
+          margin: 0;
+          text-align: left;
+          padding: 0 50px 0 58px;
+          line-height: 50px;
+          font-weight: bold;
+          letter-spacing: 0;
+        }
+      }
+    }
+  }
+  .main {
+    box-shadow: 4px 4px 6px rgba(0,0,0,0.1);
+    max-width: 1000px;
+    border-radius: 0px 0px 5px 5px;
+    padding: 0;
+    text-align: center;
+    margin: 0 auto 55px;
+    background: #fff;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 50px;
+    @media (max-width: 1024px){
+      margin-bottom: 15px;
+      //padding: 50px 15px 40px;
+    }
+    h2 {
+      color: #000;
+      margin-bottom: 10px;
+    }
+    .buttonsWrapper {
+      margin-bottom: 48px;
+      .methodButton {
+        box-shadow: 4px 4px 2px rgba(70,93,140,0.2);
+        background-color: #FFFFFF;
+        border-radius: 3px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #E5E5E5;
+        width: 122px;
+        padding: 15px 0;
+        margin: 0 10px 10px 0;
+        color: #333333;
+        cursor: pointer;
+        font-weight: 500;
+        @media (max-width: 1024px){
+          width: 112px;
+          margin: 0 8px 10px 0;
+        }
+        &:hover {
+          background: #F7F7F7;
+        }
+        img {
+          width: 48px;
+          display: block;
+          margin: 0 auto 4px;
+        }
+      }
+    }
+    .createAccountDescription {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 16px;
+      color: #333333;
+      margin-bottom: 5px;
+    }
+    .createAccountLink {
+      color: #00A0D2;
+      font-family: roboto, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .footerLogo {
+    margin: 0 auto 55px;
+    width: 97px;
+    display: block;
+    @media (max-width: 1024px){
+      width: 66px;
+    }
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+.page {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+.activeSlide {
+  opacity: 1;
+  display: block;
+  visibility: visible;
+}
