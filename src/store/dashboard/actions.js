@@ -13,7 +13,7 @@ export const getPageData = () => async (dispatch, getState) => {
     const state = getState()
     const token = userTokenSelector()(state)
     const profile = await backendApi.getDashboardData(token)
-    dispatch(getPageDataSuccess(profile))
+    dispatch(getPageDataSuccess({ profile }))
   } catch (err) {
     dispatch(getPageDataFailure(err))
   }

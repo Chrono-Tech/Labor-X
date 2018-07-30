@@ -32,26 +32,26 @@ export const TYPES = {
 }
 
 export const STATE = {
-  profile: null,
-  reviewProfileLoading: true,
-  reviewProfileFailure: null,
+  pageData: null,
+  pageDataLoading: true,
+  pageDataFailure: null,
 }
 
 export default (state = STATE, { type, payload }) => {
   switch (type) {
     case GET_PAGE_DATA_REQUEST: return ({
       ...state,
-      reviewProfileLoading: true,
+      pageDataLoading: true,
     })
     case GET_PAGE_DATA_SUCCESS: return ({
       ...state,
-      reviewProfileLoading: false,
-      profile: payload,
+      pageDataLoading: false,
+      pageData: payload,
     })
     case GET_PAGE_DATA_FAILURE: return ({
       ...state,
-      reviewProfileLoading: false,
-      reviewProfileFailure: payload,
+      pageDataLoading: false,
+      pageDataFailure: payload,
     })
 
     default: return ({

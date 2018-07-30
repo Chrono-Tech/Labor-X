@@ -150,7 +150,7 @@ export const getClient = (address: string): Promise<ProfileClientModel> => http.
 ).then(res => ProfileClientModel.fromJson(res.data))
 
 export const getDashboardData = (token: string) => {
-  return http.get(`${ API_URL }/me/full`, {
+  return http.get(`${ API_URL }/security/me/full`, {
     headers: { Authorization: `Bearer ${ token }` },
   }).then(res => res.data)
 }
