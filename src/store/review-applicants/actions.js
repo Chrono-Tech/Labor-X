@@ -10,9 +10,10 @@ export const workerProfileFailure = (err) => ({ type: WORKER_PROFILE_FAILURE, pa
 export const workerProfile = (address) => async (dispatch, getState) => {
   try {
     dispatch(workerProfileRequest())
+    const profile = await backendApi.getProfile(address) //we need to get a profile avatar
     const workerProfile = await backendApi.getWorker(address)
     if (workerProfile) {
-      dispatch(workerProfileSuccess({workerProfile, address}))
+      dispatch(workerProfileSuccess({ workerProfile, profile, address }))
     }
   } catch (err) {
     dispatch(workerProfileFailure(err))

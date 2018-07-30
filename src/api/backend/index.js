@@ -122,7 +122,12 @@ export const getWorkerProfile = (token: string): { profile: ProfileWorkerModel }
 })
 
 export const getWorker = (address: string): Promise<ProfileWorkerModel> => http.get(
-  '/security/worker', 
+  `/security/worker`, 
+  { params: { address } }
+).then(res => ProfileWorkerModel.fromJson(res.data)) 
+
+export const getProfile = (address: string): Promise<ProfileModel> => http.get(
+  `/security/profile`, 
   { params: { address } }
 ).then(res => ProfileWorkerModel.fromJson(res.data)) 
 

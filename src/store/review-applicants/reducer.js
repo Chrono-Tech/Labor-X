@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import ProfileWorkerModel from "../../api/backend/model/ProfileWorkerModel"
+import PersonModel from "../../api/backend/model/PersonModel"
 import AttachmentModel from "../../api/backend/model/AttachmentModel"
 import ImageModel from "../../api/backend/model/ImageModel"
 import CurrencyModel from "../../api/backend/model/CurrencyModel"
@@ -16,12 +17,14 @@ import {
 
 export const TYPES = {
   workerProfilesByAddress: PropTypes.instanceOf(ProfileWorkerModel),
+  profilesByAddress: PropTypes.instanceOf(PersonModel),
   workerProfileLoading: PropTypes.bool,
   workerProfileFailure: PropTypes.instanceOf(Error),
 }
 
 export const STATE = {
   workerProfilesByAddress: {},
+  profilesByAddress: {},
   workerProfileLoading: false,
   workerProfileFailure: null,
 }
@@ -40,7 +43,11 @@ export default (state = STATE, { type, payload }) => {
       workerProfilesByAddress:{
         ...state.workerProfilesByAddress,
         [payload.address]: payload.workerProfile
-      }
+      },
+      profilesByAddress:{ 
+        ...state.profilesByAddress,
+        [payload.address]: payload.profile
+      },
     })
     case WORKER_PROFILE_FAILURE: return ({
       ...state,

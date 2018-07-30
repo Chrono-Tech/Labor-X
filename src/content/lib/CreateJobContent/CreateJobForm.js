@@ -70,7 +70,7 @@ class CreateJobForm extends React.Component {
     })
   }
 
-  getTagsFromBoard = (board) => {
+  getTagsFromBoard = () => {
     return SKILLS_LIST
     //So that we not have a skills editing, on the sc side. After adding the skills, uncommit bottom code
     // if ((board && Array.isArray(board.tags))) { return [...board.tags] }
@@ -306,7 +306,6 @@ class CreateJobForm extends React.Component {
 
   render () {
     const { isLoading, boards, hasBudget, hasPeriod, hasAddress, selectedBoard } = this.props
-    console.log(selectedBoard)
     return (
       <div className={css.main}>
         <form

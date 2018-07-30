@@ -5,7 +5,7 @@ import uniqid from 'uniqid'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { JobModel, ProfileModel, JobOfferModel } from 'src/models'
-import { reloadJobsOffers, jobsOffersSelector, profileSelector } from 'src/store'
+import { reloadJobsOffers, jobsOffersSelector, profileSelector, workerProfile } from 'src/store'
 import { getState } from 'src/store/review-applicants/selectors'
 import { Button, Input, Image, Icon } from 'src/components/common'
 import { WorkerCard } from 'src/partials'
@@ -23,7 +23,9 @@ export class ReviewApplicantsContent extends React.Component {
     })),
     worker: PropTypes.instanceOf(ProfileModel),
     push: PropTypes.func,
-    // workersByAddressKey: PropTypes.shape({}),
+    workerByAddressKey: PropTypes.shape({}),
+    profileByAddressKey: PropTypes.shape({}),
+    getWorkerProfile: PropTypes.func,
   }
 
   constructor (props) {
@@ -31,7 +33,11 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   componentDidMount () {
-    this.props.reloadJobsOffers()
+    const { reloadJobsOffers, applicants, getWorkerProfile } = this.props
+    reloadJobsOffers()
+    applicants.forEach((applicant) => {
+      getWorkerProfile(applicant.worker.address)
+    })
   }
 
   handleBack = () => {
@@ -47,7 +53,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   render () {
-    const { job, applicants, worker /*, workersByAddressKey */ } = this.props
+    const { job, applicants, worker, workerByAddressKey, profileByAddressKey } = this.props
     return (
       <div className={css.main}>
         <div className={css.title}>
@@ -112,7 +118,14 @@ export class ReviewApplicantsContent extends React.Component {
             <div className={css.block}>
               <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                {applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} jobId={this.props.job.id} job={this.props.job} />))}
+                {applicants.map((applicant) => (<WorkerCard
+                  {...applicant}
+                  key={uniqid()}
+                  jobId={this.props.job.id}
+                  job={this.props.job}
+                  workerProfile={workerByAddressKey[applicant.worker.address]}
+                  profile={profileByAddressKey[applicant.worker.address]}
+                />))}
                 {!applicants.length && this.renderEmptyListMessage()}
               </div>
             </div>
@@ -133,13 +146,14 @@ function mapStateToProps (state, op) {
   const worker = op.job.worker && applicants && applicants.length
     ? applicants.find(x => x.worker.address.toLowerCase() === op.job.worker.toLowerCase())
     : null
-  
+
   const pageState = getState(state)
 
   return {
     applicants: worker ? applicants.filter(x => x.worker.address.toLowerCase() !== op.job.worker.toLowerCase()) : applicants,
     worker,
-    workersByAddressKey: pageState.workerProfilesByAddress,
+    workerByAddressKey: pageState.workerProfilesByAddress,
+    profileByAddressKey: pageState.profilesByAddress,
   }
 }
 
@@ -147,6 +161,7 @@ function mapDispatchToProps (dispatch, op) {
   return {
     push: (url) => dispatch(push(url)),
     reloadJobsOffers: () => dispatch(reloadJobsOffers(op.job.id)),
+    getWorkerProfile: (address) => dispatch(workerProfile(address)),
   }
 }
 

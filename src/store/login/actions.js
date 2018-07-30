@@ -7,7 +7,7 @@ import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicF
 
 import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
 import { web3Selector } from "src/store/ethereum/selectors"
-import { getAccountTypes, userSave } from "src/store/user/actions"
+import { userSave } from "src/store/user/actions"
 import { setExistingAccount } from "src/store/createAccount/actions"
 import { getAccount } from "./selectors"
 
@@ -236,15 +236,9 @@ export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
     const web3 = web3Selector()(getState())
     web3.eth.accounts.wallet.clear()
     const account = web3.eth.accounts.privateKeyToAccount(`0x${values.key}`)
-    const person = await backendApi.getPerson(account.address)
-    const accountTypes = await dispatch(getAccountTypes(account.address))
-    if (person && accountTypes) {
-      const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: values.key, address: account.address })
-      dispatch(setSignInModel(signInModel))
-      dispatch(navigateToCreateWallet())
-    } else {
-      dispatch(showAccount404Dialog())
-    }
+    const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: values.key, address: account.address })
+    dispatch(setSignInModel(signInModel))
+    dispatch(navigateToCreateWallet())
   } catch (err) {
     dispatch(stopSubmit(FORM_PRIVATE_KEY, { key: 'Wrong private key' }))
   }
