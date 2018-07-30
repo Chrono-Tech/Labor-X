@@ -16,7 +16,7 @@ export class Header extends React.Component {
     handleLogout: PropTypes.func.isRequired,
     accountTypes: PropTypes.instanceOf(UserAccountTypesModel),
     avatar: PropTypes.shape({
-      url: PropTypes.string
+      url: PropTypes.string,
     }),
     validationLevel: PropTypes.number,
   }
