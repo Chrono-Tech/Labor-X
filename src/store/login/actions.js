@@ -236,9 +236,14 @@ export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
     const web3 = web3Selector()(getState())
     web3.eth.accounts.wallet.clear()
     const account = web3.eth.accounts.privateKeyToAccount(`0x${values.key}`)
-    const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: values.key, address: account.address })
-    dispatch(setSignInModel(signInModel))
-    dispatch(navigateToCreateWallet())
+    const person = await backendApi.getPerson(account.address)
+    if (person) {
+      const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: values.key, address: account.address })
+      dispatch(setSignInModel(signInModel))
+      dispatch(navigateToCreateWallet())
+    } else {
+      dispatch(showAccount404Dialog())
+    }
   } catch (err) {
     dispatch(stopSubmit(FORM_PRIVATE_KEY, { key: 'Wrong private key' }))
   }

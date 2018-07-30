@@ -44,6 +44,10 @@ export const getPerson = (address: string): Promise<PersonModel> => new Promise(
   .catch(res => res.response.status === 404 ? resolve(null) : reject(res))
 )
 
+export const getPersons = (addresses: Array<string>): Promise<Array<PersonModel>> => http
+  .post('/security/persons/query', addresses)
+  .then(res => res.data.map((x) => new PersonModel(x)))
+
 export const reviewProfile = (token: string): ProfileModel => {
   return http.get(`${ API_URL }/security/me`, {
     headers: { Authorization: `Bearer ${ token }` },
@@ -114,7 +118,7 @@ export const submitWorkerProfile = (workerProfile, token: string): { profile: Pr
   { headers: { Authorization: `Bearer ${ token }` } }
 ).then(res => ({ profile: ProfileWorkerModel.fromJson(res.data) }))
 
-export const getWorkerProfile = (token: string): { profile: ProfileWorkerModel } => http.get(
+export const getMeWorkerProfile = (token: string): { profile: ProfileWorkerModel } => http.get(
   `${ API_URL }/security/me/profile/worker`,
   { headers: { Authorization: `Bearer ${ token }` } }
 ).then(res => {
@@ -126,10 +130,12 @@ export const getWorker = (address: string): Promise<ProfileWorkerModel> => http.
   { params: { address } }
 ).then(res => ProfileWorkerModel.fromJson(res.data)) 
 
-export const getProfile = (address: string): Promise<ProfileModel> => http.get(
-  `/security/profile`, 
+export const getProfile = (address: string): { profile: ProfileModel } => http.get(
+  `${ API_URL }/security/profile`,
   { params: { address } }
-).then(res => ProfileWorkerModel.fromJson(res.data)) 
+).then(res => {
+  return (ProfileModel.fromJson(res.data))
+})
 
 export const getServiceCategories = () => http.get(
   `${ API_URL }/security/worker/serviceCategories`,
@@ -142,3 +148,8 @@ export const getCurrencies = () => http.get(
 ).then(res => {
   return (res.data)
 })
+
+export const getClient = (address: string): Promise<ProfileClientModel> => http.get(
+  '/security/client', 
+  { params: { address } }
+).then(res => ProfileClientModel.fromJson(res.data))

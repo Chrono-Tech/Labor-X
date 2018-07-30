@@ -1,9 +1,9 @@
-import React from 'react'
+  import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
 import pluralize from 'pluralize'
-import { JobModel, JOB_STATE_FINALIZED, BoardModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE } from 'src/models'
+import { JobModel, JOB_STATE_FINALIZED, BoardModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE, JobOfferModel } from 'src/models'
 import { Link, Button } from 'src/components/common'
 import css from './JobCard.scss'
 
@@ -15,7 +15,7 @@ export default class JobCard extends React.Component {
     board: PropTypes.instanceOf(BoardModel),
     notice: PropTypes.instanceOf(JobNoticeModel),
     onClickReview: PropTypes.func,
-    applicantsCount: PropTypes.number,
+    offers: PropTypes.arrayOf(JobOfferModel),
   }
 
   constructor (...args) {
@@ -61,7 +61,7 @@ export default class JobCard extends React.Component {
   }
 
   render () {
-    const { job, board, notice, applicantsCount } = this.props
+    const { job, board, notice, offers } = this.props
 
     return (
       <div
@@ -73,22 +73,10 @@ export default class JobCard extends React.Component {
           [css.problem]: notice && notice.type === NOTICE_TYPE_PROBLEM,
         })}
       >
-        {board
-          ? (
-            <div>
-              {!board.ipfs.logo ? null : (
-                <img className={css.icon} src={board.ipfs.logo} alt={board.ipfs.name} />
-              )}
-              <p>{board.ipfs.name}</p>
-            </div>
-          )
-          : (
-            <div>
-              <img className={css.icon} src='/static/temp/get-started.png' alt='' />
-              <p>No Board</p>
-            </div>
-          )
-        }
+        <div>
+          <img className={css.icon} src={board.ipfs.logo || '/static/temp/get-started.png'} alt='' />
+          <p>{board.ipfs.name}</p>
+        </div>
         <div className={css.jobInfo}>
           <Link className={css.jobName} href={`/client-job-view/${job.id}`}>
             <h4>{job.ipfs.name}</h4>
@@ -102,7 +90,7 @@ export default class JobCard extends React.Component {
             )}
           </div>
         </div>
-        { this.renderFooter({ job, notice, applicantsCount }) }
+        { this.renderFooter({ job, notice, applicantsCount: offers.length }) }
       </div>
     )
   }

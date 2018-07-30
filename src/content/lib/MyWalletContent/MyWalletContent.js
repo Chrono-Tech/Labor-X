@@ -266,6 +266,7 @@ export class MyWalletContent extends React.Component {
           <br />
           <div>{this.props.withdrawValues.to}</div>
           <br />
+          <br />
           <FormLabel>Amount</FormLabel>
           <br />
           <br />
@@ -273,6 +274,7 @@ export class MyWalletContent extends React.Component {
             <Grid item xs='6' className={css2.withdrawConfirmDialogValue}>LHT {this.props.withdrawValueView}</Grid>
             <Grid item xs='6' className={css2.withdrawConfirmDialogUsdValue}>≈${this.props.withdrawValueUsdView}</Grid>
           </Grid>
+          <br />
           <br />
           <FormLabel>Fee</FormLabel>
           <br />

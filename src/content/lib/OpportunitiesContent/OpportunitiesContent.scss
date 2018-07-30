@@ -46,7 +46,7 @@ $maxWidth: 74rem;
 
 .filterBlock {
   width: 200px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-left: 20px;
 }
 
@@ -91,6 +91,7 @@ $maxWidth: 74rem;
 .contentContainer {
   @include flex(column, center, flex-start);
   flex: 1;
+  display: block;
 }
 
 .flexRow {

@@ -129,3 +129,6 @@ export const withdrawConfirmDialogSubmit = () => async (dispatch, getState) => {
     dispatch(withdrawConfirmDialogSubmitFailure(err))
   }
 }
+
+export const RESET = 'MY_WALLET/RESET'
+export const reset = () => ({ type: RESET })

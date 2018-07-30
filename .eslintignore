@@ -103,6 +103,7 @@ src/**/*.js
 !src/components/common/CompletedJobCard/CompletedJobCard.js
 !src/components/Account/AccountPasswordForm/
 !src/components/Account/ShowMnemonic/
+!src/components/common/UserRow/UserRow.js
 
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
@@ -110,6 +111,8 @@ src/**/*.js
 !src/components/CompletedJobs/CompletedJobs.js
 !src/components/Login/LoginForm/LoginForm.js
 !src/components/Login/LoginOptions/
+!src/components/Login/SelectWallet/SelectWallet.js
+!src/components/Login/LoginOptions/LoginOptions.js
 !src/components/Login/WalletFileForm/
 !src/components/SpecializationsAutoComplete/SpecializationsAutoComplete.js
 
@@ -208,6 +211,7 @@ src/**/*.js
 !src/store/ui/page/general-profile/personal.js
 !src/store/opportunities/selectors.js
 !src/store/login/actions.js
+!src/store/profiles/actions.js
 
 !pages/my-wallet.js
 !src/api/lht/index.js
@@ -218,5 +222,3 @@ src/**/*.js
 !src/store/my-wallet/reducer.js
 !src/store/my-wallet/selectors.js
 !src/utils/copy-to-clipboard.js
-
-

@@ -68,6 +68,7 @@
       padding: 12px 0;
       color: $color-azure;
       box-shadow: none;
+      height: 40px;
       &:hover {
         background-color: darken($color-white, 5) !important;
       }
@@ -78,6 +79,7 @@
       background-color: $color-azure !important;
       padding: 12px 0;
       color: $color-white;
+      height: 40px;
       &:hover {
         background-color: darken($color-azure, 5) !important;
       }

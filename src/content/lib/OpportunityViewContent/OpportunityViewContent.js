@@ -6,9 +6,10 @@ import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
 import { JobModel, BoardModel, JobOfferFormModel, ClientModel, WORKFLOW_TM } from 'src/models'
-import { createJobOffer, createJobOfferWithPrice, signerSelector, boardByIdSelector, modalsPush } from 'src/store'
+import { createJobOffer, createJobOfferWithPrice, signerSelector, boardByIdSelector, modalsPush, companyInfo } from 'src/store'
 import { Image, Button, Tab, ScheduleWidget } from 'src/components/common'
 import { MakeOfferDialog } from 'src/partials'
+import { getClientProfile, getState } from './../../../store/opportunity-view'
 import DescriptionTab from './DescriptionTab/DescriptionTab'
 import CompanyTab from './CompanyTab/CompanyTab'
 import css from './OpportunityViewContent.scss'
@@ -22,12 +23,18 @@ export class OpportunityViewContent extends React.Component {
     pushModal: PropTypes.func.isRequired,
     onPostOfferWithPrice: PropTypes.func,
     push: PropTypes.func,
+    getCompanyInfo: PropTypes.func,
   }
 
   state = {
     currentTab: 0,
     isOfferPosting: false,
     isScheduleVisible: false,
+  }
+
+  componentDidMount () {
+    let { job, getCompanyInfo } = this.props
+    getCompanyInfo(job.client)
   }
 
   handleBack = () => {
@@ -148,7 +155,7 @@ export class OpportunityViewContent extends React.Component {
       key: 'info',
       title: 'Company info',
       content: (props) => (
-        <CompanyTab {...props.company} board={props.board} client={props.client} />
+        <CompanyTab {...props.company} board={props.board} client={props.client} companyInfo={props.companyInfo} companyInfoLoading={props.companyInfoLoading} companyInfoFailure={props.companyInfoFailure} />
       ),
     },
   ]
@@ -233,17 +240,23 @@ export class OpportunityViewContent extends React.Component {
 function mapStateToProps (state, op) {
   const signer = signerSelector()(state)
   const board = boardByIdSelector(op.job.boardId)(state)
+  const opportunityViewState = getState(state)
+  const companyInfo = getClientProfile(opportunityViewState.companyInfo)
   // TODO aevalyakin recieve client data from blockchain
   const client = new ClientModel({})
   return {
     signer,
     board,
     client,
+    companyInfo,
+    companyInfoLoading: companyInfo.companyInfoLoading,
+    companyInfoFailure: companyInfo.companyInfoFailure,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
+    getCompanyInfo: (address) => dispatch(companyInfo(address)),
     onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form)),
     onPostOfferWithPrice: async (form: JobOfferFormModel) => dispatch(createJobOfferWithPrice(form)),
     pushModal (modal) { dispatch(modalsPush(modal)) },

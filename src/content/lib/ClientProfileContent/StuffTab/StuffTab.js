@@ -1,11 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
+
 import { Icon } from 'src/components/common'
 import { ProfileModel } from 'src/models'
+import { getStuff } from 'src/store/client-profile'
 import css from './StuffTab.scss'
 
-export default class StuffTab extends React.Component {
+export class StuffTab extends React.Component {
   static propTypes = {
     stuff: PropTypes.arrayOf(PropTypes.instanceOf(ProfileModel)),
   }
@@ -16,10 +19,9 @@ export default class StuffTab extends React.Component {
   }
 
   render () {
-    const { stuff } = this.props
     return (
       <div className={css.content}>
-        { stuff.map( worker => (
+        { this.props.stuff.map((worker) => (
           <div className={css.workerCard} key={uniqid()}>
             <div className={css.worker}>
               <img src={worker.ipfs.logo} alt={worker.ipfs.name} />
@@ -38,3 +40,9 @@ export default class StuffTab extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  stuff: getStuff(state),
+})
+
+export default connect(mapStateToProps)(StuffTab)

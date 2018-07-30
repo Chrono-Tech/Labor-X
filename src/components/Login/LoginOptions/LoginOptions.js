@@ -28,6 +28,11 @@ import {
   navigateToLoginForm,
 } from 'src/store'
 
+import {
+  getState,
+  loadProfileByAddress,
+} from 'src/store/profiles'
+
 import { Button } from 'components/common'
 
 import {
@@ -82,6 +87,8 @@ class LoginOptions extends React.Component {
     fetchSignIn: PropTypes.bool,
     openAccount404Dialog: PropTypes.bool,
     push: PropTypes.func,
+    profilesByAddressKey: PropTypes.shape({}),
+    loadProfileByAddress: PropTypes.func,
   }
 
   static defaultProps = {
@@ -96,6 +103,13 @@ class LoginOptions extends React.Component {
     if (selectedWallet && !step) {
       onChangeStep(LoginSteps.Login)
     }
+  }
+
+  componentDidMount () {
+    const { walletsList, loadProfileByAddress } = this.props
+    walletsList.forEach((wallet) => {
+      loadProfileByAddress(`0x${wallet.encrypted[0].address}`)
+    })
   }
 
   handleAccount404DialogNoClick = () => {
@@ -135,6 +149,7 @@ class LoginOptions extends React.Component {
       navigateToRecoveryPassword,
       selectedWalletRecoveryForm,
       fetchSignIn,
+      profilesByAddressKey,
     } = this.props
 
     let component
@@ -168,7 +183,7 @@ class LoginOptions extends React.Component {
         component = (<SelectOption onChangeStep={onChangeStep} />)
         break
       case LoginSteps.SelectWallet:
-        component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
+        component = (<SelectWallet profilesByAddressKey={profilesByAddressKey} onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
         break
       case LoginSteps.RecoveryPassword:
         component = (
@@ -200,10 +215,11 @@ class LoginOptions extends React.Component {
             onSubmitFail={onSignInFail}
             onClickForgotPassword={navigateToRecoveryPassword}
             fetchSignIn={fetchSignIn}
+            profilesByAddressKey={profilesByAddressKey}
           />)
         break
       default:
-        component = (<SelectWallet onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
+        component = (<SelectWallet profilesByAddressKey={profilesByAddressKey} onChangeStep={onChangeStep} walletsList={walletsList} onSelectWallet={onSelectWallet} />)
     }
 
     return [<div key={step} className={css.componentWrapper}>{component}</div>]
@@ -232,7 +248,7 @@ class LoginOptions extends React.Component {
             LaborX account with the provided address is not found.
             Would you like to Create a New Account?
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{ height: '40px' }}>
             <Button
               label='No'
               onClick={this.handleAccount404DialogNoClick}
@@ -254,8 +270,8 @@ class LoginOptions extends React.Component {
 }
 
 function mapStateToProps (state) {
-
   return {
+    profilesByAddressKey: getState(state).byAddressKey,
     fetchSignIn: state.login.fetchSignIn ,
     selectedWallet: state.wallet.selectedWallet && new WalletEntryModel(state.wallet.selectedWallet),
     selectedWalletRecoveryForm: state.login.selectedWalletRecoveryForm && new WalletEntryModel(state.login.selectedWalletRecoveryForm),
@@ -286,6 +302,7 @@ function mapDispatchToProps (dispatch) {
     hideAccount404Dialog: () => dispatch(hideAccount404Dialog()),
     handleAccount404DialogYesClick: () => dispatch(handleAccount404DialogYesClick()),
     push: (url) => dispatch(push(url)),
+    loadProfileByAddress: (address) => dispatch(loadProfileByAddress(address)),
   }
 }
 
