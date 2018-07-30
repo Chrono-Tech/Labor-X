@@ -58,7 +58,7 @@ import ForgotPasswordPage from "pages/forgot-password"
 import { initFrontend } from "src/store/bootstrap"
 import web3Factory from "src/web3"
 import { ModalStack } from 'src/partials'
-import translations from './i18n'
+import translations from 'src/i18n'
 import {
   balances,
   boards,
@@ -76,15 +76,12 @@ import {
   user,
   wallet,
   workerProfile,
-  opportunityView
+  opportunityView,
   postedJobs,
   clientProfile,
   activeJobs,
   profiles,
 } from "src/store/reducers";
-import {reducer as formReducer} from "redux-form";
-import { i18nReducer, syncTranslationWithStore, loadTranslations, setLocale } from "react-redux-i18n";
-import {initFrontend} from "src/store/bootstrap";
 
 import 'styles/globals/globals.scss'
 
@@ -122,10 +119,9 @@ const reducer = combineReducers({
   user: user(),
   offers,
   generalProfile,
-  clientProfile,
   workerProfile,
   myWallet,
-  profiles
+  profiles,
   opportunityView,
   postedJobs,
   clientProfile,
