@@ -88,7 +88,7 @@ import {
   activeJobs,
   profiles,
   myAccounts,
-} from "src/store/reducers";
+} from "src/store/reducers"
 
 import 'styles/globals/globals.scss'
 
