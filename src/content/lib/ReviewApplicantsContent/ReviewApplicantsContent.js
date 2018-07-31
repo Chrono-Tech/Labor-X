@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
+import get from "lodash/get"
 import { JobModel, ProfileModel, JobOfferModel } from 'src/models'
-import { reloadJobsOffers, jobsOffersSelector, profileSelector } from 'src/store'
+import { applicantsSelector, jobSelector } from 'src/store/review-applicants/selectors'
 import { Button, Input, Image, Icon } from 'src/components/common'
 import { WorkerCard } from 'src/partials'
 import css from './ReviewApplicantsContent.scss'
@@ -22,21 +23,20 @@ export class ReviewApplicantsContent extends React.Component {
     })),
     worker: PropTypes.instanceOf(ProfileModel),
     push: PropTypes.func,
+    workerByAddressKey: PropTypes.shape({}),
+    profileByAddressKey: PropTypes.shape({}),
+    getWorkerProfile: PropTypes.func,
   }
 
   constructor (props) {
     super(props)
   }
 
-  componentDidMount () {
-    this.props.reloadJobsOffers()
-  }
-
   handleBack = () => {
     this.props.push('/posted-jobs')
   }
 
-  renderEmptyListMessage (){
+  renderEmptyListMessage () {
     return (
       <div className={css.emptyListMessage}>
         Worker list is empty
@@ -66,7 +66,7 @@ export class ReviewApplicantsContent extends React.Component {
           <div className={css.header}>
             <h2 className={css.jobHeader}>Review Workers</h2>
             <div className={css.jobName}>
-              <h4>{job.ipfs.name}</h4>
+              <h4>{get(job, "ipfs.name")}</h4>
               <div className={css.jobMenu}>
                 <Icon
                   icon={Icon.ICONS.MORE}
@@ -104,14 +104,21 @@ export class ReviewApplicantsContent extends React.Component {
             <div className={css.block}>
               <h4>Selected Worker</h4>
               <div className={css.cards}>
-                { worker ? <WorkerCard offerSent {...worker} /> : this.renderEmptyListMessage() }
+                {worker ? <WorkerCard offerSent workerProfile={worker} /> : this.renderEmptyListMessage()}
               </div>
             </div>
             <div className={css.block}>
               <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                { applicants.map((applicant) => (<WorkerCard {...applicant} key={uniqid()} jobId={this.props.job.id} job={this.props.job} />))}
-                { !applicants.length && this.renderEmptyListMessage() }
+                {applicants.map((applicant) => (<WorkerCard
+                  offer={applicant.offer}
+                  key={uniqid()}
+                  jobId={job.id}
+                  job={job}
+                  workerProfile={applicant.workerProfile}
+                  profile={applicant.profile}
+                />))}
+                {!applicants.length && this.renderEmptyListMessage()}
               </div>
             </div>
           </form>
@@ -121,27 +128,23 @@ export class ReviewApplicantsContent extends React.Component {
   }
 }
 
-function mapStateToProps (state, op) {
-  const offers = jobsOffersSelector(op.job.id)(state)
-  const applicants = !offers ? [] : offers.map(offer => ({
-    offer,
-    worker: profileSelector(offer.worker)(state),
-  }))
-
-  const worker = op.job.worker && applicants && applicants.length
-    ? applicants.find(x => x.worker.address.toLowerCase() === op.job.worker.toLowerCase())
+function mapStateToProps (state) {
+  const applicants = applicantsSelector(state)
+  const job = jobSelector(state)
+  const worker = job.worker && applicants && applicants.length
+    ? applicants.find(x => x.worker.address.toLowerCase() === job.worker.toLowerCase())
     : null
 
   return {
-    applicants: worker ? applicants.filter(x => x.worker.address.toLowerCase() !== op.job.worker.toLowerCase()) : applicants,
+    job,
+    applicants,
     worker,
   }
 }
 
-function mapDispatchToProps (dispatch, op) {
+function mapDispatchToProps (dispatch) {
   return {
     push: (url) => dispatch(push(url)),
-    reloadJobsOffers: () => dispatch(reloadJobsOffers(op.job.id)),
   }
 }
 
