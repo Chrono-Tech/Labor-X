@@ -5,7 +5,7 @@ import moment from 'moment'
 import cn from 'classnames'
 import _ from 'lodash'
 import { ProfileModel, JobOfferModel, JobModel } from 'src/models'
-import { Link, Button, Rating, SecurityShield, WorkerState } from 'src/components/common'
+import { Link, Button, Rating, SecurityShield } from 'src/components/common'
 import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
 import ProfileModelBackend from 'src/api/backend/model/ProfileModel'
 import { modalsPush } from 'src/store'
@@ -112,6 +112,9 @@ class WorkerCard extends React.Component {
     const avatarUrl = _.get(profile, "level1.approved.avatar.url") 
       ? _.get(profile, "level1.approved.avatar.url") 
       : "/static/temp/icon-profile.jpg"
+    const validationLevel = profile
+      ? profile.getValidationLevel()
+      : 0
 
     return (
       <div className={cn(css.root, {
@@ -130,8 +133,8 @@ class WorkerCard extends React.Component {
           </div>
           <div className={css.extraData}>
             <Rating rating={4} />
-            <SecurityShield level={4} />
-            <WorkerState state='' />
+            <SecurityShield level={validationLevel} />
+            {/* <WorkerState state={workerProfile.extra.state} /> */}
           </div>
         </div>
         { offerSent ? this.renderFooterOfferSent(offer) : this.renderFooter(offer) }
