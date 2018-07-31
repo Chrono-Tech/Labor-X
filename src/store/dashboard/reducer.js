@@ -4,19 +4,10 @@ import ProfileClientModel from 'src/api/backend/model/ProfileClientModel'
 import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
 import ProfileRecruiterModel from 'src/api/backend/model/ProfileRecruiterModel'
 import {
-
   GET_PAGE_DATA_REQUEST,
   GET_PAGE_DATA_SUCCESS,
   GET_PAGE_DATA_FAILURE,
-
 } from "./actions"
-
-export const FORM_PERSONAL = 'GENERAL_PROFILE/FORM/PERSONAL'
-export const FORM_CONTACTS = 'GENERAL_PROFILE/FORM/CONTACTS'
-export const FORM_PASSPORT = 'GENERAL_PROFILE/FORM/PASSPORT'
-export const FORM_LOCATION = 'GENERAL_PROFILE/FORM/LOCATION'
-export const FORM_CONTACTS_EMAIL_CODE = 'GENERAL_PROFILE/FORM/CONTACTS_EMAIL_CODE'
-export const FORM_CONTACTS_PHONE_CODE = 'GENERAL_PROFILE/FORM/CONTACTS_PHONE_CODE'
 
 export const TYPES = {
   pageDataLoading: PropTypes.bool,

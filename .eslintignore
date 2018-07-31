@@ -84,6 +84,7 @@ src/**/*.js
 
 
 !src/components/common/Link/
+!src/components/common/Action/
 !src/components/common/Icon/Icon.js
 !src/components/common/Chip/Chip.js
 !src/components/common/Select/WrapperSelect.js
@@ -114,6 +115,7 @@ src/**/*.js
 !src/components/Login/SelectWallet/SelectWallet.js
 !src/components/Login/LoginOptions/LoginOptions.js
 !src/components/Login/WalletFileForm/
+!src/components/MyProfile/
 !src/components/SpecializationsAutoComplete/SpecializationsAutoComplete.js
 
 !src/content/index.js

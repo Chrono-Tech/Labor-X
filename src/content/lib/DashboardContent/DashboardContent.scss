@@ -5,7 +5,27 @@ $gutter: 4rem;
 $maxWidth: 74rem;
 
 .block {
+  position: relative;
   margin-top: 4rem;
+  .completeBadge {
+    @include flex(row, center, center);
+    @include position(absolute, 8.5rem, auto, auto, 3rem);
+    width: 7rem;
+    height: 3rem;
+    border-radius: 1.6rem;
+    &.badgeGreen {
+      background-color: $color-green;
+    }
+    &.badgeRed {
+      background-color: $color-red;
+    }
+    .completePercent {
+      color: $color-white;
+      margin-left: 1rem;
+      font-size: 1.2rem;
+      font-weight: $font-weight-bold;
+    }
+  }
 }
 
 .highlightsRow {
@@ -32,6 +52,25 @@ $maxWidth: 74rem;
 .main {
   margin-bottom: 16rem;
   flex-grow: 1;
+  .contentError {
+    @include flex(column, center, center);
+    height: 50rem;
+    .buttonReload {
+      margin-top: 1.5rem;
+      height: 4rem;
+      width: 14rem;
+      border-radius: 21px;
+      font-size: $pSize;
+      font-weight: $font-weight-bold;
+      color: $color-white;
+      background-color: $color-azure;
+      text-transform: none;
+    }
+  }
+  .contentLoading {
+    @include flex(column, center, center);
+    height: 50rem;
+  }
 }
 
 .title {
