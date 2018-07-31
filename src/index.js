@@ -66,6 +66,7 @@ import {
   daos,
   ethereum,
   generalProfile,
+  dashboard,
   jobs,
   landing,
   login,
@@ -119,6 +120,7 @@ const reducer = combineReducers({
   modals,
   user: user(),
   offers,
+  dashboard,
   generalProfile,
   workerProfile,
   myWallet,
@@ -135,7 +137,8 @@ const store = createStore(
   {},
   compose(
     applyMiddleware(routerMiddleware(history), thunk, loggerMiddleware),
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // eslint-disable-next-line no-underscore-dangle
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 )
 

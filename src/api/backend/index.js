@@ -9,6 +9,7 @@ import AttachmentModel from "./model/AttachmentModel"
 import PersonModel from "./model/PersonModel"
 import ProfileClientModel from "./model/ProfileClientModel"
 import ProfileWorkerModel from "./model/ProfileWorkerModel"
+import ProfileRecruiterModel from "./model/ProfileRecruiterModel"
 
 const API_URL = 'https://backend.profile.tp.ntr1x.com/api/v1'
 // const API_URL = 'http://localhost:3000/api/v1'
@@ -150,6 +151,17 @@ export const getCurrencies = () => http.get(
 })
 
 export const getClient = (address: string): Promise<ProfileClientModel> => http.get(
-  '/security/client', 
+  '/security/client',
   { params: { address } }
 ).then(res => ProfileClientModel.fromJson(res.data))
+
+export const getDashboardData = (token: string) => {
+  return http.get(`${ API_URL }/security/me/full`, {
+    headers: { Authorization: `Bearer ${ token }` },
+  }).then(res => ({
+    profile: ProfileModel.fromJson(res.data.profile),
+    client: ProfileClientModel.fromJson(res.data.client),
+    recruiter: ProfileRecruiterModel.fromJson(res.data.recruiter),
+    worker: ProfileWorkerModel.fromJson(res.data.worker),
+  }))
+}

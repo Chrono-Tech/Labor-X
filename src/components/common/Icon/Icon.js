@@ -43,6 +43,8 @@ export default class Icon extends React.PureComponent {
     LHT_LIGHT: 'lht-light',
     LHT_MEDIUM_1: 'lht-medium-1',
     LHT_MEDIUM_2: 'lht-medium-2',
+    EMAIL: 'e-mail',
+    COMPANY: 'company',
   }
 
   static COLORS = {
@@ -88,6 +90,10 @@ export default class Icon extends React.PureComponent {
       icon: Icon.ICONS.HELP,
       color: Icon.COLORS.BLUE,
     },
+    HELP_OUTLINE: {
+      icon: Icon.ICONS.HELP_OUTLINE,
+      color: Icon.COLORS.BLUE,
+    },
     HELP_INVERT: {
       icon: Icon.ICONS.HELP_OUTLINE,
       color: Icon.COLORS.WHITE,
@@ -95,6 +101,26 @@ export default class Icon extends React.PureComponent {
     BACK_WHITE: {
       icon: Icon.ICONS.BACK,
       color: Icon.COLORS.WHITE,
+    },
+    MESSAGE_WARNING: {
+      icon: Icon.ICONS.MESSAGE_WARNING,
+      color: Icon.COLORS.RED,
+    },
+    NOTIFICATIONS_ON: {
+      icon: Icon.ICONS.NOTIFICATIONS,
+      color: Icon.COLORS.BLUE,
+    },
+    NOTIFICATIONS_OFF: {
+      icon: Icon.ICONS.NOTIFICATIONS,
+      color: Icon.COLORS.GREY,
+    },
+    EMAIL_ON: {
+      icon: Icon.ICONS.EMAIL,
+      color: Icon.COLORS.BLUE,
+    },
+    EMAIL_OFF: {
+      icon: Icon.ICONS.EMAIL,
+      color: Icon.COLORS.GREY,
     },
   }
 
