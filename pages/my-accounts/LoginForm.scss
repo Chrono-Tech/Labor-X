@@ -1,8 +1,10 @@
 .root {
   text-align: center;
-  padding: 100px 130px 150px;
+  padding: 40px 130px 50px;
   color: #BFE7F4;
   font-size: 16px;
+  min-height: 63px;
+  line-height: 24px;
 
   @media (max-width: 640px) {
     padding: 40px 20px;

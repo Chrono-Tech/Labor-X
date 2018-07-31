@@ -4,6 +4,7 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import Link from 'react-router-dom/Link'
 
 import styles from './index.pcss'
+import WhiteRoundButton from "../../src/components/common/buttons/WhiteRoundButton/WhiteRoundButton";
 
 export class LaborhourPage extends React.Component {
   render () {
@@ -23,7 +24,7 @@ export class LaborhourPage extends React.Component {
           <p>LaborHour (LH) is a crypto-currency connected to an approximate hour of work in your country, based on official bureau reports, hence when the influence occur, 1 LaborHour will reflect the change, and You will not afraid of loosing money.</p>
           <p>By joining LaborX you become an active contributor to the project and, as we aim, to your better future.</p>
           <p>You will be able to exchange the LH into your local currency any time!</p>
-          <Button component={Link} to='/account-password' variant='contained' className={styles.nextButton}>Create an Account</Button>
+          <WhiteRoundButton component={Link} to='/account-password'>Create an Account</WhiteRoundButton>
           <Button component='a' href='/static/assets/whitepaper.pdf' className={styles.newAccountButton}>Download Whitepaper</Button>
           <MobileStepper
             variant="dots"

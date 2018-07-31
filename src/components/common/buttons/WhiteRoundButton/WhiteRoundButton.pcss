@@ -1,0 +1,23 @@
+.root {
+  color: #00A0D2;
+  font-weight: 700;
+  text-transform: none;
+  line-height: 36px;
+  font-size: 14px;
+  border-radius: 21px;
+  padding: 2px 50px;
+  box-shadow: 4px 4px 2px rgba(70,93,140,0.2);
+  border-color: #000;
+  background-color: #fff;
+  &:hover {
+    background-color: #E5F5FA;
+  }
+  &.rootWithLoader {
+    & .text {
+      opacity: 0;
+    }
+  }
+  & .progress {
+    position: absolute;
+  }
+}

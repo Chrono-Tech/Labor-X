@@ -4,6 +4,7 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import Link from 'react-router-dom/Link'
 
 import styles from './index.pcss'
+import WhiteRoundButton from "../../src/components/common/buttons/WhiteRoundButton/WhiteRoundButton";
 
 export class OurNetworkPage extends React.Component {
   render () {
@@ -22,7 +23,7 @@ export class OurNetworkPage extends React.Component {
           </h1>
           <h2>LaborX network is not controlled by a small group of people, but controlled by all the participants, including You!</h2>
           <p>This network is transparent for all participants, uses chronological data storing and verifies any change by all the network participants, by having a synchronized copy of database. De-centralized in nature, this technology called block-chain.</p>
-          <Button component={Link} to='/your-account' variant='contained' className={styles.nextButton}>​NEXT: Your Account</Button>
+          <WhiteRoundButton component={Link} to='/your-account'>​NEXT: Your Account</WhiteRoundButton>
           <Button component={Link} to='/account-password' className={styles.newAccountButton}>New Account</Button>
           <MobileStepper
             variant="dots"
