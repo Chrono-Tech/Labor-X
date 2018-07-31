@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import cn from 'classnames'
-import _ from 'lodash'
+import get from 'lodash/get'
 import { ProfileModel, JobOfferModel, JobModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield } from 'src/components/common'
 import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
@@ -105,12 +105,12 @@ class WorkerCard extends React.Component {
   }
 
   render () {
-    const { worker, profile, offer, offerSent } = this.props
-    const workerName = _.get(profile, "level1.approved.userName") 
-      ? _.get(profile, "level1.approved.userName") 
+    const { workerProfile, profile, offer, offerSent } = this.props
+    const workerName = get(profile, "level1.approved.userName") 
+      ? get(profile, "level1.approved.userName") 
       : ""
-    const avatarUrl = _.get(profile, "level1.approved.avatar.url") 
-      ? _.get(profile, "level1.approved.avatar.url") 
+    const avatarUrl = get(profile, "level1.approved.avatar.url") 
+      ? get(profile, "level1.approved.avatar.url") 
       : "/static/temp/icon-profile.jpg"
     const validationLevel = profile
       ? profile.getValidationLevel()
@@ -122,11 +122,9 @@ class WorkerCard extends React.Component {
       })}
       >
         <div className={css.workerRow}>
-          <div className={css.workerName}>
-            {worker.ipfs.logo != null && (
-              <img className={css.icon} src={avatarUrl} alt={workerName} />
-            )}
-            <Link className={css.link} href={`/worker-profile/${worker.id}`}>
+          <div className={css.workerName}>    
+            <img className={css.icon} src={avatarUrl} alt={workerName} />
+            <Link className={css.link} href={`/worker-profile/${workerProfile.id}`}>
               <h4>{workerName}</h4>
               <p>Worker</p>
             </Link>

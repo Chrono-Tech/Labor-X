@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
 import pluralize from 'pluralize'
-import _ from "lodash"
+import get from "lodash/get"
 import { JobModel, JOB_STATE_FINALIZED, BoardModel, JobNoticeModel, NOTICE_TYPE_PROBLEM, NOTICE_TYPE_MESSAGE, JobOfferModel } from 'src/models'
 import { Link, Button } from 'src/components/common'
 import css from './JobCard.scss'
@@ -75,8 +75,8 @@ export default class JobCard extends React.Component {
         })}
       >
         <div>
-          <img className={css.icon} src={_.get(board,"ipfs.logo") || '/static/temp/get-started.png'} alt='' />
-          <p>{ _.get(board,"ipfs.logo") || ""}</p>
+          <img className={css.icon} src={get(board,"ipfs.logo") || '/static/temp/get-started.png'} alt='' />
+          <p>{ get(board,"ipfs.logo") || ""}</p>
         </div>
         <div className={css.jobInfo}>
           <Link className={css.jobName} href={`/client-job-view/${job.id}`}>
