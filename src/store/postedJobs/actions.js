@@ -15,7 +15,7 @@ export const selectInitialProps = () => async (dispatch, getState) => {
     const JobsDataProvider = daoByType('JobsDataProvider')(state)
     const BoardController = daoByType('BoardController')(state)
     const userAddress = currentAddressSelector()(state)
-    const jobs = await JobsDataProvider.getJobs(BoardController)
+    const jobs = (await JobsDataProvider.getJobs(BoardController)).filter((x) => x.boardId)
     const boards = await BoardController.getBoards(userAddress)
     const userJobs = jobs.filter((x) => x.client.toLowerCase() === userAddress.toLowerCase())
     const jobOffers = await Promise.all(userJobs.map((x) => JobsDataProvider.getJobOffers(x.id)))
