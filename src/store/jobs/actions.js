@@ -10,6 +10,8 @@ import {
   JobFormModel,
   JobOfferFormModel,
   SkillModel,
+  WORKFLOW_TM,
+  WORKFLOW_FIXED_PRICE
 } from 'src/models'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
@@ -348,17 +350,28 @@ export const endWork = (id) => async (dispatch, getState) => {
   }
 }
 
-export const PAY_REQUEST = 'PAY_REQUEST'
-export const PAY_SUCCESS = 'PAY_SUCCESS'
-export const PAY_FAILURE = 'PAY_FAILURE'
+export const pay = (flowType, id) => async (dispatch, getState) => {
+  if (flowType === WORKFLOW_TM) {
+    dispatch(payWorkflowTm(id))
+  }
+  if (flowType === WORKFLOW_FIXED_PRICE) {
+    dispatch(payWorkflowFixedPrice(id))
+  }
+}
 
-const payRequest = (req) => ({ type: PAY_REQUEST, req })
-const paySuccess = (res) => ({ type: PAY_SUCCESS, res })
-const payFailure = (err) => ({ type: PAY_FAILURE, err })
 
-export const pay = (id) => async (dispatch, getState) => {
+
+export const PAY_WORKFLOW_TM_REQUEST = 'PAY_WORKFLOW_TM_REQUEST'
+export const PAY_WORKFLOW_TM_SUCCESS = 'PAY_WORKFLOW_TM_SUCCESS'
+export const PAY_WORKFLOW_TM_FAILURE = 'PAY_WORKFLOW_TM_FAILURE'
+
+const payWorkflowTmRequest = (req) => ({ type: PAY_WORKFLOW_TM_REQUEST, req })
+const payWorkflowTmSuccess = (res) => ({ type: PAY_WORKFLOW_TM_SUCCESS, res })
+const payWorkflowTmFailure = (err) => ({ type: PAY_WORKFLOW_TM_FAILURE, err })
+
+export const payWorkflowTm = (id) => async (dispatch, getState) => {
   try {
-    dispatch(payRequest({ id }))
+    dispatch(payWorkflowTmRequest({ id }))
     const state = getState()
     const JobController = daoByType('JobController')(state)
     const signer = signerSelector()(state)
@@ -367,10 +380,63 @@ export const pay = (id) => async (dispatch, getState) => {
     const confirmEndWorkRes = await dispatch(executeTransaction({ tx: confirmEndWorkTx, web3, signer }))
     const releasePaymentTx = JobController.releasePayment(signer.address, id)
     const releasePaymentRes = await dispatch(executeTransaction({ tx: releasePaymentTx, web3, signer }))
-    dispatch(paySuccess({ confirmEndWorkRes, releasePaymentRes }))
+    dispatch(payWorkflowTmSuccess({ confirmEndWorkRes, releasePaymentRes }))
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err)
-    dispatch(payFailure(err))
+    dispatch(payWorkflowTmFailure(err))
   }
 }
+
+export const WORKFLOW_FIXED_PRICE_REQUEST = 'WORKFLOW_FIXED_PRICE_REQUEST'
+export const WORKFLOW_FIXED_PRICE_SUCCESS = 'WORKFLOW_FIXED_PRICE_SUCCESS'
+export const WORKFLOW_FIXED_PRICE_FAILURE = 'WORKFLOW_FIXED_PRICE_FAILURE'
+
+const payWorkflowFixedPriceRequest = (req) => ({ type: WORKFLOW_FIXED_PRICE_REQUEST, req })
+const payWorkflowFixedPriceSuccess = (res) => ({ type: WORKFLOW_FIXED_PRICE_SUCCESS, res })
+const payWorkflowFixedPriceFailure = (err) => ({ type: WORKFLOW_FIXED_PRICE_FAILURE, err })
+
+export const payWorkflowFixedPrice = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(payWorkflowFixedPriceRequest({ id }))
+    const state = getState()
+    const JobController = daoByType('JobController')(state)
+    const signer = signerSelector()(state)
+    const web3 = web3Selector()(state)
+    const acceptWorkResultsTx = JobController.acceptWorkResults(signer.address, id)
+    const acceptWorkResultsRes = await dispatch(executeTransaction({ tx: acceptWorkResultsTx, web3, signer }))
+    dispatch(payWorkflowFixedPriceSuccess({ acceptWorkResultsRes }))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(payWorkflowFixedPriceFailure(err))
+  }
+}
+
+
+export const REJECT_WORK_RESULTS_REQUEST = 'REJECT_WORK_RESULTS_REQUEST'
+export const REJECT_WORK_RESULTS_SUCCESS = 'REJECT_WORK_RESULTS_SUCCESS'
+export const REJECT_WORK_RESULTS_FAILURE = 'REJECT_WORK_RESULTS_FAILURE'
+
+const rejectWorkResultsRequest = (req) => ({ type: REJECT_WORK_RESULTS_REQUEST, req })
+const rejectWorkResultsSuccess = (res) => ({ type: REJECT_WORK_RESULTS_SUCCESS, res })
+const rejectWorkResultsFailure = (err) => ({ type: REJECT_WORK_RESULTS_FAILURE, err })
+
+export const rejectWorkResults = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(rejectWorkResultsRequest({ id }))
+    const state = getState()
+    const JobController = daoByType('JobController')(state)
+    const signer = signerSelector()(state)
+    const web3 = web3Selector()(state)
+    const rejectWorkResultsTx = JobController.rejectWorkResults(signer.address, id)
+    const rejectWorkResultsRes = await dispatch(executeTransaction({ tx: rejectWorkResultsTx, web3, signer }))
+    dispatch(rejectWorkResultsSuccess({ rejectWorkResultsRes }))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+    dispatch(rejectWorkResultsFailure(err))
+  }
+}
+
+

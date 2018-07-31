@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { Button, Link } from 'src/components/common'
-import { JobModel, ProfileModel } from 'src/models'
+import { JobModel, ProfileModel, WORKFLOW_NOT_SET, WORKFLOW_TM, WORKFLOW_FIXED_PRICE } from 'src/models'
 
 import css from './PayInvoiceDialog.scss'
 import { pay } from "../../../store"
@@ -92,7 +92,7 @@ class PayInvoiceDialog extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  pay: () => dispatch(pay(ownProps.job.id)),
+  pay: () => dispatch(pay(ownProps.job.ipfs.budget.flowType , ownProps.job.id)),
   // decline: () => dispatch(confirmEndWork(ownProps.jobId)),
 })
 

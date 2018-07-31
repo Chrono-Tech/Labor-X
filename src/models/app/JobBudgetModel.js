@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import faker from 'faker'
 import AbstractModel from '../AbstractModel'
+import { FlowTypeModel, WORKFLOW_TM, WORKFLOW_FIXED_PRICE, WORKFLOW_NOT_SET } from './FlowTypeModel'
 
 export const schemaFactory = () => ({
   isSpecified: PropTypes.bool,
@@ -44,6 +45,16 @@ export default class JobBudgetModel extends AbstractModel {
       return this.hourlyRateAward.multipliedBy(40)
     }
     return null
+  }
+
+  get flowType (): FlowTypeModel {
+    if (this.fixedPrice) {
+      return WORKFLOW_FIXED_PRICE
+    }
+    if (this.hourlyRate && this.totalHours) {
+      return WORKFLOW_TM
+    }
+    return WORKFLOW_NOT_SET
   }
 }
 
