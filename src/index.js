@@ -82,6 +82,7 @@ import {
   clientProfile,
   activeJobs,
   profiles,
+  reviewApplicants,
 } from "src/store/reducers"
 
 import 'styles/globals/globals.scss'
@@ -128,6 +129,7 @@ const reducer = combineReducers({
   postedJobs,
   clientProfile,
   activeJobs,
+  reviewApplicants,
 })
 
 const store = createStore(
@@ -205,4 +207,3 @@ const persistor = persistStore(store, null, async () => {
   )
 
 })
-

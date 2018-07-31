@@ -22,5 +22,6 @@ export * from './modals/actions'
 export * from './offers/actions'
 export * from './offers/selectors'
 export * from './user/selectors'
+export * from './review-applicants/actions'
 export * from './opportunity-view/actions'
-// export * from './opportunity-view/selectors'
+

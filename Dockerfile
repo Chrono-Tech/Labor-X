@@ -6,13 +6,12 @@ WORKDIR /app
 RUN apt update && \
     apt install -y python make g++ git build-essential && \
     npm install -g pm2@2.7.1 && \
-    git clone https://github.com/ChronoBank/Labor-X && \
-    cd Labor-X && \
-    git checkout develop && \
+    git clone https://github.com/ChronoBank/Labor-X
+WORKDIR /app/Labor-X
+RUN git checkout develop && \
     npm install eslint@^4.9.0 && \
     yarn install --ignore-engines
-EXPOSE 3000 3001 3010 3011
+RUN yarn run build
 RUN echo "test"
-CMD cd Labor-X && \
-    yarn run build && \
-    yarn start
+EXPOSE 3000 3001 3010 3011
+CMD yarn start
