@@ -10,3 +10,4 @@ export { default as MakeOfferDialog } from './lib/MakeOfferDialog/MakeOfferDialo
 export { default as ReviewOfferDialog } from './lib/ReviewOfferDialog/ReviewOfferDialog'
 export { default as WorkerCard } from './lib/WorkerCard/WorkerCard'
 export { default as NotificationWidget } from './lib/NotificationWidget/NotificationWidget'
+export { default as ForWorkersWidget } from './lib/ForWorkersWidget/ForWorkersWidget'
