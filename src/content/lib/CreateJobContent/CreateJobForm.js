@@ -233,7 +233,7 @@ class CreateJobForm extends React.Component {
           </div>
         </div>
       )
-      case WORKFLOW_FIXED_PRICE: return (
+      case WORKFLOW_FIXED_PRICE.index: return (
         <div className={css.budgetWidget}>
           <div>
             <Field
