@@ -4,6 +4,8 @@ import * as profileApi from 'src/api/backend'
 import { web3Selector } from "src/store/ethereum/selectors"
 import {privateKeySelector} from "./selectors";
 
+import { setPrivateKey as setCreateWalletPrivateKey } from 'src/store/createWallet/actions'
+
 export const RESET_STATE = 'HOME_PRIVATE_KEY_LOGIN/RESET_STATE'
 export const resetState = () => ({ type: RESET_STATE })
 
@@ -22,12 +24,12 @@ export const submit = () => async (dispatch, getState) => {
   try {
     dispatch(updateFileRequest())
     const state = getState()
-    const privateKey = privateKeySelector(state)
     const web3 = web3Selector()(state)
+    const privateKey = privateKeySelector(state)
     const account = web3.eth.accounts.privateKeyToAccount(privateKey)
     const person = await profileApi.getPerson(account.address)
     if (person) {
-      // dispatch(setCreateWalletPrivateKey(privateKey))
+      dispatch(setCreateWalletPrivateKey(privateKey))
       dispatch(push('/create-wallet'))
     } else {
       dispatch(showAccount404Dialog())

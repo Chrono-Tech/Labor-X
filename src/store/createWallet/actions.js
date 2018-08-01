@@ -4,6 +4,9 @@ import * as profileApi from 'src/api/backend'
 import { web3Selector } from "src/store/ethereum/selectors"
 import {privateKeySelector} from "./selectors";
 
+export const SET_PRIVATE_KEY = 'CREATE_WALLET/SET_PRIVATE_KEY'
+export const setPrivateKey = (privateKey) => ({ type: SET_PRIVATE_KEY, privateKey })
+
 export const RESET_STATE = 'HOME_PRIVATE_KEY_LOGIN/RESET_STATE'
 export const resetState = () => ({ type: RESET_STATE })
 
