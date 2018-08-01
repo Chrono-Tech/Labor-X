@@ -1,0 +1,16 @@
+.ButtonWithLoader {
+  & .text {
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+  }
+  &.withLoader {
+    & .text {
+      opacity: 0;
+    }
+    & .progress {
+      position: absolute;
+    }
+  }
+}
+
