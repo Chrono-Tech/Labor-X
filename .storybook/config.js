@@ -1,9 +1,18 @@
-import { configure } from '@storybook/react';
+import React from 'react'
+import { configure, addDecorator } from '@storybook/react'
 
-// automatically import all files ending in *.stories.js
-const req = require.context('../stories', true, /.stories.js$/);
-function loadStories() {
-  req.keys().forEach(filename => req(filename));
-}
+import jssProviderDecorator from './decorator/jssProvider'
+import backgroundsDecorator from './decorator/backgrounds'
 
-configure(loadStories, module);
+
+addDecorator(jssProviderDecorator)
+addDecorator(backgroundsDecorator)
+
+configure(() => {
+  require('src/components/common/buttons/ButtonWithLoader/ButtonWithLoader.storybook');
+  require('src/components/common/buttons/RoundedButton/RoundedButton.storybook');
+  require('src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton.storybook');
+  require('src/components/common/buttons/OrangeRoundedButton/OrangeRoundedButton.storybook');
+  require('src/components/common/buttons/BlueRoundedButton/BlueRoundedButton.storybook');
+}, module);
+
