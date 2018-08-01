@@ -10,4 +10,9 @@ export default class ProfileRecruiterModel extends AbstractModel {
     super(props, schemaFactory())
     Object.freeze(this)
   }
+
+  static fromJson (data) {
+    const profile = new ProfileRecruiterModel(data)
+    return profile
+  }
 }

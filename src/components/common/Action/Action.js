@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, Image, Moment, Tip, Translate } from 'components/common/index'
+import { Link, Icon, Moment, Tip, Translate } from 'components/common/index'
 import uniqid from 'uniqid'
 import Counter from '../Counter/Counter'
 import css from './Action.scss'
@@ -48,7 +48,8 @@ export default class Action extends React.Component {
           </div>
         )}
         {item.firstIcon && (
-          <Image
+          <Icon
+            size={24}
             className={css.firstIcon}
             {...item.firstIcon}
           />
@@ -63,11 +64,11 @@ export default class Action extends React.Component {
               {item.secondIconTip
                 ? (
                   <Tip {...item.secondIconTip}>
-                    <Image className={css.secondIcon} {...icon} />
+                    <Icon size={24} className={css.secondIcon} {...icon} />
                   </Tip>
                 )
                 : (
-                  <Image className={css.secondIcon} {...icon} />
+                  <Icon size={24} className={css.secondIcon} {...icon} />
                 )}
             </div>
           ))
