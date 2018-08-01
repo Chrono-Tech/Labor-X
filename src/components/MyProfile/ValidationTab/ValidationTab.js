@@ -1,5 +1,5 @@
 import React from 'react'
-import { Widget, Image, Translate } from 'components/common'
+import { Widget, Icon, Translate } from 'components/common'
 import css from './ValidationTab.scss'
 
 export default class ValidationTab extends React.Component {
@@ -16,17 +16,17 @@ export default class ValidationTab extends React.Component {
             },
             {
               href: '/general-profile#photo',
-              firstIcon: Image.SETS.SHIELD_SUCCESS,
+              firstIcon: Icon.SETS.SECURITY_CHECK,
               label: 'ui.myProfile.validation.general.photoNameDate',
             },
             {
               href: '/general-profile#email',
-              firstIcon: Image.SETS.SHIELD_SUCCESS,
+              firstIcon: Icon.SETS.SECURITY_CHECK,
               label: 'ui.myProfile.validation.general.phoneMail',
             },
             {
               href: '/general-profile#address',
-              firstIcon: Image.SETS.SHIELD_ERROR,
+              firstIcon: Icon.SETS.SECURITY_NONE,
               label: 'ui.myProfile.validation.general.homeAddress',
             },
 
@@ -36,7 +36,7 @@ export default class ValidationTab extends React.Component {
             },
             {
               href: '/recruiter-profile',
-              firstIcon: Image.SETS.SHIELD_ERROR,
+              firstIcon: Icon.SETS.SECURITY_NONE,
               label: 'ui.myProfile.validation.recruiter.recruiterInformation',
             },
 
@@ -46,7 +46,7 @@ export default class ValidationTab extends React.Component {
             },
             {
               href: '/worker-profile',
-              firstIcon: Image.SETS.SHIELD_SUCCESS,
+              firstIcon: Icon.SETS.SECURITY_CHECK,
               label: 'ui.myProfile.validation.worker.workerInformation',
             },
 
@@ -56,7 +56,7 @@ export default class ValidationTab extends React.Component {
             },
             {
               href: '/client-profile',
-              firstIcon: Image.SETS.SHIELD_ERROR,
+              firstIcon: Icon.SETS.SECURITY_NONE,
               label: 'ui.myProfile.validation.client.clientInformation',
             },
           ]}
@@ -71,15 +71,24 @@ export default class ValidationTab extends React.Component {
           actions={[
             {
               label: 'Task One',
-              firstIcon: Image.SETS.CIRCLE_CHECKBOX_OFF,
+              firstIcon: {
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.GREY,
+              },
             },
             {
               label: 'Task Two',
-              firstIcon: Image.SETS.CIRCLE_CHECKBOX_OFF,
+              firstIcon: {
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.GREY,
+              },
             },
             {
               label: 'Task Three',
-              firstIcon: Image.SETS.CIRCLE_CHECKBOX_OFF,
+              firstIcon: {
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.GREY,
+              },
             },
           ]}
         />

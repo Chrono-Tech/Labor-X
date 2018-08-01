@@ -188,6 +188,24 @@ export default class JobControllerDAO extends AbstractContractDAO {
     }
   }
 
+  acceptWorkResults (sender: String, jobId: Number) {
+    const data = this.contract.methods.acceptWorkResults(jobId).encodeABI()
+    return {
+      from: sender,
+      to: this.address,
+      data,
+    }
+  }
+
+  rejectWorkResults (sender: String, jobId: Number) {
+    const data = this.contract.methods.rejectWorkResults(jobId).encodeABI()
+    return {
+      from: sender,
+      to: this.address,
+      data,
+    }
+  }
+
   handleJobPostedData (data) {
     // eslint-disable-next-line no-console
     console.log('[JobControllerDAO] JobPosted', data)

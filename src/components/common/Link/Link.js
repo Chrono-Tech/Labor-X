@@ -14,7 +14,7 @@ export default class LinkControl extends React.Component {
     router: PropTypes.shape({
       route: PropTypes.string,
     }),
-    children: PropTypes.string,
+    children: PropTypes.node,
     activeClassName: PropTypes.string,
   }
 

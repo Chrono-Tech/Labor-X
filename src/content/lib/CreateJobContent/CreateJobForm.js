@@ -13,7 +13,7 @@ import t from "typy"
 import DatePickerField from 'src/components/DatePickerField'
 import validate from './validate'
 import css from './CreateJobForm.scss'
-import { WORKFLOW_FIXED_PRICE, WORKFLOW_TM } from "../../../models"
+import { WORKFLOW_FIXED_PRICE, WORKFLOW_TM, SKILLS_LIST } from "../../../models"
 
 export const FORM_CREATE_JOB = 'form/createJob'
 
@@ -70,9 +70,11 @@ class CreateJobForm extends React.Component {
     })
   }
 
-  getTagsFromBoard = (board) => {
-    if ((board && Array.isArray(board.tags))) { return [...board.tags] }
-    else { return [] }
+  getTagsFromBoard = () => {
+    return SKILLS_LIST
+    //So that we not have a skills editing, on the sc side. After adding the skills, uncommit bottom code
+    // if ((board && Array.isArray(board.tags))) { return [...board.tags] }
+    // else { return [] }
   }
 
   searchTagFilter = (searchText, key) => {
@@ -231,7 +233,7 @@ class CreateJobForm extends React.Component {
           </div>
         </div>
       )
-      case WORKFLOW_FIXED_PRICE: return (
+      case WORKFLOW_FIXED_PRICE.index: return (
         <div className={css.budgetWidget}>
           <div>
             <Field
@@ -304,7 +306,6 @@ class CreateJobForm extends React.Component {
 
   render () {
     const { isLoading, boards, hasBudget, hasPeriod, hasAddress, selectedBoard } = this.props
-
     return (
       <div className={css.main}>
         <form
