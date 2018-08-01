@@ -1,4 +1,5 @@
 import * as backendApi from 'src/api/backend'
+import { JOB_STATE_OFFER_ACCEPTED, JOB_STATE_PENDING_START, JOB_STATE_STARTED } from 'src/models'
 import { userTokenSelector, daoByType } from 'src/store'
 
 export const GET_PAGE_DATA_REQUEST = 'DASHBOARD/GET_PAGE_DATA/REQUEST'
@@ -31,9 +32,18 @@ export const getWorkerTodoJobsFailure = (err) => ({ type: GET_WORKER_TODO_JOBS_F
 export const getWorkerTodoJobs = (address) => async (dispatch, getState) => {
   try {
     dispatch(getWorkerTodoJobsRequest())
-    const JobsDataProvider = daoByType('JobsDataProvider')(getState())
-    const jobs = await JobsDataProvider.getJobsForWorker(address)
-    dispatch(getWorkerTodoJobsSuccess(jobs))
+    const state = getState()
+    const JobsDataProvider = daoByType('JobsDataProvider')(state)
+    const BoardController = daoByType('BoardController')(state)
+    // TODO @aevalyakin use JobsDataProvider.getJobsForWorker when fixed in smartcontract
+    const jobs = await JobsDataProvider.getJobs(BoardController)
+    const jobsForWorker = jobs.filter(job => job.worker === address)
+    const workerTodoJobs = jobsForWorker.filter(job =>
+      job.state === JOB_STATE_STARTED ||
+      job.state === JOB_STATE_OFFER_ACCEPTED ||
+      job.state === JOB_STATE_PENDING_START
+    )
+    dispatch(getWorkerTodoJobsSuccess(workerTodoJobs))
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err)

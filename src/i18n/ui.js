@@ -100,7 +100,7 @@ export default {
     worker: {
       worker: 'Worker',
       startYourJobSearch: 'Start your Job Search',
-      toDo: 'To-Do 20 Dec 2017',
+      toDo: 'To-Do %{placeholder}',
       opportunities: 'Opportunities',
     },
     client: {

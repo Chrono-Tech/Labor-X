@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import { Widget } from 'src/components/common'
 import {
@@ -8,7 +9,7 @@ import {
   workerTodoJobsFailureSelector,
   workerTodoJobsSelector,
 } from 'src/store/dashboard'
-import { SignerModel } from 'src/models'
+import { SignerModel, JobModel } from 'src/models'
 import css from './ForWorkersWidget.scss'
 
 export class ForWorkersWidget extends React.Component {
@@ -18,6 +19,8 @@ export class ForWorkersWidget extends React.Component {
     workerTodoJobsLoading: PropTypes.bool,
     workerTodoJobsFailure: PropTypes.instanceOf(Error),
     workerTodoJobs: PropTypes.arrayOf(PropTypes.object),
+    todoJobs: PropTypes.arrayOf(PropTypes.instanceOf(JobModel)),
+    todoDate:  PropTypes.string,
   }
 
   componentDidMount () {
@@ -25,7 +28,8 @@ export class ForWorkersWidget extends React.Component {
   }
 
   render () {
-    return this.props.signer && (
+    const { todoJobs, todoDate, signer } = this.props
+    return signer && (
       <div className={css.main}>
         <div className={css.row}>
           <Widget
@@ -47,26 +51,6 @@ export class ForWorkersWidget extends React.Component {
             You may visit our General Job Board and start your search or
             browse Job Boards created by other network users.
           </Widget>
-          <Widget
-            title='ui.dashboard.worker.toDo'
-            subtitle='ui.dashboard.worker.worker'
-            actions={[
-              {
-                label: 'Install 10 Gas Ovens',
-                date: '10:30 PM',
-                isLink: true,
-
-              },
-              {
-                label: 'Pick-up 3 sofas',
-                date: '7:30 PM',
-                isLink: true,
-
-              },
-            ]}
-          />
-        </div>
-        <div className={css.row}>
           <Widget
             href='/opportunities'
             title='ui.dashboard.worker.opportunities'
@@ -90,16 +74,49 @@ export class ForWorkersWidget extends React.Component {
             ]}
           />
         </div>
+        { todoJobs.length > 0 ? (
+          <div className={css.row}>
+            <Widget
+              title='ui.dashboard.worker.toDo'
+              titlePlaceholder={todoDate}
+              subtitle='ui.dashboard.worker.worker'
+              actions={
+                todoJobs.map(job => ({
+                  label: job.ipfs.name,
+                  date: moment(job.ipfs.period.since).format('h:mm A'),
+                  isLink: true,
+                }))
+              }
+            />
+          </div>
+        ) : null }
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  workerTodoJobsLoading: workerTodoJobsLoadingSelector(state),
-  workerTodoJobsFailure: workerTodoJobsFailureSelector(state),
-  workerTodoJobs: workerTodoJobsSelector(state),
-})
+const mapStateToProps = (state) => {
+  const workerTodoJobs = workerTodoJobsSelector(state)
+  let todoJobs = []
+  let todoDate = null
+  if (workerTodoJobs) {
+    workerTodoJobs.forEach(job => {
+      const date = job.ipfs.period.since
+      if (moment(date).isSame(todoDate, 'day')) {
+        todoJobs = todoJobs.concat(job)
+      } else if (moment().diff(date, 'days') < 0 && (moment(date).isBefore(todoDate, 'day') || todoDate === null)) {
+        todoDate = date
+        todoJobs = [job]
+      }
+    })
+  }
+  return {
+    workerTodoJobsLoading: workerTodoJobsLoadingSelector(state),
+    workerTodoJobsFailure: workerTodoJobsFailureSelector(state),
+    todoJobs,
+    todoDate: todoDate === null ? null : moment(todoDate).format('D MMM YYYY'),
+  }
+}
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   getWorkerTodoJobs: () => dispatch(getWorkerTodoJobs(ownProps.signer.address)),

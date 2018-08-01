@@ -66,7 +66,7 @@ export default (state = STATE, { type, payload }) => {
       workerTodoJobsLoading: false,
       pageData: {
         ...state.pageData,
-        ...payload,
+        workerTodoJobs: payload,
       },
     })
     case GET_WORKER_TODO_JOBS_FAILURE: return ({
