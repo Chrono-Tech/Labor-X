@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import faker from 'faker'
 import AbstractModel from '../AbstractModel'
-import { FlowTypeModel, WORKFLOW_TM, WORKFLOW_FIXED_PRICE, WORKFLOW_NOT_SET } from './FlowTypeModel'
+import FlowTypeModel, { WORKFLOW_TM, WORKFLOW_FIXED_PRICE, WORKFLOW_NOT_SET } from './FlowTypeModel'
 
 export const schemaFactory = () => ({
   isSpecified: PropTypes.bool,

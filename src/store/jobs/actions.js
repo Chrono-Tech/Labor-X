@@ -11,7 +11,7 @@ import {
   JobOfferFormModel,
   SkillModel,
   WORKFLOW_TM,
-  WORKFLOW_FIXED_PRICE
+  WORKFLOW_FIXED_PRICE,
 } from 'src/models'
 import { daoByType } from '../daos/selectors'
 import { signerSelector } from '../wallet/selectors'
@@ -350,17 +350,6 @@ export const endWork = (id) => async (dispatch, getState) => {
   }
 }
 
-export const pay = (flowType, id) => async (dispatch, getState) => {
-  if (flowType === WORKFLOW_TM) {
-    dispatch(payWorkflowTm(id))
-  }
-  if (flowType === WORKFLOW_FIXED_PRICE) {
-    dispatch(payWorkflowFixedPrice(id))
-  }
-}
-
-
-
 export const PAY_WORKFLOW_TM_REQUEST = 'PAY_WORKFLOW_TM_REQUEST'
 export const PAY_WORKFLOW_TM_SUCCESS = 'PAY_WORKFLOW_TM_SUCCESS'
 export const PAY_WORKFLOW_TM_FAILURE = 'PAY_WORKFLOW_TM_FAILURE'
@@ -413,7 +402,6 @@ export const payWorkflowFixedPrice = (id) => async (dispatch, getState) => {
   }
 }
 
-
 export const REJECT_WORK_RESULTS_REQUEST = 'REJECT_WORK_RESULTS_REQUEST'
 export const REJECT_WORK_RESULTS_SUCCESS = 'REJECT_WORK_RESULTS_SUCCESS'
 export const REJECT_WORK_RESULTS_FAILURE = 'REJECT_WORK_RESULTS_FAILURE'
@@ -439,4 +427,17 @@ export const rejectWorkResults = (id) => async (dispatch, getState) => {
   }
 }
 
+export const pay = (flowType, id) => async (dispatch) => {
+  if (flowType === WORKFLOW_TM) {
+    dispatch(payWorkflowTm(id))
+  }
+  if (flowType === WORKFLOW_FIXED_PRICE) {
+    dispatch(payWorkflowFixedPrice(id))
+  }
+}
 
+export const decline = (flowType, id) => async (dispatch) => {
+  if (flowType === WORKFLOW_FIXED_PRICE) {
+    dispatch(rejectWorkResults(id))
+  }
+}

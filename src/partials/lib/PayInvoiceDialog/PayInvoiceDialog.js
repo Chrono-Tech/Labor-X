@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { Button, Link } from 'src/components/common'
-import { JobModel, ProfileModel, WORKFLOW_NOT_SET, WORKFLOW_TM, WORKFLOW_FIXED_PRICE } from 'src/models'
+import { JobModel } from 'src/models'
+import ProfileModel from 'src/api/backend/model/ProfileModel'
 
 import css from './PayInvoiceDialog.scss'
-import { pay } from "../../../store"
+import { pay, decline } from "../../../store"
 
 const dateFormat = 'DD.MM.YYYY'
 
@@ -15,6 +16,7 @@ class PayInvoiceDialog extends React.Component {
     job: PropTypes.instanceOf(JobModel),
     worker: PropTypes.instanceOf(ProfileModel),
     pay: PropTypes.func.isRequired,
+    decline: PropTypes.func.isRequired,
     cancelJob: PropTypes.func.isRequired,
   }
 
@@ -23,7 +25,7 @@ class PayInvoiceDialog extends React.Component {
   }
 
   handleDecline = () => {
-    this.props.cancelJob(this.props.job.id)
+    this.props.decline()
   }
 
   render () {
@@ -93,7 +95,7 @@ class PayInvoiceDialog extends React.Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   pay: () => dispatch(pay(ownProps.job.ipfs.budget.flowType , ownProps.job.id)),
-  // decline: () => dispatch(confirmEndWork(ownProps.jobId)),
+  decline: () => dispatch(decline(ownProps.job.ipfs.budget.flowType , ownProps.job.id)),
 })
 
 export default connect(null, mapDispatchToProps)(PayInvoiceDialog)
