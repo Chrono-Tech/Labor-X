@@ -17,7 +17,7 @@ export default class SelectWallet extends React.Component {
     onChangeStep: PropTypes.func,
     pristine: PropTypes.bool,
     invalid: PropTypes.bool,
-    error: PropTypes.instanceOf(Error)
+    error: PropTypes.instanceOf(Error),
   }
 
   static defaultProps = {

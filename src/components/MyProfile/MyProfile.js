@@ -1,11 +1,11 @@
 import React from 'react'
-import { Translate, Tab } from 'components/common'
 import uniqid from 'uniqid'
+import { connect } from "react-redux"
+import { Translate, Tab } from 'components/common'
 import ValidationTab from './ValidationTab/ValidationTab'
 import NotificationsTab from './NotificationsTab/NotificationsTab'
 import SecurityTab from './SecurityTab/SecurityTab'
-import css from './MyProfile.scss';
-import {connect} from "react-redux";
+import css from './MyProfile.scss'
 
 class MyProfile extends React.Component {
   constructor (props, context){
@@ -66,12 +66,4 @@ class MyProfile extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  // profile: state.ui.myProfile.profile
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  // reviewProfile: () => dispatch(reviewProfile()),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyProfile)
+export default connect(null, null)(MyProfile)

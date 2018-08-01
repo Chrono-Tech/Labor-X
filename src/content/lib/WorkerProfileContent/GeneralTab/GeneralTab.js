@@ -35,10 +35,10 @@ export default class GeneralTab extends React.Component {
     return (
       <div className={css.content}>
         <div className={css.logoContainer} onClick={this.handleClickLogo}>
-        <div className={css.logo}>
-        <img src={avatarUrl} alt='Logo' />
-        <div className={css.overlay} />
-        </div>
+          <div className={css.logo}>
+            <img src={avatarUrl} alt='Logo' />
+            <div className={css.overlay} />
+          </div>
         </div>
         <div className={css.block}>
           <h3>Intro</h3>

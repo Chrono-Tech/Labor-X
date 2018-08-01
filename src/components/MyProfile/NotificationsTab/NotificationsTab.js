@@ -1,5 +1,5 @@
 import React from 'react'
-import { Widget, Image } from 'components/common'
+import { Widget, Icon } from 'components/common'
 import css from './NotificationsTab.scss'
 
 export default class NotificationsTab extends React.Component {
@@ -17,36 +17,36 @@ export default class NotificationsTab extends React.Component {
             {
               label: 'ui.myProfile.notifications.worker.opportunities',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.worker.jobApplied',
               secondIcon: [
-                Image.SETS.EMAIL_OFF,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_OFF,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.worker.jobOfferReceived',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.worker.invoiceUpdates',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.worker.endorsementReceived',
               secondIcon: [
-                Image.SETS.EMAIL_OFF,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_OFF,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
 
@@ -57,22 +57,22 @@ export default class NotificationsTab extends React.Component {
             {
               label: 'ui.myProfile.notifications.client.applicationReceived',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.client.invoiceUpdates',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.client.offerAccepted',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_ON,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_ON,
               ],
             },
 
@@ -83,15 +83,15 @@ export default class NotificationsTab extends React.Component {
             {
               label: 'ui.myProfile.notifications.recruiter.myJobBoardUpdates',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.recruiter.offerReceived',
               secondIcon: [
-                Image.SETS.EMAIL_OFF,
-                Image.SETS.NOTIFICATIONS_ON,
+                Icon.SETS.EMAIL_OFF,
+                Icon.SETS.NOTIFICATIONS_ON,
               ],
             },
 
@@ -102,43 +102,43 @@ export default class NotificationsTab extends React.Component {
             {
               label: 'ui.myProfile.notifications.general.jobBoardAdded',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.general.messageReceived',
               secondIcon: [
-                Image.SETS.EMAIL_OFF,
-                Image.SETS.NOTIFICATIONS_ON,
+                Icon.SETS.EMAIL_OFF,
+                Icon.SETS.NOTIFICATIONS_ON,
               ],
             },
             {
               label: 'ui.myProfile.notifications.general.validationUpdates',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
             {
               label: 'ui.myProfile.notifications.general.ratingChanged',
               secondIcon: [
-                Image.SETS.EMAIL_OFF,
-                Image.SETS.NOTIFICATIONS_ON,
+                Icon.SETS.EMAIL_OFF,
+                Icon.SETS.NOTIFICATIONS_ON,
               ],
             },
             {
               label: 'ui.myProfile.notifications.general.myJobUpdates',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_ON,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_ON,
               ],
             },
             {
               label: 'ui.myProfile.notifications.general.reportUpdates',
               secondIcon: [
-                Image.SETS.EMAIL_ON,
-                Image.SETS.NOTIFICATIONS_OFF,
+                Icon.SETS.EMAIL_ON,
+                Icon.SETS.NOTIFICATIONS_OFF,
               ],
             },
           ]}
@@ -154,8 +154,8 @@ export default class NotificationsTab extends React.Component {
               href: '/',
               label: 'Become Involved',
               firstIcon: {
-                icon: Image.ICONS.LOGO,
-                color: Image.COLORS.RED,
+                icon: Icon.ICONS.COMPANY,
+                color: Icon.COLORS.BLUE,
               },
               counter: { value: 3 },
               isLink: true,
@@ -164,8 +164,8 @@ export default class NotificationsTab extends React.Component {
               href: '/',
               label: 'Janna\'s Board',
               firstIcon: {
-                icon: Image.ICONS.LOGO,
-                color: Image.COLORS.RED,
+                icon: Icon.ICONS.COMPANY,
+                color: Icon.COLORS.BLUE,
               },
               isLink: true,
             },
@@ -181,43 +181,43 @@ export default class NotificationsTab extends React.Component {
             {
               label: 'ui.myProfile.notifications.messaging.everyoneCanSendMessages',
               firstIcon: {
-                icon: Image.ICONS.CHECKBOX_OFF,
-                color: Image.COLORS.GREY,
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.GREY,
               },
             },
             {
               label: 'ui.myProfile.notifications.messaging.workers',
               firstIcon: {
-                icon: Image.ICONS.CHECKBOX_ON,
-                color: Image.COLORS.BLUE,
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.BLUE,
               },
             },
             {
               label: 'ui.myProfile.notifications.messaging.clients',
               firstIcon: {
-                icon: Image.ICONS.CHECKBOX_ON,
-                color: Image.COLORS.BLUE,
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.BLUE,
               },
             },
             {
               label: 'ui.myProfile.notifications.messaging.recruiters',
               firstIcon: {
-                icon: Image.ICONS.CHECKBOX_ON,
-                color: Image.COLORS.BLUE,
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.BLUE,
               },
             },
             {
               label: 'ui.myProfile.notifications.messaging.withValidatedEmail',
               firstIcon: {
-                icon: Image.ICONS.CHECKBOX_ON,
-                color: Image.COLORS.BLUE,
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.BLUE,
               },
             },
             {
               label: 'ui.myProfile.notifications.messaging.withValidatedId',
               firstIcon: {
-                icon: Image.ICONS.CHECKBOX_ON,
-                color: Image.COLORS.BLUE,
+                icon: Icon.ICONS.CHECK_CIRCLE,
+                color: Icon.COLORS.BLUE,
               },
             },
           ]}
