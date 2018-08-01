@@ -1,22 +1,9 @@
-import { createSelector } from 'reselect'
-import { formValueSelector } from 'redux-form'
+import { createSelector } from "reselect"
+import formValueSelector from "redux-form/lib/formValueSelector"
+import {FORM} from "./constants";
 
-import { LoginSteps } from './actions'
-import {web3Selector} from "../ethereum/selectors";
-import {FORM_PRIVATE_KEY} from "../../components/Login";
-
-export const getState = state => state.login
-export const getStep = createSelector(getState, state => state.step)
-export const getOpenAccount404Dialog = createSelector(getState, state => state.openAccount404Dialog)
-
-export const getAccount = createSelector(
-  getStep,
-  web3Selector(),
-  state => formValueSelector(FORM_PRIVATE_KEY)(state, 'key'),
-  (step, web3, privateKey) => {
-    switch (step) {
-      case LoginSteps.PrivateKey:
-        return web3.eth.accounts.privateKeyToAccount(`0x${privateKey}`)
-    }
-  }
-)
+export const stateSelector = (state) => state.login
+export const getInitialPropsLoadingSelector = createSelector(stateSelector, (state) => state.getInitialPropsLoading)
+export const personSelector = createSelector(stateSelector, (state) => state.person)
+export const addressSelector = createSelector(stateSelector, (state) => state.address)
+export const getSigninLoadingSelector = createSelector(stateSelector, (state) => state.signinLoading)

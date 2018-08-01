@@ -1,11 +1,16 @@
 import { push } from 'connected-react-router'
 
-import { createWallet, walletAdd, navigateToSelectWallet, navigateToSelectLoginMethod } from 'src/store'
-import { setSignInModel } from "src/store/login/actions"
+import {
+  createWallet,
+  walletAdd,
+  // navigateToSelectWallet,
+  // navigateToSelectLoginMethod
+} from 'src/store'
+// import { setSignInModel } from "src/store/login/actions"
 import { generateNameWalletSelector, getExistingAccount } from "./selectors"
-import { SignInModel } from "../../models"
+// import { SignInModel } from "../../models"
 import * as backendApi from "../../api/backend"
-import { navigateToCreateWallet } from "../login/actions"
+// import { navigateToCreateWallet } from "../login/actions"
 
 export const CREATE_ACCOUNT_SET_MNEMONIC = 'createAccount/setMnemonic'
 export const CREATE_ACCOUNT_SET_PASSWORD = 'createAccount/setPassword'
@@ -65,10 +70,10 @@ export const downloadWallet = () => (dispatch, getState) => {
   }
 }
 
-export const navigateToSelectWalletPage = () => (dispatch) => {
-  dispatch(push('/login'))
-  dispatch(navigateToSelectWallet())
-}
+// export const navigateToSelectWalletPage = () => (dispatch) => {
+//   dispatch(push('/login'))
+//   dispatch(navigateToSelectWallet())
+// }
 
 export const onFinishCreateAccount = () => (dispatch, getState) => {
   const state = getState()
@@ -77,10 +82,10 @@ export const onFinishCreateAccount = () => (dispatch, getState) => {
   dispatch(push('/login'))
 }
 
-export const navigateToSelectMethod = () => (dispatch) => {
-  dispatch(push('/login'))
-  dispatch(navigateToSelectLoginMethod())
-}
+// export const navigateToSelectMethod = () => (dispatch) => {
+//   dispatch(push('/login'))
+//   dispatch(navigateToSelectLoginMethod())
+// }
 
 export const SET_EXISTING_ACCOUNT = 'SET_EXISTING_ACCOUNT'
 export const setExistingAccount = (existingAccount) => ({ type: SET_EXISTING_ACCOUNT, existingAccount })
@@ -92,9 +97,9 @@ export const handleAccountPasswordFormSubmitSuccess = ({ password, types }) => a
     const { client, worker, recruiter } = types
     const roles = { isClient: client, isWorker: worker, isRecruiter: recruiter }
     await backendApi.signin(existingAccount, roles) // register user with roles
-    const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: existingAccount.privateKey, address: existingAccount.address })
-    dispatch(setSignInModel(signInModel))
-    dispatch(navigateToCreateWallet())
+    // const signInModel = new SignInModel({ method: SignInModel.METHODS.PRIVATE_KEY, key: existingAccount.privateKey, address: existingAccount.address })
+    // dispatch(setSignInModel(signInModel))
+    // dispatch(navigateToCreateWallet())
     dispatch(push('/login'))
   } else {
     dispatch(setPassword(password))

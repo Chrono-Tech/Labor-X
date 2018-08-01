@@ -4,7 +4,7 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import Link from 'react-router-dom/Link'
 
 import styles from './index.pcss'
-import WhiteRoundButton from "../../src/components/common/buttons/WhiteRoundButton/WhiteRoundButton";
+import WhiteRoundedButton from "../../src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton";
 
 export class CryptoCurrenciesPage extends React.Component {
   render () {
@@ -24,7 +24,7 @@ export class CryptoCurrenciesPage extends React.Component {
           <p>Bitcoin made online payments secure and removed intermediates, e.g. banks, by making the transaction cheaper, faster and de-centralized.</p>
           <p>Ethereum made digital contracts automated and trustworthy by all sides.</p>
           <p>LaborX is using all these technologies and introducing LaborHour a crypto-currency to solve the problem of inflation which, we believe, will make Workers, Clients and Recruiters to experience a better future.</p>
-          <WhiteRoundButton component={Link} to='/laborhour'>​NEXT: LaborHour</WhiteRoundButton>
+          <WhiteRoundedButton component={Link} to='/laborhour'>​NEXT: LaborHour</WhiteRoundedButton>
           <Button component={Link} to='/account-password' className={styles.newAccountButton}>New Account</Button>
           <MobileStepper
             variant="dots"
