@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import _ from 'lodash'
 import { Button, UserRow } from 'components/common'
-// import { LoginSteps } from 'src/store'
+import { LoginSteps } from 'src/store'
 import WalletEntryModel from 'src/models/wallets/WalletEntryModel'
 
 import css from './SelectWallet.scss'
@@ -77,13 +77,13 @@ export default class SelectWallet extends React.Component {
   }
 
   navigateToLoginMethods (){
-    // const { onChangeStep } = this.props
-    // onChangeStep(LoginSteps.SelectLoginMethod)
+    const { onChangeStep } = this.props
+    onChangeStep(LoginSteps.SelectLoginMethod)
   }
 
   navigateToCreateWallet () {
-    // const { onChangeStep } = this.props
-    // onChangeStep(LoginSteps.CreateWallet)
+    const { onChangeStep } = this.props
+    onChangeStep(LoginSteps.CreateWallet)
   }
 
   render () {

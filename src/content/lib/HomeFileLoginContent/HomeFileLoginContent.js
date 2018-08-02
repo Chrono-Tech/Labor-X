@@ -59,8 +59,7 @@ export class HomeFileLoginContent extends React.Component {
   render () {
     return (
       <div className={css.HomeFileLoginContent}>
-        <SigninLayout title='Upload a Wallet File'>
-          <p className={css.subheader}>Upload a wallet file to add the login information to your browser. We provide the file on New Account Creation.</p>
+        <SigninLayout title='Upload a Wallet File' subtitle='Upload a wallet file to add the login information to your browser. We provide the file on New Account Creation.'>
           <br/>
           <br/>
           <br/>
@@ -79,7 +78,7 @@ export class HomeFileLoginContent extends React.Component {
           <br/>
           <div className={css.otherActions}>
             or
-            <Link to='/my-accounts' className={css.backButton}>Back</Link>
+            <Link to='/home-login-methods' className={css.backButton}>Back</Link>
           </div>
         </SigninLayout>
       </div>

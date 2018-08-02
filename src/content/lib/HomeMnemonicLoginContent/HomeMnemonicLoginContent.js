@@ -33,10 +33,10 @@ export class HomeMnemonicLoginContent extends React.Component {
   render () {
     return (
       <Form onSubmit={this.props.handleSubmit} className={css.HomeMnemonicLoginContent}>
-        <SigninLayout title='Import Wallet' subtitle='Type or copy your "Private Key" into the box below'>
+        <SigninLayout title='Import Wallet' subtitle='Type or copy your "Mnemonic" into the box below'>
           <Field
-            name='privateKey'
-            placeholder='Enter Private Key'
+            name='mnemonic'
+            placeholder='Enter Mnemonic'
             component={TextField}
             multiline
             rows={2}
@@ -54,7 +54,10 @@ export class HomeMnemonicLoginContent extends React.Component {
           <br/>
           <br/>
           <br/>
-          <Link to='/home-mnemonic-login' className={css.forgotLink}>Forgot your password?</Link>
+          <div className={css.otherActions}>
+            or
+            <Link to='/home-login-methods' className={css.backButton}>Back</Link>
+          </div>
         </SigninLayout>
       </Form>
     )

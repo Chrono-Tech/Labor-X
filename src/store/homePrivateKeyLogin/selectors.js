@@ -5,6 +5,4 @@ import {FORM} from "./constants";
 export const stateSelector = (state) => state.homePrivateKeyLogin
 export const getSubmitLoadingSelector = createSelector(stateSelector, (state) => state.submitLoading)
 export const privateKeySelector = (state) => formValueSelector(FORM)(state, 'privateKey')
-// export const personSelector = createSelector(stateSelector, (state) => state.person)
-// export const addressSelector = createSelector(stateSelector, (state) => state.address)
-// export const getSigninLoadingSelector = createSelector(stateSelector, (state) => state.signinLoading)
+export const openAccount404DialogSelector = createSelector(stateSelector, (state) => state.openAccount404Dialog)

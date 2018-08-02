@@ -44,6 +44,7 @@ export const submit = () => (dispatch, getState) => {
     const state = getState()
     const web3 = web3Selector()(state)
     const encryptedWallet = walletSelector(state)
+  } catch (err) {
 
   //   // const account = web3.eth.accounts.privateKeyToAccount(privateKey)
   //   const person = await profileApi.getPerson(account.address)

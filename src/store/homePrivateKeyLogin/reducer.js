@@ -5,16 +5,20 @@ import {
   SUBMIT_SUCCESS,
   SUBMIT_FAILURE,
   RESET_STATE,
+  SHOW_ACCOUNT_404_DIALOG,
+  HIDE_ACCOUNT_404_DIALOG,
 } from "./actions"
 
 interface State {
   submitLoading: boolean;
   submitFailure: Error;
+  openAccount404Dialog: boolean;
 }
 
 export const STATE: State = {
   submitLoading: false,
   submitFailure: false,
+  openAccount404Dialog: false,
 }
 
 export default (state: State = STATE, action) => {
@@ -37,6 +41,15 @@ export default (state: State = STATE, action) => {
       ...state,
       submitLoading: false,
       submitFailure: action.payload,
+    })
+
+    case SHOW_ACCOUNT_404_DIALOG: return ({
+      ...state,
+      openAccount404Dialog: true,
+    })
+    case HIDE_ACCOUNT_404_DIALOG: return ({
+      ...state,
+      openAccount404Dialog: true,
     })
 
     default: return ({

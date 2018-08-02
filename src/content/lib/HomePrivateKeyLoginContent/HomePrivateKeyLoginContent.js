@@ -5,22 +5,14 @@ import Form from 'redux-form/lib/Form'
 import Field from 'redux-form/lib/Field'
 import reduxForm from 'redux-form/lib/reduxForm'
 import TextField from 'redux-form-material-ui-next/lib/TextField'
-import ViewListIcon from '@material-ui/icons/ViewList'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import List from '@material-ui/core/List'
-import IconButton from '@material-ui/core/IconButton'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItem from '@material-ui/core/ListItem'
-import Avatar from '@material-ui/core/Avatar'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Divider from '@material-ui/core/Divider'
 
 import WhiteRoundedButton from "src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton";
 import SigninLayout from "src/components/SigninLayout/SigninLayout";
 import { FORM } from "src/store/homePrivateKeyLogin/constants";
-import { getSubmitLoadingSelector } from "src/store/homePrivateKeyLogin/selectors";
-import { resetState, submit } from "src/store/homePrivateKeyLogin/actions";
+import { getSubmitLoadingSelector, openAccount404DialogSelector } from "src/store/homePrivateKeyLogin/selectors";
+import { resetState, submit, hideAccount404Dialog, handleAccount404DialogConfirm } from "src/store/homePrivateKeyLogin/actions";
 import validator from "src/utils/validator";
+import Account404Dialog from "src/components/dialogs/Account404Dialog/Account404Dialog";
 
 import css from './HomePrivateKeyLoginContent.pcss'
 
@@ -54,8 +46,17 @@ export class HomePrivateKeyLoginContent extends React.Component {
           <br/>
           <br/>
           <br/>
-          <Link to='/home-mnemonic-login' className={css.forgotLink}>Forgot your password?</Link>
+          <div className={css.otherActions}>
+            or
+            <Link to='/home-login-methods' className={css.backButton}>Back</Link>
+          </div>
         </SigninLayout>
+        <Account404Dialog
+          open={this.props.openAccount404Dialog}
+          onClose={this.props.hideAccount404Dialog}
+          onNoClick={this.props.hideAccount404Dialog}
+          onYesClick={this.props.handleAccount404DialogConfirm}
+        />
       </Form>
     )
   }
@@ -65,11 +66,14 @@ HomePrivateKeyLoginContent = reduxForm({ form: FORM })(HomePrivateKeyLoginConten
 
 const mapStateToProps = (state) => ({
   submitLoading: getSubmitLoadingSelector(state),
+  openAccount404Dialog: openAccount404DialogSelector(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
   resetState: () => dispatch(resetState()),
   onSubmit: () => dispatch(submit()),
+  hideAccount404Dialog: () => dispatch(hideAccount404Dialog()),
+  handleAccount404DialogConfirm: () => dispatch(handleAccount404DialogConfirm()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePrivateKeyLoginContent)

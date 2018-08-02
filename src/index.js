@@ -53,7 +53,7 @@ import SchedulePage from "pages/schedule"
 import ValidationRequestsPage from "pages/validation-requests"
 import WorkerResumePage from "pages/worker-resume"
 import AuthorizationMethodsPage from "pages/authorization-methods"
-// import ForgotPasswordPage from "pages/forgot-password"
+import ForgotPasswordPage from "pages/forgot-password"
 import CryptoEducationPage from "pages/crypto-education"
 import OurNetworkPage from "pages/our-network"
 import YourAccountPage from "pages/your-account"
@@ -65,6 +65,8 @@ import HomeFileLoginPage from "pages/home-file-login"
 import HomePrivateKeyLoginPage from "pages/home-private-key-login"
 import HomeMnemonicLoginPage from "pages/home-mnemonic-login"
 import CreateWalletPage from "pages/create-wallet"
+import AccountPasswordPage from "pages/account-password"
+import CopyYourAccountPasswordPage from "pages/copy-your-account-password"
 
 import { initFrontend } from "src/store/bootstrap"
 import web3Factory from "src/web3"
@@ -211,7 +213,7 @@ const persistor = persistStore(store, null, async () => {
                       <Route exact path='/validation-requests' component={ValidationRequestsPage} />
                       <Route exact path='/worker-resume' component={WorkerResumePage} />
                       <Route exact path='/authorization-methods' component={AuthorizationMethodsPage} />
-                      {/*<Route exact path='/forgot-password' component={ForgotPasswordPage} />*/}
+                      <Route exact path='/forgot-password' component={ForgotPasswordPage} />
                       <Route exact path='/crypto-education' component={CryptoEducationPage} />
                       <Route exact path='/our-network' component={OurNetworkPage} />
                       <Route exact path='/your-account' component={YourAccountPage} />
@@ -223,6 +225,8 @@ const persistor = persistStore(store, null, async () => {
                       <Route exact path='/home-private-key-login' component={HomePrivateKeyLoginPage} />
                       <Route exact path='/home-mnemonic-login' component={HomeMnemonicLoginPage} />
                       <Route exact path='/create-wallet' component={CreateWalletPage} />
+                      <Route exact path='/account-password' component={AccountPasswordPage} />
+                      <Route exact path='/copy-your-account-password' component={CopyYourAccountPasswordPage} />
                     </Switch>
                     <ModalStack />
                   </div>

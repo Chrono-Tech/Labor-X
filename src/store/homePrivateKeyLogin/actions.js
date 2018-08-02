@@ -40,3 +40,10 @@ export const submit = () => async (dispatch, getState) => {
   }
 }
 
+export const handleAccount404DialogConfirm = () => (dispatch, getState) => {
+  const state = getState()
+  const privateKey = privateKeySelector(state)
+  // dispatch(setAccountPasswordPrivateKey(privateKey))
+  dispatch(push('/account-password'))
+}
+
