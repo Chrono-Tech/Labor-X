@@ -100,6 +100,8 @@ import {
   homeFileLogin,
   homePrivateKeyLogin,
   createWallet,
+  completedJobs,
+  applicationsAndOffers,
 } from "src/store/reducers"
 
 import 'styles/globals/globals.scss'
@@ -151,6 +153,8 @@ const reducer = combineReducers({
   homePrivateKeyLogin,
   createWallet,
   reviewApplicants,
+  completedJobs,
+  applicationsAndOffers,
 })
 
 const store = createStore(

@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { JobModel } from 'src/models'
 import { Translate, CompletedJobCard } from 'components/common'
-import { signerSelector, monthWorkerEraningSelector, totalWorkerEraningSelector, countFinishedJobsByWorkerSelector, finishedJobsByWorkerSelector, finalizedJobsByWorkerSelector, pendingFinishJobsByWorkerSelector } from 'src/store'
+import { monthWorkerEraningSelector, totalWorkerEraningSelector, countFinishedJobsByWorkerSelector, finishedJobsByWorkerSelector, finalizedJobsByWorkerSelector, pendingFinishJobsByWorkerSelector } from 'src/store/completedJobs'
 import css from './CompletedJobs.scss'
 
 const courseUsdLhus = 18
@@ -96,15 +96,13 @@ class CompletedJobs extends React.Component {
 }
 
 function mapStateToProps (state) {
-  const signer = signerSelector()(state)
-  const finishedCount = countFinishedJobsByWorkerSelector(signer.address)(state)
-  const finishedJobs = finishedJobsByWorkerSelector(signer.address)(state)
-  const finalizedJobs = finalizedJobsByWorkerSelector(signer.address)(state)
-  const pendingFinishJobs = pendingFinishJobsByWorkerSelector(signer.address)(state)
-  const totalEarn = totalWorkerEraningSelector(signer.address)(state)
-  const monthEarn = monthWorkerEraningSelector(signer.address)(state)
+  const finishedCount = countFinishedJobsByWorkerSelector(state)
+  const finishedJobs = finishedJobsByWorkerSelector(state)
+  const finalizedJobs = finalizedJobsByWorkerSelector(state)
+  const pendingFinishJobs = pendingFinishJobsByWorkerSelector(state)
+  const totalEarn = totalWorkerEraningSelector(state)
+  const monthEarn = monthWorkerEraningSelector(state)
   return {
-    signer,
     finishedCount,
     finishedJobs,
     pendingFinishJobs,
