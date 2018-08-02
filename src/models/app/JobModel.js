@@ -24,9 +24,7 @@ export const schemaFactory = () => ({
   flowType: PropTypes.instanceOf(BigNumber),
   paused: PropTypes.bool,
   defaultPay: PropTypes.number,
-  startedAt: PropTypes.instanceOf(Date),
   pausedAt: PropTypes.instanceOf(Date),
-  finishedAt: PropTypes.instanceOf(Date),
   pausedFor: PropTypes.number,
   requestedAdditionalTime: PropTypes.number,
 })
@@ -42,12 +40,12 @@ export default class JobModel extends AbstractModel {
   }
 
   get progress () {
-    if (!this.startedAt || !this.ipfs.period.since || !this.ipfs.period.until ) {
+    if (!this.extra.startTime || !this.ipfs.period.since || !this.ipfs.period.until ) {
       return 0
     }
     const totalPausedTime = this.paused ? new Date() - this.pausedAt + this.pausedFor * 1000 : this.pausedFor * 1000
     const totalEstimatedTime = this.ipfs.period.until - this.ipfs.period.since + this.requestedAdditionalTime * 1000
-    const totalPassedTime = this.finishedAt ? this.finishedAt - this.startedAt : new Date() - this.startedAt
+    const totalPassedTime = this.extra.finishTime ? this.extra.finishTime - this.extra.startTime : new Date() - this.extra.startTime
     return Math.round(totalEstimatedTime / (totalPassedTime - totalPausedTime) * 100)
   }
 }
