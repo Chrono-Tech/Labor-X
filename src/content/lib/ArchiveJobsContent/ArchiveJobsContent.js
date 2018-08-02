@@ -22,7 +22,7 @@ class ArchiveJobsContent extends React.Component {
     ),
   }
 
-  renderHead({ finishedCount, finalizedCount, totalCount }) {
+  renderHead ({ finishedCount, finalizedCount, totalCount }) {
     return (
       <div className={css.title}>
         <div className={css.titleText}><Translate value='nav.archivedJobs' /></div>
@@ -44,7 +44,7 @@ class ArchiveJobsContent extends React.Component {
     )
   }
 
-  render() {
+  render () {
     const { groups, totalCount, finishedCount, finalizedCount } = this.props
     return groups == null ? null : (
       <div className={css.main}>
@@ -69,16 +69,16 @@ class ArchiveJobsContent extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     totalCount: getTotalCardsCount(state),
     finishedCount: getFinishedCardsCount(state),
     finalizedCount: getFinalizedCardsCount(state),
-    groups: getCardsByGroupDays(state)
+    groups: getCardsByGroupDays(state),
   }
 }
 
-function mapDispatchToProps(/*dispatch*/) {
+function mapDispatchToProps (/*dispatch*/) {
   return {
     // stack: state.modals.stack,
   }
