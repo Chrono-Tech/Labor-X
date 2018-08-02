@@ -83,6 +83,7 @@ import {
   activeJobs,
   profiles,
   reviewApplicants,
+  completedJobs,
   applicationsAndOffers,
 } from "src/store/reducers"
 
@@ -131,6 +132,7 @@ const reducer = combineReducers({
   clientProfile,
   activeJobs,
   reviewApplicants,
+  completedJobs,
   applicationsAndOffers,
 })
 
