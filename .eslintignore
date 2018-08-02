@@ -217,3 +217,7 @@ src/**/*.js
 !src/store/my-wallet/reducer.js
 !src/store/my-wallet/selectors.js
 !src/utils/copy-to-clipboard.js
+
+!pages/signup/**/*.js
+!src/store/signup/**/*.js
+!src/content/lib/signup/**/*.js
