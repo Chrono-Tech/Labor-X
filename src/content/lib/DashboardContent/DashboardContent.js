@@ -10,7 +10,7 @@ import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
 import ProfileRecruiterModel from 'src/api/backend/model/ProfileRecruiterModel'
 
 import { Widget, Translate, Icon } from 'src/components/common'
-import { MyFundsWidget, ForWorkersWidget } from 'src/partials'
+import { MyFundsWidget, ForWorkersWidget, ForClientsWidget } from 'src/partials'
 import { SignerModel, UserModel } from 'src/models'
 import { signerSelector } from 'src/store'
 import {
@@ -137,55 +137,7 @@ export class DashboardContent extends React.Component {
   renderClientBlock = () => (
     <div className={css.block}>
       <h2 className={css.blockTitle}>For Clients</h2>
-      <div className={css.highlightsRow}>
-        <Widget
-          title='ui.dashboard.client.postYourJob'
-          subtitle='ui.dashboard.client.client'
-          actions={[
-            {
-              href: '/',
-              label: 'Learn more',
-              isLink: true,
-            },
-          ]}
-        >
-              Has got a Job already? Post it now!
-        </Widget>
-        <Widget
-          title='ui.dashboard.client.myPostedJobs'
-          subtitle='ui.dashboard.client.client'
-          actions={[
-            {
-              label: 'Offers Activity',
-              counter: { value: 1 },
-              isLink: true,
-            },
-            {
-              label: 'Worker Assignments Review',
-              counter: { value: 1 },
-              isLink: true,
-            },
-          ]}
-        />
-      </div>
-      <div className={css.highlightsRow}>
-        <Widget
-          title='ui.dashboard.client.jobsProgress'
-          subtitle='ui.dashboard.client.client'
-          actions={[
-            {
-              href: '/',
-              label: 'Install 10 Gas Ovens',
-              counter: { value: 3, isPercent: true },
-            },
-            {
-              href: '/',
-              label: 'Pick-up 3 sofas',
-              counter: { value: 0, isPercent: true },
-            },
-          ]}
-        />
-      </div>
+      <ForClientsWidget signer={this.props.signer} />
     </div>
   )
 

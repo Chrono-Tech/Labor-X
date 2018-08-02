@@ -7,6 +7,5 @@ export const pageDataLoadingSelector = createSelector(getState, state => state.p
 export const pageDataFailureSelector = createSelector(getState, state => state.pageDataFailure)
 export const pageDataSelector = createSelector(getState, state => state.pageData)
 
-export const workerTodoJobsLoadingSelector = createSelector(getState, state => state.workerTodoJobsLoading)
-export const workerTodoJobsFailureSelector = createSelector(getState, state => state.workerTodoJobsFailure)
 export const workerTodoJobsSelector = createSelector(getState, state => state.pageData ? state.pageData.workerTodoJobs : null)
+export const clientTodoJobsSelector = createSelector(getState, state => state.pageData ? state.pageData.clientTodoJobs : null)

@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import { Widget } from 'src/components/common'
 import {
   getWorkerTodoJobs,
-  workerTodoJobsLoadingSelector,
-  workerTodoJobsFailureSelector,
   workerTodoJobsSelector,
 } from 'src/store/dashboard'
 import { SignerModel, JobModel } from 'src/models'
@@ -16,11 +14,8 @@ export class ForWorkersWidget extends React.Component {
   static propTypes = {
     signer: PropTypes.instanceOf(SignerModel).isRequired,
     getWorkerTodoJobs: PropTypes.func.isRequired,
-    workerTodoJobsLoading: PropTypes.bool,
-    workerTodoJobsFailure: PropTypes.instanceOf(Error),
-    workerTodoJobs: PropTypes.arrayOf(PropTypes.object),
-    todoJobs: PropTypes.arrayOf(PropTypes.instanceOf(JobModel)),
-    todoDate:  PropTypes.string,
+    earliestDateJobs: PropTypes.arrayOf(PropTypes.instanceOf(JobModel)),
+    earliestDate:  PropTypes.string,
   }
 
   componentDidMount () {
@@ -28,7 +23,7 @@ export class ForWorkersWidget extends React.Component {
   }
 
   render () {
-    const { todoJobs, todoDate, signer } = this.props
+    const { earliestDateJobs, earliestDate, signer } = this.props
     return signer && (
       <div className={css.main}>
         <div className={css.row}>
@@ -74,14 +69,14 @@ export class ForWorkersWidget extends React.Component {
             ]}
           />
         </div>
-        { todoJobs.length > 0 ? (
+        { earliestDateJobs.length > 0 ? (
           <div className={css.row}>
             <Widget
               title='ui.dashboard.worker.toDo'
-              titlePlaceholder={todoDate}
+              titlePlaceholder={earliestDate}
               subtitle='ui.dashboard.worker.worker'
               actions={
-                todoJobs.map(job => ({
+                earliestDateJobs.map(job => ({
                   label: job.ipfs.name,
                   date: moment(job.ipfs.period.since).format('h:mm A'),
                   isLink: true,
@@ -97,24 +92,22 @@ export class ForWorkersWidget extends React.Component {
 
 const mapStateToProps = (state) => {
   const workerTodoJobs = workerTodoJobsSelector(state)
-  let todoJobs = []
-  let todoDate = null
+  let earliestDate = null
+  let earliestDateJobs = []
   if (workerTodoJobs) {
     workerTodoJobs.forEach(job => {
       const date = job.ipfs.period.since
-      if (moment(date).isSame(todoDate, 'day')) {
-        todoJobs = todoJobs.concat(job)
-      } else if (moment().diff(date, 'days') < 0 && (moment(date).isBefore(todoDate, 'day') || todoDate === null)) {
-        todoDate = date
-        todoJobs = [job]
+      if (moment(date).isSame(earliestDate, 'day')) {
+        earliestDateJobs = earliestDateJobs.concat(job)
+      } else if (moment().diff(date, 'days') < 0 && (moment(date).isBefore(earliestDate, 'day') || earliestDate === null)) {
+        earliestDate = date
+        earliestDateJobs = [job]
       }
     })
   }
   return {
-    workerTodoJobsLoading: workerTodoJobsLoadingSelector(state),
-    workerTodoJobsFailure: workerTodoJobsFailureSelector(state),
-    todoJobs,
-    todoDate: todoDate === null ? null : moment(todoDate).format('D MMM YYYY'),
+    earliestDateJobs,
+    earliestDate: earliestDate === null ? null : moment(earliestDate).format('D MMM YYYY'),
   }
 }
 
