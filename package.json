@@ -111,8 +111,8 @@
     "circular-dependency-plugin": "^5.0.2"
   },
   "scripts": {
-    "watch": "NODE_ENV=development npm run build:sc-config && node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js --config ./webpack.config.dvlp.js --watch",
-    "build": "NODE_ENV=production npm run build:sc-config && node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js --config ./webpack.config.prod.js",
+    "watch": "./node_modules/.bin/cross-env NODE_ENV=development npm run build:sc-config && node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js --config ./webpack.config.dvlp.js --watch",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production npm run build:sc-config && node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js --config ./webpack.config.prod.js",
     "start": "./node_modules/.bin/http-server --push-state -p 3001",
     "lint": "echo 'linting without fix...' && node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx src pages specs",
     "lint:fix": "echo 'linting with fix...' && node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx --fix src pages specs",
