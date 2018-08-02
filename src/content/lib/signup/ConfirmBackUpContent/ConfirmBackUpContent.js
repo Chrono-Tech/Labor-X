@@ -1,29 +1,28 @@
 import React  from 'react'
+import PropTypes from 'prop-types'
 import shuffle from 'lodash/shuffle'
-
 import classnames from 'classnames'
-
-
-import SignupLayout from 'src/components/layouts/SignupLayout/SignupLayout'
-
-
-import { reduxForm, Field, change } from 'redux-form'
+import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { Link, Button } from 'components/common'
+import SignupLayout from 'src/components/layouts/SignupLayout/SignupLayout'
+import { Button } from 'components/common'
+import { mnemonicConfirmationSelector, mnemonicSelector } from "src/store/signup/selectors"
+import { CONFIRM_BACK_UP_FORM as FORM } from 'src/store/signup/constants'
+import { submitConfirmBackUp as submit, setMnemonicConfirmation } from "src/store/signup/actions"
 import validate from './validate'
 
-import 'styles/globals/globals.scss'
 import css from './ConfirmBackUpContent.scss'
-import {mnemonicConfirmationSelector, mnemonicSelector} from "src/store/signup/selectors";
-
-import { CONFIRM_BACK_UP_FORM as FORM } from 'src/store/signup/constants'
-import {generateMnemonic} from "src/store/signup/actions";
-import {push} from "connected-react-router";
-
-import {submitConfirmBackUp as submit} from "src/store/signup/actions";
 
 export class ConfirmBackUpContent extends React.Component {
+
+  static propTypes = {
+    mnemonic: PropTypes.string.isRequired,
+    mnemonicConfirmation: PropTypes.string.isRequired,
+    error: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    setMnemonicConfirmation: PropTypes.func.isRequired,
+  }
 
   constructor (props){
     super(props)
@@ -31,22 +30,19 @@ export class ConfirmBackUpContent extends React.Component {
   }
 
   onWordClick (word){
-    const { dispatch } = this.props
     const words = this.props.mnemonicConfirmation.split(' ')
     const newMnemonic = [ ...words, word ].join(' ').trim()
-    dispatch(change(FORM, 'mnemonicConfirmation', newMnemonic))
+    this.props.setMnemonicConfirmation(newMnemonic)
   }
 
   clearMnemonic (){
-    const { dispatch } = this.props
-    dispatch(change(FORM, 'mnemonicConfirmation', ''))
+    this.props.setMnemonicConfirmation('')
   }
 
   clearLastWord (){
-    const { dispatch } = this.props
     const words = this.props.mnemonicConfirmation.split(' ')
     const newMnemonic = words.slice(0, -1).join(' ')
-    dispatch(change(FORM, 'mnemonicConfirmation', newMnemonic))
+    this.props.setMnemonicConfirmation(newMnemonic)
   }
 
   renderWords () {
@@ -60,11 +56,10 @@ export class ConfirmBackUpContent extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, mnemonic } = this.props
     return (
       <div>
         <SignupLayout>
-          <form className={css.root} name={FORM} onSubmit={handleSubmit}>
+          <form className={css.root} name={FORM} onSubmit={this.props.handleSubmit}>
             <div className={css.contentBlock}>
               <h2>Confirm back-up phrase (mnemonic key)</h2>
 
@@ -101,7 +96,7 @@ export class ConfirmBackUpContent extends React.Component {
                 // disabled={pristine || invalid}
                 disabled={this.props.mnemonic !== this.props.mnemonicConfirmation}
                 mods={Button.MODS.INVERT}
-                error={error}
+                error={this.props.error}
                 primary
               />
 
@@ -119,9 +114,6 @@ export class ConfirmBackUpContent extends React.Component {
 
 }
 
-
-
-
 ConfirmBackUpContent = reduxForm({
   form: FORM,
   destroyOnUnmount: false,
@@ -135,8 +127,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: () => dispatch(submit())
-  // onSubmit: () => dispatch(push('/your-wallet-file')),
+  onSubmit: () => dispatch(submit()),
+  setMnemonicConfirmation: (value) => dispatch(setMnemonicConfirmation(value)),
 })
 
 ConfirmBackUpContent = connect(mapStateToProps, mapDispatchToProps)(ConfirmBackUpContent)

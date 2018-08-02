@@ -1,6 +1,6 @@
 import React  from 'react'
 
-import AccountPasswordContent from "../../../src/content/lib/signup/AccountPasswordContent/AccountPasswordContent";
+import AccountPasswordContent from "src/content/lib/signup/AccountPasswordContent/AccountPasswordContent"
 
 export class AccountPasswordPage extends React.Component {
 

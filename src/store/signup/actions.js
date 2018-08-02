@@ -1,21 +1,28 @@
 import uniqueId from 'lodash/uniqueId'
 import bip39 from 'bip39'
 import { push } from 'connected-react-router'
-import { destroy } from 'redux-form'
+import { destroy, change } from 'redux-form'
 
 import * as profileApi from 'src/api/backend'
-import {accountPasswordFormValuesSelector, mnemonicSelector} from "./selectors";
-import WalletEntryModel from "../../models/wallets/WalletEntryModel";
-import {walletAdd} from "src/store/wallet/actions";
-import {userSave} from "../user/actions";
-import {UserAccountTypesModel, WalletModel} from "../../models";
-import {walletLoad, walletSelect} from "../";
-import {ACCOUNT_PASSWORD_FORM, CONFIRM_BACK_UP_FORM, COPY_YOUR_ACCOUNT_PASSWORD_FORM} from "./constants";
-import {web3Selector} from "../ethereum/selectors";
-import mnemonicToWallet from "../../utils/mnemonicToWallet";
+import WalletEntryModel from "src/models/wallets/WalletEntryModel"
+import { userSave } from "src/store/user/actions"
+import { UserAccountTypesModel, WalletModel } from "src/models"
+import { walletLoad, walletAdd } from "src/store/wallet/actions"
+import { web3Selector } from "src/store/ethereum/selectors"
+import mnemonicToWallet from "src/utils/mnemonicToWallet"
+import { accountPasswordFormValuesSelector, mnemonicSelector } from "./selectors"
+import {
+  ACCOUNT_PASSWORD_FORM,
+  CONFIRM_BACK_UP_FORM,
+  COPY_YOUR_ACCOUNT_PASSWORD_FORM,
+} from "./constants"
 
 export const SET_MNEMONIC = 'SIGNUP/SET_MNEMONIC'
 export const setMnemonic = (mnemonic) => ({ type: SET_MNEMONIC, mnemonic })
+
+export const setMnemonicConfirmation = (mnemonicConfirmation) => (dispatch) => {
+  dispatch(change(CONFIRM_BACK_UP_FORM, 'mnemonicConfirmation', mnemonicConfirmation))
+}
 
 export const submitAccountPassword = () => (dispatch) => {
   dispatch(setMnemonic(bip39.generateMnemonic()))
@@ -48,29 +55,29 @@ export const submitWelcome = () => async (dispatch, getState) => {
     const state = getState()
 
     const mnemonic = mnemonicSelector(state)
-    const {roles, name, password} = accountPasswordFormValuesSelector(state)
+    const { roles, name, password } = accountPasswordFormValuesSelector(state)
     const web3 = web3Selector()(state)
 
     const wallet = mnemonicToWallet(web3, mnemonic)
 
     // add to wallet store
     const encryptedWallet = wallet.encrypt(password)
-    const walletEntryModel = new WalletEntryModel({key: uniqueId(), name, encrypted: encryptedWallet})
+    const walletEntryModel = new WalletEntryModel({ key: uniqueId(), name, encrypted: encryptedWallet })
     dispatch(walletAdd(walletEntryModel))
-    const walletModel = new WalletModel({entry: walletEntryModel, wallet})
+    const walletModel = new WalletModel({ entry: walletEntryModel, wallet })
     dispatch(walletLoad(walletModel))
 
     // register in profile service
     const account = wallet[0]
     await profileApi.signup(account, roles)
-    const {token, profile, client, worker, recruiter} = await profileApi.signin(account)
+    const { token, profile, client, worker, recruiter } = await profileApi.signin(account)
     const accountTypes = new UserAccountTypesModel({
       client: client.isRequested,
       worker: worker.isRequested,
-      recruiter: recruiter.isRequested
+      recruiter: recruiter.isRequested,
     })
 
-    dispatch(userSave({token, profile, client, worker, recruiter, accountTypes}))
+    dispatch(userSave({ token, profile, client, worker, recruiter, accountTypes }))
 
     dispatch(destroy(ACCOUNT_PASSWORD_FORM, COPY_YOUR_ACCOUNT_PASSWORD_FORM, CONFIRM_BACK_UP_FORM))
 
@@ -102,5 +109,4 @@ export const downloadWallet = () => (dispatch, getState) => {
   element.click()
   document.body.removeChild(element)
 }
-
 

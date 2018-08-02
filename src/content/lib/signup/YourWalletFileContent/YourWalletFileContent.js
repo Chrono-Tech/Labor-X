@@ -1,14 +1,18 @@
 import React  from 'react'
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import SignupLayout from 'src/components/layouts/SignupLayout/SignupLayout'
+import { submitYourWalletFile as submit, downloadWallet } from "src/store/signup/actions"
 
-import 'styles/globals/globals.scss'
 import css from './YourWalletFileContent.scss'
-import {downloadWallet, generateMnemonic} from "../../../../store/signup/actions";
 
-import {connect} from "react-redux";
-import {submitYourWalletFile as submit} from "src/store/signup/actions";
 export class YourWalletFileContent extends React.Component {
+
+  static propTypes = {
+    submit: PropTypes.func.isRequired,
+    downloadWallet: PropTypes.func.isRequired,
+  }
 
   render () {
     return (
@@ -41,13 +45,9 @@ export class YourWalletFileContent extends React.Component {
 
 }
 
-// const mapStateToProps = (state) => ({
-//   mnemonic: mnemonicSelector(state)
-// })
-
 const mapDispatchToProps = (dispatch) => ({
   downloadWallet: () => dispatch(downloadWallet()),
-  submit: () => dispatch(submit())
+  submit: () => dispatch(submit()),
 })
 
 YourWalletFileContent = connect(null, mapDispatchToProps)(YourWalletFileContent)

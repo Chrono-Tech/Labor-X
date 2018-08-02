@@ -1,9 +1,11 @@
+// @flow
+
 import {
   SUBMIT_WELCOME_REQUEST,
   SUBMIT_WELCOME_SUCCESS,
   SUBMIT_WELCOME_FAILURE,
-  SET_MNEMONIC
-} from "./actions";
+  SET_MNEMONIC,
+} from "./actions"
 
 interface State {
   mnemonic: string;

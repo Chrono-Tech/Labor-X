@@ -1,15 +1,22 @@
 import React from 'react'
-import connect from "react-redux/lib/connect/connect";
+import PropTypes from 'prop-types'
+import connect from "react-redux/lib/connect/connect"
 
-import {submitWelcome as submit} from "src/store/signup/actions";
-import {submitWelcomeLoadingSelector as submitLoadingSelector} from "src/store/signup/selectors";
-import {Link} from 'src/components/common'
+import { submitWelcome as submit } from "src/store/signup/actions"
+import { submitWelcomeLoadingSelector as submitLoadingSelector } from "src/store/signup/selectors"
+import { Link } from 'src/components/common'
+import WhiteRoundedButton from "src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton"
 
 import css from './WelcomeContent.pcss'
-import WhiteRoundedButton from "../../../../components/common/buttons/WhiteRoundedButton/WhiteRoundedButton";
 
 export class WelcomeContent extends React.Component {
-  render() {
+
+  static propTypes = {
+    submit: PropTypes.func.isRequired,
+    submitLoading: PropTypes.bool.isRequired,
+  }
+
+  render () {
     return (
       <div>
         <div className={css.root}>
@@ -24,12 +31,12 @@ export class WelcomeContent extends React.Component {
             <h1>Welcome to LaborX!</h1>
             <p>
               <strong>Dear Member,</strong>
-              <br/>
+              <br />
               our team thanks you for creating the account and wishes you a productive work.
             </p>
-            <br/>
-            <br/>
-            <br/>
+            <br />
+            <br />
+            <br />
             <WhiteRoundedButton onClick={this.props.submit} loader={this.props.submitLoading}>Done</WhiteRoundedButton>
           </div>
         </div>
@@ -43,7 +50,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  submit: () => dispatch(submit())
+  submit: () => dispatch(submit()),
 })
 
 WelcomeContent = connect(mapStateToProps, mapDispatchToProps)(WelcomeContent)

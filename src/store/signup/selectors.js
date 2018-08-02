@@ -3,7 +3,7 @@ import formValueSelector from 'redux-form/lib/formValueSelector'
 import getFormNames from 'redux-form/lib/getFormNames'
 import getFormValues from 'redux-form/lib/getFormValues'
 
-import {ACCOUNT_PASSWORD_FORM, CONFIRM_BACK_UP_FORM, COPY_YOUR_ACCOUNT_PASSWORD_FORM} from "./constants";
+import { ACCOUNT_PASSWORD_FORM, CONFIRM_BACK_UP_FORM, COPY_YOUR_ACCOUNT_PASSWORD_FORM } from "./constants"
 
 export const stateSelector = (state) => state.signup
 export const mnemonicSelector = createSelector(stateSelector, (state) => state.mnemonic)

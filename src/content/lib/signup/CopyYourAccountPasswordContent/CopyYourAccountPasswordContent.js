@@ -1,34 +1,33 @@
 import React  from 'react'
-import {push} from "connected-react-router";
+import PropTypes  from 'prop-types'
 import { Checkbox } from 'redux-form-material-ui'
-import { reduxForm, Field, SubmissionError } from 'redux-form'
+import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 
-import {COPY_YOUR_ACCOUNT_PASSWORD_FORM as FORM} from "src/store/signup/constants";
+import { COPY_YOUR_ACCOUNT_PASSWORD_FORM as FORM } from "src/store/signup/constants"
 import SignupLayout from 'src/components/layouts/SignupLayout/SignupLayout'
-import { Link, Button } from 'components/common'
+import { Link, Button } from 'src/components/common'
+import { mnemonicSelector } from "src/store/signup/selectors"
+import { submitCopyYourAccountPassword as submit } from "src/store/signup/actions"
 import validate from './validate'
-import {mnemonicSelector} from "src/store/signup/selectors";
 
-import 'styles/globals/globals.scss'
 import css from './CopyYourAccountPasswordContent.scss'
-
-import {submitCopyYourAccountPassword as submit} from "src/store/signup/actions";
-
-const onSubmit = ({ confirm }) => {
-  if (!confirm) {
-    throw new SubmissionError({ _error: 'Please apply license' })
-  }
-}
 
 export class CopyYourAccountPasswordContent extends React.Component {
 
+  static propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    mnemonic: PropTypes.string.isRequired,
+    pristine: PropTypes.bool.isRequired,
+    invalid: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+  }
+
   render () {
-    const { handleSubmit, error, pristine, invalid, mnemonic } = this.props
     return (
       <div>
         <SignupLayout>
-          <form className={css.root} name={FORM} onSubmit={handleSubmit}>
+          <form className={css.root} name={FORM} onSubmit={this.props.handleSubmit}>
             <h2>Write down back-up phrase</h2>
             <p className={css.description}>
               You can use this phrase to login and access your wallet, even if you forgot your password.
@@ -37,9 +36,7 @@ export class CopyYourAccountPasswordContent extends React.Component {
             </p>
             <div className={css.phraseBlock}>
               <div className={css.phraseBlockTitle}>Your back-up phrase (Mnemonic Key)</div>
-              <div className={css.phrase}>
-                { mnemonic }
-              </div>
+              <div className={css.phrase}>{ this.props.mnemonic }</div>
             </div>
             <div className={css.infoBlock}>
               <div className={css.infoBlockHeader}>Q&A</div>
@@ -118,9 +115,9 @@ export class CopyYourAccountPasswordContent extends React.Component {
                 label='Proceed'
                 buttonClassName={css.submitButton}
                 type={Button.TYPES.SUBMIT}
-                disabled={pristine || invalid}
+                disabled={this.props.pristine || this.props.invalid}
                 mods={Button.MODS.INVERT}
-                error={error}
+                error={this.props.error}
                 errorClassName={css.formError}
                 primary
               />
@@ -143,11 +140,10 @@ CopyYourAccountPasswordContent = reduxForm({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
   validate,
-  // onSubmit
 })(CopyYourAccountPasswordContent)
 
 const mapStateToProps = (state) => ({
-  mnemonic: mnemonicSelector(state)
+  mnemonic: mnemonicSelector(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
