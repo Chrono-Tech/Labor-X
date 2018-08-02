@@ -83,6 +83,7 @@ import {
   activeJobs,
   profiles,
   reviewApplicants,
+  completedJobs,
 } from "src/store/reducers"
 
 import 'styles/globals/globals.scss'
@@ -130,6 +131,7 @@ const reducer = combineReducers({
   clientProfile,
   activeJobs,
   reviewApplicants,
+  completedJobs,
 })
 
 const store = createStore(
