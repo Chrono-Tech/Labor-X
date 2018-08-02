@@ -31,7 +31,7 @@ export default class WorkerJobCard extends React.Component {
   }
 
   renderFooter = () => {
-    const { notice, onClickReview, onClickReviewOffer, onClickDismiss, offer } = this.props
+    const { notice, onClickReview, onClickReviewOffer, onClickDismiss } = this.props
     return (
       <div>
         { !notice ? null : (
@@ -39,7 +39,7 @@ export default class WorkerJobCard extends React.Component {
             position={Tip.POSITION.LEFT}
             tipContent={(
               <div>
-                <div className={css.tipTitle}>{offer.createdAt ? moment(offer.createdAt).format(dateFormat) : moment(Date.now()).format(dateFormat)}</div>
+                <div className={css.tipTitle}>{moment(notice.date).format(dateFormat)}</div>
                 <p>{notice.description}</p>
               </div>
             )}
