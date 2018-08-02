@@ -33,6 +33,8 @@ export const STATE = {
   pageData: null,
   pageDataLoading: true,
   pageDataFailure: null,
+  workerTodoJobsLoading: true,
+  workerTodoJobsFailure: null,
 }
 
 export default (state = STATE, { type, payload }) => {

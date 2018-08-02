@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { Translate } from 'components/common'
-import { signerSelector, boardByIdSelector, jobByIdSelector, offersListByWorkerSelector } from 'src/store'
+import { getCards, getCardsApproved, getApplicationsCount } from 'src/store/applicationsAndOffers/selectors'
 import { JobModel, BoardModel } from 'src/models'
 import OffersTabContent from './OffersTabContent/OffersTabContent'
 import ApplicationsTabContent from './ApplicationsTabContent/ApplicationsTabContent'
@@ -14,6 +14,7 @@ import css from './ApplicationsAndOffersContent.scss'
 
 class ApplicationsAndOffersContent extends React.Component {
   static propTypes = {
+    applicationsCount: PropTypes.number,
     applications: PropTypes.arrayOf(PropTypes.shape({
       job: PropTypes.instanceOf(JobModel),
       board: PropTypes.instanceOf(BoardModel),
@@ -59,7 +60,7 @@ class ApplicationsAndOffersContent extends React.Component {
   handleTabChange = (e, index) => this.setState({ slideIndex: index })
 
   render () {
-    const { applications, applicationsApproved, offers } = this.props
+    const { applications, applicationsApproved, applicationsCount, offers } = this.props
 
     return (
       <div className={css.main}>
@@ -67,7 +68,7 @@ class ApplicationsAndOffersContent extends React.Component {
           <div className={css.titleText}><Translate value='nav.applicationsAndOffers' /></div>
           <div className={css.titleStats}>
             <div>
-              <h2 className={css.titleStatsCounter}>{applicationsApproved.length}</h2>
+              <h2 className={css.titleStatsCounter}>{applicationsCount}</h2>
               <div>Applications</div>
             </div>
             <div>
@@ -88,7 +89,7 @@ class ApplicationsAndOffersContent extends React.Component {
             index={this.state.slideIndex}
             onChangeIndex={this.handleChangeIndex}
           >
-            <ApplicationsTabContent applicationsApproved={applicationsApproved} applications={applications} />
+            <ApplicationsTabContent applications={applications} applicationsApproved={applicationsApproved} />
             <OffersTabContent offers={offers} />
           </SwipeableViews>
         </div>
@@ -98,28 +99,10 @@ class ApplicationsAndOffersContent extends React.Component {
 }
 
 function mapStateToProps (state) {
-  // TODO @aevalyakin bind data
-
-  const signer = signerSelector()(state)
-  const myOffers = offersListByWorkerSelector(signer.address)(state)
-
-  const applicationsApproved = myOffers.map((offer) => {
-    const job = jobByIdSelector(offer.jobId)(state)
-    return {
-      job,
-      board: boardByIdSelector(job.boardId)(state),
-      offer,
-      notice: {
-        label: 'ON REVIEW',
-        description: 'Your application is under review. We will send you a notification once decision has been made.',
-        date: new Date('12-12-2017'),
-      },
-    }
-  })
-
   return {
-    applications:[],
-    applicationsApproved,
+    applications: getCards(state),
+    applicationsApproved: getCardsApproved(state),
+    applicationsCount: getApplicationsCount(state),
     offers: [],
   }
 }
