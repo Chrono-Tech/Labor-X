@@ -2,15 +2,13 @@ import { createSelector } from "reselect"
 import moment from 'moment'
 import groupBy from 'lodash/groupBy'
 
-export const getState = state => {
-    console.log(state);
-    return state.archiveJobs
-}
+export const getState = state => state.archiveJobs
 
 export const getSelectInitialPropsLoading = createSelector(getState, state => state.selectInitialPropsLoading)
 export const getCardsByGroupDays = createSelector(
-    state => state.archiveJobs.cards,
-    (cards) => {
+    getState,
+    state => {
+        const { cards } = state;
         const groups = groupBy(cards, card => moment(card.job.extra.createdAt).format('YYYY-MM-DD'));
         return Object.entries(groups)
             .map(([key, cards]) => ({
@@ -23,16 +21,16 @@ export const getCardsByGroupDays = createSelector(
 )
 
 export const getTotalCardsCount = createSelector(
-    state => state.archiveJobs.cards,
-    (cards) => cards.length,
+    getState,
+    state => state.cards.length,
 )
 
 export const getFinalizedCardsCount = createSelector(
-    state => state.archiveJobs.cards,
-    (cards) => cards.filter(card => card.worker != null).length,
+    getState,
+    state => state.cards.filter(card => card.worker != null).length,
 )
 
 export const getFinishedCardsCount = createSelector(
-    state => state.archiveJobs.cards,
-    cards => cards.length - cards.filter(card => card.worker != null).length
+    getState,
+    state => state.cards.length - state.cards.filter(card => card.worker != null).length
 )

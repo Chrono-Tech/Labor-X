@@ -19,15 +19,13 @@ export const selectInitialProps = () => async (dispatch, getState) => {
     const userAddress = currentAddressSelector()(state)
     const jobs = (await JobsDataProvider.getJobs(BoardController)).filter((x) => x.boardId)
     const boards = await BoardController.getBoards(userAddress)
-    const userJobs = jobs.filter((x) => x.client.toLowerCase() === userAddress.toLowerCase())
+    const clientJobs = jobs.filter((x) => x.client.toLowerCase() === userAddress.toLowerCase())
+    const clientArchiveJobs = clientJobs.filter((x) => allowedStatuses.includes(x.state))
 
-    const workerAddresses = userJobs
-      .reduce((result, x) => (x.worker ? result.concat(x) : result), [])
-      .map((x) => x.worker)
+    const workerAddresses = clientArchiveJobs.map((x) => x.worker)
     const workerPersons = await profileApi.getPersons(workerAddresses)
 
-    const cards = userJobs
-      .filter((job) => allowedStatuses.includes(job.state))
+    const cards = clientArchiveJobs
       .map(job => ({
         job,
         board: boards.find((board) => board.id === job.boardId),
