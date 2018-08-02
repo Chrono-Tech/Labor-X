@@ -52,9 +52,9 @@ import { WalletEntryModel } from 'src/models'
 import {
   hideAccount404Dialog,
   handleAccount404DialogYesClick,
-} from 'src/store/login/actions'
+} from 'src/store/_login/actions'
 
-import { getOpenAccount404Dialog } from 'src/store/login/selectors'
+import { getOpenAccount404Dialog } from 'src/store/_login/selectors'
 
 import css from './LoginOptions.scss'
 

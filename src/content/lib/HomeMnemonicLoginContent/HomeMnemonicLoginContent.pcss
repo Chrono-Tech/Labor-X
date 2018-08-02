@@ -1,0 +1,89 @@
+.HomeMnemonicLoginContent {
+  & .list {
+    margin-bottom: 20px;
+  }
+  & .listItem {
+    padding-left: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    &.listItemNoAccounts {
+      text-align: center;
+      display: block;
+    }
+
+  }
+  & .divider {
+    background-color: #A8EAFF;
+  }
+  & .listItemTextPrimary {
+    color: #A8EAFF;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+  }
+  & .listItemTextSecondary {
+    color: #A8EAFF;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  & .accountListIconButton {
+    position: relative;
+    right: -18px;
+    & .accountListIcon {
+      color: rgba(256, 256, 256, 0.5)
+    }
+  }
+
+  & .passwordTextField {
+    width: 100%;
+    & .passwordTextFieldInputComponent {
+      padding: 0;
+      &:before,
+      &:after {
+        border-color: #A8EAFF !important;
+        border-bottom-width: 1px !important;
+      }
+    }
+    & .passwordTextFieldInput {
+      line-height: 20px;
+      padding: 10px 0;
+      border-color: #A8EAFF;
+      color: #A8EAFF;
+      font-weight: 400;
+      font-size: 14px;
+      text-align: center;
+    }
+    & .passwordTextFieldFormHelperText {
+      text-align: center;
+    }
+  }
+
+  & .forgotLink {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 300;
+  }
+
+  & .otherActions {
+  //margin-bottom: 3rem;
+    color: #BFE7F4;
+    font-size: 16px;
+    font-weight: 300;
+    & .backButton {
+      margin-left: 5px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: inline;
+      font-weight: 300;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+}

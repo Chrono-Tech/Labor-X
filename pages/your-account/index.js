@@ -2,8 +2,11 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import Link from 'react-router-dom/Link'
-import styles from './index.pcss'
+
 import WhiteRoundedButton from "../../src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton";
+
+import styles from './index.pcss'
+
 export class YourAccountPage extends React.Component {
   render () {
     return (
@@ -32,4 +35,5 @@ export class YourAccountPage extends React.Component {
     )
   }
 }
+
 export default YourAccountPage

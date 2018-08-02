@@ -59,6 +59,14 @@ import OurNetworkPage from "pages/our-network"
 import YourAccountPage from "pages/your-account"
 import CryptoCurrenciesPage from "pages/crypto-currencies"
 import LaborhourPage from "pages/laborhour"
+import MyAccountsPage from "pages/my-accounts"
+import HomeLoginMethodsPage from "pages/home-login-methods"
+import HomeFileLoginPage from "pages/home-file-login"
+import HomePrivateKeyLoginPage from "pages/home-private-key-login"
+import HomeMnemonicLoginPage from "pages/home-mnemonic-login"
+import CreateWalletPage from "pages/create-wallet"
+import AccountPasswordPage from "pages/account-password"
+import CopyYourAccountPasswordPage from "pages/copy-your-account-password"
 
 import { initFrontend } from "src/store/bootstrap"
 import web3Factory from "src/web3"
@@ -88,6 +96,10 @@ import {
   activeJobs,
   profiles,
   reviewApplicants,
+  myAccounts,
+  homeFileLogin,
+  homePrivateKeyLogin,
+  createWallet,
   completedJobs,
   applicationsAndOffers,
 } from "src/store/reducers"
@@ -136,6 +148,10 @@ const reducer = combineReducers({
   postedJobs,
   clientProfile,
   activeJobs,
+  myAccounts,
+  homeFileLogin,
+  homePrivateKeyLogin,
+  createWallet,
   reviewApplicants,
   completedJobs,
   applicationsAndOffers,
@@ -207,6 +223,14 @@ const persistor = persistStore(store, null, async () => {
                       <Route exact path='/your-account' component={YourAccountPage} />
                       <Route exact path='/crypto-currencies' component={CryptoCurrenciesPage} />
                       <Route exact path='/laborhour' component={LaborhourPage} />
+                      <Route exact path='/my-accounts' component={MyAccountsPage} />
+                      <Route exact path='/home-login-methods' component={HomeLoginMethodsPage} />
+                      <Route exact path='/home-file-login' component={HomeFileLoginPage} />
+                      <Route exact path='/home-private-key-login' component={HomePrivateKeyLoginPage} />
+                      <Route exact path='/home-mnemonic-login' component={HomeMnemonicLoginPage} />
+                      <Route exact path='/create-wallet' component={CreateWalletPage} />
+                      <Route exact path='/account-password' component={AccountPasswordPage} />
+                      <Route exact path='/copy-your-account-password' component={CopyYourAccountPasswordPage} />
                     </Switch>
                     <ModalStack />
                   </div>
@@ -219,5 +243,4 @@ const persistor = persistStore(store, null, async () => {
     </Provider>,
     document.getElementById('root')
   )
-
 })

@@ -1,8 +1,10 @@
+import { push } from "connected-react-router"
 import { daoByType } from "../daos/selectors"
 import { bytes32ToIPFSHash, loadFromIPFS, storeIntoIPFS } from "../../utils"
 import { UserAccountTypesModel, UserModel } from "../../models"
 import { web3Selector } from "../ethereum/selectors"
 import { executeTransaction } from './../ethereum/actions'
+import { walletLoad } from "../"
 
 export const USER_SAVE = 'user/save'
 
@@ -49,4 +51,10 @@ export const setUserAccountTypes = (address, accountTypes, signer) => async (dis
     console.error(err)
     throw err
   }
+}
+
+export const logout = () => (dispatch) => {
+  dispatch(userSave(null))
+  dispatch(walletLoad(null))
+  dispatch(push('/'))
 }

@@ -4,11 +4,15 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Link from 'react-router-dom/Link'
 
+import Button from '@material-ui/core/Button'
+
 import { Carousel, ParallaxBox } from 'src/components/common'
 import { Footer } from 'src/components/layouts'
 import { hideCookiesNotice, getCookiesNoticeValue } from 'src/store'
 
 import css from './index.scss'
+import OrangeRoundedButton from "../../src/components/common/buttons/OrangeRoundedButton/OrangeRoundedButton";
+import BlueRoundedButton from "../../src/components/common/buttons/BlueRoundedButton/BlueRoundedButton";
 
 class LandingPage extends React.Component {
   static propTypes = {
@@ -76,16 +80,11 @@ class LandingPage extends React.Component {
         <div className={css.fixedPanel}>
           { this.getCookiesNoticeWidget() }
           <div className={css.navigationPanel}>
-            <div className={css.createButtonWrapper} >
-              <Link to='/create-account' className={css.createButton}>
-                New account
-              </Link>
-            </div>
-            <div className={css.loginButtonWrapper}>
-              <Link to='/login' className={css.loginButton}>
-                Login
-              </Link>
-            </div>
+            <OrangeRoundedButton component={Link} to='/crypto-education'>NEW ACCOUNT</OrangeRoundedButton>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <BlueRoundedButton component={Link} to='/my-accounts'>LOGIN</BlueRoundedButton>
           </div>
         </div>
         <div className={css.sliderContainer}>

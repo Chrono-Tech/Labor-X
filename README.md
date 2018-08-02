@@ -3,24 +3,34 @@
 
 ## Launch in development environment
 
-Build:
+Installation:
 ```
 yarn install
 ```
 
 Launch:
 ```
-yarn dev
+yarn watch
+```
+in separate terminal:
+```
+yarn start
 ```
 
 The app will be launched on the port 3001 by default.
 
-Run storybook for UI development:
+## Launch in production environment
+
+Launch:
 ```
-yarn storybook
+yarn build
+```
+in separate terminal:
+```
+yarn start
 ```
 
-storybook will be launched on localhost:6006
+The app will be launched on the port 3001 by default.
 
 ## Launch in demo environment
 
@@ -51,3 +61,24 @@ yarn docker:stop
 ```
 
 The app will be launched on the 192.168.11.0:3000
+
+## Test
+
+Run:
+```
+yarn test
+```
+
+With coverage report:
+```
+yarn test:coverage
+```
+
+## Other
+
+Run storybook for UI development:
+```
+yarn storybook
+```
+
+storybook will be launched on localhost:6006

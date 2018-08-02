@@ -1,17 +1,21 @@
 import React from 'react'
-import { LoginActions } from 'src/components/layouts'
-import { LoginOptions } from 'src/components/Login'
+import { connect } from 'react-redux'
+import Redirect from 'react-router-dom/Redirect'
 
-import css from './index.scss'
+import { addressSelector } from "src/store/login/selectors";
+import LoginContent from "src/content/lib/LoginContent/LoginContent";
 
-export default class LoginPage extends React.Component {
+export class LoginPage extends React.Component {
+
   render () {
-    return (
-      <div className={css.root}>
-        <LoginActions contentClassName={css.contentGradient}>
-          <LoginOptions />
-        </LoginActions>
-      </div>
-    )
+    return this.props.address ? <LoginContent /> : <Redirect to='/my-accounts' />
   }
+
 }
+
+const mapStateToProps = (state) => ({
+  address: addressSelector(state),
+})
+
+export default connect(mapStateToProps)(LoginPage)
+

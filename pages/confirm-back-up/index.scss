@@ -1,0 +1,18 @@
+.contentBlock {
+  border-bottom: 1px solid #E5E5E5;
+  padding-bottom: 20px;
+}
+
+.page {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+
+.activeSlide {
+  opacity: 1;
+  display: block;
+  visibility: visible;
+
+}

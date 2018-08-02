@@ -1,11 +1,10 @@
-import { push } from 'connected-react-router'
 import uniqid from 'uniqid'
 import bip39 from 'bip39'
 import { WalletModel, WalletEntryModel } from 'src/models'
 import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
-import { changeStep as loginChangeStep } from './../login/actions'
+// import { changeStep as loginChangeStep } from './../login/actions'
 
 export const WALLETS_ADD = 'wallets/add'
 export const WALLETS_SELECT = 'wallets/select'
@@ -128,11 +127,4 @@ export const createWallet = ({ name, password, privateKey, mnemonic, numberOfAcc
   // }
 
   return walletEntry
-}
-
-export const logout = () => (dispatch) => {
-  dispatch(walletSelect(null))
-  dispatch(walletLoad(null))
-  dispatch(loginChangeStep(null))
-  dispatch(push('/'))
 }

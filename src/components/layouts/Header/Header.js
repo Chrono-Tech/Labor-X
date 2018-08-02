@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, Tip } from 'src/components/common'
 import { RightPanel } from 'src/components/layouts'
-import { userSelector, logout } from "src/store"
+import { logout } from "src/store/user/actions"
+import { userSelector } from "src/store/user/selectors"
 import { UserAccountTypesModel } from "src/models"
 import { NotificationWidget } from "src/partials"
 import ProfileModel from 'src/api/backend/model/ProfileModel'
