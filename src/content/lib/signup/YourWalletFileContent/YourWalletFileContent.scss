@@ -1,0 +1,63 @@
+.root {
+  padding: 50px 20px 25px;
+}
+
+.description {
+  margin-bottom: 50px;
+
+  @media (max-width: 1023px) {
+    margin-bottom: 20px;
+  }
+}
+
+.submitButton {
+  background: #00A0D2;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 21px;
+  cursor: pointer;
+  line-height: 40px;
+  height: 40px;
+  min-width: 150px;
+  border: none;
+  margin-bottom: 40px;
+
+  &:hover {
+    background: #0088C3;
+  }
+}
+
+.progressBlock {
+  width: 70px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progressPoint {
+  background: #00A0D2;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  &.progressPointInactive {
+    background: #BFBFBF;
+  }
+}
+
+.link {
+  color: #00A0D2;
+  font-size: 16px;
+  font-weight: 400 !important;
+  margin-bottom: 50px;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+
+  }
+}

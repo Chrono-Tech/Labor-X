@@ -6,6 +6,7 @@ import { replaceWallet, getWalletAddress } from 'src/utils'
 import { web3Selector } from '../ethereum/selectors'
 
 import { changeStep as loginChangeStep } from './../login/actions'
+import { userSave } from "../user/actions"
 
 export const WALLETS_ADD = 'wallets/add'
 export const WALLETS_SELECT = 'wallets/select'
@@ -134,5 +135,7 @@ export const logout = () => (dispatch) => {
   dispatch(walletSelect(null))
   dispatch(walletLoad(null))
   dispatch(loginChangeStep(null))
+  dispatch(userSave(null))
   dispatch(push('/'))
+
 }

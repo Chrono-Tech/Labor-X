@@ -16,7 +16,7 @@ class DelegateDialog extends React.Component {
   static propTypes = {
     board: PropTypes.instanceOf(BoardModel),
     job: PropTypes.instanceOf(JobModel),
-    handleCancel: PropTypes.func
+    handleCancel: PropTypes.func,
   } 
 
   handleSumbit = () => {

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 
+export const stateSelector = (state) => state.wallet
 export const walletsSelector = () => (state) => state.wallet
 
 export const walletModelSelector = () => createSelector(
@@ -20,3 +21,5 @@ export const currentAddressSelector = () => createSelector(
   signerSelector(),
   (signer) => signer ? signer.address : null
 )
+
+export const decryptedWalletSelector = createSelector(stateSelector, (state) => state.decryptedWallet)

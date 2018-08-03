@@ -61,11 +61,7 @@ export const signIn = ({ password }) => async (dispatch, getState) => {
     const { selectedWallet } = state.wallet
     const walletModel = await dispatch(decryptWallet(new WalletEntryModel(selectedWallet), password))
     const account = walletModel.wallet[0]
-    const { types } = selectedWallet
-    const roles = types
-      ? { isClient: types.client, isWorker: types.worker, isRecruiter: types.recruiter }
-      : null
-    const { token, profile, client, worker, recruiter } = await backendApi.signin(account, roles)
+    const { token, profile, client, worker, recruiter } = await backendApi.signin(account)
     const accountTypes = new UserAccountTypesModel({ client: client.isRequested, worker: worker.isRequested, recruiter: recruiter.isRequested })
     dispatch(userSave({ token, profile, accountTypes, client, worker, recruiter }))
     endFetchSignIn(dispatch)

@@ -29,9 +29,17 @@ function deepSortByKey (obj) {
   }, {})
 }
 
-export const signin = (account, roles): SigninResBodyModel => {
+export const signup = (account, roles): SigninResBodyModel => {
+  const body = { purpose: 'laborx', roles }
+  const data = JSON.stringify(deepSortByKey({ url: '/api/v1/security/signin/signature/laborx', body }))
+  const { signature } = account.sign(data)
+  return http.post('/security/signin/signature/laborx', body, {
+    headers: { Authorization: `Signature ${ signature }` },
+  }).then(res => SigninResBodyModel.fromJson(res.data))
+}
+
+export const signin = (account): SigninResBodyModel => {
   const body = { purpose: 'laborx' }
-  if (roles) body.roles = roles
   const data = JSON.stringify(deepSortByKey({ url: '/api/v1/security/signin/signature/laborx', body }))
   const { signature } = account.sign(data)
   return http.post('/security/signin/signature/laborx', body, {
@@ -127,9 +135,9 @@ export const getMeWorkerProfile = (token: string): { profile: ProfileWorkerModel
 })
 
 export const getWorker = (address: string): Promise<ProfileWorkerModel> => http.get(
-  `/security/worker`, 
+  `/security/worker`,
   { params: { address } }
-).then(res => ProfileWorkerModel.fromJson(res.data)) 
+).then(res => ProfileWorkerModel.fromJson(res.data))
 
 export const getProfile = (address: string): { profile: ProfileModel } => http.get(
   `${ API_URL }/security/profile`,

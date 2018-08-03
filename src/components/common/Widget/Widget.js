@@ -9,6 +9,7 @@ const WHITE = 'White'
 export default class Widget extends React.Component {
   static propTypes = {
     title: PropTypes.string,
+    titlePlaceholder: PropTypes.string,
     href: PropTypes.string,
     subtitle: PropTypes.string,
     className: PropTypes.string,
@@ -34,7 +35,7 @@ export default class Widget extends React.Component {
   header () {
     return (
       <div className={css[`header${this.props.headerTheme}`]}>
-        <h3 className={css[`title${this.props.headerTheme}`]}><Translate value={this.props.title} /></h3>
+        <h3 className={css[`title${this.props.headerTheme}`]}><Translate value={this.props.title} placeholder={this.props.titlePlaceholder}/></h3>
         {this.props.subtitle && <div className={css[`subtitle${this.props.headerTheme}`]}><Translate value={this.props.subtitle} /></div>}
       </div>
     )
