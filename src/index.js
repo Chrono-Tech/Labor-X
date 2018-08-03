@@ -60,6 +60,12 @@ import YourAccountPage from "pages/your-account"
 import CryptoCurrenciesPage from "pages/crypto-currencies"
 import LaborhourPage from "pages/laborhour"
 
+import AccountPasswordPage from "pages/signup/account-password"
+import CopyYourAccountPasswordPage from "pages/signup/copy-your-account-password"
+import ConfirmBackUpPage from "pages/signup/confirm-back-up"
+import YourWalletFilePage from "pages/signup/your-wallet-file"
+import WelcomePage from "pages/signup/welcome"
+
 import { initFrontend } from "src/store/bootstrap"
 import web3Factory from "src/web3"
 import { ModalStack } from 'src/partials'
@@ -88,11 +94,14 @@ import {
   activeJobs,
   profiles,
   reviewApplicants,
+  archiveJobs,
   completedJobs,
   applicationsAndOffers,
+  signup,
 } from "src/store/reducers"
 
 import 'styles/globals/globals.scss'
+import AuthRoute from "./components/routes/AuthRoute"
 
 const generateClassName = createGenerateClassName()
 const jss = create(jssPreset())
@@ -137,8 +146,10 @@ const reducer = combineReducers({
   clientProfile,
   activeJobs,
   reviewApplicants,
+  archiveJobs,
   completedJobs,
   applicationsAndOffers,
+  signup,
 })
 
 const store = createStore(
@@ -147,7 +158,7 @@ const store = createStore(
   compose(
     applyMiddleware(routerMiddleware(history), thunk, loggerMiddleware),
     // eslint-disable-next-line no-underscore-dangle
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 )
 
@@ -202,11 +213,19 @@ const persistor = persistStore(store, null, async () => {
                       <Route exact path='/worker-resume' component={WorkerResumePage} />
                       <Route exact path='/authorization-methods' component={AuthorizationMethodsPage} />
                       <Route exact path='/forgot-password' component={ForgotPasswordPage} />
-                      <Route exact path='/crypto-education' component={CryptoEducationPage} />
-                      <Route exact path='/our-network' component={OurNetworkPage} />
-                      <Route exact path='/your-account' component={YourAccountPage} />
-                      <Route exact path='/crypto-currencies' component={CryptoCurrenciesPage} />
-                      <Route exact path='/laborhour' component={LaborhourPage} />
+
+                      <AuthRoute exact path='/crypto-education' component={CryptoEducationPage} />
+                      <AuthRoute exact path='/our-network' component={OurNetworkPage} />
+                      <AuthRoute exact path='/your-account' component={YourAccountPage} />
+                      <AuthRoute exact path='/crypto-currencies' component={CryptoCurrenciesPage} />
+                      <AuthRoute exact path='/laborhour' component={LaborhourPage} />
+
+                      <AuthRoute exact path='/account-password' component={AccountPasswordPage} />
+                      <AuthRoute exact path='/copy-your-account-password' component={CopyYourAccountPasswordPage} />
+                      <AuthRoute exact path='/confirm-back-up' component={ConfirmBackUpPage} />
+                      <AuthRoute exact path='/your-wallet-file' component={YourWalletFilePage} />
+                      <AuthRoute exact path='/welcome' component={WelcomePage} />
+
                     </Switch>
                     <ModalStack />
                   </div>
