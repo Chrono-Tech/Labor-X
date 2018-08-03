@@ -1,0 +1,68 @@
+.card {
+  width: 100%;
+  border-left-color: #C25451;
+  border-radius: .5rem;
+  background-color: #FFF;
+  box-shadow: 0.4rem 0.4rem 0.6rem rgba(51, 51, 51, 0.1);
+  border-left-width: 1rem;
+  border-left-style: solid;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  background-color: red;
+}
+
+.cardName {
+  padding: 0.3rem;
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: #333;
+  margin-left: -0.5rem;
+  padding-top: 1rem;
+}
+
+.workerName {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #333;
+}
+
+.label {
+  color: #C25451;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 14px;
+  padding-left: 1rem;
+  font-size: 10px;
+  line-height: 14px;
+  padding-right: 1rem;
+  margin-left: -1.1rem;
+  display: inline-block;
+}
+
+.label:hover {
+  background-color: #C25451;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.delegateButton {
+  color: #00A0D2;
+  font-family: roboto, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.moreVertIcon {
+  color: #00A0D2;
+}
+
+.wrapCosts {
+  line-height: 50px;
+}
+
+.cost {
+  margin-left: 4rem;
+}

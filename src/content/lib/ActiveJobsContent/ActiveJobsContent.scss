@@ -9,9 +9,10 @@ $maxWidth: 74rem;
 
 .title {
   margin: 0;
-  padding: 5rem 0 5rem 4rem;
+  padding: 5rem 0 9rem 4rem;
   color: $color-white;
   background-image: $gradientBlueToGreen;
+  position: relative;
 }
 
 .titleStats {
@@ -60,4 +61,14 @@ $maxWidth: 74rem;
 
 .medium {
   font-weight: $font-weight-medium;
+}
+
+.appBar {
+  position: absolute;
+  bottom: 0rem;
+  left: 0rem;
+  background-color: transparent;
+  box-shadow: unset;
+  border-top: 1px solid rgba($color: #ffffff, $alpha: 0.2);
+  padding-left: 4rem;
 }
