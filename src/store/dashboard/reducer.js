@@ -10,13 +10,12 @@ import {
 
   GET_WORKER_TODO_JOBS_SUCCESS,
   GET_CLIENT_TODO_JOBS_SUCCESS,
+  GET_RECRUITER_BOARDS_SUCCESS,
 } from "./actions"
 
 export const TYPES = {
   pageDataLoading: PropTypes.bool,
   pageDataFailure: PropTypes.instanceOf(Error),
-  workerTodoJobsLoading: PropTypes.bool,
-  workerTodoJobsFailure: PropTypes.instanceOf(Error),
   pageData: PropTypes.shape({
     profile:  PropTypes.shape({
       profile: PropTypes.instanceOf(ProfileModel),
@@ -26,6 +25,7 @@ export const TYPES = {
     }),
     workerTodoJobs: [],
     clientTodoJobs: [],
+    recruiterBoards: [],
   }),
 }
 
@@ -33,8 +33,6 @@ export const STATE = {
   pageData: null,
   pageDataLoading: true,
   pageDataFailure: null,
-  workerTodoJobsLoading: true,
-  workerTodoJobsFailure: null,
 }
 
 export default (state = STATE, { type, payload }) => {
@@ -59,7 +57,6 @@ export default (state = STATE, { type, payload }) => {
 
     case GET_WORKER_TODO_JOBS_SUCCESS: return ({
       ...state,
-      workerTodoJobsLoading: false,
       pageData: {
         ...state.pageData,
         workerTodoJobs: payload,
@@ -68,10 +65,17 @@ export default (state = STATE, { type, payload }) => {
 
     case GET_CLIENT_TODO_JOBS_SUCCESS: return ({
       ...state,
-      clientTodoJobsLoading: false,
       pageData: {
         ...state.pageData,
         clientTodoJobs: payload,
+      },
+    })
+
+    case GET_RECRUITER_BOARDS_SUCCESS: return ({
+      ...state,
+      pageData: {
+        ...state.pageData,
+        recruiterBoards: payload,
       },
     })
 

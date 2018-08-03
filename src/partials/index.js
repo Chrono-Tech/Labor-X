@@ -13,3 +13,4 @@ export { default as NotificationWidget } from './lib/NotificationWidget/Notifica
 export { default as DelegateDialog } from './lib/DelegateDialog/DelegateDialog'
 export { default as ForWorkersWidget } from './lib/ForWorkersWidget/ForWorkersWidget'
 export { default as ForClientsWidget } from './lib/ForClientsWidget/ForClientsWidget'
+export { default as ForRecruitersWidget } from './lib/ForRecruitersWidget/ForRecruitersWidget'
