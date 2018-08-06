@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { getCardsByGroupDays, getTotalCardsCount, getFinalizedCardsCount, getFinishedCardsCount } from 'src/store/archiveJobs/selectors'
 import { Translate, ActiveJobCard } from 'src/components/common'
+
 import css from './ArchiveJobsContent.scss'
 
 const dateFormat = 'DD MMMM YYYY, ddd'
@@ -44,44 +45,48 @@ class ArchiveJobsContent extends React.Component {
     )
   }
 
-  render () {
-    const { groups, totalCount, finishedCount, finalizedCount } = this.props
-    return groups == null ? null : (
+  renderNoGroups () {
+    return (
       <div className={css.main}>
-        {!groups.length ? null : this.renderHead({ totalCount, finishedCount, finalizedCount })}
+        <div className={css.title}>
+          <div className={css.titleText}><Translate value='nav.archivedJobs' /></div>
+        </div>
         <div className={css.content}>
-          {groups.map(({ key, date, cards }) => (
-            <div className={css.section} key={key}>
-              <h3>{moment(date).format(dateFormat)}</h3>
-              {cards.map((card) => (
-                <ActiveJobCard
-                  key={card.job.key}
-                  job={card.job}
-                  board={card.board}
-                  workerPerson={card.worker}
-                />
-              ))}
-            </div>
-          ))}
+          <div className={css.noGroups}>No Archived Jobs</div>
         </div>
       </div>
     )
   }
-}
 
-function mapStateToProps (state) {
-  return {
-    totalCount: getTotalCardsCount(state),
-    finishedCount: getFinishedCardsCount(state),
-    finalizedCount: getFinalizedCardsCount(state),
-    groups: getCardsByGroupDays(state),
+  renderGroups () {
+    const { groups, totalCount, finishedCount, finalizedCount } = this.props
+    return (
+      <div className={css.main}>
+        { this.renderHead({ totalCount, finishedCount, finalizedCount }) }
+        <div className={css.content}>
+          {
+            groups.map(({ key, date, cards }) => (
+              <div className={css.section} key={key}>
+                <h3>{moment(date).format(dateFormat)}</h3>
+                { cards.map((card) => <ActiveJobCard key={card.job.key} job={card.job} board={card.board} workerPerson={card.worker} />) }
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    )
+  }
+
+  render () {
+    return Object.keys(this.props.groups).length ? this.renderGroups() : this.renderNoGroups()
   }
 }
 
-function mapDispatchToProps (/*dispatch*/) {
-  return {
-    // stack: state.modals.stack,
-  }
-}
+const mapStateToProps = (state) => ({
+  totalCount: getTotalCardsCount(state),
+  finishedCount: getFinishedCardsCount(state),
+  finalizedCount: getFinalizedCardsCount(state),
+  groups: getCardsByGroupDays(state),
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArchiveJobsContent)
+export default connect(mapStateToProps)(ArchiveJobsContent)
