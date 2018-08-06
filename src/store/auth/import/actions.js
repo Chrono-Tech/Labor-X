@@ -33,7 +33,6 @@ export const updateEncryptedWallet = (file: File) => async (dispatch) => {
     const fileContent = await readFile(file)
     const fileContentParsed = JSON.parse(fileContent)
     const encryptedWallet = Array.isArray(fileContentParsed) ? fileContentParsed : [ fileContentParsed ]
-    debugger
     dispatch(updateEncryptedWalletSuccess({ encryptedWallet }))
   } catch (err) {
     dispatch(updateEncryptedWalletFailure(err))
@@ -54,7 +53,6 @@ export const submitFile = () => async (dispatch, getState) => {
     dispatch(submitFileRequest())
     const state = getState()
     const encryptedWallet = encryptedWalletSelector(state)
-    debugger
     const address = `0x${ encryptedWallet[0].address }`
     const person = await profileApi.getPerson(address)
     if (person) {

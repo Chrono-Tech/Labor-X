@@ -177,85 +177,85 @@ const persistor = persistStore(store, null, async () => {
   await store.dispatch(initFrontend(store)({ web3 }))
   store.dispatch(loadTranslations(translations))
   store.dispatch(setLocale('en'))
+  ReactDOM.render(
+    <Provider store={store}>
+      <PersistGate loading='Loading' persistor={persistor}>
+        <JssProvider jss={jss} generateClassName={generateClassName}>
+          <MuiThemeProvider>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <div>
+                <ConnectedRouter history={history}>
+                  <div>
+                    <Switch>
+
+                      <Route exact path='/' component={LandingPage} />
+
+                      <Route exact path='/dashboard' component={DashboardPage} />
+
+                      <Route exact path='/job-types' component={JobTypesPage} />
+                      <Route exact path='/create-job' component={CreateJobPage} />
+                      <Route exact path='/create-job-board' component={CreateJobBoardPage} />
+                      <Route exact path='/posted-jobs' component={PostedJobsPage} />
+                      <Route exact path='/active-jobs' component={ActiveJobsPage} />
+                      <Route exact path='/jobs-archive' component={JobsArchivePage} />
+                      <Route exact path='/my-wallet' component={MyWalletPage} />
+                      <Route exact path='/to-do' component={ToDoPage} />
+                      <Route exact path='/applications-and-offers' component={ApplicationsAndOffersPage} />
+                      <Route exact path='/opportunities' component={OpportunitiesPage} />
+                      <Route exact path='/opportunity-view/:id' component={OpportunityViewPage} />
+                      <Route exact path='/completed-jobs' component={CompletedJobsPage} />
+                      <Route exact path='/general-profile' component={GeneralProfilePage} />
+                      <Route exact path='/worker-profile' component={WorkerProfilePage} />
+                      <Route exact path='/client-profile' component={ClientProfilePage} />
+                      <Route exact path='/client-job-view/:id' component={ClientJobViewPage} />
+                      <Route exact path='/client-stats' component={ClientStatsPage} />
+                      <Route exact path='/earn-activity-points' component={EarnActivityPointsPage} />
+                      <Route exact path='/job-boards' component={JobBoardsPage} />
+                      <Route exact path='/jobs' component={JobsPage} />
+                      <Route exact path='/my-jobs-boards' component={MyJobsBoardPage} />
+                      <Route exact path='/my-profile' component={MyProfilePage} />
+                      <Route exact path='/recruiter-jobs' component={RecruiterJobsPage} />
+                      <Route exact path='/reports-and-claims' component={ReportsAndClaimsPage} />
+                      <Route exact path='/review-applicants/:id' component={ReviewApplicantsPage} />
+                      <Route exact path='/saved' component={SavedPage} />
+                      <Route exact path='/schedule' component={SchedulePage} />
+                      <Route exact path='/validation-requests' component={ValidationRequestsPage} />
+                      <Route exact path='/worker-resume' component={WorkerResumePage} />
+                      <Route exact path='/authorization-methods' component={AuthorizationMethodsPage} />
+                      <Route exact path='/forgot-password' component={ForgotPasswordPage} />
+
+                      <AuthRoute exact path='/introduction/crypto-education' component={IntroductionCryptoEducationPage} />
+                      <AuthRoute exact path='/introduction/our-network' component={IntroductionOurNetworkPage} />
+                      <AuthRoute exact path='/introduction/your-account' component={IntroductionYourAccountPage} />
+                      <AuthRoute exact path='/introduction/crypto-currencies' component={IntroductionCryptoCurrenciesPage} />
+                      <AuthRoute exact path='/introduction/laborhour' component={IntroductionLaborhourPage} />
+
+                      <AuthRoute exact path='/auth/signup/account-password' component={AuthSignupAccountPasswordPage} />
+                      <AuthRoute exact path='/auth/signup/copy-your-account-password' component={AuthSignupCopyYourAccountPasswordPage} />
+                      <AuthRoute exact path='/auth/signup/confirm-back-up' component={AuthSignupConfirmBackUpPage} />
+                      <AuthRoute exact path='/auth/signup/your-wallet-file' component={AuthSignupYourWalletFilePage} />
+                      <AuthRoute exact path='/auth/signup/welcome' component={AuthSignupWelcomePage} />
+
+                      <AuthRoute exact path='/auth/signin/my-accounts' component={AuthSigninMyAccountsPage} />
+                      <AuthRoute exact path='/auth/signin/login' component={AuthSigninLoginPage} />
+
+                      <AuthRoute exact path='/auth/import/select-method' component={AuthImportSelectMethodPage} />
+                      <AuthRoute exact path='/auth/import/pkey' component={AuthImportPkeyPage} />
+                      <AuthRoute exact path='/auth/import/seed' component={AuthImportSeedPage} />
+                      <AuthRoute exact path='/auth/import/file' component={AuthImportFilePage} />
+                      <AuthRoute exact path='/auth/import/create-wallet' component={AuthImportCreateWalletPage} />
+
+                    </Switch>
+                    <ModalStack />
+                  </div>
+                </ConnectedRouter>
+              </div>
+            </MuiPickersUtilsProvider>
+          </MuiThemeProvider>
+        </JssProvider>
+      </PersistGate>
+    </Provider>,
+    document.getElementById('root')
+  )
 })
 
-ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading='Loading' persistor={persistor}>
-      <JssProvider jss={jss} generateClassName={generateClassName}>
-        <MuiThemeProvider>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <div>
-              <ConnectedRouter history={history}>
-                <div>
-                  <Switch>
-
-                    <Route exact path='/' component={LandingPage} />
-
-                    <Route exact path='/dashboard' component={DashboardPage} />
-
-                    <Route exact path='/job-types' component={JobTypesPage} />
-                    <Route exact path='/create-job' component={CreateJobPage} />
-                    <Route exact path='/create-job-board' component={CreateJobBoardPage} />
-                    <Route exact path='/posted-jobs' component={PostedJobsPage} />
-                    <Route exact path='/active-jobs' component={ActiveJobsPage} />
-                    <Route exact path='/jobs-archive' component={JobsArchivePage} />
-                    <Route exact path='/my-wallet' component={MyWalletPage} />
-                    <Route exact path='/to-do' component={ToDoPage} />
-                    <Route exact path='/applications-and-offers' component={ApplicationsAndOffersPage} />
-                    <Route exact path='/opportunities' component={OpportunitiesPage} />
-                    <Route exact path='/opportunity-view/:id' component={OpportunityViewPage} />
-                    <Route exact path='/completed-jobs' component={CompletedJobsPage} />
-                    <Route exact path='/general-profile' component={GeneralProfilePage} />
-                    <Route exact path='/worker-profile' component={WorkerProfilePage} />
-                    <Route exact path='/client-profile' component={ClientProfilePage} />
-                    <Route exact path='/client-job-view/:id' component={ClientJobViewPage} />
-                    <Route exact path='/client-stats' component={ClientStatsPage} />
-                    <Route exact path='/earn-activity-points' component={EarnActivityPointsPage} />
-                    <Route exact path='/job-boards' component={JobBoardsPage} />
-                    <Route exact path='/jobs' component={JobsPage} />
-                    <Route exact path='/my-jobs-boards' component={MyJobsBoardPage} />
-                    <Route exact path='/my-profile' component={MyProfilePage} />
-                    <Route exact path='/recruiter-jobs' component={RecruiterJobsPage} />
-                    <Route exact path='/reports-and-claims' component={ReportsAndClaimsPage} />
-                    <Route exact path='/review-applicants/:id' component={ReviewApplicantsPage} />
-                    <Route exact path='/saved' component={SavedPage} />
-                    <Route exact path='/schedule' component={SchedulePage} />
-                    <Route exact path='/validation-requests' component={ValidationRequestsPage} />
-                    <Route exact path='/worker-resume' component={WorkerResumePage} />
-                    <Route exact path='/authorization-methods' component={AuthorizationMethodsPage} />
-                    <Route exact path='/forgot-password' component={ForgotPasswordPage} />
-
-                    <AuthRoute exact path='/introduction/crypto-education' component={IntroductionCryptoEducationPage} />
-                    <AuthRoute exact path='/introduction/our-network' component={IntroductionOurNetworkPage} />
-                    <AuthRoute exact path='/introduction/your-account' component={IntroductionYourAccountPage} />
-                    <AuthRoute exact path='/introduction/crypto-currencies' component={IntroductionCryptoCurrenciesPage} />
-                    <AuthRoute exact path='/introduction/laborhour' component={IntroductionLaborhourPage} />
-
-                    <AuthRoute exact path='/auth/signup/account-password' component={AuthSignupAccountPasswordPage} />
-                    <AuthRoute exact path='/auth/signup/copy-your-account-password' component={AuthSignupCopyYourAccountPasswordPage} />
-                    <AuthRoute exact path='/auth/signup/confirm-back-up' component={AuthSignupConfirmBackUpPage} />
-                    <AuthRoute exact path='/auth/signup/your-wallet-file' component={AuthSignupYourWalletFilePage} />
-                    <AuthRoute exact path='/auth/signup/welcome' component={AuthSignupWelcomePage} />
-
-                    <AuthRoute exact path='/auth/signin/my-accounts' component={AuthSigninMyAccountsPage} />
-                    <AuthRoute exact path='/auth/signin/login' component={AuthSigninLoginPage} />
-
-                    <AuthRoute exact path='/auth/import/select-method' component={AuthImportSelectMethodPage} />
-                    <AuthRoute exact path='/auth/import/pkey' component={AuthImportPkeyPage} />
-                    <AuthRoute exact path='/auth/import/seed' component={AuthImportSeedPage} />
-                    <AuthRoute exact path='/auth/import/file' component={AuthImportFilePage} />
-                    <AuthRoute exact path='/auth/import/create-wallet' component={AuthImportCreateWalletPage} />
-
-                  </Switch>
-                  <ModalStack />
-                </div>
-              </ConnectedRouter>
-            </div>
-          </MuiPickersUtilsProvider>
-        </MuiThemeProvider>
-      </JssProvider>
-    </PersistGate>
-  </Provider>,
-  document.getElementById('root')
-)

@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { mnemonicSelector } from "src/store/auth/signup/selectors"
+import { mnemonicSelector, mnemonicConfirmationSelector } from "src/store/auth/signup/selectors"
 import { CONFIRM_BACK_UP_FORM as FORM } from 'src/store/auth/signup/constants'
 import { submitConfirmBackUp as submit, setMnemonicConfirmation } from "src/store/auth/signup/actions"
 import SignupLayout from 'src/components/layouts/SignupLayout/SignupLayout'
@@ -104,14 +104,12 @@ export class ConfirmBackUpContent extends React.Component {
 ConfirmBackUpContent = reduxForm({
   form: FORM,
   destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true,
   validate,
 })(ConfirmBackUpContent)
 
 const mapStateToProps = (state) => ({
   mnemonic: mnemonicSelector(state),
-  initialValues: { mnemonicConfirmation: mnemonicSelector(state) },
-  mnemonicConfirmation: mnemonicSelector(state),
+  mnemonicConfirmation: mnemonicConfirmationSelector(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({

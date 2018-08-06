@@ -4,6 +4,8 @@ export default (values) => {
   return {
     'password': password ? null : 'Wrong password',
     'password-confirm': password === passwordConfirm && password ? null : 'Wrong confirm password',
-    roles: values.roles.isRecruiter || values.roles.isClient || values.roles.isWorker ? null : 'Please select at least one of account type',
+    'isRecruiter': values.isRecruiter || values.isClient || values.isWorker ? null : 'Please select at least one of account type',
+    'isClient': values.isRecruiter || values.isClient || values.isWorker ? null : 'Please select at least one of account type',
+    'isWorker': values.isRecruiter || values.isClient || values.isWorker ? null : 'Please select at least one of account type',
   }
 }
