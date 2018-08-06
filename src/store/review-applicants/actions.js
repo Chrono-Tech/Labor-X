@@ -1,4 +1,4 @@
-import {daoByType} from "src/store";
+import { daoByType } from "src/store";
 import * as backendApi from "../../api/backend"
 
 
@@ -21,8 +21,23 @@ export const selectInitialProps = (jobId) => async (dispatch, getState) => {
     let applicants = []
     for (let i = 0; i < jobOffers.length; i++) {
       const offer = jobOffers[i];
-      const profile = await backendApi.getProfile(offer.worker);
-      const workerProfile = await backendApi.getWorker(offer.worker);
+
+      let profile = null;
+      try {
+        profile = await backendApi.getProfile(offer.worker);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+      }
+
+      let workerProfile = null;
+      try {
+        workerProfile = await backendApi.getWorker(offer.worker);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+      }
+
       applicants.push({
         offer,
         profile,
@@ -31,6 +46,9 @@ export const selectInitialProps = (jobId) => async (dispatch, getState) => {
     }
     dispatch(selectInitialPropsSuccess({ applicants, job: currentJob }))
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
     dispatch(selectInitialPropsFailure(err))
+
   }
 }
