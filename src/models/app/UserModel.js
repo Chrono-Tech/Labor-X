@@ -1,13 +1,20 @@
 import PropTypes from 'prop-types'
-import AbstractModel from '../AbstractModel'
+
+import AbstractModel from 'src/models/AbstractModel'
+import ProfileModel from "src/api/backend/model/ProfileModel"
+import ProfileRecruiterModel from "src/api/backend/model/ProfileRecruiterModel"
+import ProfileClientModel from "src/api/backend/model/ProfileClientModel"
+import ProfileWorkerModel from "src/api/backend/model/ProfileWorkerModel"
+
 import UserAccountTypesModel from './UserAccountTypesModel'
-import SigninResBodyModel from "../../api/backend/model/SigninResBodyModel";
-import ProfileModel from "../../api/backend/model/ProfileModel";
 
 export const schemaFactory = () => ({
   token: PropTypes.string,
-  profile: PropTypes.instanceOf(ProfileModel),
   accountTypes: PropTypes.instanceOf(UserAccountTypesModel),
+  profile: PropTypes.instanceOf(ProfileModel),
+  recruiter: PropTypes.instanceOf(ProfileRecruiterModel),
+  client: PropTypes.instanceOf(ProfileClientModel),
+  worker: PropTypes.instanceOf(ProfileWorkerModel),
 })
 
 export default class UserModel extends AbstractModel {
@@ -18,10 +25,18 @@ export default class UserModel extends AbstractModel {
 
   static fromJson (data) {
     if (data == null) return null
+    // const accountTypes = { client: client.isRequested, worker: worker.isRequested, recruiter: recruiter.isRequested }
     return new UserModel({
       token: data.token,
       profile: ProfileModel.fromJson(data.profile),
-      accountTypes: new UserAccountTypesModel(data.accountTypes),
+      recruiter: new ProfileRecruiterModel(data.recruiter),
+      client: new ProfileClientModel(data.client),
+      worker: new ProfileWorkerModel(data.worker),
     })
   }
+
+  get accountTypes () {
+    return UserAccountTypesModel.fromProfiles(this.recruiter, this.client, this.worker)
+  }
+
 }

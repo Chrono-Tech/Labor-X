@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, Tip } from 'src/components/common'
 import { RightPanel } from 'src/components/layouts'
-import { userSelector, logout } from "src/store"
+import { logout } from "src/store/user/actions"
+import { userSelector } from "src/store/user/selectors"
 import { UserAccountTypesModel } from "src/models"
 import { NotificationWidget } from "src/partials"
 import ProfileModel from 'src/api/backend/model/ProfileModel'
@@ -13,7 +14,7 @@ import css from './Header.scss'
 export class Header extends React.Component {
 
   static propTypes = {
-    handleLogout: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
     accountTypes: PropTypes.instanceOf(UserAccountTypesModel),
     avatar: PropTypes.shape({
       url: PropTypes.string,
@@ -54,7 +55,7 @@ export class Header extends React.Component {
           <nav className={css.actions}>
             { this.props.accountTypes.client ? <Link href='/job-types' className={css.actionItem} label='nav.newJob' /> : null }
             { this.props.accountTypes.client ? <Link href='/create-job-board' className={css.actionItem} label='nav.newBoard' /> : null }
-            <button className={css.actionItem} onClick={this.props.handleLogout}>Log out</button>
+            <button className={css.actionItem} onClick={this.props.logout}>Log out</button>
           </nav>
           <div className={css.points}>
             <Tip
@@ -101,12 +102,8 @@ const mapStateToProps = state => {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    handleLogout: () => {
-      dispatch(logout())
-    },
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(logout()),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

@@ -77,12 +77,12 @@ class LandingPage extends React.Component {
           { this.getCookiesNoticeWidget() }
           <div className={css.navigationPanel}>
             <div className={css.createButtonWrapper} >
-              <Link to='/crypto-education' className={css.createButton}>
+              <Link to='/introduction/crypto-education' className={css.createButton}>
                 New account
               </Link>
             </div>
             <div className={css.loginButtonWrapper}>
-              <Link to='/login' className={css.loginButton}>
+              <Link to='/auth/signin/my-accounts' className={css.loginButton}>
                 Login
               </Link>
             </div>
@@ -169,7 +169,6 @@ class LandingPage extends React.Component {
                       verified by out professional team. LaborX is using an innovative
                       technology and guarantees reliable contacts reputation.
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -208,7 +207,6 @@ class LandingPage extends React.Component {
                       LaborX is a fully automated solution with ability to track you
                       time, view reports and plan your schedule.
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -228,14 +226,12 @@ class LandingPage extends React.Component {
                     </div>
                     <div className={css.advantageCountBlockText}>
                     posted their jobs
-
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </ParallaxBox>
-
         </div>
         <div className={[css.advantageBlockWrapper, css.advantageBlockWrapperLast].join(' ')}>
           <ParallaxBox imgSrc='/static/images/laborx-promo-client-3.jpg' deflectionPercent={0}>
@@ -289,7 +285,6 @@ class LandingPage extends React.Component {
                       The ability to pay with a variety of digital tokens makes the
                       system universal and not tied to any particular country or region.
                     </div>
-
                   </div>
                 </div>
               </div>

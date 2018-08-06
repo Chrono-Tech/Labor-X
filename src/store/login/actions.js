@@ -250,5 +250,5 @@ export const handleAccount404DialogYesClick = () => (dispatch, getState) => {
   const account = getAccount(state)
   dispatch(setExistingAccount(account))
   dispatch(hideAccount404Dialog())
-  dispatch(push('/create-account'))
+  dispatch(push('/account-password'))
 }
