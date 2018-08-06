@@ -3,7 +3,8 @@ import { push } from 'connected-react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Translate, JobCard } from 'src/components/common'
-import { getCards } from 'src/store/postedJobs/selectors'
+import { getSortedCards } from 'src/store/postedJobs/selectors'
+
 import css from './PostedJobsContent.scss'
 
 class PostedJobsContent extends React.Component {
@@ -16,6 +17,14 @@ class PostedJobsContent extends React.Component {
     this.props.push(`/review-applicants/${jobId}`)
   }
 
+  renderCards () {
+    return this.props.cards.map((card) => <JobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.id} />)
+  }
+
+  renderNoCards () {
+    return <div className={css.noJobs}>No posted jobs</div>
+  }
+
   render () {
     return (
       <div className={css.main}>
@@ -23,7 +32,8 @@ class PostedJobsContent extends React.Component {
           <div className={css.titleText}><Translate value='nav.postedJobs' /></div>
         </div>
         <div className={css.content}>
-          {this.props.cards.sort(x => x.job.id).map((card) => (<JobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.id} />))}
+          { this.props.cards.length ? this.renderCards() : this.renderNoCards() }
+          {}
         </div>
       </div>
     )
@@ -31,7 +41,7 @@ class PostedJobsContent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  cards: getCards(state),
+  cards: getSortedCards(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
