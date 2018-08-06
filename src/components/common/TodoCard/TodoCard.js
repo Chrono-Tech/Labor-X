@@ -36,14 +36,13 @@ class TodoCard extends React.Component {
     openSendInvoiceDialog: PropTypes.func,
   }
 
-  constructor (props, context){
+  constructor (props, context) {
     super(props, context)
     this.state = {
-      now: Date.now(),
-      sinceStartedAtTime: 0,
       workTime: 0,
-      intervalRef: null
+      pausedTime: 0,
     }
+    this.intervalRef = null
     this.workedTimeRender = this.workedTimeRender.bind(this)
     this.progressIcon = this.progressIcon.bind(this)
     this.handleComplete = this.handleComplete.bind(this)
@@ -51,24 +50,14 @@ class TodoCard extends React.Component {
   }
 
   componentDidMount () {
-    //this.setState({intervalRef: setInterval(this.oneSecondInterv.bind(this), 1000)})
-  }
+    const { job } = this.props
+    if (job.state === JOB_STATE_STARTED) {
+      this.intervalRef = setInterval(this.oneSecondInterv.bind(this), 1000)
+    }
+  } 
 
-  componentWillUnmount () {
-    clearInterval(this.state.intervalRef);
-  }
-
-  oneSecondInterv () {
-    const startTime = get(this, "props.job.extra.startTime") && get(this, "props.job.extra.startTime").getSeconds();
-    const pausedFor = get(this, "props.job.pausedFor");
-
-    const now = Date.now();
-    let sinceStartedAtTime = null;
-    let workTime = null;
-    if (startTime) sinceStartedAtTime = now - startTime;
-    if (sinceStartedAtTime && pausedFor) workTime = sinceStartedAtTime - pausedFor;
-
-    this.setState({ workTime, sinceStartedAtTime });
+  componentWillUnmount() {
+    clearInterval(this.intervalRef)
   }
 
   handleComplete () {
@@ -106,7 +95,7 @@ class TodoCard extends React.Component {
     }
     if (job.ipfs.period && this.daysUntil(job.ipfs.period.until) === 1) {
       return STATUSES.ATTENTION
-    } 
+    }
     return STATUSES.APPROVED
   }
 
@@ -134,22 +123,10 @@ class TodoCard extends React.Component {
 
   totalHours () {
     const { job } = this.props
-    const since = get(job, "ipfs.period.since");
-    const until = get(job, "ipfs.period.until");
+    const since = get(job, "ipfs.period.since")
+    const until = get(job, "ipfs.period.until")
     if (since && until) {
       return moment.duration((until.getTime() - since.getTime()), 'milliseconds').asHours()
-    } else {
-      return 0
-    }
-  }
-
-  pausedTime () {
-    const { job } = this.props
-    const now = Date.now();
-    const pausedAt = get(job, "pausedAt").getTime();
-    const pausedFor = get(job, "pausedFor") * 1000;
-    if (pausedAt && pausedFor) {
-      return  pausedFor + (now - pausedAt)
     } else {
       return 0
     }
@@ -164,27 +141,53 @@ class TodoCard extends React.Component {
   }
 
   getIconType (job) {
-    if ( job.paused && job.state === JOB_STATE_STARTED ) {
+    if (job.paused && job.state === JOB_STATE_STARTED) {
       return Image.ICONS.PLAY
     }
-    if ( !job.paused && job.state === JOB_STATE_STARTED ) {
+    if (!job.paused && job.state === JOB_STATE_STARTED) {
       return Image.ICONS.PAUSE
     }
     return Image.ICONS.PLAY
   }
 
   progressIcon () {
-      return (
-        <Image
-          onClick={this.handlePausePlayClick}
-          icon={ this.getIconType(this.props.job) }
-        />
-      )
+    return (
+      <Image
+        onClick={this.handlePausePlayClick}
+        icon={this.getIconType(this.props.job)}
+      />
+    )
   }
 
   getDurationString (milliseconds) {
     var tempTime = moment.duration(milliseconds, "milliseconds");
-    return String(tempTime.hours()).padStart(2, "0") + ":" + String(tempTime.minutes()).padStart(2, "0") + ":" + String(tempTime.seconds()).padStart(2, "0");
+    return String(tempTime.hours()).padStart(2, "0") + ":" + String(tempTime.minutes()).padStart(2, "0") + ":" + String(tempTime.seconds()).padStart(2, "0")
+  }
+
+  oneSecondInterv() {
+    const { job } = this.props
+    const pausedFor = get(job, "pausedFor") * 1000
+
+    if (job.paused && job.state === JOB_STATE_STARTED) {
+      const now = Date.now();
+      const pausedAt = get(job, "pausedAt").getTime()
+      if (pausedAt && pausedFor) {
+        this.setState({ pausedTime: pausedFor + (now - pausedAt) })
+      } else {
+        this.setState({ pausedTime: 0 })
+      }
+    }
+
+    if (!job.paused && job.state === JOB_STATE_STARTED) {
+      const startTime = get(job, "extra.startTime")
+      const startTimeMilliseconds = startTime && + startTime
+      const now = Date.now()
+      let sinceStartedAtTime = null
+      let workTime = null
+      if (startTimeMilliseconds) sinceStartedAtTime = now - startTimeMilliseconds
+      if (sinceStartedAtTime && pausedFor) workTime = sinceStartedAtTime - pausedFor
+      this.setState({ workTime, sinceStartedAtTime })
+    }
   }
 
   renderTimes () {
@@ -201,7 +204,7 @@ class TodoCard extends React.Component {
       return (
         <p>
           <span className={css.medium}>
-          {`${this.getDurationString(this.state.workTime)} of  ${this.totalHours()}h`} 
+            {`${this.getDurationString(this.state.workTime)} of  ${this.totalHours()}h`}
           </span>
         </p>
       )
@@ -211,7 +214,7 @@ class TodoCard extends React.Component {
       return (
         <p>
           <span className={css.medium}>
-            {`${this.getDurationString(this.pausedTime())} total pause time`} 
+            {`${this.getDurationString(this.state.pausedTime)} total pause time`}
           </span>
         </p>
       )
@@ -221,23 +224,22 @@ class TodoCard extends React.Component {
   render () {
     const { job } = this.props
     const cardNote = this.getCardNote()
-    console.log(job);
 
     return (
       <div className={cn(css.root, css[this.getTodoStatus()])}>
         <div className={css.todoInfo}>
           {cardNote ? <p className={css.cardNote}>{cardNote}</p> : null}
           <div className={css.rowInfo}>
-            { job.ipfs.period && job.ipfs.period.isSpecified ? <span>{moment(job.ipfs.period.since).format(dateFormat)}</span> : null }
-            <span className={css.medium}>{ job.ipfs.name }</span>
-            { job.ipfs.period && job.ipfs.period.isSpecified && !!this.daysUntil(job.ipfs.period.until) ? <span className={css.daysLeft}>{this.daysUntil(job.ipfs.period.until)} day(s) to go</span> : null }
+            {job.ipfs.period && job.ipfs.period.since ? <span>{moment(job.ipfs.period.since).format(dateFormat)}</span> : null}
+            <span className={css.medium}>{job.ipfs.name}</span>
+            {job.ipfs.period && job.ipfs.period.until && !!this.daysUntil(job.ipfs.period.until) ? <span className={css.daysLeft}>{this.daysUntil(job.ipfs.period.until)} day(s) to go</span> : null}
           </div>
         </div>
         <div className={css.progress}>
           <div className={css.progressTimer}>
             {this.progressIcon()}
             {this.renderTimes()}
-              
+
           </div>
           <div className={css.actions}>
             {
