@@ -53,7 +53,7 @@ export const getClientTodoJobs = (address) => async (dispatch, getState) => {
     const state = getState()
     const JobsDataProvider = daoByType('JobsDataProvider')(state)
     const BoardController = daoByType('BoardController')(state)
-    // TODO @aevalyakin use JobsDataProvider.getJobsForClient  when fixed in smartcontract
+    // TODO @aevalyakin use JobsDataProvider.getJobsForClient when fixed in smartcontract
     const jobs = await JobsDataProvider.getJobs(BoardController)
     const jobsForClient = jobs.filter(job => job.client === address)
     const clientTodoJobs = jobsForClient.filter(job =>
@@ -62,6 +62,23 @@ export const getClientTodoJobs = (address) => async (dispatch, getState) => {
       job.state === JOB_STATE_PENDING_START
     )
     dispatch(getClientTodoJobsSuccess(clientTodoJobs))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
+  }
+}
+
+export const GET_RECRUITER_BOARDS_SUCCESS = 'DASHBOARD/GET_RECRUITER_BOARDS/SUCCESS'
+export const getRecruiterBoardsSuccess = (res) => ({ type: GET_RECRUITER_BOARDS_SUCCESS, payload: res })
+
+export const getRecruiterBoardsJobs = (address) => async (dispatch, getState) => {
+  try {
+    const state = getState()
+    const BoardController = daoByType('BoardController')(state)
+    // TODO @aevalyakin use BoardController.getBoardsForUser when fixed in smartcontract
+    const boards = await BoardController.getBoards(address)
+    const recruiterJobs = boards.filter(board => board.creator.toLowerCase() === address.toLowerCase())
+    dispatch(getRecruiterBoardsSuccess(recruiterJobs))
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err)

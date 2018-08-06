@@ -10,7 +10,7 @@ import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
 import ProfileRecruiterModel from 'src/api/backend/model/ProfileRecruiterModel'
 
 import { Widget, Translate, Icon } from 'src/components/common'
-import { MyFundsWidget, ForWorkersWidget, ForClientsWidget } from 'src/partials'
+import { MyFundsWidget, ForWorkersWidget, ForClientsWidget, ForRecruitersWidget } from 'src/partials'
 import { SignerModel, UserModel } from 'src/models'
 import { signerSelector } from 'src/store'
 import {
@@ -50,80 +50,7 @@ export class DashboardContent extends React.Component {
   renderRecruiterBlock = () => (
     <div className={css.block}>
       <h2 className={css.blockTitle}>For Recruiters</h2>
-      <div className={css.highlightsRow}>
-        <Widget
-          href='/create-job-board'
-          title='ui.dashboard.recruiter.createYourJobBoard'
-          subtitle='ui.dashboard.recruiter.recruiter'
-          actions={[
-            {
-              href: '/create-job-board',
-              label: 'Create a job board',
-              secondIcon: Icon.SETS.HELP_OUTLINE,
-              secondIconTip: {
-                tip: 'tip.createJobBoard',
-              },
-              isLink: true,
-            },
-            {
-              href: '/create-client-job-board',
-              label: 'Create a client job board',
-              secondIcon: Icon.SETS.HELP_OUTLINE,
-              secondIconTip: {
-                tip: 'tip.createClientJobBoard',
-              },
-              isLink: true,
-            },
-          ]}
-        >
-        Create you first Job Board and start to build your network of Clients
-        and Workers to receive fees on job completed.
-        </Widget>
-        <Widget
-          title='ui.dashboard.recruiter.createYourJobBoard'
-          subtitle='ui.dashboard.recruiter.recruiter'
-          actions={[
-            {
-              href: '/become-involved',
-              label: 'Become Involved',
-              firstIcon: {
-                icon: Icon.ICONS.COMPANY,
-                color: Icon.COLORS.BLUE,
-              },
-              counter: { value: 3 },
-              isLink: true,
-            },
-            {
-              href: '/',
-              label: 'Hays Recruitment',
-              firstIcon: {
-                icon: Icon.ICONS.COMPANY,
-                color: Icon.COLORS.BLUE,
-              },
-              isLink: true,
-            },
-          ]}
-        />
-      </div>
-      <div className={css.highlightsRow}>
-        <Widget
-          href='/recruiter-jobs'
-          title='ui.dashboard.recruiter.hrReview'
-          subtitle='ui.dashboard.recruiter.recruiter'
-          actions={[
-            {
-              href: '/',
-              label: 'Install 10 Gas Ovens',
-              date: '20 Dec',
-            },
-            {
-              href: '/',
-              label: 'Pick-up 3 sofas',
-              date: '21 Dec',
-            },
-          ]}
-        />
-      </div>
+      <ForRecruitersWidget signer={this.props.signer} />
     </div>
   )
 

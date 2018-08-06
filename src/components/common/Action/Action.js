@@ -14,6 +14,7 @@ export default class Action extends React.Component {
         PropTypes.string,
         PropTypes.object,
       ]).isRequired,
+      firstImage: PropTypes.string,
       firstIcon: PropTypes.shape({
         icon: PropTypes.string,
         color: PropTypes.string,
@@ -53,6 +54,9 @@ export default class Action extends React.Component {
             className={css.firstIcon}
             {...item.firstIcon}
           />
+        )}
+        {item.firstImage && (
+          <img className={css.firstImage} src={item.firstImage} />
         )}
         <div className={item.isLink ? css.link : css.action}><Translate className={item.isHeader ? css.header : null} value={item.label} /></div>
         {item.secondIcon && (
