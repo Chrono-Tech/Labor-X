@@ -106,23 +106,22 @@ class WorkerCard extends React.Component {
 
   render () {
     const { workerProfile, profile, offer, offerSent } = this.props
-    const workerName = get(profile, "level1.approved.userName") 
-      ? get(profile, "level1.approved.userName") 
+    const workerName = get(profile, "level1.approved.userName")
+      ? get(profile, "level1.approved.userName")
       : ""
-    const avatarUrl = get(profile, "level1.approved.avatar.url") 
-      ? get(profile, "level1.approved.avatar.url") 
+    const avatarUrl = get(profile, "level1.approved.avatar.url")
+      ? get(profile, "level1.approved.avatar.url")
       : "/static/temp/icon-profile.jpg"
     const validationLevel = profile
       ? profile.getValidationLevel()
       : 0
-
     return (
       <div className={cn(css.root, {
         [css.attention]: !offerSent && offer,
       })}
       >
         <div className={css.workerRow}>
-          <div className={css.workerName}>    
+          <div className={css.workerName}>
             <img className={css.icon} src={avatarUrl} alt={workerName} />
             <Link className={css.link} href={`/worker-profile/${workerProfile.id}`}>
               <h4>{workerName}</h4>

@@ -9,7 +9,7 @@ $maxWidth: 74rem;
   margin-top: 4rem;
   .completeBadge {
     @include flex(row, center, center);
-    @include position(absolute, 8.5rem, auto, auto, 3rem);
+    @include position(absolute, 7rem, auto, auto, 3rem);
     width: 7rem;
     height: 3rem;
     border-radius: 1.6rem;
