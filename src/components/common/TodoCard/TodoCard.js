@@ -56,7 +56,7 @@ class TodoCard extends React.Component {
     }
   } 
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     clearInterval(this.intervalRef)
   }
 
@@ -110,15 +110,19 @@ class TodoCard extends React.Component {
     }
   }
 
-  workedTimeRender () {
-    const { job } = this.props
-    if (job.paused) {
-      const dur = moment.duration(job.pausedFor, 'seconds')
-      const hours = Math.trunc(dur.asHours())
-      const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
-      const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
-      return `${hours}:${minutes}:${seconds}`
+  getIconType (job) {
+    if (job.paused && job.state === JOB_STATE_STARTED) {
+      return Image.ICONS.PLAY
     }
+    if (!job.paused && job.state === JOB_STATE_STARTED) {
+      return Image.ICONS.PAUSE
+    }
+    return Image.ICONS.PLAY
+  }
+
+  getDurationString (milliseconds) {
+    var tempTime = moment.duration(milliseconds, "milliseconds")
+    return String(tempTime.hours()).padStart(2, "0") + ":" + String(tempTime.minutes()).padStart(2, "0") + ":" + String(tempTime.seconds()).padStart(2, "0")
   }
 
   totalHours () {
@@ -140,16 +144,6 @@ class TodoCard extends React.Component {
     return moment(date).diff(moment(), 'days')
   }
 
-  getIconType (job) {
-    if (job.paused && job.state === JOB_STATE_STARTED) {
-      return Image.ICONS.PLAY
-    }
-    if (!job.paused && job.state === JOB_STATE_STARTED) {
-      return Image.ICONS.PAUSE
-    }
-    return Image.ICONS.PLAY
-  }
-
   progressIcon () {
     return (
       <Image
@@ -159,17 +153,12 @@ class TodoCard extends React.Component {
     )
   }
 
-  getDurationString (milliseconds) {
-    var tempTime = moment.duration(milliseconds, "milliseconds");
-    return String(tempTime.hours()).padStart(2, "0") + ":" + String(tempTime.minutes()).padStart(2, "0") + ":" + String(tempTime.seconds()).padStart(2, "0")
-  }
-
-  oneSecondInterv() {
+  oneSecondInterv () {
     const { job } = this.props
     const pausedFor = get(job, "pausedFor") * 1000
 
     if (job.paused && job.state === JOB_STATE_STARTED) {
-      const now = Date.now();
+      const now = Date.now()
       const pausedAt = get(job, "pausedAt").getTime()
       if (pausedAt && pausedFor) {
         this.setState({ pausedTime: pausedFor + (now - pausedAt) })
@@ -186,12 +175,23 @@ class TodoCard extends React.Component {
       let workTime = null
       if (startTimeMilliseconds) sinceStartedAtTime = now - startTimeMilliseconds
       if (sinceStartedAtTime && pausedFor) workTime = sinceStartedAtTime - pausedFor
-      this.setState({ workTime, sinceStartedAtTime })
+      this.setState({ workTime })
+    }
+  }
+
+  workedTimeRender () {
+    const { job } = this.props
+    if (job.paused) {
+      const dur = moment.duration(job.pausedFor, 'seconds')
+      const hours = Math.trunc(dur.asHours())
+      const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
+      const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
+      return `${hours}:${minutes}:${seconds}`
     }
   }
 
   renderTimes () {
-    const { job } = this.props;
+    const { job } = this.props
     if (job.state === JOB_STATE_PENDING_START) {
       return (
         <p>
