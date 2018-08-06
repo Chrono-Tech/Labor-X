@@ -2,7 +2,7 @@ import React  from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Checkbox } from 'redux-form-material-ui'
-import { reduxForm, Field, getFormSyncErrors } from 'redux-form'
+import { reduxForm, Field } from 'redux-form'
 
 import { Link, Button, Input } from 'src/components/common'
 import SignupLayout from 'src/components/layouts/SignupLayout/SignupLayout'
@@ -12,6 +12,7 @@ import validate from './validate'
 
 import css from './AccountPasswordContent.scss'
 import { encryptedWalletSelector } from "../../../../../store/auth/import/selectors"
+import { required } from "../../../../../utils/validator"
 
 export class AccountPasswordContent extends React.Component {
 
@@ -36,25 +37,24 @@ export class AccountPasswordContent extends React.Component {
               <div className={css.checkboxBlock}>
                 <Field
                   className={css.checkbox}
-                  name='roles.isRecruiter'
+                  name='isRecruiter'
                   component={Checkbox}
                   label={<div className={css.checkboxLabel}><p><strong>Recruiter</strong></p><p>Create and manage Job Boards</p></div>}
                 />
                 <div className={css.checkbox}>
                   <Field
-                    name='roles.isWorker'
+                    name='isWorker'
                     component={Checkbox}
                     label={<div className={css.checkboxLabel}><p><strong>Worker</strong></p><p>Join Job Boards and start your job search</p></div>}
                   />
                 </div>
                 <div className={css.checkbox}>
                   <Field
-                    name='roles.isClient'
+                    name='isClient'
                     component={Checkbox}
                     label={<div className={css.checkboxLabel}><p><strong>Client</strong></p><p>Join Job Boards and post your jobs</p></div>}
                   />
                 </div>
-                {this.props.submitted && this.props.errors.roles}
               </div>
             </div>
             <div className={css.contentBlock}>
@@ -68,6 +68,7 @@ export class AccountPasswordContent extends React.Component {
                   name='name'
                   placeholder='Account Name'
                   mods={[css.passwordField]}
+                  validate={[required]}
                 />
                 <Field
                   className={css.password}
@@ -76,6 +77,7 @@ export class AccountPasswordContent extends React.Component {
                   name='password'
                   placeholder='Password'
                   mods={[css.passwordField]}
+                  validate={[required]}
                 />
                 {
                   this.props.encryptedWallet ? null : (
@@ -86,6 +88,7 @@ export class AccountPasswordContent extends React.Component {
                       name='password-confirm'
                       placeholder='Confirm Password'
                       mods={[css.passwordField]}
+                      validate={[required]}
                     />
                   )
                 }
@@ -103,7 +106,7 @@ export class AccountPasswordContent extends React.Component {
                 type={Button.TYPES.SUBMIT}
                 label='Create an Account'
                 primary
-                disabled={this.props.pristine || this.props.invalid}
+                disabled={this.props.invalid}
                 error={this.props.error}
                 mods={Button.MODS.INVERT}
                 errorClassName={css.formError}
@@ -130,8 +133,7 @@ AccountPasswordContent = reduxForm({
 })(AccountPasswordContent)
 
 const mapStateToProps = (state) => ({
-  initialValues: { roles: { isClient: false, isRecruiter: false, isWorker: false } },
-  errors: getFormSyncErrors(FORM)(state),
+  initialValues: { isClient: false, isRecruiter: false, isWorker: false },
   encryptedWallet: encryptedWalletSelector(state),
 })
 

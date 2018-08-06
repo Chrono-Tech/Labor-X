@@ -1,7 +1,5 @@
-export default (values, state) => {
-  const mnemonic = values.mnemonic === state.mnemonic
-  
+export default (values, props) => {
   return {
-    mnemonic: mnemonic ? null : 'Wrong field',
+    mnemonicConfirmation: values.mnemonicConfirmation === props.mnemonic ? null : 'Wrong mnemonic',
   }
 }

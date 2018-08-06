@@ -32,7 +32,8 @@ export const submitAccountPassword = () => async (dispatch, getState) => {
   if (encryptedWallet || wallet) {
     dispatch(push('/auth/signup/welcome'))
   } else {
-    dispatch(setMnemonic(bip39.generateMnemonic()))
+    const mnemonic = mnemonicSelector(state)
+    mnemonic ? dispatch(setMnemonicConfirmation('')) : dispatch(setMnemonic(bip39.generateMnemonic()))
     dispatch(push('/auth/signup/copy-your-account-password'))
   }
 }
@@ -52,16 +53,17 @@ export const submitYourWalletFile = () => (dispatch) => {
 export const SUBMIT_WELCOME_REQUEST = 'AUTH/SIGNUP/SUBMIT_WELCOME_REQUEST'
 export const SUBMIT_WELCOME_SUCCESS = 'AUTH/SIGNUP/SUBMIT_WELCOME_SUCCESS'
 export const SUBMIT_WELCOME_FAILURE = 'AUTH/SIGNUP/SUBMIT_WELCOME_FAILURE'
-export const submitWelcomeRequest = () => ({ type: SUBMIT_WELCOME_REQUEST })
-export const submitWelcomeSuccess = () => ({ type: SUBMIT_WELCOME_SUCCESS })
-export const submitWelcomeFailure = () => ({ type: SUBMIT_WELCOME_FAILURE })
+export const submitWelcomeRequest = (req) => ({ type: SUBMIT_WELCOME_REQUEST, payload: req })
+export const submitWelcomeSuccess = (res) => ({ type: SUBMIT_WELCOME_SUCCESS, payload: res })
+export const submitWelcomeFailure = (err) => ({ type: SUBMIT_WELCOME_FAILURE, payload: err })
 export const submitWelcome = () => async (dispatch, getState) => {
   try {
     dispatch(submitWelcomeRequest())
     const state = getState()
     const encryptedWallet = encryptedWalletSelector(state)
     const wallet = walletSelector(state)
-    const { roles, name, password } = accountPasswordFormValuesSelector(state)
+    const { isRecruiter, isClient, isWorker, name, password } = accountPasswordFormValuesSelector(state)
+    const roles = { isRecruiter, isClient, isWorker }
     const web3 = web3Selector()(state)
     if (encryptedWallet) {
       const wallet = web3.eth.accounts.wallet.decrypt(encryptedWallet, password)
