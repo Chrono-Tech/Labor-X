@@ -35,7 +35,8 @@ export const submit = () => async (dispatch, getState) => {
     const walletModel = new WalletModel({ entry: walletEntry, wallet })
     dispatch(walletLoad(walletModel))
     const account = wallet[0]
-    const { token, profile, client, worker, recruiter } = await profileApi.signup(account, { isClient: true, isWorker: false, isRecruiter: false })
+    // const { token, profile, client, worker, recruiter } = await profileApi.signup(account, { isClient: true, isWorker: false, isRecruiter: false })
+    const { token, profile, client, worker, recruiter } = await profileApi.signin(account)
     const user = UserModel.fromJson({ token, profile, client, worker, recruiter })
     dispatch(userSave(user))
     dispatch(push('/dashboard'))
