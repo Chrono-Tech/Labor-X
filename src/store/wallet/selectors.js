@@ -22,4 +22,6 @@ export const currentAddressSelector = () => createSelector(
   (signer) => signer ? signer.address : null
 )
 
+export const selectedWalletSelector = createSelector(stateSelector, (state) => state.selectedWallet)
 export const decryptedWalletSelector = createSelector(stateSelector, (state) => state.decryptedWallet)
+export const walletEntriesSelector = createSelector(stateSelector, (state) => state.walletsList)
