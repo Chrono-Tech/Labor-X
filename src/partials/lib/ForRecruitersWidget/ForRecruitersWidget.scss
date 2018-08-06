@@ -1,0 +1,21 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.main {
+  .row {
+    @include flex(row, flex-start, stretch);
+    > * {
+      margin-right: 4rem;
+      flex-basis: 50%;
+      &:last-child {
+        margin-right: 0rem;
+      }
+      &:only-child {
+        flex-basis: calc(50% - 2rem);
+      }
+    }
+    &:not(:first-child) {
+      margin-top: 4rem;
+    }
+  }
+}
