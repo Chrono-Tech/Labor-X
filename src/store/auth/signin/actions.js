@@ -31,6 +31,7 @@ export const submit = () => async (dispatch, getState) => {
     const web3 = web3Selector()(state)
     const { password } = formValuesSelector(state)
     const walletEntry = selectedWalletSelector(state)
+    web3.eth.accounts.wallet.clear()
     const wallet = web3.eth.accounts.wallet.decrypt(walletEntry.encrypted, password)
     const walletModel = new WalletModel({ entry: walletEntry, wallet })
     dispatch(walletLoad(walletModel))
