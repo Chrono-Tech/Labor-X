@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from "prop-types"
 import connect from "react-redux/lib/connect/connect"
-import { Field, reduxForm, SubmissionError } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
 
-import { validateWalletName } from 'src/store'
 import { CREATE_WALLET_FORM as FORM } from "src/store/auth/import/constants"
 import { submitCreateWallet as submit } from "src/store/auth/import/actions"
 import SigninLayout from "src/components/layouts/SigninLayout/SigninLayout"
@@ -14,21 +13,6 @@ import { encryptedWalletSelector } from "src/store/auth/import/selectors"
 import validate from './validate'
 
 import css from './AuthImportCreateWalletContent.scss'
-
-const onSubmit = ({ walletName, password }, dispatch) => {
-  const validateName = dispatch(validateWalletName(walletName))
-
-  if (!validateName){
-    throw new SubmissionError({
-      walletName: 'Please enter other wallet name',
-    })
-  }
-
-  return {
-    walletName,
-    password,
-  }
-}
 
 export class AuthImportCreateWalletContent extends React.Component {
 
@@ -96,7 +80,7 @@ export class AuthImportCreateWalletContent extends React.Component {
 AuthImportCreateWalletContent = reduxForm({
   form: FORM,
   validate,
-  onSubmit,
+  // onSubmit,
 })(AuthImportCreateWalletContent)
 
 const mapStateToProps = (state) => ({
