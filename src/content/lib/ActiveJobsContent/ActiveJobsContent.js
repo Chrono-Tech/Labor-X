@@ -70,9 +70,9 @@ class ActiveJobsContent extends React.Component {
 
         <div className={css.content}>
           { value === 0 && (
-            <ActiveTabContent 
-              toPayCards={toPayCards} 
-              otherCardsGroupedByCreatedAt={otherCardsGroupedByCreatedAt} 
+            <ActiveTabContent
+              toPayCards={toPayCards}
+              otherCardsGroupedByCreatedAt={otherCardsGroupedByCreatedAt}
               onHandleOnClickReview={this.handleOnClickReview}
             />
           )

@@ -5,6 +5,8 @@ import {
   JobPausedEvent,
   JobResumedEvent,
   JobConfirmEndWorkEvent,
+  JobStartWorkRequestedEvent,
+  JobWorkStartedEvent,
 } from 'src/models'
 import {
   ipfsHashToBytes32,
@@ -51,6 +53,13 @@ export default class JobControllerDAO extends AbstractContractDAO {
     this.jobJobOfferPosted = this.history.events.JobOfferPosted({})
       .on('data', this.handleJobOfferPostedData.bind(this))
       .on('error', this.handleError.bind(this))
+
+    this.jobStartWorkRequestedEmitter = this.history.events.StartWorkRequested({})
+      .on('data', this.handleJobStartWorkRequestedData.bind(this))
+      .on('error', this.handleError.bind(this))
+    this.jobWorkStartedEmitter = this.history.events.WorkStarted({})
+      .on('data', this.handleJobWorkStartedData.bind(this))
+      .on('error', this.handleError.bind(this))
     // this.jobClosedEmitter = this.contract.events.JobClosed({})
     //   .on('data', this.handleJobClosedData.bind(this))
     //   .on('error', this.handleError.bind(this))
@@ -62,8 +71,10 @@ export default class JobControllerDAO extends AbstractContractDAO {
     if (this.isConnected) {
       this.jobCreatedEmitter.removeAllListeners()
       this.jobClosedEmitter.removeAllListeners()
+      this.jobStartWorkRequestedEmitter.removeAllListeners()
       this.jobCreatedEmitter = null
       this.jobClosedEmitter = null
+      this.jobStartWorkRequestedEmitter = null
       this.contract = null
       this.history = null
     }
@@ -204,6 +215,40 @@ export default class JobControllerDAO extends AbstractContractDAO {
       to: this.address,
       data,
     }
+  }
+
+  handleJobStartWorkRequestedData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] JobStartWorkRequested', data)
+    const { returnValues } = data
+    setImmediate(() => {
+      this.emit('JobPosted', {
+        data,
+        event: new JobStartWorkRequestedEvent({
+          key: `${data.transactionHash}/${data.logIndex}`,
+          self: returnValues.self,
+          jobId: Number(returnValues.jobId),
+          at: Number(returnValues.at),
+        }),
+      })
+    })
+  }
+
+  handleJobWorkStartedData (data) {
+    // eslint-disable-next-line no-console
+    console.log('[JobControllerDAO] JobStartWorkRequested', data)
+    const { returnValues } = data
+    setImmediate(() => {
+      this.emit('JobPosted', {
+        data,
+        event: new JobWorkStartedEvent({
+          key: `${data.transactionHash}/${data.logIndex}`,
+          self: returnValues.self,
+          jobId: Number(returnValues.jobId),
+          at: Number(returnValues.at),
+        }),
+      })
+    })
   }
 
   handleJobPostedData (data) {

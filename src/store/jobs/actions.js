@@ -48,6 +48,7 @@ export const initJobs = () => async (dispatch, getState) => {
     .on('JobResumed', ({ event }) => dispatch(handleJobResumed(event)))
     .on('JobConfirmEndWork', ({ event }) => dispatch(handleJobConfirmEndWork(event)))
     .on('JobCanceled', ({ event }) => dispatch(handleJobCanceled(event)))
+    .on('StartWorkRequested', ({ event }) => dispatch(handleJobStartWorkRequested(event)))
   await dispatch(reloadJobs())
 }
 
@@ -79,18 +80,16 @@ export const reloadJobs = () => async (dispatch, getState) => {
 
 }
 
-export const handleJobPaused = (e: JobPausedEvent) => async (dispatch, getState) => {
+export const handleJobStartWorkRequested = (e: JobStartWorkRequested) => async (dispatch) => {
+  // eslint-disable-next-line no-console
+  console.log('handleJobStartWorkRequested', e)
+  dispatch(refreshJob(e.jobId))
+}
+
+export const handleJobPaused = (e: JobPausedEvent) => async (dispatch) => {
   // eslint-disable-next-line no-console
   console.log('handleJobPaused', e)
-  const state = getState()
-  const jobsDataProviderDAO = daoByType('JobsDataProvider')(state)
-  const boardControlerDAO = daoByType('BoardController')(state)
-  const job = await jobsDataProviderDAO.getJobById(boardControlerDAO, e.jobId)
-  dispatch({
-    type: JOBS_WORKER_SAVE,
-    jobList: [ job ],
-  })
-  return job
+  dispatch(refreshJob(e.jobId))
 }
 
 export const handleJobResumed = (e: JobResumedEvent) => async (dispatch) => {
@@ -174,28 +173,41 @@ export const createJob = (form: JobFormModel) => async (dispatch, getState) => {
   await dispatch(executeTransaction({ tx, web3, signer }))
 }
 
-export const createJobOffer = (form: JobOfferFormModel) => async (dispatch, getState) => {
+export const createJobOffer = (form: JobOfferFormModel, job: JobModel) => async (dispatch, getState) => {
+  // debugger
   // eslint-disable-next-line no-console
-  console.log('[jobs] createJobOffer from values', form)
+  console.log('[jobs] createJobOffer from values', form, job)
   const state = getState()
 
   const jobControllerDAO = daoByType('JobController')(state)
   const signer = signerSelector()(state)
   const web3 = web3Selector()(state)
 
+  // const flowType = FlowTypeModel.valueOf(job.flowType.toNumber())
+  // switch (flowType) {
+  //   case WORKFLOW_TM:
+  //     const rate = job.ipfs.budget.hourlyRate / 60;
+  //     сonst estimate = job.ipfs.budget.totalHours / 60;
+  //
+  //
+  // }
+
   const tx = jobControllerDAO.createPostJobOfferTx(
     signer.address,
     form.jobId,
-    form.rate,
-    form.estimate,
-    form.ontop
+    // form.rate,
+    job.ipfs.budget.hourlyRate,
+    job.ipfs.budget.totalHours,
+    // form.estimate,
+    // form.ontop
+    0,
   )
   await dispatch(executeTransaction({ tx, web3, signer }))
 }
 
-export const createJobOfferWithPrice = (form: JobOfferFormModel) => async (dispatch, getState) => {
+export const createJobOfferWithPrice = (form: JobOfferFormModel, job: JobModel) => async (dispatch, getState) => {
   // eslint-disable-next-line no-console
-  console.log('[jobs] createJobOffer from values', form)
+  console.log('[jobs] createJobOffer from values', form, job)
   const state = getState()
 
   const jobControllerDAO = daoByType('JobController')(state)
@@ -428,10 +440,10 @@ export const rejectWorkResults = (id) => async (dispatch, getState) => {
 }
 
 export const pay = (flowType, id) => async (dispatch) => {
-  if (flowType === WORKFLOW_TM) {
+  if (flowType === WORKFLOW_TM.index) {
     dispatch(payWorkflowTm(id))
   }
-  if (flowType === WORKFLOW_FIXED_PRICE) {
+  if (flowType === WORKFLOW_FIXED_PRICE.index) {
     dispatch(payWorkflowFixedPrice(id))
   }
 }

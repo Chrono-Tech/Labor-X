@@ -17,7 +17,7 @@ class ReviewOfferDialog extends React.Component {
   static propTypes = {
     job: PropTypes.instanceOf(JobModel).isRequired,
     offer: PropTypes.instanceOf(JobOfferModel).isRequired,
-    worker: PropTypes.instanceOf(ProfileModel).isRequired,
+    person: PropTypes.instanceOf(ProfileModel).isRequired,
     closeModal: PropTypes.func.isRequired,
     acceptOffer: PropTypes.func,
   }
@@ -35,7 +35,7 @@ class ReviewOfferDialog extends React.Component {
   }
 
   render () {
-    const { job, offer, worker } = this.props
+    const { job, offer, person } = this.props
 
     return (
       <div className={css.root}>
@@ -48,11 +48,11 @@ class ReviewOfferDialog extends React.Component {
         <div className={css.body}>
           <div className={css.workerRow}>
             <div className={css.workerName}>
-              {worker.ipfs.logo != null && (
-                <img className={css.workerImage} src={worker.ipfs.logo} alt={worker.ipfs.name} />
+              {person.avatar != null && (
+                <img className={css.workerImage} src={person.avatar} alt={person.userName} />
               )}
-              <Link className={css.link} href={`/worker-profile/${worker.id}`}>
-                <h4>{worker.ipfs.name}</h4>
+              <Link className={css.link} href={`/worker-profile/${person.id}`}>
+                <h4>{person.userName}</h4>
                 <p>Worker</p>
               </Link>
             </div>
@@ -99,7 +99,7 @@ class ReviewOfferDialog extends React.Component {
 
 function mapDispatchToProps (dispatch, ownProps) {
   return {
-    acceptOffer: () => dispatch(acceptOffer(ownProps.job.id, ownProps.worker.address)),
+    acceptOffer: () => dispatch(acceptOffer(ownProps.job.id, ownProps.person.address)),
     closeModal: () => dispatch(modalsPop()),
   }
 }
