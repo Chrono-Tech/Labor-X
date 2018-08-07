@@ -22,9 +22,9 @@ export const selectInitialProps = (jobId) => async (dispatch, getState) => {
     for (let i = 0; i < jobOffers.length; i++) {
       const offer = jobOffers[i];
 
-      let profile = null;
+      let person = null;
       try {
-        profile = await backendApi.getProfile(offer.worker);
+        person = await backendApi.getPerson(offer.worker);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error)
@@ -40,7 +40,7 @@ export const selectInitialProps = (jobId) => async (dispatch, getState) => {
 
       applicants.push({
         offer,
-        profile,
+        person,
         workerProfile,
       });
     }

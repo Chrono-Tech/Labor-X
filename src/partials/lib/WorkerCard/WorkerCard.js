@@ -7,7 +7,7 @@ import get from 'lodash/get'
 import { ProfileModel, JobOfferModel, JobModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield } from 'src/components/common'
 import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
-import ProfileModelBackend from 'src/api/backend/model/ProfileModel'
+import PersonModelBackend from 'src/api/backend/model/PersonModel'
 import { modalsPush } from 'src/store'
 import { ReviewOfferDialog } from 'src/partials'
 import css from './WorkerCard.scss'
@@ -19,7 +19,7 @@ class WorkerCard extends React.Component {
     offer: PropTypes.instanceOf(JobOfferModel).isRequired,
     worker: PropTypes.instanceOf(ProfileModel).isRequired,
     workerProfile: PropTypes.instanceOf(ProfileWorkerModel),
-    profile: PropTypes.instanceOf(ProfileModelBackend),
+    person: PropTypes.instanceOf(PersonModelBackend),
     job: PropTypes.instanceOf(JobModel),
     offerSent: PropTypes.bool,
     pushModal: PropTypes.func,
@@ -105,15 +105,15 @@ class WorkerCard extends React.Component {
   }
 
   render () {
-    const { workerProfile, profile, offer, offerSent } = this.props
-    const workerName = get(profile, "level1.approved.userName")
-      ? get(profile, "level1.approved.userName")
+    const { workerProfile, person, offer, offerSent } = this.props
+    const workerName = get(person, "userName")
+      ? get(person, "userName")
       : ""
-    const avatarUrl = get(profile, "level1.approved.avatar.url")
-      ? get(profile, "level1.approved.avatar.url")
+    const avatarUrl = get(person, "avatar")
+      ? get(person, "avatar")
       : "/static/temp/icon-profile.jpg"
-    const validationLevel = profile
-      ? profile.getValidationLevel()
+    const validationLevel = get(person, "validationLevel")
+      ? get(person, "validationLevel")
       : 0
     return (
       <div className={cn(css.root, {

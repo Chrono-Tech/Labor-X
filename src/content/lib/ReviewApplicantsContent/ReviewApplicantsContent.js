@@ -116,7 +116,7 @@ export class ReviewApplicantsContent extends React.Component {
                   jobId={job.id}
                   job={job}
                   workerProfile={applicant.workerProfile}
-                  profile={applicant.profile}
+                  person={applicant.person}
                 />))}
                 {!applicants.length && this.renderEmptyListMessage()}
               </div>
