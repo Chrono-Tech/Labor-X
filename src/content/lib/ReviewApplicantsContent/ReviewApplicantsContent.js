@@ -21,6 +21,10 @@ export class ReviewApplicantsContent extends React.Component {
       offer: PropTypes.instanceOf(JobOfferModel),
       worker: PropTypes.instanceOf(ProfileModel),
     })),
+    selectedApplicant: PropTypes.shape({
+      offer: PropTypes.instanceOf(JobOfferModel),
+      worker: PropTypes.instanceOf(ProfileModel),
+    }),
     worker: PropTypes.instanceOf(ProfileModel),
     push: PropTypes.func,
     workerByAddressKey: PropTypes.shape({}),
@@ -45,7 +49,7 @@ export class ReviewApplicantsContent extends React.Component {
   }
 
   render () {
-    const { job, applicants, worker } = this.props
+    const { job, applicants, selectedApplicant } = this.props
     return (
       <div className={css.main}>
         <div className={css.title}>
@@ -104,20 +108,23 @@ export class ReviewApplicantsContent extends React.Component {
             <div className={css.block}>
               <h4>Selected Worker</h4>
               <div className={css.cards}>
-                {worker ? <WorkerCard offerSent workerProfile={worker} /> : this.renderEmptyListMessage()}
+                {selectedApplicant ? <WorkerCard offer={selectedApplicant.offer} offerSent person={selectedApplicant.person} /> : this.renderEmptyListMessage()}
               </div>
             </div>
             <div className={css.block}>
               <h4>Job Applicants ({applicants.length})</h4>
               <div className={css.cards}>
-                {applicants.map((applicant) => (<WorkerCard
-                  offer={applicant.offer}
-                  key={uniqid()}
-                  jobId={job.id}
-                  job={job}
-                  workerProfile={applicant.workerProfile}
-                  profile={applicant.profile}
-                />))}
+                {
+                  applicants.map((applicant) => (<WorkerCard
+                    offer={applicant.offer}
+                    key={uniqid()}
+                    jobId={job.id}
+                    job={job}
+                    person={applicant.person}
+                    // workerProfile={applicant.workerProfile}
+                    // profile={applicant.profile}
+                  />))
+                }
                 {!applicants.length && this.renderEmptyListMessage()}
               </div>
             </div>
@@ -131,14 +138,16 @@ export class ReviewApplicantsContent extends React.Component {
 function mapStateToProps (state) {
   const applicants = applicantsSelector(state)
   const job = jobSelector(state)
-  const worker = job.worker && applicants && applicants.length
-    ? applicants.find(x => x.worker.address.toLowerCase() === job.worker.toLowerCase())
+  const selectedApplicant = job.worker
+    ? applicants.find(x => x.person.address.toLowerCase() === job.worker.toLowerCase())
     : null
-
+  const applicantsWithoutSelected = selectedApplicant
+    ? applicants.filter(x => x.person.address !== selectedApplicant.person.address)
+    : applicants
   return {
     job,
-    applicants,
-    worker,
+    applicants: applicantsWithoutSelected,
+    selectedApplicant: selectedApplicant,
   }
 }
 

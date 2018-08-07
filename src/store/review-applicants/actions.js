@@ -8,28 +8,27 @@ export const SELECT_INITIAL_PROPS_FAILURE = 'REVIEW_APPLICANTS/SELECT_INITIAL_PR
 export const selectInitialPropsRequest = (req) => ({ type: SELECT_INITIAL_PROPS_REQUEST, payload: req })
 export const selectInitialPropsSuccess = (res) => ({ type: SELECT_INITIAL_PROPS_SUCCESS, payload: res })
 export const selectInitialPropsFailure = (err) => ({ type: SELECT_INITIAL_PROPS_FAILURE, payload: err })
-export const selectInitialProps = (jobId) => async (dispatch, getState) => {
+export const selectInitialProps = (id) => async (dispatch, getState) => {
   try {
     dispatch(selectInitialPropsRequest())
     const state = getState()
     const JobsDataProvider = daoByType('JobsDataProvider')(state)
     const BoardController = daoByType('BoardController')(state)
     const jobs = await JobsDataProvider.getJobs(BoardController)
-    const [ currentJob ] = jobs.filter((x) => x.id === jobId)
-    const jobOffers = await JobsDataProvider.getJobOffers(jobId);
-
+    const job = jobs.find((x) => parseInt(x.id) === (parseInt(id)))
+    const jobOffers = await JobsDataProvider.getJobOffers(job.id)
     let applicants = []
     for (let i = 0; i < jobOffers.length; i++) {
       const offer = jobOffers[i];
-      const profile = await backendApi.getProfile(offer.worker);
-      const workerProfile = await backendApi.getWorker(offer.worker);
+      const person = await backendApi.getPerson(offer.worker)
+      // const workerProfile = offer.worker ? await backendApi.getWorker(offer.worker) : {};
       applicants.push({
         offer,
-        profile,
-        workerProfile,
+        person,
+        // workerProfile,
       });
     }
-    dispatch(selectInitialPropsSuccess({ applicants, job: currentJob }))
+    dispatch(selectInitialPropsSuccess({ applicants, job }))
   } catch (err) {
     dispatch(selectInitialPropsFailure(err))
   }
