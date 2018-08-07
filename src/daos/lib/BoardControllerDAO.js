@@ -71,6 +71,10 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     return Number(await this.contract.methods.getJobsBoard(jobId).call())
   }
 
+  async getJobsInBoardCount (boardId) {
+    return Number(await this.contract.methods.getJobsInBoardCount(boardId).call())
+  }
+
   async getBoardById (signer, id) {
     const [ board ] = await this.getBoardsByIds(signer, [ id ])
     return board

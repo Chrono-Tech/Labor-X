@@ -8,13 +8,13 @@ import {
 
 interface State {
   selectInitialPropsLoading: boolean;
-  boards: Array<Object>;
+  cards: Array<Object>;
   selectInitialPropsFailure: Error;
 }
 
 export const STATE: State = {
   selectInitialPropsLoading: true,
-  boards: [],
+  cards: [],
   selectInitialPropsFailure: true,
 }
 
@@ -29,7 +29,7 @@ export default (state: State = STATE, action) => {
     case SELECT_INITIAL_PROPS_SUCCESS: return ({
       ...state,
       selectInitialPropsLoading: false,
-      boards: action.payload.boards,
+      cards: action.payload.cards,
     })
     case SELECT_INITIAL_PROPS_FAILURE: return ({
       ...state,

@@ -2,9 +2,9 @@ import { createSelector } from "reselect"
 
 export const getState = state => state.jobBoards
 
-export const boardsSelector = createSelector(
+export const boardCardsSelector = createSelector(
     getState,
-    (state) => state.boards
+    (state) => state.cards
 )
 
 export const getSelectInitialPropsLoading = createSelector(getState, state => state.selectInitialPropsLoading)

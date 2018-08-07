@@ -105,6 +105,8 @@ src/**/*.js
 !src/components/Account/AccountPasswordForm/
 !src/components/Account/ShowMnemonic/
 !src/components/common/UserRow/UserRow.js
+!src/components/JobBoards/JobBoards.js
+!src/components/JobBoards/JobBoardItem/JobBoardItem.js
 
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
