@@ -105,6 +105,7 @@ import {
   completedJobs,
   applicationsAndOffers,
   auth,
+  jobBoards,
 } from "src/store/reducers"
 
 import AuthRoute from "src/components/routes/AuthRoute"
@@ -159,6 +160,7 @@ const reducer = combineReducers({
   completedJobs,
   applicationsAndOffers,
   auth,
+  jobBoards,
 })
 
 const store = createStore(

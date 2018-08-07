@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
 import { Input, Icon, Checkbox, Radio } from 'src/components/common'
-import { boardsFilteredListSelector, updateFilterBoards } from 'src/store'
+import { updateFilterBoards } from 'src/store'
+import { boardsSelector } from 'src/store/jobBoards/selectors'
 import { BoardModel, TAG_CATEGORIES_LIST } from 'src/models'
 import JobBoardItem from './JobBoardItem/JobBoardItem'
 
@@ -257,7 +258,7 @@ class JobBoards extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const boardsList = boardsFilteredListSelector()(state)
+  const boardsList = boardsSelector(state)
   return {
     boardsList: boardsList.filter(x => x.isActive),
     activeCategoriesFilter: formSelector(state, FILTER_CATEGORIES_NAME),

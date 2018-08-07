@@ -193,263 +193,262 @@ export class JobBoardItem extends React.Component {
       </div>
     )
 
-    return (
-      <button key='join' className={css.actionButton} onClick={onClick} disabled={isDisabled}>
-        {text}
-        {this.renderActionsTooltip({
-          src: '/static/images/svg/help-white-clear.svg',
-          popoverContent,
-          popoverClassName: css.actionPopover,
-        })}
-      </button>
-    )
-  }
-
-  renderNeedVerifyButton (text, onClick) {
-    const handleClick = onClick ? onClick : () => {}
-    const buttonText = text || 'Verify Me to Join'
-
-    const popoverContent = (
-      <div>
-        <div className={css.popoverHeader}>Requirements are not met</div>
-        <div className={css.popoverDescription}>
-          Sorry, requirements to join the board are not met. Board owner requires the following to be completed:
-        </div>
-        <ul className={css.popoverVerifyList}>
-          <li className={css.listItem}>Validate your email or phone</li>
-          <li className={css.listItem}>Validate your ID</li>
-          <li className={css.listItem}>Validate your home address</li>
-          <li className={css.listItem}>Validate your legal documents (Worker or Client)</li>
-          <li className={css.listItem}>At least one skill should be endorsed by other people. new comers may get an
-            endorsement by our validation team
-          </li>
-          <li className={css.listItem}>Your rating should be 3+</li>
-        </ul>
-      </div>
-    )
-
-    return (
-      <button className={css.actionButton} onClick={handleClick}>
-        {buttonText}
-        {this.renderActionsTooltip({
-          src: '/static/images/svg/help-white-clear.svg',
-          popoverContent,
-          popoverClassName: css.actionPopover,
-        })}
-      </button>
-    )
-  }
-
-  renderJoinedActions () {
     return [
-      <button key='view' className={css.actionButtonView}>
-        View
-      </button>,
-      <span key='joined' className={css.actionButtonJoined}>
-        Joined
-      </span>,
-    ]
-  }
-
-  renderApprovalActions () {
-    const popoverContent = (
-      <div>
-        <div className={css.popoverHeader}>Your Request is processing</div>
-        <div className={css.popoverDescription}>
-          You have requested to join the board. Moderators of the board are reviewing your request and will back to
-          you soon!
-        </div>
-      </div>
-    )
-
-    return (
-      <div className={css.actionButtonApproval}>
-        On Approval
+      <button key='info' className={css.infoButton}>
         {this.renderActionsTooltip({
           src: '/static/images/svg/help-clean.svg',
           popoverContent,
-          popoverClassName: css.approvalPopover,
+          popoverClassName: css.actionPopover,
         })}
-      </div>
-    )
+      </button>,
+      <button key='join' className={css.actionButton} onClick={onClick} disabled={isDisabled}>
+          {text}
+      </button>
+    ]
   }
-
+    
+  renderNeedVerifyButton (text, onClick) {
+    const handleClick = onClick ? onClick : () => {}
+        const buttonText = text || 'Verify Me to Join'
+    
+        const popoverContent = (
+      <div>
+          <div className={css.popoverHeader}>Requirements are not met</div>
+          <div className={css.popoverDescription}>
+            Sorry, requirements to join the board are not met. Board owner requires the following to be completed:
+        </div>
+          <ul className={css.popoverVerifyList}>
+            <li className={css.listItem}>Validate your email or phone</li>
+            <li className={css.listItem}>Validate your ID</li>
+            <li className={css.listItem}>Validate your home address</li>
+            <li className={css.listItem}>Validate your legal documents (Worker or Client)</li>
+            <li className={css.listItem}>At least one skill should be endorsed by other people. new comers may get an
+              endorsement by our validation team
+          </li>
+            <li className={css.listItem}>Your rating should be 3+</li>
+          </ul>
+        </div>
+        )
+    
+        return (
+      <button className={css.actionButton} onClick={handleClick}>
+          {buttonText}
+          {this.renderActionsTooltip({
+            src: '/static/images/svg/help-white-clear.svg',
+            popoverContent,
+            popoverClassName: css.actionPopover,
+          })}
+        </button>
+        )
+      }
+    
+  renderJoinedActions () {
+    return [
+      <span key='joined' className={css.actionButtonJoined}>
+          Joined
+      </span>,
+      ]
+    }
+  
+  renderApprovalActions () {
+    const popoverContent = (
+      <div>
+          <div className={css.popoverHeader}>Your Request is processing</div>
+          <div className={css.popoverDescription}>
+            You have requested to join the board. Moderators of the board are reviewing your request and will back to
+            you soon!
+        </div>
+        </div>
+        )
+    
+        return (
+      <div className={css.actionButtonApproval}>
+          On Approval
+        {this.renderActionsTooltip({
+            src: '/static/images/svg/help-clean.svg',
+            popoverContent,
+            popoverClassName: css.approvalPopover,
+          })}
+        </div>
+        )
+      }
+    
   renderActions () {
     const { jobBoard, isMyJobBoard } = this.props
-    return (
-      <div>
-        {
-          isMyJobBoard
-            ? <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>Terminate</button>
-            : null
-        }
-        {
-          jobBoard.extra.isSignerJoined
-            ? this.renderJoinedActions()
-            : this.renderDefaultActionButton('Join the Board', this.state.isJoinInProgress, () => this.handleJoinBoard(jobBoard.id))
-        }
-      </div>
-    )
-  }
-
-  renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }) {
-    const { actionPopover } = this.state
-
-    return (
+        return (
+      <div className={css.buttonsWrapper}>
+          {
+            isMyJobBoard
+              ? <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>Terminate</button>
+              : null
+          }
+          {
+            jobBoard.extra.isSignerJoined
+              ? this.renderJoinedActions()
+              : this.renderDefaultActionButton('Join the Board', this.state.isJoinInProgress, () => this.handleJoinBoard(jobBoard.id))
+          }
+        </div>
+        )
+      }
+    
+  renderActionsTooltip ({src, popoverContent, popoverClassName = '' }) {
+    const {actionPopover} = this.state
+    
+        return (
       <span
-        className={css.actionButtonTooltip}
-        onMouseOver={this.handleActionsPopoverOpen.bind(this)}
-        onMouseOut={this.handleActionsPopoverClose.bind(this)}
-      >
-        <img src={src} alt='' width='24' height='24' />
-        {popoverContent ? (
-          <Popover
-            open={actionPopover}
-            arrowPosition={Popover.ARROW_POSITION.RIGHT}
-            className={popoverClassName}
-          >
-            {popoverContent}
-          </Popover>)
-          : null}
-      </span>
-    )
-  }
-
+          className={css.actionButtonTooltip}
+          onMouseOver={this.handleActionsPopoverOpen.bind(this)}
+          onMouseOut={this.handleActionsPopoverClose.bind(this)}
+        >
+          <span className={css.helpIcon}>?</span>
+          {popoverContent ? (
+            <Popover
+              open={actionPopover}
+              arrowPosition={Popover.ARROW_POSITION.RIGHT}
+              className={popoverClassName}
+            >
+              {popoverContent}
+            </Popover>)
+            : null}
+        </span>
+        )
+      }
+    
   renderSecurityTooltip () {
-    const { jobBoard } = this.props
-
-    const level = jobBoard.extra.validationLevel
-    const securityIcon = level ? Icon.SETS.SECURITY : Icon.SETS.SECURITY_NONE
-
-    return (
+    const {jobBoard} = this.props
+    
+        const level = jobBoard.extra.validationLevel
+        const securityIcon = level ? Icon.SETS.SECURITY : Icon.SETS.SECURITY_NONE
+    
+        return (
       <div className={css.securityRatingWrapper}>
-        <Icon className={css.securityRatingShield} size={31} {...securityIcon} />
-        { level ? (<span className={css.securityRating}>{level}</span>) : null }
-      </div>
-    )
-  }
-
+          <Icon className={css.securityRatingShield} size={31} {...securityIcon} />
+          {level ? (<span className={css.securityRating}>{level}</span>) : null}
+        </div>
+        )
+      }
+    
   renderBoardTags () {
-    const { jobBoard } = this.props
-    const tags = [
-      jobBoard.tagsCategory.map(t => t.name),
-      ...jobBoard.tags.map(t => t.name),
-    ]
-    return tags.join(', ')
-  }
-
+    const {jobBoard} = this.props
+        const tags = [
+          jobBoard.tagsCategory.map(t => t.name),
+          ...jobBoard.tags.map(t => t.name),
+        ]
+        return tags.join(', ')
+      }
+    
   renderLogo () {
-    const { jobBoard } = this.props
-    return (
+    const {jobBoard} = this.props
+        return (
       <button className={css.logoLink}>
-        <img src={jobBoard.ipfs.logo || '/static/images/board-logo-placeholder.png'} alt='' style={{width:'128px'}} />
-      </button>
-    )
-  }
-
+          <img src={jobBoard.ipfs.logo || '/static/images/board-logo-placeholder.png'} alt='' style={{ width: '128px' }} />
+        </button>
+        )
+      }
+    
   renderTerminateDialog () {
     return (
       <Dialog
-        open={this.state.isTerminateDialogOpen}
-        onClose={this.handleTerminateDialogClose}
-      >
-        <DialogTitle>Are you absolutely sure?</DialogTitle>
-        <DialogContent>This action cannot be undone. This will permanently terminate this job board</DialogContent>
-        <DialogActions>
-          <Button
-            disabled={this.state.isTerminateProgress}
-            onClick={this.handleTerminateRejectClick}
-          >NO</Button>
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={this.state.isTerminateProgress}
-            onClick={this.handleTerminateApproveClick}
-          >{this.state.isTerminateProgress ? 'Loading' : 'YES'}</Button>
-        </DialogActions>
-      </Dialog>
-    )
-  }
-
+          open={this.state.isTerminateDialogOpen}
+          onClose={this.handleTerminateDialogClose}
+        >
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogContent>This action cannot be undone. This will permanently terminate this job board</DialogContent>
+          <DialogActions>
+            <Button
+              disabled={this.state.isTerminateProgress}
+              onClick={this.handleTerminateRejectClick}
+            >NO</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={this.state.isTerminateProgress}
+              onClick={this.handleTerminateApproveClick}
+            >{this.state.isTerminateProgress ? 'Loading' : 'YES'}</Button>
+          </DialogActions>
+        </Dialog>
+        )
+      }
+    
   render () {
-    const { jobBoard } = this.props
-
-    return (
+    const {jobBoard} = this.props
+    
+        return (
       <div className={css.main}>
-        <div className={css.logoBlock}>
-          { this.renderLogo() }
-        </div>
-        <div className={css.contentBlock}>
-          <div className={css.titleBlock}>
-            <div>
-              <button className={css.title}>
-                { jobBoard.ipfs.name }
-              </button>
-            </div>
-
-            <div className={css.categoryWrapper}>
-              <button className={css.category}>
-                { this.renderBoardTags() }
-              </button>
-            </div>
-
+          <div className={css.logoBlock}>
+            {this.renderLogo()}
           </div>
-
-          <div className={css.ratingBlock}>
-            <div
-              className={css.starsWrapper}
-              onMouseOver={this.handleStarsPopoverOpen.bind(this)}
-              onMouseOut={this.handleStarsPopoverClose.bind(this)}
-            >
-              {this.getRatingStars()}
-              {this.getStarsPopover()}
-            </div>
-
-            <div
-              className={css.securityBadge}
-              onMouseOver={this.handleSecurityPopoverOpen.bind(this)}
-              onMouseLeave={this.handleSecurityPopoverClose.bind(this)}
-            >
-              { this.renderSecurityTooltip() }
-              { this.getSecurityPopover() }
-            </div>
-          </div>
-
-          <div className={css.aboutJob}>
-            <div className={css.jobInfo}>
-
-              <div className={css.jobInfoBlock}>
-                <div className={css.jobInfoCount}>{jobBoard.extra.jobsCount}</div>
-                <div className={css.jobInfoDescribe}>{pluralize('Job', jobBoard.extra.jobsCount)}</div>
+          <div className={css.contentBlock}>
+            <div className={css.titleBlock}>
+              <div>
+                <button className={css.title}>
+                  {jobBoard.ipfs.name}
+                </button>
               </div>
 
-              <div className={css.jobInfoBlock}>
-                <div className={css.jobInfoCount}>{ jobBoard.extra.clientsCount }</div>
-                <div className={css.jobInfoDescribe}>{pluralize('Client', jobBoard.extra.clientsCount)}</div>
+              <div className={css.categoryWrapper}>
+                <button className={css.category}>
+                  {this.renderBoardTags()}
+                </button>
               </div>
 
             </div>
 
-            <div className={css.actionsWrapper}>
-              {this.renderActions()}
+            <div className={css.ratingBlock}>
+              <div
+                className={css.starsWrapper}
+                onMouseOver={this.handleStarsPopoverOpen.bind(this)}
+                onMouseOut={this.handleStarsPopoverClose.bind(this)}
+              >
+                {this.getRatingStars()}
+                {this.getStarsPopover()}
+              </div>
+
+              <div
+                className={css.securityBadge}
+                onMouseOver={this.handleSecurityPopoverOpen.bind(this)}
+                onMouseLeave={this.handleSecurityPopoverClose.bind(this)}
+              >
+                {this.renderSecurityTooltip()}
+                {this.getSecurityPopover()}
+              </div>
+            </div>
+
+            <div className={css.aboutJob}>
+              <div className={css.jobInfo}>
+
+                <div className={css.jobInfoBlock}>
+                  <div className={css.jobInfoCount}>{jobBoard.extra.jobsCount}</div>
+                  <div className={css.jobInfoDescribe}>{pluralize('Job', jobBoard.extra.jobsCount)}</div>
+                </div>
+
+                <div className={css.jobInfoBlock}>
+                  <div className={css.jobInfoCount}>{jobBoard.extra.clientsCount}</div>
+                  <div className={css.jobInfoDescribe}>{pluralize('Client', jobBoard.extra.clientsCount)}</div>
+                </div>
+
+              </div>
+
+              <div className={css.actionsWrapper}>
+                {this.renderActions()}
+              </div>
             </div>
           </div>
+          {this.renderTerminateDialog()}
         </div>
-        { this.renderTerminateDialog() }
-      </div>
-    )
-  }
-}
-
+        )
+      }
+    }
+    
 const mapStateToProps = (state, ownProps) => ({
-  isMyJobBoard: state.wallet.decryptedWallet.entry.encrypted[0].address === ownProps.jobBoard.creator.slice(2).toLowerCase(),
-})
-
+          isMyJobBoard: state.wallet.decryptedWallet.entry.encrypted[0].address === ownProps.jobBoard.creator.slice(2).toLowerCase(),
+      })
+      
 function mapDispatchToProps (dispatch) {
   return {
-    onJoinBoard: (boardId) => dispatch(joinBoard(boardId)),
-    onTerminateBoard: (boardId) => dispatch(terminateBoard(boardId)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(JobBoardItem)
+          onJoinBoard: (boardId) => dispatch(joinBoard(boardId)),
+        onTerminateBoard: (boardId) => dispatch(terminateBoard(boardId)),
+      }
+    }
+    
+    export default connect(mapStateToProps, mapDispatchToProps)(JobBoardItem)

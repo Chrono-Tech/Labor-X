@@ -1,4 +1,5 @@
 // import BigNumber from 'bignumber.js'
+import get from 'lodash/get'
 import {
   BoardModel,
   BoardIPFSModel,
@@ -115,11 +116,11 @@ export default class BoardControllerDAO extends AbstractContractDAO {
         tagsCategory: TagCategoryModel.arrayValueOfMask(_tagsCategories[i]),
         ipfs: new BoardIPFSModel({
           ...ipfs,
-          joinRequirement: ipfs.joinRequirement !== undefined ? BoardRequirementModel.valueOf(ipfs.joinRequirement) : null,
-          fee: ipfs.fee !== undefined ? BoardPostFeeModel.valueOf(ipfs.fee) : null,
-          lhus: ipfs.lhus !== undefined ? +ipfs.lhus : 0,
+          joinRequirement: get(ipfs, "joinRequirement") !== undefined ? BoardRequirementModel.valueOf(get(ipfs, "joinRequirement")) : null,
+          fee: get(ipfs, "fee") !== undefined ? BoardPostFeeModel.valueOf(get(ipfs, "fee")) : null,
+          lhus: get(ipfs, "lhus") !== undefined ? +get(ipfs, "lhus") : 0,
           hash: ipfsHash,
-          endorsingSkills: !!ipfs.endorsingSkills,
+          endorsingSkills: !!get(ipfs, "endorsingSkills"),
         }),
         extra: new BoardExtraModel({
           isSignerJoined,
