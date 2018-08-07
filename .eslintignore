@@ -193,6 +193,7 @@ src/**/*.js
 !src/content/lib/GeneralProfileContent/PersonalForm.js
 !src/content/lib/GeneralProfileContent/index.js
 !src/content/lib/GeneralProfileContent/index.scss
+!src/content/lib/PeopleContent/
 !src/store/client-profile/actions.js
 !src/store/client-profile/index.js
 !src/store/client-profile/reducer.js
@@ -209,6 +210,7 @@ src/**/*.js
 !src/store/dashboard/
 
 !pages/my-wallet.js
+!pages/dashboard/
 !src/api/lht/index.js
 !src/content/lib/MyWalletContent/MyWalletContent.css
 !src/content/lib/MyWalletContent/MyWalletContent.js

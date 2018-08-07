@@ -52,25 +52,6 @@ $maxWidth: 74rem;
 .main {
   margin-bottom: 16rem;
   flex-grow: 1;
-  .contentError {
-    @include flex(column, center, center);
-    height: 50rem;
-    .buttonReload {
-      margin-top: 1.5rem;
-      height: 4rem;
-      width: 14rem;
-      border-radius: 21px;
-      font-size: $pSize;
-      font-weight: $font-weight-bold;
-      color: $color-white;
-      background-color: $color-azure;
-      text-transform: none;
-    }
-  }
-  .contentLoading {
-    @include flex(column, center, center);
-    height: 50rem;
-  }
 }
 
 .title {

@@ -1,0 +1,59 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$contentWidth: 92rem;
+
+.main {
+  @include flex(column, flex-start, stretch);
+  flex-grow: 1;
+  .title {
+    @include flex(column, flex-start, flex-start);
+    margin: 0;
+    padding-left: 5rem;
+    border-bottom: solid 1px $color-azure;
+    background-color: white;
+    .indicator {
+      height: 2px;
+    }
+    .tab {
+      margin-bottom:2px;
+      padding-top: 2px;
+      font-weight: $font-weight-regular;
+      color: $color-gray50;
+      min-width: unset;
+      &:hover {
+        margin-bottom: 0px;
+        border-bottom: solid 2px $color-gray50;
+      }
+    }
+    .tabActive {
+      font-weight: $font-weight-medium;
+      color: $color-azure;
+    }
+  }
+  .content {
+    @include flex(column, flex-start, stretch);
+    align-self: center;
+    width: $contentWidth;
+    .searchContainer {
+      @include flex(row, flex-start, center);
+      margin: 3rem 0;
+      width: 100%;
+      .searchInput {
+        width: 100%;
+      }
+      .currentFilterContainer {
+        @include flex(row, flex-start, center);
+        padding-left: 5rem;
+        margin-left: auto;
+        .filterText {
+          white-space: nowrap;
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}
+
+
+
