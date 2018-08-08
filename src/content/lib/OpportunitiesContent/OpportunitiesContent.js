@@ -1,12 +1,19 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { SignerModel, TagCategoryModel, TAG_CATEGORIES_LIST, FILTERS_LIST } from 'src/models'
+import { connect } from 'react-redux'
 import { reduxForm, Field, getFormValues } from 'redux-form'
+import { Checkbox } from 'redux-form-material-ui-next'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import { signerSelector, opportunitiesFilteredListSelector } from 'src/store'
-import { Translate, OpportunityCard, Input, Image, Checkbox, Icon, Select, RadioIcon } from 'src/components/common'
+import { SignerModel, TagCategoryModel, TAG_CATEGORIES_LIST, FILTERS_LIST } from 'src/models'
+import { Translate, OpportunityCard, Input, Image, Icon, Select, RadioIcon } from 'src/components/common'
+
 import css from './OpportunitiesContent.scss'
+
+const FILTER_CHECKBOX_CLASSES = {
+  root: css.filterBlockCheckbox,
+}
 
 const FORM_SEARCH_OPPORTUNITIES = 'form/opportunities'
 export const SEARCH_INPUT_NAME = 'OpportunitiesSearchInput'
@@ -53,14 +60,11 @@ export class OpportunitiesContent extends React.Component {
   renderCategories () {
     return TAG_CATEGORIES_LIST.map((tag) => {
       return (
-        <Field
+        <FormControlLabel
           key={tag.name}
-          component={Checkbox}
-          className={css.field}
-          name={`categories[index-${String(tag.index)}]`}
+          classes={{ label: css.filterCheckboxlabel }}
+          control={<Field classes={FILTER_CHECKBOX_CLASSES} component={Checkbox} name={`categories[index-${String(tag.index)}]`} />}
           label={tag.name.toString()}
-          material
-          defaultTheme={false}
         />
       )
     })
@@ -105,13 +109,11 @@ export class OpportunitiesContent extends React.Component {
 
           <div className={css.hr} />
 
-          <Field
+          <FormControlLabel
             key='reverse_order'
-            component={Checkbox}
-            className={css.field}
-            name='reverse_order'
+            classes={{ label: css.filterCheckboxlabel }}
+            control={<Field classes={FILTER_CHECKBOX_CLASSES} component={Checkbox} name='reverse_order' />}
             label='Reverse order'
-            defaultTheme={false}
           />
 
           <div className={css.hr} />
@@ -214,14 +216,11 @@ export class OpportunitiesContent extends React.Component {
 
           <label className={css.filterLabel}>Recruiting Services</label>
 
-          <Field
+          <FormControlLabel
             key='recruting_services'
-            component={Checkbox}
-            className={css.field}
-            name='recruting_services'
+            classes={{ label: css.filterCheckboxlabel }}
+            control={<Field classes={FILTER_CHECKBOX_CLASSES} component={Checkbox} name='recruting_services' />}
             label='Has services'
-            material
-            defaultTheme={false}
           />
 
           <Field

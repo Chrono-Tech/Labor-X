@@ -99,7 +99,7 @@ export const createAccount = (walletName, password) => async (dispatch, getState
 
     dispatch(changeStep(LoginSteps.SelectWallet))
   } else {
-    dispatch(push('/account-password'))
+    dispatch(push('/auth/signup/account-password'))
   }
 }
 
@@ -250,5 +250,5 @@ export const handleAccount404DialogYesClick = () => (dispatch, getState) => {
   const account = getAccount(state)
   dispatch(setExistingAccount(account))
   dispatch(hideAccount404Dialog())
-  dispatch(push('/account-password'))
+  dispatch(push('/auth/signup/account-password'))
 }

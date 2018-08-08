@@ -8,8 +8,9 @@ import { Field, reduxForm } from 'redux-form'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { MenuItem } from 'material-ui/Menu'
 import { SelectField, TextField } from 'redux-form-material-ui'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
-import { Image, Chip, Input, Button, Icon, Checkbox, RadioIcon, VerificationLevelSelector, Translate } from 'components/common'
+import { Image, Chip, Input, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector, Translate } from 'components/common'
 import {
   TagModel,
   TAGS_LIST,
@@ -227,13 +228,10 @@ class CreateJobBoardForm extends React.Component {
               Skills
             </h3>
             <div className={css.subtitle}>
-              <Field
-                component={Checkbox}
+              <FormControlLabel
                 className={css.field}
-                name='endorsingSkills'
+                control={<Field color='primary' component={ValidatedCheckbox} name='endorsingSkills' />}
                 label='Worker skills must be endorsed'
-                material
-                defaultTheme
               />
             </div>
           </div>

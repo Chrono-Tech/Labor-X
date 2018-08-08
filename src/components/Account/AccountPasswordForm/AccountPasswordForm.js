@@ -1,13 +1,13 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
-import { Checkbox } from 'redux-form-material-ui'
-
 import { reduxForm, Field, SubmissionError } from 'redux-form'
+import { Checkbox } from 'redux-form-material-ui-next'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import { Link, Button, Input } from 'components/common'
 import 'styles/globals/globals.scss'
-import validate from './validate'
 
+import validate from './validate'
 import css from './AccountPasswordForm.scss'
 
 const FORM_ACCOUNT_PASSWORD = 'form/accountPassword'
@@ -85,30 +85,21 @@ class AccountPasswordForm extends React.Component {
       <form className={css.root} name={FORM_ACCOUNT_PASSWORD} onSubmit={handleSubmit}>
         <div className={css.contentBlock}>
           <h2>Select Account Type</h2>
-
           <p className={css.description}>You may also add account types any time in the future. Please select at least one now.</p>
 
           <div className={css.checkboxBlock}>
-            <Field
-              className={css.checkbox}
-              name='recruiter'
-              component={Checkbox}
+            <FormControlLabel
+              control={<Field color='primary' name='recruiter' component={Checkbox} />}
               label={<div className={css.checkboxLabel}><p><strong>Recruiter</strong></p><p>Create and manage Job Boards</p></div>}
             />
-            <div className={css.checkbox}>
-              <Field
-                name='worker'
-                component={Checkbox}
-                label={<div className={css.checkboxLabel}><p><strong>Worker</strong></p><p>Join Job Boards and start your job search</p></div>}
-              />
-            </div>
-            <div className={css.checkbox}>
-              <Field
-                name='client'
-                component={Checkbox}
-                label={<div className={css.checkboxLabel}><p><strong>Client</strong></p><p>Join Job Boards and post your jobs</p></div>}
-              />
-            </div>
+            <FormControlLabel
+              control={<Field color='primary' name='worker' component={Checkbox} />}
+              label={<div className={css.checkboxLabel}><p><strong>Worker</strong></p><p>Join Job Boards and start your job search</p></div>}
+            />
+            <FormControlLabel
+              control={<Field color='primary' name='client' component={Checkbox} />}
+              label={<div className={css.checkboxLabel}><p><strong>Client</strong></p><p>Join Job Boards and post your jobs</p></div>}
+            />
           </div>
         </div>
 

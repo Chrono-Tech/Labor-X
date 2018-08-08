@@ -1,19 +1,21 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { push } from 'connected-react-router'
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
 import { Field, reduxForm, propTypes } from 'redux-form'
 import { Toggle, SelectField, TextField } from 'redux-form-material-ui'
 import { MenuItem } from 'material-ui'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import AutoComplete from 'material-ui/AutoComplete'
-import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
-import { SignerModel, BoardModel } from 'src/models'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import t from "typy"
+
+import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
+import { SignerModel, BoardModel, WORKFLOW_FIXED_PRICE, WORKFLOW_TM, SKILLS_LIST } from 'src/models'
 import DatePickerField from 'src/components/DatePickerField'
-import validate from './validate'
+
 import css from './CreateJobForm.scss'
-import { WORKFLOW_FIXED_PRICE, WORKFLOW_TM, SKILLS_LIST } from "../../../models"
+import validate from './validate'
 
 export const FORM_CREATE_JOB = 'form/createJob'
 
@@ -95,12 +97,6 @@ class CreateJobForm extends React.Component {
           <MenuItem value={2} primaryText='Fixed price' />
         </Field>
         {this.props.flowType ? this.renderBudgetWidget() : null}
-
-        <Field
-          component={ValidatedCheckbox}
-          name='budgetApproximate'
-          label={<Translate value='ui.createJob.budgetApproximateLabel' />}
-        />
       </div>
     )
   }
@@ -109,10 +105,8 @@ class CreateJobForm extends React.Component {
     if (!hasAddress) return null
     return (
       <div>
-        <Field
-          className={css.addressCheckbox}
-          component={ValidatedCheckbox}
-          name='companyAddress'
+        <FormControlLabel
+          control={<Field color='primary' component={ValidatedCheckbox} name='companyAddress' />}
           label={<Translate value='ui.createJob.companyAddressLabel' />}
         />
         <div className={css.twoColumn}>
@@ -205,50 +199,66 @@ class CreateJobForm extends React.Component {
     )
   }
 
+  renderBudgetWidgetTM = () => (
+    <div className={css.budgetWidget}>
+      <Field
+        className={css.numberInput}
+        component={NumberInput}
+        name='hourlyRate'
+        title='ui.createJob.hourlyRate'
+        subtitle='USD 60.00'
+        max={1000}
+        min={0}
+      />
+      <Field
+        className={css.numberInput}
+        component={NumberInput}
+        name='totalHours'
+        title='ui.createJob.totalHours'
+        subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+        max={1000}
+        min={0}
+      />
+    </div>
+  )
+
+  renderBudgetWidgetFixed = () => (
+    <div className={css.budgetWidget}>
+      <Field
+        className={css.numberInput}
+        component={NumberInput}
+        name='fixedPrice'
+        title='ui.createJob.fixedPrice'
+        subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+        max={1000}
+        min={0}
+      />
+    </div>
+  )
+
   renderBudgetWidget = () => {
-    switch (+this.props.flowType) {
-      case WORKFLOW_TM.index: return (
-        <div className={css.budgetWidget}>
-          <div>
-            <Field
-              className={css.numberInput}
-              component={NumberInput}
-              name='hourlyRate'
-              title='ui.createJob.hourlyRate'
-              subtitle='USD 60.00'
-              max={1000}
-              min={0}
-            />
-          </div>
-          <div>
-            <Field
-              className={css.numberInput}
-              component={NumberInput}
-              name='totalHours'
-              title='ui.createJob.totalHours'
-              subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
-              max={1000}
-              min={0}
-            />
-          </div>
-        </div>
-      )
-      case WORKFLOW_FIXED_PRICE.index: return (
-        <div className={css.budgetWidget}>
-          <div>
-            <Field
-              className={css.numberInput}
-              component={NumberInput}
-              name='fixedPrice'
-              title='ui.createJob.fixedPrice'
-              subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
-              max={1000}
-              min={0}
-            />
-          </div>
-        </div>
-      )
-    }
+    () => ('123')()
+    return (
+      <div>
+        {
+          (() => {
+            switch (+this.props.flowType) {
+              case WORKFLOW_TM.index: return (
+                this.renderBudgetWidgetTM()
+              )
+              case WORKFLOW_FIXED_PRICE.index: return (
+                this.renderBudgetWidgetFixed()
+              )
+            }
+          })()
+        }
+        <FormControlLabel
+          control={<Field color='primary' component={ValidatedCheckbox} name='budgetApproximate' />}
+          label={<Translate value='ui.createJob.budgetApproximateLabel' />}
+        />
+      </div>
+    )
+
   }
 
   renderSelectedTagsArea = (board) => {
@@ -577,9 +587,8 @@ class CreateJobForm extends React.Component {
             </div>
 
             <div className={css.card}>
-              <Field
-                component={ValidatedCheckbox}
-                name='legal'
+              <FormControlLabel
+                control={<Field color='primary' component={ValidatedCheckbox} name='legal' />}
                 label={<Translate value='ui.createJob.legalAgreeLabel' />}
               />
             </div>

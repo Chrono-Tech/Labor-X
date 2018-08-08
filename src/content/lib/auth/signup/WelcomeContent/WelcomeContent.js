@@ -32,7 +32,7 @@ export class WelcomeContent extends React.Component {
             <p>
               <strong>Dear Member,</strong>
               <br />
-              our team thanks you for creating the account and wishes you a productive work.
+              Our team thanks you for creating the account and wishes you a productive work.
             </p>
             <br />
             <br />
