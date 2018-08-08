@@ -6,7 +6,9 @@ import DonutChart from "react-svg-donut-chart"
 import AutoComplete from 'material-ui/AutoComplete'
 import { Field, reduxForm } from 'redux-form'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { MenuItem } from 'material-ui/Menu'
+// import { MenuItem } from 'material-ui/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import { Select } from 'redux-form-material-ui-next'
 import { SelectField, TextField } from 'redux-form-material-ui'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 
@@ -375,17 +377,15 @@ class CreateJobBoardForm extends React.Component {
                 <h3 className={css.cardTitle}>Area</h3>
                 <div className={css.flexRow}>
                   <Field
-                    component={SelectField}
+                    className={css.formControl}
+                    displayEmpty
                     name='tagsArea'
-                    selectedMenuItemStyle={{ fontSize: 14 }}
-                    menuItemStyle={{ fontSize: 14 }}
-                    labelStyle={{ fontSize: 14 }}
-                    style={{ width: 300 }}
-                    hintText='Select area'
+                    component={Select}
                   >
+                    <MenuItem value='' disabled>Select area</MenuItem>
                     {
                       TAG_AREAS_LIST.map((item) => (
-                        <MenuItem key={uniqid()} value={item} primaryText={item.name} />
+                        <MenuItem key={item.index} value={item}>{item.name}</MenuItem>
                       ))
                     }
                   </Field>

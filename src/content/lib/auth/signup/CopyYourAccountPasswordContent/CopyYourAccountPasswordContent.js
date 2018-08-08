@@ -1,8 +1,9 @@
 import React  from 'react'
 import PropTypes  from 'prop-types'
-import { Checkbox } from 'redux-form-material-ui'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
+import { Checkbox } from 'redux-form-material-ui-next'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import { COPY_YOUR_ACCOUNT_PASSWORD_FORM as FORM } from "src/store/auth/signup/constants"
 import { submitCopyYourAccountPassword as submit } from "src/store/auth/signup/actions"
@@ -104,10 +105,9 @@ export class CopyYourAccountPasswordContent extends React.Component {
                 </li>
               </ol>
             </div>
-            <Field
+            <FormControlLabel
               className={css.checkbox}
-              name='confirm'
-              component={Checkbox}
+              control={<Field color='primary' name='confirm' component={Checkbox} />}
               label='I have read QA and will follow security guidelines given on this page'
             />
             <div>

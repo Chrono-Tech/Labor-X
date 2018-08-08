@@ -115,6 +115,9 @@ $maxWidth: 74rem;
         visibility: hidden;
       }
     }
+    .formControl {
+      width: 30rem;
+    }
   }
   .twoColumn {
     @include flex(row, flex-start, stretch);
