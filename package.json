@@ -103,7 +103,10 @@
     "pre-commit": "^1.2.2",
     "redux-devtools-extension": "^2.13.5",
     "sass-loader": "^7.0.3",
+    "selenium-standalone": "^6.15.1",
+    "selenium-webdriver": "^4.0.0-alpha.1",
     "spa-http-server": "^0.9.0",
+    "string_decoder": "^1.1.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.16.1",
     "webpack-bundle-analyzer": "^2.13.1",
@@ -127,7 +130,10 @@
     "test": "echo 'testing...' && cross-env NODE_ENV=test ./node_modules/.bin/mocha --opts .mocharc",
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/nyc yarn test",
     "build:sc-config": "node ./bin/sc-config-create.js",
-    "generate-webpack-stats": "./node_modules/.bin/webpack --progress -c --profile --json > stats.json"
+    "generate-webpack-stats": "./node_modules/.bin/webpack --progress -c --profile --json > stats.json",
+    "selenium-standalone:fetch": "selenium-standalone install",
+    "selenium-standalone:start": "selenium-standalone start",
+    "test:integration": "APP_URL=http://dev.laborx.io mocha --require babel-register test/integration/signup2.js"
   },
   "pre-commit": [
     "lint",
