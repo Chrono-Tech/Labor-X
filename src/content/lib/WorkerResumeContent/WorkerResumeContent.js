@@ -43,7 +43,7 @@ export default class WorkerResumeContent extends React.Component {
   }
 
   render () {
-    const jobsDone = 100, experience = 10, lhus = '20–27', name = 'Gogi',
+    const jobsDone = 100, experience = 10, lht = '20–27', name = 'Gogi',
       subtitle = 'Worker Profile', logo = '/static/images/worker-crop.jpg', status = 'Available'
 
     return (
@@ -130,8 +130,8 @@ export default class WorkerResumeContent extends React.Component {
                       </div>
 
                       <div className={css.jobInfoBlock}>
-                        <div className={css.jobInfoCount}>{ lhus }</div>
-                        <div className={css.jobInfoDescribe}>Lhus per hour</div>
+                        <div className={css.jobInfoCount}>{ lht }</div>
+                        <div className={css.jobInfoDescribe}>lht per hour</div>
                       </div>
 
                     </div>

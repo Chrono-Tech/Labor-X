@@ -11,7 +11,7 @@ const schemaFactory = () => ({
   background: PropTypes.string,
   joinRequirement: PropTypes.instanceOf(BoardRequirementModel),
   fee: PropTypes.instanceOf(BoardPostFeeModel),
-  lhus: PropTypes.number,
+  lht: PropTypes.number,
   endorsingSkills: PropTypes.bool,
   agreement: PropTypes.string,
 

@@ -105,10 +105,10 @@ export default class WorkerJobCard extends React.Component {
           </Link>
           <div className={css.jobDateAward}>
             {!(job.ipfs.budget.isSpecified && job.ipfs.budget.hourlyRateAward) ? null : (
-              <p>LHUS { job.ipfs.budget.hourlyRateAward.toFixed(2) } (${job.ipfs.budget.hourlyRateAwardUSD.toFixed(2)}) / h</p>
+              <p>LHT { job.ipfs.budget.hourlyRateAward.toFixed(2) } (${job.ipfs.budget.hourlyRateAwardUSD.toFixed(2)}) / h</p>
             )}
             {!(job.ipfs.budget.isSpecified && job.ipfs.budget.award) ? null : (
-              <p>LHUS { job.ipfs.budget.award.toFixed(2) } (${job.ipfs.budget.awardUSD.toFixed(2)})</p>
+              <p>LHT { job.ipfs.budget.award.toFixed(2) } (${job.ipfs.budget.awardUSD.toFixed(2)})</p>
             )}
           </div>
         </div>

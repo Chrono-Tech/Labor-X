@@ -99,7 +99,7 @@ const mapDispatchToProps = (dispatch) => {
           tags: values.tags,
           joinRequirement: BoardRequirementModel.valueOf(values.joinRequirement),
           fee: values.fee,
-          lhus: +values.lhus,
+          lht: +values.lht,
           ratingRequirements: values.ratingRequirements,
           verificationRequirements: values.verificationRequirements,
           agreement: values.agreement,

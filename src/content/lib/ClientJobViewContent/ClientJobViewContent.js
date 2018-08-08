@@ -91,7 +91,7 @@ export class ClientJobViewContent extends React.Component {
             </div>
             { job.ipfs.budget.isSpecified && job.state === JobStateModel.JOB_STATE_STARTED &&
               <div className={css.jobProgressContainer}>
-                <div><strong>PROGRESS 0%</strong> 0 / {job.ipfs.budget.award.toString()} LHUS   $0 / ${job.ipfs.budget.awardUSD.toString()}</div>
+                <div><strong>PROGRESS 0%</strong> 0 / {job.ipfs.budget.award.toString()} LHT   $0 / ${job.ipfs.budget.awardUSD.toString()}</div>
               </div>
             }
             <div className={css.jobMenu}>
