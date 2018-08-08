@@ -2,16 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
-import { Input, Icon, Checkbox, Radio } from 'src/components/common'
+import { Checkbox } from 'redux-form-material-ui-next'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+
 import { boardsFilteredListSelector, updateFilterBoards } from 'src/store'
 import { BoardModel, TAG_CATEGORIES_LIST } from 'src/models'
-import JobBoardItem from './JobBoardItem/JobBoardItem'
+import { Input, Icon, Radio } from 'src/components/common'
 
+import JobBoardItem from './JobBoardItem/JobBoardItem'
 import css from './JobBoards.scss'
 
 const FORM_JOB_BOARDS = 'form/jobBoards'
 const FILTER_CATEGORIES_NAME = 'categories'
 const formSelector = formValueSelector(FORM_JOB_BOARDS)
+
+const FILTER_CHECKBOX_CLASSES = {
+  root: css.filterBlockCheckbox,
+}
 
 const searchStyles = {
   style: {
@@ -59,19 +66,16 @@ class JobBoards extends React.Component {
     }
   }
 
-  showAllCategories () {
+  showAllCategories = () => {
     const { change } = this.props
-
     TAG_CATEGORIES_LIST.forEach((item) => {
       change(`${FILTER_CATEGORIES_NAME}[${String(item.name).toUpperCase()}]`, false)
     })
-
     change('categories_reset', true)
   }
 
-  onCategoryChecked () {
+  onCategoryChecked = () => {
     const { change } = this.props
-
     change('categories_reset', false)
   }
 
@@ -110,17 +114,13 @@ class JobBoards extends React.Component {
 
   renderCategories () {
     // const { } = this.props
-    return TAG_CATEGORIES_LIST.map((tag, i) => {
+    return TAG_CATEGORIES_LIST.map((tag) => {
       return (
-        <Field
-          key={i}
-          component={Checkbox}
-          className={css.field}
-          name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`}
-          label={tag.name}
-          onCheck={this.onCategoryChecked.bind(this)}
-          material
-          defaultTheme={false}
+        <FormControlLabel
+          key={tag.name}
+          classes={{ label: css.filterCheckboxlabel }}
+          control={<Field classes={FILTER_CHECKBOX_CLASSES} onChange={this.onCategoryChecked} component={Checkbox} name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`} />}
+          label={tag.name.toString()}
         />
       )
     })
@@ -142,17 +142,11 @@ class JobBoards extends React.Component {
 
         <div className={css.filterContent}>
           <label className={css.filterLabel}>Categories</label>
-          <Field
-            component={Checkbox}
-            className={css.field}
-            name='categories_reset'
+          <FormControlLabel
+            classes={{ label: css.filterCheckboxlabel }}
+            control={<Field classes={FILTER_CHECKBOX_CLASSES} onChange={this.showAllCategories} component={Checkbox} name='categories_reset' />}
             label='Show all'
-            type='checkbox'
-            onCheck={this.showAllCategories.bind(this)}
-            material
-            defaultTheme={false}
           />
-
           { this.renderCategories() }
 
           <div className={css.hr} />

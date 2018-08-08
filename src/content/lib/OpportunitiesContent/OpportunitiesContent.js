@@ -110,7 +110,6 @@ export class OpportunitiesContent extends React.Component {
           <div className={css.hr} />
 
           <FormControlLabel
-            key='reverse_order'
             classes={{ label: css.filterCheckboxlabel }}
             control={<Field classes={FILTER_CHECKBOX_CLASSES} component={Checkbox} name='reverse_order' />}
             label='Reverse order'
