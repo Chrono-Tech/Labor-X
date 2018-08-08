@@ -82,7 +82,7 @@ export default class WorkExperienceTab extends React.Component {
                 component={TextField}
                 name={`${experience}.responsibilities`}
                 label='List your responsibilities here'
-                multiLine
+                multiline
                 rows={2}
               />
             </Grid>

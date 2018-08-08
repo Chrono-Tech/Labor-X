@@ -2,7 +2,7 @@ import React  from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { connect } from 'react-redux'
-import { TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui-next'
 import { profileSelector } from 'src/store'
 import { Button, Link, Icon } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
@@ -124,14 +124,14 @@ class SendInvoiceDialog extends React.Component {
             <TextField
               fullWidth
               className={css.expense}
-              hintText='Expense'
+              placeholder='Expense'
               value={this.state.newExpense.name}
               onChange={this.handleExpenseNameChange}
             />
             <div className={css.fieldWithIcon}>
               <TextField
                 fullWidth
-                hintText='$0.00'
+                placeholder='$0.00'
                 value={this.state.newExpense.value}
                 onChange={this.handleExpenseValueChange}
               />

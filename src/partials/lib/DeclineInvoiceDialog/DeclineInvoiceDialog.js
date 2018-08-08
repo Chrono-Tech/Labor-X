@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui-next'
 import { Button, Image, Radio } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
 import css from './DeclineInvoiceDialog.scss'
@@ -57,7 +57,7 @@ export default class DeclineInvoiceDialog extends React.Component {
         <div className={css.body}>
           <TextField
             fullWidth
-            floatingLabelText='Describe reason(s) you do decline the invoice'
+            label='Describe reason(s) you do decline the invoice'
           />
           <div className={css.upload}>
             <div className={css.uploadIcon}>

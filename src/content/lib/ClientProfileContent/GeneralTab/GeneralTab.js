@@ -87,7 +87,7 @@ export class GeneralTab extends React.Component {
               component={TextField}
               name='verifiable.intro'
               label='Write a few words about your organisation'
-              multiLine
+              multiline
               rows={2}
             />
           </Grid>
@@ -131,7 +131,7 @@ export class GeneralTab extends React.Component {
               component={TextField}
               name='verifiable.intro'
               label='Write a few words about yourself'
-              multiLine
+              multiline
               rows={2}
             />
           </Grid>

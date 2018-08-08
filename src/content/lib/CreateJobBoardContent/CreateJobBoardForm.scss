@@ -115,7 +115,7 @@ $maxWidth: 74rem;
         visibility: hidden;
       }
     }
-    .formControl {
+    .selectField {
       width: 30rem;
     }
   }
@@ -194,6 +194,7 @@ $maxWidth: 74rem;
 
 .requirementsSelect {
   margin: 30px 0 0;
+  width: 30rem;
 }
 
 .feeInputs {

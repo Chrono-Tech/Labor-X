@@ -6,13 +6,11 @@ import DonutChart from "react-svg-donut-chart"
 import AutoComplete from 'material-ui/AutoComplete'
 import { Field, reduxForm } from 'redux-form'
 import CircularProgress from '@material-ui/core/CircularProgress'
-// import { MenuItem } from 'material-ui/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { Select } from 'redux-form-material-ui-next'
-import { SelectField, TextField } from 'redux-form-material-ui'
+import { Select, TextField } from 'redux-form-material-ui-next'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 
-import { Image, Chip, Input, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector, Translate } from 'components/common'
+import { Image, Chip, Input, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector } from 'components/common'
 import {
   TagModel,
   TAGS_LIST,
@@ -21,6 +19,7 @@ import {
   BOARD_REQUIREMENTS_LIST,
   BOARD_REQUIREMENTS,
   BOARD_POST_FEES,
+  BOARD_POST_FEE_LIST,
 } from 'src/models'
 
 import css from './CreateJobBoardForm.scss'
@@ -377,7 +376,7 @@ class CreateJobBoardForm extends React.Component {
                 <h3 className={css.cardTitle}>Area</h3>
                 <div className={css.flexRow}>
                   <Field
-                    className={css.formControl}
+                    className={css.selectField}
                     displayEmpty
                     name='tagsArea'
                     component={Select}
@@ -385,7 +384,7 @@ class CreateJobBoardForm extends React.Component {
                     <MenuItem value='' disabled>Select area</MenuItem>
                     {
                       TAG_AREAS_LIST.map((item) => (
-                        <MenuItem key={item.index} value={item}>{item.name}</MenuItem>
+                        <MenuItem key={item.index} value={item.index}>{item.name}</MenuItem>
                       ))
                     }
                   </Field>
@@ -396,17 +395,15 @@ class CreateJobBoardForm extends React.Component {
                 <h3 className={css.cardTitle}>Categories</h3>
                 <div className={css.flexRow}>
                   <Field
-                    component={SelectField}
+                    className={css.selectField}
+                    displayEmpty
                     name='tagsCategory'
-                    selectedMenuItemStyle={{ fontSize: 14 }}
-                    menuItemStyle={{ fontSize: 14 }}
-                    labelStyle={{ fontSize: 14 }}
-                    style={{ width: 300 }}
-                    hintText='Select category'
+                    component={Select}
                   >
+                    <MenuItem value='' disabled>Select category</MenuItem>
                     {
                       TAG_CATEGORIES_LIST.map((item) => (
-                        <MenuItem key={uniqid()} value={item} primaryText={item.name} />
+                        <MenuItem key={item.index} value={item.index}>{item.name}</MenuItem>
                       ))
                     }
                   </Field>
@@ -417,6 +414,7 @@ class CreateJobBoardForm extends React.Component {
             <div className={css.flexRow}>
               <Field
                 className={css.find}
+                name='searchTags'
                 style={{ marginRight: 10 }}
                 component={AutoComplete}
                 onNewRequest={this.handleAddTag}
@@ -427,7 +425,6 @@ class CreateJobBoardForm extends React.Component {
                 }}
                 errorText={formErrors.tags && submitFailed ? formErrors.tags : null}
                 dataSource={this.getTagsList()}
-                name='searchTags'
                 hintText='Find'
               />
               <Field
@@ -451,17 +448,13 @@ class CreateJobBoardForm extends React.Component {
                 Specify which requirements should be met in order to join the board.
             </div>
             <Field
-              component={SelectField}
+              component={Select}
               className={css.requirementsSelect}
               name='joinRequirement'
-              selectedMenuItemStyle={{ fontSize: 14 }}
-              menuItemStyle={{ fontSize: 14 }}
-              labelStyle={{ fontSize: 14 }}
-              style={{ width: 300 }}
             >
               {
                 BOARD_REQUIREMENTS_LIST.map((item) => (
-                  <MenuItem key={uniqid()} value={item.index} primaryText={item.label} />
+                  <MenuItem key={item.index} value={item.index}>{item.label}</MenuItem>
                 ))
               }
             </Field>
@@ -495,20 +488,20 @@ class CreateJobBoardForm extends React.Component {
             <div className={css.cardContent}>
               <div className={css.feeInputs}>
                 <Field
-                  component={SelectField}
-                  hintText='Fixed Fee'
-                  hintStyle={{ fontStyle: 'italic' }}
+                  component={Select}
                   name='fee'
                 >
                   {
-                    <MenuItem value={BOARD_POST_FEES.FIXED_FEE} primaryText={BOARD_POST_FEES.FIXED_FEE.label} />
+                    BOARD_POST_FEE_LIST.map((item) => (
+                      <MenuItem key={item.index} value={item.index}>{item.label}</MenuItem>
+                    ))
                   }
                 </Field>
                 <Field
                   className={css.match}
                   component={TextField}
                   name='lhus'
-                  hintText={<Translate value='ui.createJobBoard.value' />}
+                  placeholder='LHUS 0.00'
                 />
               </div>
             </div>
@@ -528,7 +521,7 @@ export default reduxForm({
   form: FORM_CREATE_JOB_BOARD,
   initialValues: {
     requirements: 0,
-    fee: BOARD_POST_FEES.FIXED_FEE,
+    fee: BOARD_POST_FEES.FIXED_FEE.index,
     endorsingSkills: false,
     joinRequirement: 0,
     ratingRequirements: 0,
