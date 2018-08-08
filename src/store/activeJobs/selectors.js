@@ -6,3 +6,4 @@ export const getSelectInitialPropsLoading = createSelector(getState, state => st
 export const getCards = createSelector(getState, state => state.cards)
 export const getToPayCards = createSelector(getCards, (cards) => cards.filter((x) => x.job.state === JOB_STATE_PENDING_FINISH))
 export const getOtherCards = createSelector(getCards, (cards) => cards.filter((x) => x.job.state !== JOB_STATE_PENDING_FINISH))
+export const getLhtUsdPrice = createSelector(getState, state => state.lhtUsdPrice)

@@ -3,6 +3,7 @@ import faker from 'faker'
 import { currentAddressSelector } from "src/store"
 import {daoByType} from "src/store";
 import * as profileApi from 'src/api/backend'
+import { getUsdPrice } from 'src/api/lht'
 import {
   JOB_STATE_OFFER_ACCEPTED, JOB_STATE_PENDING_FINISH, JOB_STATE_PENDING_START,
   JOB_STATE_STARTED
@@ -21,6 +22,7 @@ export const selectInitialProps = () => async (dispatch, getState) => {
     const JobsDataProvider = daoByType('JobsDataProvider')(state)
     const BoardController = daoByType('BoardController')(state)
     const userAddress = currentAddressSelector()(state)
+    const lhtUsdPrice = await getUsdPrice()
     const jobs = await JobsDataProvider.getJobs(BoardController)
     const userJobs = jobs.filter((x) => x.client.toLowerCase() === userAddress.toLowerCase())
     const activeJobs = userJobs.filter((x) => (
@@ -41,7 +43,7 @@ export const selectInitialProps = () => async (dispatch, getState) => {
         ...(workerPersons.find((workerPerson) => workerPerson.address.toLowerCase() === x.worker.toLowerCase()) || {})
       }
     }))
-    dispatch(selectInitialPropsSuccess({ cards }))
+    dispatch(selectInitialPropsSuccess({ cards, lhtUsdPrice }))
   } catch (err) {
     dispatch(selectInitialPropsFailure(err))
   }

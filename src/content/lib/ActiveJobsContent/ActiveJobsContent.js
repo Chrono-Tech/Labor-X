@@ -67,8 +67,8 @@ class ActiveJobsContent extends React.Component {
             </Tabs>
           </AppBar>
         </div>
-
         <div className={css.content}>
+       
           { value === 0 && (
             <ActiveTabContent
               toPayCards={toPayCards}

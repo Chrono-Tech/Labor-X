@@ -24,6 +24,7 @@ class ActiveJobCard extends React.Component {
     onClickReview: PropTypes.func,
     confirmStartWork: PropTypes.func,
     openPayInvoiceDialog: PropTypes.func,
+    lhtUsdPrice: PropTypes.number,
   }
 
   constructor (...args) {
@@ -49,7 +50,7 @@ class ActiveJobCard extends React.Component {
   }
 
   render () {
-    const { job, workerPerson } = this.props
+    const { job, workerPerson, lhtUsdPrice } = this.props
     return (
       <div
         className={cn(css.root, {
@@ -72,7 +73,7 @@ class ActiveJobCard extends React.Component {
           { job.ipfs.budget ? (
             <div className={css.jobAwardRow}>
               <p>LHT { job.ipfs.budget.hourlyRate } / { job.ipfs.budget.totalHours }</p>
-              <p>USD { job.ipfs.budget.hourlyRate * 30 } / { job.ipfs.budget.totalHours * 30 }</p>
+              <p>USD { (job.ipfs.budget.hourlyRate * lhtUsdPrice).toFixed(2) } / { (job.ipfs.budget.totalHours * lhtUsdPrice).toFixed(2) }</p>
             </div>
           ) : null }
         </div>

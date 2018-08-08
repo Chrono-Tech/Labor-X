@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { ActiveJobCard } from 'src/components/common'
+import { getLhtUsdPrice } from "src/store/activeJobs"
 import css from './ActiveTabContent.scss'
 
 const dateFormat = 'DD MMMM YYYY, ddd'
@@ -12,6 +13,7 @@ class ActiveTabContent extends React.Component {
     toPayCards: PropTypes.arrayOf(PropTypes.shape({})),
     otherCardsGroupedByCreatedAt: PropTypes.shape({}),
     onHandleOnClickReview: PropTypes.func,
+    lhtUsdPrice: PropTypes.number,
   }
 
   onHandleOnClickReview (job, worker) {
@@ -19,12 +21,12 @@ class ActiveTabContent extends React.Component {
   }
 
   renderOtherCards () {
-    const { onHandleOnClickReview } = this.props;
+    const { onHandleOnClickReview, lhtUsdPrice } = this.props;
     return Object.entries(this.props.otherCardsGroupedByCreatedAt).map(([ date, cards ]) => (
       <div key={date}>
         <h3 className={css.cardsHeader}>{moment(date).format(dateFormat)}</h3>
         {cards.map((card) => (
-          <ActiveJobCard {...card} onClickReview={() => onHandleOnClickReview(card.job, card.worker) } key={card.job.key} />
+          <ActiveJobCard lhtUsdPrice={lhtUsdPrice} {...card} onClickReview={() => onHandleOnClickReview(card.job, card.worker) } key={card.job.key} />
         ))}
       </div>
     ))
@@ -45,7 +47,11 @@ class ActiveTabContent extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  lhtUsdPrice: getLhtUsdPrice(state),
+})
+
 const mapDispatchToProps = (dispatch) => ({
 })
 
-export default connect(null, mapDispatchToProps)(ActiveTabContent)
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveTabContent)
