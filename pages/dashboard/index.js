@@ -36,46 +36,38 @@ class DashboardPage extends React.Component {
       }).isRequired,
     }),
   }
-
   componentDidMount () {
     this.props.getPageData()
   }
-
-  reloadPage = () => {
-    document && document.location.reload(true)
-  }
-
-  renderError = () => (
-    <div className={css.contentError}>
-      <h3>Error loading data</h3>
-      <Button className={css.buttonReload} onClick={this.reloadPage}>Reload page</Button>
-    </div>
-  )
-
-  render () {
-    const { signer, user, pageData, pageDataFailure, pageDataLoading } = this.props
-
-    return (
-      <MainLayout title='nav.dashboard'>
-        { signer == null || pageDataLoading
-          ? <PageContentLoader />
-          : pageDataFailure
-            ? this.renderError()
-            : <DashboardContent signer={signer} user={user} pageData={pageData} /> }
-      </MainLayout>
-    )
-  }
+   reloadPage = () => {
+     document && document.location.reload(true)
+   }
+   renderError = () => (
+     <div className={css.contentError}>
+       <h3>Error loading data</h3>
+       <Button className={css.buttonReload} onClick={this.reloadPage}>Reload page</Button>
+     </div>
+   )
+   render () {
+     const { signer, user, pageData, pageDataFailure, pageDataLoading } = this.props
+     return (
+       <MainLayout title='nav.dashboard'>
+         { signer == null || pageDataLoading
+           ? <PageContentLoader />
+           : pageDataFailure
+             ? this.renderError()
+             : <DashboardContent signer={signer} user={user} pageData={pageData} /> }
+       </MainLayout>
+     )
+   }
 }
-
 const mapStateToProps = (state) => ({
   signer: signerSelector()(state),
   user: userSelector()(state),
-
   pageDataLoading: pageDataLoadingSelector(state),
   pageDataFailure: pageDataFailureSelector(state),
   pageData: pageDataSelector(state),
 })
-
 const mapDispatchToProps = (dispatch) => ({
   getPageData: () => dispatch(getPageData()),
 })

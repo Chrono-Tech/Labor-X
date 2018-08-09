@@ -1,12 +1,13 @@
 import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import { createLogger } from "redux-logger"
@@ -19,7 +20,7 @@ import JssProvider from "react-jss/lib/JssProvider"
 import { createGenerateClassName, jssPreset, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
 import LandingPage from "pages/landing-page"
-import DashboardPage from "pages/dashboard"
+import DashboardPage from "pages/dashboard/index"
 import CreateJobPage from "pages/create-job"
 import JobTypesPage from "pages/job-types"
 import CreateJobBoardPage from "pages/create-job-board"
@@ -112,6 +113,9 @@ import AuthRoute from "src/components/routes/AuthRoute"
 
 import 'styles/globals/globals.scss'
 
+// eslint-disable-next-line no-console
+console.log(process.env.NODE_ENV)
+
 const generateClassName = createGenerateClassName()
 const jss = create(jssPreset())
 jss.options.insertionPoint = "insertion-point-jss"
@@ -172,13 +176,23 @@ const reducer = combineReducers({
   auth,
 })
 
+const middlewares = [
+  routerMiddleware(history),
+  thunkMiddleware,
+]
+
+switch (process.env.NODE_ENV) {
+  case 'development':
+    middlewares.push(
+      loggerMiddleware,
+    )
+}
+
 const store = createStore(
   connectRouter(history)(reducer),
   {},
-  compose(
-    applyMiddleware(routerMiddleware(history), thunk, loggerMiddleware),
-    // eslint-disable-next-line no-underscore-dangle
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(
+    applyMiddleware(...middlewares)
   )
 )
 

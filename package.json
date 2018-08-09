@@ -99,9 +99,12 @@
     "postcss-loader": "^2.1.6",
     "postcss-nesting": "^6.0.0",
     "pre-commit": "^1.2.2",
-    "redux-devtools-extension": "^2.13.2",
+    "redux-devtools-extension": "^2.13.5",
     "sass-loader": "^7.0.3",
+    "selenium-standalone": "^6.15.1",
+    "selenium-webdriver": "^4.0.0-alpha.1",
     "spa-http-server": "^0.9.0",
+    "string_decoder": "^1.1.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.16.1",
     "webpack-bundle-analyzer": "^2.13.1",
@@ -122,13 +125,17 @@
     "docker:upgrade": "yarn docker:build && yarn docker:restart",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "echo 'testing...' && cross-env NODE_ENV=test ./node_modules/.bin/mocha --opts .mocharc",
+    "test": "echo 'testing...' && ./node_modules/.bin/cross-env NODE_ENV=test ./node_modules/.bin/mocha --opts .mocharc",
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/nyc yarn test",
     "build:sc-config": "node ./bin/sc-config-create.js",
-    "generate-webpack-stats": "./node_modules/.bin/webpack --progress -c --profile --json > stats.json"
+    "generate-webpack-stats": "./node_modules/.bin/webpack --progress -c --profile --json > stats.json",
+    "selenium-standalone:fetch": "selenium-standalone install",
+    "selenium-standalone:start": "selenium-standalone start",
+    "test:integration": "echo 'testing e2e...' && ./node_modules/.bin/cross-env APP_URL=http://localhost:3001 mocha --require babel-register test/integration/**/*.spec.js"
   },
   "pre-commit": [
     "lint",
-    "test"
+    "test",
+    "test:integration"
   ]
 }

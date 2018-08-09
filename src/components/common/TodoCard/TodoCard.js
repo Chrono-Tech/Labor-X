@@ -9,7 +9,7 @@ import { JobModel, JOB_STATE_WORK_REJECTED } from "src/models"
 import { pauseJobWork, resumeJobWork, startWork } from "src/store"
 
 import css from './TodoCard.scss'
-import { JOB_STATE_STARTED } from "../../../models"
+import { JOB_STATE_PENDING_START, JOB_STATE_STARTED } from "../../../models"
 import { SendInvoiceDialog } from "../../../partials"
 import { modalsPush } from "../../../store"
 
@@ -147,8 +147,20 @@ class TodoCard extends React.Component {
         </div>
         <div className={css.progress}>
           <div className={css.progressTimer}>
-            { this.progressIcon() }
-            <p><span className={css.medium}>{this.workedTimeSeconds() > 0 ? this.workedTimeRender() : 'Start Work'}</span> {this.totalHours() ? `of  ${this.totalHours()}h` : `h` }</p>
+            { job.state === JOB_STATE_PENDING_START ? null : this.progressIcon() }
+            <p>
+              <span className={css.medium}>
+                {
+                  this.workedTimeSeconds() > 0
+                    ? this.workedTimeRender()
+                    : job.state === JOB_STATE_PENDING_START
+                      ? 'Waiting for Start Work Approve by Client'
+                      : 'Start Work'
+                }
+              </span>
+              &nbsp;
+              {this.totalHours() ? `of  ${this.totalHours()}h` : (this.workedTimeSeconds() === 0 ? null : `h`) }
+            </p>
           </div>
           <div className={css.actions}>
             {

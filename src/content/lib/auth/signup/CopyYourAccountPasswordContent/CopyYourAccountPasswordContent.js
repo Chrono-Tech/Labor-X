@@ -37,7 +37,7 @@ export class CopyYourAccountPasswordContent extends React.Component {
             </p>
             <div className={css.phraseBlock}>
               <div className={css.phraseBlockTitle}>Your back-up phrase (Mnemonic Key)</div>
-              <div className={css.phrase}>{ this.props.mnemonic }</div>
+              <div className={css.phrase} id='mnemonic'>{ this.props.mnemonic }</div>
             </div>
             <div className={css.infoBlock}>
               <div className={css.infoBlockHeader}>Q&A</div>
