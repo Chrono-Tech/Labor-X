@@ -18,7 +18,11 @@
 }
 
 .checkbox {
-  display: inline-block;
+  display: flex;
+  margin-right: 1rem;
+  width: 25px;
+  height: 43px;
+  flex-direction: row;
 }
 
 .buttonContainer {

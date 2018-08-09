@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import MenuItem from '@material-ui/core/MenuItem'
 import { Select, TextField } from 'redux-form-material-ui-next'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Autosuggest from 'react-autosuggest';
 
 import { Image, Chip, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector } from 'components/common'
 import {
@@ -138,6 +139,26 @@ class CreateJobBoardForm extends React.Component {
     return searchText !== '' &&
       String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
   }
+
+
+  getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+
+    return inputLength === 0 ? [] : this.getTagsList.filter(tag =>
+      tag.name.toLowerCase().indexOf(inputValue) !== -1
+    )
+  }
+
+  getSuggestionValue = suggestion => suggestion.index;
+
+  renderSuggestion = suggestion => (
+    <div>
+      {suggestion.name}
+    </div>
+  )
+
+
 
   renderTags () {
     const { tags } = this.state
@@ -413,6 +434,11 @@ class CreateJobBoardForm extends React.Component {
             </div>
             <h3 className={cn(css.cardTitle, css.skillsRow)}>Skills</h3>
             <div className={css.flexRow}>
+
+              <Autosuggest
+                suggestions={this.getTagsList()}
+              />
+
               <Field
                 className={css.find}
                 name='searchTags'
@@ -428,6 +454,7 @@ class CreateJobBoardForm extends React.Component {
                 dataSource={this.getTagsList()}
                 hintText='Find'
               />
+
               <Field
                 component='input'
                 type='hidden'

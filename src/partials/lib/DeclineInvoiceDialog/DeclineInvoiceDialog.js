@@ -1,9 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
 import moment from 'moment'
-import { TextField } from 'redux-form-material-ui-next'
-import { Button, Image, Radio } from 'src/components/common'
+import { TextField, RadioGroup } from 'redux-form-material-ui-next'
+import Radio from '@material-ui/core/Radio'
+
+import { Button, Image } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
+
 import css from './DeclineInvoiceDialog.scss'
 
 const dateFormat = 'DD.MM.YYYY'
@@ -70,29 +74,16 @@ export default class DeclineInvoiceDialog extends React.Component {
           </div>
           <div className={css.delegate}>
             <h4>Delegate management to</h4>
-            <Radio
-              primary
+            <Field
+              component={RadioGroup}
               name='handle'
               radioButtonClassName={css.radio}
-              input={{
-                onChange: this.handleRadioChange,
-              }}
-              material
-              values={[
-                {
-                  value: '1',
-                  label: 'I\'ll handle myself',
-                },
-                {
-                  value: '2',
-                  label: `Recruiter (${recruiter.ipfs.name})`,
-                },
-                {
-                  value: '3',
-                  label: 'LaborX team for refund',
-                },
-              ]}
-            />
+              onChange={this.handleRadioChange}
+            >
+              <Radio value='1' label="I\'ll handle myself" />
+              <Radio value='2' label={`Recruiter (${recruiter.ipfs.name})`} />
+              <Radio value='3' label='LaborX team for refund' />
+            </Field>
           </div>
         </div>
         <div className={css.actions}>

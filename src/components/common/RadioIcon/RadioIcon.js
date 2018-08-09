@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Checkbox from 'material-ui/Checkbox'
+import Checkbox from '@material-ui/core/Checkbox'
 
 import css from './RadioIcon.scss'
 
@@ -33,8 +33,8 @@ export default class RadioIcon extends React.Component {
     super(props)
   }
 
-  handleOnChange = (event) => {
-    this.props.input.onChange(Number(event.target.dataset.id))
+  handleOnChange = (value) => {
+    this.props.input.onChange(Number(value))
   }
 
   renderButtons () {
@@ -44,18 +44,12 @@ export default class RadioIcon extends React.Component {
       return (<Checkbox
         key={`checkboxKey${item.value}`}
         checked={input.value >= item.value}
-        style={{
-          display: 'flex',
-          width: '25px',
-          height: '43px',
-          flexDirection: 'row',
-        }}
+        classes={{ root: css.checkbox }}
         input={input}
         checkedIcon={checkedIcon}
-        uncheckedIcon={uncheckedIcon}
-        classes={[css.checkbox]}
-        onCheck={this.handleOnChange}
-        data-id={item.value}
+        icon={uncheckedIcon}
+        // eslint-disable-next-line react/jsx-no-bind
+        onChange={() => this.handleOnChange(item.value)}
       />)
     })
   }

@@ -85,8 +85,11 @@ $maxWidth: 74rem;
 
 .fieldSelect {
   margin-bottom: 17px;
-  width: 200px;
+  width: 17rem;
   color: $color-white;
+  color: #7F7F7F;
+  font-size: 16px;
+  border-bottom: 1px solid #E5E5E5;
 }
 
 .contentContainer {
@@ -143,12 +146,6 @@ $maxWidth: 74rem;
 
 .filterCheckboxlabel {
   color: $color-white;
-}
-
-.fieldInput {
-  color: #7F7F7F;
-  font-size: 16px;
-  border-bottom: 1px solid #E5E5E5;
 }
 
 .filterField {

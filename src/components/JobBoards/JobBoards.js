@@ -5,10 +5,12 @@ import { connect } from 'react-redux'
 import { Checkbox, TextField } from 'redux-form-material-ui-next'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import Radio from '@material-ui/core/Radio'
 
 import { boardsFilteredListSelector, updateFilterBoards } from 'src/store'
 import { BoardModel, TAG_CATEGORIES_LIST } from 'src/models'
-import { Icon, Radio } from 'src/components/common'
+import { Icon } from 'src/components/common'
 
 import JobBoardItem from './JobBoardItem/JobBoardItem'
 import css from './JobBoards.scss'
@@ -17,8 +19,8 @@ const FORM_JOB_BOARDS = 'form/jobBoards'
 const FILTER_CATEGORIES_NAME = 'categories'
 const formSelector = formValueSelector(FORM_JOB_BOARDS)
 
-const FILTER_CHECKBOX_CLASSES = {
-  root: css.filterBlockCheckbox,
+const FILTER_SWITCH_CLASSES = {
+  root: css.filterSwitchBg,
 }
 
 const onSubmit = (values, dispatch) => {
@@ -94,13 +96,12 @@ class JobBoards extends React.Component {
   }
 
   renderCategories () {
-    // const { } = this.props
     return TAG_CATEGORIES_LIST.map((tag) => {
       return (
         <FormControlLabel
           key={tag.name}
-          classes={{ label: css.filterCheckboxlabel }}
-          control={<Field classes={FILTER_CHECKBOX_CLASSES} onChange={this.onCategoryChecked} component={Checkbox} name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`} />}
+          classes={{ label: css.filterSwitchlabel }}
+          control={<Field classes={FILTER_SWITCH_CLASSES} onChange={this.onCategoryChecked} component={Checkbox} name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`} />}
           label={tag.name.toString()}
         />
       )
@@ -124,8 +125,8 @@ class JobBoards extends React.Component {
         <div className={css.filterContent}>
           <label className={css.filterLabel}>Categories</label>
           <FormControlLabel
-            classes={{ label: css.filterCheckboxlabel }}
-            control={<Field classes={FILTER_CHECKBOX_CLASSES} onChange={this.showAllCategories} component={Checkbox} name='categories_reset' />}
+            classes={{ label: css.filterSwitchlabel }}
+            control={<Field classes={FILTER_SWITCH_CLASSES} onChange={this.showAllCategories} component={Checkbox} name='categories_reset' />}
             label='Show all'
           />
           { this.renderCategories() }
@@ -135,37 +136,68 @@ class JobBoards extends React.Component {
           <label className={css.filterLabel}>Rating</label>
 
           <Field
-            component={Radio}
-            radioButtonClassName={css.field}
+            component={RadioGroup}
             name='rating'
-            label='Rating'
-            values={[
-              { value: 'any', label: 'Any rating' },
-              { value: '2', label: '2+' },
-              { value: '3', label: '3+' },
-              { value: '4', label: '4+' },
-              { value: '5', label: '5' },
-            ]}
-            material
-          />
+            classes={{ root: css.field }}
+          >
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='any' />}
+              label='Any rating'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='2' />}
+              label='2+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='3' />}
+              label='3+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='4' />}
+              label='4+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='5' />}
+              label='5'
+            />
+          </Field>
 
           <div className={css.hr} />
 
           <label className={css.filterLabel}>Validation level</label>
 
           <Field
-            component={Radio}
+            component={RadioGroup}
             name='level'
-            label='Level'
-            radioButtonClassName={css.field}
-            values={[
-              { value: 'any', label: 'Any' },
-              { value: '2', label: '2+' },
-              { value: '3', label: '3+' },
-              { value: '4', label: '4+' },
-            ]}
-            material
-          />
+            classes={{ root: css.field }}
+          >
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='any' />}
+              label='Any rating'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='2' />}
+              label='2+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='3' />}
+              label='3+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='4' />}
+              label='4'
+            />
+          </Field>
+
         </div>
       </div>
 
