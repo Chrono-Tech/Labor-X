@@ -68,6 +68,9 @@ it('signup happy path flow', async function () {
   await this.authSignupYourWalletFilePageObject.finishButtonClick()
   await this.authSignupWelcomePageObject.doneButtonClick()
   await this.driver.wait(until.urlIs(this.dashboardPageObject.url))
+  await this.dashboardPageObject.isRecruiterMenuVisible()
+  await this.dashboardPageObject.isClientMenuVisible()
+  await this.dashboardPageObject.isWorkerMenuVisible()
 })
 
 after(async function () {

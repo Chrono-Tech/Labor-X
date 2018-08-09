@@ -47,7 +47,7 @@ class SecondMenu extends React.Component {
         </div>
         {
           this.props.accountTypes.worker ? (
-            <div className={css.section}>
+            <div className={css.section} id='worker-menu'>
               <Link href='/to-do' className={css.link} label='nav.worker' />
               <Link href='/to-do' className={css.subLink} activeClassName={css.selected} label='nav.toDo' />
               <Link href='/applications-and-offers' className={css.subLink} activeClassName={css.selected} label='nav.applicationsAndOffers' />
@@ -58,7 +58,7 @@ class SecondMenu extends React.Component {
         }
         {
           this.props.accountTypes.client ? (
-            <div className={css.section}>
+            <div className={css.section} id='client-menu'>
               <Link href='/active-jobs' className={css.link} label='nav.client' />
               <Link href='/active-jobs' className={css.subLink} activeClassName={css.selected} label='nav.activeJobs' />
               <Link href='/posted-jobs' className={css.subLink} activeClassName={css.selected} label='nav.postedJobs' />
@@ -68,7 +68,7 @@ class SecondMenu extends React.Component {
         }
         {
           this.props.accountTypes.recruiter ? (
-            <div className={css.section}>
+            <div className={css.section} id='recruiter-menu'>
               <Link href='/my-jobs-boards' className={css.link} label='nav.recruiter' />
               <Link href='/my-jobs-boards' className={css.subLink} activeClassName={css.selected} label='nav.myJobsBoards' />
               <Link href='/recruiter-jobs' className={css.subLink} activeClassName={css.selected} label='nav.jobs' />
