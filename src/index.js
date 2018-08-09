@@ -21,7 +21,7 @@ import JssProvider from "react-jss/lib/JssProvider"
 import { createGenerateClassName, jssPreset } from "@material-ui/core/styles"
 
 import LandingPage from "pages/landing-page"
-import DashboardPage from "pages/dashboard"
+import DashboardPage from "pages/dashboard/index"
 import CreateJobPage from "pages/create-job"
 import JobTypesPage from "pages/job-types"
 import CreateJobBoardPage from "pages/create-job-board"

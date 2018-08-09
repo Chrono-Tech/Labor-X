@@ -48,7 +48,7 @@ export class ConfirmBackUpContent extends React.Component {
   renderWords () {
     return this.state.words.map((word) => {
       const selected = this.props.mnemonicConfirmation.split(' ').includes(word)
-      const className = classnames(css.word, selected ? css.wordInactive : null)
+      const className = classnames('word', css.word, selected ? css.wordInactive : null)
       return (
         <button key={word} onClick={this.onWordClick.bind(this, word)} className={className} disabled={selected}>{ word }</button>
       )}
