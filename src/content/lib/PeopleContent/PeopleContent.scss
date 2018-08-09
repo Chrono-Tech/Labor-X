@@ -1,7 +1,7 @@
 @import "~styles/globals/variables";
 @import "~styles/globals/mixins";
 
-$contentWidth: 92rem;
+$contentWidth: 100rem;
 
 .main {
   @include flex(column, flex-start, stretch);
@@ -9,14 +9,11 @@ $contentWidth: 92rem;
   .title {
     @include flex(column, flex-start, flex-start);
     margin: 0;
-    padding-left: 5rem;
+    padding-left: 3rem;
     border-bottom: solid 1px $color-azure;
     background-color: white;
-    .indicator {
-      height: 2px;
-    }
     .tab {
-      margin-bottom:2px;
+      margin-bottom: 2px;
       padding-top: 2px;
       font-weight: $font-weight-regular;
       color: $color-gray50;
@@ -36,6 +33,7 @@ $contentWidth: 92rem;
     align-self: center;
     width: $contentWidth;
     .searchContainer {
+      padding: 0 4rem;
       @include flex(row, flex-start, center);
       margin: 3rem 0;
       width: 100%;

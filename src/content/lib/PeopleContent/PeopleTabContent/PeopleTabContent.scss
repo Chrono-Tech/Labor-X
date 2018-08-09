@@ -2,10 +2,9 @@
 @import "~styles/globals/mixins";
 
 .content {
-  margin-top: 3rem;
-  padding-bottom: 12rem;
+  margin-top: 1rem;
+  padding: 0 4rem;
   > * {
-    margin-bottom: 3rem;
-    margin-right: 4rem;
+    margin-bottom: 1rem;
   }
 }

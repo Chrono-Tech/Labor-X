@@ -55,7 +55,6 @@ class PeopleContent extends React.Component {
         <div className={css.content}>
           <div className={css.searchContainer}>
             <TextField
-              fullwidth
               className={css.searchInput}
               name='people-search'
               placeholder='Search by keyword'
@@ -89,7 +88,18 @@ class PeopleContent extends React.Component {
 
 function mapStateToProps (/*state*/) {
   return {
-    workers: [],
+    workers: [
+      new PersonModel({
+        id: '1',
+        avatar: '/static/images/worker-3.jpg',
+        userName: 'James Harvey',
+      }),
+      new PersonModel({
+        id: '2',
+        avatar: '/static/images/profile-photo.jpg',
+        userName: 'Artem Vilonsky',
+      }),
+    ],
     clients: [],
     recruiters: [],
   }
