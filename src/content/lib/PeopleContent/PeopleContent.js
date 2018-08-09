@@ -55,7 +55,7 @@ class PeopleContent extends React.Component {
             <TextField
               fullwidth
               className={css.searchInput}
-              id='people-search'
+              name='people-search'
               placeholder='Search by keyword'
               InputProps={{
                 startAdornment: (

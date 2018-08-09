@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
-import { Checkbox } from 'redux-form-material-ui-next'
+import { Checkbox, TextField } from 'redux-form-material-ui-next'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 import { boardsFilteredListSelector, updateFilterBoards } from 'src/store'
 import { BoardModel, TAG_CATEGORIES_LIST } from 'src/models'
-import { Input, Icon, Radio } from 'src/components/common'
+import { Icon, Radio } from 'src/components/common'
 
 import JobBoardItem from './JobBoardItem/JobBoardItem'
 import css from './JobBoards.scss'
@@ -18,26 +19,6 @@ const formSelector = formValueSelector(FORM_JOB_BOARDS)
 
 const FILTER_CHECKBOX_CLASSES = {
   root: css.filterBlockCheckbox,
-}
-
-const searchStyles = {
-  style: {
-    width: '100%',
-  },
-  inputStyle: {
-    fontSize: 14,
-    color: '#333',
-    marginLeft: 36 ,
-  },
-  underlineStyle: {
-    borderColor: '#E5E5E5',
-    bottom: 0,
-    height: 1,
-  },
-  underlineFocusStyle: {
-    borderColor: '#00A0D2',
-    borderWidth: 1,
-  },
 }
 
 const onSubmit = (values, dispatch) => {
@@ -212,20 +193,26 @@ class JobBoards extends React.Component {
               <div className={css.actionsBlock}>
                 <div className={css.search}>
                   <Field
-                    component={Input}
+                    className={css.searchInput}
                     name='searchText'
-                    type='text'
+                    component={TextField}
                     placeholder='Search by keyword'
-                    materialInputStyles={searchStyles}
-                    className={css.searchField}
-                    materialInput
-                    materialTheme={Input.MATERIAL_THEME.DEFAULT}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <Icon size={24} icon={Icon.ICONS.SEARCH} color={Icon.COLORS.BLACK} />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </div>
-                <div className={css.filter}>
-                  <div onClick={this.toggleFilterBlock.bind(this)} className={css.filterButton}>
-                    { this.renderActiveCategories() }
-                  </div>
+
+                <div
+                  className={css.currentFilterContainer}
+                  onClick={this.toggleFilterBlock.bind(this)}
+                >
+                  <div className={css.filterText}>{ this.renderActiveCategories() }</div>
+                  <Icon size={24} icon={Icon.ICONS.FILTER} color={Icon.COLORS.GREY50} />
                 </div>
               </div>
 

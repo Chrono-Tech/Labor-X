@@ -103,6 +103,7 @@ src/**/*.js
 !src/components/common/ScheduleWidget/
 !src/components/common/CompletedJobCard/CompletedJobCard.js
 !src/components/common/UserRow/UserRow.js
+!src/components/common/NumberInput/
 
 !src/components/JobBoards/
 !src/components/layouts/MainLayout.js

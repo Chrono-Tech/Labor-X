@@ -38,105 +38,14 @@ b {
 }
 
 .actionsBlock {
+
   display: flex;
-
   margin-bottom: 30px;
-}
-
-.search {
-  flex: 1;
-  padding-right: 20px;
-}
-.searchField {
-  &:before {
-    content: '\F07E';
-    display: inline-block;
-    white-space: nowrap;
-    font-family: 'ChronoBankIcons';
-    font-style: normal;
-    line-height: 100%;
-    font-size: 24px;
-    position: absolute;
-    top: 13px;
-    left: 6px;
-  }
-}
-
-.filterButton {
-  background: transparent;
-  border: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-  filter: alpha(opacity=50);
-  opacity: 0.5;
-  margin-top: 14px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: pointer;
-  position: relative;
-  padding-right: 35px;
-  min-height: 24px;
-  line-height: 24px;
-  max-width: 200px;
-
-  &:after {
-    content: '\F04E';
-    display: inline-block;
-    white-space: nowrap;
-    font-family: 'ChronoBankIcons';
-    font-style: normal;
-    line-height: 100%;
-    font-size: 26px;
-    right: 3px;
-    top:0;
-    position: absolute;
-  }
-
-  img {
-    vertical-align: middle;
-    margin-left: 10px;
-  }
-}
-
-.searchFieldInput {
-  text-align: left;
-  position: relative;
-  color:#333 !important;
-  padding: 5px 0 8px;
-  border-bottom: 1px solid #333;
-
-  &:hover, &:focus {
-    color:#333 !important;
-    border-bottom: 1px solid #ccc;
-  }
-
-  &::placeholder {
-    color:#333 !important;
-  }
-
-}
-
-.searchFieldLabel {
-  transform-origin: top left !important;
-  color:#333 !important;
-
-}
-.searchFieldWrapper {
-  width: 100%;
-
-  &:before {
-    background-color: #333 !important;
-    height: 1px !important;
-  }
-
-  &:after {
-    background-color: #333 !important;
-    height: 1px !important;
-  }
-
-  &:hover, &:focus {
-    &:after {
-      background-color: #ccc !important;
+  .search {
+    flex: 1;
+    padding-right: 20px;
+    .searchInput {
+      width: 100%;
     }
   }
 }
