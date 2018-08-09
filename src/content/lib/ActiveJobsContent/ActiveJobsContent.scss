@@ -72,3 +72,29 @@ $maxWidth: 74rem;
   border-top: 1px solid rgba($color: #ffffff, $alpha: 0.2);
   padding-left: 4rem;
 }
+
+.tabsIndicator {
+  background-color: white;
+  height: 5px;
+}
+
+.tabSelected {
+  color: white;
+}
+
+.tabRoot {
+  color: white;
+  font-size: 2rem;
+  min-width: 7rem;
+  max-width: 11rem;
+}
+
+.activeTabText {
+  font-size: 2rem;
+  font-size: 1.4rem;
+}
+
+.declineTabText {
+  font-size: 2rem;
+  font-size: 1.4rem;
+}

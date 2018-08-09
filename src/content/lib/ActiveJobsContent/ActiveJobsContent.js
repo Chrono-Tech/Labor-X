@@ -61,9 +61,9 @@ class ActiveJobsContent extends React.Component {
         <div className={css.title}>
           <div className={css.titleText}><Translate value='nav.activeJobs' /></div>
           <AppBar position='static' className={css.appBar}>
-            <Tabs value={value} onChange={this.handleChange}>
-              <Tab label='ACTIVE' />
-              <Tab label='DECLINED' />
+            <Tabs value={value} onChange={this.handleChange}  classes={{ indicator: css.tabsIndicator }}>
+              <Tab classes={{ root: css.tabRoot, selected: css.tabSelected }} label={<span className={css.activeTabText}>ACTIVE</span>} />
+              <Tab classes={{ root: css.tabRoot, selected: css.tabSelected }} label={<span className={css.declineTabText}>DECLINED</span>} />
             </Tabs>
           </AppBar>
         </div>
