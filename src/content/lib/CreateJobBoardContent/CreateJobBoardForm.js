@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import cn from 'classnames'
 import DonutChart from "react-svg-donut-chart"
-import AutoComplete from 'material-ui/AutoComplete'
 import { Field, reduxForm } from 'redux-form'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import MenuItem from '@material-ui/core/MenuItem'
 import { Select, TextField } from 'redux-form-material-ui-next'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Autosuggest from 'react-autosuggest';
+import Autosuggest from 'react-autosuggest'
 
 import { Image, Chip, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector } from 'components/common'
 import {
@@ -50,6 +49,8 @@ class CreateJobBoardForm extends React.Component {
     super(props)
 
     this.state = {
+      tagSuggestions: [],
+      tagValue: '',
       tags: [],
       agreement: {
         loading: false,
@@ -105,23 +106,50 @@ class CreateJobBoardForm extends React.Component {
     this.handleUpload(e, 'background')
   }
 
-  handleAddTag = (tag) => {
+  getTagsList () {
+    return TAGS_LIST
+  }
+
+  getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+
+    const tagsWithoutSelected = this.getTagsList().filter(tag => !this.state.tags.find(t => t.index === tag.index))
+
+    return inputLength === 0 ? [] : tagsWithoutSelected.filter(tag =>
+      tag.name.toLowerCase().indexOf(inputValue) !== -1
+    )
+  }
+
+  getSuggestionValue = suggestion => {
     const { change } = this.props
+    if (suggestion instanceof TagModel && !this.state.tags.find(item => item.index === suggestion.index)) {
 
-    if (tag instanceof TagModel && !this.state.tags.find(item => item.index === tag.index)) {
-
-      const newTags = [...this.state.tags, tag]
+      const newTags = [...this.state.tags, suggestion]
 
       this.setState({ tags: newTags }, () => {
         change('tags', newTags)
       })
     }
-
-    change('searchTags', '')
+    return ''
   }
 
-  getTagsList () {
-    return TAGS_LIST
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      tagSuggestions: this.getSuggestions(value),
+    })
+  }
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      tagSuggestions: [],
+    })
+  }
+
+  onSuggestionChange = (event, { newValue }) => {
+    this.setState({
+      tagValue: newValue,
+    })
   }
 
   onRemoveTag (tag) {
@@ -135,30 +163,7 @@ class CreateJobBoardForm extends React.Component {
     change('tags', newTags)
   }
 
-  searchTagFilter = (searchText, key) => {
-    return searchText !== '' &&
-      String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
-  }
-
-
-  getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase()
-    const inputLength = inputValue.length
-
-    return inputLength === 0 ? [] : this.getTagsList.filter(tag =>
-      tag.name.toLowerCase().indexOf(inputValue) !== -1
-    )
-  }
-
-  getSuggestionValue = suggestion => suggestion.index;
-
-  renderSuggestion = suggestion => (
-    <div>
-      {suggestion.name}
-    </div>
-  )
-
-
+  renderSuggestion = suggestion => <div>{suggestion.name}</div>
 
   renderTags () {
     const { tags } = this.state
@@ -436,24 +441,23 @@ class CreateJobBoardForm extends React.Component {
             <div className={css.flexRow}>
 
               <Autosuggest
-                suggestions={this.getTagsList()}
-              />
-
-              <Field
-                className={css.find}
-                name='searchTags'
-                style={{ marginRight: 10 }}
-                component={AutoComplete}
-                onNewRequest={this.handleAddTag}
-                filter={this.searchTagFilter}
-                dataSourceConfig={{
-                  text: 'name',
-                  value: 'name',
+                theme={{
+                  input: css.autocompleteInput,
+                  suggestionsContainer: css.suggestionsContainer,
+                  suggestion: css.autocompleteSuggestion,
                 }}
-                errorText={formErrors.tags && submitFailed ? formErrors.tags : null}
-                dataSource={this.getTagsList()}
-                hintText='Find'
+                suggestions={this.state.tagSuggestions}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                getSuggestionValue={this.getSuggestionValue}
+                renderSuggestion={this.renderSuggestion}
+                inputProps={{
+                  placeholder: 'Find',
+                  value: this.state.tagValue,
+                  onChange: this.onSuggestionChange,
+                }}
               />
+              { formErrors.tags && submitFailed ? <div>{formErrors.tags}</div> : null}
 
               <Field
                 component='input'

@@ -16,8 +16,7 @@ import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsPr
 import MomentUtils from 'material-ui-pickers/utils/moment-utils'
 import { create } from "jss"
 import JssProvider from "react-jss/lib/JssProvider"
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { createGenerateClassName, jssPreset, createMuiTheme } from '@material-ui/core/styles'
+import { createGenerateClassName, jssPreset, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
 import LandingPage from "pages/landing-page"
 import DashboardPage from "pages/dashboard"

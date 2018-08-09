@@ -273,3 +273,30 @@ $maxWidth: 74rem;
     opacity: 0.4;
   }
 }
+
+.autocompleteSuggestion {
+  font-size: 1.4rem;
+  padding: .5rem;
+  list-style-type: none;
+  &:hover {
+    background-color: $color-gray3;
+  }
+}
+
+.suggestionsContainer {
+  width: 28.5rem;
+  position: absolute;
+  background-color: $color-white;
+}
+
+.autocompleteInput {
+  width: 28.5rem;
+  padding: .6rem 0;
+  outline: none;
+  border: 0;
+  font-size: 1.6rem;
+  border-bottom: 1px solid #E5E5E5;
+  &:hover, &:focus {
+    border-bottom: 1px solid #00A0D2;
+  }
+}

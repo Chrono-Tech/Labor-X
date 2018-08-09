@@ -6,12 +6,12 @@ import { Field, reduxForm, propTypes } from 'redux-form'
 import { Select, Switch, TextField } from 'redux-form-material-ui-next'
 import MenuItem from '@material-ui/core/MenuItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import AutoComplete from 'material-ui/AutoComplete'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Autosuggest from 'react-autosuggest'
 import t from "typy"
 
 import { Image, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
-import { SignerModel, BoardModel, WORKFLOW_FIXED_PRICE, WORKFLOW_TM, SKILLS_LIST } from 'src/models'
+import { SignerModel, BoardModel, WORKFLOW_FIXED_PRICE, WORKFLOW_TM, SKILLS_LIST, SkillModel } from 'src/models'
 import DatePickerField from 'src/components/DatePickerField'
 
 import css from './CreateJobForm.scss'
@@ -38,9 +38,10 @@ class CreateJobForm extends React.Component {
   }
 
   state = {
+    tagSuggestions: [],
+    tagValue: '',
+    tags: [],
     hourlyRatingValue: 1,
-    selectedSkills: [],
-    // stateValue: 1,
   }
 
   // handleChangeJobBoard = (event, index, value) => this.setState({ jobBoardValue: value })
@@ -51,38 +52,77 @@ class CreateJobForm extends React.Component {
     this.props.push('/job-types')
   }
 
-  handleAddSkill = (skill) => {
-    if (this.state.selectedSkills.findIndex((item) => item.index === skill.index) === -1) { this.setState({ selectedSkills: [...this.state.selectedSkills, skill] }) }
-  }
-
-  handleRemoveSkill = (skill) => {
-    this.setState({ selectedSkills: this.state.selectedSkills.filter((item) => item.index !== skill) })
-  }
-
   handleChangeBoard = () => {
-    this.setState({ selectedSkills: [] })
+    this.setState({ tags: [] })
   }
 
   handleSubmitForm = (values) => {
     this.props.onSubmit({
       ...values,
-      selectedSkills: this.state.selectedSkills,
+      selectedSkills: this.state.tags,
       categories: this.props.selectedBoard.tagsCategory,
       areas: Array.isArray(this.props.selectedBoard.tagsArea) ? this.props.selectedBoard.tagsArea : [this.props.selectedBoard.tagsArea],
     })
   }
 
-  getTagsFromBoard = () => {
+  getTagsList () {
     return SKILLS_LIST
-    //So that we not have a skills editing, on the sc side. After adding the skills, uncommit bottom code
-    // if ((board && Array.isArray(board.tags))) { return [...board.tags] }
-    // else { return [] }
   }
 
-  searchTagFilter = (searchText, key) => {
-    return searchText !== '' &&
-      String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
+  getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+
+    const tagsWithoutSelected = this.getTagsList().filter(tag => !this.state.tags.find(t => t.index === tag.index))
+
+    return inputLength === 0 ? [] : tagsWithoutSelected.filter(tag =>
+      tag.name.toLowerCase().indexOf(inputValue) !== -1
+    )
   }
+
+  getSuggestionValue = suggestion => {
+    const { change } = this.props
+    if (suggestion instanceof SkillModel && !this.state.tags.find(item => item.index === suggestion.index)) {
+
+      const newTags = [...this.state.tags, suggestion]
+
+      this.setState({ tags: newTags }, () => {
+        change('tags', newTags)
+      })
+    }
+    return ''
+  }
+
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      tagSuggestions: this.getSuggestions(value),
+    })
+  }
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      tagSuggestions: [],
+    })
+  }
+
+  onSuggestionChange = (event, { newValue }) => {
+    this.setState({
+      tagValue: newValue,
+    })
+  }
+
+  onRemoveTag (tag) {
+    const { tags } = this.state
+    const { change } = this.props
+
+    const newTags = tags.filter(item => item.index !== tag.index)
+
+    this.setState({ tags: newTags })
+
+    change('tags', newTags)
+  }
+
+  renderSuggestion = suggestion => <div>{suggestion.name}</div>
 
   renderBudgetBlock = (hasBudget) => {
     if (!hasBudget) return null
@@ -554,22 +594,26 @@ class CreateJobForm extends React.Component {
                 <h3><Translate value='ui.createJob.skills' /></h3>
               </div>
               <div className={css.tagsRow}>
-                <Field
-                  className={css.find}
-                  style={{ marginRight: 10 }}
-                  component={AutoComplete}
-                  onNewRequest={this.handleAddSkill}
-                  filter={this.searchTagFilter}
-                  dataSourceConfig={{
-                    text: 'name',
-                    value: 'index',
+
+                <Autosuggest
+                  theme={{
+                    input: css.autocompleteInput,
+                    suggestionsContainer: css.suggestionsContainer,
+                    suggestion: css.autocompleteSuggestion,
                   }}
-                  dataSource={this.getTagsFromBoard(selectedBoard)}
-                  name='searchTags'
-                  hintText='Find'
+                  suggestions={this.state.tagSuggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={{
+                    placeholder: 'Find',
+                    value: this.state.tagValue,
+                    onChange: this.onSuggestionChange,
+                  }}
                 />
                 <div className={css.tags}>
-                  {this.state.selectedSkills.map(e => (
+                  {this.state.tags.map(e => (
                     <Chip value={e.name} key={e.index} index={e.index} onRemove={this.handleRemoveSkill} />
                   ))}
                 </div>
