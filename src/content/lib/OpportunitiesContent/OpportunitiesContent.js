@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, Field, getFormValues } from 'redux-form'
-import { Checkbox } from 'redux-form-material-ui-next'
+import { Checkbox, TextField } from 'redux-form-material-ui-next'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 import { signerSelector, opportunitiesFilteredListSelector } from 'src/store'
 import { SignerModel, TagCategoryModel, TAG_CATEGORIES_LIST, FILTERS_LIST } from 'src/models'
-import { Translate, OpportunityCard, Input, Image, Icon, Select, RadioIcon } from 'src/components/common'
+import { Translate, OpportunityCard, Icon, Select, RadioIcon } from 'src/components/common'
 
 import css from './OpportunitiesContent.scss'
 
@@ -223,23 +224,19 @@ export class OpportunitiesContent extends React.Component {
           />
 
           <Field
-            key='from_lhus'
-            materialTheme={Input.MATERIAL_THEME.FILTER}
-            component={Input}
+            className={css.filterField}
+            component={TextField}
             name='from_lhus'
             placeholder='From LHUS'
-            materialInput
-            defaultTheme={false}
+            InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
 
           <Field
-            key='to_lhus'
-            component={Input}
-            materialTheme={Input.MATERIAL_THEME.FILTER}
+            className={css.filterField}
+            component={TextField}
             name='to_lhus'
             placeholder='To LHUS'
-            materialInput
-            defaultTheme={false}
+            InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
 
         </div>
@@ -280,24 +277,26 @@ export class OpportunitiesContent extends React.Component {
             <div className={css.contentContainer}>
               <div className={css.filterRow}>
                 <div className={css.searchRow}>
-                  <Image
-                    icon={Image.ICONS.SEARCH}
-                    color={Image.COLORS.BLACK}
-                  />
                   <Field
-                    component={Input}
-                    className={css.search}
+                    className={css.searchInput}
                     name={SEARCH_INPUT_NAME}
+                    component={TextField}
                     placeholder='Search by keyword'
-                    materialInput
-                    defaultTheme={false}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <Icon size={24} icon={Icon.ICONS.SEARCH} color={Icon.COLORS.BLACK} />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </div>
                 <div className={css.filterRow} onClick={this.handleToggleFilter}>
                   <p> {this.renderSelectedCityAndCategories()}</p>
-                  <Image
-                    icon={Image.ICONS.FILTER}
-                    color={Image.COLORS.BLACK}
+                  <Icon
+                    size={24}
+                    icon={Icon.ICONS.FILTER}
+                    color={Icon.COLORS.GREY50}
                   />
                 </div>
               </div>

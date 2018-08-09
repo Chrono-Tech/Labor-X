@@ -3,12 +3,13 @@ import connect from 'react-redux/lib/connect/connect'
 import _ from 'lodash'
 import { Field, reduxForm } from 'redux-form'
 import PropTypes from "prop-types"
+import TextField from 'redux-form-material-ui-next/lib/TextField'
 
 import { FORM } from 'src/store/auth/signin/constants'
 import { submitLoadingSelector } from 'src/store/auth/signin/selectors'
 import { submit } from 'src/store/auth/signin/actions'
 import SigninLayout from "src/components/layouts/SigninLayout/SigninLayout"
-import { Input, UserRow } from 'src/components/common'
+import { UserRow } from 'src/components/common'
 import { WalletEntryModel } from 'src/models'
 import { LoginSteps } from 'src/store'
 import { selectedWalletSelector } from "src/store/wallet/selectors"
@@ -73,16 +74,12 @@ export class LoginContent extends React.Component {
           </div>
           <Field
             className={css.row}
-            component={Input}
+            component={TextField}
             name='password'
             type='password'
             placeholder='Enter Password'
-            autoComplete={false}
-            mods={css.passwordField}
-            errorMods={css.fieldError}
-            inputMods={css.passwordFieldInput}
-            lineEnabled={false}
-            materialInput={false}
+            FormHelperTextProps={{ classes: { root: css.fieldHelper } }}
+            InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
           <WhiteRoundedButton type='submit' loader={this.props.submitLoading}>LOGIN</WhiteRoundedButton>
           <br />

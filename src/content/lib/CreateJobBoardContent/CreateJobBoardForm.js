@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { Select, TextField } from 'redux-form-material-ui-next'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 
-import { Image, Chip, Input, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector } from 'components/common'
+import { Image, Chip, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector } from 'components/common'
 import {
   TagModel,
   TAGS_LIST,
@@ -259,10 +259,10 @@ class CreateJobBoardForm extends React.Component {
             <div className={css.agreementActionsIcon}>
               {
                 this.state.agreement.loaded
-                  ? <Icon size={28} icon={Icon.ICONS.FILE} color={Image.COLORS.BLUE} />
+                  ? <Icon size={28} icon={Icon.ICONS.FILE} color={Icon.COLORS.BLUE} />
                   : this.state.agreement.loading
                     ? <CircularProgress size={26} thickness={2} />
-                    : <Icon size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
+                    : <Icon size={28} icon={Icon.ICONS.UPLOAD} color={Icon.COLORS.BLUE} />
               }
 
             </div>
@@ -294,7 +294,7 @@ class CreateJobBoardForm extends React.Component {
                 ? <img className={css.visual} src={logo} alt='Logo' />
                 : this.state.logo.loading
                   ? <CircularProgress className={css.visual} size={26} thickness={2} />
-                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
+                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Icon.COLORS.BLUE} />
             }
 
             {
@@ -315,7 +315,7 @@ class CreateJobBoardForm extends React.Component {
                 ? <img className={css.visual} src={background} alt='Background' />
                 : this.state.background.loading
                   ? <CircularProgress className={css.visual} size={26} thickness={2} />
-                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
+                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Icon.COLORS.BLUE} />
             }
 
             {
@@ -362,11 +362,12 @@ class CreateJobBoardForm extends React.Component {
         <div className={css.content}>
           <div className={css.headline}>
             <Field
+              fullWidth
               className={css.boardHeadline}
-              component={Input}
+              component={TextField}
               placeholder='Enter Job Board Headline'
-              mods={[ Input.MODS.INVERT, Input.MODS.HUGE ]}
               name='name'
+              InputProps={{ disableUnderline: true, classes: { root: css.boardHeadlineLabel } }}
             />
           </div>
 

@@ -45,19 +45,8 @@
   }
 }
 
-.submitButton {
-  justify-content: center;
-  font-weight: 500;
-  background-color: #fff !important;
-  padding: 12px 0;
-
-  &:hover {
-    background-color: #E5F5FA !important;
-    text-decoration: underline;
-  }
-}
-
 .descriptionBlock {
+  margin-top: 90px;
   font-size: 16px;
   color: #BFE7F4;
 
@@ -81,12 +70,11 @@
 
 .submitButtonWrapper {
   min-width: 190px;
-  margin-bottom: 90px;
 }
 
 .formError {
   color: #FFE14D !important;
   font-weight: 400;
-  margin-bottom: 40px;
+  margin-top: 40px;
 }
 

@@ -40,8 +40,9 @@ $maxWidth: 74rem;
   flex: 1;
 }
 
-.search {
+.searchInput {
   flex-grow: 1;
+  width: 100%;
 }
 
 .filterBlock {
@@ -142,4 +143,15 @@ $maxWidth: 74rem;
 
 .filterCheckboxlabel {
   color: $color-white;
+}
+
+.fieldInput {
+  color: #7F7F7F;
+  font-size: 16px;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.filterField {
+  width: 17rem;
+  padding: .5rem 0;
 }

@@ -44,6 +44,10 @@ $maxWidth: 74rem;
     background-color: $color-azure;
     .boardHeadline {
       padding: 4rem;
+      .boardHeadlineLabel {
+        font-size: $h1Size;
+        color: $color-white;
+      }
     }
   }
   .card {

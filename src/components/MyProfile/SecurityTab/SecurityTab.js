@@ -1,6 +1,10 @@
 import React from 'react'
 import uniqid from 'uniqid'
-import { Button, Translate, Input } from 'components/common'
+import TextField from '@material-ui/core/TextField'
+import BlueRoundedButton from 'src/components/common/buttons/BlueRoundedButton/BlueRoundedButton'
+
+import { Translate } from 'components/common'
+
 import css from './SecurityTab.scss'
 
 export default class NotificationsTab extends React.Component {
@@ -37,11 +41,11 @@ export default class NotificationsTab extends React.Component {
                 alt=''
               />
             </div>
-            <Button
+            <BlueRoundedButton
               className={css.proceedButton}
-              label='terms.proceed'
-              color={Button.COLORS.PRIMARY}
-            />
+            >
+              <Translate value='terms.proceed' />
+            </BlueRoundedButton>
           </div>
         </div>
         <div className={css.card}>
@@ -52,24 +56,24 @@ export default class NotificationsTab extends React.Component {
           <div>
             <div className={css.header}><Translate value='ui.myProfile.security.resetPassword' /></div>
             <div className={css.passwords}>
-              <Input
-                type={Input.TYPES.PASSWORD}
-                placeholder='ui.myProfile.security.oldPassword'
+              <TextField
+                type='password'
+                placeholder='Old Password'
               />
-              <Input
-                type={Input.TYPES.PASSWORD}
-                placeholder='ui.myProfile.security.newPassword'
+              <TextField
+                type='password'
+                placeholder='New Password'
               />
-              <Input
-                type={Input.TYPES.PASSWORD}
-                placeholder='ui.myProfile.security.confirmNewPassword'
+              <TextField
+                type='password'
+                placeholder='Confirm New Password'
               />
             </div>
-            <Button
+            <BlueRoundedButton
               className={css.proceedButton}
-              label='terms.proceed'
-              color={Button.COLORS.PRIMARY}
-            />
+            >
+              <Translate value='terms.proceed' />
+            </BlueRoundedButton>
           </div>
         </div>
         <div className={css.card}>

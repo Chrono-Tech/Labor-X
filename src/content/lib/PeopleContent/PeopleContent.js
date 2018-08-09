@@ -6,8 +6,10 @@ import Tab from '@material-ui/core/Tab'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import SwipeableViews from 'react-swipeable-views'
+
 import PersonModel from 'src/api/backend/model/PersonModel'
 import { Icon } from 'src/components/common'
+
 import PeopleTabContent from './PeopleTabContent/PeopleTabContent'
 import css from './PeopleContent.scss'
 

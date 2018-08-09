@@ -105,6 +105,7 @@ src/**/*.js
 !src/components/common/UserRow/UserRow.js
 !src/components/common/NumberInput/
 
+!src/components/Login/
 !src/components/JobBoards/
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js

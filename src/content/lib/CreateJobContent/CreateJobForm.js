@@ -10,7 +10,7 @@ import AutoComplete from 'material-ui/AutoComplete'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import t from "typy"
 
-import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
+import { Image, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
 import { SignerModel, BoardModel, WORKFLOW_FIXED_PRICE, WORKFLOW_TM, SKILLS_LIST } from 'src/models'
 import DatePickerField from 'src/components/DatePickerField'
 
@@ -111,63 +111,45 @@ class CreateJobForm extends React.Component {
           label={<Translate value='ui.createJob.companyAddressLabel' />}
         />
         <div className={css.twoColumn}>
-          <div>
+          <div className={css.addressColumn}>
             <Field
-              lineEnabled
               className={css.inputSection}
-              type={Input.TYPES.TEXT}
-              component={Input}
+              component={TextField}
               name='state'
-              mods={Input.MODS.ALIGN_LEFT}
-              placeholder='ui.createJob.state'
+              label='State'
             />
             <Field
-              lineEnabled
               className={css.inputSection}
-              type={Input.TYPES.TEXT}
-              component={Input}
+              component={TextField}
               name='zip'
-              mods={Input.MODS.ALIGN_LEFT}
-              placeholder='ui.createJob.zip'
+              label='ZIP'
             />
             <Field
               className={css.inputSection}
-              component={Input}
+              component={TextField}
               name='street'
-              lineEnabled
-              type={Input.TYPES.TEXT}
-              mods={Input.MODS.ALIGN_LEFT}
-              placeholder='ui.createJob.street'
+              label='Street'
             />
           </div>
-          <div>
+          <div className={css.addressColumn}>
             <Field
               className={css.inputSection}
-              component={Input}
+              component={TextField}
               name='city'
-              lineEnabled
-              type={Input.TYPES.TEXT}
-              mods={Input.MODS.ALIGN_LEFT}
-              placeholder='ui.createJob.city'
+              label='City'
             />
             <div className={css.twoColumn}>
               <Field
                 className={css.inputSection}
-                component={Input}
+                component={TextField}
                 name='building'
-                lineEnabled
-                type={Input.TYPES.TEXT}
-                mods={Input.MODS.ALIGN_LEFT}
-                placeholder='ui.createJob.buildingN'
+                label='Building #'
               />
               <Field
                 className={css.inputSection}
-                component={Input}
+                component={TextField}
                 name='suit'
-                lineEnabled
-                type={Input.TYPES.TEXT}
-                mods={Input.MODS.ALIGN_LEFT}
-                placeholder='ui.createJob.suit'
+                label='Suit'
               />
             </div>
           </div>
@@ -354,10 +336,10 @@ class CreateJobForm extends React.Component {
 
             <div className={css.headline}>
               <Field
-                className={css.boardHeadline}
-                component={Input}
-                placeholder='ui.createJob.jobHeadlinePlaceholder'
-                mods={[Input.MODS.INVERT, Input.MODS.HUGE]}
+                className={css.jobHeadline}
+                component={TextField}
+                placeholder='Enter Job Headline'
+                InputProps={{ disableUnderline: true, classes: { root: css.jobHeadlineLabel } }}
                 name='name'
               />
             </div>
