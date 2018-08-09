@@ -37,7 +37,7 @@ before(async function () {
 })
 
 it('signup happy path flow', async function () {
-  this.timeout(0)
+  this.timeout(60000)
   await this.indexPageObject.open()
   await this.indexPageObject.newAccountLinkClick()
   await this.introductionCryptoEducationPageObject.ourNetworkLinkClick()
