@@ -6,7 +6,8 @@ const schemaFactory = () => ({
   ipfsHash: PropTypes.string,
   address: PropTypes.string,
   avatar: PropTypes.string,
-  userName: PropTypes.string
+  userName: PropTypes.string,
+  validationLevel: PropTypes.number,
 })
 
 export default class PersonModel extends AbstractModel {
