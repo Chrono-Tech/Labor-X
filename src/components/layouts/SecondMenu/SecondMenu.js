@@ -1,18 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import get from 'lodash/get'
 import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Image, Link, Icon } from 'src/components/common'
 import { userSelector } from 'src/store/user/selectors'
+import PersonModel from 'src/api/backend/model/PersonModel'
+import { personProfile, personProfileLoadingStateSelector, personProfileSelector } from 'src/store/secondMenu'
 import { schemaFactory as accountTypesSchemaFactory } from 'src/models/app/UserAccountTypesModel'
 import css from './SecondMenu.scss'
 
 class SecondMenu extends React.Component {
   static propTypes = {
     accountTypes: PropTypes.shape(accountTypesSchemaFactory()),
+    personProfile: PropTypes.instanceOf(PersonModel),
+    loadPersonProfile: PropTypes.func,
+  }
+
+  componentDidMount () {
+    this.props.loadPersonProfile()
+  }
+
+  getFillPercentageProfile (personProfile) {
+    const validationLevel = get(personProfile, 'validationLevel')
+    if (validationLevel === 4) return "100%"
+    if (validationLevel === 3) return "75%"
+    if (validationLevel === 2) return "50%"
+    if (validationLevel === 1) return "25%"
+    return "0%"
   }
 
   render () {
+    const { personProfile } = this.props
     return (
       <nav className={css.root}>
         <div className={css.section}>
@@ -25,15 +44,17 @@ class SecondMenu extends React.Component {
                 faded
               />
             </Link>
-            <div className={cn(css.iconsItem, css.iconProfile)}>
-              <Icon
-                size={24}
-                icon={Icon.ICONS.PROFILE}
-                color={Icon.COLORS.BLACK}
-                faded
-              />
-              <span className={css.completed}>75%</span>
-            </div>
+            <Link className={css.completedProfileLink} href='/general-profile'>
+              <div className={cn(css.iconsItem, css.iconProfile)}>
+                <Icon
+                  size={24}
+                  icon={Icon.ICONS.PROFILE}
+                  color={Icon.COLORS.BLACK}
+                  faded
+                />
+                <span className={css.completed}>{this.getFillPercentageProfile(personProfile)}</span>
+              </div>
+            </Link>
           </div>
         </div>
         <div className={css.section}>
@@ -93,6 +114,14 @@ class SecondMenu extends React.Component {
 
 const mapStateToProps = state => ({
   accountTypes: userSelector()(state).accountTypes,
+  personProfileLoadingState: personProfileLoadingStateSelector(state),
+  personProfile: personProfileSelector(state),
 })
 
-export default connect(mapStateToProps)(SecondMenu)
+function mapDispatchToProps (dispatch) {
+  return {
+    loadPersonProfile: () => dispatch(personProfile()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SecondMenu)
