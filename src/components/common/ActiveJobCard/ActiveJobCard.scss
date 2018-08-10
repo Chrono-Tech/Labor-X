@@ -12,7 +12,6 @@
 
 .review {
   margin-left: auto;
-  width: 12rem;
   color: $color-azure;
   background-color: transparent;
 }
@@ -95,4 +94,76 @@
 
 .problem {
   border-left-color: $color-red;
+}
+
+.card {
+  width: 100%;
+  border-left-color: #92BB72;
+  border-radius: .5rem;
+  background-color: #FFF;
+  box-shadow: 0.4rem 0.4rem 0.6rem rgba(51, 51, 51, 0.1);
+  border-left-width: 1rem;
+  border-left-style: solid;
+  margin-bottom: 2rem;
+}
+
+.cardName {
+  font-weight: 500;
+  color: #333;
+  display: inline-block;
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.cardName:hover {
+  color: #00A0D2;
+}
+
+.jobStartTimeBlock {
+  display: inline-block;
+  font-size: 1.4rem;
+}
+
+.avatar {
+  background-color: #92BB72;
+  width: 30px;
+  height: 30px;
+}
+
+.workerName {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #333;
+}
+
+.cardTop {
+  height: 80px;
+}
+
+.cardBottom {
+  height: 64px;
+}
+
+.cardHeaderAction {
+  align-self: center !important;
+  margin-top: 0px !important;
+  margin-right: 0px !important;
+}
+
+.avatarImg {
+  width: 30px;
+  height: 30px;
+}
+
+.actionBtn {
+  color: #00A0D2;
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.actionBtn:hover {
+  color: #0088C3;
 }

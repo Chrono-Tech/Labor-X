@@ -9,12 +9,14 @@ import {
 interface State {
   selectInitialPropsLoading: boolean;
   cards: Array<Object>;
+  lhtUsdPrice: Number,
   selectInitialPropsFailure: Error;
 }
 
 export const STATE: State = {
   selectInitialPropsLoading: true,
   cards: [],
+  lhtUsdPrice: 1,
   selectInitialPropsFailure: true,
 }
 
@@ -30,6 +32,7 @@ export default (state: State = STATE, action) => {
       ...state,
       selectInitialPropsLoading: false,
       cards: action.payload.cards,
+      lhtUsdPrice: action.payload.lhtUsdPrice,
     })
     case SELECT_INITIAL_PROPS_FAILURE: return ({
       ...state,
