@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { MenuItem } from 'material-ui/Menu'
 import { SelectField, TextField } from 'redux-form-material-ui'
 
-import { Image, Chip, Input, Button, Icon, Checkbox, RadioIcon, VerificationLevelSelector, Translate } from 'components/common'
+import { Link, Image, Chip, Input, Button, Icon, Checkbox, RadioIcon, VerificationLevelSelector, Translate } from 'components/common'
 import {
   TagModel,
   TAGS_LIST,
@@ -338,12 +338,10 @@ class CreateJobBoardForm extends React.Component {
       <form name={FORM_CREATE_JOB_BOARD} className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
           <div className={css.titleBar}>
-            <Button
-              className={css.cancelButton}
-              icon={Image.SETS.ARROW_BACK}
-              type={Button.TYPES.SUBMIT}
-              mods={Button.MODS.FLAT}
-            />
+            <Link className={css.backBtn} href='/dashboard'>
+              <Image icon={Image.SETS.ARROW_BACK.icon} />
+            </Link>
+             
             <div className={css.titleBarRight}>
               <Button
                 className={css.helpButton}
