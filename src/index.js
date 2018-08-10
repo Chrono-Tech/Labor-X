@@ -58,6 +58,7 @@ import IntroductionOurNetworkPage from "pages/introduction/our-network"
 import IntroductionYourAccountPage from "pages/introduction/your-account"
 import IntroductionCryptoCurrenciesPage from "pages/introduction/crypto-currencies"
 import IntroductionLaborhourPage from "pages/introduction/laborhour"
+import WorkerJobViewActivePage from "pages/worker-job-view-active"
 
 import AuthSignupAccountPasswordPage from "pages/auth/signup/account-password"
 import AuthSignupCopyYourAccountPasswordPage from "pages/auth/signup/copy-your-account-password"
@@ -237,7 +238,8 @@ const persistor = persistStore(store, null, async () => {
                       <Route exact path='/worker-resume' component={WorkerResumePage} />
                       <Route exact path='/authorization-methods' component={AuthorizationMethodsPage} />
                       <Route exact path='/forgot-password' component={ForgotPasswordPage} />
-
+                      <Route exact path='/worker-job-view-active/:id' component={WorkerJobViewActivePage} />
+                      
                       <AuthRoute exact path='/introduction/crypto-education' component={IntroductionCryptoEducationPage} />
                       <AuthRoute exact path='/introduction/our-network' component={IntroductionOurNetworkPage} />
                       <AuthRoute exact path='/introduction/your-account' component={IntroductionYourAccountPage} />
