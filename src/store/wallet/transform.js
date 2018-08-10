@@ -1,29 +1,31 @@
+// @flow
+
 import { WalletModel, WalletEntryModel } from 'src/models'
 import { createTransform } from 'redux-persist'
 
 export const decryptedWalletTransform = ({ web3 }) => createTransform(
-  (inboundState) => {
-    const decryptedWallet = inboundState
-    return decryptedWallet == null
-      ? null
-      : new WalletEntryModel({
-        key: decryptedWallet.entry.key,
-        name: decryptedWallet.entry.name,
-        encrypted: decryptedWallet.wallet.encrypt(decryptedWallet.entry.key),
-      })
-  },
-  (outboundState) => {
-    const decryptedWallet = outboundState
-    if (decryptedWallet) {
-      const entry = new WalletEntryModel(decryptedWallet)
-      return new WalletModel({
-        entry,
-        wallet: web3.eth.accounts.wallet.decrypt(entry.encrypted, entry.key),
+  (state: WalletModel) => {
+    if (state) {
+      return new WalletEntryModel({
+        key: state.entry.key,
+        name: state.entry.name,
+        encrypted: state.wallet.encrypt(state.entry.key),
       })
     } else {
       return null
     }
   },
-  // define which reducers this transform gets called for.
+  (state: WalletEntryModel) => {
+    if (state) {
+      const walletEntryModel = new WalletEntryModel(state)
+      web3.eth.accounts.wallet.clear()
+      return new WalletModel({
+        entry: walletEntryModel,
+        wallet: web3.eth.accounts.wallet.decrypt(walletEntryModel.encrypted, walletEntryModel.key),
+      })
+    } else {
+      return null
+    }
+  },
   { whitelist: ['decryptedWallet'] }
 )

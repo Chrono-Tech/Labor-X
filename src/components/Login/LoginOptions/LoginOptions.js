@@ -123,7 +123,7 @@ class LoginOptions extends React.Component {
   handleSubmitSuccess = (signInModel) => this.props.signIn(signInModel)
 
   navigateToCreateAccount = () => {
-    this.props.push('/create-account')
+    this.props.push('/account-password')
   }
 
   renderComponent () {

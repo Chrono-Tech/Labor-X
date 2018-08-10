@@ -8,10 +8,9 @@ import cn from 'classnames'
 import get from "lodash/get"
 import { JobModel, JOB_STATE_WORK_REJECTED, JOB_STATE_STARTED, JOB_STATE_PENDING_START } from "src/models"
 import { pauseJobWork, resumeJobWork, startWork } from "src/store"
-
-import css from './TodoCard.scss'
 import { SendInvoiceDialog } from "../../../partials"
 import { modalsPush } from "../../../store"
+import css from './TodoCard.scss'
 
 const STATUSES = {
   APPLIED: 'applied',
@@ -239,7 +238,6 @@ class TodoCard extends React.Component {
           <div className={css.progressTimer}>
             {this.progressIcon()}
             {this.renderTimes()}
-
           </div>
           <div className={css.actions}>
             {

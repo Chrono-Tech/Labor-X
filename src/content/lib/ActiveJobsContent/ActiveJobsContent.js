@@ -2,15 +2,31 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import { groupBy } from 'lodash'
+import moment from 'moment'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
 import { cancelJob, modalsPush } from 'src/store'
 import { PayInvoiceDialog } from 'src/partials'
-import { Translate, ActiveJobCard } from 'src/components/common'
+import { Translate } from 'src/components/common'
 import { getToPayCards, getOtherCards } from "src/store/activeJobs"
+import ActiveTabContent from "./ActiveTabContent/ActiveTabContent"
+import DeclineTabContent from "./DeclineTabContent/DeclineTabContent"
 import css from './ActiveJobsContent.scss'
 
-const dateFormat = 'DD MMMM YYYY, ddd'
+const TabContainer = (props) => {
+  return (
+    <Typography component='div' style={{ padding: 8 * 3 }}>
+      {props.children}
+    </Typography>
+  )
+}
+
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+}
 
 class ActiveJobsContent extends React.Component {
   static propTypes = {
@@ -19,6 +35,10 @@ class ActiveJobsContent extends React.Component {
     toPayCards: PropTypes.arrayOf(PropTypes.shape({})),
     otherCardsGroupedByCreatedAt: PropTypes.shape({}),
   }
+
+  state = {
+    value: 0,
+  };
 
   handleOnClickReview = (job, worker) => {
     const { cancelJob } = this.props
@@ -29,33 +49,35 @@ class ActiveJobsContent extends React.Component {
     this.props.pushModal(modal)
   }
 
-  renderOtherCards () {
-    return Object.entries(this.props.otherCardsGroupedByCreatedAt).map(([ date, cards ]) => (
-      <div key={date}>
-        <h3 className={css.cardsHeader}>{moment(date).format(dateFormat)}</h3>
-        {cards.map((card) => (
-          <ActiveJobCard {...card} onClickReview={this.handleOnClickReview} key={card.job.key} />
-        ))}
-      </div>
-    ))
-  }
-
-  renderToPayCards () {
-    return this.props.toPayCards.map((card) => <ActiveJobCard {...card} key={card.job.id} />)
-  }
+  handleChange = (event, value) => {
+    this.setState({ value })
+  };
 
   render () {
+    const { value } = this.state
+    const { toPayCards, otherCardsGroupedByCreatedAt } = this.props
     return (
       <div className={css.main}>
         <div className={css.title}>
           <div className={css.titleText}><Translate value='nav.activeJobs' /></div>
+          <AppBar position='static' className={css.appBar}>
+            <Tabs value={value} onChange={this.handleChange}>
+              <Tab label='ACTIVE' />
+              <Tab label='DECLINED' />
+            </Tabs>
+          </AppBar>
         </div>
+
         <div className={css.content}>
-          <div>
-            <h3 className={css.cardsHeader}>Review & Pay</h3>
-            { this.props.toPayCards.length ? this.renderToPayCards() : <div>No Jobs to Review & Pay</div> }
-          </div>
-          {this.renderOtherCards()}
+          { value === 0 && (
+            <ActiveTabContent
+              toPayCards={toPayCards}
+              otherCardsGroupedByCreatedAt={otherCardsGroupedByCreatedAt}
+              onHandleOnClickReview={this.handleOnClickReview}
+            />
+          )
+          }
+          { value === 1 && <DeclineTabContent /> }
         </div>
       </div>
     )

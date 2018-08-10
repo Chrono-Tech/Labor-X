@@ -12,4 +12,12 @@ export default class UserAccountTypesModel extends AbstractModel {
     super(props, schemaFactory())
     Object.freeze(this)
   }
+
+  static fromProfiles (recruiter, client, worker) {
+    return new UserAccountTypesModel({
+      recruiter: recruiter.isRequested ,
+      client: client.isRequested,
+      worker: worker.isRequested,
+    })
+  }
 }

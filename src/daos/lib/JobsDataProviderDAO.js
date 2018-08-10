@@ -209,7 +209,7 @@ export default class JobsDataProviderDAO extends AbstractContractDAO {
         category: TagCategoryModel.valueOfCode(skillsCategory),
         skills: SkillModel.arrayValueOfMask(skills),
         ipfs,
-        flowType,
+        flowType: flowType.toNumber(),
         paused,
         defaultPay,
         pausedAt,

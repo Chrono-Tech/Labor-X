@@ -7,7 +7,7 @@ import WalletEntryModel from './WalletEntryModel'
 import SignerModel from './SignerModel'
 
 const schema = {
-  wallet: PropTypes.object,
+  wallet: PropTypes.object, // eth wallet
   entry: PropTypes.instanceOf(WalletEntryModel),
 }
 

@@ -76,7 +76,7 @@ export default class JobCard extends React.Component {
       >
         <div>
           <img className={css.icon} src={get(board,"ipfs.logo") || '/static/temp/get-started.png'} alt='' />
-          <p>{ get(board,"ipfs.logo") || ""}</p>
+          <p>{ get(board,"ipfs.name") || ""}</p>
         </div>
         <div className={css.jobInfo}>
           <Link className={css.jobName} href={`/client-job-view/${job.id}`}>
