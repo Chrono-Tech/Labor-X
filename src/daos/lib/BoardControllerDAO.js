@@ -1,4 +1,5 @@
 // import BigNumber from 'bignumber.js'
+import get from 'lodash/get'
 import {
   BoardModel,
   BoardIPFSModel,
@@ -15,6 +16,9 @@ import {
 import { loadFromIPFS, bytes32ToIPFSHash, ipfsHashToBytes32  } from 'src/utils'
 import AbstractContractDAO from './AbstractContractDAO'
 import {TAGS_LIST} from "../../models";
+import { TAG_ANY_MASK } from "src/models/meta/TagModel";
+import { TAG_AREA_ANY_MASK } from "src/models/meta/TagAreaModel";
+import { TAG_CATEGORY_ANY_MASK } from "src/models/meta/TagCategoryModel";
 
 export default class BoardControllerDAO extends AbstractContractDAO {
   constructor ({ address, history, abi }) {
@@ -85,6 +89,12 @@ export default class BoardControllerDAO extends AbstractContractDAO {
     return boards
   }
 
+  async getBoardsForUser (address, tags = TAG_ANY_MASK, tagsArea = TAG_AREA_ANY_MASK, tagsCategory = TAG_CATEGORY_ANY_MASK) {
+    const ids = await this.contract.methods.getBoardsForUser(address, tags, tagsArea, tagsCategory).call()
+    const boards = await this.getBoards(address)
+    let b=8;
+  }
+
   async getBoardsByIds (signer, ids: Number[]) {
     const boards = []
     const response = await this.contract.methods.getBoardsByIds(ids).call()
@@ -115,11 +125,11 @@ export default class BoardControllerDAO extends AbstractContractDAO {
         tagsCategory: TagCategoryModel.arrayValueOfMask(_tagsCategories[i]),
         ipfs: new BoardIPFSModel({
           ...ipfs,
-          joinRequirement: ipfs.joinRequirement !== undefined ? BoardRequirementModel.valueOf(ipfs.joinRequirement) : null,
-          fee: ipfs.fee !== undefined ? BoardPostFeeModel.valueOf(ipfs.fee) : null,
-          lhus: ipfs.lhus !== undefined ? +ipfs.lhus : 0,
+          joinRequirement: get(ipfs, "joinRequirement") !== undefined ? BoardRequirementModel.valueOf(get(ipfs, "joinRequirement")) : null,
+          fee: get(ipfs, "fee") !== undefined ? BoardPostFeeModel.valueOf(get(ipfs, "fee")) : null,
+          lhus: get(ipfs, "lhus") !== undefined ? +get(ipfs, "lhus") : 0,
           hash: ipfsHash,
-          endorsingSkills: !!ipfs.endorsingSkills,
+          endorsingSkills: !!get(ipfs, "endorsingSkills"),
         }),
         extra: new BoardExtraModel({
           isSignerJoined,
