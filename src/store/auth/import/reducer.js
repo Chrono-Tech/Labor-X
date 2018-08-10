@@ -17,6 +17,7 @@ import {
   UPDATE_WALLET,
   SHOW_PERSON_404_DIALOG,
   HIDE_PERSON_404_DIALOG,
+  RESET_STATE,
 } from './actions'
 
 interface State {
@@ -65,6 +66,7 @@ export const reducer = (state: State = STATE, action) => {
     case UPDATE_WALLET: return ({ ...state, wallet: action.wallet })
     case SHOW_PERSON_404_DIALOG: return ({ ...state, openPerson404Dialog: true })
     case HIDE_PERSON_404_DIALOG: return ({ ...state, openPerson404Dialog: false })
+    case RESET_STATE: return ({ ...STATE })
     default: return ({ ...state })
   }
 }

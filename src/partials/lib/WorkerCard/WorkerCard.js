@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import cn from 'classnames'
-import get from 'lodash/get'
 import { ProfileModel, JobOfferModel, JobModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield } from 'src/components/common'
 import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
@@ -36,10 +35,10 @@ class WorkerCard extends React.Component {
   }
 
   handleReviewOffer = () => {
-    const { job, offer, worker } = this.props
+    const { job, offer, person } = this.props
     const modal = {
       component: ReviewOfferDialog,
-      props: { job, offer, worker },
+      props: { job, offer, person },
     }
     this.props.pushModal(modal)
   }
@@ -106,15 +105,9 @@ class WorkerCard extends React.Component {
 
   render () {
     const { workerProfile, person, offer, offerSent } = this.props
-    const workerName = get(person, "userName")
-      ? get(person, "userName")
-      : ""
-    const avatarUrl = get(person, "avatar")
-      ? get(person, "avatar")
-      : "/static/temp/icon-profile.jpg"
-    const validationLevel = get(person, "validationLevel")
-      ? get(person, "validationLevel")
-      : 0
+    const workerName = person.userName || ''
+    const avatarUrl = person.avatar || "/static/temp/icon-profile.jpg"
+    const validationLevel = person.validationLevel || 0
     return (
       <div className={cn(css.root, {
         [css.attention]: !offerSent && offer,
@@ -122,15 +115,15 @@ class WorkerCard extends React.Component {
       >
         <div className={css.workerRow}>
           <div className={css.workerName}>
-            <img className={css.icon} src={avatarUrl} alt={workerName} />
-            <Link className={css.link} href={`/worker-profile/${workerProfile.id}`}>
-              <h4>{workerName}</h4>
+            <img className={css.icon} src={person.avatar} alt={person.userName} />
+            <Link className={css.link} href={`/worker-profile/${person.id}`}>
+              <h4>{person.userName}</h4>
               <p>Worker</p>
             </Link>
           </div>
           <div className={css.extraData}>
             <Rating rating={4} />
-            <SecurityShield level={validationLevel} />
+            <SecurityShield level={person.validationLevel} />
             {/* <WorkerState state={workerProfile.extra.state} /> */}
           </div>
         </div>

@@ -66,6 +66,7 @@ export const submitWelcome = () => async (dispatch, getState) => {
     const roles = { isRecruiter, isClient, isWorker }
     const web3 = web3Selector()(state)
     if (encryptedWallet) {
+      web3.eth.accounts.wallet.clear()
       const wallet = web3.eth.accounts.wallet.decrypt(encryptedWallet, password)
       const walletEntryModel = new WalletEntryModel({ key: uniqueId(), name, encrypted: encryptedWallet })
       dispatch(walletAdd(walletEntryModel))

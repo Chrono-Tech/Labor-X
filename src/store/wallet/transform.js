@@ -18,6 +18,7 @@ export const decryptedWalletTransform = ({ web3 }) => createTransform(
   (state: WalletEntryModel) => {
     if (state) {
       const walletEntryModel = new WalletEntryModel(state)
+      web3.eth.accounts.wallet.clear()
       return new WalletModel({
         entry: walletEntryModel,
         wallet: web3.eth.accounts.wallet.decrypt(walletEntryModel.encrypted, walletEntryModel.key),

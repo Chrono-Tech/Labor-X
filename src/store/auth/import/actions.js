@@ -4,6 +4,7 @@ import uniqueId from 'lodash/uniqueId'
 import { push } from "connected-react-router"
 import bip39 from "bip39"
 import hdkey from "ethereumjs-wallet/hdkey"
+import { destroy } from 'redux-form'
 
 import readFile from "src/utils/readFile"
 import * as profileApi from "src/api/backend"
@@ -18,6 +19,7 @@ import {
   pkeyFormValuesSelector,
   seedFormValuesSelector,
 } from "./selectors"
+import { CREATE_WALLET_FORM, PKEY_FORM, SEED_FORM } from "./constants"
 
 // IMPORT FILE ACTIONS
 
@@ -88,8 +90,8 @@ export const submitPkey = () => async (dispatch, getState) => {
     const address = account.address
     const person = await profileApi.getPerson(address)
     if (person) {
+      web3.eth.accounts.wallet.clear()
       const wallet = web3.eth.accounts.wallet.create()
-
       wallet.add(account)
       dispatch(updateWallet(wallet))
       dispatch(push('/auth/import/create-wallet'))
@@ -107,6 +109,7 @@ export const submitPkeyPerson404 = () => (dispatch, getState) => {
   const web3 = web3Selector()(state)
   const { privateKey } = pkeyFormValuesSelector(state)
   const account = web3.eth.accounts.privateKeyToAccount(`0x${ privateKey }`)
+  web3.eth.accounts.wallet.clear()
   const wallet = web3.eth.accounts.wallet.create()
   wallet.add(account)
   dispatch(updateWallet(wallet))
@@ -134,6 +137,7 @@ export const submitSeed = () => async (dispatch, getState) => {
     const address = account.address
     const person = await profileApi.getPerson(address)
     if (person) {
+      web3.eth.accounts.wallet.clear()
       const wallet = web3.eth.accounts.wallet.create()
       wallet.add(account)
       dispatch(updateWallet(wallet))
@@ -155,6 +159,7 @@ export const submitSeedPerson404Dialog = () => (dispatch, getState) => {
   const hdWallet = hdkey.fromMasterSeed(seed).derivePath("m/44'/60'/0'/0/0'").getWallet()
   const privateKey = `0x${ hdWallet.getPrivateKey().toString('hex') }`
   const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+  web3.eth.accounts.wallet.clear()
   const wallet = web3.eth.accounts.wallet.create()
   wallet.add(account)
   dispatch(updateWallet(wallet))
@@ -177,6 +182,8 @@ export const submitCreateWallet = () => (dispatch, getState) => {
     const encryptedWallet = wallet.encrypt(password)
     const walletEntryModel = new WalletEntryModel({ key: uniqueId(), name, encrypted: encryptedWallet })
     dispatch(walletAdd(walletEntryModel))
+    dispatch(destroy(PKEY_FORM, SEED_FORM, CREATE_WALLET_FORM))
+    dispatch(resetState())
     dispatch(push('/auth/signin/my-accounts'))
   }
 }
@@ -188,3 +195,6 @@ export const hidePerson404Dialog = () => ({ type: HIDE_PERSON_404_DIALOG })
 
 export const UPDATE_WALLET = 'AUTH/IMPORT/UPDATE_WALLET'
 export const updateWallet = (wallet) => ({ type: UPDATE_WALLET, wallet })
+
+export const RESET_STATE = 'AUTH/IMPORT/RESET_STATE'
+export const resetState = () => ({ type: RESET_STATE })

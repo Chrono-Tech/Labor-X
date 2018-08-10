@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
-import faker from 'faker'
 import AbstractModel from '../AbstractModel'
 
 const schemaFactory = () => ({
@@ -14,28 +13,7 @@ const schemaFactory = () => ({
 
 export default class JobOfferFormModel extends AbstractModel {
   constructor (props) {
-    super(propsWithDefaults(props), schemaFactory())
+    super(props, schemaFactory())
     Object.freeze(this)
   }
-}
-
-function propsWithDefaults (props) {
-  const {
-    totalHours,
-    hourlyRate,
-    fixedPrice,
-    ...other
-  } = props
-  return Object.assign({}, {
-    isSpecified: true,
-    hourlyRate: hourlyRate
-      ? String(hourlyRate)
-      : String(faker.random.number({ min: 5, max: 40 })),
-    totalHours: totalHours
-      ? String(totalHours)
-      : String(faker.random.number({ min: 1, max: 40 })),
-    fixedPrice: fixedPrice
-      ? String(fixedPrice)
-      : String(faker.random.number({ min: 1, max: 40 })),
-  }, other)
 }

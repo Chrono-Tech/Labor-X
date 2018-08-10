@@ -94,8 +94,8 @@ class PayInvoiceDialog extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  pay: () => dispatch(pay(ownProps.job.ipfs.budget.flowType , ownProps.job.id)),
-  decline: () => dispatch(decline(ownProps.job.ipfs.budget.flowType , ownProps.job.id)),
+  pay: () => dispatch(pay(ownProps.job.flowType , ownProps.job.id)),
+  decline: () => dispatch(decline(ownProps.job.flowType , ownProps.job.id)),
 })
 
 export default connect(null, mapDispatchToProps)(PayInvoiceDialog)
