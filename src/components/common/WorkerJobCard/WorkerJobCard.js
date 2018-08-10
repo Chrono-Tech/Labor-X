@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import PersonModel from 'src/api/backend/model/PersonModel'
 import { JobModel, BoardModel, JobOfferModel } from 'src/models'
 import { Link, Button, Tip } from 'src/components/common'
 import css from './WorkerJobCard.scss'
@@ -12,6 +13,7 @@ export default class WorkerJobCard extends React.Component {
     job: PropTypes.instanceOf(JobModel).isRequired,
     board: PropTypes.instanceOf(BoardModel),
     offer: PropTypes.instanceOf(JobOfferModel),
+    client: PropTypes.instanceOf(PersonModel),
     notice: PropTypes.shape({
       label: PropTypes.string,
       description: PropTypes.string,
@@ -78,27 +80,19 @@ export default class WorkerJobCard extends React.Component {
   }
 
   render () {
-    const { job, board, notice } = this.props
+    const { job, board, notice, client } = this.props
     return (
       <div
         className={css.root}
       >
-        {board
-          ? (
-            <div>
-              {!board.ipfs.logo ? null : (
-                <img className={css.icon} src={board.ipfs.logo} alt={board.ipfs.name} />
-              )}
-              <p>{board.ipfs.name}</p>
-            </div>
-          )
-          : (
-            <div>
-              <img className={css.icon} src='/static/temp/get-started.png' alt='' />
-              <p>No Board</p>
-            </div>
-          )
-        }
+        {board ? (
+          <div>
+            {!client.avatar ? null : (
+              <img className={css.icon} src={client.avatar} alt={client.userName} />
+            )}
+            <div><strong>{client.userName}(Client)</strong> <span className={css.boardName}>at {board.ipfs.name}</span></div>
+          </div>
+        ) : null }
         <div className={css.jobInfo}>
           <Link className={css.jobName} href={`/client-job-view/${job.id}`}>
             <h4>{job.ipfs.name}</h4>

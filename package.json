@@ -131,7 +131,7 @@
     "generate-webpack-stats": "./node_modules/.bin/webpack --progress -c --profile --json > stats.json",
     "selenium-standalone:fetch": "selenium-standalone install",
     "selenium-standalone:start": "selenium-standalone start",
-    "test:integration": "echo 'testing e2e...' && ./node_modules/.bin/cross-env APP_URL=http://localhost:3001 mocha --require babel-register test/integration/**/*.spec.js"
+    "test:integration": "echo 'testing e2e...' && cross-env APP_URL=http://localhost:3001 mocha --timeout 60000 --require babel-register test/integration/**/*.spec.js"
   },
   "pre-commit": [
     "lint",

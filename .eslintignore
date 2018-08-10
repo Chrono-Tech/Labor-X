@@ -207,6 +207,7 @@ src/**/*.js
 !src/store/opportunities/selectors.js
 !src/store/login/actions.js
 !src/store/profiles/actions.js
+!src/store/applicationsAndOffers/
 
 !src/store/index.js
 !src/store/general-profile/

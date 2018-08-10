@@ -1,8 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import PropTypes from 'prop-types'
-import uniqid from 'uniqid'
+import PersonModel from 'src/api/backend/model/PersonModel'
 import { JobModel, BoardModel } from 'src/models'
 import { WorkerJobCard } from 'components/common'
 import css from './ApplicationsTabContent.scss'
@@ -12,6 +12,7 @@ class ApplicationsTabContent extends React.Component {
     applications: PropTypes.arrayOf(PropTypes.shape({
       job: PropTypes.instanceOf(JobModel),
       board: PropTypes.instanceOf(BoardModel),
+      client: PropTypes.instanceOf(PersonModel),
       notice: PropTypes.shape({
         label: PropTypes.string,
         description: PropTypes.string,
@@ -21,6 +22,7 @@ class ApplicationsTabContent extends React.Component {
     applicationsApproved: PropTypes.arrayOf(PropTypes.shape({
       job: PropTypes.instanceOf(JobModel),
       board: PropTypes.instanceOf(BoardModel),
+      client: PropTypes.instanceOf(PersonModel),
       notice: PropTypes.shape({
         label: PropTypes.string,
         description: PropTypes.string,
@@ -44,8 +46,8 @@ class ApplicationsTabContent extends React.Component {
   render () {
     return (
       <div className={css.content}>
-        { this.props.applicationsApproved.map(card => (<WorkerJobCard offer={card.offer} job={card.job} board={card.board} notice={card.notice} onClickReviewOffer={this.handleClickReviewOffer} key={uniqid()} />)) }
-        { this.props.applications.map(card => (<WorkerJobCard offer={card.offer} job={card.job} board={card.board} notice={card.notice} onClickDismiss={this.handleClickDismiss} key={uniqid()} />)) }
+        { this.props.applicationsApproved.map(card => (<WorkerJobCard {...card} onClickReviewOffer={this.handleClickReviewOffer} key={card.offer.id} />)) }
+        { this.props.applications.map(card => (<WorkerJobCard {...card} onClickDismiss={this.handleClickDismiss} key={card.offer.id} />)) }
       </div>
     )
   }
