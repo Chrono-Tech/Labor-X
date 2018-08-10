@@ -14,3 +14,5 @@ export { default as DelegateDialog } from './lib/DelegateDialog/DelegateDialog'
 export { default as ForWorkersWidget } from './lib/ForWorkersWidget/ForWorkersWidget'
 export { default as ForClientsWidget } from './lib/ForClientsWidget/ForClientsWidget'
 export { default as ForRecruitersWidget } from './lib/ForRecruitersWidget/ForRecruitersWidget'
+export { default as TimeTrackerWidget } from './lib/TimeTrackerWidget/TimeTrackerWidget'
+

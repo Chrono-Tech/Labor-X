@@ -83,6 +83,7 @@ src/**/*.js
 !src/store/user/
 
 
+!src/components/common/TimeTrackerWidget/
 !src/components/common/Link/
 !src/components/common/Action/
 !src/components/common/Icon/Icon.js
