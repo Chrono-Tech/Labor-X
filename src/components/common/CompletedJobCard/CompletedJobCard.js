@@ -7,7 +7,7 @@ import { Link } from 'src/components/common'
 import css from './CompletedJobCard.scss'
 
 const dateFormat = 'DD MMM YYYY'
-const courseUsdLhus = 18
+const courseUsdLht = 18
 
 export default class CompletedJobCard extends React.Component {
   static propTypes = {
@@ -48,7 +48,7 @@ export default class CompletedJobCard extends React.Component {
     {return `${totalHours}h`}
   }
 
-  getJobLhus = (job) => {
+  getJobLht = (job) => {
     const fixedPrice = get(job, "ipfs.budget.fixedPrice")
     if (fixedPrice) {
       return fixedPrice
@@ -93,8 +93,8 @@ export default class CompletedJobCard extends React.Component {
 
   render () {
     const { job } = this.props
-    const workCostLhus = this.getJobLhus(job)
-    const workCostUsd = workCostLhus * courseUsdLhus
+    const workCostLht = this.getJobLht(job)
+    const workCostUsd = workCostLht * courseUsdLht
     return (
       <div
         className={css.root}
@@ -110,7 +110,7 @@ export default class CompletedJobCard extends React.Component {
             {this.renderHours(job)}
           </div>
           <div className={css.cardCostPayment}>
-            LHUS {workCostLhus} (${workCostUsd})
+            LHT {workCostLht} (${workCostUsd})
           </div>
         </div>
         {this.renderFooter(job)}

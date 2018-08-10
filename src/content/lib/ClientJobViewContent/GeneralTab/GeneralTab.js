@@ -36,7 +36,7 @@ export default class GeneralTab extends React.Component {
           {job.ipfs.budget.isSpecified && (
             <div className={css.dataRow}>
               <h3>Est. Budget:</h3>
-              <span className={css.dataText}>{`LHUS ${job.ipfs.budget.award.toString()} (${job.ipfs.budget.awardUSD.toString()})`}</span>
+              <span className={css.dataText}>{`LHT ${job.ipfs.budget.award.toString()} (${job.ipfs.budget.awardUSD.toString()})`}</span>
             </div>
           )}
         </div>

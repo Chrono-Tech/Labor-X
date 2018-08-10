@@ -57,7 +57,7 @@ class WorkerCard extends React.Component {
     const offerAmount = offer.estimate && offer.rate ? offer.estimate.times(offer.rate) : null
     return (
       <div className={css.footerRow}>
-        { offerAmount != null && <p className={css.offer}>Offer: LHUS {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
+        { offerAmount != null && <p className={css.offer}>Offer: LHT {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
         <p className={css.date}>Sent on {moment(offer.ipfs.appliedDate).format(dateFormat)}</p>
         <div className={css.actions}>
           <Button
@@ -81,7 +81,7 @@ class WorkerCard extends React.Component {
     const offerAmount = offer.estimate && offer.rate ? offer.estimate.times(offer.rate) : null
     return (
       <div className={css.footerRow}>
-        { offerAmount != null && <p className={css.offer}>Offer: LHUS {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
+        { offerAmount != null && <p className={css.offer}>Offer: LHT {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
         <p className={css.date}>Applied on {moment(offer.ipfs.appliedDate).format(dateFormat)}</p>
         <div className={css.actions}>
           { offerAmount != null

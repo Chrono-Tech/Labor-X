@@ -225,21 +225,21 @@ export class OpportunitiesContent extends React.Component {
           />
 
           <Field
-            key='from_lhus'
+            key='from_lht'
             materialTheme={Input.MATERIAL_THEME.FILTER}
             component={Input}
-            name='from_lhus'
-            placeholder='From LHUS'
+            name='from_lht'
+            placeholder='From LHT'
             materialInput
             defaultTheme={false}
           />
 
           <Field
-            key='to_lhus'
+            key='to_lht'
             component={Input}
             materialTheme={Input.MATERIAL_THEME.FILTER}
-            name='to_lhus'
-            placeholder='To LHUS'
+            name='to_lht'
+            placeholder='To LHT'
             materialInput
             defaultTheme={false}
           />

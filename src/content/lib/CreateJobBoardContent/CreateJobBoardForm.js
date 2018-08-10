@@ -507,7 +507,7 @@ class CreateJobBoardForm extends React.Component {
                 <Field
                   className={css.match}
                   component={TextField}
-                  name='lhus'
+                  name='lht'
                   hintText={<Translate value='ui.createJobBoard.value' />}
                 />
               </div>
