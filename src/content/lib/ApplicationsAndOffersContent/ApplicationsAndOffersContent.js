@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab'
 import { Translate } from 'components/common'
 import { getCards, getCardsApproved, getApplicationsCount } from 'src/store/applicationsAndOffers/selectors'
 import { JobModel, BoardModel } from 'src/models'
+import PersonModel from 'src/api/backend/model/PersonModel'
 import OffersTabContent from './OffersTabContent/OffersTabContent'
 import ApplicationsTabContent from './ApplicationsTabContent/ApplicationsTabContent'
 import css from './ApplicationsAndOffersContent.scss'
@@ -18,6 +19,7 @@ class ApplicationsAndOffersContent extends React.Component {
     applications: PropTypes.arrayOf(PropTypes.shape({
       job: PropTypes.instanceOf(JobModel),
       board: PropTypes.instanceOf(BoardModel),
+      client: PropTypes.instanceOf(PersonModel),
       notice: PropTypes.shape({
         label: PropTypes.string,
         description: PropTypes.string,
@@ -27,6 +29,7 @@ class ApplicationsAndOffersContent extends React.Component {
     applicationsApproved: PropTypes.arrayOf(PropTypes.shape({
       job: PropTypes.instanceOf(JobModel),
       board: PropTypes.instanceOf(BoardModel),
+      client: PropTypes.instanceOf(PersonModel),
       notice: PropTypes.shape({
         label: PropTypes.string,
         description: PropTypes.string,
@@ -36,6 +39,7 @@ class ApplicationsAndOffersContent extends React.Component {
     offers: PropTypes.arrayOf(PropTypes.shape({
       job: PropTypes.instanceOf(JobModel),
       board: PropTypes.instanceOf(BoardModel),
+      client: PropTypes.instanceOf(PersonModel),
       notice: PropTypes.shape({
         label: PropTypes.string,
         description: PropTypes.string,
@@ -61,7 +65,6 @@ class ApplicationsAndOffersContent extends React.Component {
 
   render () {
     const { applications, applicationsApproved, applicationsCount, offers } = this.props
-
     return (
       <div className={css.main}>
         <div className={css.title}>

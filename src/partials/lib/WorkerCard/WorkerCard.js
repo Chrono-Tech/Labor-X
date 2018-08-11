@@ -5,6 +5,8 @@ import moment from 'moment'
 import cn from 'classnames'
 import { ProfileModel, JobOfferModel, JobModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield } from 'src/components/common'
+import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
+import PersonModelBackend from 'src/api/backend/model/PersonModel'
 import { modalsPush } from 'src/store'
 import { ReviewOfferDialog } from 'src/partials'
 import css from './WorkerCard.scss'
@@ -14,9 +16,9 @@ const dateFormat = 'DD MMM YYYY h:mm A'
 class WorkerCard extends React.Component {
   static propTypes = {
     offer: PropTypes.instanceOf(JobOfferModel).isRequired,
-    person: PropTypes.instanceOf(ProfileModel).isRequired,
-    // workerProfile: PropTypes.instanceOf(ProfileWorkerModel),
-    // profile: PropTypes.instanceOf(ProfileModelBackend),
+    worker: PropTypes.instanceOf(ProfileModel).isRequired,
+    workerProfile: PropTypes.instanceOf(ProfileWorkerModel),
+    person: PropTypes.instanceOf(PersonModelBackend),
     job: PropTypes.instanceOf(JobModel),
     offerSent: PropTypes.bool,
     pushModal: PropTypes.func,
@@ -55,7 +57,7 @@ class WorkerCard extends React.Component {
     const offerAmount = offer.estimate && offer.rate ? offer.estimate.times(offer.rate) : null
     return (
       <div className={css.footerRow}>
-        { offerAmount != null && <p className={css.offer}>Offer: LHUS {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
+        { offerAmount != null && <p className={css.offer}>Offer: LHT {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
         <p className={css.date}>Sent on {moment(offer.ipfs.appliedDate).format(dateFormat)}</p>
         <div className={css.actions}>
           <Button
@@ -79,7 +81,7 @@ class WorkerCard extends React.Component {
     const offerAmount = offer.estimate && offer.rate ? offer.estimate.times(offer.rate) : null
     return (
       <div className={css.footerRow}>
-        { offerAmount != null && <p className={css.offer}>Offer: LHUS {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
+        { offerAmount != null && <p className={css.offer}>Offer: LHT {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
         <p className={css.date}>Applied on {moment(offer.ipfs.appliedDate).format(dateFormat)}</p>
         <div className={css.actions}>
           { offerAmount != null
@@ -102,16 +104,10 @@ class WorkerCard extends React.Component {
   }
 
   render () {
-    const { person, offer, offerSent } = this.props
-    // const workerName = get(profile, "level1.approved.userName")
-    //   ? get(profile, "level1.approved.userName")
-    //   : ""
-    // const avatarUrl = get(profile, "level1.approved.avatar.url")
-    //   ? get(profile, "level1.approved.avatar.url")
-    //   : "/static/temp/icon-profile.jpg"
-    // const validationLevel = profile
-    //   ? profile.getValidationLevel()
-    //   : 0
+    const { workerProfile, person, offer, offerSent } = this.props
+    const workerName = person.userName || ''
+    const avatarUrl = person.avatar || "/static/temp/icon-profile.jpg"
+    const validationLevel = person.validationLevel || 0
     return (
       <div className={cn(css.root, {
         [css.attention]: !offerSent && offer,

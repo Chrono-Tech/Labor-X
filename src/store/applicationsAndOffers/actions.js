@@ -1,6 +1,7 @@
-import { currentAddressSelector } from "src/store"
-import { daoByType } from "src/store";
-import { JOB_STATE_OFFER_ACCEPTED } from "src/models/app/JobStateModel";
+import { currentAddressSelector, daoByType } from "src/store"
+import { JOB_STATE_OFFER_ACCEPTED } from "src/models/app/JobStateModel"
+import { getPersons } from 'src/api/backend'
+
 export const SELECT_INITIAL_PROPS_REQUEST = 'APPLICATIONS/SELECT_INITIAL_PROPS/REQUEST'
 export const SELECT_INITIAL_PROPS_SUCCESS = 'APPLICATIONS/SELECT_INITIAL_PROPS/SUCCESS'
 export const SELECT_INITIAL_PROPS_FAILURE = 'APPLICATIONS/SELECT_INITIAL_PROPS/FAILURE'
@@ -19,19 +20,23 @@ export const selectInitialProps = () => async (dispatch, getState) => {
     const boards = await BoardController.getBoards(userAddress)
     const offers = await Promise.all(jobs.map((x) => JobsDataProvider.getJobOffers(x.id)))
     const myOffers = []
-    .concat(...offers)
-    .filter((x) => x.worker === userAddress)
+      .concat(...offers)
+      .filter((x) => x.worker === userAddress)
+
+    const clients = await getPersons(myOffers.map(offer => jobs.find(job => offer.jobId === job.id)).map(job => job.client))
 
     const applications = myOffers
       //Create the applicant cards
       .map((offer) => {
         const job = jobs.find(x => x.id === offer.jobId)
         const board = boards.find(x => x.id === job.boardId)
-        if (job && board) {
+        const client = clients.find(x => x.address === job.client)
+        if (job && board && client) {
           return {
             board,
             job,
             offer,
+            client,
           }
         }
       })

@@ -265,3 +265,14 @@ $maxWidth: 74rem;
     opacity: 0.4;
   }
 }
+
+.backBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+}
+
+.backBtn:hover {
+  background-color: rgba(51, 51, 51, 0.2);
+}

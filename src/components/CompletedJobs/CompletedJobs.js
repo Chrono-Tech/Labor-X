@@ -6,7 +6,7 @@ import { Translate, CompletedJobCard } from 'components/common'
 import { monthWorkerEraningSelector, totalWorkerEraningSelector, countFinishedJobsByWorkerSelector, finishedJobsByWorkerSelector, finalizedJobsByWorkerSelector, pendingFinishJobsByWorkerSelector } from 'src/store/completedJobs'
 import css from './CompletedJobs.scss'
 
-const courseUsdLhus = 18
+const courseUsdLht = 18
 
 class CompletedJobs extends React.Component {
   static propTypes = {
@@ -40,7 +40,7 @@ class CompletedJobs extends React.Component {
                 <span className={css.earnedTotalLx}>{totalEarn}</span>
               </div>
               <div className={css.blockTotalEarnedUsd}>
-                Earned Total (${courseUsdLhus * totalEarn})
+                Earned Total (${courseUsdLht * totalEarn})
               </div>
             </div>
 
@@ -50,7 +50,7 @@ class CompletedJobs extends React.Component {
                 <span className={css.earnedMonthLx}>{monthEarn}</span>
               </div>
               <div className={css.blockTotalEarnedUsd}>
-                Earned this month (${courseUsdLhus * monthEarn})
+                Earned this month (${courseUsdLht * monthEarn})
               </div>
             </div>
 

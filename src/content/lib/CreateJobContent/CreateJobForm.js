@@ -226,7 +226,7 @@ class CreateJobForm extends React.Component {
               component={NumberInput}
               name='totalHours'
               title='ui.createJob.totalHours'
-              subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+              subtitle={<span>USD 2,400.00<br />LHT 80.00</span>}
               max={1000}
               min={0}
             />
@@ -241,7 +241,7 @@ class CreateJobForm extends React.Component {
               component={NumberInput}
               name='fixedPrice'
               title='ui.createJob.fixedPrice'
-              subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+              subtitle={<span>USD 2,400.00<br />LHT 80.00</span>}
               max={1000}
               min={0}
             />
@@ -409,7 +409,7 @@ class CreateJobForm extends React.Component {
                     ))}
                   </Field>
                   <div className={css.postFee}>
-                    Post Fee (no-refund): LHUS 1.00 (USD 30.00)
+                    Post Fee (no-refund): LHT 1.00 (USD 30.00)
                   </div>
                 </div>
                 <div>
