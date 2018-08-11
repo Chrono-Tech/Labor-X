@@ -38,39 +38,48 @@ class TodoCard extends React.Component {
   constructor (props, context) {
     super(props, context)
     this.state = {
-      workTime: 0,
-      pausedTime: 0,
+      ticker: 0,
+      intervalRef: null,
+      tick: this.tick,
     }
-    this.intervalRef = null
-    this.workedTimeRender = this.workedTimeRender.bind(this)
-    this.progressIcon = this.progressIcon.bind(this)
-    this.handleComplete = this.handleComplete.bind(this)
-    this.handlePausePlayClick = this.handlePausePlayClick.bind(this)
   }
 
-  componentDidMount () {
-    const { job } = this.props
-    if (job.state === JOB_STATE_STARTED) {
-      this.intervalRef = setInterval(this.oneSecondInterv.bind(this), 1000)
+  static getDerivedStateFromProps (nextProps, prevState) {
+    let ticker = prevState.ticker
+    let intervalRef = prevState.intervalRef
+
+    if (nextProps.job.state === JOB_STATE_STARTED) {
+      if (!prevState.intervalRef && !nextProps.job.paused) {
+        ticker = 0
+        intervalRef = setInterval(prevState.tick, 1000)
+      } else {
+        if (nextProps.job.paused) {
+          clearInterval(prevState.intervalRef)
+          ticker = 0
+          intervalRef = null
+        }
+      }
+    } else {
+      clearInterval(prevState.intervalRef)
+      ticker = 0
+      intervalRef = null
     }
-  } 
+    return {
+      ticker,
+      intervalRef,
+    }
+  }
 
   componentWillUnmount () {
-    clearInterval(this.intervalRef)
+    clearInterval(this.state.intervalRef)
   }
 
-  handleComplete () {
-    // eslint-disable-next-line no-console
-    console.log('Opportunity-view-handleComplete')
-    this.props.openSendInvoiceDialog(this.props.job)
-  }
-
-  handleMessage () {
+  handleMessage = () => {
     // eslint-disable-next-line no-console
     console.log('Opportunity-view-handleMessage')
   }
 
-  handlePausePlayClick () {
+  handlePausePlayClick = () => {
     // eslint-disable-next-line no-console
     console.log('handlePausePlayClick: ', this.props.job.paused)
     if (this.props.job.extra.startTime) {
@@ -80,7 +89,7 @@ class TodoCard extends React.Component {
     }
   }
 
-  handleCompleteTaskIconClick () {
+  handleCompleteTaskIconClick = () => {
     this.props.openSendInvoiceDialog()
   }
 
@@ -124,6 +133,18 @@ class TodoCard extends React.Component {
     return String(tempTime.hours()).padStart(2, "0") + ":" + String(tempTime.minutes()).padStart(2, "0") + ":" + String(tempTime.seconds()).padStart(2, "0")
   }
 
+  getWorkedTime () {
+    const now = Date.now()
+    const startTime = this.props.job.extra.startTime.getTime()
+    const pausedFor = this.props.job.pausedFor * 1000
+    const ticker = this.state.ticker * 1000
+    return ((now - startTime) - pausedFor) + ticker
+  }
+
+  tick = () => {
+    this.setState({ ticker: this.state.ticker++ })
+  }
+
   totalHours () {
     const { job } = this.props
     const since = get(job, "ipfs.period.since")
@@ -152,43 +173,6 @@ class TodoCard extends React.Component {
     )
   }
 
-  oneSecondInterv () {
-    const { job } = this.props
-    const pausedFor = get(job, "pausedFor") * 1000
-
-    if (job.paused && job.state === JOB_STATE_STARTED) {
-      const now = Date.now()
-      const pausedAt = get(job, "pausedAt").getTime()
-      if (pausedAt && pausedFor) {
-        this.setState({ pausedTime: pausedFor + (now - pausedAt) })
-      } else {
-        this.setState({ pausedTime: 0 })
-      }
-    }
-
-    if (!job.paused && job.state === JOB_STATE_STARTED) {
-      const startTime = get(job, "extra.startTime")
-      const startTimeMilliseconds = startTime && + startTime
-      const now = Date.now()
-      let sinceStartedAtTime = null
-      let workTime = null
-      if (startTimeMilliseconds) sinceStartedAtTime = now - startTimeMilliseconds
-      if (sinceStartedAtTime && pausedFor) workTime = sinceStartedAtTime - pausedFor
-      this.setState({ workTime })
-    }
-  }
-
-  workedTimeRender () {
-    const { job } = this.props
-    if (job.paused) {
-      const dur = moment.duration(job.pausedFor, 'seconds')
-      const hours = Math.trunc(dur.asHours())
-      const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
-      const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
-      return `${hours}:${minutes}:${seconds}`
-    }
-  }
-
   renderTimes () {
     const { job } = this.props
     if (job.state === JOB_STATE_PENDING_START) {
@@ -203,7 +187,7 @@ class TodoCard extends React.Component {
       return (
         <p>
           <span className={css.medium}>
-            {`${this.getDurationString(this.state.workTime)} of  ${this.totalHours()}h`}
+            {`${this.getDurationString(this.getWorkedTime())} of  ${this.totalHours()}h`}
           </span>
         </p>
       )
@@ -213,7 +197,7 @@ class TodoCard extends React.Component {
       return (
         <p>
           <span className={css.medium}>
-            {`${this.getDurationString(this.state.pausedTime)} total pause time`}
+            {`${this.getDurationString(this.getWorkedTime())} of  ${this.totalHours()}h`}
           </span>
         </p>
       )
