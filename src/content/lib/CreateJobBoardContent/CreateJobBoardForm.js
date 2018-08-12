@@ -10,7 +10,7 @@ import { Select, TextField } from 'redux-form-material-ui-next'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Autosuggest from 'react-autosuggest'
 
-import { Image, Chip, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector } from 'components/common'
+import { Image, Chip, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector, Link } from 'components/common'
 import {
   TagModel,
   TAGS_LIST,
@@ -366,7 +366,7 @@ class CreateJobBoardForm extends React.Component {
             <Link className={css.backBtn} href='/dashboard'>
               <Image icon={Image.SETS.ARROW_BACK.icon} />
             </Link>
-             
+
             <div className={css.titleBarRight}>
               <Button
                 className={css.helpButton}

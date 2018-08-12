@@ -104,10 +104,7 @@ class WorkerCard extends React.Component {
   }
 
   render () {
-    const { workerProfile, person, offer, offerSent } = this.props
-    const workerName = person.userName || ''
-    const avatarUrl = person.avatar || "/static/temp/icon-profile.jpg"
-    const validationLevel = person.validationLevel || 0
+    const { person, offer, offerSent } = this.props
     return (
       <div className={cn(css.root, {
         [css.attention]: !offerSent && offer,
@@ -124,7 +121,6 @@ class WorkerCard extends React.Component {
           <div className={css.extraData}>
             <Rating rating={4} />
             <SecurityShield level={person.validationLevel} />
-            {/* <WorkerState state={workerProfile.extra.state} /> */}
           </div>
         </div>
         { offerSent ? this.renderFooterOfferSent(offer) : this.renderFooter(offer) }
