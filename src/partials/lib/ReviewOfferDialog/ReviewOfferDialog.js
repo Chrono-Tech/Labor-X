@@ -62,7 +62,7 @@ class ReviewOfferDialog extends React.Component {
             <div className={css.twoColumn}>
               <div>
                 <p><strong>Total</strong></p>
-                <h3>LHUS: {offer.rate.times(offer.estimate).toFixed(2)}</h3>
+                <h3>LHT: {offer.rate.times(offer.estimate).toFixed(2)}</h3>
                 <p>${offer.rate.times(offer.estimate).times(30).toFixed(2)}</p>
               </div>
               <div>

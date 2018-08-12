@@ -280,7 +280,6 @@ class CreateJobForm extends React.Component {
         />
       </div>
     )
-
   }
 
   renderSelectedTagsArea = (board) => {
@@ -449,7 +448,7 @@ class CreateJobForm extends React.Component {
                     ))}
                   </Field>
                   <div className={css.postFee}>
-                    Post Fee (no-refund): LHUS 1.00 (USD 30.00)
+                    Post Fee (no-refund): LHT 1.00 (USD 30.00)
                   </div>
                 </div>
                 <div>

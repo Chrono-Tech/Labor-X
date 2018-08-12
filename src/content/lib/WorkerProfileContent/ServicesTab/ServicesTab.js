@@ -100,7 +100,7 @@ export default class ServicesTab extends React.Component {
                 fullWidth
                 component={TextField}
                 name={`${service}.minFee`}
-                label='Min fee, LHUS'
+                label='Min fee, LHT'
               />
             </Grid>
           </Grid>
@@ -149,7 +149,7 @@ export default class ServicesTab extends React.Component {
               fullWidth
               component={TextField}
               name='regular.hourlyCharge'
-              label='LHUS 1'
+              label='LHT 1'
             />
             <Link className={cn(css.link, css.linkRates)} href='/rates'>View Rates</Link>
           </div>

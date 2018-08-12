@@ -363,12 +363,10 @@ class CreateJobBoardForm extends React.Component {
       <form name={FORM_CREATE_JOB_BOARD} className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
           <div className={css.titleBar}>
-            <Button
-              className={css.cancelButton}
-              icon={Image.SETS.ARROW_BACK}
-              type={Button.TYPES.SUBMIT}
-              mods={Button.MODS.FLAT}
-            />
+            <Link className={css.backBtn} href='/dashboard'>
+              <Image icon={Image.SETS.ARROW_BACK.icon} />
+            </Link>
+             
             <div className={css.titleBarRight}>
               <Button
                 className={css.helpButton}
@@ -532,8 +530,8 @@ class CreateJobBoardForm extends React.Component {
                 <Field
                   className={css.match}
                   component={TextField}
-                  name='lhus'
                   placeholder='LHUS 0.00'
+                  name='lht'
                 />
               </div>
             </div>

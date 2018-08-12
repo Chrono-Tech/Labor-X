@@ -214,19 +214,18 @@ export class OpportunitiesContent extends React.Component {
           <Field
             className={css.filterField}
             component={TextField}
-            name='from_lhus'
-            placeholder='From LHUS'
+            name='from_lht'
+            placeholder='From LHT'
             InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
 
           <Field
             className={css.filterField}
             component={TextField}
-            name='to_lhus'
-            placeholder='To LHUS'
+            name='to_lht'
+            placeholder='To LHT'
             InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
-
         </div>
       </div>
 

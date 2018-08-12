@@ -7,7 +7,7 @@ export default (values) => {
 
   const nameError = validators.name(values.name)
   const feeError = validators.isDefined(values.fee)
-  const lhusError = validators.required(values.lhus)
+  const lhtError = validators.required(values.lht)
   const ratingRequirementsError = validators.isDefined(values.ratingRequirements)
   const verificationRequirementsError = validators.isDefined(values.verificationRequirements)
   const joinRequirementError = validators.isDefined(values.joinRequirement)
@@ -18,7 +18,7 @@ export default (values) => {
   return {
     name: nameError ? nameError : null,
     fee: feeError  ? feeError : null,
-    lhus: lhusError ? lhusError : null,
+    lht: lhtError ? lhtError : null,
     ratingRequirements: values.joinRequirement === REQUIREMENTS_RATING && ratingRequirementsError ? ratingRequirementsError : null,
     verificationRequirements: values.joinRequirement === REQUIREMENTS_RATING && verificationRequirementsError ? verificationRequirementsError : null,
     joinRequirement: joinRequirementError ? joinRequirementError : null,

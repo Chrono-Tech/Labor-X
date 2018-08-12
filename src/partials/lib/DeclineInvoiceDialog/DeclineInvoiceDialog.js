@@ -54,7 +54,7 @@ export default class DeclineInvoiceDialog extends React.Component {
             </div>
             <div>
               <strong className={css.infoString}>Amount</strong>
-              <p className={css.infoString}>LHUS 76.25</p>
+              <p className={css.infoString}>LHT 76.25</p>
             </div>
           </div>
         </div>

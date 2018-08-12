@@ -107,7 +107,7 @@ class SendInvoiceDialog extends React.Component {
         <div className={css.body}>
           <div className={css.bodyRow}>
             <strong>{job.ipfs.name}</strong>
-            <strong>LHUS {job.ipfs.budget.award ? job.ipfs.budget.award.toFixed(2).toString() : 0}</strong>
+            <strong>LHT {job.ipfs.budget.award ? job.ipfs.budget.award.toFixed(2).toString() : 0}</strong>
           </div>
           {
             this.state.expenses.map((e, index) => (
@@ -147,7 +147,7 @@ class SendInvoiceDialog extends React.Component {
           <div className={css.bodyRow}>
             <strong>Total</strong>
             <div className={css.amount}>
-              <strong>LHUS {job.ipfs.budget.award ? job.ipfs.budget.award.plus(this.expensesValue() / 40).toFixed(2).toString() : 0}</strong>
+              <strong>LHT {job.ipfs.budget.award ? job.ipfs.budget.award.plus(this.expensesValue() / 40).toFixed(2).toString() : 0}</strong>
               <p>&nbsp;(${job.ipfs.budget.awardUSD ? job.ipfs.budget.awardUSD.plus(this.expensesValue()).toFixed(2).toString() : 0})</p>
             </div>
           </div>

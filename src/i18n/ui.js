@@ -119,7 +119,7 @@ export default {
     jobBoardHeadlinePlaceholder: 'Enter Job Board Headline',
     matchJobBoardCategories: 'Match job board categories',
     fixedFee: 'Fixed fee',
-    value: 'LHUS 0.00',
+    value: 'LHT 0.00',
   },
   createJob: {
     general: 'General',
@@ -136,13 +136,13 @@ export default {
     tags: 'Tags',
 
     flowType: 'Flow type',
-    hourlyRate: 'Hourly Rate, LHUS',
+    hourlyRate: 'Hourly Rate, LHT',
     totalHours: 'Total Hours',
     fixedPrice: 'Fixed Price',
     budgetApproximateLabel: 'The budget is approximate',
 
     badgesSubtitle: 'By posting your job in the selected Job Board the following workers will be able able to apply.',
-    hourlyRatingTitle: 'Average hourly charge per rating, LHUS',
+    hourlyRatingTitle: 'Average hourly charge per rating, LHT',
 
     allowCustomOffers: 'Allow Custom Offers',
     startWorkAllowance: 'Start of Work Allowance',

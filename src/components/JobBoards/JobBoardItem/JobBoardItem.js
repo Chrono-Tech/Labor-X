@@ -185,10 +185,10 @@ export class JobBoardItem extends React.Component {
           <b>Join the Board</b> and wait for approval notification from the Board Moderators
         </div>
         <div className={css.popoverDescription}>
-          <b>Job Post fee:</b> LHUS 3.00 ($90.00)
+          <b>Job Post fee:</b> LHT 3.00 ($90.00)
         </div>
         <div className={css.popoverDescription}>
-          <b>Recruiting Services:</b> LHUS 10.00‒ 30.00 ($300.00 ‒ $900.00)
+          <b>Recruiting Services:</b> LHT 10.00‒ 30.00 ($300.00 ‒ $900.00)
         </div>
       </div>
     )

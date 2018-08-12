@@ -53,7 +53,7 @@ class MakeOfferDialog extends React.Component {
               name='totalHours'
               label='Total Hours'
             />
-            <p>LHUS {totalHours}</p>
+            <p>LHT {totalHours}</p>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@ class MakeOfferDialog extends React.Component {
               fullWidth
               component={TextField}
               name='fixedPrice'
-              label='Total Price, LHUS'
+              label='Total Price, LHT'
             />
           ) : (
             this.renderFlowTM(hourlyRate, totalHours)
