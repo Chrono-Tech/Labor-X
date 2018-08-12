@@ -1,4 +1,3 @@
-// import BigNumber from 'bignumber.js'
 import {
   BoardModel,
   BoardIPFSModel,
@@ -6,7 +5,6 @@ import {
   BoardCreatedEvent,
   BoardClosedEvent,
   UserBindedEvent,
-  TagModel,
   TagAreaModel,
   TagCategoryModel,
   BoardPostFeeModel,
@@ -68,6 +66,10 @@ export default class BoardControllerDAO extends AbstractContractDAO {
 
   async getJobsBoard (jobId) {
     return Number(await this.contract.methods.getJobsBoard(jobId).call())
+  }
+
+  async getJobsInBoardCount (boardId) {
+    return Number(await this.contract.methods.getJobsInBoardCount(boardId).call())
   }
 
   async getBoardById (signer, id) {

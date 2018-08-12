@@ -105,6 +105,8 @@ src/**/*.js
 !src/components/common/CompletedJobCard/CompletedJobCard.js
 !src/components/common/UserRow/UserRow.js
 !src/components/common/NumberInput/
+!src/content/lib/JobBoardsContent/JobBoardsContent.js
+!src/content/lib/JobBoardsContent/JobBoardItem.js
 
 !src/components/Login/
 !src/components/JobBoards/

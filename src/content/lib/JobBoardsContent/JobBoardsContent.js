@@ -8,12 +8,13 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Radio from '@material-ui/core/Radio'
 
-import { boardsFilteredListSelector, updateFilterBoards } from 'src/store'
 import { BoardModel, TAG_CATEGORIES_LIST } from 'src/models'
 import { Icon } from 'src/components/common'
-
+import { updateFilterBoards } from 'src/store'
+import { boardCardsSelector } from 'src/store/jobBoards/selectors'
 import JobBoardItem from './JobBoardItem/JobBoardItem'
-import css from './JobBoards.scss'
+
+import css from './JobBoardsContent.scss'
 
 const FORM_JOB_BOARDS = 'form/jobBoards'
 const FILTER_CATEGORIES_NAME = 'categories'
@@ -29,9 +30,7 @@ const onSubmit = (values, dispatch) => {
 
 class JobBoards extends React.Component {
   static propTypes = {
-    boardsList: PropTypes.arrayOf(
-      PropTypes.instanceOf(BoardModel)
-    ),
+    boardCardsList: PropTypes.arrayOf(PropTypes.instanceOf(BoardModel)),
     change: PropTypes.func,
     handleSubmit: PropTypes.func,
     onSubmit: PropTypes.func,
@@ -63,7 +62,9 @@ class JobBoards extends React.Component {
   }
 
   toggleFilterBlock () {
-    this.setState({ isVisibleFilterBlock: !this.state.isVisibleFilterBlock })
+    this.setState({
+      isVisibleFilterBlock: !this.state.isVisibleFilterBlock,
+    })
   }
 
   resetFilters () {
@@ -89,10 +90,7 @@ class JobBoards extends React.Component {
   renderActiveCategories () {
     const { activeCategoriesFilter } = this.props
 
-    return TAG_CATEGORIES_LIST
-      .filter((tag) => activeCategoriesFilter && activeCategoriesFilter[String(tag.name).toUpperCase()] )
-      .map((tag) => tag.name)
-      .join(', ') || ''
+    return TAG_CATEGORIES_LIST.filter((tag) => activeCategoriesFilter && activeCategoriesFilter[String(tag.name).toUpperCase()]).map((tag) => tag.name).join(', ') || ''
   }
 
   renderCategories () {
@@ -101,7 +99,14 @@ class JobBoards extends React.Component {
         <FormControlLabel
           key={tag.name}
           classes={{ label: css.filterSwitchlabel }}
-          control={<Field classes={FILTER_SWITCH_CLASSES} onChange={this.onCategoryChecked} component={Checkbox} name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`} />}
+          control={(
+            <Field
+              classes={FILTER_SWITCH_CLASSES}
+              onChange={this.onCategoryChecked}
+              component={Checkbox}
+              name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`}
+            />
+          )}
           label={tag.name.toString()}
         />
       )
@@ -111,11 +116,17 @@ class JobBoards extends React.Component {
   renderFilterBlock () {
     return (
       <div className={css.filterBlock}>
-        {
-          this.isHideResetBlock() ? null : (
+        {this.isHideResetBlock()
+          ? null
+          : (
             <div className={css.resetRow}>
               <b>Reset</b>
-              <button onClick={this.resetFilters.bind(this)} className={css.resetButton}>
+              <button
+                onClick={this
+                  .resetFilters
+                  .bind(this)}
+                className={css.resetButton}
+              >
                 <Icon size={24} icon={Icon.ICONS.CLOSE} />
               </button>
             </div>
@@ -204,7 +215,7 @@ class JobBoards extends React.Component {
     )
   }
 
-  renderEmptyListMessage (){
+  renderEmptyListMessage () {
     return (
       <div className={css.emptyListMessage}>
         Boards list is empty
@@ -213,14 +224,18 @@ class JobBoards extends React.Component {
   }
 
   render () {
-    const { boardsList, onSubmit, handleSubmit } = this.props
+    const { boardCardsList, onSubmit, handleSubmit } = this.props
 
     return (
       <div className={css.main}>
         <div className={css.contentWrapper}>
           <h1 className={css.titleText}>Job Boards</h1>
 
-          <form className={css.flexRow} name={FORM_JOB_BOARDS} onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className={css.flexRow}
+            name={FORM_JOB_BOARDS}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className={css.contentBlock}>
               <div className={css.actionsBlock}>
                 <div className={css.search}>
@@ -249,17 +264,21 @@ class JobBoards extends React.Component {
               </div>
 
               <div className={css.jobBoardsList}>
-                {
-                  boardsList && boardsList.map(board => (
-                    <JobBoardItem key={board.key} jobBoard={board} />
-                  ))
+                {boardCardsList && boardCardsList.map(card => (<JobBoardItem
+                  key={card.board.key}
+                  jobBoard={card.board}
+                  jobsCount={card.jobsCount}
+                  clientsCount={card.clientsCount}
+                />))
                 }
-                { boardsList && !boardsList.length && this.renderEmptyListMessage() }
+                {boardCardsList && !boardCardsList.length && this.renderEmptyListMessage()}
               </div>
             </div>
 
             {
-              this.state.isVisibleFilterBlock ? this.renderFilterBlock() : null
+              this.state.isVisibleFilterBlock
+                ? this.renderFilterBlock()
+                : null
             }
 
           </form>
@@ -270,9 +289,9 @@ class JobBoards extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const boardsList = boardsFilteredListSelector()(state)
+  const boardCardsList = boardCardsSelector(state)
   return {
-    boardsList: boardsList.filter(x => x.isActive),
+    boardCardsList: boardCardsList.filter(x => x.board.isActive),
     activeCategoriesFilter: formSelector(state, FILTER_CATEGORIES_NAME),
     ratingFilter: formSelector(state, 'rating'),
     levelFilter: formSelector(state, 'level'),

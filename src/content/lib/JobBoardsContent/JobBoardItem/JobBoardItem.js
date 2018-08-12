@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import pluralize from 'pluralize'
+import get from "lodash/get"
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
-import { Popover, Icon } from 'src/components/common'
-import { BoardModel } from 'src/models'
-import { joinBoard, terminateBoard } from 'src/store'
+import { Popover, Icon } from 'src/components/common/index'
+import { BoardModel } from 'src/models/index'
+import { joinBoard, terminateBoard } from 'src/store/index'
+import { BOARD_REQUIREMENTS_LIST } from "src/models/app/BoardRequirementModel"
 import css from './JobBoardItem.scss'
 
 export class JobBoardItem extends React.Component {
@@ -18,6 +19,8 @@ export class JobBoardItem extends React.Component {
     onJoinBoard: PropTypes.func,
     onTerminateBoard: PropTypes.func,
     isMyJobBoard: PropTypes.bool,
+    jobsCount: PropTypes.number,
+    clientsCount: PropTypes.number,
   }
 
   constructor () {
@@ -58,15 +61,11 @@ export class JobBoardItem extends React.Component {
   }
 
   handleJoinBoard = async (boardId) => {
-    this.setState({
-      isJoinInProgress: true,
-    })
+    this.setState({ isJoinInProgress: true })
     try {
       await this.props.onJoinBoard(boardId)
     } finally {
-      this.setState({
-        isJoinInProgress: false,
-      })
+      this.setState({ isJoinInProgress: false })
     }
   }
 
@@ -89,7 +88,7 @@ export class JobBoardItem extends React.Component {
     const { jobBoard } = this.props
 
     let starsArray = []
-    let count = jobBoard.extra.rating
+    let count = jobBoard.ipfs.ratingRequirements || 0
 
     for (let i = 0; i < count; i++) {
       starsArray.push(
@@ -182,46 +181,57 @@ export class JobBoardItem extends React.Component {
         <div className={css.popoverHeader}>Join the Board</div>
         <div className={css.popoverDescription}>
           In order to apply for jobs or receive new jobs notifications click on&nbsp;
-          <b>Join the Board</b> and wait for approval notification from the Board Moderators
+          <b>Join the Board</b>
+          and wait for approval notification from the Board Moderators
         </div>
         <div className={css.popoverDescription}>
-          <b>Job Post fee:</b> LHT 3.00 ($90.00)
+          <b>Job Post fee:</b>
+          LHT 3.00 ($90.00)
         </div>
         <div className={css.popoverDescription}>
-          <b>Recruiting Services:</b> LHT 10.00‒ 30.00 ($300.00 ‒ $900.00)
+          <b>Recruiting Services:</b>
+          LHT 10.00‒ 30.00 ($300.00 ‒ $900.00)
         </div>
       </div>
     )
 
-    return (
+    return [
+      <button
+        key='info'
+        className={
+          css.infoButton
+        }
+      >
+        {
+          this.renderActionsTooltip({ src: '/static/images/svg/help-clean.svg', popoverContent, popoverClassName: css.actionPopover })
+        }
+      </button>,
       <button key='join' className={css.actionButton} onClick={onClick} disabled={isDisabled}>
         {text}
-        {this.renderActionsTooltip({
-          src: '/static/images/svg/help-white-clear.svg',
-          popoverContent,
-          popoverClassName: css.actionPopover,
-        })}
-      </button>
-    )
+      </button >,
+    ]
   }
 
   renderNeedVerifyButton (text, onClick) {
-    const handleClick = onClick ? onClick : () => {}
+    const handleClick = onClick
+      ? onClick
+      : () => { }
     const buttonText = text || 'Verify Me to Join'
 
     const popoverContent = (
       <div>
         <div className={css.popoverHeader}>Requirements are not met</div>
         <div className={css.popoverDescription}>
-          Sorry, requirements to join the board are not met. Board owner requires the following to be completed:
+          Sorry, requirements to join the board are not met. Board owner requires the
+          following to be completed:
         </div>
         <ul className={css.popoverVerifyList}>
           <li className={css.listItem}>Validate your email or phone</li>
           <li className={css.listItem}>Validate your ID</li>
           <li className={css.listItem}>Validate your home address</li>
           <li className={css.listItem}>Validate your legal documents (Worker or Client)</li>
-          <li className={css.listItem}>At least one skill should be endorsed by other people. new comers may get an
-            endorsement by our validation team
+          <li className={css.listItem}>At least one skill should be endorsed by other
+              people. new comers may get an endorsement by our validation team
           </li>
           <li className={css.listItem}>Your rating should be 3+</li>
         </ul>
@@ -231,21 +241,19 @@ export class JobBoardItem extends React.Component {
     return (
       <button className={css.actionButton} onClick={handleClick}>
         {buttonText}
-        {this.renderActionsTooltip({
-          src: '/static/images/svg/help-white-clear.svg',
-          popoverContent,
-          popoverClassName: css.actionPopover,
-        })}
+        {this.renderActionsTooltip({ src: '/static/images/svg/help-white-clear.svg', popoverContent, popoverClassName: css.actionPopover })}
       </button>
     )
   }
 
   renderJoinedActions () {
     return [
-      <button key='view' className={css.actionButtonView}>
-        View
-      </button>,
-      <span key='joined' className={css.actionButtonJoined}>
+      <span
+        key='joined'
+        className={
+          css.actionButtonJoined
+        }
+      >
         Joined
       </span>,
     ]
@@ -256,8 +264,8 @@ export class JobBoardItem extends React.Component {
       <div>
         <div className={css.popoverHeader}>Your Request is processing</div>
         <div className={css.popoverDescription}>
-          You have requested to join the board. Moderators of the board are reviewing your request and will back to
-          you soon!
+          You have requested to join the board. Moderators of the board are reviewing your
+          request and will back to you soon!
         </div>
       </div>
     )
@@ -265,11 +273,13 @@ export class JobBoardItem extends React.Component {
     return (
       <div className={css.actionButtonApproval}>
         On Approval
-        {this.renderActionsTooltip({
-          src: '/static/images/svg/help-clean.svg',
-          popoverContent,
-          popoverClassName: css.approvalPopover,
-        })}
+        {
+          this.renderActionsTooltip({
+            src: '/static/images/svg/help-clean.svg',
+            popoverContent,
+            popoverClassName: css.approvalPopover,
+          })
+        }
       </div>
     )
   }
@@ -277,10 +287,10 @@ export class JobBoardItem extends React.Component {
   renderActions () {
     const { jobBoard, isMyJobBoard } = this.props
     return (
-      <div>
+      <div className={css.buttonsWrapper}>
         {
           isMyJobBoard
-            ? <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>Terminate</button>
+            ? <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>Terminate</button >
             : null
         }
         {
@@ -292,7 +302,7 @@ export class JobBoardItem extends React.Component {
     )
   }
 
-  renderActionsTooltip ({ src, popoverContent, popoverClassName = '' }) {
+  renderActionsTooltip ({ popoverContent, popoverClassName = '' }) {
     const { actionPopover } = this.state
 
     return (
@@ -303,30 +313,37 @@ export class JobBoardItem extends React.Component {
         onMouseOver={this.handleActionsPopoverOpen}
         onMouseOut={this.handleActionsPopoverClose}
       >
-        <img src={src} alt='' width='24' height='24' />
-        {popoverContent ? (
-          <Popover
-            open={actionPopover}
-            arrowPosition={Popover.ARROW_POSITION.RIGHT}
-            className={popoverClassName}
-          >
-            {popoverContent}
-          </Popover>)
-          : null}
+        <span className={css.helpIcon}>?</span > {
+          popoverContent
+            ? (
+              <Popover
+                open={actionPopover}
+                arrowPosition={Popover.ARROW_POSITION.RIGHT}
+                className={popoverClassName}
+              >
+                {popoverContent}
+              </Popover>
+            )
+            : null
+        }
       </span>
     )
   }
 
   renderSecurityTooltip () {
     const { jobBoard } = this.props
-
-    const level = jobBoard.extra.validationLevel
+    const level = jobBoard.ipfs.verificationRequirements || 0
     const securityIcon = level ? Icon.SETS.SECURITY : Icon.SETS.SECURITY_NONE
 
     return (
       <div className={css.securityRatingWrapper}>
-        <Icon className={css.securityRatingShield} size={31} {...securityIcon} />
-        { level ? (<span className={css.securityRating}>{level}</span>) : null }
+        <Icon className={css.securityRatingShield} size={31} {...securityIcon} /> {
+          level
+            ? (
+              <span className={css.securityRating}>{level}</span>
+            )
+            : null
+        }
       </div>
     )
   }
@@ -355,14 +372,14 @@ export class JobBoardItem extends React.Component {
         open={this.state.isTerminateDialogOpen}
         onClose={this.handleTerminateDialogClose}
       >
-        <DialogTitle>Are you absolutely sure?</DialogTitle>
+        <DialogTitle>Are you absolutely sure?</DialogTitle >
+
         <DialogContent>This action cannot be undone. This will permanently terminate this job board</DialogContent>
-        <DialogActions>
+        <DialogActions >
           <Button
             disabled={this.state.isTerminateProgress}
             onClick={this.handleTerminateRejectClick}
-          >NO
-          </Button>
+          >NO</Button>
           <Button
             variant='contained'
             color='primary'
@@ -376,7 +393,7 @@ export class JobBoardItem extends React.Component {
   }
 
   render () {
-    const { jobBoard } = this.props
+    const { jobBoard, jobsCount, clientsCount } = this.props
 
     return (
       <div className={css.main}>
@@ -399,41 +416,43 @@ export class JobBoardItem extends React.Component {
 
           </div>
 
-          <div className={css.ratingBlock}>
-            <div
-              className={css.starsWrapper}
-              onFocus={this.handleStarsPopoverOpen}
-              onBlur={this.handleStarsPopoverClose}
-              onMouseOver={this.handleStarsPopoverOpen}
-              onMouseOut={this.handleStarsPopoverClose}
-            >
-              {this.getRatingStars()}
-              {this.getStarsPopover()}
-            </div>
+          {get(jobBoard, "ipfs.joinRequirement") === BOARD_REQUIREMENTS_LIST[1] && (
+            <div className={css.ratingBlock}>
+              <div
+                className={css.starsWrapper}
+                onFocus={this.handleStarsPopoverOpen}
+                onBlur={this.handleStarsPopoverClose}
+                onMouseOver={this.handleStarsPopoverOpen}
+                onMouseOut={this.handleStarsPopoverClose}
+              >
+                {this.getRatingStars()}
+                {this.getStarsPopover()}
+              </div>
 
-            <div
-              className={css.securityBadge}
-              onFocus={this.handleSecurityPopoverOpen}
-              onBlur={this.handleSecurityPopoverClose}
-              onMouseOver={this.handleSecurityPopoverOpen}
-              onMouseLeave={this.handleSecurityPopoverClose}
-            >
-              { this.renderSecurityTooltip() }
-              { this.getSecurityPopover() }
-            </div>
+              <div
+                className={css.securityBadge}
+                onFocus={this.handleSecurityPopoverOpen}
+                onBlur={this.handleSecurityPopoverClose}
+                onMouseOver={this.handleSecurityPopoverOpen}
+                onMouseLeave={this.handleSecurityPopoverClose}
+              >
+                { this.renderSecurityTooltip() }
+                { this.getSecurityPopover() }
+              </div>
           </div>
+          )}
 
           <div className={css.aboutJob}>
             <div className={css.jobInfo}>
 
               <div className={css.jobInfoBlock}>
-                <div className={css.jobInfoCount}>{jobBoard.extra.jobsCount}</div>
-                <div className={css.jobInfoDescribe}>{pluralize('Job', jobBoard.extra.jobsCount)}</div>
+                <div className={css.jobInfoCount}>{jobsCount}</div>
+                <div className={css.jobInfoDescribe}>JOBS</div>
               </div>
 
               <div className={css.jobInfoBlock}>
-                <div className={css.jobInfoCount}>{ jobBoard.extra.clientsCount }</div>
-                <div className={css.jobInfoDescribe}>{pluralize('Client', jobBoard.extra.clientsCount)}</div>
+                <div className={css.jobInfoCount}>{clientsCount}</div>
+                <div className={css.jobInfoDescribe}>CLIENTS</div>
               </div>
 
             </div>
@@ -450,7 +469,11 @@ export class JobBoardItem extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isMyJobBoard: state.wallet.decryptedWallet.entry.encrypted[0].address === ownProps.jobBoard.creator.slice(2).toLowerCase(),
+  isMyJobBoard: state.wallet.decryptedWallet.entry.encrypted[0].address === ownProps
+    .jobBoard
+    .creator
+    .slice(2)
+    .toLowerCase(),
 })
 
 function mapDispatchToProps (dispatch) {

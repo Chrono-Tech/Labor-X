@@ -20,7 +20,7 @@ import JssProvider from "react-jss/lib/JssProvider"
 import { createGenerateClassName, jssPreset, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
 import LandingPage from "pages/landing-page"
-import DashboardPage from "pages/dashboard/index"
+import DashboardPage from "pages/dashboard"
 import CreateJobPage from "pages/create-job"
 import JobTypesPage from "pages/job-types"
 import CreateJobBoardPage from "pages/create-job-board"
@@ -106,6 +106,7 @@ import {
   completedJobs,
   applicationsAndOffers,
   auth,
+  jobBoards,
 } from "src/store/reducers"
 
 import AuthRoute from "src/components/routes/AuthRoute"
@@ -174,6 +175,7 @@ const reducer = combineReducers({
   completedJobs,
   applicationsAndOffers,
   auth,
+  jobBoards,
 })
 
 const middlewares = [
