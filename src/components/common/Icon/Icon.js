@@ -45,6 +45,7 @@ export default class Icon extends React.PureComponent {
     LHT_MEDIUM_2: 'lht-medium-2',
     EMAIL: 'e-mail',
     COMPANY: 'company',
+    SEARCH: 'search',
   }
 
   static COLORS = {
@@ -56,6 +57,7 @@ export default class Icon extends React.PureComponent {
     GOLD: 'gold',
     GREY: 'grey',
     GREY30: 'grey30',
+    GREY50: 'grey50',
 
     ERROR: 'error',
     WARN: 'warn',

@@ -1,19 +1,21 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { push } from 'connected-react-router'
 import { connect } from "react-redux"
-import PropTypes from 'prop-types'
 import { Field, reduxForm, propTypes } from 'redux-form'
-import { Toggle, SelectField, TextField } from 'redux-form-material-ui'
-import { MenuItem } from 'material-ui'
+import { Select, Switch, TextField } from 'redux-form-material-ui-next'
+import MenuItem from '@material-ui/core/MenuItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import AutoComplete from 'material-ui/AutoComplete'
-import { Image, Input, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
-import { SignerModel, BoardModel } from 'src/models'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Autosuggest from 'react-autosuggest'
 import t from "typy"
+
+import { Image, Badge, Translate, NumberInput, Button, ValidatedCheckbox, Chip, Link, Tip } from 'src/components/common'
+import { SignerModel, BoardModel, WORKFLOW_FIXED_PRICE, WORKFLOW_TM, SKILLS_LIST, SkillModel } from 'src/models'
 import DatePickerField from 'src/components/DatePickerField'
-import validate from './validate'
+
 import css from './CreateJobForm.scss'
-import { WORKFLOW_FIXED_PRICE, WORKFLOW_TM, SKILLS_LIST } from "../../../models"
+import validate from './validate'
 
 export const FORM_CREATE_JOB = 'form/createJob'
 
@@ -36,9 +38,10 @@ class CreateJobForm extends React.Component {
   }
 
   state = {
+    tagSuggestions: [],
+    tagValue: '',
+    tags: [],
     hourlyRatingValue: 1,
-    selectedSkills: [],
-    // stateValue: 1,
   }
 
   // handleChangeJobBoard = (event, index, value) => this.setState({ jobBoardValue: value })
@@ -49,58 +52,92 @@ class CreateJobForm extends React.Component {
     this.props.push('/job-types')
   }
 
-  handleAddSkill = (skill) => {
-    if (this.state.selectedSkills.findIndex((item) => item.index === skill.index) === -1) { this.setState({ selectedSkills: [...this.state.selectedSkills, skill] }) }
-  }
-
-  handleRemoveSkill = (skill) => {
-    this.setState({ selectedSkills: this.state.selectedSkills.filter((item) => item.index !== skill) })
-  }
-
   handleChangeBoard = () => {
-    this.setState({ selectedSkills: [] })
+    this.setState({ tags: [] })
   }
 
   handleSubmitForm = (values) => {
     this.props.onSubmit({
       ...values,
-      selectedSkills: this.state.selectedSkills,
+      selectedSkills: this.state.tags,
       categories: this.props.selectedBoard.tagsCategory,
       areas: Array.isArray(this.props.selectedBoard.tagsArea) ? this.props.selectedBoard.tagsArea : [this.props.selectedBoard.tagsArea],
     })
   }
 
-  getTagsFromBoard = () => {
+  getTagsList () {
     return SKILLS_LIST
-    //So that we not have a skills editing, on the sc side. After adding the skills, uncommit bottom code
-    // if ((board && Array.isArray(board.tags))) { return [...board.tags] }
-    // else { return [] }
   }
 
-  searchTagFilter = (searchText, key) => {
-    return searchText !== '' &&
-      String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
+  getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+
+    const tagsWithoutSelected = this.getTagsList().filter(tag => !this.state.tags.find(t => t.index === tag.index))
+
+    return inputLength === 0 ? [] : tagsWithoutSelected.filter(tag =>
+      tag.name.toLowerCase().indexOf(inputValue) !== -1
+    )
   }
+
+  getSuggestionValue = suggestion => {
+    const { change } = this.props
+    if (suggestion instanceof SkillModel && !this.state.tags.find(item => item.index === suggestion.index)) {
+
+      const newTags = [...this.state.tags, suggestion]
+
+      this.setState({ tags: newTags }, () => {
+        change('tags', newTags)
+      })
+    }
+    return ''
+  }
+
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      tagSuggestions: this.getSuggestions(value),
+    })
+  }
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      tagSuggestions: [],
+    })
+  }
+
+  onSuggestionChange = (event, { newValue }) => {
+    this.setState({
+      tagValue: newValue,
+    })
+  }
+
+  onRemoveTag (tag) {
+    const { tags } = this.state
+    const { change } = this.props
+
+    const newTags = tags.filter(item => item.index !== tag.index)
+
+    this.setState({ tags: newTags })
+
+    change('tags', newTags)
+  }
+
+  renderSuggestion = suggestion => <div>{suggestion.name}</div>
 
   renderBudgetBlock = (hasBudget) => {
     if (!hasBudget) return null
     return (
       <div>
         <Field
-          component={SelectField}
+          displayEmpty
+          component={Select}
           name='flowType'
-          hintText={<Translate value='ui.createJob.flowType' />}
         >
-          <MenuItem value={1} primaryText='Hourly Based' />
-          <MenuItem value={2} primaryText='Fixed price' />
+          <MenuItem value='' disabled><Translate value='ui.createJob.flowType' /></MenuItem>
+          <MenuItem value={1}>Hourly Based</MenuItem>
+          <MenuItem value={2}>Fixed price</MenuItem>
         </Field>
         {this.props.flowType ? this.renderBudgetWidget() : null}
-
-        <Field
-          component={ValidatedCheckbox}
-          name='budgetApproximate'
-          label={<Translate value='ui.createJob.budgetApproximateLabel' />}
-        />
       </div>
     )
   }
@@ -109,70 +146,50 @@ class CreateJobForm extends React.Component {
     if (!hasAddress) return null
     return (
       <div>
-        <Field
-          className={css.addressCheckbox}
-          component={ValidatedCheckbox}
-          name='companyAddress'
+        <FormControlLabel
+          control={<Field color='primary' component={ValidatedCheckbox} name='companyAddress' />}
           label={<Translate value='ui.createJob.companyAddressLabel' />}
         />
         <div className={css.twoColumn}>
-          <div>
+          <div className={css.addressColumn}>
             <Field
-              lineEnabled
               className={css.inputSection}
-              type={Input.TYPES.TEXT}
-              component={Input}
+              component={TextField}
               name='state'
-              mods={Input.MODS.ALIGN_LEFT}
-              placeholder='ui.createJob.state'
+              label='State'
             />
             <Field
-              lineEnabled
               className={css.inputSection}
-              type={Input.TYPES.TEXT}
-              component={Input}
+              component={TextField}
               name='zip'
-              mods={Input.MODS.ALIGN_LEFT}
-              placeholder='ui.createJob.zip'
+              label='ZIP'
             />
             <Field
               className={css.inputSection}
-              component={Input}
+              component={TextField}
               name='street'
-              lineEnabled
-              type={Input.TYPES.TEXT}
-              mods={Input.MODS.ALIGN_LEFT}
-              placeholder='ui.createJob.street'
+              label='Street'
             />
           </div>
-          <div>
+          <div className={css.addressColumn}>
             <Field
               className={css.inputSection}
-              component={Input}
+              component={TextField}
               name='city'
-              lineEnabled
-              type={Input.TYPES.TEXT}
-              mods={Input.MODS.ALIGN_LEFT}
-              placeholder='ui.createJob.city'
+              label='City'
             />
             <div className={css.twoColumn}>
               <Field
                 className={css.inputSection}
-                component={Input}
+                component={TextField}
                 name='building'
-                lineEnabled
-                type={Input.TYPES.TEXT}
-                mods={Input.MODS.ALIGN_LEFT}
-                placeholder='ui.createJob.buildingN'
+                label='Building #'
               />
               <Field
                 className={css.inputSection}
-                component={Input}
+                component={TextField}
                 name='suit'
-                lineEnabled
-                type={Input.TYPES.TEXT}
-                mods={Input.MODS.ALIGN_LEFT}
-                placeholder='ui.createJob.suit'
+                label='Suit'
               />
             </div>
           </div>
@@ -205,50 +222,64 @@ class CreateJobForm extends React.Component {
     )
   }
 
+  renderBudgetWidgetTM = () => (
+    <div className={css.budgetWidget}>
+      <Field
+        className={css.numberInput}
+        component={NumberInput}
+        name='hourlyRate'
+        title='ui.createJob.hourlyRate'
+        subtitle='USD 60.00'
+        max={1000}
+        min={0}
+      />
+      <Field
+        className={css.numberInput}
+        component={NumberInput}
+        name='totalHours'
+        title='ui.createJob.totalHours'
+        subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+        max={1000}
+        min={0}
+      />
+    </div>
+  )
+
+  renderBudgetWidgetFixed = () => (
+    <div className={css.budgetWidget}>
+      <Field
+        className={css.numberInput}
+        component={NumberInput}
+        name='fixedPrice'
+        title='ui.createJob.fixedPrice'
+        subtitle={<span>USD 2,400.00<br />LHUS 80.00</span>}
+        max={1000}
+        min={0}
+      />
+    </div>
+  )
+
   renderBudgetWidget = () => {
-    switch (+this.props.flowType) {
-      case WORKFLOW_TM.index: return (
-        <div className={css.budgetWidget}>
-          <div>
-            <Field
-              className={css.numberInput}
-              component={NumberInput}
-              name='hourlyRate'
-              title='ui.createJob.hourlyRate'
-              subtitle='USD 60.00'
-              max={1000}
-              min={0}
-            />
-          </div>
-          <div>
-            <Field
-              className={css.numberInput}
-              component={NumberInput}
-              name='totalHours'
-              title='ui.createJob.totalHours'
-              subtitle={<span>USD 2,400.00<br />LHT 80.00</span>}
-              max={1000}
-              min={0}
-            />
-          </div>
-        </div>
-      )
-      case WORKFLOW_FIXED_PRICE.index: return (
-        <div className={css.budgetWidget}>
-          <div>
-            <Field
-              className={css.numberInput}
-              component={NumberInput}
-              name='fixedPrice'
-              title='ui.createJob.fixedPrice'
-              subtitle={<span>USD 2,400.00<br />LHT 80.00</span>}
-              max={1000}
-              min={0}
-            />
-          </div>
-        </div>
-      )
-    }
+    return (
+      <div>
+        {
+          (() => {
+            switch (+this.props.flowType) {
+              case WORKFLOW_TM.index: return (
+                this.renderBudgetWidgetTM()
+              )
+              case WORKFLOW_FIXED_PRICE.index: return (
+                this.renderBudgetWidgetFixed()
+              )
+            }
+          })()
+        }
+        <FormControlLabel
+          control={<Field color='primary' component={ValidatedCheckbox} name='budgetApproximate' />}
+          label={<Translate value='ui.createJob.budgetApproximateLabel' />}
+        />
+      </div>
+    )
   }
 
   renderSelectedTagsArea = (board) => {
@@ -344,10 +375,10 @@ class CreateJobForm extends React.Component {
 
             <div className={css.headline}>
               <Field
-                className={css.boardHeadline}
-                component={Input}
-                placeholder='ui.createJob.jobHeadlinePlaceholder'
-                mods={[Input.MODS.INVERT, Input.MODS.HUGE]}
+                className={css.jobHeadline}
+                component={TextField}
+                placeholder='Enter Job Headline'
+                InputProps={{ disableUnderline: true, classes: { root: css.jobHeadlineLabel } }}
                 name='name'
               />
             </div>
@@ -362,32 +393,39 @@ class CreateJobForm extends React.Component {
                   component={TextField}
                   name='intro'
                   fullWidth
-                  floatingLabelText={<Translate value='ui.createJob.intro' />}
-                  hintText={<Translate value='ui.createJob.introPlaceholder' />}
+                  multiline
+                  rows='2'
+                  label={<Translate value='ui.createJob.intro' />}
+                  placeholder='Write a few words about the position'
                 />
                 <Field
                   className={css.inputSection}
                   component={TextField}
                   name='responsibilities'
                   fullWidth
-                  floatingLabelText={<Translate value='ui.createJob.responsibilities' />}
-                  hintText={<Translate value='ui.createJob.responsibilitiesPlaceholder' />}
+                  multiline
+                  rows='2'
+                  label={<Translate value='ui.createJob.responsibilities' />}
+                  placeholder='Which responsibilities worker will have?'
                 />
                 <Field
                   className={css.inputSection}
                   component={TextField}
                   name='requirements'
                   fullWidth
-                  floatingLabelText={<Translate value='ui.createJob.requirements' />}
-                  hintText={<Translate value='ui.createJob.requirementsPlaceholder' />}
+                  multiline
+                  rows='2'
+                  label={<Translate value='ui.createJob.requirements' />}
+                  placeholder='Which requirements should be met by worker?'
                 />
                 <Field
                   className={css.inputSection}
                   component={TextField}
                   name='conclusion'
                   fullWidth
-                  floatingLabelText={<Translate value='ui.createJob.conclusion' />}
-                  hintText={<Translate value='ui.createJob.conclusionPlaceholder' />}
+                  rows='2'
+                  label={<Translate value='ui.createJob.conclusion' />}
+                  placeholder='Write any additional job related information about the position here'
                 />
               </div>
             </div>
@@ -399,13 +437,14 @@ class CreateJobForm extends React.Component {
               <div>
                 <div className={css.twoColumn}>
                   <Field
-                    component={SelectField}
+                    displayEmpty
+                    component={Select}
                     name='board'
-                    hintText={<Translate value='ui.createJob.jobBoard' />}
                     onChange={this.handleChangeBoard}
                   >
+                    <MenuItem value='' disabled><Translate value='ui.createJob.jobBoard' /></MenuItem>
                     {boards.map(board => (
-                      <MenuItem key={board.key} value={board.id} primaryText={board.ipfs.name} />
+                      <MenuItem key={board.key} value={board.id}>{board.ipfs.name}</MenuItem>
                     ))}
                   </Field>
                   <div className={css.postFee}>
@@ -422,18 +461,16 @@ class CreateJobForm extends React.Component {
                   </div>
                   <div className={css.hourlyRatingColumn}>
                     <Field
-                      component={SelectField}
-                      hintText='Force Worker Rating'
-                      hintStyle={{ fontStyle: 'italic' }}
+                      displayEmpty
+                      component={Select}
                       value={this.state.hourlyRatingValue}
                       onChange={this.handleChangeHourlyRating}
                       name='hourlyRating'
                     >
-                      <MenuItem value={1} primaryText='Force Worker Rating 1' />
-                      <MenuItem value={2} primaryText='Force Worker Rating 2' />
-                      <MenuItem value={3} primaryText='Force Worker Rating 3' />
-                      <MenuItem value={3} primaryText='Force Worker Rating 4' />
-                      <MenuItem value={3} primaryText='Force Worker Rating 5' />
+                      <MenuItem value='' disabled>Force Worker Rating</MenuItem>
+                      <MenuItem value={1}>Force Worker Rating 1</MenuItem>
+                      <MenuItem value={2}>Force Worker Rating 1</MenuItem>
+                      <MenuItem value={3}>Force Worker Rating 1</MenuItem>
                     </Field>
                     <div className={css.hourlyRating}>
                       <Translate className={css.hourlyRatingTitle} value='ui.createJob.hourlyRatingTitle' />
@@ -449,9 +486,9 @@ class CreateJobForm extends React.Component {
                 <h3><Translate value='ui.createJob.budget' /></h3>
                 <div>
                   <Field
-                    component={Toggle}
+                    component={Switch}
                     name='hasBudget'
-                    parse={Boolean}
+                    color='primary'
                   />
                 </div>
               </div>
@@ -469,9 +506,9 @@ class CreateJobForm extends React.Component {
                 <h3><Translate value='ui.createJob.allowCustomOffers' /></h3>
                 <div>
                   <Field
-                    component={Toggle}
+                    component={Switch}
                     name='allowCustomOffers'
-                    parse={Boolean}
+                    color='primary'
                   />
                 </div>
               </div>
@@ -486,9 +523,9 @@ class CreateJobForm extends React.Component {
                 <h3><Translate value='ui.createJob.startWorkAllowance' /></h3>
                 <div>
                   <Field
-                    component={Toggle}
+                    component={Switch}
                     name='startWorkAllowance'
-                    parse={Boolean}
+                    color='primary'
                   />
                 </div>
               </div>
@@ -502,8 +539,9 @@ class CreateJobForm extends React.Component {
                 <h3><Translate value='ui.createJob.deadline' /></h3>
                 <div>
                   <Field
-                    component={Toggle}
+                    component={Switch}
                     name='hasPeriod'
+                    color='primary'
                   />
                 </div>
               </div>
@@ -519,8 +557,9 @@ class CreateJobForm extends React.Component {
                 <h3><Translate value='ui.createJob.address' /></h3>
                 <div>
                   <Field
-                    component={Toggle}
+                    component={Switch}
                     name='hasAddress'
+                    color='primary'
                   />
                 </div>
               </div>
@@ -554,22 +593,26 @@ class CreateJobForm extends React.Component {
                 <h3><Translate value='ui.createJob.skills' /></h3>
               </div>
               <div className={css.tagsRow}>
-                <Field
-                  className={css.find}
-                  style={{ marginRight: 10 }}
-                  component={AutoComplete}
-                  onNewRequest={this.handleAddSkill}
-                  filter={this.searchTagFilter}
-                  dataSourceConfig={{
-                    text: 'name',
-                    value: 'index',
+
+                <Autosuggest
+                  theme={{
+                    input: css.autocompleteInput,
+                    suggestionsContainer: css.suggestionsContainer,
+                    suggestion: css.autocompleteSuggestion,
                   }}
-                  dataSource={this.getTagsFromBoard(selectedBoard)}
-                  name='searchTags'
-                  hintText='Find'
+                  suggestions={this.state.tagSuggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={{
+                    placeholder: 'Find',
+                    value: this.state.tagValue,
+                    onChange: this.onSuggestionChange,
+                  }}
                 />
                 <div className={css.tags}>
-                  {this.state.selectedSkills.map(e => (
+                  {this.state.tags.map(e => (
                     <Chip value={e.name} key={e.index} index={e.index} onRemove={this.handleRemoveSkill} />
                   ))}
                 </div>
@@ -577,9 +620,8 @@ class CreateJobForm extends React.Component {
             </div>
 
             <div className={css.card}>
-              <Field
-                component={ValidatedCheckbox}
-                name='legal'
+              <FormControlLabel
+                control={<Field color='primary' component={ValidatedCheckbox} name='legal' />}
                 label={<Translate value='ui.createJob.legalAgreeLabel' />}
               />
             </div>

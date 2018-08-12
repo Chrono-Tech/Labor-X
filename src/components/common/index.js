@@ -7,9 +7,7 @@ export { default as ParallaxBox } from './ParallaxBox/ParallaxBox'
 export { default as Moment } from './Moment/Moment'
 export { default as Tip } from './Tip/Tip'
 export { default as UserRow } from './UserRow/UserRow'
-export { default as Checkbox } from './Checkbox/Checkbox'
 export { default as ValidatedCheckbox } from './ValidatedCheckbox/ValidatedCheckbox'
-export { default as Radio } from './Radio/Radio'
 export { default as RadioIcon } from './RadioIcon/RadioIcon'
 export { default as Popover } from './Popover/Popover'
 
@@ -24,6 +22,7 @@ export { default as FeedbackCard } from './FeedbackCard/FeedbackCard'
 export { default as OpportunityCard } from './OpportunityCard/OpportunityCard'
 export { default as TodoCard } from './TodoCard/TodoCard'
 export { default as ActiveJobCard } from './ActiveJobCard/ActiveJobCard'
+export { default as PersonCard } from './PersonCard/PersonCard'
 export { default as ScheduleWidget } from './ScheduleWidget/ScheduleWidget'
 
 //elements
@@ -39,9 +38,7 @@ export { default as WorkerState } from './WorkerState/WorkerState'
 
 // forms
 export { default as Button } from './Button/Button'
-export { default as Input } from './Input/Input'
 export { default as FileUploader } from './FileUploader/FileUploader'
-export { default as Select } from './Select/Select'
 export { default as NumberInput } from './NumberInput/NumberInput'
 export { default as Calendar } from './Calendar/Calendar'
 export { default as VerificationLevelSelector } from './VerificationLevelSelector/VerificationLevelSelector'

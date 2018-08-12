@@ -2,38 +2,39 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import { Translate } from 'components/common'
-import Link from 'react-router-dom/Link'
+import NavLink from 'react-router-dom/NavLink'
 import css from './Link.scss'
 
-export default class LinkControl extends React.Component {
+export default class Link extends React.Component {
   static propTypes = {
     href: PropTypes.string.isRequired,
     className: PropTypes.string,
+    activeClassName: PropTypes.string,
     invert: PropTypes.bool,
     label: PropTypes.string,
     router: PropTypes.shape({
       route: PropTypes.string,
     }),
     children: PropTypes.node,
-    activeClassName: PropTypes.string,
   }
 
   render () {
 
-    const { label, className, children, href, invert } = this.props
+    const { label, className, activeClassName, children, href, invert } = this.props
     return (
-      <Link
+      <NavLink
         to={href}
         className={cn(
+          className,
           invert ? css.linkInvert : css.link,
-          className
         )}
+        activeClassName={activeClassName ? activeClassName : null}
       >
         {label
           ? <Translate value={label} />
           : children
         }
-      </Link>
+      </NavLink>
     )
   }
 }

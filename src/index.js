@@ -13,12 +13,11 @@ import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-reac
 import { createLogger } from "redux-logger"
 import { reducer as formReducer } from "redux-form"
 import { i18nReducer, syncTranslationWithStore, loadTranslations, setLocale } from "react-redux-i18n"
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider'
 import MomentUtils from 'material-ui-pickers/utils/moment-utils'
 import { create } from "jss"
 import JssProvider from "react-jss/lib/JssProvider"
-import { createGenerateClassName, jssPreset } from "@material-ui/core/styles"
+import { createGenerateClassName, jssPreset, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
 import LandingPage from "pages/landing-page"
 import DashboardPage from "pages/dashboard/index"
@@ -58,6 +57,7 @@ import IntroductionOurNetworkPage from "pages/introduction/our-network"
 import IntroductionYourAccountPage from "pages/introduction/your-account"
 import IntroductionCryptoCurrenciesPage from "pages/introduction/crypto-currencies"
 import IntroductionLaborhourPage from "pages/introduction/laborhour"
+import PeoplePage from "pages/people"
 
 import AuthSignupAccountPasswordPage from "pages/auth/signup/account-password"
 import AuthSignupCopyYourAccountPasswordPage from "pages/auth/signup/copy-your-account-password"
@@ -119,6 +119,17 @@ console.log(process.env.NODE_ENV)
 const generateClassName = createGenerateClassName()
 const jss = create(jssPreset())
 jss.options.insertionPoint = "insertion-point-jss"
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#00A0D2',
+    },
+  },
+  typography: {
+    htmlFontSize: 10,
+  },
+})
 
 const history = createBrowserHistory()
 
@@ -195,7 +206,7 @@ const persistor = persistStore(store, null, async () => {
     <Provider store={store}>
       <PersistGate loading='Loading' persistor={persistor}>
         <JssProvider jss={jss} generateClassName={generateClassName}>
-          <MuiThemeProvider>
+          <MuiThemeProvider theme={theme}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <div>
                 <ConnectedRouter history={history}>
@@ -237,6 +248,7 @@ const persistor = persistStore(store, null, async () => {
                       <Route exact path='/worker-resume' component={WorkerResumePage} />
                       <Route exact path='/authorization-methods' component={AuthorizationMethodsPage} />
                       <Route exact path='/forgot-password' component={ForgotPasswordPage} />
+                      <Route exact path='/people' component={PeoplePage} />
 
                       <AuthRoute exact path='/introduction/crypto-education' component={IntroductionCryptoEducationPage} />
                       <AuthRoute exact path='/introduction/our-network' component={IntroductionOurNetworkPage} />

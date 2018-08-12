@@ -33,27 +33,27 @@ export class JobBoardItem extends React.Component {
     }
   }
 
-  handleStarsPopoverOpen () {
+  handleStarsPopoverOpen = () => {
     this.setState({ starsPopover: true })
   }
 
-  handleStarsPopoverClose () {
+  handleStarsPopoverClose = () => {
     this.setState({ starsPopover: false })
   }
 
-  handleSecurityPopoverOpen () {
+  handleSecurityPopoverOpen = () => {
     this.setState({ securityPopover: true })
   }
 
-  handleSecurityPopoverClose () {
+  handleSecurityPopoverClose = () => {
     this.setState({ securityPopover: false })
   }
 
-  handleActionsPopoverOpen () {
+  handleActionsPopoverOpen = () => {
     this.setState({ actionPopover: true })
   }
 
-  handleActionsPopoverClose () {
+  handleActionsPopoverClose = () => {
     this.setState({ actionPopover: false })
   }
 
@@ -298,8 +298,10 @@ export class JobBoardItem extends React.Component {
     return (
       <span
         className={css.actionButtonTooltip}
-        onMouseOver={this.handleActionsPopoverOpen.bind(this)}
-        onMouseOut={this.handleActionsPopoverClose.bind(this)}
+        onFocus={this.handleActionsPopoverOpen}
+        onBlur={this.handleActionsPopoverClose}
+        onMouseOver={this.handleActionsPopoverOpen}
+        onMouseOut={this.handleActionsPopoverClose}
       >
         <img src={src} alt='' width='24' height='24' />
         {popoverContent ? (
@@ -342,7 +344,7 @@ export class JobBoardItem extends React.Component {
     const { jobBoard } = this.props
     return (
       <button className={css.logoLink}>
-        <img src={jobBoard.ipfs.logo || '/static/images/board-logo-placeholder.png'} alt='' style={{width:'128px'}} />
+        <img src={jobBoard.ipfs.logo || '/static/images/board-logo-placeholder.png'} alt='' style={{ width:'128px' }} />
       </button>
     )
   }
@@ -359,13 +361,15 @@ export class JobBoardItem extends React.Component {
           <Button
             disabled={this.state.isTerminateProgress}
             onClick={this.handleTerminateRejectClick}
-          >NO</Button>
+          >NO
+          </Button>
           <Button
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             disabled={this.state.isTerminateProgress}
             onClick={this.handleTerminateApproveClick}
-          >{this.state.isTerminateProgress ? 'Loading' : 'YES'}</Button>
+          >{this.state.isTerminateProgress ? 'Loading' : 'YES'}
+          </Button>
         </DialogActions>
       </Dialog>
     )
@@ -398,8 +402,10 @@ export class JobBoardItem extends React.Component {
           <div className={css.ratingBlock}>
             <div
               className={css.starsWrapper}
-              onMouseOver={this.handleStarsPopoverOpen.bind(this)}
-              onMouseOut={this.handleStarsPopoverClose.bind(this)}
+              onFocus={this.handleStarsPopoverOpen}
+              onBlur={this.handleStarsPopoverClose}
+              onMouseOver={this.handleStarsPopoverOpen}
+              onMouseOut={this.handleStarsPopoverClose}
             >
               {this.getRatingStars()}
               {this.getStarsPopover()}
@@ -407,8 +413,10 @@ export class JobBoardItem extends React.Component {
 
             <div
               className={css.securityBadge}
-              onMouseOver={this.handleSecurityPopoverOpen.bind(this)}
-              onMouseLeave={this.handleSecurityPopoverClose.bind(this)}
+              onFocus={this.handleSecurityPopoverOpen}
+              onBlur={this.handleSecurityPopoverClose}
+              onMouseOver={this.handleSecurityPopoverOpen}
+              onMouseLeave={this.handleSecurityPopoverClose}
             >
               { this.renderSecurityTooltip() }
               { this.getSecurityPopover() }

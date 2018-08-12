@@ -1,50 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Button from '@material-ui/core/Button'
-import { connect } from 'react-redux'
 import ProfileModel from 'src/api/backend/model/ProfileModel'
 import ProfileClientModel from 'src/api/backend/model/ProfileClientModel'
 import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
 import ProfileRecruiterModel from 'src/api/backend/model/ProfileRecruiterModel'
-
+import { SignerModel, UserModel } from 'src/models'
 import { Widget, Translate, Icon } from 'src/components/common'
 import { MyFundsWidget, ForWorkersWidget, ForClientsWidget, ForRecruitersWidget } from 'src/partials'
-import { SignerModel, UserModel } from 'src/models'
-import { signerSelector } from 'src/store'
-import {
-  getPageData,
-  pageDataLoadingSelector,
-  pageDataFailureSelector,
-  pageDataSelector,
-} from 'src/store/dashboard'
-import { userSelector } from 'src/store/user/selectors'
 import css from './DashboardContent.scss'
 
-export class DashboardContent extends React.Component {
+export default class DashboardContent extends React.Component {
   static propTypes = {
-    user: PropTypes.instanceOf(UserModel),
-    signer: PropTypes.instanceOf(SignerModel),
-    getPageData: PropTypes.func.isRequired,
-    pageDataLoading: PropTypes.bool.isRequired,
-    pageDataFailure: PropTypes.instanceOf(Error),
+    user: PropTypes.instanceOf(UserModel).isRequired,
+    signer: PropTypes.instanceOf(SignerModel).isRequired,
     pageData: PropTypes.shape({
       profile:  PropTypes.shape({
         profile: PropTypes.instanceOf(ProfileModel),
         client: PropTypes.instanceOf(ProfileClientModel),
         worker: PropTypes.instanceOf(ProfileWorkerModel),
         recruiter: PropTypes.instanceOf(ProfileRecruiterModel),
-      }),
+      }).isRequired,
     }),
-  }
-
-  componentDidMount () {
-    this.props.getPageData()
-  }
-
-  reloadPage = () => {
-    document && document.location.reload(true)
   }
 
   renderRecruiterBlock = () => (
@@ -180,43 +157,14 @@ export class DashboardContent extends React.Component {
     )
   }
 
-  renderError = () => (
-    <div className={css.contentError}>
-      <h3>Error loading data</h3>
-      <Button className={css.buttonReload} onClick={this.reloadPage}>Reload page</Button>
-    </div>
-  )
-
   render () {
-    const { signer, pageDataFailure, pageDataLoading } = this.props
     return (
       <div className={css.main}>
         <div className={css.title}>
           <div className={css.titleText}><Translate value='nav.dashboard' /></div>
         </div>
-        {
-          signer == null || pageDataLoading
-            ? <div className={css.contentLoading}><CircularProgress style={{ color: '#00A0D2' }} size={40} /></div>
-            : pageDataFailure
-              ? this.renderError()
-              : this.renderContent()
-        }
+        { this.renderContent() }
       </div>
     )
   }
 }
-
-const mapStateToProps = (state) => ({
-  signer: signerSelector()(state),
-  user: userSelector()(state),
-
-  pageDataLoading: pageDataLoadingSelector(state),
-  pageDataFailure: pageDataFailureSelector(state),
-  pageData: pageDataSelector(state),
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  getPageData: () => dispatch(getPageData()),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContent)

@@ -40,8 +40,9 @@ $maxWidth: 74rem;
   flex: 1;
 }
 
-.search {
+.searchInput {
   flex-grow: 1;
+  width: 100%;
 }
 
 .filterBlock {
@@ -84,8 +85,11 @@ $maxWidth: 74rem;
 
 .fieldSelect {
   margin-bottom: 17px;
-  width: 200px;
+  width: 100%;
   color: $color-white;
+  color: #7F7F7F;
+  font-size: 16px;
+  border-bottom: 1px solid #E5E5E5;
 }
 
 .contentContainer {
@@ -133,4 +137,18 @@ $maxWidth: 74rem;
   > * {
     margin-bottom: 2rem;
   }
+}
+
+.filterBlockCheckbox {
+  color: $color-white !important;
+  fill: $color-white !important;
+}
+
+.filterCheckboxlabel {
+  color: $color-white;
+}
+
+.filterField {
+  width: 17rem;
+  padding: .5rem 0;
 }

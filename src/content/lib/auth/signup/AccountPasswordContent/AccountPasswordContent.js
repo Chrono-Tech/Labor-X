@@ -1,10 +1,12 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Checkbox } from 'redux-form-material-ui'
+import { Checkbox } from 'redux-form-material-ui-next'
 import { reduxForm, Field } from 'redux-form'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
 
-import { Link, Button, Input } from 'src/components/common'
+import { Link, Button } from 'src/components/common'
 import SignupLayout from 'src/components/layouts/SignupLayout/SignupLayout'
 import { ACCOUNT_PASSWORD_FORM as FORM } from "src/store/auth/signup/constants"
 import { submitAccountPassword as submit } from "src/store/auth/signup/actions"
@@ -35,26 +37,18 @@ export class AccountPasswordContent extends React.Component {
               <h2>Select Account Type</h2>
               <p className={css.description}>You may also add account types any time in the future. Please select at least one now.</p>
               <div className={css.checkboxBlock}>
-                <Field
-                  className={css.checkbox}
-                  name='isRecruiter'
-                  component={Checkbox}
+                <FormControlLabel
+                  control={<Field color='primary' name='isRecruiter' component={Checkbox} />}
                   label={<div className={css.checkboxLabel}><p><strong>Recruiter</strong></p><p>Create and manage Job Boards</p></div>}
                 />
-                <div className={css.checkbox}>
-                  <Field
-                    name='isWorker'
-                    component={Checkbox}
-                    label={<div className={css.checkboxLabel}><p><strong>Worker</strong></p><p>Join Job Boards and start your job search</p></div>}
-                  />
-                </div>
-                <div className={css.checkbox}>
-                  <Field
-                    name='isClient'
-                    component={Checkbox}
-                    label={<div className={css.checkboxLabel}><p><strong>Client</strong></p><p>Join Job Boards and post your jobs</p></div>}
-                  />
-                </div>
+                <FormControlLabel
+                  control={<Field color='primary' name='isWorker' component={Checkbox} />}
+                  label={<div className={css.checkboxLabel}><p><strong>Worker</strong></p><p>Join Job Boards and start your job search</p></div>}
+                />
+                <FormControlLabel
+                  control={<Field color='primary' name='isClient' component={Checkbox} />}
+                  label={<div className={css.checkboxLabel}><p><strong>Client</strong></p><p>Join Job Boards and post your jobs</p></div>}
+                />
               </div>
             </div>
             <div className={css.contentBlock}>
@@ -63,32 +57,35 @@ export class AccountPasswordContent extends React.Component {
               <div className={css.passwordBlock}>
                 <Field
                   className={css.password}
-                  component={Input}
+                  component={TextField}
                   type='text'
                   name='name'
                   placeholder='Account Name'
-                  mods={[css.passwordField]}
                   validate={[required]}
+                  FormHelperTextProps={{ classes: { root: css.fieldHelper } }}
+                  InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
                 />
                 <Field
                   className={css.password}
-                  component={Input}
+                  component={TextField}
                   type='password'
                   name='password'
                   placeholder='Password'
-                  mods={[css.passwordField]}
                   validate={[required]}
+                  FormHelperTextProps={{ classes: { root: css.fieldHelper } }}
+                  InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
                 />
                 {
                   this.props.encryptedWallet ? null : (
                     <Field
                       className={css.password}
-                      component={Input}
+                      component={TextField}
                       type='password'
                       name='password-confirm'
                       placeholder='Confirm Password'
-                      mods={[css.passwordField]}
                       validate={[required]}
+                      FormHelperTextProps={{ classes: { root: css.fieldHelper } }}
+                      InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
                     />
                   )
                 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui-next'
 import { Button, Rating } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
 import css from './PaidInvoiceDialog.scss'
@@ -45,7 +45,7 @@ export default class PaidInvoiceDialog extends React.Component {
             <Rating rating={4} starSize={44} />
             <TextField
               fullWidth
-              floatingLabelText='Write your feedback'
+              label='Write your feedback'
             />
           </div>
           <div className={css.feedbackGroup}>
@@ -61,7 +61,7 @@ export default class PaidInvoiceDialog extends React.Component {
             <Rating rating={3} starSize={44} />
             <TextField
               fullWidth
-              floatingLabelText='Write your feedback'
+              label='Write your feedback'
             />
           </div>
         </div>

@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import uniqid from 'uniqid'
 import { Field, reduxForm, SubmissionError } from 'redux-form'
+import TextField from '@material-ui/core/TextField'
 
-import { Button, Input, UserRow } from 'src/components/common'
-// import { FieldInputComponent } from 'src/components/Login'
-import { WalletEntryModel } from 'src/models'
+import { UserRow } from 'src/components/common'
+import WhiteRoundedButton from 'src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton'
 import { LoginSteps, validateRecoveryForm } from 'src/store'
+import { WalletEntryModel } from 'src/models'
 
 import css from './RecoveryAccountForm.scss'
 
@@ -33,9 +35,11 @@ const onSubmit = (values, dispatch) => {
 
 class RecoveryAccountForm extends React.Component {
   static propTypes = {
+    error: PropTypes.string,
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     onChangeStep: PropTypes.func,
     navigateToLoginForm: PropTypes.func,
+    handleSubmit: PropTypes.func,
     walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
 
@@ -54,7 +58,7 @@ class RecoveryAccountForm extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList, navigateToLoginForm } = this.props
+    const { handleSubmit, error, selectedWallet, walletsList, navigateToLoginForm } = this.props
     const wordsArray = new Array(12).fill()
 
     return (
@@ -72,12 +76,11 @@ class RecoveryAccountForm extends React.Component {
           {
             wordsArray.map((item, index) =>
               (<Field
-                key={index}
+                key={uniqid()}
                 className={css.word}
-                component={Input}
+                component={TextField}
                 name={`word-${index}`}
                 placeholder={`word ${index + 1}`}
-                mods={css.wordField}
               />)
             )
           }
@@ -89,17 +92,12 @@ class RecoveryAccountForm extends React.Component {
           component='input'
           name='mnemonic'
         />
-        <Button
+        <WhiteRoundedButton
           className={css.submitButtonWrapper}
-          buttonClassName={css.submitButton}
-          type={Button.TYPES.SUBMIT}
-          label='Proceed'
-          primary
-          disabled={pristine}
-          error={error}
-          mods={Button.MODS.INVERT}
-          errorClassName={css.formError}
-        />
+          type='submit'
+        >Proceed
+        </WhiteRoundedButton>
+        { !error ? null : <div className={css.formError}>{error}</div> }
         <p className={css.descriptionBlock}>
           or <button onClick={navigateToLoginForm} className={css.loginLink}>Login</button>
         </p>
