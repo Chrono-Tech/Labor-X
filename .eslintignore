@@ -83,6 +83,7 @@ src/**/*.js
 !src/store/user/
 
 
+!src/components/common/PersonCard/
 !src/components/common/Link/
 !src/components/common/Action/
 !src/components/common/Icon/Icon.js
@@ -102,12 +103,13 @@ src/**/*.js
 !src/components/common/VerificationLevelSelector/
 !src/components/common/ScheduleWidget/
 !src/components/common/CompletedJobCard/CompletedJobCard.js
-!src/components/Account/AccountPasswordForm/
-!src/components/Account/ShowMnemonic/
 !src/components/common/UserRow/UserRow.js
-!src/components/JobBoards/JobBoards.js
-!src/components/JobBoards/JobBoardItem/JobBoardItem.js
+!src/components/common/NumberInput/
+!src/content/lib/JobBoardsContent/JobBoardsContent.js
+!src/content/lib/JobBoardsContent/JobBoardItem.js
 
+!src/components/Login/
+!src/components/JobBoards/
 !src/components/layouts/MainLayout.js
 !src/components/layouts/SecondMenu/SecondMenu.js
 !src/components/layouts/Header/Header.js
@@ -179,6 +181,7 @@ src/**/*.js
 !src/utils/validator.js
 
 !pages/general-profile.js
+!pages/people.js
 !src/api/backend/index.js
 !src/api/backend/model/ProfileContactsApprovedModel.js
 !src/api/backend/model/ProfileContactsModel.js
@@ -195,6 +198,7 @@ src/**/*.js
 !src/content/lib/GeneralProfileContent/PersonalForm.js
 !src/content/lib/GeneralProfileContent/index.js
 !src/content/lib/GeneralProfileContent/index.scss
+!src/content/lib/PeopleContent/
 !src/store/client-profile/actions.js
 !src/store/client-profile/index.js
 !src/store/client-profile/reducer.js
@@ -205,12 +209,14 @@ src/**/*.js
 !src/store/opportunities/selectors.js
 !src/store/login/actions.js
 !src/store/profiles/actions.js
+!src/store/applicationsAndOffers/
 
 !src/store/index.js
 !src/store/general-profile/
 !src/store/dashboard/
 
 !pages/my-wallet.js
+!pages/dashboard/
 !src/api/lht/index.js
 !src/content/lib/MyWalletContent/MyWalletContent.css
 !src/content/lib/MyWalletContent/MyWalletContent.js

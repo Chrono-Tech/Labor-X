@@ -119,7 +119,7 @@ export default class BoardControllerDAO extends AbstractContractDAO {
           ...ipfs,
           joinRequirement: ipfs.joinRequirement !== undefined ? BoardRequirementModel.valueOf(ipfs.joinRequirement) : null,
           fee: ipfs.fee !== undefined ? BoardPostFeeModel.valueOf(ipfs.fee) : null,
-          lhus: ipfs.lhus !== undefined ? +ipfs.lhus : 0,
+          lht: ipfs.lht !== undefined ? +ipfs.lht : 0,
           hash: ipfsHash,
           endorsingSkills: !!ipfs.endorsingSkills,
         }),

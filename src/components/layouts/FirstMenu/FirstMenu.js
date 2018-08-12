@@ -4,7 +4,7 @@ import css from './FirstMenu.scss'
 
 const menuItems = [
   {
-    href: '/',
+    href: '/dashboard',
     label: 'nav.home',
   },
   {
@@ -20,15 +20,11 @@ const menuItems = [
 export default class FirstMenu extends React.Component {
 
   renderItem = (item, index) => {
-    const className = [ css.navItem ]
-    if (index === 0) {
-      // TODO @dkchv: implement selected
-      className.push(css.navItemSelected)
-    }
     return (
       <Link
         key={index}
-        className={className.join(' ')}
+        className={css.navItem}
+        activeClassName={css.navItemSelected}
         {...item}
       />
     )

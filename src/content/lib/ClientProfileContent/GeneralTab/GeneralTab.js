@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Field } from 'redux-form'
 import TextField from 'redux-form-material-ui-next/lib/TextField'
 import SelectField from 'redux-form-material-ui-next/lib/Select'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -86,7 +87,7 @@ export class GeneralTab extends React.Component {
               component={TextField}
               name='verifiable.intro'
               label='Write a few words about your organisation'
-              multiLine
+              multiline
               rows={2}
             />
           </Grid>
@@ -130,7 +131,7 @@ export class GeneralTab extends React.Component {
               component={TextField}
               name='verifiable.intro'
               label='Write a few words about yourself'
-              multiLine
+              multiline
               rows={2}
             />
           </Grid>
@@ -172,7 +173,13 @@ export class GeneralTab extends React.Component {
         <div className={css.block}>
           <h3>Currency</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>
-          { this.props.currencies.map(({ title, symbol }) => <Field key={symbol} component={ValidatedCheckbox} name={`custom.currencies.${symbol}`} label={title} />) }
+          <div className={css.checkboxColumn}>
+            { this.props.currencies.map(({ title, symbol }) => (<FormControlLabel
+              key={symbol}
+              control={<Field color='primary' component={ValidatedCheckbox} name={`custom.currencies.${symbol}`} />}
+              label={title}
+            />)) }
+          </div>
         </div>
       </div>
     )

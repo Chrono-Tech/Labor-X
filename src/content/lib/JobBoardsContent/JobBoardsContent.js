@@ -2,10 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
-import { Input, Icon, Checkbox, Radio } from 'src/components/common/index'
-import { updateFilterBoards } from 'src/store/index'
+import { Checkbox, TextField } from 'redux-form-material-ui-next'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import Radio from '@material-ui/core/Radio'
+
+import { BoardModel, TAG_CATEGORIES_LIST } from 'src/models'
+import { Icon } from 'src/components/common'
+import { updateFilterBoards } from 'src/store'
 import { boardCardsSelector } from 'src/store/jobBoards/selectors'
-import { BoardModel, TAG_CATEGORIES_LIST } from 'src/models/index'
 import JobBoardItem from './JobBoardItem/JobBoardItem'
 
 import css from './JobBoardsContent.scss'
@@ -14,24 +20,8 @@ const FORM_JOB_BOARDS = 'form/jobBoards'
 const FILTER_CATEGORIES_NAME = 'categories'
 const formSelector = formValueSelector(FORM_JOB_BOARDS)
 
-const searchStyles = {
-  style: {
-    width: '100%',
-  },
-  inputStyle: {
-    fontSize: 14,
-    color: '#333',
-    marginLeft: 36,
-  },
-  underlineStyle: {
-    borderColor: '#E5E5E5',
-    bottom: 0,
-    height: 1,
-  },
-  underlineFocusStyle: {
-    borderColor: '#00A0D2',
-    borderWidth: 1,
-  },
+const FILTER_SWITCH_CLASSES = {
+  root: css.filterSwitchBg,
 }
 
 const onSubmit = (values, dispatch) => {
@@ -58,19 +48,16 @@ class JobBoards extends React.Component {
     }
   }
 
-  showAllCategories () {
+  showAllCategories = () => {
     const { change } = this.props
-
     TAG_CATEGORIES_LIST.forEach((item) => {
       change(`${FILTER_CATEGORIES_NAME}[${String(item.name).toUpperCase()}]`, false)
     })
-
     change('categories_reset', true)
   }
 
-  onCategoryChecked () {
+  onCategoryChecked = () => {
     const { change } = this.props
-
     change('categories_reset', false)
   }
 
@@ -107,20 +94,22 @@ class JobBoards extends React.Component {
   }
 
   renderCategories () {
-    // const { } = this.props
     return TAG_CATEGORIES_LIST.map((tag) => {
-      return (<Field
-        key={tag.name}
-        component={Checkbox}
-        className={css.field}
-        name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`}
-        label={tag.name}
-        onCheck={this
-          .onCategoryChecked
-          .bind(this)}
-        material
-        defaultTheme={false}
-      />)
+      return (
+        <FormControlLabel
+          key={tag.name}
+          classes={{ label: css.filterSwitchlabel }}
+          control={(
+            <Field
+              classes={FILTER_SWITCH_CLASSES}
+              onChange={this.onCategoryChecked}
+              component={Checkbox}
+              name={`${FILTER_CATEGORIES_NAME}[${String(tag.name).toUpperCase()}]`}
+            />
+          )}
+          label={tag.name.toString()}
+        />
+      )
     })
   }
 
@@ -146,82 +135,80 @@ class JobBoards extends React.Component {
 
         <div className={css.filterContent}>
           <label className={css.filterLabel}>Categories</label>
-          <Field
-            component={Checkbox}
-            className={css.field}
-            name='categories_reset'
+          <FormControlLabel
+            classes={{ label: css.filterSwitchlabel }}
+            control={<Field classes={FILTER_SWITCH_CLASSES} onChange={this.showAllCategories} component={Checkbox} name='categories_reset' />}
             label='Show all'
-            type='checkbox'
-            onCheck={this
-              .showAllCategories
-              .bind(this)}
-            material
-            defaultTheme={false}
-          /> {this.renderCategories()}
+          />
+          { this.renderCategories() }
 
           <div className={css.hr} />
 
           <label className={css.filterLabel}>Rating</label>
 
           <Field
-            component={Radio}
-            radioButtonClassName={css.field}
+            component={RadioGroup}
             name='rating'
-            label='Rating'
-            values={[
-              {
-                value: 'any',
-                label: 'Any rating',
-              },
-              {
-                value: '2',
-                label: '2+',
-              },
-              {
-                value: '3',
-                label: '3+',
-              },
-              {
-                value: '4',
-                label: '4+',
-              },
-              {
-                value: '5',
-                label: '5',
-              },
-            ]}
-            material
-          />
+            classes={{ root: css.field }}
+          >
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='any' />}
+              label='Any rating'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='2' />}
+              label='2+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='3' />}
+              label='3+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='4' />}
+              label='4+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='5' />}
+              label='5'
+            />
+          </Field>
 
           <div className={css.hr} />
 
           <label className={css.filterLabel}>Validation level</label>
 
           <Field
-            component={Radio}
+            component={RadioGroup}
             name='level'
-            label='Level'
-            radioButtonClassName={css.field}
-            values={[
-              {
-                value: 'any',
-                label: 'Any',
-              },
-              {
-                value: '2',
-                label: '2+',
-              },
-              {
-                value: '3',
-                label: '3+',
-              },
-              {
-                value: '4',
-                label: '4+',
-              },
-            ]}
-            material
-          />
+            classes={{ root: css.field }}
+          >
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='any' />}
+              label='Any rating'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='2' />}
+              label='2+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='3' />}
+              label='3+'
+            />
+            <FormControlLabel
+              classes={{ label: css.filterSwitchlabel }}
+              control={<Radio classes={FILTER_SWITCH_CLASSES} value='4' />}
+              label='4'
+            />
+          </Field>
+
         </div>
       </div>
 
@@ -253,25 +240,26 @@ class JobBoards extends React.Component {
               <div className={css.actionsBlock}>
                 <div className={css.search}>
                   <Field
-                    component={Input}
+                    className={css.searchInput}
                     name='searchText'
-                    type='text'
+                    component={TextField}
                     placeholder='Search by keyword'
-                    materialInputStyles={searchStyles}
-                    className={css.searchField}
-                    materialInput
-                    materialTheme={Input.MATERIAL_THEME.DEFAULT}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <Icon size={24} icon={Icon.ICONS.SEARCH} color={Icon.COLORS.BLACK} />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </div>
-                <div className={css.filter}>
-                  <div
-                    onClick={this
-                      .toggleFilterBlock
-                      .bind(this)}
-                    className={css.filterButton}
-                  >
-                    {this.renderActiveCategories()}
-                  </div>
+
+                <div
+                  className={css.currentFilterContainer}
+                  onClick={this.toggleFilterBlock.bind(this)}
+                >
+                  <div className={css.filterText}>{ this.renderActiveCategories() }</div>
+                  <Icon size={24} icon={Icon.ICONS.FILTER} color={Icon.COLORS.GREY50} />
                 </div>
               </div>
 
@@ -319,9 +307,7 @@ function mapDispatchToProps (/*dispatch*/) {
 
 const form = reduxForm({
   form: FORM_JOB_BOARDS,
-  fields: [
-    'level', 'rating', 'categories', 'searchText',
-  ],
+  fields: ['level', 'rating', 'categories', 'searchText'],
   onChange: (values, dispatch) => {
     dispatch(updateFilterBoards(values))
   },

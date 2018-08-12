@@ -5,7 +5,7 @@ import { Link } from 'src/components/common'
 import PropTypes from 'prop-types'
 import css from './OpportunityCard.scss'
 
-const courseUsdLhus = 18
+const courseUsdLht = 18
 
 export default class OpportunityCard extends React.Component {
   static propTypes = {
@@ -13,7 +13,7 @@ export default class OpportunityCard extends React.Component {
     board: PropTypes.instanceOf(BoardModel),
   }
 
-  getJobLhus = (job) => {
+  getJobLht = (job) => {
     const fixedPrice = t(job, "ipfs.budget.fixedPrice").safeObject
     if (fixedPrice) { return fixedPrice }
     else {
@@ -33,9 +33,9 @@ export default class OpportunityCard extends React.Component {
   }
 
   renderJobTotalEarning = (job) => {
-    const totalEarningLhus = this.getJobLhus(job)
-    const totalEarningUsd = totalEarningLhus * courseUsdLhus
-    return `LHUS ${totalEarningLhus} ($${totalEarningUsd})`
+    const totalEarningLht = this.getJobLht(job)
+    const totalEarningUsd = totalEarningLht * courseUsdLht
+    return `LHT ${totalEarningLht} ($${totalEarningUsd})`
   }
 
   renderJobHourlyRate = (job) => {
@@ -44,9 +44,9 @@ export default class OpportunityCard extends React.Component {
       return ""
     }
     else {
-      const hourlyRateLhus = Number(t(job, "ipfs.budget.hourlyRate").safeObject)
-      const hourlyRateUsd = hourlyRateLhus * courseUsdLhus
-      return `LHUS ${hourlyRateLhus} ($${hourlyRateUsd}) / h`
+      const hourlyRateLht = Number(t(job, "ipfs.budget.hourlyRate").safeObject)
+      const hourlyRateUsd = hourlyRateLht * courseUsdLht
+      return `LHT ${hourlyRateLht} ($${hourlyRateUsd}) / h`
     }
 
   }

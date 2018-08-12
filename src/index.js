@@ -1,23 +1,23 @@
 import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import { createLogger } from "redux-logger"
 import { reducer as formReducer } from "redux-form"
 import { i18nReducer, syncTranslationWithStore, loadTranslations, setLocale } from "react-redux-i18n"
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider'
 import MomentUtils from 'material-ui-pickers/utils/moment-utils'
 import { create } from "jss"
 import JssProvider from "react-jss/lib/JssProvider"
-import { createGenerateClassName, jssPreset } from "@material-ui/core/styles"
+import { createGenerateClassName, jssPreset, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
 import LandingPage from "pages/landing-page"
 import DashboardPage from "pages/dashboard"
@@ -39,7 +39,7 @@ import OpportunityViewPage from "pages/opportunity-view"
 import ClientJobViewPage from "pages/client-job-view"
 import ClientStatsPage from "pages/client-stats"
 import EarnActivityPointsPage from "pages/earn-activity-points"
-import JobBoardsPage from "pages/job-boards/index"
+import JobBoardsPage from "pages/job-boards"
 import JobsPage from "pages/jobs"
 import MyJobsBoardPage from "pages/my-jobs-boards"
 import MyProfilePage from "pages/my-profile"
@@ -57,6 +57,7 @@ import IntroductionOurNetworkPage from "pages/introduction/our-network"
 import IntroductionYourAccountPage from "pages/introduction/your-account"
 import IntroductionCryptoCurrenciesPage from "pages/introduction/crypto-currencies"
 import IntroductionLaborhourPage from "pages/introduction/laborhour"
+import PeoplePage from "pages/people"
 
 import AuthSignupAccountPasswordPage from "pages/auth/signup/account-password"
 import AuthSignupCopyYourAccountPasswordPage from "pages/auth/signup/copy-your-account-password"
@@ -113,9 +114,23 @@ import AuthRoute from "src/components/routes/AuthRoute"
 
 import 'styles/globals/globals.scss'
 
+// eslint-disable-next-line no-console
+console.log(process.env.NODE_ENV)
+
 const generateClassName = createGenerateClassName()
 const jss = create(jssPreset())
 jss.options.insertionPoint = "insertion-point-jss"
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#00A0D2',
+    },
+  },
+  typography: {
+    htmlFontSize: 10,
+  },
+})
 
 const history = createBrowserHistory()
 
@@ -163,13 +178,23 @@ const reducer = combineReducers({
   jobBoards,
 })
 
+const middlewares = [
+  routerMiddleware(history),
+  thunkMiddleware,
+]
+
+switch (process.env.NODE_ENV) {
+  case 'development':
+    middlewares.push(
+      loggerMiddleware,
+    )
+}
+
 const store = createStore(
   connectRouter(history)(reducer),
   {},
-  compose(
-    applyMiddleware(routerMiddleware(history), thunk, loggerMiddleware),
-    // eslint-disable-next-line no-underscore-dangle
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(
+    applyMiddleware(...middlewares)
   )
 )
 
@@ -183,7 +208,7 @@ const persistor = persistStore(store, null, async () => {
     <Provider store={store}>
       <PersistGate loading='Loading' persistor={persistor}>
         <JssProvider jss={jss} generateClassName={generateClassName}>
-          <MuiThemeProvider>
+          <MuiThemeProvider theme={theme}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <div>
                 <ConnectedRouter history={history}>
@@ -225,6 +250,7 @@ const persistor = persistStore(store, null, async () => {
                       <Route exact path='/worker-resume' component={WorkerResumePage} />
                       <Route exact path='/authorization-methods' component={AuthorizationMethodsPage} />
                       <Route exact path='/forgot-password' component={ForgotPasswordPage} />
+                      <Route exact path='/people' component={PeoplePage} />
 
                       <AuthRoute exact path='/introduction/crypto-education' component={IntroductionCryptoEducationPage} />
                       <AuthRoute exact path='/introduction/our-network' component={IntroductionOurNetworkPage} />

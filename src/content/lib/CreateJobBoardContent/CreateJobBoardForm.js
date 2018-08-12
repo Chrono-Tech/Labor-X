@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import cn from 'classnames'
 import DonutChart from "react-svg-donut-chart"
-import AutoComplete from 'material-ui/AutoComplete'
 import { Field, reduxForm } from 'redux-form'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { MenuItem } from 'material-ui/Menu'
-import { SelectField, TextField } from 'redux-form-material-ui'
+import MenuItem from '@material-ui/core/MenuItem'
+import { Select, TextField } from 'redux-form-material-ui-next'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Autosuggest from 'react-autosuggest'
 
-import { Image, Chip, Input, Button, Icon, Checkbox, RadioIcon, VerificationLevelSelector, Translate } from 'components/common'
+import { Image, Chip, Button, Icon, ValidatedCheckbox, RadioIcon, VerificationLevelSelector, Link } from 'components/common'
 import {
   TagModel,
   TAGS_LIST,
@@ -18,6 +19,7 @@ import {
   BOARD_REQUIREMENTS_LIST,
   BOARD_REQUIREMENTS,
   BOARD_POST_FEES,
+  BOARD_POST_FEE_LIST,
 } from 'src/models'
 
 import css from './CreateJobBoardForm.scss'
@@ -47,6 +49,8 @@ class CreateJobBoardForm extends React.Component {
     super(props)
 
     this.state = {
+      tagSuggestions: [],
+      tagValue: '',
       tags: [],
       agreement: {
         loading: false,
@@ -102,23 +106,50 @@ class CreateJobBoardForm extends React.Component {
     this.handleUpload(e, 'background')
   }
 
-  handleAddTag = (tag) => {
+  getTagsList () {
+    return TAGS_LIST
+  }
+
+  getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+
+    const tagsWithoutSelected = this.getTagsList().filter(tag => !this.state.tags.find(t => t.index === tag.index))
+
+    return inputLength === 0 ? [] : tagsWithoutSelected.filter(tag =>
+      tag.name.toLowerCase().indexOf(inputValue) !== -1
+    )
+  }
+
+  getSuggestionValue = suggestion => {
     const { change } = this.props
+    if (suggestion instanceof TagModel && !this.state.tags.find(item => item.index === suggestion.index)) {
 
-    if (tag instanceof TagModel && !this.state.tags.find(item => item.index === tag.index)) {
-
-      const newTags = [...this.state.tags, tag]
+      const newTags = [...this.state.tags, suggestion]
 
       this.setState({ tags: newTags }, () => {
         change('tags', newTags)
       })
     }
-
-    change('searchTags', '')
+    return ''
   }
 
-  getTagsList () {
-    return TAGS_LIST
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      tagSuggestions: this.getSuggestions(value),
+    })
+  }
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      tagSuggestions: [],
+    })
+  }
+
+  onSuggestionChange = (event, { newValue }) => {
+    this.setState({
+      tagValue: newValue,
+    })
   }
 
   onRemoveTag (tag) {
@@ -132,10 +163,7 @@ class CreateJobBoardForm extends React.Component {
     change('tags', newTags)
   }
 
-  searchTagFilter = (searchText, key) => {
-    return searchText !== '' &&
-      String(key || '').toLowerCase().indexOf(String(searchText || '').toLowerCase()) !== -1
-  }
+  renderSuggestion = suggestion => <div>{suggestion.name}</div>
 
   renderTags () {
     const { tags } = this.state
@@ -227,13 +255,10 @@ class CreateJobBoardForm extends React.Component {
               Skills
             </h3>
             <div className={css.subtitle}>
-              <Field
-                component={Checkbox}
+              <FormControlLabel
                 className={css.field}
-                name='endorsingSkills'
+                control={<Field color='primary' component={ValidatedCheckbox} name='endorsingSkills' />}
                 label='Worker skills must be endorsed'
-                material
-                defaultTheme
               />
             </div>
           </div>
@@ -260,10 +285,10 @@ class CreateJobBoardForm extends React.Component {
             <div className={css.agreementActionsIcon}>
               {
                 this.state.agreement.loaded
-                  ? <Icon size={28} icon={Icon.ICONS.FILE} color={Image.COLORS.BLUE} />
+                  ? <Icon size={28} icon={Icon.ICONS.FILE} color={Icon.COLORS.BLUE} />
                   : this.state.agreement.loading
                     ? <CircularProgress size={26} thickness={2} />
-                    : <Icon size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
+                    : <Icon size={28} icon={Icon.ICONS.UPLOAD} color={Icon.COLORS.BLUE} />
               }
 
             </div>
@@ -295,7 +320,7 @@ class CreateJobBoardForm extends React.Component {
                 ? <img className={css.visual} src={logo} alt='Logo' />
                 : this.state.logo.loading
                   ? <CircularProgress className={css.visual} size={26} thickness={2} />
-                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
+                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Icon.COLORS.BLUE} />
             }
 
             {
@@ -316,7 +341,7 @@ class CreateJobBoardForm extends React.Component {
                 ? <img className={css.visual} src={background} alt='Background' />
                 : this.state.background.loading
                   ? <CircularProgress className={css.visual} size={26} thickness={2} />
-                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Image.COLORS.BLUE} />
+                  : <Icon className={css.visual} size={28} icon={Icon.ICONS.UPLOAD} color={Icon.COLORS.BLUE} />
             }
 
             {
@@ -338,12 +363,10 @@ class CreateJobBoardForm extends React.Component {
       <form name={FORM_CREATE_JOB_BOARD} className={css.main} onSubmit={handleSubmit}>
         <div className={css.title}>
           <div className={css.titleBar}>
-            <Button
-              className={css.cancelButton}
-              icon={Image.SETS.ARROW_BACK}
-              type={Button.TYPES.SUBMIT}
-              mods={Button.MODS.FLAT}
-            />
+            <Link className={css.backBtn} href='/dashboard'>
+              <Image icon={Image.SETS.ARROW_BACK.icon} />
+            </Link>
+
             <div className={css.titleBarRight}>
               <Button
                 className={css.helpButton}
@@ -363,11 +386,12 @@ class CreateJobBoardForm extends React.Component {
         <div className={css.content}>
           <div className={css.headline}>
             <Field
+              fullWidth
               className={css.boardHeadline}
-              component={Input}
+              component={TextField}
               placeholder='Enter Job Board Headline'
-              mods={[ Input.MODS.INVERT, Input.MODS.HUGE ]}
               name='name'
+              InputProps={{ disableUnderline: true, classes: { root: css.boardHeadlineLabel } }}
             />
           </div>
 
@@ -377,17 +401,15 @@ class CreateJobBoardForm extends React.Component {
                 <h3 className={css.cardTitle}>Area</h3>
                 <div className={css.flexRow}>
                   <Field
-                    component={SelectField}
+                    className={css.selectField}
+                    displayEmpty
                     name='tagsArea'
-                    selectedMenuItemStyle={{ fontSize: 14 }}
-                    menuItemStyle={{ fontSize: 14 }}
-                    labelStyle={{ fontSize: 14 }}
-                    style={{ width: 300 }}
-                    hintText='Select area'
+                    component={Select}
                   >
+                    <MenuItem value='' disabled>Select area</MenuItem>
                     {
                       TAG_AREAS_LIST.map((item) => (
-                        <MenuItem key={uniqid()} value={item} primaryText={item.name} />
+                        <MenuItem key={item.index} value={item.index}>{item.name}</MenuItem>
                       ))
                     }
                   </Field>
@@ -398,17 +420,15 @@ class CreateJobBoardForm extends React.Component {
                 <h3 className={css.cardTitle}>Categories</h3>
                 <div className={css.flexRow}>
                   <Field
-                    component={SelectField}
+                    className={css.selectField}
+                    displayEmpty
                     name='tagsCategory'
-                    selectedMenuItemStyle={{ fontSize: 14 }}
-                    menuItemStyle={{ fontSize: 14 }}
-                    labelStyle={{ fontSize: 14 }}
-                    style={{ width: 300 }}
-                    hintText='Select category'
+                    component={Select}
                   >
+                    <MenuItem value='' disabled>Select category</MenuItem>
                     {
                       TAG_CATEGORIES_LIST.map((item) => (
-                        <MenuItem key={uniqid()} value={item} primaryText={item.name} />
+                        <MenuItem key={item.index} value={item.index}>{item.name}</MenuItem>
                       ))
                     }
                   </Field>
@@ -417,21 +437,26 @@ class CreateJobBoardForm extends React.Component {
             </div>
             <h3 className={cn(css.cardTitle, css.skillsRow)}>Skills</h3>
             <div className={css.flexRow}>
-              <Field
-                className={css.find}
-                style={{ marginRight: 10 }}
-                component={AutoComplete}
-                onNewRequest={this.handleAddTag}
-                filter={this.searchTagFilter}
-                dataSourceConfig={{
-                  text: 'name',
-                  value: 'name',
+
+              <Autosuggest
+                theme={{
+                  input: css.autocompleteInput,
+                  suggestionsContainer: css.suggestionsContainer,
+                  suggestion: css.autocompleteSuggestion,
                 }}
-                errorText={formErrors.tags && submitFailed ? formErrors.tags : null}
-                dataSource={this.getTagsList()}
-                name='searchTags'
-                hintText='Find'
+                suggestions={this.state.tagSuggestions}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                getSuggestionValue={this.getSuggestionValue}
+                renderSuggestion={this.renderSuggestion}
+                inputProps={{
+                  placeholder: 'Find',
+                  value: this.state.tagValue,
+                  onChange: this.onSuggestionChange,
+                }}
               />
+              { formErrors.tags && submitFailed ? <div>{formErrors.tags}</div> : null}
+
               <Field
                 component='input'
                 type='hidden'
@@ -453,17 +478,13 @@ class CreateJobBoardForm extends React.Component {
                 Specify which requirements should be met in order to join the board.
             </div>
             <Field
-              component={SelectField}
+              component={Select}
               className={css.requirementsSelect}
               name='joinRequirement'
-              selectedMenuItemStyle={{ fontSize: 14 }}
-              menuItemStyle={{ fontSize: 14 }}
-              labelStyle={{ fontSize: 14 }}
-              style={{ width: 300 }}
             >
               {
                 BOARD_REQUIREMENTS_LIST.map((item) => (
-                  <MenuItem key={uniqid()} value={item.index} primaryText={item.label} />
+                  <MenuItem key={item.index} value={item.index}>{item.label}</MenuItem>
                 ))
               }
             </Field>
@@ -497,20 +518,20 @@ class CreateJobBoardForm extends React.Component {
             <div className={css.cardContent}>
               <div className={css.feeInputs}>
                 <Field
-                  component={SelectField}
-                  hintText='Fixed Fee'
-                  hintStyle={{ fontStyle: 'italic' }}
+                  component={Select}
                   name='fee'
                 >
                   {
-                    <MenuItem value={BOARD_POST_FEES.FIXED_FEE} primaryText={BOARD_POST_FEES.FIXED_FEE.label} />
+                    BOARD_POST_FEE_LIST.map((item) => (
+                      <MenuItem key={item.index} value={item.index}>{item.label}</MenuItem>
+                    ))
                   }
                 </Field>
                 <Field
                   className={css.match}
                   component={TextField}
-                  name='lhus'
-                  hintText={<Translate value='ui.createJobBoard.value' />}
+                  placeholder='LHUS 0.00'
+                  name='lht'
                 />
               </div>
             </div>
@@ -530,7 +551,7 @@ export default reduxForm({
   form: FORM_CREATE_JOB_BOARD,
   initialValues: {
     requirements: 0,
-    fee: BOARD_POST_FEES.FIXED_FEE,
+    fee: BOARD_POST_FEES.FIXED_FEE.index,
     endorsingSkills: false,
     joinRequirement: 0,
     ratingRequirements: 0,

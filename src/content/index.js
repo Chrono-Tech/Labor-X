@@ -15,3 +15,4 @@ export { default as ClientJobViewContent } from './lib/ClientJobViewContent/Clie
 export { default as ApplicationsAndOffersContent } from './lib/ApplicationsAndOffersContent/ApplicationsAndOffersContent'
 export { default as ClientProfileContent } from './lib/ClientProfileContent/ClientProfileContent'
 export { default as WorkerProfileContent } from './lib/WorkerProfileContent/WorkerProfileContent'
+export { default as PeopleContent } from './lib/PeopleContent/PeopleContent'

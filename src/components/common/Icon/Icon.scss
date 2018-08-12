@@ -48,6 +48,10 @@
   color: $color-gray30 !important;
 }
 
+.grey50 {
+  color: $color-gray50 !important;
+}
+
 .black {
   color: $color-black !important;
 }
@@ -206,4 +210,8 @@
 
 .icon-company:before {
   content: '\F05B';
+}
+
+.icon-search:before {
+  content: '\F07E';
 }

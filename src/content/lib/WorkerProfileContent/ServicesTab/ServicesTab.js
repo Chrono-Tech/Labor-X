@@ -6,8 +6,10 @@ import TextField from 'redux-form-material-ui-next/lib/TextField'
 import SelectField from 'redux-form-material-ui-next/lib/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
+
 import { ValidatedCheckbox, Link, Icon } from 'src/components/common'
 import CurrencyModel from '../../../../api/backend/model/CurrencyModel'
 import ServiceCategoryModel from '../../../../api/backend/model/ServiceCategoryModel'
@@ -98,7 +100,7 @@ export default class ServicesTab extends React.Component {
                 fullWidth
                 component={TextField}
                 name={`${service}.minFee`}
-                label='Min fee, LHUS'
+                label='Min fee, LHT'
               />
             </Grid>
           </Grid>
@@ -147,7 +149,7 @@ export default class ServicesTab extends React.Component {
               fullWidth
               component={TextField}
               name='regular.hourlyCharge'
-              label='LHUS 1'
+              label='LHT 1'
             />
             <Link className={cn(css.link, css.linkRates)} href='/rates'>View Rates</Link>
           </div>
@@ -156,14 +158,12 @@ export default class ServicesTab extends React.Component {
           <h3>Accepting Currencies</h3>
           <p>Selected currencies will be used for transactions. Need an advice? <Link className={css.link} href='/recommendations'>View our Recommendations</Link></p>
           {
-            currencies.map(({ title, symbol }) => {
-              return (<Field
-                key={symbol}
-                component={ValidatedCheckbox}
-                name={`regular.currenciesKeys.${symbol}`}
-                label={title}
-              />)
-            })
+            currencies.map(({ title, symbol }) => (<FormControlLabel
+              key={symbol}
+              control={<Field color='primary' component={ValidatedCheckbox} name={`regular.currenciesKeys.${symbol}`} />}
+              label={title}
+            />)
+            )
           }
         </div>
       </div>

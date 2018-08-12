@@ -1,12 +1,21 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { SignerModel, TagCategoryModel, TAG_CATEGORIES_LIST, FILTERS_LIST } from 'src/models'
+import { connect } from 'react-redux'
 import { reduxForm, Field, getFormValues } from 'redux-form'
+import { Checkbox, TextField, Select } from 'redux-form-material-ui-next'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import { signerSelector, opportunitiesFilteredListSelector } from 'src/store'
-import { Translate, OpportunityCard, Input, Image, Checkbox, Icon, Select, RadioIcon } from 'src/components/common'
+import { SignerModel, TagCategoryModel, TAG_CATEGORIES_LIST, FILTERS_LIST } from 'src/models'
+import { Translate, OpportunityCard, Icon, RadioIcon } from 'src/components/common'
+
 import css from './OpportunitiesContent.scss'
+
+const FILTER_CHECKBOX_CLASSES = {
+  root: css.filterBlockCheckbox,
+}
 
 const FORM_SEARCH_OPPORTUNITIES = 'form/opportunities'
 export const SEARCH_INPUT_NAME = 'OpportunitiesSearchInput'
@@ -53,28 +62,17 @@ export class OpportunitiesContent extends React.Component {
   renderCategories () {
     return TAG_CATEGORIES_LIST.map((tag) => {
       return (
-        <Field
+        <FormControlLabel
           key={tag.name}
-          component={Checkbox}
-          className={css.field}
-          name={`categories[index-${String(tag.index)}]`}
+          classes={{ label: css.filterCheckboxlabel }}
+          control={<Field classes={FILTER_CHECKBOX_CLASSES} component={Checkbox} name={`categories[index-${String(tag.index)}]`} />}
           label={tag.name.toString()}
-          material
-          defaultTheme={false}
         />
       )
     })
   }
 
   renderFilter () {
-    const selectThemeStyle = {
-      width: '180px',
-      marginLeft: '-5px',
-    }
-    const labelSelectFilter = {
-      color: 'white',
-    }
-
     return (
       <div className={[css.filterBlock, (this.state.isVisibleFilter ? "" : css.hideFilterBlock)].join(' ')}>
 
@@ -90,28 +88,26 @@ export class OpportunitiesContent extends React.Component {
         <div className={css.filterContent}>
 
           <Field
-            component={Select}
             className={css.fieldSelect}
+            displayEmpty
+            disableUnderline
             name='sort_by'
-            type='select'
-            label=''
-            autoWidth
-            floatingLabelText='Sorting by ..'
-            floatingLabelStyle={{ color: '#7F7F7F' }}
-            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
-            placeholder=''
-            values={FILTERS_LIST.map(item => ({ value: item.index.toString(), name: item.name }))}
-          />
+            component={Select}
+          >
+            <MenuItem value='' disabled>Sorting by ..</MenuItem>
+            {
+              FILTERS_LIST.map((item) => (
+                <MenuItem key={item.index.toString()} value={item.index.toString()}>{item.name}</MenuItem>
+              ))
+            }
+          </Field>
 
           <div className={css.hr} />
 
-          <Field
-            key='reverse_order'
-            component={Checkbox}
-            className={css.field}
-            name='reverse_order'
+          <FormControlLabel
+            classes={{ label: css.filterCheckboxlabel }}
+            control={<Field classes={FILTER_CHECKBOX_CLASSES} component={Checkbox} name='reverse_order' />}
             label='Reverse order'
-            defaultTheme={false}
           />
 
           <div className={css.hr} />
@@ -183,67 +179,53 @@ export class OpportunitiesContent extends React.Component {
           <label className={css.filterLabel}>Location</label>
 
           <Field
-            component={Select}
             className={css.fieldSelect}
+            displayEmpty
+            disableUnderline
             name='location_country'
-            type='select'
-            autoWidth
-            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
-            floatingLabelText='Select country'
-            floatingLabelStyle={{ color: '#7F7F7F' }}
-            values={[
-              { value: 'Russia', name: 'Russia' },
-            ]}
-          />
+            component={Select}
+          >
+            <MenuItem value='' disabled>Select country</MenuItem>
+            <MenuItem value={0}>Russia</MenuItem>
+          </Field>
 
           <Field
-            component={Select}
             className={css.fieldSelect}
+            displayEmpty
+            disableUnderline
             name='location_city'
-            type='select'
-            autoWidth
-            floatingLabelText='Select city'
-            floatingLabelStyle={{ color: '#7F7F7F' }}
-            profileTheme={{ style: selectThemeStyle, labelStyle: labelSelectFilter }}
-            values={[
-              { value: 'Moscow', name: 'Moscow' },
-            ]}
-          />
+            component={Select}
+          >
+            <MenuItem value='' disabled>Select city</MenuItem>
+            <MenuItem value={0}>Moscow</MenuItem>
+          </Field>
 
           <div className={css.hr} />
 
           <label className={css.filterLabel}>Recruiting Services</label>
 
-          <Field
+          <FormControlLabel
             key='recruting_services'
-            component={Checkbox}
-            className={css.field}
-            name='recruting_services'
+            classes={{ label: css.filterCheckboxlabel }}
+            control={<Field classes={FILTER_CHECKBOX_CLASSES} component={Checkbox} name='recruting_services' />}
             label='Has services'
-            material
-            defaultTheme={false}
           />
 
           <Field
-            key='from_lhus'
-            materialTheme={Input.MATERIAL_THEME.FILTER}
-            component={Input}
-            name='from_lhus'
-            placeholder='From LHUS'
-            materialInput
-            defaultTheme={false}
+            className={css.filterField}
+            component={TextField}
+            name='from_lht'
+            placeholder='From LHT'
+            InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
 
           <Field
-            key='to_lhus'
-            component={Input}
-            materialTheme={Input.MATERIAL_THEME.FILTER}
-            name='to_lhus'
-            placeholder='To LHUS'
-            materialInput
-            defaultTheme={false}
+            className={css.filterField}
+            component={TextField}
+            name='to_lht'
+            placeholder='To LHT'
+            InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
-
         </div>
       </div>
 
@@ -282,24 +264,26 @@ export class OpportunitiesContent extends React.Component {
             <div className={css.contentContainer}>
               <div className={css.filterRow}>
                 <div className={css.searchRow}>
-                  <Image
-                    icon={Image.ICONS.SEARCH}
-                    color={Image.COLORS.BLACK}
-                  />
                   <Field
-                    component={Input}
-                    className={css.search}
+                    className={css.searchInput}
                     name={SEARCH_INPUT_NAME}
+                    component={TextField}
                     placeholder='Search by keyword'
-                    materialInput
-                    defaultTheme={false}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <Icon size={24} icon={Icon.ICONS.SEARCH} color={Icon.COLORS.BLACK} />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </div>
                 <div className={css.filterRow} onClick={this.handleToggleFilter}>
                   <p> {this.renderSelectedCityAndCategories()}</p>
-                  <Image
-                    icon={Image.ICONS.FILTER}
-                    color={Image.COLORS.BLACK}
+                  <Icon
+                    size={24}
+                    icon={Icon.ICONS.FILTER}
+                    color={Icon.COLORS.GREY50}
                   />
                 </div>
               </div>

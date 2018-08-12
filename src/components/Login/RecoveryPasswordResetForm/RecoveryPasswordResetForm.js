@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, SubmissionError } from 'redux-form'
+import TextField from '@material-ui/core/TextField'
 
-import { Button, Input, UserRow } from 'src/components/common'
+import WhiteRoundedButton from 'src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton'
+import { UserRow } from 'src/components/common'
 import { WalletEntryModel } from 'src/models'
 import { LoginSteps } from 'src/store'
 
@@ -22,17 +24,14 @@ const onSubmit = ({ password }) => {
 
 class RecoveryPasswordResetForm extends React.Component {
   static propTypes = {
+    handleSubmit: PropTypes.func,
+    error: PropTypes.string,
     selectedWallet: PropTypes.instanceOf(WalletEntryModel),
     onChangeStep: PropTypes.func,
-    walletsList: PropTypes.arrayOf(PropTypes.instanceOf(WalletEntryModel)),
   }
 
   constructor (props){
     super(props)
-
-    this.state = {
-      previousSelectedWallet: props.selectedWallet,
-    }
   }
 
   getWalletAddress (wallet) {
@@ -50,9 +49,7 @@ class RecoveryPasswordResetForm extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, pristine, invalid, selectedWallet, walletsList } = this.props
-    const wordsArray = new Array(12).fill()
-
+    const { handleSubmit, error, selectedWallet } = this.props
     return (
       <form className={css.root} name={FORM_PASSWORD_RESET} onSubmit={handleSubmit}>
         <div className={css.formHeader}>Recover Account</div>
@@ -66,36 +63,26 @@ class RecoveryPasswordResetForm extends React.Component {
 
         <Field
           className={css.row}
-          component={Input}
+          component={TextField}
           name='password'
           type='password'
-          autoComplete={false}
           placeholder='New Account Password'
-          mods={css.passwordField}
-          errorMods={css.fieldError}
-          lineEnabled={false}
         />
         <Field
           className={css.row}
-          component={Input}
+          component={TextField}
           name='password-confirm'
           type='password'
-          autoComplete={false}
           placeholder='Confirm New Account Password'
-          mods={[css.passwordField, css.passwordConfirmField].join(' ')}
-          errorMods={css.fieldError}
-          lineEnabled={false}
         />
-        <Button
+        <WhiteRoundedButton
           className={css.row}
-          buttonClassName={css.submitButton}
-          type={Button.TYPES.SUBMIT}
-          label='Proceed to Login'
-          primary
-          disabled={pristine || invalid}
-          error={error}
-          mods={Button.MODS.INVERT}
-        />
+          type='submit'
+          label=''
+        >
+        Proceed to Login
+        </WhiteRoundedButton>
+        { !error ? null : <div className={css.formError}>{error}</div> }
       </form>
     )
   }

@@ -2,7 +2,7 @@ import React  from 'react'
 import PropTypes from 'prop-types'
 import uniqid from 'uniqid'
 import { connect } from 'react-redux'
-import { TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui-next'
 import { profileSelector } from 'src/store'
 import { Button, Link, Icon } from 'src/components/common'
 import { JobModel, ProfileModel } from 'src/models'
@@ -107,7 +107,7 @@ class SendInvoiceDialog extends React.Component {
         <div className={css.body}>
           <div className={css.bodyRow}>
             <strong>{job.ipfs.name}</strong>
-            <strong>LHUS {job.ipfs.budget.award ? job.ipfs.budget.award.toFixed(2).toString() : 0}</strong>
+            <strong>LHT {job.ipfs.budget.award ? job.ipfs.budget.award.toFixed(2).toString() : 0}</strong>
           </div>
           {
             this.state.expenses.map((e, index) => (
@@ -124,14 +124,14 @@ class SendInvoiceDialog extends React.Component {
             <TextField
               fullWidth
               className={css.expense}
-              hintText='Expense'
+              placeholder='Expense'
               value={this.state.newExpense.name}
               onChange={this.handleExpenseNameChange}
             />
             <div className={css.fieldWithIcon}>
               <TextField
                 fullWidth
-                hintText='$0.00'
+                placeholder='$0.00'
                 value={this.state.newExpense.value}
                 onChange={this.handleExpenseValueChange}
               />
@@ -147,7 +147,7 @@ class SendInvoiceDialog extends React.Component {
           <div className={css.bodyRow}>
             <strong>Total</strong>
             <div className={css.amount}>
-              <strong>LHUS {job.ipfs.budget.award ? job.ipfs.budget.award.plus(this.expensesValue() / 40).toFixed(2).toString() : 0}</strong>
+              <strong>LHT {job.ipfs.budget.award ? job.ipfs.budget.award.plus(this.expensesValue() / 40).toFixed(2).toString() : 0}</strong>
               <p>&nbsp;(${job.ipfs.budget.awardUSD ? job.ipfs.budget.awardUSD.plus(this.expensesValue()).toFixed(2).toString() : 0})</p>
             </div>
           </div>

@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import cn from 'classnames'
-import get from 'lodash/get'
 import { ProfileModel, JobOfferModel, JobModel } from 'src/models'
 import { Link, Button, Rating, SecurityShield } from 'src/components/common'
 import ProfileWorkerModel from 'src/api/backend/model/ProfileWorkerModel'
-import ProfileModelBackend from 'src/api/backend/model/ProfileModel'
+import PersonModelBackend from 'src/api/backend/model/PersonModel'
 import { modalsPush } from 'src/store'
 import { ReviewOfferDialog } from 'src/partials'
 import css from './WorkerCard.scss'
@@ -19,7 +18,7 @@ class WorkerCard extends React.Component {
     offer: PropTypes.instanceOf(JobOfferModel).isRequired,
     worker: PropTypes.instanceOf(ProfileModel).isRequired,
     workerProfile: PropTypes.instanceOf(ProfileWorkerModel),
-    profile: PropTypes.instanceOf(ProfileModelBackend),
+    person: PropTypes.instanceOf(PersonModelBackend),
     job: PropTypes.instanceOf(JobModel),
     offerSent: PropTypes.bool,
     pushModal: PropTypes.func,
@@ -36,10 +35,10 @@ class WorkerCard extends React.Component {
   }
 
   handleReviewOffer = () => {
-    const { job, offer, worker } = this.props
+    const { job, offer, person } = this.props
     const modal = {
       component: ReviewOfferDialog,
-      props: { job, offer, worker },
+      props: { job, offer, person },
     }
     this.props.pushModal(modal)
   }
@@ -58,7 +57,7 @@ class WorkerCard extends React.Component {
     const offerAmount = offer.estimate && offer.rate ? offer.estimate.times(offer.rate) : null
     return (
       <div className={css.footerRow}>
-        { offerAmount != null && <p className={css.offer}>Offer: LHUS {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
+        { offerAmount != null && <p className={css.offer}>Offer: LHT {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
         <p className={css.date}>Sent on {moment(offer.ipfs.appliedDate).format(dateFormat)}</p>
         <div className={css.actions}>
           <Button
@@ -82,7 +81,7 @@ class WorkerCard extends React.Component {
     const offerAmount = offer.estimate && offer.rate ? offer.estimate.times(offer.rate) : null
     return (
       <div className={css.footerRow}>
-        { offerAmount != null && <p className={css.offer}>Offer: LHUS {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
+        { offerAmount != null && <p className={css.offer}>Offer: LHT {offerAmount.toFixed(2).toString()} (${(offerAmount.times(30)).toFixed(2).toString()})</p>}
         <p className={css.date}>Applied on {moment(offer.ipfs.appliedDate).format(dateFormat)}</p>
         <div className={css.actions}>
           { offerAmount != null
@@ -105,16 +104,7 @@ class WorkerCard extends React.Component {
   }
 
   render () {
-    const { workerProfile, profile, offer, offerSent } = this.props
-    const workerName = get(profile, "level1.approved.userName")
-      ? get(profile, "level1.approved.userName")
-      : ""
-    const avatarUrl = get(profile, "level1.approved.avatar.url")
-      ? get(profile, "level1.approved.avatar.url")
-      : "/static/temp/icon-profile.jpg"
-    const validationLevel = profile
-      ? profile.getValidationLevel()
-      : 0
+    const { person, offer, offerSent } = this.props
     return (
       <div className={cn(css.root, {
         [css.attention]: !offerSent && offer,
@@ -122,16 +112,15 @@ class WorkerCard extends React.Component {
       >
         <div className={css.workerRow}>
           <div className={css.workerName}>
-            <img className={css.icon} src={avatarUrl} alt={workerName} />
-            <Link className={css.link} href={`/worker-profile/${workerProfile.id}`}>
-              <h4>{workerName}</h4>
+            <img className={css.icon} src={person.avatar} alt={person.userName} />
+            <Link className={css.link} href={`/worker-profile/${person.id}`}>
+              <h4>{person.userName}</h4>
               <p>Worker</p>
             </Link>
           </div>
           <div className={css.extraData}>
             <Rating rating={4} />
-            <SecurityShield level={validationLevel} />
-            {/* <WorkerState state={workerProfile.extra.state} /> */}
+            <SecurityShield level={person.validationLevel} />
           </div>
         </div>
         { offerSent ? this.renderFooterOfferSent(offer) : this.renderFooter(offer) }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, formValueSelector, propTypes } from 'redux-form'
-import { TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui-next'
 import { connect } from 'react-redux'
 import { JobModel, FlowTypeModel, FLOW_TYPES } from 'src/models'
 import { modalsPop } from 'src/store'
@@ -42,7 +42,7 @@ class MakeOfferDialog extends React.Component {
               fullWidth
               component={TextField}
               name='hourlyRate'
-              floatingLabelText='One hour cost'
+              label='One hour cost'
             />
             <p>USD {hourlyRate}</p>
           </div>
@@ -51,9 +51,9 @@ class MakeOfferDialog extends React.Component {
               fullWidth
               component={TextField}
               name='totalHours'
-              floatingLabelText='Total Hours'
+              label='Total Hours'
             />
-            <p>LHUS {totalHours}</p>
+            <p>LHT {totalHours}</p>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@ class MakeOfferDialog extends React.Component {
               fullWidth
               component={TextField}
               name='fixedPrice'
-              floatingLabelText='Total Price, LHUS'
+              label='Total Price, LHT'
             />
           ) : (
             this.renderFlowTM(hourlyRate, totalHours)

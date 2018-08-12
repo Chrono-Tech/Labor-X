@@ -254,11 +254,11 @@ function mapStateToProps (state, op) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (dispatch, ownProps) {
   return {
     getCompanyInfo: (address) => dispatch(companyInfo(address)),
-    onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form)),
-    onPostOfferWithPrice: async (form: JobOfferFormModel) => dispatch(createJobOfferWithPrice(form)),
+    onPostOffer: async (form: JobOfferFormModel) => dispatch(createJobOffer(form, ownProps.job)),
+    onPostOfferWithPrice: async (form: JobOfferFormModel) => dispatch(createJobOfferWithPrice(form, ownProps.job)),
     pushModal (modal) { dispatch(modalsPush(modal)) },
     push: (url) => dispatch(push(url)),
   }

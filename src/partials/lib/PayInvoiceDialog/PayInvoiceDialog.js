@@ -55,7 +55,7 @@ class PayInvoiceDialog extends React.Component {
         <div className={css.body}>
           <div className={css.invoiceRow}>
             <p>Install 10 Gas Ovens</p>
-            <p>{job.ipfs.budget.award && `LHUS ${job.ipfs.budget.award.toFixed(2)}`}</p>
+            <p>{job.ipfs.budget.award && `LHT ${job.ipfs.budget.award.toFixed(2)}`}</p>
           </div>
           <div className={css.invoiceRow}>
             <p>Gas Tubes</p>
@@ -64,15 +64,15 @@ class PayInvoiceDialog extends React.Component {
           <div className={css.totalRow}>
             <strong>Total</strong>
             <div className={css.totalPrice}>
-              <strong>{job.ipfs.budget.award && `LHUS ${job.ipfs.budget.award.toFixed(2)}`}</strong>
+              <strong>{job.ipfs.budget.award && `LHT ${job.ipfs.budget.award.toFixed(2)}`}</strong>
               <p>{`$${job.ipfs.budget.awardUSD && job.ipfs.budget.awardUSD.toString()}`}</p>
             </div>
           </div>
         </div>
         <div className={css.notice}>
           <span>Your </span>
-          <Link href='/currency' className={css.link}>LHUS Account</Link>
-          <span> has insufficient funds (LHUS 69.45). Deposit funds to your account and pay the invoice.</span>
+          <Link href='/currency' className={css.link}>LHT Account</Link>
+          <span> has insufficient funds (LHT 69.45). Deposit funds to your account and pay the invoice.</span>
         </div>
         <div className={css.actions}>
           <Button
@@ -94,8 +94,8 @@ class PayInvoiceDialog extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  pay: () => dispatch(pay(ownProps.job.ipfs.budget.flowType , ownProps.job.id)),
-  decline: () => dispatch(decline(ownProps.job.ipfs.budget.flowType , ownProps.job.id)),
+  pay: () => dispatch(pay(ownProps.job.flowType , ownProps.job.id)),
+  decline: () => dispatch(decline(ownProps.job.flowType , ownProps.job.id)),
 })
 
 export default connect(null, mapDispatchToProps)(PayInvoiceDialog)

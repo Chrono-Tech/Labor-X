@@ -36,36 +36,34 @@ export class JobBoardItem extends React.Component {
     }
   }
 
-  handleStarsPopoverOpen () {
+  handleStarsPopoverOpen = () => {
     this.setState({ starsPopover: true })
   }
 
-  handleStarsPopoverClose () {
+  handleStarsPopoverClose = () => {
     this.setState({ starsPopover: false })
   }
 
-  handleSecurityPopoverOpen () {
+  handleSecurityPopoverOpen = () => {
     this.setState({ securityPopover: true })
   }
 
-  handleSecurityPopoverClose () {
+  handleSecurityPopoverClose = () => {
     this.setState({ securityPopover: false })
   }
 
-  handleActionsPopoverOpen () {
+  handleActionsPopoverOpen = () => {
     this.setState({ actionPopover: true })
   }
 
-  handleActionsPopoverClose () {
+  handleActionsPopoverClose = () => {
     this.setState({ actionPopover: false })
   }
 
   handleJoinBoard = async (boardId) => {
     this.setState({ isJoinInProgress: true })
     try {
-      await this
-        .props
-        .onJoinBoard(boardId)
+      await this.props.onJoinBoard(boardId)
     } finally {
       this.setState({ isJoinInProgress: false })
     }
@@ -76,9 +74,7 @@ export class JobBoardItem extends React.Component {
   handleTerminateApproveClick = async () => {
     this.setState({ isTerminateProgress: true })
     try {
-      await this
-        .props
-        .onTerminateBoard(this.props.jobBoard.id)
+      await this.props.onTerminateBoard(this.props.jobBoard.id)
     } finally {
       this.setState({ isTerminateProgress: false, isTerminateDialogOpen: false })
     }
@@ -90,6 +86,7 @@ export class JobBoardItem extends React.Component {
 
   getRatingStars () {
     const { jobBoard } = this.props
+
     let starsArray = []
     let count = jobBoard.ipfs.ratingRequirements || 0
 
@@ -100,6 +97,7 @@ export class JobBoardItem extends React.Component {
         </span>
       )
     }
+
     return starsArray
   }
 
@@ -188,11 +186,11 @@ export class JobBoardItem extends React.Component {
         </div>
         <div className={css.popoverDescription}>
           <b>Job Post fee:</b>
-          LHUS 3.00 ($90.00)
+          LHT 3.00 ($90.00)
         </div>
         <div className={css.popoverDescription}>
           <b>Recruiting Services:</b>
-          LHUS 10.00‒ 30.00 ($300.00 ‒ $900.00)
+          LHT 10.00‒ 30.00 ($300.00 ‒ $900.00)
         </div>
       </div>
     )
@@ -275,11 +273,12 @@ export class JobBoardItem extends React.Component {
     return (
       <div className={css.actionButtonApproval}>
         On Approval
-        {this.renderActionsTooltip({
-          src: '/static / images / svg / help - clean.svg ',
-          popoverContent,
-          popoverClassName: css.approvalPopover,
-        })
+        {
+          this.renderActionsTooltip({
+            src: '/static/images/svg/help-clean.svg',
+            popoverContent,
+            popoverClassName: css.approvalPopover,
+          })
         }
       </div>
     )
@@ -291,7 +290,8 @@ export class JobBoardItem extends React.Component {
       <div className={css.buttonsWrapper}>
         {
           isMyJobBoard
-            ? <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>Terminate</button > : null
+            ? <button key='terminate' disabled={this.state.isTerminateProgress} className={css.actionButtonTerminate} onClick={this.handleTerminateClick}>Terminate</button >
+            : null
         }
         {
           jobBoard.extra.isSignerJoined
@@ -308,10 +308,10 @@ export class JobBoardItem extends React.Component {
     return (
       <span
         className={css.actionButtonTooltip}
-        onMouseOver={this.handleActionsPopoverOpen.bind(this)}
-        onFocus={this.handleActionsPopoverOpen.bind(this)}
-        onMouseOut={this.handleActionsPopoverClose.bind(this)}
-        onBlur={this.handleActionsPopoverClose.bind(this)}
+        onFocus={this.handleActionsPopoverOpen}
+        onBlur={this.handleActionsPopoverClose}
+        onMouseOver={this.handleActionsPopoverOpen}
+        onMouseOut={this.handleActionsPopoverClose}
       >
         <span className={css.helpIcon}>?</span > {
           popoverContent
@@ -361,7 +361,7 @@ export class JobBoardItem extends React.Component {
     const { jobBoard } = this.props
     return (
       <button className={css.logoLink}>
-        <img src={jobBoard.ipfs.logo || '/static / images / board - logo - placeholder.png '} alt=' ' style={{ width: '128px' }} />
+        <img src={jobBoard.ipfs.logo || '/static/images/board-logo-placeholder.png'} alt='' style={{ width:'128px' }} />
       </button>
     )
   }
@@ -379,27 +379,17 @@ export class JobBoardItem extends React.Component {
           <Button
             disabled={this.state.isTerminateProgress}
             onClick={this.handleTerminateRejectClick}
-          >
-            NO
-          </Button>
+          >NO</Button>
           <Button
             variant='contained'
             color='primary'
-            disabled={
-              this.state.isTerminateProgress
-            }
-            onClick={
-              this.handleTerminateApproveClick
-            }
-          >
-            {
-              this.state.isTerminateProgress
-                ? 'Loading'
-                : 'YES'
-            }
+            disabled={this.state.isTerminateProgress}
+            onClick={this.handleTerminateApproveClick}
+          >{this.state.isTerminateProgress ? 'Loading' : 'YES'}
           </Button>
-        </DialogActions >
-      </Dialog>)
+        </DialogActions>
+      </Dialog>
+    )
   }
 
   render () {
@@ -408,19 +398,19 @@ export class JobBoardItem extends React.Component {
     return (
       <div className={css.main}>
         <div className={css.logoBlock}>
-          {this.renderLogo()}
+          { this.renderLogo() }
         </div>
         <div className={css.contentBlock}>
           <div className={css.titleBlock}>
             <div>
               <button className={css.title}>
-                {jobBoard.ipfs.name}
+                { jobBoard.ipfs.name }
               </button>
             </div>
 
             <div className={css.categoryWrapper}>
               <button className={css.category}>
-                {this.renderBoardTags()}
+                { this.renderBoardTags() }
               </button>
             </div>
 
@@ -430,19 +420,10 @@ export class JobBoardItem extends React.Component {
             <div className={css.ratingBlock}>
               <div
                 className={css.starsWrapper}
-                onMouseOver={this
-                  .handleStarsPopoverOpen
-                  .bind(this)}
-                onFocus={this
-                  .handleStarsPopoverOpen
-                  .bind(this)}
-                onMouseOut={this
-                  .handleStarsPopoverClose
-                  .bind(this)}
-                onBlur={this
-                  .handleStarsPopoverClose
-                  .bind(this)}
-
+                onFocus={this.handleStarsPopoverOpen}
+                onBlur={this.handleStarsPopoverClose}
+                onMouseOver={this.handleStarsPopoverOpen}
+                onMouseOut={this.handleStarsPopoverClose}
               >
                 {this.getRatingStars()}
                 {this.getStarsPopover()}
@@ -450,25 +431,16 @@ export class JobBoardItem extends React.Component {
 
               <div
                 className={css.securityBadge}
-                onMouseOver={this
-                  .handleSecurityPopoverOpen
-                  .bind(this)}
-                onFocus={this
-                  .handleSecurityPopoverOpen
-                  .bind(this)}
-                onMouseLeave={this
-                  .handleSecurityPopoverClose
-                  .bind(this)}
-                onBlur={this
-                  .handleSecurityPopoverClose
-                  .bind(this)}
+                onFocus={this.handleSecurityPopoverOpen}
+                onBlur={this.handleSecurityPopoverClose}
+                onMouseOver={this.handleSecurityPopoverOpen}
+                onMouseLeave={this.handleSecurityPopoverClose}
               >
-                {this.renderSecurityTooltip()}
-                {this.getSecurityPopover()}
+                { this.renderSecurityTooltip() }
+                { this.getSecurityPopover() }
               </div>
-            </div>
-          )
-          }
+          </div>
+          )}
 
           <div className={css.aboutJob}>
             <div className={css.jobInfo}>
@@ -490,7 +462,7 @@ export class JobBoardItem extends React.Component {
             </div>
           </div>
         </div>
-        {this.renderTerminateDialog()}
+        { this.renderTerminateDialog() }
       </div>
     )
   }
