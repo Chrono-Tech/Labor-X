@@ -9,7 +9,6 @@ import {
   BoardRequirementModel,
   TagAreaModel,
   TagCategoryModel,
-  BoardPostFeeModel,
 } from 'src/models'
 import { boardCreate } from 'src/store'
 import CreateJobBoard from './CreateJobBoardForm'
