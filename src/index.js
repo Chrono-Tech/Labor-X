@@ -39,7 +39,7 @@ import OpportunityViewPage from "pages/opportunity-view"
 import ClientJobViewPage from "pages/client-job-view"
 import ClientStatsPage from "pages/client-stats"
 import EarnActivityPointsPage from "pages/earn-activity-points"
-import JobBoardsPage from "pages/job-boards"
+import JobBoardsPage from "pages/job-boards/index"
 import JobsPage from "pages/jobs"
 import MyJobsBoardPage from "pages/my-jobs-boards"
 import MyProfilePage from "pages/my-profile"
@@ -169,7 +169,7 @@ const store = createStore(
   compose(
     applyMiddleware(routerMiddleware(history), thunk, loggerMiddleware),
     // eslint-disable-next-line no-underscore-dangle
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 )
 

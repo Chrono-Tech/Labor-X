@@ -7,9 +7,9 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
-import { Popover, Icon } from 'src/components/common'
-import { BoardModel } from 'src/models'
-import { joinBoard, terminateBoard } from 'src/store'
+import { Popover, Icon } from 'src/components/common/index'
+import { BoardModel } from 'src/models/index'
+import { joinBoard, terminateBoard } from 'src/store/index'
 import { BOARD_REQUIREMENTS_LIST } from "src/models/app/BoardRequirementModel"
 import css from './JobBoardItem.scss'
 
@@ -264,7 +264,7 @@ export class JobBoardItem extends React.Component {
   renderApprovalActions () {
     const popoverContent = (
       <div>
-        <div className={css.popoverHeader}>Your Request is processing</div> 
+        <div className={css.popoverHeader}>Your Request is processing</div>
         <div className={css.popoverDescription}>
           You have requested to join the board. Moderators of the board are reviewing your
           request and will back to you soon!
@@ -391,7 +391,7 @@ export class JobBoardItem extends React.Component {
             onClick={
               this.handleTerminateApproveClick
             }
-          > 
+          >
             {
               this.state.isTerminateProgress
                 ? 'Loading'
@@ -442,7 +442,7 @@ export class JobBoardItem extends React.Component {
                 onBlur={this
                   .handleStarsPopoverClose
                   .bind(this)}
-                
+
               >
                 {this.getRatingStars()}
                 {this.getStarsPopover()}

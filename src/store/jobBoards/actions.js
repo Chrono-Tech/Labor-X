@@ -14,17 +14,13 @@ export const selectInitialProps = () => async (dispatch, getState) => {
     const BoardController = daoByType('BoardController')(state)
     const userAddress = currentAddressSelector()(state)
     const boards = await BoardController.getBoards(userAddress)
-    let cards = []
-    for (let i = 0; i < boards.length; i++) {
-      const board = boards[i];
-      const jobsCount = await BoardController.getJobsInBoardCount(board.id)
-      const clientsCount = 0
-      cards.push({
-        board,
-        jobsCount: jobsCount ? jobsCount : 0,
-        clientsCount: clientsCount ? clientsCount : 0
-      })
-    }
+    const boardIds = boards.map(x => x.id)
+    const boardsJobsCounters = await Promise.all(boardIds.map(id => BoardController.getJobsInBoardCount(id)))
+    const cards = boards.map((board, i) => ({
+      board,
+      jobsCount: boardsJobsCounters[i],
+      clientsCount: 0, // todo: we did not have correct method in smart contract to fetch clientsCount
+    }))
     dispatch(selectInitialPropsSuccess({ cards }))
   } catch (err) {
     // eslint-disable-next-line no-console

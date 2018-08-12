@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
-import JobBoards from 'src/components/JobBoards/JobBoards'
-import { MainLayout } from 'src/components/layouts'
-import { getSelectInitialPropsLoading, selectInitialProps } from "src/store/jobBoards";
+import JobBoardsContent from 'src/content/lib/JobBoardsContent/JobBoardsContent'
+import { MainLayout } from 'src/components/layouts/index'
+import { getSelectInitialPropsLoading, selectInitialProps } from "src/store/jobBoards/index";
 import PageContentLoader from 'src/components/PageContentLoader'
 
 
@@ -21,7 +21,7 @@ class JobBoardsPage extends React.Component {
   render () {
     return (
       <MainLayout title='nav.activeJobs'>
-        { this.props.selectInitialPropsLoading ? <PageContentLoader /> : <JobBoards /> }
+        { this.props.selectInitialPropsLoading ? <PageContentLoader /> : <JobBoardsContent /> }
       </MainLayout>
     )
   }
