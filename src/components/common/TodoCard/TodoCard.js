@@ -5,13 +5,12 @@ import { Image } from 'components/common'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
-import { JobModel, JOB_STATE_WORK_REJECTED } from "src/models"
+import get from "lodash/get"
+import { JobModel, JOB_STATE_WORK_REJECTED, JOB_STATE_STARTED, JOB_STATE_PENDING_START } from "src/models"
 import { pauseJobWork, resumeJobWork, startWork } from "src/store"
-
-import css from './TodoCard.scss'
-import { JOB_STATE_PENDING_START, JOB_STATE_STARTED } from "../../../models"
 import { SendInvoiceDialog } from "../../../partials"
 import { modalsPush } from "../../../store"
+import css from './TodoCard.scss'
 
 const STATUSES = {
   APPLIED: 'applied',
@@ -36,20 +35,46 @@ class TodoCard extends React.Component {
     openSendInvoiceDialog: PropTypes.func,
   }
 
-  constructor (props, context){
+  constructor (props, context) {
     super(props, context)
-    this.workedTimeRender = this.workedTimeRender.bind(this)
-    this.progressIcon = this.progressIcon.bind(this)
-    this.handleComplete = this.handleComplete.bind(this)
+    this.state = {
+      ticker: 0,
+      intervalRef: null,
+      tick: this.tick,
+    }
   }
 
-  handleComplete = () => {
-    // eslint-disable-next-line no-console
-    console.log('Opportunity-view-handleComplete')
-    this.props.openSendInvoiceDialog(this.props.job)
+  static getDerivedStateFromProps (nextProps, prevState) {
+    let ticker = prevState.ticker
+    let intervalRef = prevState.intervalRef
+
+    if (nextProps.job.state === JOB_STATE_STARTED) {
+      if (!prevState.intervalRef && !nextProps.job.paused) {
+        ticker = 0
+        intervalRef = setInterval(prevState.tick, 1000)
+      } else {
+        if (nextProps.job.paused) {
+          clearInterval(prevState.intervalRef)
+          ticker = 0
+          intervalRef = null
+        }
+      }
+    } else {
+      clearInterval(prevState.intervalRef)
+      ticker = 0
+      intervalRef = null
+    }
+    return {
+      ticker,
+      intervalRef,
+    }
   }
 
-  handleMessage () {
+  componentWillUnmount () {
+    clearInterval(this.state.intervalRef)
+  }
+
+  handleMessage = () => {
     // eslint-disable-next-line no-console
     console.log('Opportunity-view-handleMessage')
   }
@@ -68,21 +93,21 @@ class TodoCard extends React.Component {
     this.props.openSendInvoiceDialog()
   }
 
-  getTodoStatus = () => {
+  getTodoStatus () {
     const { job } = this.props
-
-    if (!job.paused) {
+    if (!job.paused && job.state === JOB_STATE_STARTED) {
       return STATUSES.IN_PROGRESS
-    } else if (job.state === JOB_STATE_WORK_REJECTED) {
-      return STATUSES.PROBLEM
-    } else if (job.ipfs.period && this.daysUntil(job.ipfs.period.until) === 1) {
-      return STATUSES.ATTENTION
-    } else {
-      return STATUSES.APPROVED
     }
+    if (job.state === JOB_STATE_WORK_REJECTED) {
+      return STATUSES.PROBLEM
+    }
+    if (job.ipfs.period && this.daysUntil(job.ipfs.period.until) === 1) {
+      return STATUSES.ATTENTION
+    }
+    return STATUSES.APPROVED
   }
 
-  getCardNote = () => {
+  getCardNote () {
     const { job } = this.props
     if (job.state.name === JOB_STATE_WORK_REJECTED) {
       return 'RE-DO TODAY'
@@ -93,25 +118,42 @@ class TodoCard extends React.Component {
     }
   }
 
-  workedTimeRender () {
-    const dur = moment.duration(this.workedTimeSeconds(), 'seconds')
-    const hours = Math.trunc(dur.asHours())
-    const minutes = this.leadZero(Math.trunc(dur.asMinutes() % 60))
-    const seconds = this.leadZero(Math.trunc(dur.asSeconds() % 60))
-    return `${hours}:${minutes}:${seconds}`
+  getIconType (job) {
+    if (job.paused && job.state === JOB_STATE_STARTED) {
+      return Image.ICONS.PLAY
+    }
+    if (!job.paused && job.state === JOB_STATE_STARTED) {
+      return Image.ICONS.PAUSE
+    }
+    return Image.ICONS.PLAY
   }
 
-  workedTimeSeconds = () => {
-    const { finishTime, extra, pausedFor } = this.props.job
-    const { startTime } = extra
-    if (!startTime) return 0
-    const fromTime = finishTime ? finishTime : + new Date
-    return fromTime - startTime.valueOf() - pausedFor
+  getDurationString (milliseconds) {
+    var tempTime = moment.duration(milliseconds, "milliseconds")
+    return String(tempTime.hours()).padStart(2, "0") + ":" + String(tempTime.minutes()).padStart(2, "0") + ":" + String(tempTime.seconds()).padStart(2, "0")
   }
 
-  totalHours = () => {
+  getWorkedTime () {
+    const now = Date.now()
+    const startTime = this.props.job.extra.startTime.getTime()
+    const pausedFor = this.props.job.pausedFor * 1000
+    const ticker = this.state.ticker * 1000
+    return ((now - startTime) - pausedFor) + ticker
+  }
+
+  tick = () => {
+    this.setState({ ticker: this.state.ticker++ })
+  }
+
+  totalHours () {
     const { job } = this.props
-    return job.ipfs.period && job.ipfs.period.isSpecified && job.ipfs.period.totalHours
+    const since = get(job, "ipfs.period.since")
+    const until = get(job, "ipfs.period.until")
+    if (since && until) {
+      return moment.duration((until.getTime() - since.getTime()), 'milliseconds').asHours()
+    } else {
+      return 0
+    }
   }
 
   leadZero (value) {
@@ -126,9 +168,40 @@ class TodoCard extends React.Component {
     return (
       <Image
         onClick={this.handlePausePlayClick}
-        icon={this.props.job.paused ? Image.ICONS.PAUSE : Image.ICONS.PLAY}
+        icon={this.getIconType(this.props.job)}
       />
     )
+  }
+
+  renderTimes () {
+    const { job } = this.props
+    if (job.state === JOB_STATE_PENDING_START) {
+      return (
+        <p>
+          {`Start Work of  ${this.totalHours()}h`}
+        </p>
+      )
+    }
+
+    if (job.state === JOB_STATE_STARTED && !job.paused) {
+      return (
+        <p>
+          <span className={css.medium}>
+            {`${this.getDurationString(this.getWorkedTime())} of  ${this.totalHours()}h`}
+          </span>
+        </p>
+      )
+    }
+
+    if (job.state === JOB_STATE_STARTED && job.paused) {
+      return (
+        <p>
+          <span className={css.medium}>
+            {`${this.getDurationString(this.getWorkedTime())} of  ${this.totalHours()}h`}
+          </span>
+        </p>
+      )
+    }
   }
 
   render () {
@@ -140,27 +213,15 @@ class TodoCard extends React.Component {
         <div className={css.todoInfo}>
           {cardNote ? <p className={css.cardNote}>{cardNote}</p> : null}
           <div className={css.rowInfo}>
-            { job.ipfs.period && job.ipfs.period.isSpecified ? <span>{moment(job.ipfs.period.since).format(dateFormat)}</span> : null }
-            <span className={css.medium}>{ job.ipfs.name }</span>
-            { job.ipfs.period && job.ipfs.period.isSpecified && !!this.daysUntil(job.ipfs.period.until) ? <span className={css.daysLeft}>{this.daysUntil(job.ipfs.period.until)} day(s) to go</span> : null }
+            {job.ipfs.period && job.ipfs.period.since ? <span>{moment(job.ipfs.period.since).format(dateFormat)}</span> : null}
+            <span className={css.medium}>{job.ipfs.name}</span>
+            {job.ipfs.period && job.ipfs.period.until && !!this.daysUntil(job.ipfs.period.until) ? <span className={css.daysLeft}>{this.daysUntil(job.ipfs.period.until)} day(s) to go</span> : null}
           </div>
         </div>
         <div className={css.progress}>
           <div className={css.progressTimer}>
-            { job.state === JOB_STATE_PENDING_START ? null : this.progressIcon() }
-            <p>
-              <span className={css.medium}>
-                {
-                  this.workedTimeSeconds() > 0
-                    ? this.workedTimeRender()
-                    : job.state === JOB_STATE_PENDING_START
-                      ? 'Waiting for Start Work Approve by Client'
-                      : 'Start Work'
-                }
-              </span>
-              &nbsp;
-              {this.totalHours() ? `of  ${this.totalHours()}h` : (this.workedTimeSeconds() === 0 ? null : `h`) }
-            </p>
+            {this.progressIcon()}
+            {this.renderTimes()}
           </div>
           <div className={css.actions}>
             {
