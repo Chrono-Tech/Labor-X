@@ -1,0 +1,10 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.content {
+  margin-top: 1rem;
+  padding: 0 4rem;
+  > * {
+    margin-bottom: 1rem;
+  }
+}

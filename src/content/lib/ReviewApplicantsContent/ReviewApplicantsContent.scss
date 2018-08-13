@@ -78,19 +78,20 @@ $maxWidth: 74rem;
     .contentContainer {
       @include flex(column, center, stretch);
       flex: 1;
-      .filterRow {
+      .searchContainer {
         @include flex(row, flex-start, center);
-        margin-top: 2rem;
-        flex: 1;
+        margin: 3rem 0;
         width: 100%;
-        .searchRow {
+        .searchInput {
+          width: 100%;
+        }
+        .currentFilterContainer {
           @include flex(row, flex-start, center);
-          flex: 2;
-          > * {
-            margin-left: 1.5rem;
-          }
-          .search {
-            flex-grow: 1;
+          padding-left: 5rem;
+          margin-left: auto;
+          .filterText {
+            white-space: nowrap;
+            margin-right: 1rem;
           }
         }
       }

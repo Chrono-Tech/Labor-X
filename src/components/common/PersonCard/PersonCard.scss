@@ -1,0 +1,86 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.card {
+  .content {
+    @include flex(row, flex-start, center);
+    .person {
+      @include flex(row, flex-start, center);
+      .avatar {
+        margin-right: 1rem;
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .name {
+        color: $color-black;
+        font-weight: $font-weight-medium;
+      }
+      .skills {
+        color: $color-grey;
+        font-weight: $font-weight-light;
+      }
+    }
+    .extra {
+      @include flex(row, space-between, center);
+      margin-left: auto;
+      width: 30rem;
+      .stars {
+        @include flex(row, flex-start, center);
+        .star {
+          height: 2rem;
+          width: 2rem;
+          margin-right: .3rem;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+      .securityRatingWrapper {
+        @include flex(column, center, center);
+        position: relative;
+        width: 3.2rem;
+        height: 3.2rem;
+        .securityRatingShield {
+          position: absolute;
+        }
+        .securityRating {
+          position: absolute;
+          color: $color-white;
+        }
+      }
+      .state {
+        font-size: $pMediumSize;
+        font-weight: $font-weight-medium;
+        height: 2.4rem;
+      }
+    }
+  }
+}
+
+.tooltipContainer {
+  padding: 2rem;
+  background-color: $color-white;
+  border: 2px solid $color-super-black;
+  .tooltip {
+    background-color: $color-white;
+    .tooltipHeader {
+      color: $color-super-black;
+      font-weight: $font-weight-medium;
+    }
+    .tooltipComment {
+      color: $color-super-black;
+      padding: 1.5rem 0;
+      font-size: $pSize;
+      line-height: 2.2rem;
+      font-weight: $font-weight-light;
+    }
+    .tooltipCalendar {
+      color: $color-super-black;
+      font-size: $pSize;
+      line-height: 2.2rem;
+      font-weight: $font-weight-light;
+    }
+  }
+}

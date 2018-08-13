@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import { Tip, Icon } from 'src/components/common'
-import Checkbox from 'material-ui/Checkbox'
+import Checkbox from '@material-ui/core/Checkbox'
 
 import css from './VerificationLevelSelector.scss'
 
@@ -44,16 +44,12 @@ export default class VerificationLevelSelector extends React.Component {
       >
         <Checkbox
           name={`verificationCb${level}`}
-          style={{
-            width: '24px',
-            height: '42px',
-            opacity: 'inherit',
-          }}
+          classes={{ root: css.checkbox }}
           checked={this.state.currentValue >= level}
           // eslint-disable-next-line react/jsx-no-bind
-          onCheck={() => this.handleOnChange(level)}
+          onChange={() => this.handleOnChange(level)}
           checkedIcon={this.renderIcon(level, true)}
-          uncheckedIcon={this.renderIcon(level, false)}
+          icon={this.renderIcon(level, false)}
 
         />
       </Tip>

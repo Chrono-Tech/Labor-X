@@ -5,10 +5,14 @@ import uniqid from 'uniqid'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import get from "lodash/get"
+import InputAdornment from '@material-ui/core/InputAdornment'
+import TextField from '@material-ui/core/TextField'
+
 import { JobModel, ProfileModel, JobOfferModel } from 'src/models'
 import { applicantsSelector, jobSelector } from 'src/store/review-applicants/selectors'
-import { Button, Input, Image, Icon } from 'src/components/common'
+import { Button, Image, Icon } from 'src/components/common'
 import { WorkerCard } from 'src/partials'
+
 import css from './ReviewApplicantsContent.scss'
 
 const FORM_REVIEW_APPLICANTS = 'form/review-applicants'
@@ -85,25 +89,25 @@ export class ReviewApplicantsContent extends React.Component {
             </div>
           </div>
           <form className={css.contentContainer} name={FORM_REVIEW_APPLICANTS}>
-            <div className={css.filterRow}>
-              <div className={css.searchRow}>
-                <Image
-                  icon={Image.ICONS.SEARCH}
-                  color={Image.COLORS.BLACK}
-                />
-                <Field
-                  component={Input}
-                  className={css.search}
-                  name='searchReviewApplicants'
-                  placeholder='Search by keyword'
-                  materialInput
-                  defaultTheme={false}
-                />
-              </div>
-              <Image
-                icon={Image.ICONS.FILTER}
-                color={Image.COLORS.BLACK}
+            <div className={css.searchContainer}>
+              <Field
+                fullwidth
+                component={TextField}
+                className={css.searchInput}
+                name='searchReviewApplicants'
+                placeholder='Search by keyword'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <Icon size={24} icon={Icon.ICONS.SEARCH} color={Icon.COLORS.BLACK} />
+                    </InputAdornment>
+                  ),
+                }}
               />
+              <div className={css.currentFilterContainer}>
+                <div className={css.filterText}>Sydney, Building, Industrial</div>
+                <Icon size={24} icon={Icon.ICONS.FILTER} color={Icon.COLORS.GREY50} />
+              </div>
             </div>
             <div className={css.block}>
               <h4>Selected Worker</h4>

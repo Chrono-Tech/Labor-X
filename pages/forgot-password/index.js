@@ -15,10 +15,11 @@ class ForgotPassword extends React.Component {
   }
 
   render () {
+    const { walletsList, selectedWallet } = this.props
     return (
       <div className={css.root}>
         <LoginActions>
-          <RecoveryAccountForm />
+          <RecoveryAccountForm walletsList={walletsList} selectedWallet={selectedWallet} />
         </LoginActions>
       </div>
     )

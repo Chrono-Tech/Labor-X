@@ -3,8 +3,8 @@ import connect from 'react-redux/lib/connect/connect'
 import Link from 'react-router-dom/Link'
 import PropTypes from "prop-types"
 import { Field, reduxForm } from 'redux-form'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
 
-import { Input } from "src/components/common"
 import SigninLayout from "src/components/layouts/SigninLayout/SigninLayout"
 import WhiteRoundedButton from "src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton"
 import Person404Dialog from 'src/components/dialogs/Person404Dialog/Person404Dialog'
@@ -39,13 +39,12 @@ export class AuthImportSeedContent extends React.Component {
         <form className={css.root} name={FORM} onSubmit={this.props.handleSubmit}>
           <h3 className={css.header}>Mnemonic form</h3>
           <Field
-            component={Input}
+            component={TextField}
             name='mnemonic'
             placeholder='Enter mnemonic'
             className={css.input}
-            autoComplete={false}
-            lineEnabled={false}
-            mods={css.keyField}
+            FormHelperTextProps={{ classes: { root: css.fieldHelper } }}
+            InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
           <WhiteRoundedButton type='submit' loader={this.props.submitLoading}>Proceed to Login</WhiteRoundedButton>
           <br />

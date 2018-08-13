@@ -104,7 +104,6 @@ export const handleUserBinded = (e: UserBindedEvent) => async (dispatch, getStat
 
 export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
   const state = getState()
-
   const { list } = state.boards
 
   let { rating, categories, level, searchText } = filterFields
@@ -115,7 +114,7 @@ export const updateFilterBoards = (filterFields) => (dispatch, getState) => {
 
     currentList = currentList.filter(
       (board) => categories.every(
-        (item) => board.categories.find(
+        (item) => board.tagsCategory.find(
           (tag) => String(tag.name).toLowerCase() === String(item).toLowerCase()
         )
       )

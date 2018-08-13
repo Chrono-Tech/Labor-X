@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
-import { TextField } from 'redux-form-material-ui'
+import { TextField } from 'redux-form-material-ui-next'
 import { connect } from 'react-redux'
 import { BoardModel, JobModel } from 'src/models'
 import Button from "@material-ui/core/Button"
@@ -17,7 +17,7 @@ class DelegateDialog extends React.Component {
     board: PropTypes.instanceOf(BoardModel),
     job: PropTypes.instanceOf(JobModel),
     handleCancel: PropTypes.func,
-  } 
+  }
 
   handleSumbit = () => {
   }
@@ -40,13 +40,13 @@ class DelegateDialog extends React.Component {
                 fullWidth
                 component={TextField}
                 name='delegateDialogText'
-                floatingLabelText='Message to board creator'
+                label='Message to board creator'
               />
             </Grid>
           </Grid>
 
           <Grid container spacing={24}>
-            <Grid item xs={12} className={css.gridButtons}> 
+            <Grid item xs={12} className={css.gridButtons}>
               <Button className={css.cancelButton} variant='contained' onClick={this.props.handleCancel}> Cancel </Button>
               <Button className={css.submitButton} variant='contained' color='primary' type='submit'> Submit </Button>
             </Grid>

@@ -1,4 +1,4 @@
-import { Input, Translate } from 'components/common'
+import { Translate } from 'components/common'
 import PropTypes from 'prop-types'
 import React from 'react'
 import css from './NumberInput.scss'
@@ -69,7 +69,7 @@ export default class NumberInput extends React.Component {
 
         <input
           className={css.input}
-          type={Input.TYPES.TEXT}
+          type='text'
           {...this.props.input}
         />
 

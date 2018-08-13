@@ -1,0 +1,109 @@
+@import '~styles/globals/variables';
+@import '~styles/globals/mixins';
+
+.main {
+  width: 100%;
+  padding: 50px 0;
+}
+
+.contentWrapper {
+  margin: 0 30px;
+}
+
+.emptyListMessage {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 20px 0;
+}
+
+.flexRow {
+  @include flex(row, center, flex-start);
+}
+
+.contentBlock {
+  width: 100%;
+}
+
+.titleText {
+  color: #333333;
+  font-weight: 200;
+  letter-spacing: -1px;
+  margin-bottom: 37px;
+}
+
+b {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.actionsBlock {
+
+  display: flex;
+  margin-bottom: 30px;
+  .search {
+    flex: 1;
+    padding-right: 20px;
+    .searchInput {
+      width: 100%;
+    }
+  }
+}
+
+.filterBlock {
+  width: 200px;
+  margin-left: 40px;
+}
+
+.filterContent {
+  padding: 20px;
+  background: #333333;
+  width: 200px;
+}
+
+hr {
+  margin-left: -10px;
+  margin-right: -10px;
+  border-bottom: 1px solid #4C4C4C;
+}
+
+.resetRow {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  color: #00A0D2;
+  margin-bottom: 10px;
+}
+
+.resetButton {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #00A0D2;
+}
+
+.filterLabel {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.field {
+  margin-bottom: 17px;
+}
+
+.hr {
+  margin: 20px -20px 20px -20px;
+  border-bottom: 1px solid #4C4C4C;
+}
+
+.filterSwitchBg {
+  color: $color-white !important;
+  fill: $color-white !important;
+}
+
+.filterSwitchlabel {
+  color: $color-white;
+}

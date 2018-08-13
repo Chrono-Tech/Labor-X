@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox } from 'redux-form-material-ui'
+import { Checkbox } from 'redux-form-material-ui-next'
 import css from './ValidatedCheckbox.scss'
 
 export default class ValidatedCheckbox extends Checkbox {

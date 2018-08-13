@@ -5,7 +5,6 @@ import { push } from 'connected-react-router'
 import { WalletEntryModel, SignInModel, UserAccountTypesModel } from 'src/models'
 import { createWallet, decryptWallet, walletSelect, walletAdd, validateMnemonicForWallet, resetPasswordWallet } from 'src/store'
 
-import { FORM_LOGIN, FORM_PRIVATE_KEY, FORM_MNEMONIC } from 'src/components/Login'
 import { web3Selector } from "src/store/ethereum/selectors"
 import { userSave } from "src/store/user/actions"
 import { setExistingAccount } from "src/store/createAccount/actions"
@@ -77,7 +76,7 @@ export const onSignInSuccess = () => (dispatch) => {
 }
 
 export const onSignInFail = () => (dispatch) => {
-  dispatch(stopSubmit(FORM_LOGIN, { password: 'Password does not match' }))
+  dispatch(stopSubmit('form/createWallet', { password: 'Password does not match' }))
 }
 
 export const signOut = () => (dispatch) => {
@@ -99,7 +98,7 @@ export const createAccount = (walletName, password) => async (dispatch, getState
 
     dispatch(changeStep(LoginSteps.SelectWallet))
   } else {
-    dispatch(push('/account-password'))
+    dispatch(push('/auth/signup/account-password'))
   }
 }
 
@@ -125,7 +124,7 @@ export const onSubmitMnemonicSuccess = () => (dispatch) => {
 }
 
 export const onSubmitMnemonicFail = () => (dispatch) => {
-  dispatch(stopSubmit(FORM_MNEMONIC, { key: 'Wrong mnemonic' }))
+  dispatch(stopSubmit('form/mnemonic', { key: 'Wrong mnemonic' }))
 }
 
 export const selectWalletRecoveryForm = (wallet) => (dispatch) => {
@@ -241,7 +240,7 @@ export const onSubmitPrivateKey = (values) => async (dispatch, getState) => {
       dispatch(showAccount404Dialog())
     }
   } catch (err) {
-    dispatch(stopSubmit(FORM_PRIVATE_KEY, { key: 'Wrong private key' }))
+    dispatch(stopSubmit('form/privateKey', { key: 'Wrong private key' }))
   }
 }
 
@@ -250,5 +249,5 @@ export const handleAccount404DialogYesClick = () => (dispatch, getState) => {
   const account = getAccount(state)
   dispatch(setExistingAccount(account))
   dispatch(hideAccount404Dialog())
-  dispatch(push('/account-password'))
+  dispatch(push('/auth/signup/account-password'))
 }

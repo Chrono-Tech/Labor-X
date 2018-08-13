@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from "prop-types"
 import connect from "react-redux/lib/connect/connect"
 import { Field, reduxForm } from 'redux-form'
+import TextField from 'redux-form-material-ui-next/lib/TextField'
 
 import { CREATE_WALLET_FORM as FORM } from "src/store/auth/import/constants"
 import { submitCreateWallet as submit } from "src/store/auth/import/actions"
 import SigninLayout from "src/components/layouts/SigninLayout/SigninLayout"
 import WhiteRoundedButton from "src/components/common/buttons/WhiteRoundedButton/WhiteRoundedButton"
-import { Input } from 'src/components/common'
 import { encryptedWalletSelector } from "src/store/auth/import/selectors"
 
 import validate from './validate'
@@ -28,36 +28,34 @@ export class AuthImportCreateWalletContent extends React.Component {
           <div className={css.header}>Create wallet</div>
           <Field
             className={css.row}
-            component={Input}
+            component={TextField}
+            fullwidth
             name='name'
             placeholder='Wallet name'
-            autoComplete={false}
-            lineEnabled={false}
-            mods={css.passwordField}
-            errorMods={css.fieldError}
+            FormHelperTextProps={{ classes: { root: css.fieldHelper } }}
+            InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
           />
           {
             this.props.encryptedWallet ? null : (
-              <div>
+              <div className={css.passwordsColumn}>
                 <Field
                   className={css.row}
-                  component={Input}
+                  component={TextField}
                   name='password'
                   type='password'
                   placeholder='Password'
-                  autoComplete={false}
-                  lineEnabled={false}
-                  mods={css.passwordField}
+                  FormHelperTextProps={{ classes: { root: css.fieldHelper } }}
+                  InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
                 />
+
                 <Field
                   className={css.row}
-                  component={Input}
+                  component={TextField}
                   name='passwordConfirm'
                   type='password'
                   placeholder='Password confirmation'
-                  autoComplete={false}
-                  lineEnabled={false}
-                  mods={css.passwordField}
+                  FormHelperTextProps={{ classes: { root: css.fieldHelper } }}
+                  InputProps={{ disableUnderline: true, classes: { input: css.fieldInput } }}
                 />
               </div>
             )
