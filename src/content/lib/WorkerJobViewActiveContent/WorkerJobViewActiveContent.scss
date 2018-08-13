@@ -1,0 +1,198 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+$maxWidth: 100rem;
+
+.main {
+  flex-grow: 1;
+  margin-bottom: 20rem;
+  .title {
+    height: 9rem;
+    margin: 0;
+    padding: 4rem 4rem 0;
+    color: $color-white;
+    background-image: $gradientBlueToGreen;
+    .titleBar {
+      @include flex(row, flex-start, stretch);
+      max-width: calc(#{$maxWidth} - 4rem);
+      height: 5rem;
+      border-top-left-radius: .5rem;
+      border-top-right-radius: .5rem;
+      background-color: $color-azure;
+      .backButton {
+        color: $color-white;
+        background-color: $color-azure;
+      }
+    }
+  }
+  .content {
+    @include card;
+    margin: 0 4rem;
+    max-width: calc(#{$maxWidth} - 4rem);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    .header {
+      @include flex(row, flex-start, stretch);
+      position: relative;
+      color: $color-white;
+      height: 20.5rem;
+      padding: 4rem;
+      padding-top: 3rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      .jobInfoContainer {
+        @include flex(row, flex-start, stretch);
+        //padding-top: 1.5rem;
+        .jobInfo {
+          margin-right: 2rem;
+          font-size: $h4Size;
+        }
+      }
+      .jobName {
+        @include flex(row, flex-start, center);
+        height: 6rem;
+
+        color: #FFFFFF;
+        line-height: 36px;
+        font-family: roboto, sans-serif;
+        font-size: 30px;
+        font-weight: 500;
+        text-transform: none;
+        margin-bottom: 0;
+      }
+      .jobMenu {
+        @include position(absolute, $bottom: -2rem, $right: 13rem);
+        @include flex(column, center, center);
+        cursor: pointer;
+        height: 4rem;
+        width: 4rem;
+        background-color: $color-azure;
+        border-radius: 50%;
+        &:hover {
+          background-color: $color-blue;
+          .jobDropdown {
+            visibility: visible;
+          }
+        }
+        .jobDropdown {
+          @include position(absolute, $bottom: -16rem, $right: 0);
+          visibility: hidden;
+          .jobDropdownEntry {
+            @include flex(column, center, center);
+            margin: 1rem 0;
+            height: 4rem;
+            width: 16rem;
+            border-radius: 2rem;
+            color: $color-white;
+            background-color: $color-azure;
+            &:hover {
+              background-color: $color-blue;
+            }
+          }
+        }
+      }
+      .messageIcon {
+        @include flex(column, center, center);
+        @include position(absolute, $bottom: -3rem, $right: 4rem);
+        cursor: pointer;
+        background-color: $color-azure;
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        &:hover {
+          background-color: $color-blue;
+        }
+      }
+    }
+    .tabs {
+      @include flex(row, flex-start, stretch);
+      padding: 0 3rem;
+      height: 5rem;
+      margin-bottom: 3rem;
+      .tab {
+        @include flex(row, center, center);
+        outline-color: transparent;
+        cursor: pointer;
+        user-select: none;
+        color: $color-white;
+        min-width: 16rem;
+        padding: .5rem 2rem;
+        font-size: $h4Size;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        &:hover:not(.tabActive) {
+          background-color: rgba($color-black, .3);
+        }
+      }
+      .tabActive {
+        border-bottom: .5rem solid $color-white;
+        padding-bottom: 0;
+        outline: none;
+        &:hover {
+          //background-color: 0;
+          //border-bottom: .5rem solid $color-white;
+        }
+      }
+    }
+    .tabContent {
+      min-height: 60rem;
+    }
+  }
+}
+
+.bgGreen {
+  background-color: $color-todo1;
+}
+
+.bgGrey {
+  background-color: $color-gray50;
+}
+
+.appBar {
+  position: relative;
+  top: 0px;
+  left: 4rem;
+  background-color: transparent;
+  box-shadow: unset !important;
+  height: 5rem;
+  border-bottom: unset !important;
+}
+
+.appBarWrapper {
+  border-top: 1px solid rgba($color: #515151, $alpha: 0.2);
+  position: absolute;
+  bottom: 0px;
+  height: 6.4rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.tabsIndicator {
+  background-color: white;
+  height: 5px;
+}
+
+.tabsRoot {
+  position: absolute;
+  bottom: 0px;
+}
+
+.tabSelected {
+  color: white;
+}
+ .tabRoot {
+  color: white;
+  font-size: 2rem;
+  min-width: 7rem;
+  max-width: 25rem;
+  opacity: 1;
+}
+
+.activeTabText {
+  font-size: 2rem;
+  font-size: 1.7rem;
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
+}

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { connect } from "react-redux"
-import { Image } from 'components/common'
+import { Image, Link } from 'components/common'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cn from 'classnames'
@@ -141,7 +141,7 @@ class TodoCard extends React.Component {
           {cardNote ? <p className={css.cardNote}>{cardNote}</p> : null}
           <div className={css.rowInfo}>
             { job.ipfs.period && job.ipfs.period.isSpecified ? <span>{moment(job.ipfs.period.since).format(dateFormat)}</span> : null }
-            <span className={css.medium}>{ job.ipfs.name }</span>
+            <span className={css.medium}> <Link href={`/worker-job-view-active/${job.id}`}> { job.ipfs.name } </Link></span>
             { job.ipfs.period && job.ipfs.period.isSpecified && !!this.daysUntil(job.ipfs.period.until) ? <span className={css.daysLeft}>{this.daysUntil(job.ipfs.period.until)} day(s) to go</span> : null }
           </div>
         </div>

@@ -1,0 +1,38 @@
+@import "~styles/globals/variables";
+@import "~styles/globals/mixins";
+
+.rootContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.generalDataContainer {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  margin-left: 30px;
+}
+
+.dataRow {
+  color: #333333;
+  font-weight: 400;
+  font-family: roboto, sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  h3 {
+    display: flex;
+    font-size: 16px;
+  }
+}
+
+.dataText {
+  color: #7F7F7F;
+  font-family: roboto, sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+
+}
