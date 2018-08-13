@@ -35,11 +35,11 @@ $maxWidth: 100rem;
       @include flex(row, flex-start, stretch);
       position: relative;
       color: $color-white;
-      height: 16rem;
+      height: 20.5rem;
       padding: 4rem;
+      padding-top: 3rem;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
-      border-bottom: 1px solid rgba($color-black, .1);
       .jobInfoContainer {
         @include flex(row, flex-start, stretch);
         //padding-top: 1.5rem;
@@ -47,12 +47,6 @@ $maxWidth: 100rem;
           margin-right: 2rem;
           font-size: $h4Size;
         }
-      }
-      .jobProgressContainer {
-        @include flex(row, flex-start, stretch);
-        align-self: flex-end;
-        margin-left: auto;
-        font-size: $h3Size;
       }
       .jobName {
         @include flex(row, flex-start, center);
@@ -67,7 +61,7 @@ $maxWidth: 100rem;
         margin-bottom: 0;
       }
       .jobMenu {
-        @include position(absolute, $bottom: -7rem, $right: 13rem);
+        @include position(absolute, $bottom: -2rem, $right: 13rem);
         @include flex(column, center, center);
         cursor: pointer;
         height: 4rem;
@@ -99,7 +93,7 @@ $maxWidth: 100rem;
       }
       .messageIcon {
         @include flex(column, center, center);
-        @include position(absolute, $bottom: -8rem, $right: 4rem);
+        @include position(absolute, $bottom: -3rem, $right: 4rem);
         cursor: pointer;
         background-color: $color-azure;
         height: 6rem;
@@ -152,4 +146,53 @@ $maxWidth: 100rem;
 
 .bgGrey {
   background-color: $color-gray50;
+}
+
+.appBar {
+  position: relative;
+  top: 0px;
+  left: 4rem;
+  background-color: transparent;
+  box-shadow: unset !important;
+  height: 5rem;
+  border-bottom: unset !important;
+}
+
+.appBarWrapper {
+  border-top: 1px solid rgba($color: #515151, $alpha: 0.2);
+  position: absolute;
+  bottom: 0px;
+  height: 6.4rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.tabsIndicator {
+  background-color: white;
+  height: 5px;
+}
+
+.tabsRoot {
+  position: absolute;
+  bottom: 0px;
+}
+
+.tabSelected {
+  color: white;
+}
+ .tabRoot {
+  color: white;
+  font-size: 2rem;
+  min-width: 7rem;
+  max-width: 25rem;
+  opacity: 1;
+}
+
+.activeTabText {
+  font-size: 2rem;
+  font-size: 1.7rem;
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
 }

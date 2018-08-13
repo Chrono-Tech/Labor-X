@@ -18,18 +18,14 @@ export default class DocsTab extends React.Component {
             <h3>Deadline:</h3>
             <span className={css.dataText}>34</span>
           </div>
-          {job.ipfs.budget.isSpecified && (
             <div className={css.dataRow}>
               <h3>Hours:</h3>
               <span className={css.dataText}>54645</span>
             </div>
-          )}
-          {job.ipfs.budget.isSpecified && (
             <div className={css.dataRow}>
               <h3>Est. Budget:</h3>
               <span className={css.dataText}>546</span>
             </div>
-          )}
         </div>
       </div>
     )

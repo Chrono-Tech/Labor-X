@@ -1,2 +1,93 @@
 @import "~styles/globals/variables";
 @import "~styles/globals/mixins";
+
+.header {
+    padding: 4rem;
+    border-bottom: 1px solid #d6d6d6;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.user {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 21rem;
+}
+
+.avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 3rem;
+    height: 3rem;
+}
+
+.avatarImg {
+    width: 3rem;
+    height: 3rem;
+}
+
+.userText {
+    padding-left: 1.5rem;
+}
+
+.userName {
+    font-weight: 500;
+    padding-right: 0.7rem;
+}
+
+.periodAndBudget {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    padding: 3rem 4rem; 
+}
+
+.periodAndBudgetItem {
+    width: 14rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.label {
+    font-weight: 500;
+    color: #333;
+}
+
+.value {
+    color: #7F7F7F;
+    padding-top: 0.5rem;
+}
+
+.map {
+    padding: 3rem 4rem; 
+    padding-top: 0;
+    height: 40rem;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.mapItem {
+    display: block;
+    background-color: #c9c9c9;
+    height: 100%;
+    width: 100%;
+}
+
+.responsibilities {
+    padding: 3rem 4rem; 
+    line-height: 40px;
+}
+
+ul {
+    padding-left: 3rem;
+}
+
+li {
+    color: #333333;
+    font-family: roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 30px;
+}
